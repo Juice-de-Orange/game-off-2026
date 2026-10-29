@@ -34,3 +34,11 @@ Nach Priorität. Bei Zeitnot wird von unten gestrichen.
 
 ## Erledigt
 - [x] Repo, Team-Workflow und Setup-Anleitung (max, 29.10.)
+- [x] Unity 6000.3.23f1 + WebGL bei Max installiert, Lizenz aktiv (max, 29.10.)
+- [x] Martin (iMaterix) ins Repo eingeladen, Setup-Anleitung als Gist verschickt (max, 29.10.)
+
+## Vor dem 01.11. noch offen
+- [ ] martin: Setup nach Anleitung durchlaufen, Repo-Einladung annehmen (läuft am 05.11. ab), klonen
+- [ ] martin: itch.io-Benutzernamen an Max schicken (für Mitautor auf der Spielseite)
+- [ ] beide: gemeinsamen Chat (Discord o. ä.) einrichten
+- [ ] beide: Zeitpunkt fürs Theme-Brainstorming am 01.11. ausmachen
