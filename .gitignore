@@ -123,3 +123,6 @@ Desktop.ini
 # Build artifacts for itch.io uploads (never commit builds)
 *.zip
 /[Ww]eb[Gg][Ll]/
+
+# Claude Code local settings (per person)
+.claude/settings.local.json

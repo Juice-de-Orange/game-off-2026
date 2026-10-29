@@ -1,22 +1,110 @@
 # Project: Game Off 2026 entry
 
 Two-person team building a Unity game for GitHub Game Off 2026 (November 1st – December 1st, 2026).
+Each person works with their own Claude Code. The Claudes never talk directly — they coordinate
+**only through files in this repo** (`docs/team/`). Keeping those files current is part of every task.
+
+## Team
+| Person | GitHub (`git config user.name`) | Short name in files |
+|---|---|---|
+| Max    | `Juice-de-Orange` | `max`    |
+| Martin | `iMaterix`        | `martin` |
+
+Determine who you are working with from `git config user.name`. "The other" is the other person.
+Talk to your person in **German**. Team docs (handovers, questions, board) are written in German.
+Code, identifiers, comments, commit messages: English.
 
 ## Hard constraints
 - Unity version is pinned to **6000.3.23f1**. Never upgrade the project or open it with another version.
 - Primary build target is **WebGL** for itch.io. Player Settings → Publishing Settings:
   keep **Decompression Fallback** enabled (or Compression Format = Disabled), otherwise the build fails to load on itch.io.
-- Repo must be public by the deadline: December 1st, 2026, 13:37 PST (22:37 CET). Aim to submit November 30th.
+- Repo must be public by the deadline: December 1st, 2026, 13:37 PST (22:37 CET). Team submits November 30th.
 - Never commit builds, `Library/`, `Temp/`, `Logs/`, `UserSettings/`.
+- Never rewrite shared history: no force-push, no rebase of pushed commits, no `git reset --hard` on shared work.
 
-## Collaboration rules
-- Two people push to `main`. Always `git pull` before starting and before pushing.
-- Scenes (`.unity`) and prefabs are hard to merge: before editing a shared scene/prefab, make sure the
-  teammate is not editing it at the same time. Prefer working in own scenes/prefabs.
-- Commit small and often, with English commit messages.
-- Every third-party asset goes into `CREDITS.md` with source and license.
+## Session rhythm (mandatory)
 
-## Conventions
-- Code, identifiers, comments, commit messages: English.
-- Scripts in `Assets/Scripts/`, scenes in `Assets/Scenes/`, prefabs in `Assets/Prefabs/`, art in `Assets/Art/`, audio in `Assets/Audio/`.
-- Explanations to the team: German.
+### At session start → `/sync`
+A SessionStart hook prints a team briefing (behind/ahead, open questions for you, latest handover
+from the other, current board). Act on it:
+1. `git pull` (ask first if there are uncommitted local changes).
+2. If there are **open questions addressed to your person**: tell them in German and help answer them
+   (see "Questions" below). Answering the other is higher priority than new work — they may be blocked.
+3. Read the other's latest handover in `docs/team/handovers/` and summarize what changed in 2–4 lines.
+4. Check `docs/team/BOARD.md` → "In Arbeit" for files the other has claimed. Don't touch those.
+
+### Before editing a scene, prefab or shared asset → `/claim`
+Unity scenes and prefabs cannot be merged reliably. Before modifying any `.unity`, `.prefab`,
+ScriptableObject `.asset`, or a script the other is actively working on:
+1. `git pull`, check BOARD "In Arbeit" — if the other holds it, stop and ask your person what to do
+   (wait, work elsewhere, or `/ask` the other).
+2. Otherwise add your claim to BOARD and **commit + push immediately** (commit message `Claim: <files>`),
+   so the other's Claude sees it before they start.
+3. Release the claim (remove the row) when done, in the same push as the work.
+
+New files you create yourself need no claim.
+
+### When unclear about something the other built → `/ask`
+Don't guess about the other's intent when the answer changes what you build. Write a question file
+(see below), push it, tell your person, and continue with something unblocked. If a guess is
+reasonable and cheap to undo, make it, note it in the question as "Annahme", and continue.
+
+### At session end (or when your person says they stop) → `/handover`
+Write a handover file, update BOARD, release claims you no longer need, commit + push.
+Never end a session with unpushed work unless your person explicitly says so.
+If your person seems to be wrapping up ("ich hör auf", "bis morgen", "gute Nacht"), offer `/handover`.
+
+## Team files (`docs/team/`)
+| File | Purpose | Edited by |
+|---|---|---|
+| `BOARD.md` | Milestones, who works on what right now, claimed files, backlog, done | both — keep edits small, pull first |
+| `handovers/YYYY-MM-DD_HHMM_<name>.md` | One file per session end: state, unfinished work, hints for the other | author only |
+| `questions/YYYY-MM-DD_<from>-an-<to>_<slug>.md` | One file per question; the other answers in the same file | both |
+| `templates/` | Templates for handovers and questions | rarely |
+| `../DESIGN.md` | Game design: theme, core loop, scope (must/should/could) | both, after agreement |
+| `../DECISIONS.md` | Append-only log of decisions with reason | both, append only |
+
+One file per handover/question means the two people never edit the same file at the same time → no merge conflicts.
+
+### Questions
+Frontmatter fields `von`, `an`, `status` (`offen` → `beantwortet` → `erledigt`). Use `templates/question.md`.
+- The asker creates it with `status: offen`.
+- The other's Claude shows it to their person at session start, writes the answer into `## Antwort`,
+  sets `status: beantwortet`, pushes.
+- The asker's Claude, on reading the answer, applies it and sets `status: erledigt`.
+- If the answer is a real decision (affects design or architecture), also append it to `docs/DECISIONS.md`.
+
+## Git workflow
+- Everyone works on `main` (small team, short jam). Pull before starting, before claiming, before pushing.
+- Commit small and often. Push at least at every handover.
+- On a merge conflict in a `.md` file: resolve it, keeping both sides' content.
+  On a conflict in a `.unity`/`.prefab`/`.asset` file: **stop**, explain to your person, don't pick a side alone.
+
+## Unity project structure (created November 1st)
+The Unity project lives at the repo root. All our own content goes under `Assets/_Project/`:
+```
+Assets/
+  _Project/
+    Scenes/          Main.unity (claim before editing!), Boot/Menu scenes
+    Scenes/Sandbox/  Max_*.unity, Martin_*.unity — personal test scenes, never claimed, never touched by the other
+    Scripts/         C# by feature: Player/, Enemies/, UI/, Core/, Audio/ ...
+    Prefabs/         Prefabs by feature, same folders as Scripts
+    Art/             Sprites/, Materials/, Animations/
+    Audio/           Music/, SFX/
+    UI/
+    Data/            ScriptableObjects (tuning values, configs)
+  ThirdParty/        imported external assets, unmodified (credit in CREDITS.md)
+```
+- Build features as **prefabs** in your own sandbox scene, then integrate into `Main.unity` with a claim.
+  This keeps work on the shared scene short.
+- Tuning values (speed, damage, timings) go into ScriptableObjects in `Data/`, not hard-coded —
+  both people can tweak them without touching scripts or scenes.
+
+## C# conventions
+- Namespace `GameOff` (sub-namespaces per feature folder optional, e.g. `GameOff.Player`).
+- One public class per file, file name = class name. PascalCase types/methods, camelCase locals.
+- Inspector fields: `[SerializeField] private` instead of public fields.
+- Use the new Input System (Unity 6 default).
+- Avoid `GameObject.Find` / string lookups; wire references in the inspector or via events.
+- Keep it simple: jam code, not framework code. No speculative abstractions.
+- Every external asset (art, sound, font, music) goes into `CREDITS.md` with source and license.

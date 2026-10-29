@@ -102,6 +102,17 @@ Erkläre ihm kurz und praktisch:
 - Er kann Claude im Projektordner jederzeit sagen: „Hol die neuesten Änderungen" oder „Committe und pushe meine Arbeit" — Claude kennt die Teamregeln aus der `CLAUDE.md` im Repo.
 - Externe Grafiken/Sounds immer mit Quelle und Lizenz in `CREDITS.md` eintragen.
 
+### 8b. Zusammenarbeit der beiden Claudes (wichtig!)
+Lies nach dem Klonen `C:\Game-Off-2026\CLAUDE.md` und erkläre ihm kurz die vier Team-Befehle,
+die im Repo eingebaut sind (er tippt sie einfach in Claude Code, wenn er im Ordner `C:\Game-Off-2026` arbeitet):
+- `/sync` — zu Beginn jeder Session: holt Max' Änderungen, zeigt offene Fragen an ihn und Max' letzte Übergabe.
+  (Läuft auch automatisch als kurzes Briefing an, sobald Claude im Repo-Ordner startet.)
+- `/claim` — bevor er eine Szene/ein Prefab bearbeitet: reserviert sie, damit Max nicht gleichzeitig daran arbeitet.
+- `/ask` — wenn ihm etwas an Max' Arbeit unklar ist: legt eine Frage ab, die Max' Claude beim nächsten Start zeigt.
+- `/handover` — am Ende jeder Session: schreibt eine Übergabe für Max und pusht alles.
+Wichtigste Regel für ihn: **Claude Code fürs Spiel immer im Ordner `C:\Game-Off-2026` starten**, und vor dem Aufhören „Feierabend" sagen.
+Beim ersten Start im Repo fragt Claude Code, ob er dem Ordner und dessen Einstellungen (Hook) vertraut → bestätigen.
+
 ### 9. Ab dem 1. November (nur erklären, nicht jetzt ausführen)
 1. Max legt das Unity-Projekt an und pusht es.
 2. Er macht `git pull` in `C:\Game-Off-2026`.
@@ -118,5 +129,5 @@ Zeig ihm am Ende diese Liste mit ✅/❌ und sag, was noch offen ist:
 - [ ] Unity 6000.3.23f1 + Web Build Support (+ Visual Studio) installiert
 - [ ] GitHub- und itch.io-Benutzername an Max geschickt
 - [ ] Repo-Einladung angenommen, Repo nach `C:\Game-Off-2026` geklont
-- [ ] Mini-Git-Kurs verstanden
+- [ ] Mini-Git-Kurs und Team-Befehle (`/sync`, `/claim`, `/ask`, `/handover`) verstanden
 - [ ] Gemeinsamer Chat (z. B. Discord) mit Max eingerichtet

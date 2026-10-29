@@ -19,6 +19,8 @@ Our entry for [GitHub Game Off 2026](https://itch.io/jam/game-off-2026).
   Each person works in their own scene/prefabs; merge into the main scene together.
 - Builds never go into git — they go to itch.io.
 - Every external asset (art, sound, font, music) goes into [CREDITS.md](CREDITS.md) with its license.
+- Coordination happens in [docs/team/](docs/team/BOARD.md) via the Claude Code commands
+  `/sync`, `/claim`, `/ask`, `/handover` — rules in [CLAUDE.md](CLAUDE.md).
 
 ## Team
 
