@@ -33,6 +33,14 @@ from the other, current board). Act on it:
 3. Read the other's latest handover in `docs/team/handovers/` and summarize what changed in 2–4 lines.
 4. Check `docs/team/BOARD.md` → "In Arbeit" for files the other has claimed. Don't touch those.
 
+### Picking work → packages (`docs/team/PAKETE.md`)
+All work is split into clearly scoped packages. This is the team's central development concept.
+- Take an open package: `git pull`, set its status to `in Arbeit (<name>, <date>)`, commit + push immediately (`Take: Pxx`).
+- One package per person at a time. Build only what is in scope; anything else becomes a new package.
+- Rework of a finished package = a new follow-up package (`Folgt auf: Pxx`), never reopen.
+- Done = acceptance criteria met, no console errors, pushed, status `fertig`, short "Ergebnis" note.
+- Need an asset? Add it to `docs/ASSET-REQUESTS.md`, create a placeholder at the final path (rules in `docs/ASSETS.md`), keep building.
+
 ### Before editing a scene, prefab or shared asset → `/claim`
 Unity scenes and prefabs cannot be merged reliably. Before modifying any `.unity`, `.prefab`,
 ScriptableObject `.asset`, or a script the other is actively working on:
@@ -58,6 +66,9 @@ If your person seems to be wrapping up ("ich hör auf", "bis morgen", "gute Nach
 | File | Purpose | Edited by |
 |---|---|---|
 | `BOARD.md` | Milestones, who works on what right now, claimed files, backlog, done | both — keep edits small, pull first |
+| `PAKETE.md` | Development packages (scope, status, who took it) — the central work unit | both — pull first, push a take immediately |
+| `../ASSET-REQUESTS.md` | Needed assets: file name, placeholder, final look — processed by Max's asset pipeline | both append; status by Max |
+| `../ASSETS.md` | Asset rules: paths, naming, specs, placeholder → final swap | both, after agreement |
 | `handovers/YYYY-MM-DD_HHMM_<name>.md` | One file per session end: state, unfinished work, hints for the other | author only |
 | `questions/YYYY-MM-DD_<from>-an-<to>_<slug>.md` | One file per question; the other answers in the same file | both |
 | `templates/` | Templates for handovers and questions | rarely |

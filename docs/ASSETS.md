@@ -4,8 +4,8 @@ Ziel: Martin baut mit Platzhaltern, Max ersetzt sie durch finale Assets, **ohne 
 angefasst werden muss**. Dafür gelten feste Namen, Pfade und technische Eckdaten.
 
 ## Grundprinzip: Platzhalter → final durch Datei-Ersatz
-1. Wer einen Platzhalter braucht, legt ihn **unter dem finalen Namen am finalen Pfad** an und trägt ihn in die
-   Asset-Liste unten ein (Status `platzhalter`).
+1. Wer einen Platzhalter braucht, legt ihn **unter dem finalen Namen am finalen Pfad** an und trägt ihn in
+   `docs/ASSET-REQUESTS.md` ein (Status `offen`).
 2. Max ersetzt später **nur den Dateiinhalt** (gleicher Dateiname, Datei im Explorer überschreiben).
    Die `.meta`-Datei bleibt unverändert → die GUID bleibt gleich → alle Referenzen in Szenen/Prefabs bleiben heil.
 3. Ab dem Eintrag in der Liste fasst nur noch Max die Datei an. Status → `final`.
@@ -73,8 +73,4 @@ ArtSource/                 Arbeitsdateien (.blend, .psd, Rohaufnahmen) — auße
 - Platzhalter-Modelle: Unity-Primitive oder ProBuilder-Blöcke in ungefährer Endgröße.
 
 ## Asset-Liste
-Wer ein Asset braucht, trägt es hier ein. Max arbeitet die Liste ab.
-
-| Datei (Pfad unter `Assets/_Project/`) | Wofür | Angelegt von | Status |
-|---|---|---|---|
-| | | | |
+Offene Anforderungen stehen in `docs/ASSET-REQUESTS.md`.

@@ -11,3 +11,13 @@ Nur anhängen, nie löschen. Wird eine Entscheidung revidiert, neuen Eintrag sch
 | 29.10. | max | Unity-Projekt erst am 01.11. anlegen | 2D/3D und Vorlage hängen vom Theme ab |
 | 31.10. | max + martin | Timeline: 3 Wochen Entwicklung (bis Feature-Freeze 22.11.), 1 Woche Polish (bis Content-Freeze 28.11.), 29.–30.11. Puffer, Abgabe 30.11. | Polish-Woche schützen; früher WebGL-Build und Checkpoint 09.11. lassen Zeit zum Umsteuern |
 | 31.10. | max + martin | Max macht alle finalen Assets; Martin nutzt nur Platzhalter und baut den Startbildschirm (Spielstart bis Menü) | Klare Zuständigkeit, keine Überschneidung bei Art-Dateien |
+| 31.10. | max + martin | Konzept steht vor dem Theme: Zollstation im All (Prüf-Gameplay + frei begehbare Station); das Theme wird am 02.11. eingewoben | Schneller Start; Theme Interpretation wird bewertet, deshalb bewusst einweben statt dranhängen |
+| 31.10. | max + martin | 3D, Spiellänge 3 Tage (~10–15 min) | Sicher fertig werden; Jam-Spieler spielen selten länger |
+| 31.10. | max + martin | Prüfung am Schalter: feste Schalter-Ansicht + Dokumente als scharfe 2D-Karten | Lesbar trotz Low-Res-Look, schnell zu bauen |
+| 31.10. | max + martin | Spielsprache Englisch | Internationaler Jam, mehr Bewertungen |
+| 31.10. | max + martin | Tech-Stack: C#, Universal 3D (URP), uGUI + TextMeshPro, Cinemachine 3, ProBuilder, AI Navigation, ScriptableObjects, DOTween, eigener FPS-Controller; WebGL 2, Brotli + Decompression Fallback, Wasm 2023, IL2CPP | URP ist für WebGL empfohlen; einsteigerfreundlich; Tuning über ScriptableObjects |
+| 31.10. | max + martin | Luftschleuse: hoher Abzug bei Unschuldigen + versteckter Moral-Wert, der Briefe und Ende färbt | Wenig Aufwand, starke Wirkung |
+| 31.10. | max + martin | Schriften: Orbitron (Titel) + Share Tech Mono (Dokumente/UI), OFL | Sci-Fi-Look ohne Lizenzrisiko |
+| 31.10. | max + martin | Musik/SFX aus freien Assets; Voicelines selbst aufnehmen + ElevenLabs, an einem Tag nach dem Feature-Freeze | Spart Zeit; Texte stehen dann fest |
+| 31.10. | max + martin | **Zentrales Entwicklungskonzept: Pakete** mit festem Umfang (`docs/team/PAKETE.md`); wer Zeit hat, nimmt ein offenes Paket; Überarbeitungen als Folgepakete | Klare Abgrenzung statt fester Zuständigkeiten, flexibel bei unbekannter Zeit pro Woche |
+| 31.10. | max + martin | Benötigte Assets in `docs/ASSET-REQUESTS.md` (Dateiname, Platzhalter, finales Aussehen); Platzhalter unter finalem Pfad, Max ersetzt nur den Dateiinhalt | Max' Asset-Pipeline arbeitet die Liste ab; keine Szenen-/Prefab-Änderungen beim Austausch |

@@ -15,6 +15,7 @@ deine Familie auf dem Heimatplaneten am Leben. Nach der Schicht läufst du frei 
 Gadgets, handelst unter der Theke und schickst Pakete nach Hause.
 
 Arbeitstitel: ❓ (nach dem Theme)
+Sprache des Spiels: Englisch.
 
 ## Kern-Loop (ein Spieltag)
 1. **Morgen — Unterkunft:** Nachricht/Brief der Familie lesen, neue Regeln des Tages (Bulletin), ggf. neues Gadget.
@@ -27,7 +28,7 @@ Arbeitstitel: ❓ (nach dem Theme)
    (Essen, Wärme, Medizin). Was nicht bezahlt wird, hat Folgen (Familienmitglied wird krank, hungert, ...).
 5. Nächster Tag: neue Regeln, schwierigere Fälle, neue Gadgets.
 
-**Ziel:** X Tage (❓ Anzahl) überstehen, ohne dass die Familie zerbricht oder du gefeuert wirst.
+**Ziel:** 3 Tage (ca. 10–15 Minuten) überstehen, ohne dass die Familie zerbricht oder du gefeuert wirst.
 **Herausforderung:** Zeitdruck am Schalter, wachsende Regelmenge, Geldknappheit, moralische Entscheidungen.
 **Belohnung:** Geld, Gadgets, die die Prüfung erleichtern, Story-Momente, mehrere Enden.
 
@@ -37,7 +38,7 @@ Arbeitstitel: ❓ (nach dem Theme)
 | Durchlassen | Reisender betritt die Station | Falsch durchgelassen → Abzug |
 | Abweisen | Reisender fliegt zurück | Falsch abgewiesen → Abzug |
 | Verhaften (Knopf) | Wache führt ab, beschlagnahmte Gegenstände landen bei dir | Unschuldig verhaftet → größerer Abzug |
-| Luftschleuse (Knopf) | Sofortige Eliminierung, kein Zeitverlust | ❓ Konsequenzen: Strafe bei Unschuldigen, Moral-/Ruf-Wert, Einfluss auf das Ende |
+| Luftschleuse (Knopf) | Sofortige Eliminierung, kein Zeitverlust | Unschuldige: hoher Abzug. Jede Nutzung senkt einen versteckten Moral-Wert → färbt Familienbriefe und Ende |
 
 ## Station (klein, kompakt — ein Gebäude, kurze Laufwege)
 | Ort | Funktion im Spiel |
@@ -63,14 +64,15 @@ Arbeitstitel: ❓ (nach dem Theme)
 - Briefe der Familie am Morgen erzählen die Story und zeigen die Folgen deiner Entscheidungen.
 
 ## Steuerung
-- Ego-Perspektive, **WASD + Maus**, **E** = interagieren, **Maus** = Dokumente greifen/prüfen am Schalter.
+- Ego-Perspektive, **WASD + Maus**, **E** = interagieren.
+- Am Schalter: E → Kamera fährt fest auf den Tisch, Dokumente sind scharfe 2D-Karten, mit der Maus ziehen und vergleichen.
 - Nur Tastatur & Maus (Browser). Kein Gamepad, kein Mobile.
 
 ## Umfang
 ### Muss (ohne das kein Spiel)
 - Zollschalter mit Dokumentenprüfung: 2–3 Dokumenttypen, Regeln pro Tag, Durchlassen/Abweisen/Verhaften/Luftschleuse
 - Reisende als Daten (ScriptableObjects): Aussehen, Dokumente, Fehler, Gepäck
-- Tagesablauf: Morgen → Schicht → Feierabend → Schlafen → Abrechnung
+- Tagesablauf: Morgen → Schicht → Feierabend → Schlafen → Abrechnung, 3 Tage (~15 Reisende)
 - Geld + Familie mit Bedarfen und Folgen
 - Begehbare Station: Schalter, Unterkunft, Bar (Schwarzmarkt), Hangar (Pakete)
 - 1 Gadget (Dokumentenscanner) kaufbar
@@ -94,7 +96,8 @@ Arbeitstitel: ❓ (nach dem Theme)
 - **Musik & SFX:** freie Assets (Lizenz in `CREDITS.md`).
 - **Voicelines:** selbst aufnehmen, mit ElevenLabs in verschiedene Stimmen umwandeln. Ein Aufnahmetag,
   wenn alle Texte feststehen (nach dem Feature-Freeze).
-- **Schrift:** frei lizenziert, Star-Wars-Anmutung ❓ (Auswahl siehe Rückfragen).
+- **Schrift:** Orbitron (Titel, Menü) + Share Tech Mono (Dokumente, UI), beide OFL / Google Fonts.
+- **Sprache:** Englisch (Texte und Voicelines).
 - Asset-Regeln: `docs/ASSETS.md`.
 
 ## Aufgabenteilung
@@ -102,4 +105,4 @@ Arbeitstitel: ❓ (nach dem Theme)
 |---|---|
 | Alle finalen Assets (3D, Texturen, UI-Grafik, Sound-/Musik-Auswahl, Voicelines) | max |
 | Startbildschirm: alles vom Spielstart bis zum Menü (mit Platzhaltern) | martin |
-| Gameplay-Code (Schalter, Tagesablauf, Geld/Familie, Station) | ❓ |
+| Alles andere | offene Pakete nach `docs/team/PAKETE.md`, wer Zeit hat |
