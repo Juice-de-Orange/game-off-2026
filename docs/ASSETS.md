@@ -50,14 +50,18 @@ ArtSource/                 Arbeitsdateien (.blend, .psd, Rohaufnahmen) — auße
 
 ## Technische Eckdaten
 **3D (Blender → Unity)**
+- FBX binär 7.4, nur Mesh (keine eingebetteten Texturen, keine Kamera/Lichter).
 - 1 Unity-Einheit = 1 Meter. Spielerhöhe ca. 1,8 m, Türen 2,2 m.
 - Pivot: unten mittig (Props), bei Türen an der Angel.
 - FBX-Export: "Apply Transforms" an, Forward −Z, Up Y, nur ausgewählte Objekte, keine Kamera/Lichter.
 - Low-Poly. Richtwert: Prop < 1.000 Tris, Charakter < 3.000 Tris.
+- **Material-Slots:** benannte Slots im FBX, pro Prop 1, höchstens 2 (Draw Calls im Browser). Die `M_`-Materialien werden in Unity angelegt.
+- Kollision: Standard = Collider im Prefab. Bei Bedarf liefert die Pipeline ein vereinfachtes zweites Mesh `<Name>_Col`.
 
 **Texturen**
-- PNG, Potenzen von 2, klein: Props 64–256 px, Charaktere/Wände bis 512 px.
-- Bei Retro-Look: Filter Mode **Point**, Mipmaps aus. (Wird festgelegt, wenn der Art Style steht.)
+- PNG, Potenzen von 2, 64–512 px. Albedo ohne eingebackenes Licht, Emission als eigene Textur, keine Normal-/ORM-Maps.
+- **Texel-Dichte:** 64 px/m für Welt-Props, 128 px/m für Nahsicht am Schalter.
+- Filter, Palette und Stil: siehe `docs/STYLE.md`.
 - UI-Grafiken und Dokumente: voll aufgelöst, Filter Bilinear (müssen lesbar sein).
 
 **Audio**
@@ -67,6 +71,27 @@ ArtSource/                 Arbeitsdateien (.blend, .psd, Rohaufnahmen) — auße
 
 **Schriften**
 - Nur frei lizenziert (OFL o. ä.), in `CREDITS.md` eintragen. Für TextMeshPro ein Font Asset daneben ablegen.
+
+## Regeln für Platzhalter (damit der Austausch sauber klappt)
+- Der Platzhalter ist eine **echte Datei desselben Typs** am finalen Pfad mit finalem Namen: eine FBX-Box bzw. ein PNG in der finalen Größe.
+- Er hat schon die **Material-Slot-Namen** aus dem Eintrag, ungefähr die Größe aus `size_m` und denselben Pivot.
+- **Importeinstellungen** werden einmal gesetzt und danach nicht mehr geändert.
+- Skripte greifen **nicht** auf Unterobjekt-Namen im FBX zu.
+- **Collider, Skripte, Licht** hängen am Prefab (`PF_`), nie im FBX.
+- Texturen behalten den Namen und die gleiche oder eine größere Zweierpotenz.
+
+## Ablieferung durch die Asset-Pipeline
+- Die Pipeline liest `docs/ASSET-REQUESTS.md` und `docs/STYLE.md` von `main`.
+- Sie liefert auf einem eigenen Branch `assets/<Paket>`: jede Datei am finalen Pfad (**nie** die `.meta`), Arbeitsdatei unter `ArtSource/`,
+  Vorschaubild unter `docs/asset-previews/`. Dann ein **Pull Request**. Auf `main` schreibt sie nie.
+- **Gemergt wird von Max oder Martin**, nachdem die Vorschau passt. Status im Eintrag: `Vorschau` → `final`.
+- Commit-Format der Pipeline: `assets(Pxx): SM_Bar_Counter.fbx final - 820 tris, 1 material`.
+- Material, Prefab, Importeinstellungen und Szenen macht das Team im Unity-Editor, nicht die Pipeline.
+
+## Was die Pipeline (nicht) kann
+- Gut: statische Low-Poly-Props, Raummodule (Wände, Böden, Hangar-Teile), Texturen und Decals, UI-Grafiken/Dokumente, einfache Animationen (Türen, Schalter, Lüfter).
+- Eingeschränkt: Figuren mit Rig (`SK_`) nur als einfacher Low-Poly-Körper. Gesichter und Charakter-Animationen sind die schwächste Stelle → bei der Gestaltung der Reisenden einplanen.
+- Nicht: Voicelines (`VO_`), Musik komponieren. Freie Musik/SFX sucht sie heraus (CC0/CC-BY, Eintrag in `CREDITS.md`, Umwandlung nach OGG), die Auswahl nach Gehör trifft das Team.
 
 ## Platzhalter erkennen
 - Platzhalter-Materialien in Magenta/Grau-Raster (`M_Placeholder.mat`), damit sofort sichtbar ist, was noch fehlt.
