@@ -51,6 +51,7 @@ aber nicht Horror.
 - Schilder und Decals: erfundene Firmennamen und Texte, Englisch, Großbuchstaben, gern mit Seriennummern und Warnhinweisen.
 
 ## Referenzen
-5–10 Bilder unter `docs/style/refs/` (Name `<thema>_<nr>.png`). Noch leer — Max ergänzt sie.
+25 Bilder unter `docs/style/refs/` (`ai_` = Alien: Isolation, `mw_` = Mouthwashing, Name `<präfix>_<thema>_<nr>.webp`).
+Was jedes Bild zeigt und wofür es steht: `docs/style/refs/README.md`.
 Gesucht: Mouthwashing-Screenshots (Rendering, Licht, Auflösung) und Alien-Isolation-Screenshots
 (Terminals, Gänge, Türen, Möbel, Kantine/Bar). Referenzbilder dienen nur zur Orientierung und werden nicht ins Spiel übernommen.
