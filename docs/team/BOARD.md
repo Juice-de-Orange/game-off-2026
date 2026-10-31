@@ -61,7 +61,8 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 - [x] beide: gemeinsamen Chat einrichten (Discord)
 - [x] beide: Ablauf zum Start: Theme anschauen, Gedanken machen, Abend-Call, gemeinsam festlegen
 - [x] max: itch.io-Projektseite als Entwurf angelegt: https://juice-de-orange.itch.io/game-off-2026 (HTML, 960×540, Vollbild-Button, keine Zahlungen, KI-Kennzeichnung an)
-- [ ] max: Martin (`iMaterix`) als Admin auf der itch-Seite hinzufügen → martin: Einladung annehmen
+- [x] max: Martin (`iMaterix`) als Admin + Mitautor auf der itch-Seite eingetragen
+- [ ] martin: itch-Admin-Einladung annehmen: https://itch.io/game/accept-admin/5272072/19899599
 - [ ] martin: Unity-Grundlagen anschauen: uGUI-Menü (Canvas, Buttons), Szenenwechsel (`SceneManager.LoadScene`)
 - [ ] max: Tools installieren/testen: Blender (FBX-Export nach `docs/ASSETS.md`), Texturtool, Audacity
 - [x] max: Deploy-Key mit Schreibrecht für die Asset-Pipeline eintragen (31.10., Titel `asset-pipeline`)
