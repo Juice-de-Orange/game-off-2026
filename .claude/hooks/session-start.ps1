@@ -67,6 +67,31 @@ if (Test-Path $board) {
     if ($rows) { Write-Output "Claims (BOARD 'In Arbeit'):"; $rows | ForEach-Object { Write-Output "  $_" } }
     else { Write-Output "Claims: none." }
 }
+$req = Join-Path $root 'docs/ASSET-REQUESTS.md'
+if (Test-Path $req) {
+    $statuses = Get-Content $req -Encoding UTF8 |
+        Select-String -Pattern '^## Anforderungen' -Context 0, 100000 |
+        ForEach-Object { $_.Context.PostContext } |
+        Where-Object { $_ -match '^status:\s*\S' } |
+        ForEach-Object { ($_ -replace '^status:\s*', '' -replace '\s*#.*$', '').Trim() }
+    if ($statuses) {
+        $summary = ($statuses | Group-Object | ForEach-Object { "$($_.Name)=$($_.Count)" }) -join ', '
+        Write-Output "Asset requests (docs/ASSET-REQUESTS.md on this checkout): $summary"
+    }
+}
+$prJson = (gh pr list --state open --json number,title,headRefName) 2>$null
+if ($LASTEXITCODE -eq 0) {
+    $prs = @($prJson | ConvertFrom-Json | Where-Object { $_.headRefName -like 'assets/*' } |
+        ForEach-Object { "  - #$($_.number) $($_.title) [$($_.headRefName)]" })
+    if ($prs) {
+        if ($me -eq 'max') { Write-Output "ASSET PULL REQUESTS WAITING FOR MAX'S APPROVAL (review preview, merge, then integrate - see docs/ASSETS.md):" }
+        else { Write-Output "Asset pull requests open (only max approves/merges; info only):" }
+        $prs | Write-Output
+    } else { Write-Output "Asset pull requests: none open." }
+} else {
+    Write-Output "Asset pull requests: could not check (gh not logged in?)."
+}
+
 Write-Output "Follow the session rhythm in CLAUDE.md: greet the person in German, then run /sync."
 Write-Output "=== END TEAM BRIEFING ==="
 exit 0

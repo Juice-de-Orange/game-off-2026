@@ -84,9 +84,23 @@ ArtSource/                 Arbeitsdateien (.blend, .psd, Rohaufnahmen) — auße
 - Die Pipeline liest `docs/ASSET-REQUESTS.md` und `docs/STYLE.md` von `main`.
 - Sie liefert auf einem eigenen Branch `assets/<Paket>`: jede Datei am finalen Pfad (**nie** die `.meta`), Arbeitsdatei unter `ArtSource/`,
   Vorschaubild unter `docs/asset-previews/`. Dann ein **Pull Request**. Auf `main` schreibt sie nie.
-- **Gemergt wird von Max oder Martin**, nachdem die Vorschau passt. Status im Eintrag: `Vorschau` → `final`.
+- **Freigabe und Merge macht immer Max** (Art-Verantwortung). Martin kann Anpassungen anfordern, gibt aber nicht frei.
+  Status im Eintrag: `Vorschau` → `final`.
 - Commit-Format der Pipeline: `assets(Pxx): SM_Bar_Counter.fbx final - 820 tris, 1 material`.
 - Material, Prefab, Importeinstellungen und Szenen macht das Team im Unity-Editor, nicht die Pipeline.
+
+## Anpassungen anfordern (Max und Martin)
+In `docs/ASSET-REQUESTS.md` beim Eintrag eine datierte Zeile in `feedback` ergänzen und `status: rework` setzen,
+auf `main` pushen. Beispiel: `- "2026-11-10 martin: Tresen 20 cm niedriger, Spieler sieht sonst nicht drüber"`.
+Die Pipeline arbeitet den Eintrag erneut ab und liefert wieder per Pull Request.
+
+## Integration nach dem Merge (Max)
+1. `git pull`, Unity öffnen und den Import abwarten.
+2. Prüfen: Ersetzte Dateien haben **keine neue** `.meta` bekommen. Für neue Dateien ohne Platzhalter erzeugt Unity
+   eine `.meta` → **sofort committen und pushen**, damit Martin dieselbe GUID bekommt.
+3. Neue Texturen: Importeinstellungen nach `docs/STYLE.md` setzen (Point, keine Mipmaps), `M_`-Material anlegen bzw. anpassen.
+4. In der Szene kurz ansehen (Größe, Pivot, Material), dann Status im Eintrag auf `final`.
+5. Passt etwas nicht: `feedback` + `status: rework` statt selbst nachzubessern.
 
 ## Was die Pipeline (nicht) kann
 - Gut: statische Low-Poly-Props, Raummodule (Wände, Böden, Hangar-Teile), Texturen und Decals, UI-Grafiken/Dokumente, einfache Animationen (Türen, Schalter, Lüfter).

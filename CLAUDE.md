@@ -40,7 +40,8 @@ All work is split into clearly scoped packages. This is the team's central devel
 - Rework of a finished package = a new follow-up package (`Folgt auf: Pxx`), never reopen.
 - Done = acceptance criteria met, no console errors, pushed, status `fertig`, short "Ergebnis" note.
 - Need an asset? Add it to `docs/ASSET-REQUESTS.md`, create a placeholder at the final path (rules in `docs/ASSETS.md`), keep building.
-- Max's asset pipeline delivers via pull requests from `assets/<package>` branches (never pushes to `main`). Max or Martin reviews the preview and merges.
+- Max's asset pipeline delivers via pull requests from `assets/<package>` branches (never pushes to `main`). **Only Max approves and merges** asset PRs, then integrates them in Unity (steps in `docs/ASSETS.md`).
+- Want an asset changed? Both people may request it: add a dated line to the entry's `feedback` and set `status: rework` in `docs/ASSET-REQUESTS.md`, push to `main`. Never edit pipeline-delivered files by hand.
 
 ### Before editing a scene, prefab or shared asset → `/claim`
 Unity scenes and prefabs cannot be merged reliably. Before modifying any `.unity`, `.prefab`,
