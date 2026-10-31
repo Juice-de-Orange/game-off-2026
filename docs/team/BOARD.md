@@ -56,7 +56,7 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 - [x] Session-Briefing zeigt Asset-PRs und Asset-Status (max, 31.10.)
 
 ## Vor dem 01.11. noch offen
-- [ ] martin: Setup nach Anleitung durchlaufen, Repo-Einladung annehmen (läuft am 05.11. ab), klonen
+- [ ] martin: Setup nach Anleitung durchlaufen, klonen (Einladung angenommen ✔ 31.10.)
 - [x] martin: itch.io-Benutzernamen an Max schicken → `iMaterix`
 - [x] beide: gemeinsamen Chat einrichten (Discord)
 - [x] beide: Ablauf zum Start: Theme anschauen, Gedanken machen, Abend-Call, gemeinsam festlegen
