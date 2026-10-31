@@ -1,8 +1,17 @@
 # Style Guide
 
-> **Status: ENTWURF (31.10.)** — Der Art Style ist noch nicht beschlossen. Arbeitsrichtung: Mouthwashing-artig.
-> Max (Art-Verantwortung) passt diese Datei an und gibt sie frei. Die Asset-Pipeline baut zuerst
+> **Status: ENTWURF (31.10.)** — Richtung beschlossen: **Grafik wie Mouthwashing, Asset-Design wie Alien: Isolation.**
+> Endgültig festgelegt wird der Stil nach der Theme-Bekanntgabe (02.11.). Max (Art-Verantwortung) gibt die Datei dann frei. Die Asset-Pipeline baut zuerst
 > **ein Muster aus 3 Assets** zum Abnicken, bevor sie die Liste abarbeitet.
+
+## Stilrichtung
+- **Rendering & Grafik → Mouthwashing:** Low-Poly, kleine Point-gefilterte Texturen, niedrige Render-Auflösung,
+  harte Pixel, flaches bzw. gebackenes Licht.
+- **Asset-Design → Alien: Isolation:** analoger Retro-Futurismus der späten 70er/80er. Klobige Industrie-Technik,
+  CRT-Monitore mit grüner oder bernsteinfarbener Schrift, beige/cremefarbene Kunststoffgehäuse, Kippschalter,
+  Drehregler, Kabelbündel, Rohre, Gitterroste, Warnstreifen, gepolsterte Wandpaneele, schwere Schotttüren.
+  Technik wirkt gebraucht, gewartet, nie elegant. Keine Hologramme, keine Touchscreens.
+- **Keine fremden Marken:** keine Logos, Namen oder Schriftzüge aus Alien oder Mouthwashing, alles selbst erfunden.
 
 ## Stimmung
 Kleine, heruntergekommene Zollstation am Rand des Alls. Funktional, eng, abgenutzt. Kaltes Neonlicht in den
@@ -17,7 +26,7 @@ aber nicht Horror.
 | Neutral (Metall, Wände, Kunststoff) | `#0D0F14` `#1B1F27` `#2C323C` `#444B55` `#646B73` `#8B9096` `#B7B9B5` `#E2DDCF` |
 | Warm (Kunstholz, Rost, Bar, Diner) | `#3A2418` `#5E3A24` `#8A5A34` `#B9824A` |
 | Kalt (Station, Bodenbeläge, Glas) | `#1E3A46` `#2F5B66` `#4F8A8B` `#8FBFB6` |
-| Akzente / Leuchtfarben | `#FF9A3C` warmes Orange · `#FFD36B` Bernstein · `#E2463F` Alarmrot · `#7A1F2B` Dunkelrot · `#9BE05A` Giftgrün · `#3F7A3A` Dunkelgrün · `#5EC8FF` Bildschirm-Cyan · `#C27BD6` Neonviolett |
+| Akzente / Leuchtfarben (CRT-Grün = `#9BE05A`, CRT-Bernstein = `#FFD36B`) | `#FF9A3C` warmes Orange · `#FFD36B` Bernstein · `#E2463F` Alarmrot · `#7A1F2B` Dunkelrot · `#9BE05A` Giftgrün · `#3F7A3A` Dunkelgrün · `#5EC8FF` Bildschirm-Cyan · `#C27BD6` Neonviolett |
 
 ## Rendering
 - Interne Render-Auflösung: **640 × 360**, hochskaliert mit Point-Filter (Paket P17). UI und Dokumente in voller Auflösung darüber.
@@ -43,3 +52,5 @@ aber nicht Horror.
 
 ## Referenzen
 5–10 Bilder unter `docs/style/refs/` (Name `<thema>_<nr>.png`). Noch leer — Max ergänzt sie.
+Gesucht: Mouthwashing-Screenshots (Rendering, Licht, Auflösung) und Alien-Isolation-Screenshots
+(Terminals, Gänge, Türen, Möbel, Kantine/Bar). Referenzbilder dienen nur zur Orientierung und werden nicht ins Spiel übernommen.

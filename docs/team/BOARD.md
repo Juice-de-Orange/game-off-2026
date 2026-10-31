@@ -60,6 +60,6 @@ Nach Priorität. Bei Zeitnot wird von unten gestrichen.
 - [ ] max: Ab 01.11. (Repo öffentlich): `main` per Ruleset schützen — nur max/martin pushen direkt, Pipeline nur per PR
 - [ ] max: `docs/STYLE.md` + Palette prüfen/anpassen, 5–10 Referenzbilder nach `docs/style/refs/`, freigeben → Pipeline baut 3 Muster-Assets
 - [ ] max: ElevenLabs-Lizenz klären (Free-Plan erlaubt keine kommerzielle Nutzung, verlangt Namensnennung)
-- [ ] beide: Art-Style-Moodboard (Mouthwashing & Alternativen), Entscheidung vor dem 02.11.-Call
+- [x] beide: Art-Style-Richtung: Mouthwashing-Grafik + Alien-Isolation-Assets (final am 02.11. nach dem Theme)
 - [ ] beide: Tech-Stack bestätigen (Vorschlag von Claude, wird in `DECISIONS.md` geloggt)
 - [ ] beide: `docs/DESIGN.md` (Entwurf) und `docs/ASSETS.md` lesen

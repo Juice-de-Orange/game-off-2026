@@ -90,8 +90,8 @@ Sprache des Spiels: Englisch.
 - Kampf, Physik-Rätsel, offene Welt, Speichern/Laden mitten im Tag, Mehrspieler, Gamepad/Mobile
 
 ## Look & Sound
-- **Art Style ❓:** Kandidat Mouthwashing-artig (Low-Poly, kleine Texturen, Low-Res-Rendering, harte Pixel).
-  Vorteil: von einer Person in 3 Wochen schaffbar und läuft gut im Browser.
+- **Art Style (Richtung, final nach dem Theme):** Grafik wie Mouthwashing (Low-Poly, kleine Texturen, Low-Res-Rendering,
+  harte Pixel), Asset-Design wie Alien: Isolation (analoger Retro-Futurismus, CRTs, klobige Industrie-Technik). Details: `docs/STYLE.md`.
 - **Dokumente/UI** werden in voller Auflösung über dem Low-Res-Bild gezeichnet → bleiben lesbar.
 - **Musik & SFX:** freie Assets (Lizenz in `CREDITS.md`).
 - **Voicelines:** selbst aufnehmen, mit ElevenLabs in verschiedene Stimmen umwandeln. Ein Aufnahmetag,
