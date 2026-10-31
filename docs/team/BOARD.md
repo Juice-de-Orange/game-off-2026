@@ -32,7 +32,8 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | | | | |
 
 ## Backlog
-Nach Priorität. Bei Zeitnot wird von unten gestrichen.
+Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
+die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 
 ### Muss (ohne das kein Spiel)
 - [ ] 
@@ -47,6 +48,12 @@ Nach Priorität. Bei Zeitnot wird von unten gestrichen.
 - [x] Repo, Team-Workflow und Setup-Anleitung (max, 29.10.)
 - [x] Unity 6000.3.23f1 + WebGL bei Max installiert, Lizenz aktiv (max, 29.10.)
 - [x] Martin (iMaterix) ins Repo eingeladen, Setup-Anleitung als Gist verschickt (max, 29.10.)
+- [x] Timeline + Aufgabenteilung beschlossen (max + martin, 31.10.)
+- [x] Konzept-Entwurf `docs/DESIGN.md`: Zollstation im All, 3 Tage, Englisch (max + martin, 31.10.)
+- [x] Tech-Stack, Schriften, Luftschleuse/Moral, Art-Style-Richtung beschlossen (max + martin, 31.10.)
+- [x] Paket-Konzept + erste 19 Pakete `docs/team/PAKETE.md` (max, 31.10.)
+- [x] Asset-Pipeline angebunden: `ASSETS.md`, `ASSET-REQUESTS.md`, `STYLE.md` + Palette, Deploy-Key, PR-Ablauf (max, 31.10.)
+- [x] Session-Briefing zeigt Asset-PRs und Asset-Status (max, 31.10.)
 
 ## Vor dem 01.11. noch offen
 - [ ] martin: Setup nach Anleitung durchlaufen, Repo-Einladung annehmen (läuft am 05.11. ab), klonen

@@ -2,7 +2,10 @@
 
 Our entry for [GitHub Game Off 2026](https://itch.io/jam/game-off-2026).
 
-- **Theme:** announced November 1st, 2026
+- **Theme:** announced November 1st, 2026 (~22:37 CET)
+- **Concept (draft):** first-person customs inspector on a small, run-down space station — check travelers'
+  papers, let them pass, arrest them or open the airlock, and keep your family back home alive.
+  See [docs/DESIGN.md](docs/DESIGN.md).
 - **Engine:** Unity 6000.3.23f1 (exact version — do not upgrade)
 - **Target:** WebGL (playable in the browser on itch.io)
 - **Deadline:** December 1st, 2026, 13:37 PST (22:37 CET)
@@ -15,8 +18,10 @@ Our entry for [GitHub Game Off 2026](https://itch.io/jam/game-off-2026).
 ## Team workflow
 
 - `git pull` before you start working, commit and push small steps often.
-- Never edit the same scene or prefab at the same time — announce it in chat first.
-  Each person works in their own scene/prefabs; merge into the main scene together.
+- Work is split into scoped packages: [docs/team/PAKETE.md](docs/team/PAKETE.md). Take one, push the take, build it.
+- Scenes/prefabs/shared assets are claimed before editing (`/claim`), each person tests in their own sandbox scene.
+- Assets: rules in [docs/ASSETS.md](docs/ASSETS.md), style in [docs/STYLE.md](docs/STYLE.md),
+  requests in [docs/ASSET-REQUESTS.md](docs/ASSET-REQUESTS.md) (delivered via pull requests, approved by Max).
 - Builds never go into git — they go to itch.io.
 - Every external asset (art, sound, font, music) goes into [CREDITS.md](CREDITS.md) with its license.
 - Coordination happens in [docs/team/](docs/team/BOARD.md) via the Claude Code commands
@@ -24,5 +29,6 @@ Our entry for [GitHub Game Off 2026](https://itch.io/jam/game-off-2026).
 
 ## Team
 
-- Juice-de-Orange
-- iMaterix
+- Juice-de-Orange (Max) — art & assets
+- iMaterix (Martin) — start screen & menu
+- Everything else: open packages, whoever has time

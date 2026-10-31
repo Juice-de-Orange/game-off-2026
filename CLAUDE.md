@@ -98,16 +98,18 @@ The Unity project lives at the repo root. All our own content goes under `Assets
 ```
 Assets/
   _Project/
-    Scenes/          Main.unity (claim before editing!), Boot/Menu scenes
+    Scenes/          Boot.unity, Menu.unity, Main.unity (claim before editing!)
     Scenes/Sandbox/  Max_*.unity, Martin_*.unity — personal test scenes, never claimed, never touched by the other
-    Scripts/         C# by feature: Player/, Enemies/, UI/, Core/, Audio/ ...
+    Scripts/         C# by feature: Core/, Player/, Counter/, Documents/, Travelers/, Day/, Economy/, Shops/, UI/, Audio/ ...
     Prefabs/         Prefabs by feature, same folders as Scripts
-    Art/             Sprites/, Materials/, Animations/
-    Audio/           Music/, SFX/
-    UI/
-    Data/            ScriptableObjects (tuning values, configs)
+    Art/             Models/, Textures/, Materials/, Animations/, UI/  (each with area subfolders: Station, Bar, Hangar ...)
+    Audio/           Music/, SFX/, Voice/
+    Fonts/           TTF/OTF + TextMeshPro font assets
+    Data/            ScriptableObjects (tuning values, travelers, day rules, prices)
   ThirdParty/        imported external assets, unmodified (credit in CREDITS.md)
+ArtSource/           .blend/.psd/WAV working files, outside Assets/ (Git LFS)
 ```
+Asset naming, specs and the placeholder → final swap are defined in `docs/ASSETS.md` and `docs/STYLE.md`.
 - Build features as **prefabs** in your own sandbox scene, then integrate into `Main.unity` with a claim.
   This keeps work on the shared scene short.
 - Tuning values (speed, damage, timings) go into ScriptableObjects in `Data/`, not hard-coded —
