@@ -81,7 +81,17 @@ ArtSource/                 Arbeitsdateien (.blend, .psd, Rohaufnahmen) — auße
 - Texturen behalten den Namen und die gleiche oder eine größere Zweierpotenz.
 
 ## Ablieferung durch die Asset-Pipeline
-- Die Pipeline liest `docs/ASSET-REQUESTS.md` und `docs/STYLE.md` von `main`.
+- Die Pipeline liest `docs/ASSET-REQUESTS.md` und `docs/STYLE.md` von `main`: **etwa stündlich** von selbst,
+  sofort, wenn Max ihr schreibt (z. B. „Game Off: neue Einträge“). Aus `offen`-Einträgen werden Pakete,
+  aus `rework` mit neuer `feedback`-Zeile Nacharbeits-Pakete.
+- **Ein PR pro Paket** mit 3–6 zusammengehörigen Assets eines Bereichs (z. B. „Bar: Tresen, Hocker, Regal“).
+  Einzelne Nacharbeiten bekommen einen kleinen eigenen PR.
+- **Draft-PR = in Arbeit**, **„Ready for review“ = Vorschau**. Im PR-Text pro Asset: Vorschaubilder (schräg vorne + Nahansicht),
+  Tris, Material-Slots, Texturen mit Größe, Maße in m, Pivot. In `ASSET-REQUESTS.md` ändert die Pipeline nur die
+  `status`-Zeile ihrer eigenen Einträge → auf `main` steht der neue Status erst nach dem Merge.
+- Ist ein PR „Ready for review“, bekommt **Max eine Push-Nachricht** aufs Handy (plus Tagesbericht). Martin sieht PRs auf GitHub
+  und im Session-Briefing.
+- Der Start ist an die Freigabe von `docs/STYLE.md` durch Max gebunden. Danach kommt zuerst ein Muster aus 3 Assets (`assets/P00-sample`).
 - Sie liefert auf einem eigenen Branch `assets/<Paket>`: jede Datei am finalen Pfad (**nie** die `.meta`), Arbeitsdatei unter `ArtSource/`,
   Vorschaubild unter `docs/asset-previews/`. Dann ein **Pull Request**. Auf `main` schreibt sie nie.
 - **Freigabe und Merge macht immer Max** (Art-Verantwortung). Martin kann Anpassungen anfordern, gibt aber nicht frei.

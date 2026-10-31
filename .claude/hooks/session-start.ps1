@@ -79,10 +79,13 @@ if (Test-Path $req) {
         Write-Output "Asset requests (docs/ASSET-REQUESTS.md on this checkout): $summary"
     }
 }
-$prJson = (gh pr list --state open --json number,title,headRefName) 2>$null
+$prJson = (gh pr list --state open --json number,title,headRefName,isDraft) 2>$null
 if ($LASTEXITCODE -eq 0) {
     $prs = @($prJson | ConvertFrom-Json | Where-Object { $_.headRefName -like 'assets/*' } |
-        ForEach-Object { "  - #$($_.number) $($_.title) [$($_.headRefName)]" })
+        ForEach-Object {
+            $state = if ($_.isDraft) { 'in Arbeit (draft)' } else { 'READY - Vorschau' }
+            "  - #$($_.number) $($_.title) [$($_.headRefName)] $state"
+        })
     if ($prs) {
         if ($me -eq 'max') { Write-Output "ASSET PULL REQUESTS WAITING FOR MAX'S APPROVAL (review preview, merge, then integrate - see docs/ASSETS.md):" }
         else { Write-Output "Asset pull requests open (only max approves/merges; info only):" }
