@@ -7,7 +7,8 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 
 | Datum | Ziel | Status |
 |---|---|---|
-| 01.11. | Theme da → Brainstorming, Idee festlegen, `DESIGN.md` füllen, Unity-Projekt anlegen, Repo öffentlich | ⏳ |
+| 01.11. | Theme kommt ca. **22:37 MEZ** → jeder für sich Gedanken, Repo öffentlich | ⏳ |
+| 02.11. | Abend-Call: Theme ins Konzept einweben, `DESIGN.md` finalisieren, Unity-Projekt anlegen | ⏳ |
 | 03.11. | Prototyp: Kern-Mechanik spielbar (graue Klötze reichen) | ⏳ |
 | 05.11. | Erster WebGL-Testbuild auf itch.io (Draft) — danach jede Woche ein Build | ⏳ |
 | 09.11. | Checkpoint: Trägt der Kern-Loop? Wenn nicht, jetzt umsteuern | ⏳ |
@@ -48,6 +49,13 @@ Nach Priorität. Bei Zeitnot wird von unten gestrichen.
 
 ## Vor dem 01.11. noch offen
 - [ ] martin: Setup nach Anleitung durchlaufen, Repo-Einladung annehmen (läuft am 05.11. ab), klonen
-- [ ] martin: itch.io-Benutzernamen an Max schicken (für Mitautor auf der Spielseite)
-- [ ] beide: gemeinsamen Chat (Discord o. ä.) einrichten
-- [ ] beide: Zeitpunkt fürs Theme-Brainstorming am 01.11. ausmachen
+- [x] martin: itch.io-Benutzernamen an Max schicken → `iMaterix`
+- [x] beide: gemeinsamen Chat einrichten (Discord)
+- [x] beide: Ablauf zum Start: Theme anschauen, Gedanken machen, Abend-Call, gemeinsam festlegen
+- [ ] max: itch.io-Projektseite als Entwurf anlegen (Typ HTML, Viewport 16:9, Vollbild-Button), Martin als Mitautor
+- [ ] martin: Unity-Grundlagen anschauen: uGUI-Menü (Canvas, Buttons), Szenenwechsel (`SceneManager.LoadScene`)
+- [ ] max: Tools installieren/testen: Blender (FBX-Export nach `docs/ASSETS.md`), Texturtool, Audacity
+- [ ] max: ElevenLabs-Lizenz klären (Free-Plan erlaubt keine kommerzielle Nutzung, verlangt Namensnennung)
+- [ ] beide: Art-Style-Moodboard (Mouthwashing & Alternativen), Entscheidung vor dem 02.11.-Call
+- [ ] beide: Tech-Stack bestätigen (Vorschlag von Claude, wird in `DECISIONS.md` geloggt)
+- [ ] beide: `docs/DESIGN.md` (Entwurf) und `docs/ASSETS.md` lesen
