@@ -56,7 +56,8 @@ Nach Priorität. Bei Zeitnot wird von unten gestrichen.
 - [ ] max: itch.io-Projektseite als Entwurf anlegen (Typ HTML, Viewport 16:9, Vollbild-Button), Martin als Mitautor
 - [ ] martin: Unity-Grundlagen anschauen: uGUI-Menü (Canvas, Buttons), Szenenwechsel (`SceneManager.LoadScene`)
 - [ ] max: Tools installieren/testen: Blender (FBX-Export nach `docs/ASSETS.md`), Texturtool, Audacity
-- [ ] max: Deploy-Key mit Schreibrecht für die Asset-Pipeline eintragen
+- [x] max: Deploy-Key mit Schreibrecht für die Asset-Pipeline eintragen (31.10., Titel `asset-pipeline`)
+- [ ] max: Ab 01.11. (Repo öffentlich): `main` per Ruleset schützen — nur max/martin pushen direkt, Pipeline nur per PR
 - [ ] max: `docs/STYLE.md` + Palette prüfen/anpassen, 5–10 Referenzbilder nach `docs/style/refs/`, freigeben → Pipeline baut 3 Muster-Assets
 - [ ] max: ElevenLabs-Lizenz klären (Free-Plan erlaubt keine kommerzielle Nutzung, verlangt Namensnennung)
 - [ ] beide: Art-Style-Moodboard (Mouthwashing & Alternativen), Entscheidung vor dem 02.11.-Call
