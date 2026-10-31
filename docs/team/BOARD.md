@@ -61,5 +61,5 @@ Nach Priorität. Bei Zeitnot wird von unten gestrichen.
 - [ ] max: `docs/STYLE.md` + Palette prüfen/anpassen, 5–10 Referenzbilder nach `docs/style/refs/`, freigeben → Pipeline baut 3 Muster-Assets
 - [ ] max: ElevenLabs-Lizenz klären (Free-Plan erlaubt keine kommerzielle Nutzung, verlangt Namensnennung)
 - [x] beide: Art-Style-Richtung: Mouthwashing-Grafik + Alien-Isolation-Assets (final am 02.11. nach dem Theme)
-- [ ] beide: Tech-Stack bestätigen (Vorschlag von Claude, wird in `DECISIONS.md` geloggt)
+- [x] beide: Tech-Stack bestätigt (31.10., in `DECISIONS.md`)
 - [ ] beide: `docs/DESIGN.md` (Entwurf) und `docs/ASSETS.md` lesen
