@@ -80,7 +80,7 @@ namespace GameOff.EditorTools
             // Windows
             new Opening(false,  8,  14,   8.0f, 0.9f, 2.4f, true), // Bar window (north), matches SM_Station_Wall_Window_2x3
             new Opening(true,   0,  -9,   4.0f, 0.9f, 2.2f, true), // Counter -> lock
-            new Opening(false,-12,  -3,   4.0f, 1.0f, 2.2f, true), // Counter -> hangar
+            new Opening(false,-12,  -3,   4.0f, 0.9f, 2.2f, true), // Counter -> hangar (sill 0.9 = SM_Station_Window_Small)
             new Opening(true, -20,   4,   0.6f, 1.2f, 1.8f, true), // Porthole room 103
         };
 
@@ -180,13 +180,17 @@ namespace GameOff.EditorTools
                 var pos = o.OnXLine ? new Vector3(o.Line, o.Sill + h * 0.5f, o.Center) : new Vector3(o.Center, o.Sill + h * 0.5f, o.Line);
                 var size = o.OnXLine ? new Vector3(0.05f, h, o.Width) : new Vector3(o.Width, h, 0.05f);
                 var pane = Block(glass, $"Glass_{pos.x:0}_{pos.z:0}", pos, size, _glass);
-                pane.GetComponent<MeshRenderer>().enabled = !(IsWindowModuleOpening(o) && Kit(KitWindowWall) != null);
+                pane.GetComponent<MeshRenderer>().enabled =
+                    !(IsWindowModuleOpening(o) && Kit(KitWindowWall) != null) && ModuleForOpening(o) == null;
             }
+            PlaceOpeningModules(Child(visual, "WindowModules"));
 
             BuildObservationDeck(root, floors, ceilings, walls, visual, glass, lights, fixtures);
 
             // Closed outer airlock hatch and hangar barrier
-            Block(root, "Airlock_OuterHatch (SM_Station_Hatch_Airlock)", new Vector3(4.1f, 1.1f, -9), new Vector3(0.2f, 2.2f, 1.6f), _hatch);
+            var hatch = Block(root, "Airlock_OuterHatch_Collider", new Vector3(4.1f, 1.1f, -9), new Vector3(0.2f, 2.2f, 1.6f), _hatch);
+            hatch.GetComponent<MeshRenderer>().enabled = Kit(KitHatch) == null;
+            PlaceKit(visual, KitHatch, new Vector3(4f, 0f, -9f), 90f); // front (local -Z) faces into the inspection lock
             BuildEnergyBarrier(root, visual);
 
             BuildProps(props);
@@ -214,9 +218,12 @@ namespace GameOff.EditorTools
             float bottom, float top, Material mat, bool visible, bool collider)
         {
             var cuts = new List<Opening>();
-            foreach (var o in Openings)
+            foreach (var raw in Openings)
+            {
+                var o = collider ? raw : VisualOpening(raw); // visual fill leaves room for window modules
                 if (o.OnXLine == onXLine && Mathf.Approximately(o.Line, line) && o.Center - o.Width * 0.5f < to && o.Center + o.Width * 0.5f > from)
                     cuts.Add(o);
+            }
             cuts.Sort((a, b) => a.Center.CompareTo(b.Center));
 
             float cursor = from;
@@ -293,8 +300,51 @@ namespace GameOff.EditorTools
         }
 
         private static bool OnGrid(float v) => Mathf.Abs(v / KitCell - Mathf.Round(v / KitCell)) < 0.001f;
+
+        // --- Window/porthole modules that fill one specific opening (placed once per opening, not per room) ---
+        private const string KitHatch = "Station/SM_Station_Hatch_Airlock.fbx";
+        private const string KitWindowSmall = "Station/SM_Station_Window_Small.fbx";
+        private const string KitWindowSlot = "Station/SM_Station_Window_Small_Slot.fbx";
+        private const string KitPorthole = "Station/SM_Station_Porthole.fbx";
+
+        /// <summary>The module that fills this opening, or null. Counter windows (4 m, up to 2.2 m) and the porthole.</summary>
+        private static string ModuleForOpening(Opening o)
+        {
+            if (!o.Glass) return null;
+            string path = null;
+            if (o.OnXLine && Mathf.Approximately(o.Line, 0f) && Mathf.Approximately(o.Width, 4f)) path = KitWindowSlot;      // counter -> lock
+            else if (!o.OnXLine && Mathf.Approximately(o.Line, -12f) && Mathf.Approximately(o.Width, 4f)) path = KitWindowSmall; // counter -> hangar
+            else if (o.OnXLine && Mathf.Approximately(o.Line, -20f) && o.Width < 1f) path = KitPorthole;                     // room 103
+            return path != null && Kit(path) != null ? path : null;
+        }
+
+        /// <summary>
+        /// In the visual pass a window module covers the wall from the floor up to its own height, so the graybox fill must
+        /// leave that whole area open (the module brings its own sill). Other openings stay as they are.
+        /// </summary>
+        private static Opening VisualOpening(Opening o)
+        {
+            string module = ModuleForOpening(o);
+            if (module == KitWindowSmall || module == KitWindowSlot)
+                return new Opening(o.OnXLine, o.Line, o.Center, o.Width, 0f, KitHeight(module), o.Glass);
+            return o;
+        }
+
+        private static void PlaceOpeningModules(GameObject parent)
+        {
+            foreach (var o in Openings)
+            {
+                string module = ModuleForOpening(o);
+                if (module == null) continue;
+                float y = module == KitPorthole ? (o.Sill + o.Head) * 0.5f : 0f; // porthole pivot is its center
+                var pos = o.OnXLine ? new Vector3(o.Line, y, o.Center) : new Vector3(o.Center, y, o.Line);
+                PlaceKit(parent, module, pos, o.OnXLine ? 90f : 0f);
+            }
+        }
         // Counter furniture orientation (officer sits at x = -2 looking +X; checked visually).
         private const float DeskYaw = 0f, ChairYaw = 90f, DocSlotYaw = 90f;
+        // Shuttle: rear ramp must face north toward the queue lanes and the inspection lock (checked visually).
+        private const float ShuttleYaw = 0f;
 
         private static GameObject Kit(string relativePath) => AssetDatabase.LoadAssetAtPath<GameObject>(KitRoot + relativePath);
 
@@ -561,8 +611,8 @@ namespace GameOff.EditorTools
                 {
                     float top = Mathf.Min(bottom + set.Height, room.Height);
                     var ops = new List<Opening>();
-                    foreach (var o in Openings)
-                        if (o.OnXLine == onXLine && Mathf.Approximately(o.Line, line)
+                    foreach (var raw in Openings)
+                        if (VisualOpening(raw) is var o && o.OnXLine == onXLine && Mathf.Approximately(o.Line, line)
                             && o.Center - o.Width * 0.5f < cellEnd && o.Center + o.Width * 0.5f > cell
                             && o.Sill < top && o.Head > bottom)
                             ops.Add(o);
@@ -710,12 +760,17 @@ namespace GameOff.EditorTools
             KitProp(p, "Counter/SM_Counter_Locker.fbx", "SM_Counter_Locker", -4, -6.45f, 1.0f, 0.5f, 1.8f);
             KitProp(p, "Counter/SM_Counter_Board.fbx", "SM_Counter_Board", -1.5f, -6.15f, 1.0f, 0.05f, 0.7f, 1.4f);
             KitProp(p, "Counter/SM_Counter_DocSlot.fbx", "SM_Counter_DocSlot", -0.3f, -9, 0.4f, 0.5f, 0.15f, 0.85f, DocSlotYaw);
-            // Hall
-            Prop(p, "SM_Hall_DepartureBoard", 0, 0, 2, 2, 3.5f);
-            Prop(p, "SM_Hall_Bench_A", -2.5f, 3.2f, 2.8f, 0.6f, 0.9f);
-            Prop(p, "SM_Hall_Bench_B", 2.5f, 3.2f, 2.8f, 0.6f, 0.9f);
-            Prop(p, "SM_Hall_Bench_C", -2.5f, -3.5f, 2.8f, 0.6f, 0.9f);
-            Prop(p, "SM_Hall_VendingMachine", -7.4f, 4.5f, 0.8f, 1.0f, 1.9f);
+            KitProp(p, "Counter/SM_Counter_Speaker.fbx", "SM_Counter_Speaker", -2.5f, -6.25f, 0.4f, 0.15f, 0.3f, 2.3f);
+            KitProp(p, "Counter/SM_Counter_WarningLamp.fbx", "SM_Counter_WarningLamp", 2f, -9f, 0.25f, 0.25f, 0.3f, 3f); // pivot top_center → hangs from the ceiling
+            // Hall (benches face north toward the observation deck: module front = local -Z → yaw 180)
+            KitProp(p, "Hall/SM_Hall_DepartureBoard.fbx", "SM_Hall_DepartureBoard", 0, 0, 2, 2, 3.5f);
+            KitProp(p, "Hall/SM_Hall_Bench.fbx", "SM_Hall_Bench_A", -2.5f, 3.2f, 2.8f, 0.6f, 0.9f, 0, 180f);
+            KitProp(p, "Hall/SM_Hall_Bench.fbx", "SM_Hall_Bench_B", 2.5f, 3.2f, 2.8f, 0.6f, 0.9f, 0, 180f);
+            KitProp(p, "Hall/SM_Hall_Bench.fbx", "SM_Hall_Bench_C", -2.5f, -3.5f, 2.8f, 0.6f, 0.9f, 0, 180f);
+            KitProp(p, "Hall/SM_Hall_VendingMachine.fbx", "SM_Hall_VendingMachine", -7.4f, 4.5f, 0.8f, 1.0f, 1.9f, 0, -90f);
+            KitProp(p, "Hall/SM_Hall_Sign.fbx", "SM_Hall_Sign_Staff", -7f, -5.6f, 1.2f, 0.1f, 0.4f, 3.2f, 180f); // pivot top_center
+            KitProp(p, "Hall/SM_Hall_Sign.fbx", "SM_Hall_Sign_Motel", -7.6f, 1f, 0.1f, 1.2f, 0.4f, 3.2f, -90f);
+            KitProp(p, "Hall/SM_Hall_Sign.fbx", "SM_Hall_Sign_Bar", 7.6f, 3f, 0.1f, 1.2f, 0.4f, 3.2f, 90f);
             Prop(p, "SM_Hall_Planter", 7.2f, 5.2f, 1, 1, 1.4f);
             // Kiosk
             Prop(p, "SM_Kiosk_Counter", 8.6f, -4, 0.8f, 2.8f, 1.0f);
@@ -724,10 +779,11 @@ namespace GameOff.EditorTools
             // The bar counter model is 3 m along X with the guest side at local -Z → yaw 90 faces the guests (west).
             KitProp(p, "Bar/SM_Bar_Counter.fbx", "SM_Bar_Counter_A", 14.5f, 2.5f, 0.7f, 3.0f, 1.1f, 0, 90);
             KitProp(p, "Bar/SM_Bar_Counter.fbx", "SM_Bar_Counter_B", 14.5f, 5.5f, 0.7f, 3.0f, 1.1f, 0, 90);
-            Prop(p, "SM_Bar_Shelf", 17.6f, 4, 0.3f, 3.0f, 2.2f);
+            KitProp(p, "Bar/SM_Bar_Shelf.fbx", "SM_Bar_Shelf", 17.6f, 4, 0.3f, 3.0f, 2.2f, 0, 90f);
+            KitProp(p, "Bar/SM_Bar_NeonSign.fbx", "SM_Bar_NeonSign", 17.8f, 4f, 0.1f, 2.0f, 0.6f, 3.1f, 90f);
             // Standing tables along the north window
-            Prop(p, "SM_Bar_Table_A", 10.8f, 7.1f, 0.8f, 0.8f, 1.1f);
-            Prop(p, "SM_Bar_Table_B", 12.5f, 7.1f, 0.8f, 0.8f, 1.1f);
+            KitProp(p, "Bar/SM_Bar_Table.fbx", "SM_Bar_Table_A", 10.8f, 7.1f, 0.8f, 0.8f, 1.1f);
+            KitProp(p, "Bar/SM_Bar_Table.fbx", "SM_Bar_Table_B", 12.5f, 7.1f, 0.8f, 0.8f, 1.1f);
             for (int i = 0; i < 4; i++) KitProp(p, "Bar/SM_Bar_Stool.fbx", $"SM_Bar_Stool_{i + 1}", 13.6f, 1.6f + i * 1.6f, 0.4f, 0.4f, 0.75f);
             // Diner
             Prop(p, "SM_Diner_Counter", -12, -0.6f, 6.0f, 0.7f, 1.1f);
@@ -740,15 +796,23 @@ namespace GameOff.EditorTools
             Prop(p, "SM_Motel_Locker", -16.5f, 2.5f, 0.6f, 0.5f, 1.9f);
             // Hangar
             // Hangar (36 x 28 m): shuttle in the middle, queue lane from its ramp to the inspection lock door (x 1..3)
-            Prop(p, "SM_Hangar_Shuttle", 0, -28, 6, 9, 3.5f);
+            KitProp(p, "Hangar/SM_Hangar_Shuttle.fbx", "SM_Hangar_Shuttle", 0, -28, 6, 9, 3.5f, 0, ShuttleYaw);
             Prop(p, "SM_Hangar_DronePad", -7.5f, -14.5f, 3, 3, 0.2f);
             Prop(p, "SM_Hangar_CargoDrone", -7.5f, -14.5f, 1.6f, 1.6f, 0.8f, 0.2f);
-            Prop(p, "SM_Hangar_Barrier_W", 1, -17.5f, 0.3f, 11f, 1);
-            Prop(p, "SM_Hangar_Barrier_E", 3, -17.5f, 0.3f, 11f, 1);
-            Prop(p, "SM_Hangar_Crate_A", -16.5f, -26, 1.2f, 1.2f, 1);
-            Prop(p, "SM_Hangar_Crate_B", -16.5f, -27.4f, 1.2f, 1.2f, 1);
-            Prop(p, "SM_Hangar_Crate_C", -16.5f, -26.7f, 1.2f, 1.2f, 1, 1);
-            Prop(p, "SM_Hangar_Crate_D", -15.2f, -33, 1.2f, 1.2f, 1);
+            // Queue lanes from the shuttle ramp to the lock door: 2 m barrier segments along Z (model is 2 m along X → yaw 90)
+            for (int i = 0; i < 5; i++)
+            {
+                float z = -13f - i * 2f;
+                KitProp(p, "Hangar/SM_Hangar_Barrier.fbx", $"SM_Hangar_Barrier_W{i}", 1, z, 0.3f, 2f, 1, 0, 90f);
+                KitProp(p, "Hangar/SM_Hangar_Barrier.fbx", $"SM_Hangar_Barrier_E{i}", 3, z, 0.3f, 2f, 1, 0, 90f);
+            }
+            KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_A", -16.5f, -26, 1.2f, 1.2f, 1);
+            KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_B", -16.5f, -27.4f, 1.2f, 1.2f, 1, 0, 90f);
+            KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_C", -16.5f, -26.7f, 1.2f, 1.2f, 1, 1, 15f);
+            KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_D", -15.2f, -33, 1.2f, 1.2f, 1, 0, -10f);
+            KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_A", -15.4f, -26.2f, 0.6f, 0.6f, 0.5f);
+            KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_B", -14.6f, -33.4f, 0.6f, 0.6f, 0.5f, 0, 30f);
+            KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_C", -6f, -12.6f, 0.6f, 0.6f, 0.5f);
             Prop(p, "SM_Hangar_Tank_A", 16.3f, -16, 1.4f, 1.4f, 3.5f);
             Prop(p, "SM_Hangar_Tank_B", 16.3f, -18.5f, 1.4f, 1.4f, 3.5f);
             Prop(p, "SM_Hangar_Scaffold", 12, -30, 2f, 4f, 5f);
