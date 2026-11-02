@@ -187,7 +187,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Door_Slide.fbx
 package: P04
 scene: alle
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.6, 0.15, 2.2]
@@ -271,7 +271,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Window_Panorama.fbx
 package: P04
 scene: Halle
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-12
 size_m: [8.0, 0.4, 4.5]
@@ -299,7 +299,7 @@ feedback:
 path: Assets/_Project/Art/Models/Station/SM_Station_Window_Small.fbx
 package: P04
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [4.0, 0.3, 2.2]
@@ -327,7 +327,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Porthole.fbx
 package: P04
 scene: Motel
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.9, 0.3, 0.9]
@@ -354,7 +354,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Hatch_Airlock.fbx
 package: P04
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.6, 0.4, 2.2]
