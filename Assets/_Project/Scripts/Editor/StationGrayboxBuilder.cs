@@ -118,10 +118,13 @@ namespace GameOff.EditorTools
                 if (existing != null && existing.parent == null && (existing.name == "Station_Graybox" || existing.name == "PF_Station_Graybox"))
                     Object.DestroyImmediate(existing.gameObject);
 
+            PrepareKitImport();
+
             var root = new GameObject("Station_Graybox");
             var floors = Child(root, "Floors");
             var ceilings = Child(root, "Ceilings");
             var walls = Child(root, "Walls");
+            var visual = Child(root, "Visual"); // kit modules + visible graybox where no module exists yet
             var glass = Child(root, "Glass");
             var lights = Child(root, "Lights");
             var fixtures = Child(root, "LightFixtures");
@@ -134,15 +137,29 @@ namespace GameOff.EditorTools
                 float w = room.X1 - room.X0, d = room.Z1 - room.Z0;
                 var center = new Vector3((room.X0 + room.X1) * 0.5f, 0, (room.Z0 + room.Z1) * 0.5f);
 
-                Block(floors, $"{room.Name}_Floor", center + Vector3.down * (FloorThickness * 0.5f), new Vector3(w, FloorThickness, d), mat);
-                Block(ceilings, $"{room.Name}_Ceiling", center + Vector3.up * (room.Height + FloorThickness * 0.5f), new Vector3(w, FloorThickness, d), mat);
+                // Collision layer: graybox slabs/walls, invisible once kit visuals exist (walking + NavMesh stay identical).
+                bool floorKit = Kit(KitFloor) != null, ceilingKit = Kit(KitCeiling) != null;
+                var floor = Block(floors, $"{room.Name}_Floor", center + Vector3.down * (FloorThickness * 0.5f), new Vector3(w, FloorThickness, d), mat);
+                floor.GetComponent<MeshRenderer>().enabled = !floorKit;
+                var ceiling = Block(ceilings, $"{room.Name}_Ceiling", center + Vector3.up * (room.Height + FloorThickness * 0.5f), new Vector3(w, FloorThickness, d), mat);
+                ceiling.GetComponent<MeshRenderer>().enabled = !ceilingKit;
 
                 var roomWalls = Child(walls, room.Name);
                 // West/east walls run the full depth; south/north walls fit between them (no corner overlap).
-                BuildWall(roomWalls, room, true, room.X0, room.X0 + WallThickness * 0.5f, room.Z0, room.Z1, mat);
-                BuildWall(roomWalls, room, true, room.X1, room.X1 - WallThickness * 0.5f, room.Z0, room.Z1, mat);
-                BuildWall(roomWalls, room, false, room.Z0, room.Z0 + WallThickness * 0.5f, room.X0 + WallThickness, room.X1 - WallThickness, mat);
-                BuildWall(roomWalls, room, false, room.Z1, room.Z1 - WallThickness * 0.5f, room.X0 + WallThickness, room.X1 - WallThickness, mat);
+                BuildWall(roomWalls, room, true, room.X0, room.X0 + WallThickness * 0.5f, room.Z0, room.Z1, 0, room.Height, mat, false, true);
+                BuildWall(roomWalls, room, true, room.X1, room.X1 - WallThickness * 0.5f, room.Z0, room.Z1, 0, room.Height, mat, false, true);
+                BuildWall(roomWalls, room, false, room.Z0, room.Z0 + WallThickness * 0.5f, room.X0 + WallThickness, room.X1 - WallThickness, 0, room.Height, mat, false, true);
+                BuildWall(roomWalls, room, false, room.Z1, room.Z1 - WallThickness * 0.5f, room.X0 + WallThickness, room.X1 - WallThickness, 0, room.Height, mat, false, true);
+
+                // Visual layer
+                var roomVisual = Child(visual, room.Name);
+                if (floorKit) TileRoom(roomVisual, room, KitFloor, -0.1f);
+                if (ceilingKit) TileRoom(roomVisual, room, KitCeiling, room.Height);
+                // Kit walls face into the room: the module's front is local -Z.
+                BuildWallVisual(roomVisual, room, true, room.X0, room.X0 + WallThickness * 0.5f, room.Z0, room.Z1, -90f, mat);
+                BuildWallVisual(roomVisual, room, true, room.X1, room.X1 - WallThickness * 0.5f, room.Z0, room.Z1, 90f, mat);
+                BuildWallVisual(roomVisual, room, false, room.Z0, room.Z0 + WallThickness * 0.5f, room.X0, room.X1, 180f, mat);
+                BuildWallVisual(roomVisual, room, false, room.Z1, room.Z1 - WallThickness * 0.5f, room.X0, room.X1, 0f, mat);
 
                 AddRoomLights(lights, fixtures, room);
             }
@@ -183,8 +200,12 @@ namespace GameOff.EditorTools
             Debug.Log($"Station graybox built: {PrefabPath}");
         }
 
-        /// <summary>Builds one wall of a room, cutting every opening that lies on this wall line.</summary>
-        private static void BuildWall(GameObject parent, Room room, bool onXLine, float line, float offsetLine, float from, float to, Material mat)
+        /// <summary>
+        /// Builds the part [from..to] x [bottom..top] of one wall line, cutting every opening on that line.
+        /// visible/collider choose between the collision layer (invisible, collider) and graybox visual fill (visible, no collider).
+        /// </summary>
+        private static void BuildWall(GameObject parent, Room room, bool onXLine, float line, float offsetLine, float from, float to,
+            float bottom, float top, Material mat, bool visible, bool collider)
         {
             var cuts = new List<Opening>();
             foreach (var o in Openings)
@@ -197,22 +218,112 @@ namespace GameOff.EditorTools
             {
                 float a = Mathf.Max(from, o.Center - o.Width * 0.5f);
                 float b = Mathf.Min(to, o.Center + o.Width * 0.5f);
-                WallPiece(parent, onXLine, offsetLine, cursor, a, 0, room.Height, mat);
-                WallPiece(parent, onXLine, offsetLine, a, b, 0, o.Sill, mat);
-                WallPiece(parent, onXLine, offsetLine, a, b, Mathf.Min(o.Head, room.Height), room.Height, mat);
+                WallPiece(parent, onXLine, offsetLine, cursor, a, bottom, top, mat, visible, collider);
+                WallPiece(parent, onXLine, offsetLine, a, b, bottom, Mathf.Min(o.Sill, top), mat, visible, collider);
+                WallPiece(parent, onXLine, offsetLine, a, b, Mathf.Max(bottom, Mathf.Min(o.Head, room.Height)), top, mat, visible, collider);
                 cursor = b;
             }
-            WallPiece(parent, onXLine, offsetLine, cursor, to, 0, room.Height, mat);
+            WallPiece(parent, onXLine, offsetLine, cursor, to, bottom, top, mat, visible, collider);
         }
 
-        private static void WallPiece(GameObject parent, bool onXLine, float line, float from, float to, float bottom, float top, Material mat)
+        private static void WallPiece(GameObject parent, bool onXLine, float line, float from, float to, float bottom, float top,
+            Material mat, bool visible, bool collider)
         {
             float len = to - from, h = top - bottom;
             if (len < 0.01f || h < 0.01f) return;
             float mid = (from + to) * 0.5f;
             var pos = onXLine ? new Vector3(line, bottom + h * 0.5f, mid) : new Vector3(mid, bottom + h * 0.5f, line);
             var size = onXLine ? new Vector3(WallThickness, h, len) : new Vector3(len, h, WallThickness);
-            Block(parent, onXLine ? $"Wall_X{line:0.#}_{mid:0.#}" : $"Wall_Z{line:0.#}_{mid:0.#}", pos, size, mat);
+            var go = Block(parent, onXLine ? $"Wall_X{line:0.#}_{mid:0.#}_{bottom:0.#}" : $"Wall_Z{line:0.#}_{mid:0.#}_{bottom:0.#}", pos, size, mat);
+            go.GetComponent<MeshRenderer>().enabled = visible;
+            if (!collider) Object.DestroyImmediate(go.GetComponent<Collider>());
+        }
+
+        // --- Kit modules (docs/ASSET-REQUESTS.md). Missing files simply fall back to graybox. ---
+        private const string KitRoot = "Assets/_Project/Art/Models/";
+        private const string KitFloor = "Station/SM_Station_Floor_2x2.fbx";
+        private const string KitCeiling = "Station/SM_Station_Ceiling_2x2.fbx";
+        private const string KitWall = "Station/SM_Station_Wall_2x3.fbx";
+        private const string KitDoorWall = "Station/SM_Station_Wall_Door_2x3.fbx";
+        private const float KitCell = 2f, KitWallHeight = 3f, KitDoorWidth = 1.6f, KitDoorHeight = 2.2f;
+        // Counter furniture orientation (officer sits at x = -2 looking +X; checked visually).
+        private const float DeskYaw = 0f, ChairYaw = 90f, DocSlotYaw = 90f;
+
+        private static GameObject Kit(string relativePath) => AssetDatabase.LoadAssetAtPath<GameObject>(KitRoot + relativePath);
+
+        /// <summary>Kit models need lightmap UVs for the baked lighting. Sets the import flag once per model.</summary>
+        private static void PrepareKitImport()
+        {
+            foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { KitRoot.TrimEnd('/') }))
+            {
+                var importer = AssetImporter.GetAtPath(AssetDatabase.GUIDToAssetPath(guid)) as ModelImporter;
+                if (importer == null || importer.generateSecondaryUV) continue;
+                importer.generateSecondaryUV = true;
+                importer.SaveAndReimport();
+            }
+        }
+
+        private static GameObject PlaceKit(GameObject parent, string relativePath, Vector3 position, float yaw)
+        {
+            var model = Kit(relativePath);
+            if (model == null) return null;
+            var go = (GameObject)PrefabUtility.InstantiatePrefab(model);
+            go.transform.SetParent(parent.transform, false);
+            go.transform.SetPositionAndRotation(position, Quaternion.Euler(0f, yaw, 0f));
+            foreach (var t in go.GetComponentsInChildren<Transform>())
+                GameObjectUtility.SetStaticEditorFlags(t.gameObject, StaticEditorFlags.BatchingStatic | StaticEditorFlags.ContributeGI);
+            return go;
+        }
+
+        /// <summary>Fills a room's floor (or ceiling) with 2x2 m tiles. Rooms are on the 2 m grid, so tiles fit exactly.</summary>
+        private static void TileRoom(GameObject parent, Room room, string tile, float y)
+        {
+            for (float x = room.X0 + KitCell * 0.5f; x < room.X1; x += KitCell)
+            for (float z = room.Z0 + KitCell * 0.5f; z < room.Z1; z += KitCell)
+                PlaceKit(parent, tile, new Vector3(x, y, z), 0f);
+        }
+
+        /// <summary>
+        /// Visual wall in 2 m x 3 m cells: plain cell → wall module; cell with a centered 1.6 x 2.2 m door → door-wall module;
+        /// anything else (windows, narrow doors, partial heights) → visible graybox fill for that cell.
+        /// </summary>
+        private static void BuildWallVisual(GameObject parent, Room room, bool onXLine, float line, float offsetLine,
+            float from, float to, float yaw, Material mat)
+        {
+            bool wallKit = Kit(KitWall) != null, doorKit = Kit(KitDoorWall) != null;
+            // South/north walls stop at the side walls for the graybox fill (no overlapping corners).
+            float fillFrom = onXLine ? from : from + WallThickness, fillTo = onXLine ? to : to - WallThickness;
+
+            for (float cell = from; cell < to - 0.01f; cell += KitCell)
+            {
+                float cellEnd = Mathf.Min(cell + KitCell, to), mid = (cell + cellEnd) * 0.5f;
+                for (float bottom = 0f; bottom < room.Height - 0.01f; bottom += KitWallHeight)
+                {
+                    float top = Mathf.Min(bottom + KitWallHeight, room.Height);
+                    var ops = new List<Opening>();
+                    foreach (var o in Openings)
+                        if (o.OnXLine == onXLine && Mathf.Approximately(o.Line, line)
+                            && o.Center - o.Width * 0.5f < cellEnd && o.Center + o.Width * 0.5f > cell
+                            && o.Sill < top && o.Head > bottom)
+                            ops.Add(o);
+
+                    bool fullCell = Mathf.Approximately(cellEnd - cell, KitCell) && Mathf.Approximately(top - bottom, KitWallHeight);
+                    var pos = onXLine ? new Vector3(offsetLine, bottom, mid) : new Vector3(mid, bottom, offsetLine);
+                    if (fullCell && ops.Count == 0 && wallKit)
+                    {
+                        PlaceKit(parent, KitWall, pos, yaw);
+                        continue;
+                    }
+                    if (fullCell && doorKit && ops.Count == 1 && bottom == 0f
+                        && Mathf.Approximately(ops[0].Width, KitDoorWidth) && Mathf.Approximately(ops[0].Center, mid)
+                        && ops[0].Sill == 0f && Mathf.Approximately(ops[0].Head, KitDoorHeight))
+                    {
+                        PlaceKit(parent, KitDoorWall, pos, yaw);
+                        continue;
+                    }
+                    BuildWall(parent, room, onXLine, line, offsetLine, Mathf.Max(cell, fillFrom), Mathf.Min(cellEnd, fillTo), bottom, top, mat, true, false);
+                }
+            }
         }
 
         /// <summary>
@@ -327,10 +438,11 @@ namespace GameOff.EditorTools
         private static void BuildProps(GameObject p)
         {
             // Counter
-            Prop(p, "SM_Counter_Desk", -0.7f, -9, 1.2f, 4.0f, 0.85f);
-            Prop(p, "SM_Counter_Chair", -2, -9, 0.6f, 0.6f, 1.0f);
-            Prop(p, "SM_Counter_Locker", -4, -6.45f, 1.0f, 0.5f, 1.8f);
-            Prop(p, "SM_Counter_Board", -1.5f, -6.15f, 1.0f, 0.05f, 0.7f, 1.4f);
+            KitProp(p, "Counter/SM_Counter_Desk.fbx", "SM_Counter_Desk", -0.7f, -9, 1.2f, 4.0f, 0.85f, 0, DeskYaw);
+            KitProp(p, "Counter/SM_Counter_Chair.fbx", "SM_Counter_Chair", -2, -9, 0.6f, 0.6f, 1.0f, 0, ChairYaw);
+            KitProp(p, "Counter/SM_Counter_Locker.fbx", "SM_Counter_Locker", -4, -6.45f, 1.0f, 0.5f, 1.8f);
+            KitProp(p, "Counter/SM_Counter_Board.fbx", "SM_Counter_Board", -1.5f, -6.15f, 1.0f, 0.05f, 0.7f, 1.4f);
+            KitProp(p, "Counter/SM_Counter_DocSlot.fbx", "SM_Counter_DocSlot", -0.3f, -9, 0.4f, 0.5f, 0.15f, 0.85f, DocSlotYaw);
             // Hall
             Prop(p, "SM_Hall_DepartureBoard", 0, 0, 2, 2, 3.5f);
             Prop(p, "SM_Hall_Bench_A", -2.5f, 3.2f, 2.8f, 0.6f, 0.9f);
@@ -342,12 +454,13 @@ namespace GameOff.EditorTools
             Prop(p, "SM_Kiosk_Counter", 8.6f, -4, 0.8f, 2.8f, 1.0f);
             Prop(p, "SM_Kiosk_Shelf", 11.6f, -4, 0.4f, 2.8f, 2.0f);
             // Bar
-            Prop(p, "SM_Bar_Counter_A", 14.5f, 2.5f, 0.7f, 3.0f, 1.1f);
-            Prop(p, "SM_Bar_Counter_B", 14.5f, 5.5f, 0.7f, 3.0f, 1.1f);
+            // The bar counter model is 3 m along X with the guest side at local -Z → yaw 90 faces the guests (west).
+            KitProp(p, "Bar/SM_Bar_Counter.fbx", "SM_Bar_Counter_A", 14.5f, 2.5f, 0.7f, 3.0f, 1.1f, 0, 90);
+            KitProp(p, "Bar/SM_Bar_Counter.fbx", "SM_Bar_Counter_B", 14.5f, 5.5f, 0.7f, 3.0f, 1.1f, 0, 90);
             Prop(p, "SM_Bar_Shelf", 17.6f, 4, 0.3f, 3.0f, 2.2f);
             Prop(p, "SM_Bar_Table_A", 10.5f, 6, 0.8f, 0.8f, 1.1f);
             Prop(p, "SM_Bar_Table_B", 10.5f, 1.5f, 0.8f, 0.8f, 1.1f);
-            for (int i = 0; i < 4; i++) Prop(p, $"SM_Bar_Stool_{i + 1}", 13.6f, 1.6f + i * 1.6f, 0.4f, 0.4f, 0.75f);
+            for (int i = 0; i < 4; i++) KitProp(p, "Bar/SM_Bar_Stool.fbx", $"SM_Bar_Stool_{i + 1}", 13.6f, 1.6f + i * 1.6f, 0.4f, 0.4f, 0.75f);
             // Diner
             Prop(p, "SM_Diner_Counter", -12, -0.6f, 6.0f, 0.7f, 1.1f);
             Prop(p, "SM_Diner_Booth_A", -14, -5.2f, 2.2f, 1.4f, 1.2f);
@@ -380,6 +493,34 @@ namespace GameOff.EditorTools
         private static void Prop(GameObject parent, string name, float x, float z, float w, float d, float h, float y = 0)
         {
             Block(parent, name, new Vector3(x, y + h * 0.5f, z), new Vector3(w, h, d), _prop);
+        }
+
+        /// <summary>
+        /// Places the delivered model if it exists (with a box collider around it), otherwise the graybox block.
+        /// w/d/h describe the graybox block in world axes; yaw only applies to the model (module front = local -Z).
+        /// </summary>
+        private static void KitProp(GameObject parent, string kitPath, string name, float x, float z, float w, float d, float h,
+            float y = 0, float yaw = 0)
+        {
+            var model = Kit(kitPath);
+            if (model == null)
+            {
+                Prop(parent, name, x, z, w, d, h, y);
+                return;
+            }
+            var go = PlaceKit(parent, kitPath, Vector3.zero, 0f);
+            go.name = name;
+            // Collider fitted to the model's local bounds (computed before the final pose is applied).
+            var renderers = go.GetComponentsInChildren<Renderer>();
+            if (renderers.Length > 0)
+            {
+                var bounds = renderers[0].bounds;
+                foreach (var r in renderers) bounds.Encapsulate(r.bounds);
+                var box = go.AddComponent<BoxCollider>();
+                box.center = bounds.center;
+                box.size = bounds.size;
+            }
+            go.transform.SetPositionAndRotation(new Vector3(x, y, z), Quaternion.Euler(0f, yaw, 0f));
         }
 
         private static void Marker(GameObject parent, string name, Vector3 pos, float yaw)

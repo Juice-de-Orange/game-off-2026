@@ -218,7 +218,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Ergebnis: siehe `docs/STATION.md` → "Licht & Stimmung". Light Probes doch enthalten (Schalter-Knöpfe waren sonst schwarz). Von Max im Browser abgenommen (02.11.).
 
 ### P21 — Station mit dem Bausatz bauen (Teil 1)
-- Größe: M · Priorität: Muss · Status: in Arbeit (max, 02.11.)
+- Größe: M · Priorität: Muss · Status: fertig (max, 02.11.)
 - Braucht: P04, P20 · Folgt auf: P04
 - Ziel: Die Station zeigt die gelieferten Modelle statt Grau-Blöcken, wo es sie schon gibt.
 - Enthalten: Builder setzt Boden-, Decken-, Wand- und Türwand-Module im 2-m-Raster; Schalter-Möbel (Tisch, Stuhl, Spind, Pinnwand,
@@ -226,3 +226,8 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   schmale Türen, Wandvarianten, Restflächen), bleibt sichtbare Graybox. Lightmap-UVs für Modelle, neu backen.
 - Nicht enthalten: weitere Assets (kommen automatisch dazu, wenn der Builder erneut läuft), Teil 2 nach den nächsten Lieferungen.
 - Abnahme: Station sieht in allen Räumen nach Bausatz aus, wo Module existieren; Wege/NavMesh unverändert; Licht gebacken; keine Konsolenfehler.
+- Ergebnis: Builder hat jetzt zwei Ebenen: unsichtbare Graybox-Kollision (Wege/NavMesh identisch, nachgemessen) und `Visual/<Raum>` mit
+  Modulen (566 Modul-Renderer) bzw. sichtbarer Graybox-Füllung, wo noch Module fehlen (148 Stücke: Fenster, schmale Türen, 2-m-Durchgang,
+  Kiosk-Durchreiche, oberster Meter der Bar, Hangartor). Schalter mit echtem Tisch/Stuhl/Spind/Pinnwand/Durchreiche, Bar mit Tresen + Hockern.
+  Neue Lieferungen: nur *Build Station Graybox* + *Setup Main Lighting + Bake* ausführen — vorhandene Modelle werden automatisch genutzt.
+  Fehlt noch für den vollen Look: Fenster, schmale Tür, Wandvarianten (Polster/Holz), Schiebetüren, Möbel der übrigen Räume.

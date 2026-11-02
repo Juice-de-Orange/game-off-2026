@@ -96,3 +96,10 @@
   Lightmaps 4 Texel/m, max. 1024 px, 1 Bounce, Light Probes im 2,5-m-Raster (für Knöpfe, Stempel, später Reisende), NavMesh neu.
 - **Nach jedem Neubau der Graybox:** erst *Build Station Graybox*, dann *Setup Main Lighting + Bake*, warten bis der Bake fertig ist,
   Szene speichern. Bake dauert ca. 1 Minute; Lightmaps liegen in `Scenes/Main/` (~1,6 MB).
+
+## Bausatz-Module (P21)
+- Der Builder legt unter `Visual/<Raum>` die Module aus `Art/Models/Station/` im 2-m-Raster an: Boden (y = −0,1), Decke (y = Raumhöhe),
+  Wand 2×3 m, Türwand (nur für 1,6 × 2,2-m-Türen in der Zellenmitte). Hohe Räume werden in 3-m-Reihen gestapelt.
+- Modul-Vorderseite = lokale −Z; der Builder dreht jede Wand zur Raummitte.
+- Wo kein Modul passt, bleibt eine sichtbare Graybox-Füllung (ohne Collider). Kollision kommt immer aus den unsichtbaren Graybox-Blöcken.
+- Möbel mit Modell werden per `KitProp` gesetzt (Collider aus den Modell-Grenzen), sonst Grau-Block.
