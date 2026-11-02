@@ -465,7 +465,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Button_Arrest.fbx
 package: P05
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.15, 0.15, 0.08]
@@ -493,7 +493,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Button_Airlock.fbx
 package: P05
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.15, 0.15, 0.12]
@@ -521,7 +521,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Stamp.fbx
 package: P05
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.08, 0.08, 0.12]
@@ -603,7 +603,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Speaker.fbx
 package: P05
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.4, 0.15, 0.3]
@@ -658,7 +658,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_WarningLamp.fbx
 package: P05
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.25, 0.25, 0.3]
