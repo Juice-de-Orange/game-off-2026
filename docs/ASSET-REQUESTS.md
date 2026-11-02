@@ -2233,7 +2233,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_TrashBin.fbx
 package: P26
 scene: Halle, Bar, Diner
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.5, 0.5, 0.9]
@@ -2260,7 +2260,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_TrashPile.fbx
 package: P26
 scene: Gänge, Hangar
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [1.2, 0.8, 0.3]
@@ -2287,7 +2287,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_SodaCan.fbx
 package: P26
 scene: überall
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.07, 0.07, 0.12]
@@ -2314,7 +2314,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_PlantDead.fbx
 package: P26
 scene: Halle, Motel
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.5, 0.5, 1.0]
@@ -2451,7 +2451,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_WallClock.fbx
 package: P26
 scene: Halle, Schalter
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.5, 0.08, 0.5]
@@ -2533,7 +2533,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_MopBucket.fbx
 package: P26
 scene: Gänge
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.5, 0.4, 1.2]
