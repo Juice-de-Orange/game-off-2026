@@ -122,3 +122,11 @@
   Einfassung der Hangaröffnung, blinkende Positionslichter (`BlinkLight`). Sichtbar von Plattform, Bar und Hangar.
 - Nebeldichte auf 0,012 gesenkt, damit die Außenwelt durch die Fenster sichtbar bleibt.
 - Platzhalter-Texturen (prozedural) liegen an den finalen Pfaden unter `Art/Textures/Sky/` — die Pipeline ersetzt nur die Dateien.
+
+## Abwechslung & Rundungen (Builder, vorbereitet 02.11.)
+- Der Builder setzt automatisch, sobald die Pipeline liefert (Aufträge M007): Wandvarianten pro Raumtyp (gepolstert in Motel/Schalter,
+  Holz in Bar/Diner, ~35 % Detailwände mit Rohren/Lüftung/Schäden/Bildschirm/Spinden, feste Verteilung), Füllstück 2 × 1 m (Bar),
+  Gitterboden (Servicegang), Deckenleuchten-Platten, Tonnengewölbe in 2 m breiten Gängen, gerundete Raumecken, runde Säulen an der
+  Plattform-Öffnung, runde Türrahmen, Rundbogen Halle ↔ Motelgang, Plattform-Portal, Hallenkuppel, Plattform-Geländer, Hangar-Rippen.
+- **NavMesh-Wege und Türen:** Personaltüren und Zimmer 103/101/102 haben ein NavMesh-Hindernis. Weg-Messungen *durch* diese Türen
+  melden deshalb "teilweise" — das ist gewollt (Reisende bleiben draußen). Der Spieler ist kein NavMesh-Agent und kommt durch.

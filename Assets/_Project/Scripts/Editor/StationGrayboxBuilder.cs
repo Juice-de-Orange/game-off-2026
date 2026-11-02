@@ -157,8 +157,11 @@ namespace GameOff.EditorTools
                 var set = ModulesFor(room);
                 float floorCell = set.Floor == KitHangarFloor ? 4f : KitCell;
                 float ceilingCell = set.Ceiling == KitHangarCeiling ? 4f : KitCell;
-                if (floorKit) TileRoom(roomVisual, room, set.Floor, -KitHeight(set.Floor), floorCell);
-                if (ceilingKit) TileRoom(roomVisual, room, set.Ceiling, room.Height - set.CeilingDepth, ceilingCell);
+                string floorTile = room.Name == "ServiceCorridor" && Kit(KitFloorGrate) != null ? KitFloorGrate : set.Floor;
+                if (floorKit) TileRoom(roomVisual, room, floorTile, -KitHeight(floorTile), floorCell);
+                // Vaulted corridor ceiling: its pivot sits on the wall top (= room height), the vault rises above it.
+                if (ceilingKit && IsCorridor(room) && Kit(KitCeilingArch) != null) ArchCeiling(roomVisual, room);
+                else if (ceilingKit) TileRoom(roomVisual, room, set.Ceiling, room.Height - set.CeilingDepth, ceilingCell);
                 // Kit walls face into the room: the module's front is local -Z.
                 BuildWallVisual(roomVisual, room, set, true, room.X0, room.X0 + WallThickness * 0.5f, room.Z0, room.Z1, -90f, mat);
                 BuildWallVisual(roomVisual, room, set, true, room.X1, room.X1 - WallThickness * 0.5f, room.Z0, room.Z1, 90f, mat);
@@ -193,6 +196,7 @@ namespace GameOff.EditorTools
             PlaceKit(visual, KitHatch, new Vector3(4f, 0f, -9f), 90f); // front (local -Z) faces into the inspection lock
             BuildEnergyBarrier(root, visual);
             BuildDoors(root);
+            BuildRoundDetails(visual);
 
             BuildProps(props);
             BuildMarkers(markers);
@@ -302,6 +306,127 @@ namespace GameOff.EditorTools
 
         private static bool OnGrid(float v) => Mathf.Abs(v / KitCell - Mathf.Round(v / KitCell)) < 0.001f;
 
+        // --- Wall variety and rounder shapes (M007). Everything is optional: missing files fall back to the base modules. ---
+        private const string KitWallPadded = "Station/SM_Station_Wall_2x3_Padded.fbx";
+        private const string KitWallPanel = "Station/SM_Station_Wall_2x3_Panel.fbx";
+        private const string KitWallPipes = "Station/SM_Station_Wall_2x3_Pipes.fbx";
+        private const string KitWallVent = "Station/SM_Station_Wall_2x3_Vent.fbx";
+        private const string KitWallDamaged = "Station/SM_Station_Wall_2x3_Damaged.fbx";
+        private const string KitWallScreen = "Station/SM_Station_Wall_2x3_Screen.fbx";
+        private const string KitWallLockers = "Station/SM_Station_Wall_2x3_Lockers.fbx";
+        private const string KitWallFiller = "Station/SM_Station_Wall_2x1.fbx";
+        private const string KitFloorGrate = "Station/SM_Station_Floor_2x2_Grate.fbx";
+        private const string KitCeilingLight = "Station/SM_Station_Ceiling_2x2_Light.fbx";
+        private const string KitCeilingArch = "Station/SM_Station_Ceiling_Arch_2x2.fbx";
+        private const string KitCornerRound = "Station/SM_Station_Wall_CornerRound.fbx";
+        private const string KitPillarRound = "Station/SM_Station_Pillar_Round.fbx";
+        private const string KitDoorTrim = "Station/SM_Station_DoorTrim_Round.fbx";
+        private const string KitDoorTrimNarrow = "Station/SM_Station_DoorTrim_Round_Narrow.fbx";
+        private const string KitWallArch = "Station/SM_Station_Wall_Arch_2x3.fbx";
+        private const float ArchHead = 2.6f; // opening height of SM_Station_Wall_Arch_2x3
+        private const string KitDeckArch = "Station/SM_Station_DeckArch.fbx";
+        private const string KitHallDome = "Hall/SM_Hall_CeilingDome.fbx";
+        private const string KitDeckRailing = "Station/SM_Deck_Railing.fbx";
+        private const string KitHangarRib = "Hangar/SM_Hangar_RibArch.fbx";
+
+        /// <summary>Stable small hash (string.GetHashCode is not guaranteed stable), so rebuilds look the same.</summary>
+        private static int StableHash(string s, float a, float b, float c)
+        {
+            unchecked
+            {
+                int h = 17;
+                foreach (char ch in s) h = h * 31 + ch;
+                h = h * 31 + Mathf.RoundToInt(a * 10f);
+                h = h * 31 + Mathf.RoundToInt(b * 10f);
+                h = h * 31 + Mathf.RoundToInt(c * 10f);
+                return h & 0x7fffffff;
+            }
+        }
+
+        /// <summary>
+        /// Picks the wall module for one cell: the room type's base wall (padded in motel/counter, wood panels in bar/diner),
+        /// and in about a third of the cells a detail variant that fits the room. Upper rows only get pipes/vents.
+        /// </summary>
+        private static string WallVariant(Room room, float line, float mid, float bottom)
+        {
+            string baseWall = room.Area == Area.Motel || room.Area == Area.Counter ? KitWallPadded
+                : room.Area == Area.Bar || room.Area == Area.Diner ? KitWallPanel : KitWall;
+            if (Kit(baseWall) == null) baseWall = KitWall;
+
+            string[] decor;
+            if (bottom > 0f) decor = new[] { KitWallPipes, KitWallVent };
+            else if (room.Name.Contains("Corridor")) decor = new[] { KitWallPipes, KitWallVent, KitWallLockers, KitWallDamaged };
+            else if (room.Area == Area.Neutral) decor = new[] { KitWallScreen, KitWallVent, KitWallPipes, KitWallDamaged };
+            else if (room.Area == Area.Motel) decor = new[] { KitWallDamaged, KitWallVent };
+            else if (room.Area == Area.Bar || room.Area == Area.Diner) decor = new[] { KitWallScreen, KitWallVent };
+            else if (room.Area == Area.Counter) decor = new[] { KitWallPipes, KitWallScreen };
+            else decor = new[] { KitWallPipes, KitWallVent };
+
+            var available = new List<string>();
+            foreach (var d in decor) if (Kit(d) != null) available.Add(d);
+            int h = StableHash(room.Name, line, mid, bottom);
+            if (available.Count > 0 && h % 100 < 35) return available[(h / 100) % available.Count];
+            return baseWall;
+        }
+
+        /// <summary>Rounded inner corners, round pillars, door trims, arches, dome, railings and hangar ribs (when delivered).</summary>
+        private static void BuildRoundDetails(GameObject visual)
+        {
+            var group = Child(visual, "RoundDetails");
+            if (Kit(KitCornerRound) != null)
+            {
+                foreach (var room in Rooms)
+                {
+                    if (room.Name == "Hangar") continue; // hangar gets ribs instead
+                    float t = WallThickness;
+                    var corners = new[]
+                    {
+                        (new Vector3(room.X0 + t, 0f, room.Z0 + t), 0f), (new Vector3(room.X1 - t, 0f, room.Z0 + t), -90f),
+                        (new Vector3(room.X1 - t, 0f, room.Z1 - t), 180f), (new Vector3(room.X0 + t, 0f, room.Z1 - t), 90f),
+                    };
+                    foreach (var (pos, yaw) in corners)
+                        for (float y = 0f; y + KitWallHeight <= room.Height + 0.01f; y += KitWallHeight)
+                            PlaceKit(group, KitCornerRound, pos + Vector3.up * y, yaw);
+                }
+            }
+            if (Kit(KitPillarRound) != null)
+                foreach (var x in new[] { -5.6f, 5.6f })
+                    for (float y = 0f; y < HallHeight - 0.01f; y += KitWallHeight)
+                        PlaceKit(group, KitPillarRound, new Vector3(x, y, 5.5f), 0f);
+            foreach (var d in Doors)
+            {
+                string trim = d.Width < 1.4f ? KitDoorTrimNarrow : KitDoorTrim;
+                PlaceKit(group, trim, d.OnXLine ? new Vector3(d.Line, 0f, d.Center) : new Vector3(d.Center, 0f, d.Line), d.OnXLine ? 90f : 0f);
+            }
+            PlaceKit(group, KitDeckArch, new Vector3(0f, 0f, DeckCenter.z), 0f);
+            PlaceKit(group, KitHallDome, new Vector3(0f, HallHeight, 0f), 0f);
+            if (Kit(KitDeckRailing) != null)
+                for (int i = 0; i < DeckGlassSegments; i++)
+                {
+                    float a = (i + 0.5f) * Mathf.PI / DeckGlassSegments;
+                    var dir = new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a));
+                    float yaw = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg; // front (-Z) faces the deck center
+                    var pos = DeckCenter + dir * (DeckRadius * Mathf.Cos(Mathf.PI / (2f * DeckGlassSegments)) - 0.45f) + Vector3.up * -DeckDrop;
+                    PlaceKit(group, KitDeckRailing, pos, yaw);
+                }
+            if (Kit(KitHangarRib) != null)
+                for (float z = -15f; z > -40f; z -= 7f)
+                    PlaceKit(group, KitHangarRib, new Vector3(0f, 16f, z), 0f);
+        }
+
+        /// <summary>2 m wide corridors get a vaulted ceiling instead of flat tiles (arch spans the corridor width).</summary>
+        private static bool IsCorridor(Room room) => Mathf.Approximately(Mathf.Min(room.X1 - room.X0, room.Z1 - room.Z0), KitCell);
+
+        private static void ArchCeiling(GameObject parent, Room room)
+        {
+            bool alongZ = (room.Z1 - room.Z0) > (room.X1 - room.X0);
+            float cx = (room.X0 + room.X1) * 0.5f, cz = (room.Z0 + room.Z1) * 0.5f;
+            if (alongZ)
+                for (float z = room.Z0 + KitCell * 0.5f; z < room.Z1; z += KitCell) PlaceKit(parent, KitCeilingArch, new Vector3(cx, room.Height, z), 0f);
+            else
+                for (float x = room.X0 + KitCell * 0.5f; x < room.X1; x += KitCell) PlaceKit(parent, KitCeilingArch, new Vector3(x, room.Height, cz), 90f);
+        }
+
         // --- Window/porthole modules that fill one specific opening (placed once per opening, not per room) ---
         private const string KitHatch = "Station/SM_Station_Hatch_Airlock.fbx";
         private const string KitWindowSmall = "Station/SM_Station_Window_Small.fbx";
@@ -376,9 +501,12 @@ namespace GameOff.EditorTools
         /// <summary>Fills a room's floor (or ceiling) with square tiles of the given size. Rooms are on the grid, so tiles fit exactly.</summary>
         private static void TileRoom(GameObject parent, Room room, string tile, float y, float cell = KitCell)
         {
+            // Every third 2 m ceiling tile is the light variant (if delivered) for a less uniform ceiling.
+            bool lightTiles = tile == KitCeiling && Kit(KitCeilingLight) != null;
+            int i = 0;
             for (float x = room.X0 + cell * 0.5f; x < room.X1; x += cell)
-            for (float z = room.Z0 + cell * 0.5f; z < room.Z1; z += cell)
-                PlaceKit(parent, tile, new Vector3(x, y, z), 0f);
+            for (float z = room.Z0 + cell * 0.5f; z < room.Z1; z += cell, i++)
+                PlaceKit(parent, lightTiles && i % 3 == 1 ? KitCeilingLight : tile, new Vector3(x, y, z), 0f);
         }
 
         // --- Sliding doors (P27) ---
@@ -728,7 +856,23 @@ namespace GameOff.EditorTools
                     var pos = onXLine ? new Vector3(offsetLine, bottom, mid) : new Vector3(mid, bottom, offsetLine);
                     if (fullCell && ops.Count == 0 && wallKit)
                     {
-                        PlaceKit(parent, set.Wall, pos, yaw);
+                        PlaceKit(parent, set.Cell == KitCell ? WallVariant(room, line, mid, bottom) : set.Wall, pos, yaw);
+                        continue;
+                    }
+                    // 1 m top strip in 4 m rooms (bar)
+                    if (ops.Count == 0 && wallKit && set.Cell == KitCell && Mathf.Approximately(cellEnd - cell, KitCell)
+                        && Mathf.Approximately(top - bottom, 1f) && Kit(KitWallFiller) != null)
+                    {
+                        PlaceKit(parent, KitWallFiller, pos, yaw);
+                        continue;
+                    }
+                    // Open round arch (hall ↔ motel corridor): one 2 m opening centered in the cell, up to 2.6 m
+                    // (doors are 1.2/1.6 m wide, so the 2.0 m width + 2.6 m head check only matches the open arch passage)
+                    if (fullCell && set.Cell == KitCell && ops.Count == 1 && bottom == 0f && Kit(KitWallArch) != null
+                        && Mathf.Approximately(ops[0].Width, KitCell) && Mathf.Approximately(ops[0].Center, mid) && !ops[0].Glass
+                        && ops[0].Sill == 0f && Mathf.Approximately(ops[0].Head, ArchHead))
+                    {
+                        PlaceKit(parent, KitWallArch, pos, yaw);
                         continue;
                     }
                     if (fullCell && windowKit && ops.Count == 1 && bottom == 0f && IsWindowModuleOpening(ops[0])
@@ -893,9 +1037,12 @@ namespace GameOff.EditorTools
             KitProp(p, "Bar/SM_Bar_Table.fbx", "SM_Bar_Table_B", 12.5f, 7.1f, 0.8f, 0.8f, 1.1f);
             for (int i = 0; i < 4; i++) KitProp(p, "Bar/SM_Bar_Stool.fbx", $"SM_Bar_Stool_{i + 1}", 13.6f, 1.6f + i * 1.6f, 0.4f, 0.4f, 0.75f);
             // Diner
-            Prop(p, "SM_Diner_Counter", -12, -0.6f, 6.0f, 0.7f, 1.1f);
-            Prop(p, "SM_Diner_Booth_A", -14, -5.2f, 2.2f, 1.4f, 1.2f);
-            Prop(p, "SM_Diner_Booth_B", -10.5f, -5.2f, 2.2f, 1.4f, 1.2f);
+            // Diner: counter along the north wall (guest side faces south), booths against the south wall open to the north
+            KitProp(p, "Diner/SM_Diner_Counter.fbx", "SM_Diner_Counter", -12, -0.6f, 6.0f, 0.7f, 1.1f);
+            KitProp(p, "Diner/SM_Diner_Booth.fbx", "SM_Diner_Booth_A", -14, -5.2f, 2.2f, 1.4f, 1.2f, 0, 180f);
+            KitProp(p, "Diner/SM_Diner_Booth.fbx", "SM_Diner_Booth_B", -10.5f, -5.2f, 2.2f, 1.4f, 1.2f, 0, 180f);
+            KitProp(p, "Diner/SM_Diner_MenuBoard.fbx", "SM_Diner_MenuBoard", -12f, -0.15f, 2.0f, 0.1f, 0.8f, 2.3f); // pivot center
+            for (int i = 0; i < 4; i++) KitProp(p, "Bar/SM_Bar_Stool.fbx", $"SM_Diner_Stool_{i + 1}", -14.2f + i * 1.5f, -1.4f, 0.4f, 0.4f, 0.75f);
             // Motel
             Prop(p, "SM_Motel_Reception", -9, 0.35f, 1.2f, 0.5f, 1.2f);
             Prop(p, "SM_Motel_Bed", -19.4f, 4.9f, 1.0f, 2.0f, 0.6f);
