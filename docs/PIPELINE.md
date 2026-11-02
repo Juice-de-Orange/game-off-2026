@@ -55,3 +55,20 @@ in `docs/ASSET-REQUESTS.md`.
   Bis das gelöst ist: Branch pushen reicht, Max legt den PR an. Dauerhafte Lösung: ein fein abgestimmter Token nur für dieses
   Repo mit "Pull requests: write", oder die Pipeline meldet fertige Branches per Push-Nachricht.
 - antwort:
+
+### M003 — Neue Aufträge "Station 2.0" (50 Einträge) + Reihenfolge
+- datum: 2026-11-02
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`, Pakete P22–P26
+- status: offen
+- meldung: 50 neue Einträge (41 Modelle, 9 Texturen). Bitte in dieser Reihenfolge:
+  1. P22 Bausatz-Ergänzungen bis 09.11.: `SM_Station_Window_Curved`, `SM_Station_Floor_DeckRound`, `SM_Station_Ceiling_DeckRound`,
+     `SM_Station_Steps_2m`, `SM_Station_Wall_Window_2x3`, `SM_Hangar_Wall_4x4`, `SM_Hangar_Floor_4x4`, `SM_Hangar_Ceiling_4x4`,
+     `SM_Hangar_BarrierEmitter` — plus die Varianten `_Narrow` (Tür) und `_Padded`/`_Panel` (Wand) aus den alten Einträgen.
+  2. Die übrigen offenen P1-Einträge aus der ersten Liste (Halle, Hangar, Motel, Bar, Kiosk, Fenster, Schotts).
+  3. P24/P25 Außen, Schiffe, Himmel bis 13.11. — **Außen- und Schiffsmodelle mit niedriger Texeldichte (4–8 px/m)**, sie werden
+     nur aus der Ferne gesehen; Browser-Downloadgröße im Blick behalten.
+  4. P26 Details bis 16.11.
+  Geändert: `T_Sky_Space` nur noch Sterne + Nebel (Planeten sind eigene Objekte); `SM_Station_Window_Panorama` entfällt.
+- antwort:

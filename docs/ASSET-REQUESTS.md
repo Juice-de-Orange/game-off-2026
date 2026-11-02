@@ -272,7 +272,7 @@ path: Assets/_Project/Art/Models/Station/SM_Station_Window_Panorama.fbx
 package: P04
 scene: Halle
 status: offen
-priority: P1
+priority: P3
 needed_by: 2026-11-12
 size_m: [8.0, 0.4, 4.5]
 pivot: bottom_center
@@ -290,7 +290,8 @@ animations: []
 collision: prefab
 refs: [docs/style/refs/ai_corridor_window_01.webp, docs/style/refs/ai_window_docking_ship_01.webp]
 placeholder: Box 8.0 x 0.4 x 4.5 m, Pivot bottom_center, Material-Slots [Frame, Glass]
-feedback: []
+feedback:
+  - "2026-11-02 max: ENTFÄLLT - die Aussichtsplattform (SM_Station_Window_Curved) ersetzt das Panoramafenster. Bitte nicht bauen."
 ```
 
 ### SM_Station_Window_Small.fbx
@@ -1422,5 +1423,1374 @@ animations: []
 collision: none
 refs: [docs/style/refs/ai_station_exterior_01.webp, docs/style/refs/ai_window_docking_ship_01.webp]
 placeholder: PNG 2048x1024, schwarz mit weißen Einzelpixeln
+feedback:
+  - "2026-11-02 max: Nur noch Sterne + Nebel (violett/cyan, dezent) + ferner Asteroidengürtel-Streifen, KEIN Planet - Sonne und Planeten kommen als eigene Objekte (P24)"
+```
+
+### SM_Station_Window_Curved.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Window_Curved.fbx
+package: P22
+scene: Aussichtsplattform
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [1.95, 0.4, 6.4]
+pivot: bottom_center
+tris_max: 1000
+materials: [Frame, Glass]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Window_Curved_Albedo.png   # 256x512, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Ein Segment der halbrunden Glasfront der Aussichtsplattform (8 Segmente ergeben den Halbkreis, r = 5 m). Dicker, abgenutzter Metallrahmen mit Nieten, unten 0,5 m geschlossene Brüstung, darüber Glas bis 5,8 m, oben Rahmen. Seitliche Pfosten breit genug, dass zwei Segmente im Winkel von 22,5 Grad nahtlos aneinanderstoßen. Glas als eigener Slot.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/ai_corridor_window_01.webp, docs/style/refs/ai_window_docking_ship_01.webp]
+placeholder: Box 1.95 x 0.4 x 6.4 m, Pivot bottom_center, Material-Slots [Frame, Glass]
+feedback: []
+```
+
+### SM_Station_Floor_DeckRound.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Floor_DeckRound.fbx
+package: P22
+scene: Aussichtsplattform
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [10.0, 5.0, 0.1]
+pivot: bottom_center
+tris_max: 400
+materials: [Floor]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Floor_DeckRound_Albedo.png   # 512x256, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_Floor_DeckRound_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Boden der Aussichtsplattform: Halbkreis r = 5 m (16 Segmente), gerade Kante an der Südseite (lokal -Z). Gleiche Metallplatten wie SM_Station_Floor_2x2, radial verlegt, mit einem Leuchtstreifen-Bogen 0,3 m vor dem Glas.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/mw_cargo_hold_01.webp]
+placeholder: Box 10.0 x 5.0 x 0.1 m, Pivot bottom_center, Material-Slots [Floor]
+feedback: []
+```
+
+### SM_Station_Ceiling_DeckRound.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Ceiling_DeckRound.fbx
+package: P22
+scene: Aussichtsplattform
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [10.0, 5.0, 0.3]
+pivot: bottom_center
+tris_max: 600
+materials: [Ceiling]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Ceiling_DeckRound_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_Ceiling_DeckRound_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Decke der Aussichtsplattform: Halbkreis r = 5 m, leicht gewölbt, Rippen von der Mitte zum Glasrand, ein paar kleine Spots.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 10.0 x 5.0 x 0.3 m, Pivot bottom_center, Material-Slots [Ceiling]
+feedback: []
+```
+
+### SM_Station_Steps_2m.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Steps_2m.fbx
+package: P22
+scene: Aussichtsplattform
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.8, 0.36]
+pivot: bottom_center
+tris_max: 200
+materials: [Steps]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Steps_2m_Albedo.png   # 128x128, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Zwei Stufen à 0,18 m hoch und 0,4 m tief, 2 m breit, Metall mit gelb-schwarzer Kante an jeder Stufe und Gitterrost-Trittflächen. Oberkante bündig mit dem Hallenboden (Pivot unten mittig an der unteren Stufe, lokal +Z = oben/Halle).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 0.8 x 0.36 m, Pivot bottom_center, Material-Slots [Steps]
+feedback: []
+```
+
+### SM_Station_Wall_Window_2x3.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Window_2x3.fbx
+package: P22
+scene: Bar
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.2, 3.0]
+pivot: bottom_center
+tris_max: 1000
+materials: [Wall, Glass]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_Window_2x3_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Wandmodul 2 x 3 m wie SM_Station_Wall_2x3, mit Fenster von 0,9 bis 2,4 m Höhe über die volle Breite (Rahmen 0,1 m), dickes Glas als eigener Slot. Kachelt seitlich zu einem Fensterband.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/ai_corridor_window_01.webp]
+placeholder: Box 2.0 x 0.2 x 3.0 m, Pivot bottom_center, Material-Slots [Wall, Glass]
+feedback: []
+```
+
+### SM_Hangar_Wall_4x4.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Wall_4x4.fbx
+package: P22
+scene: Hangar
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [4.0, 0.3, 4.0]
+pivot: bottom_center
+tris_max: 1000
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_Wall_4x4_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Hangar-Wandmodul 4 x 4 m: grobe Industrieplatten mit senkrechten Rippen, Nieten, Ölspuren, Nummern-Schablonen, ab und zu Kabeltrassen. Kachelt seitlich und übereinander (Hangar 16 m hoch = 4 Reihen).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/real_hangar_shuttle_01.webp, docs/style/refs/mw_cargo_hold_01.webp]
+placeholder: Box 4.0 x 0.3 x 4.0 m, Pivot bottom_center, Material-Slots [Wall]
+feedback: []
+```
+
+### SM_Hangar_Floor_4x4.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Floor_4x4.fbx
+package: P22
+scene: Hangar
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [4.0, 4.0, 0.15]
+pivot: bottom_center
+tris_max: 1000
+materials: [Floor]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_Floor_4x4_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Hangar-Bodenplatte 4 x 4 m: schwerer Stahlboden mit Reifenspuren, Ölflecken, Bodenmarkierungen. Varianten mit gelber Landekreis-Markierung und Pfeilen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/real_hangar_shuttle_01.webp]
+placeholder: Box 4.0 x 4.0 x 0.15 m, Pivot bottom_center, Material-Slots [Floor]
+feedback: []
+```
+
+### SM_Hangar_Ceiling_4x4.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ceiling_4x4.fbx
+package: P22
+scene: Hangar
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [4.0, 4.0, 1.0]
+pivot: bottom_center
+tris_max: 800
+materials: [Ceiling]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_Ceiling_4x4_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_Ceiling_4x4_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Hangar-Deckenmodul 4 x 4 m: Stahlfachwerk mit Lampenkasten in der Mitte (Emission, kaltes Weiß), Kabel, Kettenhaken.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 4.0 x 4.0 x 1.0 m, Pivot bottom_center, Material-Slots [Ceiling]
+feedback: []
+```
+
+### SM_Hangar_BarrierEmitter.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_BarrierEmitter.fbx
+package: P23
+scene: Hangar
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [4.0, 1.2, 1.0]
+pivot: bottom_center
+tris_max: 1000
+materials: [Emitter]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_BarrierEmitter_Albedo.png   # 256x128, Point
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_BarrierEmitter_Emission.png   # 128x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Emitter-Segment für die Energiebarriere, 4 m lang (7 Stück oben, 7 unten, gedreht an den Seiten): klobiger Metallkasten mit Kühlrippen, Kabeln und einer durchgehenden Linse an der Innenseite, die blau leuchtet (Emission). Warnschilder 'FORCE FIELD - DO NOT TOUCH'.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/real_hangar_shuttle_01.webp]
+placeholder: Box 4.0 x 1.2 x 1.0 m, Pivot bottom_center, Material-Slots [Emitter]
+feedback: []
+```
+
+### SM_Hangar_Scaffold.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Scaffold.fbx
+package: P26
+scene: Hangar
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [4.0, 2.0, 5.0]
+pivot: bottom_center
+tris_max: 1200
+materials: [Scaffold]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_Scaffold_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Wartungsgerüst mit zwei Ebenen, Gitterrosten, Geländer, Leiter, ein paar Werkzeugkisten. Gelb lackiert, abgeplatzt.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/real_hangar_shuttle_01.webp]
+placeholder: Box 4.0 x 2.0 x 5.0 m, Pivot bottom_center, Material-Slots [Scaffold]
+feedback: []
+```
+
+### SM_Hangar_CraneRail.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_CraneRail.fbx
+package: P26
+scene: Hangar
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [36.0, 2.0, 1.5]
+pivot: top_center
+tris_max: 800
+materials: [Crane]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_CraneRail_Albedo.png   # 256x128, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Laufkran-Schiene quer durch den Hangar unter der Decke mit Laufkatze und hängendem Haken.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 36.0 x 2.0 x 1.5 m, Pivot top_center, Material-Slots [Crane]
+feedback: []
+```
+
+### SM_Ext_HabModule.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_HabModule.fbx
+package: P24
+scene: Außen (sichtbar durch Fenster + Startbildschirm)
+status: offen
+priority: P2
+needed_by: 2026-11-13
+size_m: [12.0, 12.0, 30.0]
+pivot: center
+tris_max: 1500
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HabModule_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HabModule_Emission.png   # 128x128, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Wohnmodul der Station von außen: liegender Zylinder (12 Segmente), Rumpfplatten in Beige/Grau mit Dreck- und Brandspuren, kleine erleuchtete Fensterreihen (Emission, warm), Logo-freie Schriftzüge 'KESTREL-9 / HAB 2'.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 12.0 x 12.0 x 30.0 m, Pivot center, Material-Slots [Hull]
+feedback: []
+```
+
+### SM_Ext_TrussSegment.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_TrussSegment.fbx
+package: P24
+scene: Außen (sichtbar durch Fenster + Startbildschirm)
+status: offen
+priority: P2
+needed_by: 2026-11-13
+size_m: [3.0, 3.0, 20.0]
+pivot: center
+tris_max: 600
+materials: [Truss]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_TrussSegment_Albedo.png   # 128x128, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Fachwerk-Träger, der Module verbindet, mit Rohrleitungen und Kabeln.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 3.0 x 3.0 x 20.0 m, Pivot center, Material-Slots [Truss]
+feedback: []
+```
+
+### SM_Ext_SolarArray.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_SolarArray.fbx
+package: P24
+scene: Außen (sichtbar durch Fenster + Startbildschirm)
+status: offen
+priority: P2
+needed_by: 2026-11-13
+size_m: [30.0, 1.0, 10.0]
+pivot: center
+tris_max: 400
+materials: [Solar]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_SolarArray_Albedo.png   # 256x128, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Großer Solarflügel: Gitter aus dunkelblauen Zellen mit Metallrahmen, ein paar Zellen fehlen/zersplittert.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 30.0 x 1.0 x 10.0 m, Pivot center, Material-Slots [Solar]
+feedback: []
+```
+
+### SM_Ext_Antenna.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_Antenna.fbx
+package: P24
+scene: Außen (sichtbar durch Fenster + Startbildschirm)
+status: offen
+priority: P2
+needed_by: 2026-11-13
+size_m: [4.0, 4.0, 18.0]
+pivot: bottom_center
+tris_max: 800
+materials: [Antenna]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_Antenna_Albedo.png   # 128x128, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_Antenna_Emission.png   # 64x64, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Antennenmast mit zwei Schüsseln, Gitterkorb und rotem Blinklicht oben (Emission).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 4.0 x 4.0 x 18.0 m, Pivot bottom_center, Material-Slots [Antenna]
+feedback: []
+```
+
+### SM_Ext_DockingArm.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_DockingArm.fbx
+package: P24
+scene: Außen (sichtbar durch Fenster + Startbildschirm)
+status: offen
+priority: P2
+needed_by: 2026-11-13
+size_m: [6.0, 25.0, 6.0]
+pivot: center
+tris_max: 1000
+materials: [Dock]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_DockingArm_Albedo.png   # 256x128, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_DockingArm_Emission.png   # 64x64, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Andockarm mit Gelenk und Schleusen-Kopf; daran parkt ein Schiff. Positionslichter (Emission, grün/rot).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 6.0 x 25.0 x 6.0 m, Pivot center, Material-Slots [Dock]
+feedback: []
+```
+
+### SM_Ext_HangarMouth.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_HangarMouth.fbx
+package: P24
+scene: Außen (sichtbar durch Fenster + Startbildschirm)
+status: offen
+priority: P2
+needed_by: 2026-11-13
+size_m: [36.0, 10.0, 18.0]
+pivot: bottom_center
+tris_max: 1200
+materials: [Frame]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HangarMouth_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HangarMouth_Emission.png   # 128x64, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Außenrahmen um die Hangaröffnung: massive Einfassung mit Warnstreifen, Positionslichtern, Anflugbefeuerung (Emission), Schriftzug 'CUSTOMS - ALL TRAFFIC STOP'.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 36.0 x 10.0 x 18.0 m, Pivot bottom_center, Material-Slots [Frame]
+feedback: []
+```
+
+### SM_Ext_DeckDome.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_DeckDome.fbx
+package: P24
+scene: Außen (sichtbar durch Fenster + Startbildschirm)
+status: offen
+priority: P2
+needed_by: 2026-11-13
+size_m: [12.0, 7.0, 8.0]
+pivot: bottom_center
+tris_max: 1000
+materials: [Hull, Glass]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_DeckDome_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_DeckDome_Emission.png   # 64x64, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Außenhülle der Aussichtsplattform: halbrunde Glasfront mit Rahmen von außen, Rumpfkranz drumherum, Licht dringt nach außen (Emission).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 12.0 x 7.0 x 8.0 m, Pivot bottom_center, Material-Slots [Hull, Glass]
+feedback: []
+```
+
+### SM_Ext_RadiatorPanel.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_RadiatorPanel.fbx
+package: P24
+scene: Außen (sichtbar durch Fenster + Startbildschirm)
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [2.0, 12.0, 8.0]
+pivot: center
+tris_max: 200
+materials: [Radiator]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_RadiatorPanel_Albedo.png   # 128x128, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_RadiatorPanel_Emission.png   # 64x64, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Kühlpaneel, glüht an den Rändern leicht orange (Emission).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 12.0 x 8.0 m, Pivot center, Material-Slots [Radiator]
+feedback: []
+```
+
+### SM_Ship_Freighter.fbx
+```yaml
+path: Assets/_Project/Art/Models/Ships/SM_Ship_Freighter.fbx
+package: P25
+scene: Weltraum vor den Fenstern
+status: offen
+priority: P2
+needed_by: 2026-11-13
+size_m: [40.0, 160.0, 30.0]
+pivot: center
+tris_max: 2500
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Ships/T_Ship_Freighter_Albedo.png   # 512x512, Point
+  - Assets/_Project/Art/Textures/Ships/T_Ship_Freighter_Emission.png   # 256x256, Point
+texel_px_per_m: 4
+palette: docs/style/palette.png
+look: >
+  Großer Frachter (fliegt langsam an den Fenstern vorbei): langer Rücken aus Containermodulen, Brückenturm hinten, Triebwerke mit blauem Glühen (Emission), Positionslichter, viele kleine erleuchtete Fenster. Abgenutzter Industrie-Look.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/ai_window_docking_ship_01.webp, docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 40.0 x 160.0 x 30.0 m, Pivot center, Material-Slots [Hull]
+feedback: []
+```
+
+### SM_Ship_Tanker.fbx
+```yaml
+path: Assets/_Project/Art/Models/Ships/SM_Ship_Tanker.fbx
+package: P25
+scene: Weltraum vor den Fenstern
+status: offen
+priority: P2
+needed_by: 2026-11-13
+size_m: [30.0, 120.0, 30.0]
+pivot: center
+tris_max: 2000
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Ships/T_Ship_Tanker_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Ships/T_Ship_Tanker_Emission.png   # 128x128, Point
+texel_px_per_m: 4
+palette: docs/style/palette.png
+look: >
+  Tanker mit drei kugelförmigen Tanks hintereinander an einem Rückgrat, Warnmarkierungen, kleine Brücke vorne.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 30.0 x 120.0 x 30.0 m, Pivot center, Material-Slots [Hull]
+feedback: []
+```
+
+### SM_Ship_Patrol.fbx
+```yaml
+path: Assets/_Project/Art/Models/Ships/SM_Ship_Patrol.fbx
+package: P25
+scene: Weltraum vor den Fenstern
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [15.0, 35.0, 8.0]
+pivot: center
+tris_max: 1500
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Ships/T_Ship_Patrol_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Ships/T_Ship_Patrol_Emission.png   # 64x64, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Zoll-Patrouillenschiff: schnittig aber klobig, Suchscheinwerfer, rote/blaue Blinklichter (Emission), Aufschrift 'CUSTOMS'.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 15.0 x 35.0 x 8.0 m, Pivot center, Material-Slots [Hull]
+feedback: []
+```
+
+### SM_Ship_TrafficSmall.fbx
+```yaml
+path: Assets/_Project/Art/Models/Ships/SM_Ship_TrafficSmall.fbx
+package: P25
+scene: Weltraum vor den Fenstern
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [4.0, 8.0, 2.5]
+pivot: center
+tris_max: 300
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Ships/T_Ship_TrafficSmall_Albedo.png   # 64x64, Point
+  - Assets/_Project/Art/Textures/Ships/T_Ship_TrafficSmall_Emission.png   # 64x64, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Kleines Taxi-/Pendelschiff für den Hintergrundverkehr, sehr einfach, Triebwerksglühen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 4.0 x 8.0 x 2.5 m, Pivot center, Material-Slots [Hull]
+feedback: []
+```
+
+### SM_Prop_PipeBundle_2m.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_PipeBundle_2m.fbx
+package: P26
+scene: alle
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [2.0, 0.4, 0.5]
+pivot: bottom_center
+tris_max: 300
+materials: [Pipe]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_PipeBundle_2m_Albedo.png   # 128x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Drei bis vier parallele Rohre mit Schellen, für Wände und Decken, kachelt in Längsrichtung.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 0.4 x 0.5 m, Pivot bottom_center, Material-Slots [Pipe]
+feedback: []
+```
+
+### SM_Prop_PipeElbow.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_PipeElbow.fbx
+package: P26
+scene: alle
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.6, 0.6, 0.5]
+pivot: bottom_center
+tris_max: 300
+materials: [Pipe]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_PipeElbow_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Bogenstück zum Rohrbündel (90 Grad).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.6 x 0.6 x 0.5 m, Pivot bottom_center, Material-Slots [Pipe]
+feedback: []
+```
+
+### SM_Prop_CableBundle.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_CableBundle.fbx
+package: P26
+scene: alle
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [2.0, 0.2, 0.3]
+pivot: bottom_center
+tris_max: 200
+materials: [Cable]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_CableBundle_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Durchhängende Kabelbündel mit Kabelbindern, schwarz/rot/gelb.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 0.2 x 0.3 m, Pivot bottom_center, Material-Slots [Cable]
+feedback: []
+```
+
+### SM_Prop_VentGrate.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_VentGrate.fbx
+package: P26
+scene: alle
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.8, 0.1, 0.5]
+pivot: bottom_center
+tris_max: 100
+materials: [Vent]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_VentGrate_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Lüftungsgitter für die Wand, verstaubt, Lamellen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.8 x 0.1 x 0.5 m, Pivot bottom_center, Material-Slots [Vent]
+feedback: []
+```
+
+### SM_Prop_JunctionBox.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_JunctionBox.fbx
+package: P26
+scene: alle
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.5, 0.2, 0.6]
+pivot: bottom_center
+tris_max: 200
+materials: [Box]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_JunctionBox_Albedo.png   # 64x64, Point
+  - Assets/_Project/Art/Textures/Props/T_Prop_JunctionBox_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Verteilerkasten mit Warnaufkleber, Kontrolllämpchen (Emission), Kabel raus.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.5 x 0.2 x 0.6 m, Pivot bottom_center, Material-Slots [Box]
+feedback: []
+```
+
+### SM_Prop_FireExtinguisher.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_FireExtinguisher.fbx
+package: P26
+scene: alle
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.25, 0.2, 0.7]
+pivot: bottom_center
+tris_max: 300
+materials: [Extinguisher]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_FireExtinguisher_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Feuerlöscher in Wandhalterung mit Schild.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.25 x 0.2 x 0.7 m, Pivot bottom_center, Material-Slots [Extinguisher]
+feedback: []
+```
+
+### SM_Prop_TrashBin.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_TrashBin.fbx
+package: P26
+scene: Halle, Bar, Diner
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.5, 0.5, 0.9]
+pivot: bottom_center
+tris_max: 250
+materials: [Bin]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_TrashBin_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Metallmülleimer mit Deckel, verbeult, Aufkleber.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.5 x 0.5 x 0.9 m, Pivot bottom_center, Material-Slots [Bin]
+feedback: []
+```
+
+### SM_Prop_TrashPile.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_TrashPile.fbx
+package: P26
+scene: Gänge, Hangar
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [1.2, 0.8, 0.3]
+pivot: bottom_center
+tris_max: 400
+materials: [Trash]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_TrashPile_Albedo.png   # 128x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Kleiner Haufen aus Verpackungen, Dosen, Papier in einer Ecke.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 1.2 x 0.8 x 0.3 m, Pivot bottom_center, Material-Slots [Trash]
+feedback: []
+```
+
+### SM_Prop_SodaCan.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_SodaCan.fbx
+package: P26
+scene: überall
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0.07, 0.07, 0.12]
+pivot: bottom_center
+tris_max: 60
+materials: [Can]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_SodaCan_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Getränkedose (erfundene Marke 'NOVA COLA'), auch zerdrückt als Variante.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.07 x 0.07 x 0.12 m, Pivot bottom_center, Material-Slots [Can]
+feedback: []
+```
+
+### SM_Prop_PlantDead.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_PlantDead.fbx
+package: P26
+scene: Halle, Motel
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0.5, 0.5, 1.0]
+pivot: bottom_center
+tris_max: 400
+materials: [Plant]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_PlantDead_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Topfpflanze, halb vertrocknet, Plastiktopf.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.5 x 0.5 x 1.0 m, Pivot bottom_center, Material-Slots [Plant]
+feedback: []
+```
+
+### SM_Prop_CleaningBot.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_CleaningBot.fbx
+package: P26
+scene: Halle
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.6, 0.6, 0.4]
+pivot: bottom_center
+tris_max: 500
+materials: [Bot]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_CleaningBot_Albedo.png   # 64x64, Point
+  - Assets/_Project/Art/Textures/Props/T_Prop_CleaningBot_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Kleiner runder Putzroboter (fährt per Skript durch die Halle): beige Kunststoffschale, ein Bürstenkranz unten, gelbe Rundumleuchte (Emission), Delle.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.6 x 0.6 x 0.4 m, Pivot bottom_center, Material-Slots [Bot]
+feedback: []
+```
+
+### SM_Prop_CoinTelescope.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_CoinTelescope.fbx
+package: P26
+scene: Aussichtsplattform
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.5, 0.6, 1.5]
+pivot: bottom_center
+tris_max: 600
+materials: [Telescope]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_CoinTelescope_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Münzfernrohr auf Säule, Münzschlitz, 'VIEW - 1 CREDIT'.
+interaction: "ansehen (später Zoom-Blick auf den Heimatplaneten)"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.5 x 0.6 x 1.5 m, Pivot bottom_center, Material-Slots [Telescope]
+feedback: []
+```
+
+### SM_Prop_DeckBench.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_DeckBench.fbx
+package: P26
+scene: Aussichtsplattform
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [2.4, 0.6, 0.5]
+pivot: bottom_center
+tris_max: 300
+materials: [Bench]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_DeckBench_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Niedrige gepolsterte Bank ohne Lehne, Kunstleder rissig, für die Plattform.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.4 x 0.6 x 0.5 m, Pivot bottom_center, Material-Slots [Bench]
+feedback: []
+```
+
+### SM_Prop_NeonSign_Open.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_NeonSign_Open.fbx
+package: P26
+scene: Bar, Diner, Kiosk
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.8, 0.05, 0.3]
+pivot: center
+tris_max: 100
+materials: [Neon]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_NeonSign_Open_Albedo.png   # 64x32, Point
+  - Assets/_Project/Art/Textures/Props/T_Prop_NeonSign_Open_Emission.png   # 64x32, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Kleines Leuchtschild 'OPEN' (ein Buchstabe defekt, flackert per Skript).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.8 x 0.05 x 0.3 m, Pivot center, Material-Slots [Neon]
+feedback: []
+```
+
+### SM_Prop_WallClock.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_WallClock.fbx
+package: P26
+scene: Halle, Schalter
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0.5, 0.08, 0.5]
+pivot: center
+tris_max: 100
+materials: [Clock]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_WallClock_Albedo.png   # 64x64, Point
+  - Assets/_Project/Art/Textures/Props/T_Prop_WallClock_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Digitale Stationsuhr mit roter Segmentanzeige (Emission) 'SHIFT 07:42'.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.5 x 0.08 x 0.5 m, Pivot center, Material-Slots [Clock]
+feedback: []
+```
+
+### SM_Prop_PASpeaker.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_PASpeaker.fbx
+package: P26
+scene: Halle, Gänge
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0.4, 0.3, 0.3]
+pivot: top_center
+tris_max: 200
+materials: [Speaker]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_PASpeaker_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Trichterlautsprecher an der Decke (Durchsagen).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.4 x 0.3 x 0.3 m, Pivot top_center, Material-Slots [Speaker]
+feedback: []
+```
+
+### SM_Prop_CeilingFan.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_CeilingFan.fbx
+package: P26
+scene: Bar, Diner
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [1.2, 1.2, 0.4]
+pivot: top_center
+tris_max: 300
+materials: [Fan]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_CeilingFan_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Langsam drehender Deckenventilator, 4 Blätter als eigenes Unterobjekt (dreht per Skript).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 1.2 x 1.2 x 0.4 m, Pivot top_center, Material-Slots [Fan]
+feedback: []
+```
+
+### SM_Prop_MopBucket.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_MopBucket.fbx
+package: P26
+scene: Gänge
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0.5, 0.4, 1.2]
+pivot: bottom_center
+tris_max: 300
+materials: [Mop]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_MopBucket_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Wischeimer mit Mopp, Warnschild 'WET FLOOR' daneben als Variante.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.5 x 0.4 x 1.2 m, Pivot bottom_center, Material-Slots [Mop]
+feedback: []
+```
+
+### T_Planet_GasGiant_Albedo.png
+```yaml
+path: Assets/_Project/Art/Textures/Sky/T_Planet_GasGiant_Albedo.png
+package: P24
+scene: Himmel
+status: offen
+priority: P2
+needed_by: 2026-11-13
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Sky/T_Planet_GasGiant_Albedo.png   # 1024x512, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Equirectangular-Textur eines Gasriesen: Bänder in gedämpftem Orange, Ocker und Violett, ein großer Sturmwirbel, harte Pixel, Palette.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 1024x512
+feedback: []
+```
+
+### T_Planet_Ring.png
+```yaml
+path: Assets/_Project/Art/Textures/Sky/T_Planet_Ring.png
+package: P24
+scene: Himmel
+status: offen
+priority: P2
+needed_by: 2026-11-13
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Sky/T_Planet_Ring.png   # 512x64, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Ringtextur (radial von innen nach außen, mit Alpha): mehrere Ringe mit Lücken, staubig beige/grau.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 512x64
+feedback: []
+```
+
+### T_Planet_Home_Albedo.png
+```yaml
+path: Assets/_Project/Art/Textures/Sky/T_Planet_Home_Albedo.png
+package: P24
+scene: Himmel
+status: offen
+priority: P1
+needed_by: 2026-11-13
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Sky/T_Planet_Home_Albedo.png   # 1024x512, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Equirectangular-Heimatplanet: kalte Ozeane, Eis an den Polen, karge graubraune Kontinente, Wolkenbänder, harte Pixel.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 1024x512
+feedback: []
+```
+
+### T_Planet_Home_Emission.png
+```yaml
+path: Assets/_Project/Art/Textures/Sky/T_Planet_Home_Emission.png
+package: P24
+scene: Himmel
+status: offen
+priority: P1
+needed_by: 2026-11-13
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Sky/T_Planet_Home_Emission.png   # 1024x512, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Nachtlichter der Städte zur Albedo passend (warmes Gelb, schwarzer Hintergrund) - zeigt, wo die Familie lebt.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 1024x512
+feedback: []
+```
+
+### T_Sun_Glow.png
+```yaml
+path: Assets/_Project/Art/Textures/Sky/T_Sun_Glow.png
+package: P24
+scene: Himmel
+status: offen
+priority: P1
+needed_by: 2026-11-13
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Sky/T_Sun_Glow.png   # 256x256, Bilinear
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Sonnenscheibe mit weichem Glühen und vier kurzen Strahlen (Alpha), warmweiß, für ein Billboard.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 256x256
+feedback: []
+```
+
+### T_Planet_Moon_Albedo.png
+```yaml
+path: Assets/_Project/Art/Textures/Sky/T_Planet_Moon_Albedo.png
+package: P24
+scene: Himmel
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Sky/T_Planet_Moon_Albedo.png   # 512x256, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Kleiner grauer Mond mit Kratern, equirectangular.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 512x256
+feedback: []
+```
+
+### T_Decal_Signs.png
+```yaml
+path: Assets/_Project/Art/Textures/Decals/T_Decal_Signs.png
+package: P26
+scene: überall
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Decals/T_Decal_Signs.png   # 512x512, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Atlas 4x4 mit Stationsschildern (Englisch, Großbuchstaben, Orbitron-artig, erfunden): 'STAFF ONLY', 'CUSTOMS', 'HANGAR', 'MOTEL', 'BAR', 'DINER', 'AIRLOCK', 'WARNING - VACUUM', Pfeile, Deck-Nummern, Fluchtweg-Schilder.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 512x512
+feedback: []
+```
+
+### T_Decal_Posters.png
+```yaml
+path: Assets/_Project/Art/Textures/Decals/T_Decal_Posters.png
+package: P26
+scene: Motel, Bar, Halle
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Decals/T_Decal_Posters.png   # 512x512, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Atlas 2x2 mit Plakaten: Propaganda 'A GOOD OFFICER IS A WATCHFUL OFFICER', Reisewerbung für den Heimatplaneten, Fahndungsplakat 'WANTED', Bar-Werbung für 'NOVA COLA'.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 512x512
+feedback: []
+```
+
+### T_Decal_Grime.png
+```yaml
+path: Assets/_Project/Art/Textures/Decals/T_Decal_Grime.png
+package: P26
+scene: überall
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Decals/T_Decal_Grime.png   # 512x512, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Atlas 4x4 mit Schmutz-Decals (Alpha): Wasserflecken, Rostläufer, Ölflecken, Kratzspuren, kleine Graffiti-Tags, Fußabdrücke.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 512x512
 feedback: []
 ```
