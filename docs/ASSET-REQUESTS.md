@@ -2722,7 +2722,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Decals/T_Decal_Signs.png
 package: P26
 scene: überall
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -2749,7 +2749,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Decals/T_Decal_Posters.png
 package: P26
 scene: Motel, Bar, Halle
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -2776,7 +2776,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Decals/T_Decal_Grime.png
 package: P26
 scene: überall
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -3103,7 +3103,7 @@ feedback: []
 path: Assets/_Project/Art/UI/UI_Telescope_Overlay.png
 package: P29
 scene: UI
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -3130,7 +3130,7 @@ feedback: []
 path: Assets/_Project/Art/UI/UI_Family_Photo.png
 package: P29
 scene: Motel (Spind), UI
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
