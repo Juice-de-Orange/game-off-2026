@@ -85,3 +85,14 @@
 - Gemessene Wege (NavMesh, 4 m/s): Zimmer 103 → Schalter 24 m / 6 s · Schalter → Frachtdrohne 13 m / 3 s ·
   Schalter → Bar 28 m / 7 s · Bar → Zimmer 103 33 m / 8 s · Shuttle → Kammer 6 m / 1,5 s.
 - Noch offen (andere Pakete): Türen sind nur Öffnungen (Schiebetüren mit P05/P08), Spieler-Controller (P03).
+
+## Licht & Stimmung (P20)
+- Lichter kommen aus dem Graybox-Builder: pro Raum ein Raster gebackener Punktlichter (alle 4–5 m) mit Leuchtstreifen darunter
+  (`LightFixtures`, Platzhalter für `SM_Station_Ceiling_2x2_Light`). Streifen in voller Raumfarbe, Raumlicht je Bereich zu Weiß hin
+  aufgehellt (`LightTint` im Skript). Hangar: weißes Arbeitslicht + zwei rote Lichter am Tor. Prüfkammer: rote Warnlampe.
+  Halle: bläulicher Schein am Panoramafenster. Zwei flackernde Echtzeit-Neons (Servicegang, Motelgang, `LightFlicker`).
+- Szenen-Licht per Menü **GameOff → Setup Main Lighting + Bake** (`Scripts/Editor/MainLightingSetup.cs`): Skybox `M_Sky_Space`
+  (Platzhalter-Textur `T_Sky_Space.png`), Ambient flach dunkelblau, Nebel Exp² 0,025, `PlanetLight` (gerichtet, kalt, von Norden),
+  Lightmaps 4 Texel/m, max. 1024 px, 1 Bounce, Light Probes im 2,5-m-Raster (für Knöpfe, Stempel, später Reisende), NavMesh neu.
+- **Nach jedem Neubau der Graybox:** erst *Build Station Graybox*, dann *Setup Main Lighting + Bake*, warten bis der Bake fertig ist,
+  Szene speichern. Bake dauert ca. 1 Minute; Lightmaps liegen in `Scenes/Main/` (~1,6 MB).

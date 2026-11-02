@@ -209,8 +209,9 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Größe: M · Priorität: Soll · Status: in Arbeit (max, 02.11.)
 - Braucht: P04 · Folgt auf: P04 (Licht-Feinschliff war dort ausgeklammert)
 - Ziel: Die Graybox fühlt sich nach der Station aus `STYLE.md` an: kaltes Neon in Gängen, warmes Licht in Bar/Diner, eine Leuchtfarbe pro Raum.
-- Enthalten: Lichter pro Raum (mehrere, Raumfarbe), Leuchtstreifen-Platzhalter mit Emission, gebackenes Licht (niedrige Lightmap-Auflösung,
+- Enthalten: Lichter pro Raum (mehrere, Raumfarbe), Light Probes, Leuchtstreifen-Platzhalter mit Emission, gebackenes Licht (niedrige Lightmap-Auflösung,
   passt zum Retro-Look), Nebel, dunkles Ambient, Weltraum-Skybox mit Platzhalter `T_Sky_Space.png`, flackernde Neonröhre (Skript),
   rotes Warnlicht in der Prüfkammer, Licht-Setup reproduzierbar per Editor-Menü
-- Nicht enthalten: finale Modelle/Texturen (Pipeline), Licht-Proben für bewegte Figuren (mit P14), Post-Processing
+- Nicht enthalten: finale Modelle/Texturen (Pipeline), Post-Processing
 - Abnahme: Jeder Raum hat seine Leuchtfarbe, Stimmung entspricht `STYLE.md`, WebGL-Build läuft, Licht lässt sich nach Graybox-Änderung per Menü neu backen.
+- Ergebnis: siehe `docs/STATION.md` → "Licht & Stimmung". Light Probes doch enthalten (Schalter-Knöpfe waren sonst schwarz).

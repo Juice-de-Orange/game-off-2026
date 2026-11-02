@@ -124,6 +124,7 @@ namespace GameOff.EditorTools
             var walls = Child(root, "Walls");
             var glass = Child(root, "Glass");
             var lights = Child(root, "Lights");
+            var fixtures = Child(root, "LightFixtures");
             var props = Child(root, "Props_Placeholder");
             var markers = Child(root, "Markers");
 
@@ -143,8 +144,12 @@ namespace GameOff.EditorTools
                 BuildWall(roomWalls, room, false, room.Z0, room.Z0 + WallThickness * 0.5f, room.X0 + WallThickness, room.X1 - WallThickness, mat);
                 BuildWall(roomWalls, room, false, room.Z1, room.Z1 - WallThickness * 0.5f, room.X0 + WallThickness, room.X1 - WallThickness, mat);
 
-                AddLight(lights, room);
+                AddRoomLights(lights, fixtures, room);
             }
+
+            // Tired neon tubes in the staff corridors (realtime so they can flicker).
+            AddFlickerLight(lights, "ServiceCorridor_Flicker", new Vector3(-7, 2.6f, -10), LightColors[Area.Neutral]);
+            AddFlickerLight(lights, "MotelCorridor_Flicker", new Vector3(-15, 2.6f, 1), LightColors[Area.Motel]);
 
             // Glass panes (one per window, centered on the wall line)
             foreach (var o in Openings)
@@ -170,6 +175,7 @@ namespace GameOff.EditorTools
             surface.useGeometry = UnityEngine.AI.NavMeshCollectGeometry.PhysicsColliders;
             ceilings.AddComponent<Unity.AI.Navigation.NavMeshModifier>().ignoreFromBuild = true;
             glass.AddComponent<Unity.AI.Navigation.NavMeshModifier>().ignoreFromBuild = true;
+            fixtures.AddComponent<Unity.AI.Navigation.NavMeshModifier>().ignoreFromBuild = true;
 
             System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(PrefabPath));
             PrefabUtility.SaveAsPrefabAssetAndConnect(root, PrefabPath, InteractionMode.AutomatedAction);
@@ -209,17 +215,112 @@ namespace GameOff.EditorTools
             Block(parent, onXLine ? $"Wall_X{line:0.#}_{mid:0.#}" : $"Wall_Z{line:0.#}_{mid:0.#}", pos, size, mat);
         }
 
-        private static void AddLight(GameObject parent, Room room)
+        /// <summary>
+        /// Baked ceiling lights on a grid (about one per 4-5 m) in the room's color, each with an emissive strip below
+        /// the ceiling as placeholder for SM_Station_Ceiling_2x2_Light. Special rooms get accent colors.
+        /// </summary>
+        private static void AddRoomLights(GameObject lights, GameObject fixtures, Room room)
         {
-            var go = new GameObject($"{room.Name}_Light");
+            float w = room.X1 - room.X0, d = room.Z1 - room.Z0;
+            float spacing = room.Height > 5 ? 5f : 4f;
+            int nx = Mathf.Max(1, Mathf.RoundToInt(w / spacing));
+            int nz = Mathf.Max(1, Mathf.RoundToInt(d / spacing));
+            bool alongX = w >= d; // strips run along the longer side
+
+            for (int ix = 0; ix < nx; ix++)
+            for (int iz = 0; iz < nz; iz++)
+            {
+                var pos = new Vector3(room.X0 + w * (ix + 0.5f) / nx, room.Height - 0.25f, room.Z0 + d * (iz + 0.5f) / nz);
+                Color color = RoomLightColor(room, ix + iz);
+                BakedLight(lights, $"{room.Name}_Light_{ix}_{iz}", pos, color, spacing * 1.6f + room.Height * 0.5f, RoomLightIntensity(room));
+
+                var stripSize = alongX ? new Vector3(1.4f, 0.06f, 0.2f) : new Vector3(0.2f, 0.06f, 1.4f);
+                var strip = Block(fixtures, $"{room.Name}_Strip_{ix}_{iz}", pos + Vector3.up * 0.2f, stripSize, EmissiveMaterial(StripColor(room, ix + iz)));
+                Object.DestroyImmediate(strip.GetComponent<Collider>());
+            }
+
+            // Accents
+            if (room.Name == "Hangar")
+            {
+                BakedLight(lights, "Hangar_DoorRed_W", new Vector3(-8.5f, 6.5f, -25), LightColors[Area.Danger], 10f, 3f);
+                BakedLight(lights, "Hangar_DoorRed_E", new Vector3(8.5f, 6.5f, -25), LightColors[Area.Danger], 10f, 3f);
+            }
+            if (room.Name == "InspectionLock")
+                BakedLight(lights, "Lock_WarningLamp (SM_Counter_WarningLamp)", new Vector3(3.6f, 2.5f, -9), LightColors[Area.Danger], 4f, 2.5f);
+            if (room.Name == "Hall")
+                BakedLight(lights, "Hall_PlanetGlow", new Vector3(0, 3f, 5.2f), new Color(0.45f, 0.6f, 0.9f), 9f, 1.5f);
+        }
+
+        /// <summary>How strongly a room's light is tinted with its accent color (1 = full color). Strips always use full color.</summary>
+        private static readonly Dictionary<Area, float> LightTint = new Dictionary<Area, float>
+        {
+            { Area.Neutral, 1f }, { Area.Counter, 0.5f }, { Area.Danger, 1f }, { Area.Motel, 0.4f },
+            { Area.Bar, 0.8f }, { Area.Kiosk, 0.6f }, { Area.Diner, 0.75f },
+        };
+
+        /// <summary>The light's tint: the strip color, pulled toward white per area.</summary>
+        private static Color RoomLightColor(Room room, int index)
+        {
+            if (room.Name == "Hangar") return StripColor(room, index);
+            return Color.Lerp(Color.white, StripColor(room, index), LightTint[room.Area]);
+        }
+
+        /// <summary>Full accent color of a ceiling strip: hangar white work light, bar alternates orange/violet.</summary>
+        private static Color StripColor(Room room, int index)
+        {
+            if (room.Name == "Hangar") return new Color(0.92f, 0.95f, 1f);
+            return room.Area == Area.Bar && index % 2 == 1 ? new Color(0.76f, 0.48f, 0.84f) : LightColors[room.Area];
+        }
+
+        private static float RoomLightIntensity(Room room)
+        {
+            if (room.Name == "Hangar") return 4f;
+            if (room.Height > 5) return 3f;
+            return room.Area == Area.Bar || room.Area == Area.Diner ? 1.8f : 1.5f;
+        }
+
+        private static void BakedLight(GameObject parent, string name, Vector3 pos, Color color, float range, float intensity)
+        {
+            var go = new GameObject(name);
             go.transform.SetParent(parent.transform, false);
-            go.transform.position = new Vector3((room.X0 + room.X1) * 0.5f, room.Height - 0.4f, (room.Z0 + room.Z1) * 0.5f);
+            go.transform.position = pos;
             var light = go.AddComponent<Light>();
             light.type = LightType.Point;
-            light.color = LightColors[room.Area];
-            light.range = Mathf.Max(room.X1 - room.X0, room.Z1 - room.Z0) * 0.9f + room.Height;
-            light.intensity = room.Height > 5 ? 6f : 3f;
+            light.color = color;
+            light.range = range;
+            light.intensity = intensity;
+            light.shadows = LightShadows.Soft;
+            light.lightmapBakeType = LightmapBakeType.Baked;
+        }
+
+        private static void AddFlickerLight(GameObject parent, string name, Vector3 pos, Color color)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent.transform, false);
+            go.transform.position = pos;
+            var light = go.AddComponent<Light>();
+            light.type = LightType.Point;
+            light.color = color;
+            light.range = 4f;
+            light.intensity = 1.2f;
             light.shadows = LightShadows.None;
+            light.lightmapBakeType = LightmapBakeType.Realtime;
+            go.AddComponent<GameOff.Core.LightFlicker>();
+        }
+
+        private static readonly Dictionary<Color, Material> EmissiveCache = new Dictionary<Color, Material>();
+
+        private static Material EmissiveMaterial(Color color)
+        {
+            if (EmissiveCache.TryGetValue(color, out var cached) && cached != null) return cached;
+            string name = $"M_Graybox_Emit_{ColorUtility.ToHtmlStringRGB(color)}";
+            var mat = GetOrCreateMaterial(name, color, false);
+            mat.EnableKeyword("_EMISSION");
+            mat.SetColor("_EmissionColor", color * 2f);
+            mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.BakedEmissive;
+            EditorUtility.SetDirty(mat);
+            EmissiveCache[color] = mat;
+            return mat;
         }
 
         /// <summary>Placeholder blocks named after the requested assets (docs/ASSET-REQUESTS.md). Replaced by real prefabs later.</summary>
@@ -295,9 +396,13 @@ namespace GameOff.EditorTools
             go.name = name;
             go.transform.SetParent(parent.transform, false);
             go.transform.position = center;
-            go.GetComponent<MeshRenderer>().sharedMaterial = mat;
+            var meshRenderer = go.GetComponent<MeshRenderer>();
+            meshRenderer.sharedMaterial = mat;
+            if (mat.renderQueue >= (int)UnityEngine.Rendering.RenderQueue.Transparent)
+                meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; // glass must not block light
             pb.ToMesh();
             pb.Refresh();
+            UnityEditor.ProBuilder.EditorMeshUtility.Optimize(pb, true); // generates lightmap UVs for baking
             go.AddComponent<BoxCollider>();
             GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.BatchingStatic | StaticEditorFlags.ContributeGI);
             return go;
