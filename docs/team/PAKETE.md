@@ -86,12 +86,18 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   alle Räume erreichbar, längster Weg Bar → Zimmer 103 = 8 s. Props sind benannte Platzhalter-Blöcke; Marker für Spawn, Schalter-Kamera, Reisenden-Standpunkt.
 
 ### P05 — Schalter-Ansicht
-- Größe: M · Priorität: Muss · Status: in Arbeit (max, 02.11.)
+- Größe: M · Priorität: Muss · Status: fertig (max, 02.11.)
 - Braucht: P03
 - Ziel: Am Schalter E drücken → Kamera fährt auf den Tisch, Maus wird frei; Verlassen per Esc/Taste.
 - Enthalten: Cinemachine-Übergang, Tischfläche, Knöpfe Verhaften/Luftschleuse, Stempel Durchlassen/Abweisen
 - Nicht enthalten: Dokumentenlogik
 - Abnahme: Wechsel hin und zurück ohne Ruckeln, Knöpfe lösen Events aus.
+- Ergebnis: Prefab `Prefabs/Counter/PF_CounterStation.prefab` in `Main.unity` am Schalterstuhl (-2, -9). E am Stuhl → Cinemachine-Blende
+  (0,6 s) auf `DeskVCam`, Maus frei, Hinweis "[Q] Leave counter"; Q → zurück. Klickbare Platzhalter auf dem Tisch: Stempel
+  APPROVE/DENY, Knopf ARREST, Knopf AIRLOCK unter Schutzkappe (1. Klick Kappe auf, 2. Klick auslösen). Für P06/P07/P08:
+  `CounterStation.ActionTriggered` (Event mit `CounterAction` Approve/Deny/Arrest/Airlock), `SeatedChanged`, `IsSeated`;
+  jedes `CounterClickable` hat zusätzlich ein UnityEvent `onPressed`. Spieler-Prefab hat jetzt `PlayerCamera` mit CinemachineBrain
+  + `PlayerVCam` am Kopf. Alle vier Aktionen + Hin/Zurück im Play-Modus getestet.
 
 ### P06 — Dokumente
 - Größe: L · Priorität: Muss · Status: offen
