@@ -49,7 +49,7 @@ namespace GameOff.EditorTools
             new Room("ServiceCorridor",-8, -6, -12,  -6, 3, Area.Neutral),
             new Room("Counter",       -6,   0, -12,  -6, 3, Area.Counter),
             new Room("InspectionLock", 0,   4, -12,  -6, 3, Area.Danger),
-            new Room("Hangar",       -10,  10, -26, -12, 9, Area.Danger),
+            new Room("Hangar",       -18,  18, -40, -12, 16, Area.Danger),
             new Room("MotelCorridor",-20,  -8,   0,   2, 3, Area.Motel),
             new Room("MotelRoom101", -12,  -8,   2,   6, 3, Area.Motel),
             new Room("MotelRoom102", -16, -12,   2,   6, 3, Area.Motel),
@@ -75,9 +75,10 @@ namespace GameOff.EditorTools
             new Opening(false, -6,   2,   1.6f, 0, 2.2f),   // Lock -> hall (approve)
             new Opening(false,-12,   2,   1.6f, 0, 2.2f),   // Hangar -> lock (arrive / deny)
             new Opening(true,   4,  -9,   1.6f, 0, 2.2f),   // Outer airlock hatch (closed slab added separately)
-            new Opening(false,-26,   0,  16.0f, 0, 7.0f),   // Hangar door to space
+            new Opening(false,-40,   0,  28.0f, 0, 12.0f),  // Hangar mouth to space (energy barrier, P23)
+            new Opening(false,  6,   0,  10.0f, 0, 6.0f),   // Hall → observation deck (full height, deck built separately)
             // Windows
-            new Opening(false,  6,   0,   8.0f, 0.8f, 4.5f, true), // Hall panorama
+            new Opening(false,  8,  14,   8.0f, 0.9f, 2.4f, true), // Bar window (north), matches SM_Station_Wall_Window_2x3
             new Opening(true,   0,  -9,   4.0f, 0.9f, 2.2f, true), // Counter -> lock
             new Opening(false,-12,  -3,   4.0f, 1.0f, 2.2f, true), // Counter -> hangar
             new Opening(true, -20,   4,   0.6f, 1.2f, 1.8f, true), // Porthole room 103
@@ -153,13 +154,16 @@ namespace GameOff.EditorTools
 
                 // Visual layer
                 var roomVisual = Child(visual, room.Name);
-                if (floorKit) TileRoom(roomVisual, room, KitFloor, -0.1f);
-                if (ceilingKit) TileRoom(roomVisual, room, KitCeiling, room.Height);
+                var set = ModulesFor(room);
+                float floorCell = set.Floor == KitHangarFloor ? 4f : KitCell;
+                float ceilingCell = set.Ceiling == KitHangarCeiling ? 4f : KitCell;
+                if (floorKit) TileRoom(roomVisual, room, set.Floor, -KitHeight(set.Floor), floorCell);
+                if (ceilingKit) TileRoom(roomVisual, room, set.Ceiling, room.Height - set.CeilingDepth, ceilingCell);
                 // Kit walls face into the room: the module's front is local -Z.
-                BuildWallVisual(roomVisual, room, true, room.X0, room.X0 + WallThickness * 0.5f, room.Z0, room.Z1, -90f, mat);
-                BuildWallVisual(roomVisual, room, true, room.X1, room.X1 - WallThickness * 0.5f, room.Z0, room.Z1, 90f, mat);
-                BuildWallVisual(roomVisual, room, false, room.Z0, room.Z0 + WallThickness * 0.5f, room.X0, room.X1, 180f, mat);
-                BuildWallVisual(roomVisual, room, false, room.Z1, room.Z1 - WallThickness * 0.5f, room.X0, room.X1, 0f, mat);
+                BuildWallVisual(roomVisual, room, set, true, room.X0, room.X0 + WallThickness * 0.5f, room.Z0, room.Z1, -90f, mat);
+                BuildWallVisual(roomVisual, room, set, true, room.X1, room.X1 - WallThickness * 0.5f, room.Z0, room.Z1, 90f, mat);
+                BuildWallVisual(roomVisual, room, set, false, room.Z0, room.Z0 + WallThickness * 0.5f, room.X0, room.X1, 180f, mat);
+                BuildWallVisual(roomVisual, room, set, false, room.Z1, room.Z1 - WallThickness * 0.5f, room.X0, room.X1, 0f, mat);
 
                 AddRoomLights(lights, fixtures, room);
             }
@@ -168,20 +172,23 @@ namespace GameOff.EditorTools
             AddFlickerLight(lights, "ServiceCorridor_Flicker", new Vector3(-7, 2.6f, -10), LightColors[Area.Neutral]);
             AddFlickerLight(lights, "MotelCorridor_Flicker", new Vector3(-15, 2.6f, 1), LightColors[Area.Motel]);
 
-            // Glass panes (one per window, centered on the wall line)
+            // Glass panes (one per window, centered on the wall line). Invisible where a window module brings its own glass.
             foreach (var o in Openings)
             {
                 if (!o.Glass) continue;
                 float h = o.Head - o.Sill;
                 var pos = o.OnXLine ? new Vector3(o.Line, o.Sill + h * 0.5f, o.Center) : new Vector3(o.Center, o.Sill + h * 0.5f, o.Line);
                 var size = o.OnXLine ? new Vector3(0.05f, h, o.Width) : new Vector3(o.Width, h, 0.05f);
-                Block(glass, $"Glass_{pos.x:0}_{pos.z:0}", pos, size, _glass);
+                var pane = Block(glass, $"Glass_{pos.x:0}_{pos.z:0}", pos, size, _glass);
+                pane.GetComponent<MeshRenderer>().enabled = !(IsWindowModuleOpening(o) && Kit(KitWindowWall) != null);
             }
 
-            // Closed outer airlock hatch and hangar force field
+            BuildObservationDeck(root, floors, ceilings, walls, visual, glass, lights, fixtures);
+
+            // Closed outer airlock hatch and hangar barrier
             Block(root, "Airlock_OuterHatch (SM_Station_Hatch_Airlock)", new Vector3(4.1f, 1.1f, -9), new Vector3(0.2f, 2.2f, 1.6f), _hatch);
-            // The force field's collider keeps the player inside the station.
-            Block(root, "Hangar_ForceField (SM_Hangar_Door_Big)", new Vector3(0, 3.5f, -26), new Vector3(16, 7, 0.1f), _forceField);
+            // Placeholder for the energy barrier (P23). Its collider keeps the player inside the station.
+            Block(root, "Hangar_ForceField (P23 energy barrier)", new Vector3(0, 6f, -40), new Vector3(28, 12, 0.1f), _forceField);
 
             BuildProps(props);
             BuildMarkers(markers);
@@ -245,7 +252,48 @@ namespace GameOff.EditorTools
         private const string KitCeiling = "Station/SM_Station_Ceiling_2x2.fbx";
         private const string KitWall = "Station/SM_Station_Wall_2x3.fbx";
         private const string KitDoorWall = "Station/SM_Station_Wall_Door_2x3.fbx";
+        private const string KitWindowWall = "Station/SM_Station_Wall_Window_2x3.fbx";
+        private const string KitHangarWall = "Hangar/SM_Hangar_Wall_4x4.fbx";
+        private const string KitHangarFloor = "Hangar/SM_Hangar_Floor_4x4.fbx";
+        private const string KitHangarCeiling = "Hangar/SM_Hangar_Ceiling_4x4.fbx";
+        private const string KitDeckWindow = "Station/SM_Station_Window_Curved.fbx";
+        private const string KitDeckFloor = "Station/SM_Station_Floor_DeckRound.fbx";
+        private const string KitDeckCeiling = "Station/SM_Station_Ceiling_DeckRound.fbx";
+        private const string KitSteps = "Station/SM_Station_Steps_2m.fbx";
         private const float KitCell = 2f, KitWallHeight = 3f, KitDoorWidth = 1.6f, KitDoorHeight = 2.2f;
+        private const float WindowSill = 0.9f, WindowHead = 2.4f; // SM_Station_Wall_Window_2x3
+
+        /// <summary>Module set used for a room: the hangar uses big 4 x 4 m modules once they exist.</summary>
+        private readonly struct ModuleSet
+        {
+            public readonly string Wall, Floor, Ceiling;
+            public readonly float Cell, Height, CeilingDepth;
+            public ModuleSet(string wall, string floor, string ceiling, float cell, float height, float ceilingDepth)
+            {
+                Wall = wall; Floor = floor; Ceiling = ceiling; Cell = cell; Height = height; CeilingDepth = ceilingDepth;
+            }
+        }
+
+        private static ModuleSet ModulesFor(Room room)
+        {
+            if (room.Name == "Hangar" && Kit(KitHangarWall) != null)
+                return new ModuleSet(KitHangarWall, Kit(KitHangarFloor) != null ? KitHangarFloor : KitFloor,
+                    Kit(KitHangarCeiling) != null ? KitHangarCeiling : KitCeiling, 4f, 4f, Kit(KitHangarCeiling) != null ? 1f : 0f);
+            return new ModuleSet(KitWall, KitFloor, KitCeiling, KitCell, KitWallHeight, 0f);
+        }
+
+        /// <summary>
+        /// True if the window module can fill this opening completely: matching sill/head and the opening starts and
+        /// ends on the 2 m grid (rooms are on that grid), so every covered cell gets a module with its own glass.
+        /// </summary>
+        private static bool IsWindowModuleOpening(Opening o)
+        {
+            if (!o.Glass || !Mathf.Approximately(o.Sill, WindowSill) || !Mathf.Approximately(o.Head, WindowHead)) return false;
+            float start = o.Center - o.Width * 0.5f, end = o.Center + o.Width * 0.5f;
+            return OnGrid(start) && OnGrid(end);
+        }
+
+        private static bool OnGrid(float v) => Mathf.Abs(v / KitCell - Mathf.Round(v / KitCell)) < 0.001f;
         // Counter furniture orientation (officer sits at x = -2 looking +X; checked visually).
         private const float DeskYaw = 0f, ChairYaw = 90f, DocSlotYaw = 90f;
 
@@ -275,11 +323,11 @@ namespace GameOff.EditorTools
             return go;
         }
 
-        /// <summary>Fills a room's floor (or ceiling) with 2x2 m tiles. Rooms are on the 2 m grid, so tiles fit exactly.</summary>
-        private static void TileRoom(GameObject parent, Room room, string tile, float y)
+        /// <summary>Fills a room's floor (or ceiling) with square tiles of the given size. Rooms are on the grid, so tiles fit exactly.</summary>
+        private static void TileRoom(GameObject parent, Room room, string tile, float y, float cell = KitCell)
         {
-            for (float x = room.X0 + KitCell * 0.5f; x < room.X1; x += KitCell)
-            for (float z = room.Z0 + KitCell * 0.5f; z < room.Z1; z += KitCell)
+            for (float x = room.X0 + cell * 0.5f; x < room.X1; x += cell)
+            for (float z = room.Z0 + cell * 0.5f; z < room.Z1; z += cell)
                 PlaceKit(parent, tile, new Vector3(x, y, z), 0f);
         }
 
@@ -287,19 +335,154 @@ namespace GameOff.EditorTools
         /// Visual wall in 2 m x 3 m cells: plain cell → wall module; cell with a centered 1.6 x 2.2 m door → door-wall module;
         /// anything else (windows, narrow doors, partial heights) → visible graybox fill for that cell.
         /// </summary>
-        private static void BuildWallVisual(GameObject parent, Room room, bool onXLine, float line, float offsetLine,
+        // --- Observation deck (docs/STATION.md 2.0): half circle north of the hall, two steps down ---
+        private const float DeckRadius = 5f, DeckDrop = 0.36f, StepHeight = 0.18f, StepDepth = 0.4f, DeckSillHeight = 0.5f;
+        private const int DeckGlassSegments = 8, DeckArcSegments = 16;
+        private static readonly Vector3 DeckCenter = new Vector3(0f, 0f, 6f);
+        private const float HallHeight = 6f;
+
+        private static void BuildObservationDeck(GameObject root, GameObject floors, GameObject ceilings, GameObject walls,
+            GameObject visual, GameObject glass, GameObject lights, GameObject fixtures)
+        {
+            var mat = _materials[Area.Neutral];
+            var deckVisual = Child(visual, "ObservationDeck");
+
+            // Floor, ceiling and the one step between hall floor (y 0) and deck floor (y -0.36)
+            var floor = HalfDisc(floors, "Deck_Floor", DeckCenter + Vector3.up * (-DeckDrop - FloorThickness), DeckRadius, FloorThickness, mat);
+            floor.GetComponent<MeshRenderer>().enabled = Kit(KitDeckFloor) == null;
+            var ceiling = HalfDisc(ceilings, "Deck_Ceiling", DeckCenter + Vector3.up * HallHeight, DeckRadius, FloorThickness, mat);
+            ceiling.GetComponent<MeshRenderer>().enabled = Kit(KitDeckCeiling) == null;
+            var step = Block(floors, "Deck_Step", new Vector3(0f, -DeckDrop + StepHeight * 0.5f, DeckCenter.z + StepDepth * 0.5f),
+                new Vector3(DeckRadius * 2f, StepHeight, StepDepth), mat);
+            step.GetComponent<MeshRenderer>().enabled = Kit(KitSteps) == null;
+
+            PlaceKit(deckVisual, KitDeckFloor, new Vector3(0f, -DeckDrop - KitHeight(KitDeckFloor), DeckCenter.z + DeckRadius * 0.5f), 0f);
+            PlaceKit(deckVisual, KitDeckCeiling, new Vector3(0f, HallHeight, DeckCenter.z + DeckRadius * 0.5f), 0f);
+            // Step module: 2 risers over 0.8 m depth (z 6.0..6.8). Its pivot is the center of its footprint → z 6.4,
+            // so the upper tread lines up with the walkable Deck_Step (z 6.0..6.4, top -0.18) and the lower one with the deck floor.
+            if (Kit(KitSteps) != null)
+                for (float x = -DeckRadius + 1f; x < DeckRadius; x += 2f)
+                    PlaceKit(deckVisual, KitSteps, new Vector3(x, -DeckDrop, DeckCenter.z + StepDepth), 180f);
+
+            // Glass front: 8 segments around the half circle, each a low sill wall + glass pane (colliders keep the player in).
+            var deckWalls = Child(walls, "ObservationDeck");
+            bool windowKit = Kit(KitDeckWindow) != null;
+            float chord = 2f * DeckRadius * Mathf.Sin(Mathf.PI / (2f * DeckGlassSegments));
+            for (int i = 0; i < DeckGlassSegments; i++)
+            {
+                float a = (i + 0.5f) * Mathf.PI / DeckGlassSegments;
+                var dir = new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a));
+                var inward = -dir;
+                float yaw = Mathf.Atan2(-inward.x, -inward.z) * Mathf.Rad2Deg; // module front (local -Z) faces the deck
+                var rot = Quaternion.Euler(0f, yaw, 0f);
+                var basePos = DeckCenter + dir * (DeckRadius * Mathf.Cos(Mathf.PI / (2f * DeckGlassSegments)) - WallThickness * 0.5f);
+
+                var sill = Block(deckWalls, $"Deck_Sill_{i}", basePos + Vector3.up * (-DeckDrop + DeckSillHeight * 0.5f),
+                    new Vector3(chord, DeckSillHeight, WallThickness), mat);
+                sill.transform.rotation = rot;
+                sill.GetComponent<MeshRenderer>().enabled = !windowKit;
+                float paneHeight = HallHeight - (DeckSillHeight - DeckDrop);
+                var pane = Block(glass, $"Deck_Glass_{i}", basePos + Vector3.up * (DeckSillHeight - DeckDrop + paneHeight * 0.5f),
+                    new Vector3(chord, paneHeight, 0.05f), _glass);
+                pane.transform.rotation = rot;
+                pane.GetComponent<MeshRenderer>().enabled = !windowKit;
+                PlaceKit(deckVisual, KitDeckWindow, basePos + Vector3.up * -DeckDrop, yaw);
+            }
+
+            // Light: cold glow of the home planet in front of the glass, plus two soft ceiling lights.
+            BakedLight(lights, "Deck_PlanetGlow", DeckCenter + new Vector3(0f, 3f, 3.5f), new Color(0.45f, 0.6f, 0.9f), 9f, 1.5f);
+            BakedLight(lights, "Deck_Light_W", DeckCenter + new Vector3(-2.5f, HallHeight - 0.4f, 2f), LightColors[Area.Neutral], 8f, 1.8f);
+            BakedLight(lights, "Deck_Light_E", DeckCenter + new Vector3(2.5f, HallHeight - 0.4f, 2f), LightColors[Area.Neutral], 8f, 1.8f);
+        }
+
+        /// <summary>
+        /// A half-disc slab (north half, +Z side of center) of given radius and thickness, bottom at center.y.
+        /// Built as a ProBuilder mesh so it persists in the prefab; mesh collider for walking.
+        /// </summary>
+        private static GameObject HalfDisc(GameObject parent, string name, Vector3 bottomCenter, float radius, float thickness, Material mat)
+        {
+            var positions = new List<Vector3>();
+            // 0: top center, 1: bottom center, then pairs (top, bottom) along the arc from +X (angle 0) to -X (angle 180)
+            positions.Add(new Vector3(0f, thickness, 0f));
+            positions.Add(Vector3.zero);
+            for (int i = 0; i <= DeckArcSegments; i++)
+            {
+                float a = i * Mathf.PI / DeckArcSegments;
+                var p = new Vector3(Mathf.Cos(a) * radius, 0f, Mathf.Sin(a) * radius);
+                positions.Add(p + Vector3.up * thickness);
+                positions.Add(p);
+            }
+            int Top(int i) => 2 + i * 2;
+            int Bottom(int i) => 3 + i * 2;
+
+            var top = new List<int>(); var bottom = new List<int>(); var rim = new List<int>(); var back = new List<int>();
+            for (int i = 0; i < DeckArcSegments; i++)
+            {
+                AddTriangle(top, positions, 0, Top(i), Top(i + 1), Vector3.up);
+                AddTriangle(bottom, positions, 1, Bottom(i), Bottom(i + 1), Vector3.down);
+                var outward = positions[Top(i)] + positions[Top(i + 1)];
+                AddTriangle(rim, positions, Top(i), Top(i + 1), Bottom(i + 1), outward);
+                AddTriangle(rim, positions, Top(i), Bottom(i + 1), Bottom(i), outward);
+            }
+            // Straight back edge along the center line (faces -Z)
+            AddTriangle(back, positions, Top(0), Top(DeckArcSegments), Bottom(DeckArcSegments), Vector3.back);
+            AddTriangle(back, positions, Top(0), Bottom(DeckArcSegments), Bottom(0), Vector3.back);
+
+            var faces = new List<Face> { new Face(top.ToArray()), new Face(bottom.ToArray()), new Face(rim.ToArray()), new Face(back.ToArray()) };
+            var pb = ProBuilderMesh.Create(positions, faces);
+            var go = pb.gameObject;
+            go.name = name;
+            go.transform.SetParent(parent.transform, false);
+            go.transform.position = bottomCenter;
+            go.GetComponent<MeshRenderer>().sharedMaterial = mat;
+            pb.ToMesh();
+            pb.Refresh();
+            UnityEditor.ProBuilder.EditorMeshUtility.Optimize(pb, true);
+            go.AddComponent<MeshCollider>().sharedMesh = go.GetComponent<MeshFilter>().sharedMesh;
+            GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.BatchingStatic | StaticEditorFlags.ContributeGI);
+            return go;
+        }
+
+        /// <summary>Adds a triangle wound so that its normal points along 'expected' (Unity: normal = cross(b - a, c - a)).</summary>
+        private static void AddTriangle(List<int> list, List<Vector3> positions, int a, int b, int c, Vector3 expected)
+        {
+            var n = Vector3.Cross(positions[b] - positions[a], positions[c] - positions[a]);
+            if (Vector3.Dot(n, expected) >= 0f) { list.Add(a); list.Add(b); list.Add(c); }
+            else { list.Add(a); list.Add(c); list.Add(b); }
+        }
+
+        private static float KitHeight(string relativePath)
+        {
+            // Mesh bounds are reliable on an asset that was never placed in a scene (Renderer.bounds may not be).
+            var model = Kit(relativePath);
+            if (model == null) return 0f;
+            float min = float.MaxValue, max = float.MinValue;
+            foreach (var filter in model.GetComponentsInChildren<MeshFilter>())
+            {
+                if (filter.sharedMesh == null) continue;
+                var b = filter.sharedMesh.bounds;
+                float scale = filter.transform.lossyScale.y;
+                float offset = filter.transform.position.y - model.transform.position.y;
+                min = Mathf.Min(min, offset + b.min.y * scale);
+                max = Mathf.Max(max, offset + b.max.y * scale);
+            }
+            return max > min ? max - min : 0f;
+        }
+
+        private static void BuildWallVisual(GameObject parent, Room room, ModuleSet set, bool onXLine, float line, float offsetLine,
             float from, float to, float yaw, Material mat)
         {
-            bool wallKit = Kit(KitWall) != null, doorKit = Kit(KitDoorWall) != null;
+            bool wallKit = Kit(set.Wall) != null, doorKit = set.Cell == KitCell && Kit(KitDoorWall) != null;
+            bool windowKit = set.Cell == KitCell && Kit(KitWindowWall) != null;
             // South/north walls stop at the side walls for the graybox fill (no overlapping corners).
             float fillFrom = onXLine ? from : from + WallThickness, fillTo = onXLine ? to : to - WallThickness;
 
-            for (float cell = from; cell < to - 0.01f; cell += KitCell)
+            for (float cell = from; cell < to - 0.01f; cell += set.Cell)
             {
-                float cellEnd = Mathf.Min(cell + KitCell, to), mid = (cell + cellEnd) * 0.5f;
-                for (float bottom = 0f; bottom < room.Height - 0.01f; bottom += KitWallHeight)
+                float cellEnd = Mathf.Min(cell + set.Cell, to), mid = (cell + cellEnd) * 0.5f;
+                for (float bottom = 0f; bottom < room.Height - 0.01f; bottom += set.Height)
                 {
-                    float top = Mathf.Min(bottom + KitWallHeight, room.Height);
+                    float top = Mathf.Min(bottom + set.Height, room.Height);
                     var ops = new List<Opening>();
                     foreach (var o in Openings)
                         if (o.OnXLine == onXLine && Mathf.Approximately(o.Line, line)
@@ -307,11 +490,17 @@ namespace GameOff.EditorTools
                             && o.Sill < top && o.Head > bottom)
                             ops.Add(o);
 
-                    bool fullCell = Mathf.Approximately(cellEnd - cell, KitCell) && Mathf.Approximately(top - bottom, KitWallHeight);
+                    bool fullCell = Mathf.Approximately(cellEnd - cell, set.Cell) && Mathf.Approximately(top - bottom, set.Height);
                     var pos = onXLine ? new Vector3(offsetLine, bottom, mid) : new Vector3(mid, bottom, offsetLine);
                     if (fullCell && ops.Count == 0 && wallKit)
                     {
-                        PlaceKit(parent, KitWall, pos, yaw);
+                        PlaceKit(parent, set.Wall, pos, yaw);
+                        continue;
+                    }
+                    if (fullCell && windowKit && ops.Count == 1 && bottom == 0f && IsWindowModuleOpening(ops[0])
+                        && ops[0].Center - ops[0].Width * 0.5f <= cell + 0.01f && ops[0].Center + ops[0].Width * 0.5f >= cellEnd - 0.01f)
+                    {
+                        PlaceKit(parent, KitWindowWall, pos, yaw);
                         continue;
                     }
                     if (fullCell && doorKit && ops.Count == 1 && bottom == 0f
@@ -333,7 +522,8 @@ namespace GameOff.EditorTools
         private static void AddRoomLights(GameObject lights, GameObject fixtures, Room room)
         {
             float w = room.X1 - room.X0, d = room.Z1 - room.Z0;
-            float spacing = room.Height > 5 ? 5f : 4f;
+            float spacing = room.Height > 10 ? 7f : room.Height > 5 ? 5f : 4f;
+            float lightY = room.Name == "Hangar" ? room.Height - 1.4f : room.Height - 0.25f; // below the hangar's ceiling truss
             int nx = Mathf.Max(1, Mathf.RoundToInt(w / spacing));
             int nz = Mathf.Max(1, Mathf.RoundToInt(d / spacing));
             bool alongX = w >= d; // strips run along the longer side
@@ -341,9 +531,10 @@ namespace GameOff.EditorTools
             for (int ix = 0; ix < nx; ix++)
             for (int iz = 0; iz < nz; iz++)
             {
-                var pos = new Vector3(room.X0 + w * (ix + 0.5f) / nx, room.Height - 0.25f, room.Z0 + d * (iz + 0.5f) / nz);
+                var pos = new Vector3(room.X0 + w * (ix + 0.5f) / nx, lightY, room.Z0 + d * (iz + 0.5f) / nz);
                 Color color = RoomLightColor(room, ix + iz);
-                BakedLight(lights, $"{room.Name}_Light_{ix}_{iz}", pos, color, spacing * 1.6f + room.Height * 0.5f, RoomLightIntensity(room));
+                float range = spacing * 1.6f + room.Height * (room.Height > 10 ? 0.9f : 0.5f);
+                BakedLight(lights, $"{room.Name}_Light_{ix}_{iz}", pos, color, range, RoomLightIntensity(room));
 
                 var stripSize = alongX ? new Vector3(1.4f, 0.06f, 0.2f) : new Vector3(0.2f, 0.06f, 1.4f);
                 var strip = Block(fixtures, $"{room.Name}_Strip_{ix}_{iz}", pos + Vector3.up * 0.2f, stripSize, EmissiveMaterial(StripColor(room, ix + iz)));
@@ -353,13 +544,12 @@ namespace GameOff.EditorTools
             // Accents
             if (room.Name == "Hangar")
             {
-                BakedLight(lights, "Hangar_DoorRed_W", new Vector3(-8.5f, 6.5f, -25), LightColors[Area.Danger], 10f, 3f);
-                BakedLight(lights, "Hangar_DoorRed_E", new Vector3(8.5f, 6.5f, -25), LightColors[Area.Danger], 10f, 3f);
+                BakedLight(lights, "Hangar_DoorRed_W", new Vector3(-14.5f, 10f, -39), LightColors[Area.Danger], 14f, 4f);
+                BakedLight(lights, "Hangar_DoorRed_E", new Vector3(14.5f, 10f, -39), LightColors[Area.Danger], 14f, 4f);
+                BakedLight(lights, "Hangar_BarrierGlow", new Vector3(0, 6f, -38.5f), new Color(0.37f, 0.6f, 1f), 16f, 3f);
             }
             if (room.Name == "InspectionLock")
                 BakedLight(lights, "Lock_WarningLamp (SM_Counter_WarningLamp)", new Vector3(3.6f, 2.5f, -9), LightColors[Area.Danger], 4f, 2.5f);
-            if (room.Name == "Hall")
-                BakedLight(lights, "Hall_PlanetGlow", new Vector3(0, 3f, 5.2f), new Color(0.45f, 0.6f, 0.9f), 9f, 1.5f);
         }
 
         /// <summary>How strongly a room's light is tinted with its accent color (1 = full color). Strips always use full color.</summary>
@@ -385,7 +575,7 @@ namespace GameOff.EditorTools
 
         private static float RoomLightIntensity(Room room)
         {
-            if (room.Name == "Hangar") return 4f;
+            if (room.Name == "Hangar") return 6f;
             if (room.Height > 5) return 3f;
             return room.Area == Area.Bar || room.Area == Area.Diner ? 1.8f : 1.5f;
         }
@@ -458,8 +648,9 @@ namespace GameOff.EditorTools
             KitProp(p, "Bar/SM_Bar_Counter.fbx", "SM_Bar_Counter_A", 14.5f, 2.5f, 0.7f, 3.0f, 1.1f, 0, 90);
             KitProp(p, "Bar/SM_Bar_Counter.fbx", "SM_Bar_Counter_B", 14.5f, 5.5f, 0.7f, 3.0f, 1.1f, 0, 90);
             Prop(p, "SM_Bar_Shelf", 17.6f, 4, 0.3f, 3.0f, 2.2f);
-            Prop(p, "SM_Bar_Table_A", 10.5f, 6, 0.8f, 0.8f, 1.1f);
-            Prop(p, "SM_Bar_Table_B", 10.5f, 1.5f, 0.8f, 0.8f, 1.1f);
+            // Standing tables along the north window
+            Prop(p, "SM_Bar_Table_A", 10.8f, 7.1f, 0.8f, 0.8f, 1.1f);
+            Prop(p, "SM_Bar_Table_B", 12.5f, 7.1f, 0.8f, 0.8f, 1.1f);
             for (int i = 0; i < 4; i++) KitProp(p, "Bar/SM_Bar_Stool.fbx", $"SM_Bar_Stool_{i + 1}", 13.6f, 1.6f + i * 1.6f, 0.4f, 0.4f, 0.75f);
             // Diner
             Prop(p, "SM_Diner_Counter", -12, -0.6f, 6.0f, 0.7f, 1.1f);
@@ -471,15 +662,19 @@ namespace GameOff.EditorTools
             Prop(p, "SM_Motel_Table", -17, 5.6f, 0.8f, 0.6f, 0.75f);
             Prop(p, "SM_Motel_Locker", -16.5f, 2.5f, 0.6f, 0.5f, 1.9f);
             // Hangar
-            Prop(p, "SM_Hangar_Shuttle", 0, -20, 6, 9, 3.5f);
+            // Hangar (36 x 28 m): shuttle in the middle, queue lane from its ramp to the inspection lock door (x 1..3)
+            Prop(p, "SM_Hangar_Shuttle", 0, -28, 6, 9, 3.5f);
             Prop(p, "SM_Hangar_DronePad", -7.5f, -14.5f, 3, 3, 0.2f);
             Prop(p, "SM_Hangar_CargoDrone", -7.5f, -14.5f, 1.6f, 1.6f, 0.8f, 0.2f);
-            Prop(p, "SM_Hangar_Barrier_W", 1, -13.7f, 0.3f, 3.2f, 1);
-            Prop(p, "SM_Hangar_Barrier_E", 3, -13.7f, 0.3f, 3.2f, 1);
-            Prop(p, "SM_Hangar_Crate_A", -9, -19, 1.2f, 1.2f, 1);
-            Prop(p, "SM_Hangar_Crate_B", -9, -20.4f, 1.2f, 1.2f, 1);
-            Prop(p, "SM_Hangar_Crate_C", -9, -19.7f, 1.2f, 1.2f, 1, 1);
-            Prop(p, "SM_Hangar_Tank", 8.8f, -15, 1.4f, 1.4f, 3.5f);
+            Prop(p, "SM_Hangar_Barrier_W", 1, -17.5f, 0.3f, 11f, 1);
+            Prop(p, "SM_Hangar_Barrier_E", 3, -17.5f, 0.3f, 11f, 1);
+            Prop(p, "SM_Hangar_Crate_A", -16.5f, -26, 1.2f, 1.2f, 1);
+            Prop(p, "SM_Hangar_Crate_B", -16.5f, -27.4f, 1.2f, 1.2f, 1);
+            Prop(p, "SM_Hangar_Crate_C", -16.5f, -26.7f, 1.2f, 1.2f, 1, 1);
+            Prop(p, "SM_Hangar_Crate_D", -15.2f, -33, 1.2f, 1.2f, 1);
+            Prop(p, "SM_Hangar_Tank_A", 16.3f, -16, 1.4f, 1.4f, 3.5f);
+            Prop(p, "SM_Hangar_Tank_B", 16.3f, -18.5f, 1.4f, 1.4f, 3.5f);
+            Prop(p, "SM_Hangar_Scaffold", 12, -30, 2f, 4f, 5f);
         }
 
         private static void BuildMarkers(GameObject parent)
@@ -487,7 +682,9 @@ namespace GameOff.EditorTools
             Marker(parent, "PlayerSpawn", new Vector3(-18, 0, 4), 90);
             Marker(parent, "CounterCameraAnchor", new Vector3(-2, 1.2f, -9), 90);
             Marker(parent, "TravelerStandPoint", new Vector3(2, 0, -9), -90);
-            Marker(parent, "ShuttleRamp", new Vector3(0, 0, -15), 0);
+            Marker(parent, "ShuttleRamp", new Vector3(0, 0, -23), 0);
+            Marker(parent, "ShuttleSpawnOutside", new Vector3(0, 6, -90), 0);   // P25: shuttle flies in from here through the barrier
+            Marker(parent, "ShuttleLandingPoint", new Vector3(0, 0, -28), 0);
         }
 
         private static void Prop(GameObject parent, string name, float x, float z, float w, float d, float h, float y = 0)

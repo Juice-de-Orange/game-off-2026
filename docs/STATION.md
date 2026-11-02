@@ -1,6 +1,7 @@
 # Station: Bauplan (Ebene 0)
 
-> **Status: FREIGEGEBEN (max, 02.11.2026)** — Grundlage für P04 (Graybox) und die Asset-Liste.
+> **Status: FREIGEGEBEN, Stand 2.0 (max, 02.11.2026)** — Grundlage für P04/P21/P22 und die Asset-Liste.
+> 2.0: Hangar 36 × 28 × 16 m, Aussichtsplattform statt Panoramafenster, Barfenster Nord.
 > Grafische Fassung: `docs/station/bauplan.html` (im Browser öffnen).
 > Änderungen am Grundriss nur nach Absprache, dann hier anpassen und in `DECISIONS.md` loggen.
 
@@ -17,7 +18,8 @@
 | Servicegang ("STAFF ONLY") | −8..−6 | −12..−6 | 3 | neutral | Muss |
 | Schalter (Arbeitsplatz) | −6..0 | −12..−6 | 3 | Cyan | Muss |
 | Prüfkammer (= Luftschleuse) | 0..4 | −12..−6 | 3 | Alarmrot | Muss |
-| Hangar | −10..10 | −26..−12 | 9 | Alarmrot / Weiß | Muss |
+| Hangar | −18..18 | −40..−12 | 16 | Weiß / Alarmrot am Tor | Muss |
+| Aussichtsplattform | Halbkreis, Mitte (0, 6), r = 5 | 6..11 | 6 (Boden −0,36) | neutral / Planetenschein | Soll |
 | Motelgang | −20..−8 | 0..2 | 3 | Giftgrün | Muss |
 | Motelzimmer 101 (verschlossen) | −12..−8 | 2..6 | 3 | Giftgrün | Muss |
 | Motelzimmer 102 (verschlossen) | −16..−12 | 2..6 | 3 | Giftgrün | Muss |
@@ -40,12 +42,14 @@
 | Prüfkammer → Halle (Durchlassen) | Z = −6 | X = 2 | 1,6 × 2,2 |
 | Hangar → Prüfkammer (Ankunft/Abweisen) | Z = −12 | X = 2 | 1,6 × 2,2 |
 | **Außenschott** Prüfkammer → All | X = 4 | Z = −9 | 1,6 × 2,2 |
-| **Hangartor** → All (Kraftfeld) | Z = −26 | X = 0 | 16 × 7 |
+| **Hangartor** → All (Energiebarriere, P23) | Z = −40 | X = 0 | 28 × 12 |
+| Halle ↔ Aussichtsplattform | Z = 6 | X = 0 | 10 × 6 (volle Höhe), 1 Stufe 0,18 m + Plattform −0,36 m |
 
 ## Fenster
 | Fenster | Wand | Bereich | Brüstung–Sturz |
 |---|---|---|---|
-| Panoramafenster Halle | Z = 6 | X −4..4 | 0,8–4,5 m |
+| Glasfront Aussichtsplattform | Halbkreis r = 5 | 8 Segmente à 1,95 m | 0,14–6 m (Brüstung 0,5 m über Plattformboden) |
+| Barfenster | Z = 8 | X 10..18 | 0,9–2,4 m (Modul `SM_Station_Wall_Window_2x3`) |
 | Scheibe Schalter → Prüfkammer (mit Dokument-Durchreiche) | X = 0 | Z −11..−7 | 0,9–2,2 m |
 | Fenster Schalter → Hangar | Z = −12 | X −5..−1 | 1,0–2,2 m |
 | Bullauge Zimmer 103 | X = −20 | Z = 4 | Ø 0,6 m, Mitte 1,5 m |
@@ -56,8 +60,10 @@
 | Spieler-Start (Bett in 103) | (−18, 4) |
 | Schalterstuhl / Kamera-Anker Schalteransicht | (−2, −9), Blick nach +X |
 | Standmarkierung Reisender in der Kammer | (2, −9) |
-| Shuttle-Landefeld (Mitte, Radius 5) | (0, −20) |
-| Warteschlange (Absperrgitter X = 1 und 3) | Z −18..−12 |
+| Shuttle-Landefeld (Mitte) | (0, −28) |
+| Shuttle-Rampe | (0, −23) |
+| Shuttle-Einflug von außen (P25) | (0, 6, −90) |
+| Warteschlange (Absperrgitter X = 1 und 3) | Z −23..−12 |
 | Frachtdrohne (Pad 3×3) | (−7,5, −14,5) |
 | Bar-Theke | X 14..15, Z 1..7 |
 | Kiosk-Theke | X 8,2..9, Z −5,4..−2,6 |
@@ -69,7 +75,7 @@
   Luftschleuse: Innentüren verriegeln, Außenschott Ost öffnet (sichtbar durch die Scheibe).
 - **Spieler:** Zimmer 103 → Motelgang → Halle → Servicegang → Schalter. Hangar (Frachtdrohne) über den Servicegang.
   Der Spieler betritt die Prüfkammer nie.
-- Laufwege bei 4 m/s: alle unter 10 s (Zimmer → Schalter ≈ 7 s).
+- Laufwege bei 4 m/s: Zimmer → Schalter 6 s, Halle → Plattform 3 s, Schalter → Hangar-Südende 11 s (gemessen, Stand 2.0).
 
 ## Graybox in Unity (P04)
 - Prefab: `Assets/_Project/Prefabs/Station/PF_Station_Graybox.prefab`, eingebaut in `Main.unity` (Instanz `Station_Graybox`).

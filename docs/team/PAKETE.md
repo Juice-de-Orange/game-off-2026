@@ -233,16 +233,20 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   Fehlt noch für den vollen Look: Fenster, schmale Tür, Wandvarianten (Polster/Holz), Schiebetüren, Möbel der übrigen Räume.
 
 ### P22 — Grundriss 2.0: großer Hangar, Aussichtsplattform, Barfenster
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 02.11.)
+- Größe: M · Priorität: Soll · Status: fertig (max, 02.11.)
 - Braucht: P21 · Folgt auf: P04, P21
 - Ziel: Station nach dem erweiterten Grundriss (`docs/STATION.md`, Stand 2.0).
 - Enthalten: Hangar 36 × 28 × 16 m; halbrunde Aussichtsplattform (r = 5 m, 2 Stufen tiefer, 8 Glassegmente) nördlich der Halle;
   Barfenster Nordwand; Builder-Unterstützung für Halbkreis, Stufen, Hangar-Module 4 × 4 m und Fenster-Wandmodule; Licht/NavMesh neu
 - Nicht enthalten: Energiebarriere (P23), Außenwelt/Himmel (P24), Schiffe (P25), Detail-Props (P26)
 - Abnahme: Alle Räume inkl. Plattform begehbar, Stufen ohne Hängenbleiben, Wege < 15 s, Licht gebacken.
+- Ergebnis: Builder kann Halbkreis-Plattform (eigenes ProBuilder-Mesh für Boden/Decke, Stufe, 8 Glassegmente mit Brüstung),
+  Hangar-Modulsatz 4 × 4 m (sobald geliefert) und Fenster-Wandmodule. Hangar 36 × 28 × 16 m, Barfenster x 10..18. Alle Wege
+  komplett (NavMesh), weitester Weg Schalter → Hangar-Süd 11 s; Spieler läuft im Play-Modus ohne Hängenbleiben auf die Plattform.
+  Bauplan `docs/station/bauplan.html` und `docs/STATION.md` auf Stand 2.0. Barriere ist noch Platzhalter (P23).
 
 ### P23 — Energiebarriere am Hangartor
-- Größe: S · Priorität: Soll · Status: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 02.11.)
 - Braucht: P22
 - Ziel: Sichtbare, lebendige Energiebarriere statt unsichtbarem Kraftfeld.
 - Enthalten: Shader (halbtransparent blau, wandernde Scanlinien, Randglühen, Rauschen), Emitter-Rahmen (`SM_Hangar_BarrierEmitter`),
