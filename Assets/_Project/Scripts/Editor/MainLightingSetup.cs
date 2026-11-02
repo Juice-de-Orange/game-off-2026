@@ -56,7 +56,7 @@ namespace GameOff.EditorTools
             RenderSettings.ambientLight = new Color(0.06f, 0.07f, 0.10f);
             RenderSettings.fog = true;
             RenderSettings.fogMode = FogMode.ExponentialSquared;
-            RenderSettings.fogDensity = 0.025f;
+            RenderSettings.fogDensity = 0.012f; // low: exterior and ships must stay visible through the windows
             RenderSettings.fogColor = new Color(0.05f, 0.06f, 0.09f);
             RenderSettings.defaultReflectionMode = DefaultReflectionMode.Custom;
 

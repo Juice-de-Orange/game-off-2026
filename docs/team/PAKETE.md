@@ -259,13 +259,17 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   WebGL-Build mit Barriere noch nicht im Browser angesehen.
 
 ### P24 — Himmel & Außenwelt
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 02.11.)
+- Größe: M · Priorität: Soll · Status: fertig (max, 02.11.)
 - Braucht: P22
 - Ziel: Beeindruckender Blick nach draußen.
 - Enthalten: Sterne/Nebel-Skybox, Sonne (Billboard + Lichtrichtung), Gasriese mit Ring, Heimatplanet mit Nachtlichtern, Mond — als ferne
   Objekte unter einem `SkyRig`; `SkyRig.SetDay(1..3)` dreht Sonne/Planeten pro Tag (Theme "Shift"); Außenmodule der Station
   (Rumpf, Träger, Solarflügel, Antennen, Andockarm, Hangar-Einfassung, Plattform-Kuppel) passend zu den Fenstern platziert
 - Abnahme: Aus Plattform, Bar, Halle und Hangar sieht man Station, Sonne und Planeten; `SetDay` verändert sichtbar die Szene.
+- Ergebnis: siehe `docs/STATION.md` → "Himmel & Außenwelt". Menü *GameOff → Build Sky & Exterior*; `SkyRig.SetDay(1..3)` dreht den Himmel
+  (0/18/36°) und senkt die Sonne (Echtzeit-Licht mit Schatten durch die Fenster). Alles mit Platzhaltern (prozedurale Planeten-Texturen
+  am finalen Pfad, graue Außenmodule) — Lieferungen der Pipeline werden beim nächsten Builder-Lauf übernommen. Im Editor geprüft
+  (Plattform Tag 1 + 3, Hangar); im WebGL-Build noch nicht angesehen.
 
 ### P25 — Verkehr: vorbeifliegende Schiffe & Shuttle-Ankunft
 - Größe: M · Priorität: Soll · Status: offen

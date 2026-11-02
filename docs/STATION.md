@@ -109,3 +109,16 @@
 - Modul-Vorderseite = lokale −Z; der Builder dreht jede Wand zur Raummitte.
 - Wo kein Modul passt, bleibt eine sichtbare Graybox-Füllung (ohne Collider). Kollision kommt immer aus den unsichtbaren Graybox-Blöcken.
 - Möbel mit Modell werden per `KitProp` gesetzt (Collider aus den Modell-Grenzen), sonst Grau-Block.
+
+## Himmel & Außenwelt (P24)
+- Menü **GameOff → Build Sky & Exterior** (`Scripts/Editor/SkyExteriorBuilder.cs`) baut `Prefabs/Environment/PF_SkyRig` und `PF_Exterior`
+  und setzt beide in die offene Szene. Neue Lieferungen (Außen-/Schiffsmodelle, Himmelstexturen) werden beim nächsten Lauf genutzt.
+- **SkyRig** (`Scripts/Core/SkyRig.cs`): Sonne (Billboard-Glühen + Echtzeit-Richtungslicht mit Schatten), Heimatplanet (Norden, knapp unter
+  Augenhöhe, Stadtlichter auf der Nachtseite), Gasriese mit Ring (Nordost, hoch), Mond (Nordwest). `SetDay(1..3)` dreht den Himmel um 0/18/36°
+  und senkt die Sonne von 16° auf 3° → das Licht durch die Fenster ändert sich jeden Tag (Theme "Shift"). Im Editor: Feld `previewDay`.
+- Shader: `GameOff/SkyPlanet` (Tag/Nacht nach `_GameOffSunDir`, Atmosphärenrand), `GameOff/SkyGlow` (Billboard im Vertex-Shader),
+  `GameOff/PlanetRing`. Kein Nebel auf Himmelsobjekten.
+- **Außenwelt** (Platzhalter bis zur Lieferung): Wohnmodule West/Ost, Träger, Solarflügel Nord/Süd, Antenne, Andockarm mit geparktem Schiff,
+  Einfassung der Hangaröffnung, blinkende Positionslichter (`BlinkLight`). Sichtbar von Plattform, Bar und Hangar.
+- Nebeldichte auf 0,012 gesenkt, damit die Außenwelt durch die Fenster sichtbar bleibt.
+- Platzhalter-Texturen (prozedural) liegen an den finalen Pfaden unter `Art/Textures/Sky/` — die Pipeline ersetzt nur die Dateien.
