@@ -216,3 +216,13 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Nicht enthalten: finale Modelle/Texturen (Pipeline), Post-Processing
 - Abnahme: Jeder Raum hat seine Leuchtfarbe, Stimmung entspricht `STYLE.md`, WebGL-Build läuft, Licht lässt sich nach Graybox-Änderung per Menü neu backen.
 - Ergebnis: siehe `docs/STATION.md` → "Licht & Stimmung". Light Probes doch enthalten (Schalter-Knöpfe waren sonst schwarz). Von Max im Browser abgenommen (02.11.).
+
+### P21 — Station mit dem Bausatz bauen (Teil 1)
+- Größe: M · Priorität: Muss · Status: in Arbeit (max, 02.11.)
+- Braucht: P04, P20 · Folgt auf: P04
+- Ziel: Die Station zeigt die gelieferten Modelle statt Grau-Blöcken, wo es sie schon gibt.
+- Enthalten: Builder setzt Boden-, Decken-, Wand- und Türwand-Module im 2-m-Raster; Schalter-Möbel (Tisch, Stuhl, Spind, Pinnwand,
+  Durchreiche), Bar (Tresen, Hocker). Kollision/NavMesh bleiben die unsichtbaren Graybox-Blöcke. Wo Module fehlen (Fenster,
+  schmale Türen, Wandvarianten, Restflächen), bleibt sichtbare Graybox. Lightmap-UVs für Modelle, neu backen.
+- Nicht enthalten: weitere Assets (kommen automatisch dazu, wenn der Builder erneut läuft), Teil 2 nach den nächsten Lieferungen.
+- Abnahme: Station sieht in allen Räumen nach Bausatz aus, wo Module existieren; Wege/NavMesh unverändert; Licht gebacken; keine Konsolenfehler.
