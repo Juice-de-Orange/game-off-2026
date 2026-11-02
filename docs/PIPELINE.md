@@ -127,3 +127,19 @@ in `docs/ASSET-REQUESTS.md`.
     Beschlagnahme-Gegenstände `SM_Item_*` (6 Stück), `UI_Telescope_Overlay`, `UI_Family_Photo` (3 Zustände).
   Reihenfolge: zuerst die drei Bausatz-Teile und die beiden Reworks, dann Items/UI.
 - antwort:
+
+### M007 — Mehr Abwechslung und Rundungen (21 neue Einträge)
+- datum: 2026-11-02
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`, Bausatz
+- status: offen
+- meldung: Max findet die Wände zu gleich und die Station zu eckig. Neu (alle P1 bis 09.11., außer Geländer):
+  - Wandvarianten als **eigene Dateien** (bisher nur als "Varianten" im Grundwand-Eintrag, wurden nicht geliefert):
+    `_Padded`, `_Panel`, `_Pipes`, `_Vent`, `_Damaged`, `_Screen`, `_Lockers`, dazu `SM_Station_Wall_2x1`, `SM_Station_Floor_2x2_Grate`,
+    `SM_Station_Ceiling_2x2_Light`. Bitte künftig jede Variante als eigenen Eintrag behandeln.
+  - Rundungen: `SM_Station_Ceiling_Arch_2x2` (Tonnengewölbe in Gängen), `SM_Station_Wall_CornerRound`, `SM_Station_Pillar_Round`,
+    `SM_Station_DoorTrim_Round` (+ `_Narrow`), `SM_Station_Wall_Arch_2x3`, `SM_Station_DeckArch`, `SM_Hall_CeilingDome`,
+    `SM_Deck_Railing`, `SM_Hangar_RibArch`.
+  Der Builder setzt alle automatisch, sobald die Dateien da sind. Reihenfolge: Wandvarianten zuerst, dann Gewölbe/Ecken/Bögen.
+- antwort:

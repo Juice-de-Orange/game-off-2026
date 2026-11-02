@@ -1322,7 +1322,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Diner/SM_Diner_Counter.fbx
 package: P04
 scene: Diner
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-22
 size_m: [6.0, 0.7, 1.1]
@@ -1350,7 +1350,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Diner/SM_Diner_Booth.fbx
 package: P04
 scene: Diner
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-22
 size_m: [2.2, 1.4, 1.2]
@@ -1377,7 +1377,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Diner/SM_Diner_MenuBoard.fbx
 package: P04
 scene: Diner
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-22
 size_m: [2.0, 0.1, 0.8]
@@ -3227,5 +3227,556 @@ animations: []
 collision: none
 refs: []
 placeholder: keiner (Tür spielt ohne Clip einfach keinen Ton)
+feedback: []
+```
+
+### SM_Station_Wall_2x3_Padded.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Padded.fbx
+package: P21
+scene: Motel, Schalter
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.2, 3.0]
+pivot: bottom_center
+tris_max: 600
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_2x3_Padded_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Gleiches Raster wie SM_Station_Wall_2x3 (2 x 3 m, 0,2 m tief, Vorderseite lokal -Z), kachelt nahtlos mit der Grundwand und den anderen Varianten. Gesteppte, gepolsterte Paneele in Beige/Creme (wie Raumschiff-Kabinen der 70er), einzelne Nähte geplatzt, Fußleiste dunkel.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/ai_corridor_padded_01.webp, docs/style/refs/real_crew_quarters_01.webp]
+placeholder: Box 2.0 x 0.2 x 3.0 m, Pivot bottom_center, Material-Slots [Wall]
+feedback: []
+```
+
+### SM_Station_Wall_2x3_Panel.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Panel.fbx
+package: P21
+scene: Bar, Diner
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.2, 3.0]
+pivot: bottom_center
+tris_max: 600
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_2x3_Panel_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Gleiches Raster wie SM_Station_Wall_2x3 (2 x 3 m, 0,2 m tief, Vorderseite lokal -Z), kachelt nahtlos mit der Grundwand und den anderen Varianten. Warme Kunstholz-Paneele (#5E3A24/#8A5A34) mit Metallleisten, unten Kickplatte aus Riffelblech, Brandflecken.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/ai_room_warm_panels_01.webp, docs/style/refs/ai_mess_table_02.webp]
+placeholder: Box 2.0 x 0.2 x 3.0 m, Pivot bottom_center, Material-Slots [Wall]
+feedback: []
+```
+
+### SM_Station_Wall_2x3_Pipes.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Pipes.fbx
+package: P21
+scene: Gänge, Hangar-Nähe, Schalter
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.35, 3.0]
+pivot: bottom_center
+tris_max: 900
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_2x3_Pipes_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Gleiches Raster wie SM_Station_Wall_2x3 (2 x 3 m, 0,2 m tief, Vorderseite lokal -Z), kachelt nahtlos mit der Grundwand und den anderen Varianten. Wand mit sichtbaren Rohrleitungen davor (3 Rohre waagerecht + 1 senkrecht mit Ventilrad), Schellen, Rost an Muffen. Rohre ragen bis 0,15 m in den Raum.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/ai_corridor_cargo_01.webp]
+placeholder: Box 2.0 x 0.35 x 3.0 m, Pivot bottom_center, Material-Slots [Wall]
+feedback: []
+```
+
+### SM_Station_Wall_2x3_Vent.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Vent.fbx
+package: P21
+scene: alle
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.25, 3.0]
+pivot: bottom_center
+tris_max: 700
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_2x3_Vent_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Gleiches Raster wie SM_Station_Wall_2x3 (2 x 3 m, 0,2 m tief, Vorderseite lokal -Z), kachelt nahtlos mit der Grundwand und den anderen Varianten. Wand mit großem Lüftungsgitter (Lamellen, Staubfahne darunter) und kleinem Warnschild 'AIR RETURN'.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 0.25 x 3.0 m, Pivot bottom_center, Material-Slots [Wall]
+feedback: []
+```
+
+### SM_Station_Wall_2x3_Damaged.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Damaged.fbx
+package: P21
+scene: Gänge, Motel, Hangar-Nähe
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.25, 3.0]
+pivot: bottom_center
+tris_max: 800
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_2x3_Damaged_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Gleiches Raster wie SM_Station_Wall_2x3 (2 x 3 m, 0,2 m tief, Vorderseite lokal -Z), kachelt nahtlos mit der Grundwand und den anderen Varianten. Abgenutzte Wand: ein Paneel fehlt (Kabel und Isolierung sichtbar), Delle, Wasserfleck, provisorisch mit Klebeband geflickt.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 0.25 x 3.0 m, Pivot bottom_center, Material-Slots [Wall]
+feedback: []
+```
+
+### SM_Station_Wall_2x3_Screen.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Screen.fbx
+package: P21
+scene: Halle, Bar, Gänge
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.25, 3.0]
+pivot: bottom_center
+tris_max: 700
+materials: [Wall, Screen]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_2x3_Screen_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_2x3_Screen_Emission.png   # 128x128, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Gleiches Raster wie SM_Station_Wall_2x3 (2 x 3 m, 0,2 m tief, Vorderseite lokal -Z), kachelt nahtlos mit der Grundwand und den anderen Varianten. Wand mit eingebautem CRT-Infobildschirm (Emission, Bernstein: 'KEEP PAPERS READY', Uhrzeit) und Kabelkanal.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 0.25 x 3.0 m, Pivot bottom_center, Material-Slots [Wall, Screen]
+feedback: []
+```
+
+### SM_Station_Wall_2x3_Lockers.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Lockers.fbx
+package: P21
+scene: Servicegang, Motelgang, Hangar-Nähe
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.45, 3.0]
+pivot: bottom_center
+tris_max: 900
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_2x3_Lockers_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Gleiches Raster wie SM_Station_Wall_2x3 (2 x 3 m, 0,2 m tief, Vorderseite lokal -Z), kachelt nahtlos mit der Grundwand und den anderen Varianten. Wand mit eingebauter Spindreihe (4 schmale Spinde, ein Spind halb offen, Nummernschilder), ragt 0,25 m in den Raum.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 0.45 x 3.0 m, Pivot bottom_center, Material-Slots [Wall]
+feedback: []
+```
+
+### SM_Station_Wall_2x1.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x1.fbx
+package: P21
+scene: Bar (4 m hohe Wände)
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.2, 1.0]
+pivot: bottom_center
+tris_max: 200
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_2x1_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Füllstück 2 x 1 m über der 3-m-Wand in 4 m hohen Räumen (Bar): Kabelkanal, Lüftungsschlitze, passt oben an alle Wandvarianten.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 0.2 x 1.0 m, Pivot bottom_center, Material-Slots [Wall]
+feedback: []
+```
+
+### SM_Station_Floor_2x2_Grate.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2_Grate.fbx
+package: P21
+scene: Servicegang, Hangar-Ränder
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 2.0, 0.1]
+pivot: bottom_center
+tris_max: 400
+materials: [Floor]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Floor_2x2_Grate_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Gitterrost-Bodenplatte 2 x 2 m, darunter dunkler Hohlraum mit Kabeln/Rohren (sichtbar durch die Gitter), kachelt mit SM_Station_Floor_2x2.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/mw_cargo_hold_01.webp]
+placeholder: Box 2.0 x 2.0 x 0.1 m, Pivot bottom_center, Material-Slots [Floor]
+feedback: []
+```
+
+### SM_Station_Ceiling_2x2_Light.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Ceiling_2x2_Light.fbx
+package: P21
+scene: alle
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 2.0, 0.2]
+pivot: bottom_center
+tris_max: 400
+materials: [Ceiling]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Ceiling_2x2_Light_Albedo.png   # 128x128, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_Ceiling_2x2_Light_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Deckenplatte wie SM_Station_Ceiling_2x2 mit eingelassener Leuchte (ovale Leuchtwanne mit runden Enden, kaltweiße Emission).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 2.0 x 0.2 m, Pivot bottom_center, Material-Slots [Ceiling]
+feedback: []
+```
+
+### SM_Station_Ceiling_Arch_2x2.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Ceiling_Arch_2x2.fbx
+package: P21
+scene: Servicegang, Motelgang (2 m breite Gänge)
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 2.0, 0.7]
+pivot: bottom_center
+tris_max: 600
+materials: [Ceiling]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Ceiling_Arch_2x2_Albedo.png   # 256x128, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_Ceiling_Arch_2x2_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Teil der 'runderen Station' (Max, 02.11.): weiche Rundungen statt harter Kanten, Rundungen mit 8-12 Segmenten. Gewölbtes Deckensegment für 2 m breite Gänge: Halbtonne quer zur Laufrichtung (lokale X = Gangbreite), Scheitel 0,7 m über den Wandoberkanten, Rippen alle 2 m, eine Leuchtleiste im Scheitel (Emission). Pivot unten mittig auf Wandoberkante.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/ai_corridor_padded_01.webp]
+placeholder: Box 2.0 x 2.0 x 0.7 m, Pivot bottom_center, Material-Slots [Ceiling]
+feedback: []
+```
+
+### SM_Station_Wall_CornerRound.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_CornerRound.fbx
+package: P21
+scene: alle Räume (Innenecken)
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [0.6, 0.6, 3.0]
+pivot: bottom_center
+tris_max: 300
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_CornerRound_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Teil der 'runderen Station' (Max, 02.11.): weiche Rundungen statt harter Kanten, Rundungen mit 8-12 Segmenten. Gerundete Innenecke (Viertelkreis-Hohlkehle r 0,5 m) für jede Raumecke, gleiche Paneeloptik wie die Wand. Pivot unten an der Raumecke; die Rundung zeigt in lokale +X und +Z (der Raum liegt bei +X/+Z). Stapelbar für hohe Räume.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.6 x 0.6 x 3.0 m, Pivot bottom_center, Material-Slots [Wall]
+feedback: []
+```
+
+### SM_Station_Pillar_Round.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Pillar_Round.fbx
+package: P21
+scene: Halle, Plattform-Öffnung, Hangar
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [0.8, 0.8, 3.0]
+pivot: bottom_center
+tris_max: 600
+materials: [Pillar]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Pillar_Round_Albedo.png   # 128x256, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_Pillar_Round_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Teil der 'runderen Station' (Max, 02.11.): weiche Rundungen statt harter Kanten, Rundungen mit 8-12 Segmenten. Runde Säule (Ø 0,8 m, 12 Segmente) mit Metallringen oben/unten, Kabelbündel spiralförmig, Leuchtring auf 2,4 m (Emission). Stapelbar.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.8 x 0.8 x 3.0 m, Pivot bottom_center, Material-Slots [Pillar]
+feedback: []
+```
+
+### SM_Station_DoorTrim_Round.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_DoorTrim_Round.fbx
+package: P27
+scene: alle Türen
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.3, 2.6]
+pivot: bottom_center
+tris_max: 500
+materials: [Frame]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_DoorTrim_Round_Albedo.png   # 128x128, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_DoorTrim_Round_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Teil der 'runderen Station' (Max, 02.11.): weiche Rundungen statt harter Kanten, Rundungen mit 8-12 Segmenten. Aufgesetzter Türrahmen mit stark gerundeten oberen Ecken (Raumschiff-Schott-Optik), passt um die 1,6-m-Türöffnung, mit Warnstreifen und Statuslampe (Emission). Variante _Narrow für 1,2-m-Türen (eigene Datei).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/ai_door_steam_01.webp]
+placeholder: Box 2.0 x 0.3 x 2.6 m, Pivot bottom_center, Material-Slots [Frame]
+feedback: []
+```
+
+### SM_Station_DoorTrim_Round_Narrow.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_DoorTrim_Round_Narrow.fbx
+package: P27
+scene: Personaltüren, Motel
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [1.6, 0.3, 2.6]
+pivot: bottom_center
+tris_max: 500
+materials: [Frame]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_DoorTrim_Round_Narrow_Albedo.png   # 128x128, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_DoorTrim_Round_Narrow_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Teil der 'runderen Station' (Max, 02.11.): weiche Rundungen statt harter Kanten, Rundungen mit 8-12 Segmenten. Wie SM_Station_DoorTrim_Round für die 1,2-m-Türöffnung.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 1.6 x 0.3 x 2.6 m, Pivot bottom_center, Material-Slots [Frame]
+feedback: []
+```
+
+### SM_Station_Wall_Arch_2x3.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Arch_2x3.fbx
+package: P21
+scene: Halle ↔ Motelgang
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.3, 3.0]
+pivot: bottom_center
+tris_max: 600
+materials: [Wall, Frame]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_Arch_2x3_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_Arch_2x3_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Teil der 'runderen Station' (Max, 02.11.): weiche Rundungen statt harter Kanten, Rundungen mit 8-12 Segmenten. Wandmodul mit offenem Rundbogen (2,0 m breit, Scheitel 2,6 m), dicke Laibung mit Leuchtstreifen im Bogen (Emission). Für den offenen Durchgang Halle ↔ Motelgang.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 0.3 x 3.0 m, Pivot bottom_center, Material-Slots [Wall, Frame]
+feedback: []
+```
+
+### SM_Station_DeckArch.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_DeckArch.fbx
+package: P22
+scene: Halle ↔ Aussichtsplattform
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [11.0, 0.8, 6.0]
+pivot: bottom_center
+tris_max: 1500
+materials: [Frame]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_DeckArch_Albedo.png   # 512x256, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_DeckArch_Emission.png   # 128x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Teil der 'runderen Station' (Max, 02.11.): weiche Rundungen statt harter Kanten, Rundungen mit 8-12 Segmenten. Großer Portalbogen über der 10 m breiten Öffnung zur Aussichtsplattform: zwei runde Pfeiler, oben weiter Segmentbogen bis zur Hallendecke, Schriftzug 'OBSERVATION DECK' (Emission), Nieten, Leuchtband entlang des Bogens.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 11.0 x 0.8 x 6.0 m, Pivot bottom_center, Material-Slots [Frame]
+feedback: []
+```
+
+### SM_Hall_CeilingDome.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hall/SM_Hall_CeilingDome.fbx
+package: P21
+scene: Halle
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [8.0, 8.0, 1.5]
+pivot: top_center
+tris_max: 1200
+materials: [Dome]
+textures:
+  - Assets/_Project/Art/Textures/Hall/T_Hall_CeilingDome_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Hall/T_Hall_CeilingDome_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Teil der 'runderen Station' (Max, 02.11.): weiche Rundungen statt harter Kanten, Rundungen mit 8-12 Segmenten. Flache Deckenkuppel (Ø 8 m, 1,5 m hoch) über der Anzeigesäule, Rippen strahlenförmig, Ring aus Leuchten am Rand (Emission). Pivot oben mittig (hängt von der 6-m-Decke nach unten offen).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 8.0 x 8.0 x 1.5 m, Pivot top_center, Material-Slots [Dome]
+feedback: []
+```
+
+### SM_Deck_Railing.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Deck_Railing.fbx
+package: P22
+scene: Aussichtsplattform
+status: offen
+priority: P2
+needed_by: 2026-11-13
+size_m: [1.95, 0.15, 1.0]
+pivot: bottom_center
+tris_max: 400
+materials: [Railing]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Deck_Railing_Albedo.png   # 128x64, Point
+  - Assets/_Project/Art/Textures/Station/T_Deck_Railing_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Teil der 'runderen Station' (Max, 02.11.): weiche Rundungen statt harter Kanten, Rundungen mit 8-12 Segmenten. Geländer-Segment vor einem gebogenen Glassegment (passt zu SM_Station_Window_Curved, 22,5 Grad je Segment): runder Handlauf, Stützen, unten Leuchtstreifen (Emission) zum Boden.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 1.95 x 0.15 x 1.0 m, Pivot bottom_center, Material-Slots [Railing]
+feedback: []
+```
+
+### SM_Hangar_RibArch.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_RibArch.fbx
+package: P22
+scene: Hangar
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [36.0, 1.2, 4.0]
+pivot: top_center
+tris_max: 1500
+materials: [Rib]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_RibArch_Albedo.png   # 256x128, Point
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_RibArch_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Teil der 'runderen Station' (Max, 02.11.): weiche Rundungen statt harter Kanten, Rundungen mit 8-12 Segmenten. Gebogene Stahl-Rippe unter der Hangardecke über die volle Breite (36 m), Fachwerk-Profil mit Lampen und Kabeln. Steht alle 7 m; gibt dem Hangar eine gewölbte Halle statt Kistenform. Pivot oben mittig.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/real_hangar_shuttle_01.webp]
+placeholder: Box 36.0 x 1.2 x 4.0 m, Pivot top_center, Material-Slots [Rib]
 feedback: []
 ```
