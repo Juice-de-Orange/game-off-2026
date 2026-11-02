@@ -40,14 +40,20 @@ Sprache des Spiels: Englisch.
 | Verhaften (Knopf) | Wache führt ab, beschlagnahmte Gegenstände landen bei dir | Unschuldig verhaftet → größerer Abzug |
 | Luftschleuse (Knopf) | Sofortige Eliminierung, kein Zeitverlust | Unschuldige: hoher Abzug. Jede Nutzung senkt einen versteckten Moral-Wert → färbt Familienbriefe und Ende |
 
-## Station (klein, kompakt — ein Gebäude, kurze Laufwege)
+## Station (kompakt, kurze Laufwege — Grundriss Stand 2.0: `docs/STATION.md`, Bild: `docs/station/bauplan.html`)
 | Ort | Funktion im Spiel |
 |---|---|
-| **Wachstation / Zollschalter** | Arbeitsplatz. Hier läuft die Schicht. Gadget-Ausgabe durch den Vorgesetzten |
-| **Hangar** | Reisende kommen an. Frachtdrohne: Pakete an die Familie schicken |
-| **Bar** | Barkeeper verkauft unter der Theke illegale Gegenstände (Schwarzmarkt), kauft Beschlagnahmtes an |
-| **Diner** | Essen, NPC-Gespräche, Gerüchte = Hinweise auf kommende Schmuggler (❓ oder nur Atmosphäre) |
-| **Weltraum-Motel** | Reisende übernachten. Vorschlag: deine Unterkunft ist ein Motelzimmer → spart einen Raum |
+| **Zollschalter + Prüfkammer** | Arbeitsplatz; Reisende stehen in der Kammer, die zugleich Luftschleuse ist (Außenschott klappt ins All). Kein sichtbarer Vorgesetzter: Lautsprecher-Durchsagen, Memos, Pinnwand |
+| **Hangar** (36 × 28 × 16 m) | Shuttle fliegt morgens durch die Energiebarriere ein, Reisende steigen über die Rampe aus und stellen sich an; Frachtdrohne für Pakete nach Hause; durchsuchbare Kisten |
+| **Transithalle** | Knotenpunkt mit Anzeigesäule (Live-Ankunftsplan), Bänken, Getränkeautomat |
+| **Aussichtsplattform** | Halbrunde Glasfront: Blick auf den Heimatplaneten (Stadtlichter = Zustand der Familie), Sonne, Gasriese; Münzfernrohr |
+| **Bar "The Last Orbit"** | Barkeeper (Hocker = Gespräch), Schwarzmarkt unter der Theke, Fensterband |
+| **Diner** | Essen, Gerüchte (Soll) |
+| **Kiosk** | Gadgets kaufen (Dokumentenscanner) |
+| **Motel** | Dein Zimmer 103 (Bett, Brief, Spind mit Familienfoto, Bullauge = Abendblick nach Hause); 101/102 verriegelt |
+
+Theme-Bezug in der Welt (Vorschlag für den Call): die Sonne steht jeden Tag anders (die Station dreht sich), und an Tag 3
+flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit dir.
 
 ## Gadgets (freischalten über die Tage oder kaufen)
 - Dokumentenscanner — prüft Dokumente auf Fälschung (kaufbar)

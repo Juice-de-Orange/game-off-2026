@@ -7,16 +7,22 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 
 | Datum | Ziel | Status |
 |---|---|---|
-| 01.11. | Theme kommt ca. **22:37 MEZ** → jeder für sich Gedanken, Repo öffentlich | ⏳ |
-| 02.11. | Abend-Call: Theme ins Konzept einweben, `DESIGN.md` finalisieren, Unity-Projekt anlegen | ⏳ |
-| 03.11. | Prototyp: Kern-Mechanik spielbar (graue Klötze reichen) | ⏳ |
-| 05.11. | Erster WebGL-Testbuild auf itch.io (Draft) — danach jede Woche ein Build | ⏳ |
+| 01.11. | Theme kommt ca. **22:37 MEZ** → jeder für sich Gedanken, Repo öffentlich | ✅ Theme "Shift" · Repo noch privat (Call) |
+| 02.11. | Abend-Call: Theme ins Konzept einweben, `DESIGN.md` finalisieren, Unity-Projekt anlegen | 🔶 Projekt + Station 2.0 stehen; Call offen |
+| 03.11. | Prototyp: Kern-Mechanik spielbar (graue Klötze reichen) | 🔶 Laufen, Schalter, Knöpfe, Türen da; Dokumente/Regeln (P06/P07) fehlen |
+| 05.11. | Erster WebGL-Testbuild auf itch.io (Draft) — danach jede Woche ein Build | 🔶 Build läuft lokal (18 MB); Upload P19 offen |
 | 09.11. | Checkpoint: Trägt der Kern-Loop? Wenn nicht, jetzt umsteuern | ⏳ |
 | 16.11. | Vertical Slice: ein Level komplett mit Ziel, Sieg/Niederlage, Menü, Neustart | ⏳ |
 | 22.11. | **Feature-Freeze**: keine neuen Features mehr, nur Inhalte & Polish | ⏳ |
 | 28.11. | **Content-Freeze**: nur noch Bugfixes, Audio, Juice | ⏳ |
 | 29.–30.11. | Puffer: itch-Seite, finaler Build, Browser-Tests | ⏳ |
 | 30.11. | **Abgabe** auf itch.io (offizielle Deadline 01.12., 22:37 MEZ) | ⏳ |
+
+### Stand 02.11. abends (max)
+- Fertig: P03, P04, P05, P17 (aus), P20, P21, P22, P23, P24, P27 · P01 wartet auf Martin · 9 Asset-PRs gemergt und eingebaut
+- Neu angelegt: P22–P36 (Station 2.0 + Mechaniken aus Max' Asset-Durchgang) — **im Call verteilen**
+- Pipeline: ~90 Aufträge offen (M003, M006, M007); Builder setzt alles automatisch ein, sobald es geliefert ist
+- Nächste Gameplay-Schritte für den Kern-Loop: P06 Dokumente → P07 Regeln → P08 Entscheidungen → P09 Tagesablauf → P10 Geld/Familie
 
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
