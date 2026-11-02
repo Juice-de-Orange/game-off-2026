@@ -29,7 +29,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| | | | |
+| max | Neue Asset-Lieferungen in die Station einbauen | `Assets/_Project/Scenes/Main.unity`, `Assets/_Project/Prefabs/Station/PF_Station_Graybox.prefab`, `Assets/_Project/Prefabs/Counter/PF_CounterStation.prefab` | 02.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
