@@ -2859,7 +2859,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Lintel_4x08.fbx
 package: P22
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 0.3, 0.8]
@@ -2886,7 +2886,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Porthole_2x3.fbx
 package: P22
 scene: Motel
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 3.0]
@@ -2913,7 +2913,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx
 package: P27
 scene: Servicegang, Motel
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 3.0]
@@ -3590,7 +3590,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_DoorTrim_Round.fbx
 package: P27
 scene: alle Türen
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.3, 2.6]
@@ -3618,7 +3618,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_DoorTrim_Round_Narrow.fbx
 package: P27
 scene: Personaltüren, Motel
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [1.6, 0.3, 2.6]
