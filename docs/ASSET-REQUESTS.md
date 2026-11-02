@@ -1405,7 +1405,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Sky_Space.png
 package: P04
 scene: Halle, Hangar, Prüfkammer (sichtbar durch Fenster und Hangartor)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
