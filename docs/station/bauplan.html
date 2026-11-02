@@ -1,0 +1,271 @@
+<title>Stations-Bauplan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Share+Tech+Mono&display=swap">
+<style>
+/* Layout: blueprint sheet — title block, plan drawing, then spec tables. Single dark look by choice. */
+:root {
+  color-scheme: dark;
+  --bg: #0e1822; --panel: #132231; --grid: #1a2c3b; --grid2: #22394c;
+  --line: #cfe3ea; --muted: #7f97a6; --fg: #e2ddcf;
+  --cyan: #5ec8ff; --orange: #ff9a3c; --amber: #ffd36b; --red: #e2463f; --green: #9be05a; --violet: #c27bd6;
+  --display: "Orbitron", "Segoe UI", sans-serif;
+  --mono: "Share Tech Mono", ui-monospace, Consolas, monospace;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--mono); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 36px; }
+header { display: grid; gap: 10px; border: 1px solid var(--grid2); padding: 18px 20px; background: var(--panel); }
+.eyebrow { color: var(--cyan); letter-spacing: .14em; text-transform: uppercase; font-size: 12px; }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(24px, 4vw, 38px); margin: 0; letter-spacing: .04em; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 18px; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 12px; color: var(--line); text-wrap: balance; }
+p { margin: 0; max-width: 70ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 24px; color: var(--muted); font-size: 13px; }
+.meta b { color: var(--fg); font-weight: normal; }
+.status { display: inline-block; border: 1px solid var(--amber); color: var(--amber); padding: 2px 8px; font-size: 12px; letter-spacing: .1em; }
+.plan { overflow-x: auto; border: 1px solid var(--grid2); background: var(--bg); }
+.plan svg { display: block; width: 100%; min-width: 760px; height: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 13px; color: var(--muted); margin-top: 12px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.sw { width: 22px; height: 0; border-top: 3px solid; display: inline-block; }
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--grid2); vertical-align: top; }
+th { color: var(--muted); font-weight: normal; text-transform: uppercase; font-size: 12px; letter-spacing: .1em; }
+td code { color: var(--cyan); font-family: var(--mono); }
+.dot { display: inline-block; width: 10px; height: 10px; margin-right: 8px; vertical-align: 0; }
+.p1 { color: var(--fg); } .p2 { color: var(--muted); }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
+.cols > * { min-width: 0; }
+ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.note { border-left: 3px solid var(--amber); padding: 10px 14px; background: var(--panel); }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Game Off 2026 · Paket P04 · Grundriss Ebene 0</div>
+  <h1>CHECKPOINT KESTREL-9</h1>
+  <p>Draufsicht der Station. Raster 2 m (Modul-Raster des Bausatzes). Norden oben = Unity +Z, Osten rechts = +X. Ursprung (0,0) = Mitte der Halle.</p>
+  <div class="meta"><span>Status <span class="status">ENTWURF · ZUR FREIGABE</span></span><span>Fläche <b>40 × 34 m</b></span><span>Wandmodul <b>2 × 3 m</b></span><span>Stand <b>02.11.2026</b></span></div>
+</header>
+
+<section>
+<h2>Grundriss</h2>
+<div class="plan">
+<svg viewBox="0 0 860 780" xmlns="http://www.w3.org/2000/svg" font-family="Share Tech Mono, monospace">
+  <defs>
+    <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1a2c3b" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="860" height="780" fill="#0e1822"/>
+  <rect width="860" height="780" fill="url(#g)"/>
+  <!-- axis labels (meters) -->
+  <g fill="#7f97a6" font-size="10">
+    <text x="284" y="14">-8</text><text x="436" y="14">0</text><text x="596" y="14">8</text><text x="36" y="14">-20</text><text x="756" y="14">16</text>
+    <text x="2" y="84">z 6</text><text x="2" y="204">z 0</text><text x="2" y="324">z -6</text><text x="2" y="444">z -12</text><text x="2" y="724">z -26</text>
+  </g>
+  <!-- origin cross -->
+  <path d="M432 200h16M440 192v16" stroke="#7f97a6"/>
+
+  <!-- ROOMS: fill tinted by area color, wall stroke -->
+  <g stroke="#cfe3ea" stroke-width="3">
+    <rect x="280" y="80" width="320" height="240" fill="#cfe3ea" fill-opacity="0.05"/>          <!-- Halle -->
+    <rect x="280" y="320" width="40" height="120" fill="#cfe3ea" fill-opacity="0.03"/>         <!-- Servicegang -->
+    <rect x="320" y="320" width="120" height="120" fill="#5ec8ff" fill-opacity="0.10"/>        <!-- Schalter -->
+    <rect x="440" y="320" width="80" height="120" fill="#e2463f" fill-opacity="0.10"/>         <!-- Kammer -->
+    <rect x="240" y="440" width="400" height="280" fill="#e2463f" fill-opacity="0.05"/>        <!-- Hangar -->
+    <rect x="40" y="160" width="240" height="40" fill="#9be05a" fill-opacity="0.05"/>          <!-- Motelgang -->
+    <rect x="40" y="80" width="80" height="80" fill="#9be05a" fill-opacity="0.14"/>            <!-- 103 -->
+    <rect x="120" y="80" width="80" height="80" fill="#9be05a" fill-opacity="0.04"/>           <!-- 102 -->
+    <rect x="200" y="80" width="80" height="80" fill="#9be05a" fill-opacity="0.04"/>           <!-- 101 -->
+    <rect x="120" y="200" width="160" height="120" fill="#ffd36b" fill-opacity="0.08"/>        <!-- Diner -->
+    <rect x="600" y="40" width="200" height="160" fill="#ff9a3c" fill-opacity="0.09"/>         <!-- Bar -->
+    <rect x="600" y="240" width="80" height="80" fill="#c27bd6" fill-opacity="0.10"/>          <!-- Kiosk -->
+  </g>
+
+  <!-- WINDOWS (cyan) -->
+  <g stroke="#5ec8ff" stroke-width="6">
+    <line x1="360" y1="80" x2="520" y2="80"/>   <!-- Panorama -->
+    <line x1="440" y1="340" x2="440" y2="420"/> <!-- Schalter → Kammer -->
+    <line x1="340" y1="440" x2="420" y2="440"/> <!-- Schalter → Hangar -->
+  </g>
+  <circle cx="40" cy="120" r="7" fill="#0e1822" stroke="#5ec8ff" stroke-width="3"/>  <!-- Bullauge 103 -->
+
+  <!-- DOORS (light gaps) -->
+  <g fill="#0e1822" stroke="#e2ddcf" stroke-width="1.5">
+    <rect x="276" y="164" width="8" height="32"/>   <!-- Halle-Motelgang -->
+    <rect x="224" y="156" width="32" height="8"/>   <!-- 101 -->
+    <rect x="144" y="156" width="32" height="8"/>   <!-- 102 -->
+    <rect x="64" y="156" width="32" height="8"/>    <!-- 103 -->
+    <rect x="276" y="244" width="8" height="32"/>   <!-- Diner -->
+    <rect x="596" y="124" width="8" height="32"/>   <!-- Bar -->
+    <rect x="288" y="316" width="24" height="8"/>   <!-- Halle-Servicegang -->
+    <rect x="288" y="436" width="24" height="8"/>   <!-- Servicegang-Hangar -->
+    <rect x="316" y="338" width="8" height="24"/>   <!-- Servicegang-Schalter -->
+    <rect x="464" y="316" width="32" height="8"/>   <!-- Kammer → Halle -->
+    <rect x="464" y="436" width="32" height="8"/>   <!-- Hangar → Kammer -->
+  </g>
+  <!-- Kiosk hatch (dashed) -->
+  <line x1="600" y1="264" x2="600" y2="296" stroke="#c27bd6" stroke-width="6" stroke-dasharray="4 3"/>
+  <!-- Airlock outer hatch + hangar door (red) -->
+  <rect x="516" y="364" width="8" height="32" fill="#e2463f"/>
+  <line x1="280" y1="720" x2="600" y2="720" stroke="#e2463f" stroke-width="7" stroke-dasharray="14 6"/>
+
+  <!-- PROPS -->
+  <g fill="#7f97a6" fill-opacity="0.55" stroke="#cfe3ea" stroke-width="1">
+    <!-- Schalter -->
+    <rect x="414" y="340" width="26" height="80"/>      <!-- Tisch -->
+    <circle cx="398" cy="380" r="8"/>                   <!-- Stuhl -->
+    <rect x="340" y="322" width="40" height="12"/>      <!-- Asservatenschrank -->
+    <rect x="390" y="322" width="36" height="6"/>       <!-- Pinnwand / Bulletin -->
+    <!-- Halle -->
+    <rect x="420" y="180" width="40" height="40"/>      <!-- Anzeigesäule -->
+    <rect x="362" y="122" width="56" height="12"/>      <!-- Bank -->
+    <rect x="462" y="122" width="56" height="12"/>      <!-- Bank -->
+    <rect x="362" y="266" width="56" height="12"/>      <!-- Bank -->
+    <rect x="282" y="88" width="20" height="30"/>       <!-- Automat -->
+    <rect x="578" y="88" width="20" height="20"/>       <!-- Pflanze -->
+    <!-- Kiosk -->
+    <rect x="604" y="252" width="16" height="56"/>      <!-- Theke -->
+    <rect x="664" y="246" width="12" height="68"/>      <!-- Regal -->
+    <!-- Bar -->
+    <rect x="720" y="60" width="20" height="120"/>      <!-- Theke -->
+    <rect x="786" y="56" width="10" height="128"/>      <!-- Flaschenregal -->
+    <circle cx="708" cy="80" r="6"/><circle cx="708" cy="110" r="6"/><circle cx="708" cy="140" r="6"/><circle cx="708" cy="170" r="6"/>
+    <circle cx="660" cy="80" r="14"/><circle cx="660" cy="160" r="14"/>
+    <!-- Diner -->
+    <rect x="128" y="290" width="44" height="24"/><rect x="188" y="290" width="44" height="24"/>
+    <rect x="140" y="204" width="120" height="14"/>     <!-- Tresen -->
+    <!-- Motel 103 -->
+    <rect x="46" y="86" width="44" height="26"/>        <!-- Bett -->
+    <rect x="96" y="86" width="18" height="18"/>        <!-- Tisch + Brief -->
+    <rect x="96" y="130" width="18" height="22"/>       <!-- Spind -->
+    <rect x="46" y="166" width="26" height="10"/>       <!-- Rezeption-Terminal -->
+    <!-- Hangar -->
+    <circle cx="440" cy="600" r="100" fill="none" stroke="#e2463f" stroke-dasharray="6 6"/>  <!-- Landefeld -->
+    <rect x="400" y="560" width="80" height="110" rx="6"/>                                    <!-- Shuttle -->
+    <rect x="260" y="460" width="60" height="60" fill="none" stroke="#ff9a3c" stroke-dasharray="4 4"/>  <!-- Drohnenpad -->
+    <rect x="276" y="476" width="28" height="28"/>                                           <!-- Frachtdrohne -->
+    <rect x="248" y="560" width="24" height="24"/><rect x="248" y="590" width="24" height="24"/><rect x="276" y="590" width="24" height="24"/>
+    <rect x="604" y="460" width="28" height="70" rx="12"/>                                    <!-- Tanks -->
+  </g>
+  <!-- Queue barriers -->
+  <g stroke="#ffd36b" stroke-width="2"><line x1="460" y1="446" x2="460" y2="540"/><line x1="500" y1="446" x2="500" y2="540"/></g>
+  <!-- Traveler stand mark in Kammer -->
+  <rect x="468" y="368" width="24" height="24" fill="none" stroke="#ffd36b" stroke-width="2" stroke-dasharray="3 3"/>
+
+  <!-- PATHS -->
+  <polyline points="440,560 480,540 480,380 480,300 380,230 284,180" fill="none" stroke="#ffd36b" stroke-width="2.5" stroke-dasharray="8 6"/>
+  <polyline points="480,300 560,230 600,140" fill="none" stroke="#ffd36b" stroke-width="2.5" stroke-dasharray="8 6"/>
+  <polyline points="80,140 80,180 284,180 300,250 300,350 320,350 398,380" fill="none" stroke="#9be05a" stroke-width="2.5" stroke-dasharray="2 5"/>
+  <polyline points="300,350 300,440 290,490" fill="none" stroke="#9be05a" stroke-width="2.5" stroke-dasharray="2 5"/>
+  <path d="M480 380 L536 380" stroke="#e2463f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#e2463f"/></marker></defs>
+
+  <!-- LABELS -->
+  <g fill="#e2ddcf" font-size="13">
+    <text x="300" y="104" font-size="15">HALLE</text><text x="300" y="120" fill="#7f97a6" font-size="11">16 × 12 m · H 6 m</text>
+    <text x="360" y="74" fill="#5ec8ff" font-size="11">PANORAMAFENSTER 8 m</text>
+    <text x="326" y="400" font-size="12">SCHALTER</text><text x="326" y="414" fill="#7f97a6" font-size="10">6 × 6 · H 3</text>
+    <text x="446" y="336" font-size="11">PRÜF-</text><text x="446" y="349" font-size="11">KAMMER</text><text x="446" y="430" fill="#7f97a6" font-size="10">4 × 6</text>
+    <text x="528" y="372" fill="#e2463f" font-size="11">AUSSENSCHOTT</text><text x="528" y="386" fill="#e2463f" font-size="10">→ ALL</text>
+    <text x="283" y="372" font-size="9" transform="rotate(-90 300 380)">SERVICEGANG</text>
+    <text x="250" y="700" font-size="15">HANGAR</text><text x="250" y="714" fill="#7f97a6" font-size="11">20 × 14 m · H 9 m</text>
+    <text x="300" y="740" fill="#e2463f" font-size="11">HANGARTOR / KRAFTFELD 16 m → ALL</text>
+    <text x="252" y="456" fill="#ff9a3c" font-size="10">FRACHTDROHNE</text>
+    <text x="604" y="456" fill="#7f97a6" font-size="10">TANKS</text>
+    <text x="410" y="620" fill="#7f97a6" font-size="11">SHUTTLE</text>
+    <text x="48" y="190" font-size="11">MOTELGANG 12 × 2</text>
+    <text x="46" y="74" fill="#9be05a" font-size="11">103 · DEIN ZIMMER</text>
+    <text x="128" y="124" fill="#7f97a6" font-size="11">102 (zu)</text><text x="208" y="124" fill="#7f97a6" font-size="11">101 (zu)</text>
+    <text x="128" y="250" font-size="14">DINER</text><text x="128" y="265" fill="#7f97a6" font-size="11">8 × 6 · H 3</text>
+    <text x="612" y="64" font-size="14">BAR</text><text x="612" y="79" fill="#7f97a6" font-size="11">10 × 8</text><text x="612" y="93" fill="#7f97a6" font-size="11">H 4</text>
+    <text x="626" y="292" fill="#c27bd6" font-size="11">KIOSK</text><text x="626" y="306" fill="#7f97a6" font-size="10">4 × 4</text>
+    <text x="424" y="236" fill="#7f97a6" font-size="10">ANZEIGE</text>
+    <text x="226" y="96" fill="#7f97a6" font-size="10" transform="rotate(0)"> </text>
+  </g>
+  <!-- north arrow -->
+  <g transform="translate(820 730)"><path d="M0 -24L8 0L0 -6L-8 0Z" fill="#cfe3ea"/><text x="-4" y="16" fill="#cfe3ea" font-size="12">N</text></g>
+  <!-- scale bar -->
+  <g transform="translate(680 750)" fill="#cfe3ea" font-size="10"><rect width="40" height="4"/><rect x="40" width="40" height="4" fill="none" stroke="#cfe3ea"/><rect x="80" width="40" height="4"/><text y="18">0</text><text x="74" y="18">4 m</text><text x="112" y="18">6</text></g>
+</svg>
+</div>
+<div class="legend">
+  <span><i class="sw" style="border-color:var(--line)"></i>Wand</span>
+  <span><i class="sw" style="border-color:var(--cyan)"></i>Fenster</span>
+  <span><i class="sw" style="border-color:var(--red)"></i>Schott/Tor ins All</span>
+  <span><i class="sw" style="border-color:var(--amber);border-top-style:dashed"></i>Weg der Reisenden</span>
+  <span><i class="sw" style="border-color:var(--green);border-top-style:dotted"></i>Weg des Spielers</span>
+  <span><i class="sw" style="border-color:var(--violet);border-top-style:dashed"></i>Durchreiche Kiosk</span>
+</div>
+</section>
+
+<section class="cols">
+<div>
+<h2>Ablauf an der Prüfkammer</h2>
+<ul>
+  <li>Shuttle landet im Hangar, Reisende stehen zwischen den Absperrgittern an.</li>
+  <li>Einer tritt durch die Hangartür in die <b>Prüfkammer</b> und steht auf der Markierung vor deiner Scheibe. Dokumente kommen durch die Durchreiche.</li>
+  <li><b>Durchlassen</b> → Nordtür öffnet, Reisender geht in die Halle (Motel, Bar).</li>
+  <li><b>Abweisen</b> → zurück durch die Hangartür.</li>
+  <li><b>Verhaften</b> → Wache kommt über die Halle durch die Nordtür und führt ab.</li>
+  <li><b>Luftschleuse</b> → beide Innentüren verriegeln, Außenschott Ost öffnet. Du siehst es durch die Scheibe.</li>
+</ul>
+</div>
+<div>
+<h2>Laufwege (bei 4 m/s)</h2>
+<div class="tbl"><table>
+<tr><th>Von → nach</th><th>Strecke</th><th>Zeit</th></tr>
+<tr><td>Zimmer 103 → Schalterstuhl</td><td>≈ 27 m</td><td>≈ 7 s</td></tr>
+<tr><td>Schalter → Frachtdrohne</td><td>≈ 12 m</td><td>≈ 3 s</td></tr>
+<tr><td>Schalter → Bar-Theke</td><td>≈ 26 m</td><td>≈ 7 s</td></tr>
+<tr><td>Halle-Mitte → Kiosk / Diner</td><td>≈ 9 m</td><td>≈ 2 s</td></tr>
+<tr><td>Bar → Zimmer 103</td><td>≈ 36 m</td><td>≈ 9 s</td></tr>
+</table></div>
+<p style="margin-top:10px;color:var(--muted)">Alle Wege liegen unter dem Ziel von 15 s aus P04. Der Spieler erreicht Schalter und Hangar über den Servicegang („STAFF ONLY“), nicht durch die Prüfkammer.</p>
+</div>
+</section>
+
+<section>
+<h2>Räume</h2>
+<div class="tbl"><table>
+<tr><th>Raum</th><th>Maße (B×T×H)</th><th>Leuchtfarbe</th><th>Inhalt</th><th>Prio</th></tr>
+<tr><td><span class="dot" style="background:var(--line)"></span>Halle</td><td>16×12×6</td><td>neutral, kaltes Neon</td><td>Panoramafenster (Planet), Anzeigesäule mit CRTs, 3 Bänke, Automat, Pflanze, Wegweiser</td><td>Muss</td></tr>
+<tr><td><span class="dot" style="background:var(--cyan)"></span>Schalter</td><td>6×6×3</td><td>Cyan</td><td>Tisch mit Knöpfen + Stempeln, Stuhl, Scheibe zur Kammer mit Durchreiche, Fenster in den Hangar, Asservatenschrank, Pinnwand (Bulletin), Lautsprecher (Durchsagen)</td><td>Muss</td></tr>
+<tr><td><span class="dot" style="background:var(--red)"></span>Prüfkammer</td><td>4×6×3</td><td>Alarmrot</td><td>3 Schotttüren (Hangar, Halle, Außenschott), Standmarkierung, Warnlampe</td><td>Muss</td></tr>
+<tr><td><span class="dot" style="background:var(--line)"></span>Servicegang</td><td>2×6×3</td><td>neutral</td><td>Rohre, Kabel, Schild „STAFF ONLY“</td><td>Muss</td></tr>
+<tr><td><span class="dot" style="background:var(--red)"></span>Hangar</td><td>20×14×9</td><td>Alarmrot / Weiß</td><td>Hangartor mit Kraftfeld, Landefeld + Shuttle, Absperrgitter, Frachtdrohne auf Pad, Kisten, Tanks</td><td>Muss</td></tr>
+<tr><td><span class="dot" style="background:var(--green)"></span>Motel</td><td>Gang 12×2×3, Zimmer 4×4×3</td><td>Giftgrün</td><td>Rezeptions-Terminal, 3 Zimmertüren (101, 102 verschlossen). Zimmer 103: Bett, Tisch mit Brief, Spind, CRT-Fernseher, Bullauge</td><td>Muss</td></tr>
+<tr><td><span class="dot" style="background:var(--orange)"></span>Bar</td><td>10×8×4</td><td>Orange / Violett</td><td>Theke, 4 Hocker, 2 Stehtische, Flaschenregal, Neonschild</td><td>Muss</td></tr>
+<tr><td><span class="dot" style="background:var(--violet)"></span>Kiosk</td><td>4×4×3</td><td>Violett</td><td>Durchreiche zur Halle, Verkaufstheke, Regal mit Gadgets, Verkäufer-NPC</td><td>Muss</td></tr>
+<tr><td><span class="dot" style="background:var(--amber)"></span>Diner</td><td>8×6×3</td><td>Bernstein</td><td>Tresen mit Hockern, 2 Sitznischen, Menütafel. Bei Zeitnot: Tür zu („CLOSED FOR REPAIRS“)</td><td>Soll</td></tr>
+</table></div>
+</section>
+
+<section>
+<h2>Asset-Liste für die Pipeline (Entwurf)</h2>
+<p style="margin-bottom:14px;color:var(--muted)">Nach der Freigabe trage ich jede Zeile als YAML-Eintrag in <code style="color:var(--cyan)">docs/ASSET-REQUESTS.md</code> ein, mit Maßen, Look, Referenzen und Platzhalter. Wände, Böden und Decken kommen aus einem Modul-Bausatz im 2-m-Raster. So deckt ein kleiner Satz Teile die ganze Station ab.</p>
+<div class="tbl"><table>
+<tr><th>Gruppe</th><th>Assets</th><th>Prio</th><th>Bis</th></tr>
+<tr class="p1"><td>Bausatz</td><td><code>SM_Station_Floor_2x2</code> (+ _Grate), <code>SM_Station_Wall_2x3</code> (+ _Padded, _Panel), <code>SM_Station_Wall_Door_2x3</code>, <code>SM_Station_Door_Slide</code>, <code>SM_Station_Ceiling_2x2</code> (+ _Light), <code>SM_Station_Pillar</code></td><td>P1</td><td>12.11.</td></tr>
+<tr class="p1"><td>Fenster &amp; Schotts</td><td><code>SM_Station_Window_Panorama</code>, <code>SM_Station_Window_Small</code>, <code>SM_Station_Porthole</code>, <code>SM_Station_Hatch_Airlock</code>, <code>SM_Hangar_Door_Big</code></td><td>P1</td><td>12.11.</td></tr>
+<tr class="p1"><td>Schalter</td><td><code>SM_Counter_Desk</code>, <code>SM_Counter_Chair</code>, <code>SM_Counter_Button_Arrest</code>, <code>SM_Counter_Button_Airlock</code>, <code>SM_Counter_Stamp</code>, <code>SM_Counter_DocSlot</code>, <code>SM_Counter_Locker</code>, <code>SM_Counter_Speaker</code>, <code>SM_Counter_Board</code>, <code>SM_Counter_WarningLamp</code></td><td>P1</td><td>12.11.</td></tr>
+<tr class="p1"><td>Halle</td><td><code>SM_Hall_DepartureBoard</code>, <code>SM_Hall_Bench</code>, <code>SM_Hall_VendingMachine</code>, <code>SM_Hall_Planter</code>, <code>SM_Hall_Sign</code></td><td>P1</td><td>16.11.</td></tr>
+<tr class="p1"><td>Hangar</td><td><code>SM_Hangar_Shuttle</code>, <code>SM_Hangar_DronePad</code>, <code>SM_Hangar_CargoDrone</code>, <code>SM_Hangar_Crate</code> (+ _Small), <code>SM_Hangar_Barrier</code>, <code>SM_Hangar_Tank</code></td><td>P1</td><td>16.11.</td></tr>
+<tr class="p1"><td>Motel</td><td><code>SM_Motel_Bed</code>, <code>SM_Motel_Table</code>, <code>SM_Motel_Locker</code>, <code>SM_Motel_TV</code>, <code>SM_Motel_Reception</code>, <code>SM_Motel_DoorSign</code></td><td>P1</td><td>16.11.</td></tr>
+<tr class="p1"><td>Bar</td><td><code>SM_Bar_Counter</code> (schon eingetragen), <code>SM_Bar_Stool</code>, <code>SM_Bar_Table</code>, <code>SM_Bar_Shelf</code>, <code>SM_Bar_NeonSign</code></td><td>P1</td><td>16.11.</td></tr>
+<tr class="p1"><td>Kiosk</td><td><code>SM_Kiosk_Counter</code>, <code>SM_Kiosk_Shelf</code></td><td>P1</td><td>16.11.</td></tr>
+<tr class="p2"><td>Diner</td><td><code>SM_Diner_Counter</code>, <code>SM_Diner_Booth</code>, <code>SM_Diner_MenuBoard</code> (Hocker = <code>SM_Bar_Stool</code>)</td><td>P2</td><td>22.11.</td></tr>
+<tr class="p2"><td>Skybox</td><td><code>T_Sky_Space</code> (Sterne + Heimatplanet, sichtbar durch Panoramafenster und Hangartor)</td><td>P1</td><td>16.11.</td></tr>
+</table></div>
+<p style="margin-top:10px;color:var(--muted)">≈ 50 Assets. Charaktere (Reisende, Barkeeper, Verkäufer, Wache) gehören nicht zu P04, sondern zu P07/P14. Sie folgen in einer eigenen Liste.</p>
+</section>
+
+<section class="note">
+<h2>Nach der Freigabe</h2>
+<ul>
+  <li><b>P01 Projekt-Setup</b> zuerst: Das Unity-Projekt gibt es noch nicht.</li>
+  <li><b>P04 Graybox</b>: Station mit ProBuilder im 2-m-Raster als Prefab in <code style="color:var(--cyan)">Max_Sandbox</code>, danach mit Claim in <code style="color:var(--cyan)">Main.unity</code>.</li>
+  <li>Asset-Einträge in <code style="color:var(--cyan)">ASSET-REQUESTS.md</code>, Bauplan als <code style="color:var(--cyan)">docs/STATION.md</code> ins Repo, damit Martins Claude ihn kennt.</li>
+</ul>
+</section>
+</div>

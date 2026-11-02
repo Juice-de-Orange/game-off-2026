@@ -1,0 +1,72 @@
+# Station: Bauplan (Ebene 0)
+
+> **Status: FREIGEGEBEN (max, 02.11.2026)** — Grundlage für P04 (Graybox) und die Asset-Liste.
+> Grafische Fassung: `docs/station/bauplan.html` (im Browser öffnen).
+> Änderungen am Grundriss nur nach Absprache, dann hier anpassen und in `DECISIONS.md` loggen.
+
+## Koordinaten
+- Unity-Welt: **X = Osten, Z = Norden, Y = oben**. Ursprung (0,0,0) = Mitte der Halle auf Bodenhöhe.
+- Alles auf einem **2-m-Raster** (Modul-Bausatz: Boden 2×2 m, Wand 2 m breit × 3 m hoch).
+- Wandstärke in der Graybox: 0,2 m, mittig auf der Raumkante. Böden auf Y = 0.
+- Arbeitsname der Station: **KESTREL-9** (nicht final).
+
+## Räume
+| Raum | X von..bis | Z von..bis | Höhe | Leuchtfarbe | Prio |
+|---|---|---|---|---|---|
+| Halle | −8..8 | −6..6 | 6 | neutral / kaltes Neon | Muss |
+| Servicegang ("STAFF ONLY") | −8..−6 | −12..−6 | 3 | neutral | Muss |
+| Schalter (Arbeitsplatz) | −6..0 | −12..−6 | 3 | Cyan | Muss |
+| Prüfkammer (= Luftschleuse) | 0..4 | −12..−6 | 3 | Alarmrot | Muss |
+| Hangar | −10..10 | −26..−12 | 9 | Alarmrot / Weiß | Muss |
+| Motelgang | −20..−8 | 0..2 | 3 | Giftgrün | Muss |
+| Motelzimmer 101 (verschlossen) | −12..−8 | 2..6 | 3 | Giftgrün | Muss |
+| Motelzimmer 102 (verschlossen) | −16..−12 | 2..6 | 3 | Giftgrün | Muss |
+| Motelzimmer 103 = Spielerzimmer | −20..−16 | 2..6 | 3 | Giftgrün | Muss |
+| Diner | −16..−8 | −6..0 | 3 | Bernstein | Soll |
+| Bar | 8..18 | 0..8 | 4 | Orange / Violett | Muss |
+| Kiosk (Gadget-Shop) | 8..12 | −6..−2 | 3 | Violett | Muss |
+
+## Öffnungen
+| Öffnung | Wand | Position (Mitte) | Breite × Höhe |
+|---|---|---|---|
+| Halle ↔ Motelgang | X = −8 | Z = 1 | 2,0 × 2,6 (offen) |
+| Zimmertüren 101 / 102 / 103 | Z = 2 | X = −10 / −14 / −18 | 1,2 × 2,2 |
+| Halle ↔ Diner | X = −8 | Z = −3 | 1,6 × 2,2 |
+| Halle ↔ Bar | X = 8 | Z = 3 | 1,6 × 2,2 |
+| Kiosk-Durchreiche (Theke) | X = 8 | Z = −4 | 1,6 breit, 1,0–2,2 hoch |
+| Halle ↔ Servicegang | Z = −6 | X = −7 | 1,2 × 2,2 |
+| Servicegang ↔ Hangar | Z = −12 | X = −7 | 1,2 × 2,2 |
+| Servicegang ↔ Schalter | X = −6 | Z = −7,5 | 1,2 × 2,2 |
+| Prüfkammer → Halle (Durchlassen) | Z = −6 | X = 2 | 1,6 × 2,2 |
+| Hangar → Prüfkammer (Ankunft/Abweisen) | Z = −12 | X = 2 | 1,6 × 2,2 |
+| **Außenschott** Prüfkammer → All | X = 4 | Z = −9 | 1,6 × 2,2 |
+| **Hangartor** → All (Kraftfeld) | Z = −26 | X = 0 | 16 × 7 |
+
+## Fenster
+| Fenster | Wand | Bereich | Brüstung–Sturz |
+|---|---|---|---|
+| Panoramafenster Halle | Z = 6 | X −4..4 | 0,8–4,5 m |
+| Scheibe Schalter → Prüfkammer (mit Dokument-Durchreiche) | X = 0 | Z −11..−7 | 0,9–2,2 m |
+| Fenster Schalter → Hangar | Z = −12 | X −5..−1 | 1,0–2,2 m |
+| Bullauge Zimmer 103 | X = −20 | Z = 4 | Ø 0,6 m, Mitte 1,5 m |
+
+## Wichtige Positionen (für Spawnpunkte, NavMesh, Interaktion)
+| Punkt | Position (X, Z) |
+|---|---|
+| Spieler-Start (Bett in 103) | (−18, 4) |
+| Schalterstuhl / Kamera-Anker Schalteransicht | (−2, −9), Blick nach +X |
+| Standmarkierung Reisender in der Kammer | (2, −9) |
+| Shuttle-Landefeld (Mitte, Radius 5) | (0, −20) |
+| Warteschlange (Absperrgitter X = 1 und 3) | Z −18..−12 |
+| Frachtdrohne (Pad 3×3) | (−7,5, −14,5) |
+| Bar-Theke | X 14..15, Z 1..7 |
+| Kiosk-Theke | X 8,2..9, Z −5,4..−2,6 |
+| Anzeigesäule Halle | (0, 0), 2×2 |
+
+## Abläufe
+- **Reisende:** Shuttle → Warteschlange → Prüfkammer (Standmarkierung) → Durchlassen: Nordtür → Halle → Motel/Bar.
+  Abweisen: zurück in den Hangar. Verhaften: Wache kommt über die Halle durch die Nordtür.
+  Luftschleuse: Innentüren verriegeln, Außenschott Ost öffnet (sichtbar durch die Scheibe).
+- **Spieler:** Zimmer 103 → Motelgang → Halle → Servicegang → Schalter. Hangar (Frachtdrohne) über den Servicegang.
+  Der Spieler betritt die Prüfkammer nie.
+- Laufwege bei 4 m/s: alle unter 10 s (Zimmer → Schalter ≈ 7 s).

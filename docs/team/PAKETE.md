@@ -40,7 +40,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 > prüfen, anpassen und freigeben. Erst danach werden Pakete genommen (außer P01 und P02).
 
 ### P01 — Projekt-Setup
-- Größe: S · Priorität: Muss · Status: offen
+- Größe: S · Priorität: Muss · Status: in Arbeit (max, 02.11.)
 - Braucht: — · Folgt auf: —
 - Ziel: Unity-Projekt steht, beide können klonen und öffnen.
 - Enthalten: Unity 6000.3.23f1, Vorlage Universal 3D (URP), Ordnerstruktur nach `CLAUDE.md`/`docs/ASSETS.md`,
