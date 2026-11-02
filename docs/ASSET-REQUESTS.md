@@ -855,7 +855,7 @@ feedback:
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_DronePad.fbx
 package: P13
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [3.0, 3.0, 0.2]
@@ -1682,7 +1682,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Scaffold.fbx
 package: P26
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [4.0, 2.0, 5.0]
@@ -1709,7 +1709,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_CraneRail.fbx
 package: P26
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [36.0, 2.0, 1.5]
