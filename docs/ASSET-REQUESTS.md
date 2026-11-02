@@ -70,7 +70,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Bar/SM_Bar_Counter.fbx
 package: P04
 scene: Bar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [3.0, 0.7, 1.1]
@@ -101,7 +101,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx
 package: P04
 scene: alle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [2.0, 2.0, 0.1]
@@ -129,7 +129,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx
 package: P04
 scene: alle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [2.0, 0.2, 3.0]
@@ -158,7 +158,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3.fbx
 package: P04
 scene: alle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [2.0, 0.2, 3.0]
@@ -215,7 +215,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Ceiling_2x2.fbx
 package: P04
 scene: alle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [2.0, 2.0, 0.2]
@@ -244,7 +244,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Pillar.fbx
 package: P04
 scene: Halle, Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.6, 0.6, 3.0]
@@ -409,7 +409,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Desk.fbx
 package: P05
 scene: Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.2, 4.0, 0.85]
@@ -437,7 +437,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Chair.fbx
 package: P05
 scene: Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.6, 0.6, 1.0]
@@ -548,7 +548,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_DocSlot.fbx
 package: P05
 scene: Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.5, 0.4, 0.15]
@@ -575,7 +575,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Locker.fbx
 package: P05
 scene: Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.0, 0.5, 1.8]
@@ -630,7 +630,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Board.fbx
 package: P05
 scene: Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.0, 0.05, 0.7]
@@ -1153,7 +1153,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Bar/SM_Bar_Stool.fbx
 package: P04
 scene: Bar, Diner
-status: offen
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.4, 0.4, 0.75]

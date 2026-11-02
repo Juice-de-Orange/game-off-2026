@@ -42,3 +42,16 @@ in `docs/ASSET-REQUESTS.md`.
 - meldung: Der Eintrag ließ sich nicht lesen, das YAML war fehlerhaft.
 - antwort: max/Claude, 02.11.: `interaction: Terminal: Paket ...` enthielt einen zweiten Doppelpunkt. Wert in Anführungszeichen
   gesetzt. Alle 50 YAML-Blöcke danach mit PyYAML geprüft, keine weiteren Fehler. Prüfskript `tools/check_asset_requests.py`.
+
+### M002 — Pipeline kann keine Pull Requests öffnen
+- datum: 2026-11-02
+- von: max
+- an: pipeline
+- betrifft: Lieferablauf (`assets/*`-Branches)
+- status: offen
+- meldung: Die Branches `assets/P00-sample`, `assets/P04-station-kit-a`, `assets/P05-counter-a` kamen an, aber ohne PR — mit dem
+  Deploy-Key kann man pushen, aber keine PRs über die GitHub-API anlegen. Max (bzw. sein Claude) hat die PRs #1–#3 selbst
+  angelegt und gemergt; alle drei sind integriert (Materialien, Importeinstellungen) und auf `final`.
+  Bis das gelöst ist: Branch pushen reicht, Max legt den PR an. Dauerhafte Lösung: ein fein abgestimmter Token nur für dieses
+  Repo mit "Pull requests: write", oder die Pipeline meldet fertige Branches per Push-Nachricht.
+- antwort:
