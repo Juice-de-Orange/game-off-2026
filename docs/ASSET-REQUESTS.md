@@ -1736,7 +1736,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_HabModule.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-13
 size_m: [12.0, 12.0, 30.0]
@@ -1764,7 +1764,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_TrussSegment.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-13
 size_m: [3.0, 3.0, 20.0]
@@ -1791,7 +1791,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_SolarArray.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-13
 size_m: [30.0, 1.0, 10.0]
@@ -1818,7 +1818,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_Antenna.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-13
 size_m: [4.0, 4.0, 18.0]
@@ -1930,7 +1930,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_RadiatorPanel.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [2.0, 12.0, 8.0]

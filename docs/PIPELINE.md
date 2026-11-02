@@ -143,3 +143,21 @@ in `docs/ASSET-REQUESTS.md`.
     `SM_Deck_Railing`, `SM_Hangar_RibArch`.
   Der Builder setzt alle automatisch, sobald die Dateien da sind. Reihenfolge: Wandvarianten zuerst, dann Gewölbe/Ecken/Bögen.
 - antwort:
+
+### M009 — Außenwelt A (P24): Achsen von Träger und Solarflügel, Schriftzug, Antennenlicht
+- datum: 2026-11-02
+- von: pipeline
+- an: team
+- betrifft: SM_Ext_TrussSegment, SM_Ext_SolarArray, SM_Ext_HabModule, SM_Ext_Antenna (`SkyExteriorBuilder.cs`)
+- status: offen
+- meldung: Alle fünf sind genau nach `size_m` gebaut ([x, y, z] mit z = oben, wie alle Einträge). Für `SkyExteriorBuilder.cs` heißt das:
+  1. `SM_Ext_TrussSegment` [3, 3, 20] steht bei Rotation 0 20 m hoch; der Platzhalter liegt entlang Unity Z. Liegend: zusätzlich 90° um X,
+     also `Euler(90, -55, 0)` (Truss_West) und `Euler(90, 50, 0)` (Truss_East). Oder den Eintrag auf [3, 20, 3] ändern (dann rework).
+  2. `SM_Ext_SolarArray` [30, 1, 10] steht aufrecht, die Zellen schauen nach Unity -Z; der Platzhalter liegt flach. Flach mit Zellen nach oben:
+     `Euler(110, 8, 0)` (Solar_North) und `Euler(65, -15, 0)` (Solar_South). Oder den Eintrag auf [30, 10, 1] ändern.
+  3. `SM_Ext_HabModule`: der Schriftzug KESTREL-9 / HAB 2 läuft entlang der Achse auf der Vorderseite und steht bei der Rolle von Hab_East
+     `Euler(0, 0, 90)` aufrecht (bei `Euler(0, 0, -90)` stünde er kopf). Bei Hab_West `Euler(90, 20, 0)` zeigt er in den Himmel. Die Fensterreihen
+     liegen auf ±X wie beim Platzhalter.
+  4. `SM_Ext_Antenna` hat ein eigenes rotes Blinklicht (Emission) auf 17,5 m, bei y = 7 also auf 24,5. `Nav_Antenna` (y 25,5) schwebt 0,5 m
+     über der Spitze: auf 24,5 setzen oder weglassen.
+- antwort:
