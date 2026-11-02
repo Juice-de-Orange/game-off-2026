@@ -259,7 +259,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   WebGL-Build mit Barriere noch nicht im Browser angesehen.
 
 ### P24 — Himmel & Außenwelt
-- Größe: M · Priorität: Soll · Status: offen
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 02.11.)
 - Braucht: P22
 - Ziel: Beeindruckender Blick nach draußen.
 - Enthalten: Sterne/Nebel-Skybox, Sonne (Billboard + Lichtrichtung), Gasriese mit Ring, Heimatplanet mit Nachtlichtern, Mond — als ferne
