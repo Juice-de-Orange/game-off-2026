@@ -61,13 +61,18 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Abnahme: Start → Menü → Spiel → Pause → zurück ins Menü funktioniert im WebGL-Build.
 
 ### P03 — Spieler: Laufen & Interagieren
-- Größe: S · Priorität: Muss · Status: in Arbeit (max, 02.11.)
+- Größe: S · Priorität: Muss · Status: fertig (max, 02.11.)
 - Braucht: P01
 - Ziel: Ego-Perspektive, WASD + Maus, E = interagieren.
 - Enthalten: CharacterController-basierter Controller, Maus-Look (Pointer Lock im Browser), Interaktions-Raycast
   mit Hinweistext ("[E] Schlafen"), Interface/Komponente `Interactable`
 - Nicht enthalten: Springen, Rennen, Kopfwippen
 - Abnahme: In der Sandbox herumlaufen und ein Test-Objekt per E auslösen.
+- Ergebnis: Prefab `Prefabs/Player/PF_Player.prefab` (CharacterController r=0,3 m, Kamera 1,65 m, HUD mit Fadenkreuz + Prompt),
+  steht in `Main.unity` am `PlayerSpawn` (Zimmer 103). Skripte in `Scripts/Player/`: `FirstPersonController` (WASD, Maus-Look, Maus wird
+  per Klick gefangen; `SetControlEnabled(false)` für Schalteransicht/Menüs), `PlayerInteractor` (Raycast + E), `Interactable`
+  (Prompt-Text + UnityEvent `onInteract`, oder `Interact()` überschreiben). Werte in `Data/Player/PlayerTuning.asset`
+  (4 m/s, Empfindlichkeit 0,12°/px, Reichweite 2,2 m). Input: `Data/Input/PlayerControls.inputactions`. Im Play-Modus getestet: Laufen, Wandkollision, Blick, E.
 
 ### P04 — Station als Graybox
 - Größe: M · Priorität: Muss · Status: fertig (max, 02.11.)

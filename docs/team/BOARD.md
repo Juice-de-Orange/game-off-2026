@@ -29,7 +29,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| max | P03 Spieler in Main setzen | `Assets/_Project/Scenes/Main.unity` | 02.11. |
+| | | | |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -48,6 +48,7 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 - [x] Stations-Grundriss freigegeben (`docs/STATION.md`), 48 Asset-Anforderungen für die Pipeline (max, 02.11.)
 - [x] P01 Unity-Projekt angelegt (WebGL-Testbuild steht noch aus) (max, 02.11.)
 - [x] P04 Station als Graybox in `Main.unity` (max, 02.11.)
+- [x] P03 Spieler-Controller + Interaktion, Spieler in `Main.unity` (max, 02.11.)
 - [x] Repo, Team-Workflow und Setup-Anleitung (max, 29.10.)
 - [x] Unity 6000.3.23f1 + WebGL bei Max installiert, Lizenz aktiv (max, 29.10.)
 - [x] Martin (iMaterix) ins Repo eingeladen, Setup-Anleitung als Gist verschickt (max, 29.10.)
