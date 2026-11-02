@@ -382,7 +382,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Door_Big.fbx
 package: P04
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [16.0, 1.0, 7.0]
@@ -824,7 +824,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Shuttle.fbx
 package: P04
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [6.0, 9.0, 3.5]
@@ -907,7 +907,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Crate.fbx
 package: P04
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.2, 1.2, 1.0]
@@ -935,7 +935,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Barrier.fbx
 package: P04
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [2.0, 0.3, 1.0]
