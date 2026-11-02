@@ -294,7 +294,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 > was man damit tun kann. Alle Soll; Reihenfolge und Verteilung im Call.
 
 ### P27 — Automatische Türen mit Zugangsstufen
-- Größe: S · Priorität: Soll · Status: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 02.11.)
 - Braucht: P22, P03 · Assets: `SM_Station_Door_Slide`, `_Narrow` (da), `SM_Station_Wall_Door_2x3_Narrow` (bestellt)
 - Ziel: Schiebetüren öffnen sich zischend beim Näherkommen.
 - Enthalten: Türkomponente (Trigger, Gleiten in die Wandnut, Sounds-Platzhalter), Zugangsstufen: Personaltüren nur für den Spieler,
