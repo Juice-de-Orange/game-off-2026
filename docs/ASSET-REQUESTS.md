@@ -1181,7 +1181,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Bar/SM_Bar_Table.fbx
 package: P04
 scene: Bar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.8, 0.8, 1.1]
@@ -1208,7 +1208,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Bar/SM_Bar_Shelf.fbx
 package: P04
 scene: Bar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [3.0, 0.3, 2.2]
@@ -1236,7 +1236,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Bar/SM_Bar_NeonSign.fbx
 package: P04
 scene: Bar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [2.0, 0.1, 0.6]
