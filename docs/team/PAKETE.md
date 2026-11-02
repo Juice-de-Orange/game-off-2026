@@ -191,7 +191,8 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   RenderTexture (Höhe aus `Data/Rendering/RetroLookSettings.asset`, Standard 360 px, Breite passend zum Seitenverhältnis), die
   bildschirmfüllend hinter aller UI liegt → Welt pixelig, Screen-Space-UI scharf. Ein-/Ausschalten zur Laufzeit: `RetroLook.RetroEnabled`
   (für das Optionsmenü P02). Fasst keine Projekt-Assets an. Wichtig: Maus → Strahl immer über Viewport-Koordinaten rechnen
-  (siehe `CounterStation.TryClick`), nicht `ScreenPointToRay`. WebGL-Performance noch nicht im Browser gemessen.
+  (siehe `CounterStation.TryClick`), nicht `ScreenPointToRay`. Build läuft im Browser (max, 02.11.). **Auf Wunsch von Max per Standard AUS** (`enabledByDefault = false`) — wie der
+  Retro-Look final aussehen soll, wird entschieden, wenn die Assets drin sind (dann ggf. Folgepaket).
 
 ### P18 — Audio-Grundgerüst
 - Größe: S · Priorität: Soll · Status: offen
@@ -206,7 +207,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Abnahme: Build läuft auf itch.io in Chrome und Firefox, Ablauf ist in `docs/` beschrieben.
 
 ### P20 — Licht & Stimmung der Station
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 02.11.)
+- Größe: M · Priorität: Soll · Status: fertig (max, 02.11.)
 - Braucht: P04 · Folgt auf: P04 (Licht-Feinschliff war dort ausgeklammert)
 - Ziel: Die Graybox fühlt sich nach der Station aus `STYLE.md` an: kaltes Neon in Gängen, warmes Licht in Bar/Diner, eine Leuchtfarbe pro Raum.
 - Enthalten: Lichter pro Raum (mehrere, Raumfarbe), Light Probes, Leuchtstreifen-Platzhalter mit Emission, gebackenes Licht (niedrige Lightmap-Auflösung,
@@ -214,4 +215,4 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   rotes Warnlicht in der Prüfkammer, Licht-Setup reproduzierbar per Editor-Menü
 - Nicht enthalten: finale Modelle/Texturen (Pipeline), Post-Processing
 - Abnahme: Jeder Raum hat seine Leuchtfarbe, Stimmung entspricht `STYLE.md`, WebGL-Build läuft, Licht lässt sich nach Graybox-Änderung per Menü neu backen.
-- Ergebnis: siehe `docs/STATION.md` → "Licht & Stimmung". Light Probes doch enthalten (Schalter-Knöpfe waren sonst schwarz).
+- Ergebnis: siehe `docs/STATION.md` → "Licht & Stimmung". Light Probes doch enthalten (Schalter-Knöpfe waren sonst schwarz). Von Max im Browser abgenommen (02.11.).
