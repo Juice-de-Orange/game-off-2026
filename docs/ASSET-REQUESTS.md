@@ -2560,7 +2560,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_GasGiant_Albedo.png
 package: P24
 scene: Himmel
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2587,7 +2587,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Ring.png
 package: P24
 scene: Himmel
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2614,7 +2614,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Home_Albedo.png
 package: P24
 scene: Himmel
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2641,7 +2641,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Home_Emission.png
 package: P24
 scene: Himmel
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2668,7 +2668,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Sun_Glow.png
 package: P24
 scene: Himmel
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2695,7 +2695,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Moon_Albedo.png
 package: P24
 scene: Himmel
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
