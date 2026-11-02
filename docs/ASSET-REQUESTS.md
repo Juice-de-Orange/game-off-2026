@@ -187,7 +187,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Door_Slide.fbx
 package: P04
 scene: alle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.6, 0.15, 2.2]
@@ -299,7 +299,7 @@ feedback:
 path: Assets/_Project/Art/Models/Station/SM_Station_Window_Small.fbx
 package: P04
 scene: Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [4.0, 0.3, 2.2]
@@ -327,7 +327,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Porthole.fbx
 package: P04
 scene: Motel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.9, 0.3, 0.9]
@@ -354,7 +354,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Hatch_Airlock.fbx
 package: P04
 scene: Prüfkammer
-status: Vorschau
+status: rework
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.6, 0.4, 2.2]
@@ -374,7 +374,8 @@ animations: []
 collision: prefab
 refs: [docs/style/refs/ai_door_steam_01.webp, docs/style/refs/ai_suit_room_01.webp]
 placeholder: Box 1.6 x 0.4 x 2.2 m, Pivot bottom_center, Material-Slots [Hatch]
-feedback: []
+feedback:
+  - "2026-11-02 max: Schott klappt nach außen ins All weg (M005 Punkt 5) - Pivot hinge_left an der Nordkante, geschlossen bündig in der Wand."
 ```
 
 ### SM_Hangar_Door_Big.fbx
@@ -383,7 +384,7 @@ path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Door_Big.fbx
 package: P04
 scene: Hangar
 status: Vorschau
-priority: P1
+priority: P3
 needed_by: 2026-11-12
 size_m: [16.0, 1.0, 7.0]
 pivot: bottom_center
@@ -402,7 +403,8 @@ animations: []
 collision: prefab
 refs: [docs/style/refs/real_hangar_shuttle_01.webp, docs/style/refs/ai_cockpit_view_landing_01.webp]
 placeholder: Box 16.0 x 1.0 x 7.0 m, Pivot bottom_center, Material-Slots [Frame, Field]
-feedback: []
+feedback:
+  - "2026-11-02 max: ENTFÄLLT (M004) - Barriere + Emitter bilden die Öffnung, wird nicht verbaut."
 ```
 
 ### SM_Counter_Desk.fbx
@@ -465,7 +467,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Button_Arrest.fbx
 package: P05
 scene: Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.15, 0.15, 0.08]
@@ -493,7 +495,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Button_Airlock.fbx
 package: P05
 scene: Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.15, 0.15, 0.12]
@@ -521,7 +523,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Stamp.fbx
 package: P05
 scene: Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.08, 0.08, 0.12]
@@ -603,7 +605,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Speaker.fbx
 package: P05
 scene: Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.4, 0.15, 0.3]
@@ -658,7 +660,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_WarningLamp.fbx
 package: P05
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.25, 0.25, 0.3]
@@ -686,7 +688,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_DepartureBoard.fbx
 package: P04
 scene: Halle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [2.0, 2.0, 3.5]
@@ -714,7 +716,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_Bench.fbx
 package: P04
 scene: Halle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [2.8, 0.6, 0.9]
@@ -741,7 +743,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_VendingMachine.fbx
 package: P04
 scene: Halle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.0, 0.8, 1.9]
@@ -796,7 +798,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_Sign.fbx
 package: P04
 scene: Halle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.2, 0.1, 0.4]
@@ -824,7 +826,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Shuttle.fbx
 package: P04
 scene: Hangar
-status: Vorschau
+status: rework
 priority: P1
 needed_by: 2026-11-16
 size_m: [6.0, 9.0, 3.5]
@@ -844,7 +846,8 @@ animations: []
 collision: prefab
 refs: [docs/style/refs/real_hangar_shuttle_01.webp, docs/style/refs/mw_cargo_hold_01.webp, docs/style/refs/ai_window_docking_ship_01.webp]
 placeholder: Box 6.0 x 9.0 x 3.5 m, Pivot bottom_center, Material-Slots [Hull, Detail]
-feedback: []
+feedback:
+  - "2026-11-02 max: Heckrampe als eigenes Unterobjekt 'Ramp' mit Pivot an der Angel (klappt per Skript hoch/runter, P25). Rest bleibt."
 ```
 
 ### SM_Hangar_DronePad.fbx
@@ -907,7 +910,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Crate.fbx
 package: P04
 scene: Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.2, 1.2, 1.0]
@@ -935,7 +938,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Barrier.fbx
 package: P04
 scene: Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [2.0, 0.3, 1.0]
@@ -1181,7 +1184,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Bar/SM_Bar_Table.fbx
 package: P04
 scene: Bar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.8, 0.8, 1.1]
@@ -1208,7 +1211,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Bar/SM_Bar_Shelf.fbx
 package: P04
 scene: Bar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [3.0, 0.3, 2.2]
@@ -1236,7 +1239,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Bar/SM_Bar_NeonSign.fbx
 package: P04
 scene: Bar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [2.0, 0.1, 0.6]
@@ -2792,5 +2795,359 @@ animations: []
 collision: none
 refs: []
 placeholder: PNG 512x512
+feedback: []
+```
+
+### SM_Station_Door_Slide_Narrow.fbx
+*(Variante, von der Pipeline gebaut und geliefert; Eintrag nachgezogen, M005)*
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Door_Slide_Narrow.fbx
+package: P27
+scene: Servicegang, Motel
+status: final
+priority: P1
+needed_by: 2026-11-09
+size_m: [1.2, 0.14, 2.2]
+pivot: bottom_center
+tris_max: 1000
+materials: [Door]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Door_Slide_Narrow_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Schmale Schiebetür 1,2 x 2,2 m für Personaltüren und Motelzimmer, gleicher Stil wie SM_Station_Door_Slide.
+interaction: "öffnet automatisch (P27)"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/ai_door_steam_01.webp]
+placeholder: Box 1.2 x 0.14 x 2.2 m, Pivot bottom_center, Material-Slots [Door]
+feedback: []
+```
+
+### SM_Station_Window_Small_Slot.fbx
+*(Variante, von der Pipeline gebaut und geliefert; Eintrag nachgezogen, M005)*
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Window_Small_Slot.fbx
+package: P05
+scene: Schalter
+status: final
+priority: P1
+needed_by: 2026-11-09
+size_m: [4.0, 0.3, 2.2]
+pivot: bottom_center
+tris_max: 1000
+materials: [Frame, Glass]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Window_Small_Slot_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Panzerglas-Scheibe zur Prüfkammer mit Dokument-Durchreiche unten mittig.
+interaction: "Schublade fährt aus/ein (P06)"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/real_customs_booth_01.webp]
+placeholder: Box 4.0 x 0.3 x 2.2 m, Pivot bottom_center, Material-Slots [Frame, Glass]
+feedback: []
+```
+
+### SM_Station_Lintel_4x08.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Lintel_4x08.fbx
+package: P22
+scene: Schalter
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [4.0, 0.3, 0.8]
+pivot: bottom_center
+tris_max: 200
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Lintel_4x08_Albedo.png   # 256x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Sturzstreifen über den 4-m-Fenstern (2,2 bis 3,0 m): Wandpaneel passend zu SM_Station_Wall_2x3 mit Kabelkanal oben.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 4.0 x 0.3 x 0.8 m, Pivot bottom_center, Material-Slots [Wall]
+feedback: []
+```
+
+### SM_Station_Wall_Porthole_2x3.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Porthole_2x3.fbx
+package: P22
+scene: Motel
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.2, 3.0]
+pivot: bottom_center
+tris_max: 400
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_Porthole_2x3_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Wandmodul wie SM_Station_Wall_2x3 (Polster-Variante fürs Motel) mit Achteck-Loch für SM_Station_Porthole, Mitte auf 1,5 m.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 0.2 x 3.0 m, Pivot bottom_center, Material-Slots [Wall]
+feedback: []
+```
+
+### SM_Station_Wall_Door_2x3_Narrow.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx
+package: P27
+scene: Servicegang, Motel
+status: offen
+priority: P1
+needed_by: 2026-11-09
+size_m: [2.0, 0.2, 3.0]
+pivot: bottom_center
+tris_max: 1000
+materials: [Wall, Frame]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_Door_2x3_Narrow_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_Door_2x3_Narrow_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Wandmodul mit 1,2 x 2,2 m Türöffnung mittig, Rahmen mit Warnstreifen und Statuslampe (Emission), Nuten für SM_Station_Door_Slide_Narrow.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/ai_door_steam_01.webp]
+placeholder: Box 2.0 x 0.2 x 3.0 m, Pivot bottom_center, Material-Slots [Wall, Frame]
+feedback: []
+```
+
+### SM_Item_PillBottle.fbx
+```yaml
+path: Assets/_Project/Art/Models/Items/SM_Item_PillBottle.fbx
+package: P32
+scene: Schalter (Asservatenschrank), Hangar-Kisten
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.06, 0.06, 0.1]
+pivot: bottom_center
+tris_max: 300
+materials: [Item]
+textures:
+  - Assets/_Project/Art/Textures/Items/T_Item_PillBottle_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Pillendose ohne Etikett, Kapseln sichtbar (verbotene Medizin). Liegt im Asservatenschrank und in durchsuchbaren Kisten; wird in die Hand genommen.
+interaction: "aufheben, verkaufen, nach Hause schicken"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.06 x 0.06 x 0.1 m, Pivot bottom_center, Material-Slots [Item]
+feedback: []
+```
+
+### SM_Item_Liquor.fbx
+```yaml
+path: Assets/_Project/Art/Models/Items/SM_Item_Liquor.fbx
+package: P32
+scene: Schalter (Asservatenschrank), Hangar-Kisten
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.09, 0.09, 0.3]
+pivot: bottom_center
+tris_max: 300
+materials: [Item]
+textures:
+  - Assets/_Project/Art/Textures/Items/T_Item_Liquor_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Flasche Schwarzbrand mit Pfropfen. Liegt im Asservatenschrank und in durchsuchbaren Kisten; wird in die Hand genommen.
+interaction: "aufheben, verkaufen, nach Hause schicken"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.09 x 0.09 x 0.3 m, Pivot bottom_center, Material-Slots [Item]
+feedback: []
+```
+
+### SM_Item_WeaponParts.fbx
+```yaml
+path: Assets/_Project/Art/Models/Items/SM_Item_WeaponParts.fbx
+package: P32
+scene: Schalter (Asservatenschrank), Hangar-Kisten
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.35, 0.12, 0.08]
+pivot: bottom_center
+tris_max: 300
+materials: [Item]
+textures:
+  - Assets/_Project/Art/Textures/Items/T_Item_WeaponParts_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Gewickeltes Bündel mit Waffenteilen (Lauf, Griff sichtbar). Liegt im Asservatenschrank und in durchsuchbaren Kisten; wird in die Hand genommen.
+interaction: "aufheben, verkaufen, nach Hause schicken"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.35 x 0.12 x 0.08 m, Pivot bottom_center, Material-Slots [Item]
+feedback: []
+```
+
+### SM_Item_DataChip.fbx
+```yaml
+path: Assets/_Project/Art/Models/Items/SM_Item_DataChip.fbx
+package: P32
+scene: Schalter (Asservatenschrank), Hangar-Kisten
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.08, 0.05, 0.01]
+pivot: bottom_center
+tris_max: 300
+materials: [Item]
+textures:
+  - Assets/_Project/Art/Textures/Items/T_Item_DataChip_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Datenchip in Plastikhülle, grün leuchtende Kante (Emission). Liegt im Asservatenschrank und in durchsuchbaren Kisten; wird in die Hand genommen.
+interaction: "aufheben, verkaufen, nach Hause schicken"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.08 x 0.05 x 0.01 m, Pivot bottom_center, Material-Slots [Item]
+feedback: []
+```
+
+### SM_Item_CashBundle.fbx
+```yaml
+path: Assets/_Project/Art/Models/Items/SM_Item_CashBundle.fbx
+package: P32
+scene: Schalter (Asservatenschrank), Hangar-Kisten
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.16, 0.07, 0.04]
+pivot: bottom_center
+tris_max: 300
+materials: [Item]
+textures:
+  - Assets/_Project/Art/Textures/Items/T_Item_CashBundle_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Geldbündel fremder Währung mit Banderole. Liegt im Asservatenschrank und in durchsuchbaren Kisten; wird in die Hand genommen.
+interaction: "aufheben, verkaufen, nach Hause schicken"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.16 x 0.07 x 0.04 m, Pivot bottom_center, Material-Slots [Item]
+feedback: []
+```
+
+### SM_Item_AlienSpecimen.fbx
+```yaml
+path: Assets/_Project/Art/Models/Items/SM_Item_AlienSpecimen.fbx
+package: P32
+scene: Schalter (Asservatenschrank), Hangar-Kisten
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.12, 0.12, 0.2]
+pivot: bottom_center
+tris_max: 300
+materials: [Item]
+textures:
+  - Assets/_Project/Art/Textures/Items/T_Item_AlienSpecimen_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Glasbehälter mit seltsamem Organismus in Flüssigkeit (Emission, schwach). Liegt im Asservatenschrank und in durchsuchbaren Kisten; wird in die Hand genommen.
+interaction: "aufheben, verkaufen, nach Hause schicken"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 0.12 x 0.12 x 0.2 m, Pivot bottom_center, Material-Slots [Item]
+feedback: []
+```
+
+### UI_Telescope_Overlay.png
+```yaml
+path: Assets/_Project/Art/UI/UI_Telescope_Overlay.png
+package: P29
+scene: UI
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/UI_Telescope_Overlay.png   # 1024x1024 Alpha, Bilinear
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Okular-Maske des Münzfernrohrs: runder Ausschnitt mit leicht verkratztem Glas, schwarzer Rand mit Gummiwulst, kleine Fadenkreuz-Markierungen und ein Zählwerk 'TIME 20' unten. Mitte transparent.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 1024x1024 Alpha
+feedback: []
+```
+
+### UI_Family_Photo.png
+```yaml
+path: Assets/_Project/Art/UI/UI_Family_Photo.png
+package: P29
+scene: Motel (Spind), UI
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/UI_Family_Photo.png   # 512x256 Atlas, Bilinear
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Atlas mit drei Fassungen desselben Familienfotos (Partner/in, zwei Kinder, ein Großelternteil vor einem Wohnblock): links intakt und farbig, Mitte verblasst mit Knick, rechts eingerissen und fleckig. Erfundene Personen, Retro-Fotostil.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 512x256 Atlas
 feedback: []
 ```

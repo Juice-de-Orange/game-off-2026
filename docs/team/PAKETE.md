@@ -106,6 +106,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Enthalten: 2–3 Dokumenttypen (z. B. Ausweis, Einreiseerlaubnis, Frachtliste), Drag & Drop, Rückgabe an den Reisenden
 - Nicht enthalten: Prüflogik (P07), Gadgets
 - Abnahme: Ein Test-Reisender legt Dokumente hin, man kann sie lesen, ziehen und zurückgeben.
+- Festgelegt im Asset-Durchgang (max, 02.11.): Dokumente kommen über die **animierte Durchreiche** (Schublade fährt mit Klacken herein, Papiere gleiten auf den Tisch; Rückgabe = in die Schublade ziehen, sie fährt hinaus). Modelle: `SM_Counter_DocSlot`, `SM_Station_Window_Small_Slot`.
 
 ### P07 — Reisende & Regeln
 - Größe: L · Priorität: Muss · Status: offen
@@ -124,6 +125,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   versteckter Moral-Wert (sinkt bei Luftschleuse, stark bei Unschuldigen), einfache Effekte (Wache, Schleuse)
 - Nicht enthalten: Enden (P12)
 - Abnahme: Alle vier Aktionen verändern Geld/Moral/Inventar korrekt.
+- Festgelegt im Asset-Durchgang (max, 02.11.): Luftschleuse: Außenschott **klappt nach außen ins All** (Rework mit Angel bestellt), Sog, Warnlampe dreht rot, Reisender wird hinausgerissen. Verhaftung: Warnlampe rot. Beschlagnahmtes landet physisch im Asservatenschrank (P32).
 
 ### P09 — Tagesablauf
 - Größe: M · Priorität: Muss · Status: offen
@@ -278,6 +280,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Enthalten: Großschiffe (Frachter, Tanker, Patrouille, kleine Pendler) auf festen Bahnen mit Zufallsabständen; Shuttle fliegt durch die
   Barriere ein/aus (`ShuttleTraffic.Arrive()/Depart()`, Barriere pulst), Schnittstelle für P09 (Tagesablauf ruft Arrive/Depart)
 - Abnahme: Alle paar Minuten fliegt etwas sichtbar vorbei; Arrive/Depart per Testknopf im Editor sichtbar.
+- Festgelegt im Asset-Durchgang (max, 02.11.): Shuttle mit **Rampe** (Rework bestellt): landen → Rampe klappt zischend herunter → Reisende steigen nacheinander aus und stellen sich an; abends Rampe hoch und Abflug.
 
 ### P26 — Details & Ausstattung
 - Größe: M · Priorität: Soll · Status: offen
@@ -286,3 +289,87 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Enthalten: Rohre, Kabel, Lüftungen, Verteilerkästen, Feuerlöscher, Müll, Pflanzen, Schilder/Poster/Schmutz-Decals, Putzroboter (fährt per
   Skript), Leuchtschilder, Ventilatoren, Uhr, Lautsprecher, Münzfernrohr und Bänke auf der Plattform, Gerüst und Kran im Hangar
 - Abnahme: Jeder Raum hat sichtbare Details; Draw Calls/Build-Größe im WebGL-Rahmen (Build < 40 MB).
+
+> **P27–P36: Mechaniken aus dem Asset-Durchgang** (max, 02.11.). Max hat jedes gelieferte Asset durchgesehen und festgelegt,
+> was man damit tun kann. Alle Soll; Reihenfolge und Verteilung im Call.
+
+### P27 — Automatische Türen mit Zugangsstufen
+- Größe: S · Priorität: Soll · Status: offen
+- Braucht: P22, P03 · Assets: `SM_Station_Door_Slide`, `_Narrow` (da), `SM_Station_Wall_Door_2x3_Narrow` (bestellt)
+- Ziel: Schiebetüren öffnen sich zischend beim Näherkommen.
+- Enthalten: Türkomponente (Trigger, Gleiten in die Wandnut, Sounds-Platzhalter), Zugangsstufen: Personaltüren nur für den Spieler,
+  Zimmer 101/102 verriegelt (rotes Lämpchen, "LOCKED"-Ton), Reisende (NavMesh) öffnen Publikumstüren; Builder setzt Türen in alle Türöffnungen
+- Abnahme: Alle Türen öffnen/schließen, verriegelte bleiben zu, NavMesh-Wege funktionieren weiter.
+
+### P28 — Sitzplätze & Ruhemomente
+- Größe: M · Priorität: Soll · Status: offen
+- Braucht: P05 (Sitz-Logik), P09 (Zeit vorspulen)
+- Ziel: Man kann sich hinsetzen und die Station auf sich wirken lassen.
+- Enthalten: Wartebänke in der Halle: [E] hinsetzen (Kamera tiefer, Blick zur Plattform), Durchsagen hören, im Feierabend Zeit bis zum
+  Schlafen vorspulen; Barhocker: hinsetzen öffnet das Barkeeper-Gespräch (Drink kaufen, Gerüchte, Schwarzmarkt-Einstieg → P11);
+  Bullauge Zimmer 103: [E] vor dem Schlafen Kamerafahrt ans Fenster, Blick auf den Heimatplaneten, kurzer Gedanke je nach Familienzustand
+- Abnahme: Alle drei Sitz-/Blickpunkte funktionieren, Q/ESC beendet sie sauber.
+
+### P29 — Münzfernrohr & sichtbares Familienschicksal
+- Größe: M · Priorität: Soll · Status: offen
+- Braucht: P24, P10 (Familienzustand) · Assets: `SM_Prop_CoinTelescope`, `UI_Telescope_Overlay`, `UI_Family_Photo` (bestellt)
+- Ziel: Die Familie ist in der Welt sichtbar, nicht nur in Briefen.
+- Enthalten: Fernrohr: 1 Credit, Okular-Overlay, Maus schwenkt, Mausrad zoomt, 20 s Zeit; Heimatstadt auf dem Planeten markiert, ihre
+  Lichter flackern/erlöschen je nach Familienzustand (auch von Plattform und Bullauge sichtbar); Familienfoto im Motelspind verblasst/reißt;
+  Morgenbrief liegt physisch auf dem Tisch in 103, Handschrift wird zittriger
+- Abnahme: Familienzustand ändert sichtbar Stadtlichter, Foto und Brief.
+
+### P30 — Getränkeautomat
+- Größe: S · Priorität: Soll · Status: offen
+- Braucht: P10 (Geld), P11 (Inventar) · Assets: `SM_Hall_VendingMachine` (da), `SM_Prop_SodaCan` (bestellt)
+- Ziel: Kleine Versuchung, Geld auszugeben.
+- Enthalten: [E] "NOVA COLA – 2 Credits": Geld weg, Dose fällt rumpelnd heraus, ins Inventar; nach Hause schicken (P13) oder am Schalter
+  trinken (kleiner Bonus, z. B. Schichtzeit kurz langsamer)
+- Abnahme: Kaufen, Inventar, Wirkung und Versand funktionieren.
+
+### P31 — Anzeigesäule mit Live-Ankunftsplan
+- Größe: S · Priorität: Soll · Status: offen
+- Braucht: P09 · Assets: `SM_Hall_DepartureBoard` (da)
+- Ziel: Auf einen Blick sehen, wie viel Schicht noch kommt.
+- Enthalten: TextMeshPro auf den CRT-Flächen: nächstes Shuttle, Reisende in der Schlange, Tag/Schicht-Uhr, Warnungen ("SECURITY LEVEL RAISED")
+- Abnahme: Anzeige folgt dem Spielstand.
+
+### P32 — Asservatenschrank mit echten Gegenständen
+- Größe: M · Priorität: Soll · Status: offen
+- Braucht: P08 · Assets: `SM_Counter_Locker` (da), `SM_Item_*` (6, bestellt)
+- Ziel: Beschlagnahmtes ist greifbar.
+- Enthalten: [E] Türen schwingen auf, Gegenstände liegen sichtbar in den Fächern, Rausnehmen = Inventar (Bar verkaufen / nach Hause schicken)
+- Abnahme: Verhaftung legt Gegenstände in den Schrank, man kann sie entnehmen.
+
+### P33 — Pinnwand, Lautsprecher & Warnlampe
+- Größe: M · Priorität: Soll · Status: offen
+- Braucht: P07, P09 · Assets: `SM_Counter_Board`, `SM_Counter_Speaker`, `SM_Counter_WarningLamp` (da)
+- Ziel: Der unsichtbare Vorgesetzte und die Regeln sind im Raum präsent.
+- Enthalten: Pinnwand [E] Nahansicht: Tagesregeln, Fahndungsfotos, Memos — jeden Morgen kommen Zettel dazu, alte bleiben; Lautsprecher-Lämpchen
+  leuchtet bei Durchsagen (Lob, Rüge, neue Anweisung mitten in der Schicht, Text bis Voicelines kommen); Warnlampe dreht rot bei
+  Verhaftung/Luftschleuse, gelb wenn ein Reisender eintritt
+- Abnahme: Alle drei reagieren auf das Spielgeschehen.
+
+### P34 — Terminal-Datenbank am Schalter
+- Größe: M · Priorität: Soll · Status: offen
+- Braucht: P07 · Assets: CRT im `SM_Counter_Desk`, `SM_Counter_CRTTerminal` (da)
+- Ziel: Zweites Prüfwerkzeug neben den Dokumenten.
+- Enthalten: Klick aufs Terminal → Name/ID anklicken → Abgleich mit Fahndungsliste und Einreiseakte (grüne Schrift); Statusanzeige zeigt
+  Lane-Status und Uhr; später durch Gadgets erweiterbar
+- Abnahme: Ein gesuchter Reisender lässt sich über das Terminal entlarven.
+
+### P35 — Durchsuchbare Fracht im Hangar
+- Größe: M · Priorität: Soll · Status: offen
+- Braucht: P07, P08 · Assets: `SM_Hangar_Crate`, `_Small` (da), `SM_Item_*`
+- Ziel: Gameplay im Hangar über die Drohne hinaus.
+- Enthalten: markierte Kisten gehören zu Reisenden; [E] durchsuchen findet Beweise (Schmuggelware zu einem Fall) — oder man steckt etwas
+  ein (Risiko, Moral-Wert)
+- Abnahme: Ein Fall lässt sich über einen Kistenfund lösen; Einstecken verändert Moral.
+
+### P36 — Lebendige Station: Flackern & Stromausfälle
+- Größe: S · Priorität: Soll · Status: offen
+- Braucht: P09, P20
+- Ziel: Der Zustand der Station verschiebt sich über die Tage (Theme "Shift").
+- Enthalten: Neonschild "THE LAST ORBIT" flackert (ein Buchstabe fällt aus); an Tag 3 fallen Schilder und Lichter häufiger aus;
+  `LightFlicker` wiederverwenden, Stärke pro Tag
+- Abnahme: Tag 1 ruhig, Tag 3 sichtbar instabil.
