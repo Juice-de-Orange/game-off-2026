@@ -61,7 +61,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Abnahme: Start → Menü → Spiel → Pause → zurück ins Menü funktioniert im WebGL-Build.
 
 ### P03 — Spieler: Laufen & Interagieren
-- Größe: S · Priorität: Muss · Status: offen
+- Größe: S · Priorität: Muss · Status: in Arbeit (max, 02.11.)
 - Braucht: P01
 - Ziel: Ego-Perspektive, WASD + Maus, E = interagieren.
 - Enthalten: CharacterController-basierter Controller, Maus-Look (Pointer Lock im Browser), Interaktions-Raycast
