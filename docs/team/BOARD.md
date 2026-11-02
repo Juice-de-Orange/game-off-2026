@@ -73,6 +73,11 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 - [ ] max: Tools installieren/testen: Blender (FBX-Export nach `docs/ASSETS.md`), Texturtool, Audacity
 - [x] max: Deploy-Key mit Schreibrecht für die Asset-Pipeline eintragen (31.10., Titel `asset-pipeline`)
 - [ ] max: Ab 01.11. (Repo öffentlich): `main` per Ruleset schützen — nur max/martin pushen direkt, Pipeline nur per PR
+- [ ] **beide, Call 02.11.: Repo öffentlich machen.** Vorher die urheberrechtlich geschützten Referenzbilder (`docs/style/refs/ai_*`, `mw_*`)
+  aus der Git-Historie entfernen (einmaliger Force-Push nach Absprache, Martin klont danach neu), Bilder lokal/privat weiter nutzen.
+  Max hat zugestimmt (02.11.), Martin muss noch zustimmen. Repo ist bis dahin privat (Pflicht: öffentlich bis 01.12.).
+- [ ] beide, Call 02.11.: **Audio höher priorisieren** — Audio ist eine der 6 Bewertungskategorien (P18 + Atmo-Sounds als Muss?).
+- [x] Lizenz: Code MIT (`LICENSE`), eigene Assets vorbehalten, KI-Offenlegung im README (max, 02.11.)
 - [x] max: 35 Referenzbilder in `docs/style/refs/` (31.10.)
 - [ ] max: `docs/STYLE.md` + Palette prüfen, nach dem Theme freigeben → Pipeline baut 3 Muster-Assets
 - [ ] max: ElevenLabs-Lizenz klären (Free-Plan erlaubt keine kommerzielle Nutzung, verlangt Namensnennung)

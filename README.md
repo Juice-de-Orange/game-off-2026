@@ -32,3 +32,14 @@ Our entry for [GitHub Game Off 2026](https://itch.io/jam/game-off-2026).
 - Juice-de-Orange (Max) — art & assets
 - iMaterix (Martin) — start screen & menu
 - Everything else: open packages, whoever has time
+
+## License
+
+- **Code** (everything under `Assets/_Project/Scripts/`, `tools/`, `.claude/`): [MIT](LICENSE).
+- **Our own art, audio, music, texts and voice lines**: © 2026 Juice-de-Orange & iMaterix, all rights reserved.
+- **Third-party assets** keep their own licenses, listed in [CREDITS.md](CREDITS.md).
+
+## AI disclosure
+
+AI tools are used in this project (as allowed by the Game Off rules): Claude Code for programming and planning,
+an AI-assisted pipeline for 3D models/textures, and ElevenLabs for voice transformation of our own recordings.
