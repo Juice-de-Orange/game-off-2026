@@ -1322,7 +1322,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Diner/SM_Diner_Counter.fbx
 package: P04
 scene: Diner
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-22
 size_m: [6.0, 0.7, 1.1]
@@ -1350,7 +1350,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Diner/SM_Diner_Booth.fbx
 package: P04
 scene: Diner
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-22
 size_m: [2.2, 1.4, 1.2]
@@ -1377,7 +1377,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Diner/SM_Diner_MenuBoard.fbx
 package: P04
 scene: Diner
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-22
 size_m: [2.0, 0.1, 0.8]
