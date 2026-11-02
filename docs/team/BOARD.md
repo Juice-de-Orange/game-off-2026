@@ -29,7 +29,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| max | P22/P23 Grundriss 2.0 + Energiebarriere | `Assets/_Project/Scenes/Main.unity`, `Assets/_Project/Prefabs/Station/PF_Station_Graybox.prefab` | 02.11. |
+| | | | |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -51,6 +51,7 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 - [x] P03 Spieler-Controller + Interaktion, Spieler in `Main.unity` (max, 02.11.)
 - [x] P05 Schalteransicht mit Stempeln und Knöpfen (max, 02.11.)
 - [x] P17 Retro-Look 640×360, UI scharf — vorerst AUS, Entscheidung nach Asset-Integration (max, 02.11.)
+- [x] P23 Energiebarriere am Hangartor (Shader, Puls) (max, 02.11.)
 - [x] P22 Grundriss 2.0: Hangar 36×28×16, Aussichtsplattform, Barfenster (max, 02.11.)
 - [x] P21 Station aus Bausatz-Modulen (Wände, Böden, Decken, Schalter-Möbel, Bar) (max, 02.11.)
 - [x] P20 Licht & Stimmung: Raumfarben, Leuchtstreifen, Nebel, Sternenhimmel, gebackenes Licht (max, 02.11.)

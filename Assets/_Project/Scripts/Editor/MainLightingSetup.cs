@@ -42,7 +42,7 @@ namespace GameOff.EditorTools
             var sky = AssetDatabase.LoadAssetAtPath<Material>(SkyMaterialPath);
             if (sky == null)
             {
-                System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(SkyMaterialPath));
+                AssetFolders.EnsureForAsset(SkyMaterialPath);
                 sky = new Material(Shader.Find("Skybox/Panoramic"));
                 AssetDatabase.CreateAsset(sky, SkyMaterialPath);
             }

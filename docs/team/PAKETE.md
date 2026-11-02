@@ -246,12 +246,17 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   Bauplan `docs/station/bauplan.html` und `docs/STATION.md` auf Stand 2.0. Barriere ist noch Platzhalter (P23).
 
 ### P23 — Energiebarriere am Hangartor
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 02.11.)
+- Größe: S · Priorität: Soll · Status: fertig (max, 02.11.)
 - Braucht: P22
 - Ziel: Sichtbare, lebendige Energiebarriere statt unsichtbarem Kraftfeld.
 - Enthalten: Shader (halbtransparent blau, wandernde Scanlinien, Randglühen, Rauschen), Emitter-Rahmen (`SM_Hangar_BarrierEmitter`),
   Flacker-Effekt per Methode `Pulse()` (z. B. wenn ein Schiff durchfliegt), Platz für Brumm-Sound (Audio kommt mit P18)
 - Abnahme: Barriere im Spiel und im WebGL-Build sichtbar animiert, Spieler kommt nicht hindurch.
+- Ergebnis: Shader `Art/Shaders/EnergyBarrier.shader` (URP, unlit, additiv, doppelseitig: Schimmer, aufsteigende Scanlinien, Randglühen,
+  Puls), Material `Art/Materials/Hangar/M_Hangar_EnergyBarrier.mat` (Farben/Tempo im Inspector einstellbar), Komponente
+  `Scripts/Core/EnergyBarrier.cs` mit `Pulse(stärke)` + leichtem Leerlauf-Flackern. Builder setzt Feld 28 × 12 m + unsichtbaren Blocker +
+  Emitter-Rahmen (Graybox mit Leuchtlinse, später `SM_Hangar_BarrierEmitter`). Getestet: Spieler bleibt stehen, Puls klingt in ~1 s ab.
+  WebGL-Build mit Barriere noch nicht im Browser angesehen.
 
 ### P24 — Himmel & Außenwelt
 - Größe: M · Priorität: Soll · Status: offen

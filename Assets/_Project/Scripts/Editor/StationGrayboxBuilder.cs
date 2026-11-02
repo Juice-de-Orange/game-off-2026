@@ -187,8 +187,7 @@ namespace GameOff.EditorTools
 
             // Closed outer airlock hatch and hangar barrier
             Block(root, "Airlock_OuterHatch (SM_Station_Hatch_Airlock)", new Vector3(4.1f, 1.1f, -9), new Vector3(0.2f, 2.2f, 1.6f), _hatch);
-            // Placeholder for the energy barrier (P23). Its collider keeps the player inside the station.
-            Block(root, "Hangar_ForceField (P23 energy barrier)", new Vector3(0, 6f, -40), new Vector3(28, 12, 0.1f), _forceField);
+            BuildEnergyBarrier(root, visual);
 
             BuildProps(props);
             BuildMarkers(markers);
@@ -201,7 +200,7 @@ namespace GameOff.EditorTools
             glass.AddComponent<Unity.AI.Navigation.NavMeshModifier>().ignoreFromBuild = true;
             fixtures.AddComponent<Unity.AI.Navigation.NavMeshModifier>().ignoreFromBuild = true;
 
-            System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(PrefabPath));
+            AssetFolders.EnsureForAsset(PrefabPath);
             PrefabUtility.SaveAsPrefabAssetAndConnect(root, PrefabPath, InteractionMode.AutomatedAction);
             Selection.activeGameObject = root;
             Debug.Log($"Station graybox built: {PrefabPath}");
@@ -331,10 +330,84 @@ namespace GameOff.EditorTools
                 PlaceKit(parent, tile, new Vector3(x, y, z), 0f);
         }
 
-        /// <summary>
-        /// Visual wall in 2 m x 3 m cells: plain cell → wall module; cell with a centered 1.6 x 2.2 m door → door-wall module;
-        /// anything else (windows, narrow doors, partial heights) → visible graybox fill for that cell.
-        /// </summary>
+        // --- Energy barrier in the hangar mouth (P23) ---
+        private const string BarrierMaterialPath = "Assets/_Project/Art/Materials/Hangar/M_Hangar_EnergyBarrier.mat";
+        private const string KitBarrierEmitter = "Hangar/SM_Hangar_BarrierEmitter.fbx";
+        private static readonly Vector3 BarrierCenter = new Vector3(0f, 6f, -40f);
+        private static readonly Vector2 BarrierSize = new Vector2(28f, 12f);
+
+        private static void BuildEnergyBarrier(GameObject root, GameObject visual)
+        {
+            var group = Child(root, "EnergyBarrier");
+
+            // Invisible blocker: keeps the player inside (the field itself has no collider).
+            var blocker = Block(group, "Barrier_Collider", BarrierCenter, new Vector3(BarrierSize.x, BarrierSize.y, 0.2f), _forceField);
+            blocker.GetComponent<MeshRenderer>().enabled = false;
+
+            // The animated field
+            var field = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            field.name = "Barrier_Field";
+            Object.DestroyImmediate(field.GetComponent<Collider>());
+            field.transform.SetParent(group.transform, false);
+            field.transform.SetPositionAndRotation(BarrierCenter, Quaternion.identity);
+            field.transform.localScale = new Vector3(BarrierSize.x, BarrierSize.y, 1f);
+            var renderer = field.GetComponent<MeshRenderer>();
+            renderer.sharedMaterial = BarrierMaterial();
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            renderer.receiveShadows = false;
+            field.AddComponent<GameOff.Core.EnergyBarrier>();
+
+            // Emitter frame: modules if delivered (4 m segments), otherwise graybox bars with a glowing inner lens.
+            var frame = Child(visual, "BarrierFrame");
+            float halfW = BarrierSize.x * 0.5f, top = BarrierCenter.y + BarrierSize.y * 0.5f, z = BarrierCenter.z;
+            if (Kit(KitBarrierEmitter) != null)
+            {
+                for (float x = -halfW + 2f; x < halfW; x += 4f)
+                {
+                    PlaceKit(frame, KitBarrierEmitter, new Vector3(x, top, z), 180f);                         // top row, lens down
+                    PlaceKit(frame, KitBarrierEmitter, new Vector3(x, 0f, z), 0f);                            // bottom row, lens up
+                }
+                for (float y = 2f; y < BarrierSize.y; y += 4f)
+                {
+                    var left = PlaceKit(frame, KitBarrierEmitter, new Vector3(-halfW, y, z), 0f);
+                    left.transform.rotation = Quaternion.Euler(0f, 0f, -90f);
+                    var right = PlaceKit(frame, KitBarrierEmitter, new Vector3(halfW, y, z), 0f);
+                    right.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+                }
+                return;
+            }
+            var lens = EmissiveMaterial(new Color(0.37f, 0.78f, 1f));
+            FrameBar(frame, "Emitter_Top", new Vector3(0f, top + 0.4f, z), new Vector3(BarrierSize.x + 1.6f, 0.8f, 1.2f), lens, Vector3.down);
+            FrameBar(frame, "Emitter_Bottom", new Vector3(0f, 0.3f, z), new Vector3(BarrierSize.x + 1.6f, 0.6f, 1.2f), lens, Vector3.up);
+            FrameBar(frame, "Emitter_West", new Vector3(-halfW - 0.4f, BarrierCenter.y, z), new Vector3(0.8f, BarrierSize.y, 1.2f), lens, Vector3.right);
+            FrameBar(frame, "Emitter_East", new Vector3(halfW + 0.4f, BarrierCenter.y, z), new Vector3(0.8f, BarrierSize.y, 1.2f), lens, Vector3.left);
+        }
+
+        /// <summary>A dark emitter bar with a thin glowing lens strip on the side facing the field.</summary>
+        private static void FrameBar(GameObject parent, string name, Vector3 center, Vector3 size, Material lens, Vector3 towardField)
+        {
+            var bar = Block(parent, name, center, size, _prop);
+            Object.DestroyImmediate(bar.GetComponent<Collider>());
+            var lensSize = new Vector3(
+                towardField.x != 0f ? 0.06f : size.x - 0.4f,
+                towardField.y != 0f ? 0.06f : size.y - 0.4f,
+                0.5f);
+            var lensPos = center + Vector3.Scale(towardField, size) * 0.5f + towardField * 0.03f;
+            var strip = Block(parent, name + "_Lens", lensPos, lensSize, lens);
+            Object.DestroyImmediate(strip.GetComponent<Collider>());
+        }
+
+        private static Material BarrierMaterial()
+        {
+            var mat = AssetDatabase.LoadAssetAtPath<Material>(BarrierMaterialPath);
+            if (mat != null) return mat;
+            AssetFolders.EnsureForAsset(BarrierMaterialPath);
+            mat = new Material(Shader.Find("GameOff/EnergyBarrier"));
+            mat.SetVector("_Size", new Vector4(BarrierSize.x, BarrierSize.y, 0f, 0f));
+            AssetDatabase.CreateAsset(mat, BarrierMaterialPath);
+            return mat;
+        }
+
         // --- Observation deck (docs/STATION.md 2.0): half circle north of the hall, two steps down ---
         private const float DeckRadius = 5f, DeckDrop = 0.36f, StepHeight = 0.18f, StepDepth = 0.4f, DeckSillHeight = 0.5f;
         private const int DeckGlassSegments = 8, DeckArcSegments = 16;
@@ -469,6 +542,10 @@ namespace GameOff.EditorTools
             return max > min ? max - min : 0f;
         }
 
+        /// <summary>
+        /// Visual wall in module cells (2 x 3 m, or 4 x 4 m in the hangar): plain cell → wall module; window cell → window-wall module; cell with a centered 1.6 x 2.2 m door → door-wall module;
+        /// anything else (windows, narrow doors, partial heights) → visible graybox fill for that cell.
+        /// </summary>
         private static void BuildWallVisual(GameObject parent, Room room, ModuleSet set, bool onXLine, float line, float offsetLine,
             float from, float to, float yaw, Material mat)
         {
@@ -755,7 +832,7 @@ namespace GameOff.EditorTools
 
         private static void CreateMaterials()
         {
-            System.IO.Directory.CreateDirectory(MaterialFolder);
+            AssetFolders.Ensure(MaterialFolder);
             _materials = new Dictionary<Area, Material>();
             foreach (var kv in AreaColors)
                 _materials[kv.Key] = GetOrCreateMaterial($"M_Graybox_{kv.Key}", kv.Value, false);
