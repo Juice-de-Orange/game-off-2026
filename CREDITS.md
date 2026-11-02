@@ -6,7 +6,7 @@ Only use assets whose license allows use in a public, open-source game jam entry
 
 | Asset | Type | Author | Source (URL) | License |
 |-------|------|--------|--------------|---------|
-|       |      |        |              |         |
+| Liberation Sans (TextMeshPro default font, placeholder) | Font | Red Hat / Liberation Fonts project, shipped with Unity TextMeshPro | https://github.com/liberationfonts/liberation-fonts | SIL OFL 1.1 |
 
 ## Useful sources
 
