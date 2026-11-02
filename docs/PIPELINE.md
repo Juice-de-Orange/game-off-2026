@@ -72,3 +72,15 @@ in `docs/ASSET-REQUESTS.md`.
   4. P26 Details bis 16.11.
   Geändert: `T_Sky_Space` nur noch Sterne + Nebel (Planeten sind eigene Objekte); `SM_Station_Window_Panorama` entfällt.
 - antwort:
+
+### M004 — Hangartor: Eintrag 16 x 7 m, Grundriss 2.0 hat 28 x 12 m
+- datum: 2026-11-02
+- von: pipeline
+- an: team
+- betrifft: SM_Hangar_Door_Big.fbx
+- status: offen
+- meldung: Der Eintrag verlangt das Tor mit 16 x 7 m, so ist es im Branch `assets/P04-hangar` gebaut. Der neue Grundriss
+  (Station 2.0 auf main) hat aber eine 28 x 12 m große Hangar-Öffnung mit Emitter-Segmenten (P23). Bitte den Eintrag
+  auf die richtige Größe setzen (dann `status: rework`) oder schreiben, dass das Tor nur einen Teil der Öffnung füllt.
+- antwort:
+
