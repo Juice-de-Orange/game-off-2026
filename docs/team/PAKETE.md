@@ -231,3 +231,45 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   Kiosk-Durchreiche, oberster Meter der Bar, Hangartor). Schalter mit echtem Tisch/Stuhl/Spind/Pinnwand/Durchreiche, Bar mit Tresen + Hockern.
   Neue Lieferungen: nur *Build Station Graybox* + *Setup Main Lighting + Bake* ausführen — vorhandene Modelle werden automatisch genutzt.
   Fehlt noch für den vollen Look: Fenster, schmale Tür, Wandvarianten (Polster/Holz), Schiebetüren, Möbel der übrigen Räume.
+
+### P22 — Grundriss 2.0: großer Hangar, Aussichtsplattform, Barfenster
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 02.11.)
+- Braucht: P21 · Folgt auf: P04, P21
+- Ziel: Station nach dem erweiterten Grundriss (`docs/STATION.md`, Stand 2.0).
+- Enthalten: Hangar 36 × 28 × 16 m; halbrunde Aussichtsplattform (r = 5 m, 2 Stufen tiefer, 8 Glassegmente) nördlich der Halle;
+  Barfenster Nordwand; Builder-Unterstützung für Halbkreis, Stufen, Hangar-Module 4 × 4 m und Fenster-Wandmodule; Licht/NavMesh neu
+- Nicht enthalten: Energiebarriere (P23), Außenwelt/Himmel (P24), Schiffe (P25), Detail-Props (P26)
+- Abnahme: Alle Räume inkl. Plattform begehbar, Stufen ohne Hängenbleiben, Wege < 15 s, Licht gebacken.
+
+### P23 — Energiebarriere am Hangartor
+- Größe: S · Priorität: Soll · Status: offen
+- Braucht: P22
+- Ziel: Sichtbare, lebendige Energiebarriere statt unsichtbarem Kraftfeld.
+- Enthalten: Shader (halbtransparent blau, wandernde Scanlinien, Randglühen, Rauschen), Emitter-Rahmen (`SM_Hangar_BarrierEmitter`),
+  Flacker-Effekt per Methode `Pulse()` (z. B. wenn ein Schiff durchfliegt), Platz für Brumm-Sound (Audio kommt mit P18)
+- Abnahme: Barriere im Spiel und im WebGL-Build sichtbar animiert, Spieler kommt nicht hindurch.
+
+### P24 — Himmel & Außenwelt
+- Größe: M · Priorität: Soll · Status: offen
+- Braucht: P22
+- Ziel: Beeindruckender Blick nach draußen.
+- Enthalten: Sterne/Nebel-Skybox, Sonne (Billboard + Lichtrichtung), Gasriese mit Ring, Heimatplanet mit Nachtlichtern, Mond — als ferne
+  Objekte unter einem `SkyRig`; `SkyRig.SetDay(1..3)` dreht Sonne/Planeten pro Tag (Theme "Shift"); Außenmodule der Station
+  (Rumpf, Träger, Solarflügel, Antennen, Andockarm, Hangar-Einfassung, Plattform-Kuppel) passend zu den Fenstern platziert
+- Abnahme: Aus Plattform, Bar, Halle und Hangar sieht man Station, Sonne und Planeten; `SetDay` verändert sichtbar die Szene.
+
+### P25 — Verkehr: vorbeifliegende Schiffe & Shuttle-Ankunft
+- Größe: M · Priorität: Soll · Status: offen
+- Braucht: P23, P24
+- Ziel: Lebendiges All und sichtbarer Schichtbeginn.
+- Enthalten: Großschiffe (Frachter, Tanker, Patrouille, kleine Pendler) auf festen Bahnen mit Zufallsabständen; Shuttle fliegt durch die
+  Barriere ein/aus (`ShuttleTraffic.Arrive()/Depart()`, Barriere pulst), Schnittstelle für P09 (Tagesablauf ruft Arrive/Depart)
+- Abnahme: Alle paar Minuten fliegt etwas sichtbar vorbei; Arrive/Depart per Testknopf im Editor sichtbar.
+
+### P26 — Details & Ausstattung
+- Größe: M · Priorität: Soll · Status: offen
+- Braucht: P22 und Lieferungen
+- Ziel: Station wirkt bewohnt und heruntergekommen.
+- Enthalten: Rohre, Kabel, Lüftungen, Verteilerkästen, Feuerlöscher, Müll, Pflanzen, Schilder/Poster/Schmutz-Decals, Putzroboter (fährt per
+  Skript), Leuchtschilder, Ventilatoren, Uhr, Lautsprecher, Münzfernrohr und Bänke auf der Plattform, Gerüst und Kran im Hangar
+- Abnahme: Jeder Raum hat sichtbare Details; Draw Calls/Build-Größe im WebGL-Rahmen (Build < 40 MB).
