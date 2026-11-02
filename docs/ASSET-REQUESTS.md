@@ -883,7 +883,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_CargoDrone.fbx
 package: P13
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.6, 1.6, 0.8]
