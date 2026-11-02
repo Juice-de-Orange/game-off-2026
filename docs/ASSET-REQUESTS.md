@@ -409,7 +409,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Desk.fbx
 package: P05
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.2, 4.0, 0.85]
@@ -437,7 +437,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Chair.fbx
 package: P05
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.6, 0.6, 1.0]
@@ -548,7 +548,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_DocSlot.fbx
 package: P05
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.5, 0.4, 0.15]
@@ -575,7 +575,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Locker.fbx
 package: P05
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.0, 0.5, 1.8]
@@ -630,7 +630,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Board.fbx
 package: P05
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.0, 0.05, 0.7]
