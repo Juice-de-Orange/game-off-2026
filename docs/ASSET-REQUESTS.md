@@ -2070,7 +2070,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_PipeBundle_2m.fbx
 package: P26
 scene: alle
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [2.0, 0.4, 0.5]
@@ -2097,7 +2097,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_PipeElbow.fbx
 package: P26
 scene: alle
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.6, 0.6, 0.5]
@@ -2124,7 +2124,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_CableBundle.fbx
 package: P26
 scene: alle
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [2.0, 0.2, 0.3]
@@ -2151,7 +2151,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_VentGrate.fbx
 package: P26
 scene: alle
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.8, 0.1, 0.5]
@@ -2178,7 +2178,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_JunctionBox.fbx
 package: P26
 scene: alle
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.5, 0.2, 0.6]
@@ -2206,7 +2206,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_FireExtinguisher.fbx
 package: P26
 scene: alle
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.25, 0.2, 0.7]
