@@ -70,7 +70,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Bar/SM_Bar_Counter.fbx
 package: P04
 scene: Bar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [3.0, 0.7, 1.1]
