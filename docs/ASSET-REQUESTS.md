@@ -1846,7 +1846,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_DockingArm.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-13
 size_m: [6.0, 25.0, 6.0]
@@ -1874,7 +1874,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_HangarMouth.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-13
 size_m: [36.0, 10.0, 18.0]
@@ -1902,7 +1902,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_DeckDome.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-13
 size_m: [12.0, 7.0, 8.0]
@@ -3730,7 +3730,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Deck_Railing.fbx
 package: P22
 scene: Aussichtsplattform
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-13
 size_m: [1.95, 0.15, 1.0]
