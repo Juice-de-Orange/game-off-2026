@@ -50,6 +50,7 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 - [x] P04 Station als Graybox in `Main.unity` (max, 02.11.)
 - [x] P03 Spieler-Controller + Interaktion, Spieler in `Main.unity` (max, 02.11.)
 - [x] P05 Schalteransicht mit Stempeln und Knöpfen (max, 02.11.)
+- [x] P17 Retro-Look 640×360, UI scharf (max, 02.11.)
 - [x] Repo, Team-Workflow und Setup-Anleitung (max, 29.10.)
 - [x] Unity 6000.3.23f1 + WebGL bei Max installiert, Lizenz aktiv (max, 29.10.)
 - [x] Martin (iMaterix) ins Repo eingeladen, Setup-Anleitung als Gist verschickt (max, 29.10.)

@@ -183,10 +183,15 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Abnahme: Mit Scanner wird ein gefälschtes Feld sichtbar markiert.
 
 ### P17 — Retro-Look
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 02.11.)
+- Größe: S · Priorität: Soll · Status: fertig (max, 02.11.)
 - Braucht: P01 · Hängt am Art-Style-Beschluss
 - Ziel: Low-Res-Rendering per URP Renderer Feature, UI in voller Auflösung darüber.
 - Abnahme: Einstellbare Render-Auflösung, Dokumente bleiben scharf, WebGL-Build flüssig.
+- Ergebnis: Komponente `Scripts/Core/RetroLook.cs` an `PF_Player/PlayerCamera`: Die Spielerkamera rendert in eine Point-gefilterte
+  RenderTexture (Höhe aus `Data/Rendering/RetroLookSettings.asset`, Standard 360 px, Breite passend zum Seitenverhältnis), die
+  bildschirmfüllend hinter aller UI liegt → Welt pixelig, Screen-Space-UI scharf. Ein-/Ausschalten zur Laufzeit: `RetroLook.RetroEnabled`
+  (für das Optionsmenü P02). Fasst keine Projekt-Assets an. Wichtig: Maus → Strahl immer über Viewport-Koordinaten rechnen
+  (siehe `CounterStation.TryClick`), nicht `ScreenPointToRay`. WebGL-Performance noch nicht im Browser gemessen.
 
 ### P18 — Audio-Grundgerüst
 - Größe: S · Priorität: Soll · Status: offen

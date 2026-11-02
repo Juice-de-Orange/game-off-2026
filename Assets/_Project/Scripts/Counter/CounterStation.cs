@@ -98,7 +98,9 @@ namespace GameOff.Counter
 
         private void TryClick(Vector2 screenPos)
         {
-            Ray ray = viewCamera.ScreenPointToRay(screenPos);
+            // Viewport coordinates: the camera may render into a low-res texture (RetroLook), the mouse is in screen pixels.
+            var viewport = new Vector3(screenPos.x / Mathf.Max(1, Screen.width), screenPos.y / Mathf.Max(1, Screen.height), 0f);
+            Ray ray = viewCamera.ViewportPointToRay(viewport);
             if (!Physics.Raycast(ray, out RaycastHit hit, clickRange, ~0, QueryTriggerInteraction.Ignore)) return;
             var clickable = hit.collider.GetComponentInParent<CounterClickable>();
             if (clickable != null && clickable.Click())

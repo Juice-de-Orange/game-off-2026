@@ -605,6 +605,7 @@ GameObject:
   - component: {fileID: 3835223367076158444}
   - component: {fileID: 7806348461219478978}
   - component: {fileID: 3583208000018670608}
+  - component: {fileID: 6528515353176121329}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -718,3 +719,16 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!114 &6528515353176121329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9214636968110945466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12879c6fd2ff04544bb1134194366593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Core.RetroLook
+  settings: {fileID: 11400000, guid: f21a18e1ed326224b9077c64e83ec5c7, type: 2}
