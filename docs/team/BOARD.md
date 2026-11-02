@@ -29,7 +29,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| | | | |
+| max | P04 Station-Graybox in Main einbauen | `Assets/_Project/Scenes/Main.unity`, `Assets/_Project/Prefabs/Station/PF_Station_Graybox.prefab` | 02.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
