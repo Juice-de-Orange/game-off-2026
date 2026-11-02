@@ -101,7 +101,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx
 package: P04
 scene: alle
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [2.0, 2.0, 0.1]
@@ -129,7 +129,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx
 package: P04
 scene: alle
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [2.0, 0.2, 3.0]
@@ -158,7 +158,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3.fbx
 package: P04
 scene: alle
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [2.0, 0.2, 3.0]
@@ -215,7 +215,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Ceiling_2x2.fbx
 package: P04
 scene: alle
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [2.0, 2.0, 0.2]
@@ -244,7 +244,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Pillar.fbx
 package: P04
 scene: Halle, Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.6, 0.6, 3.0]
