@@ -183,7 +183,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Abnahme: Mit Scanner wird ein gefälschtes Feld sichtbar markiert.
 
 ### P17 — Retro-Look
-- Größe: S · Priorität: Soll · Status: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 02.11.)
 - Braucht: P01 · Hängt am Art-Style-Beschluss
 - Ziel: Low-Res-Rendering per URP Renderer Feature, UI in voller Auflösung darüber.
 - Abnahme: Einstellbare Render-Auflösung, Dokumente bleiben scharf, WebGL-Build flüssig.
