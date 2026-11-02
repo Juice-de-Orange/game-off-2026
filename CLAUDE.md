@@ -32,6 +32,7 @@ from the other, current board). Act on it:
    (see "Questions" below). Answering the other is higher priority than new work — they may be blocked.
 3. Read the other's latest handover in `docs/team/handovers/` and summarize what changed in 2–4 lines.
 4. Check `docs/team/BOARD.md` → "In Arbeit" for files the other has claimed. Don't touch those.
+5. Check `docs/PIPELINE.md` for messages from the asset pipeline (`an: team`, `status: offen`) and handle them first.
 
 ### Picking work → packages (`docs/team/PAKETE.md`)
 All work is split into clearly scoped packages. This is the team's central development concept.
@@ -70,6 +71,7 @@ If your person seems to be wrapping up ("ich hör auf", "bis morgen", "gute Nach
 | `BOARD.md` | Milestones, who works on what right now, claimed files, backlog, done | both — keep edits small, pull first |
 | `PAKETE.md` | Development packages (scope, status, who took it) — the central work unit | both — pull first, push a take immediately |
 | `../ASSET-REQUESTS.md` | Needed assets: file name, placeholder, final look — processed by Max's asset pipeline | both append; status by Max |
+| `../PIPELINE.md` | Messages between team and asset pipeline (broken entries, questions, blockers) | both + pipeline (via PR) |
 | `../ASSETS.md` | Asset rules: paths, naming, specs, placeholder → final swap | both, after agreement |
 | `handovers/YYYY-MM-DD_HHMM_<name>.md` | One file per session end: state, unfinished work, hints for the other | author only |
 | `questions/YYYY-MM-DD_<from>-an-<to>_<slug>.md` | One file per question; the other answers in the same file | both |

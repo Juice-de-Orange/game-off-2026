@@ -18,6 +18,9 @@ description: Team sync at session start or on request - pull latest changes, sho
 6. Latest handover by the other in `docs/team/handovers/` (newest file name with the other's name):
    summarize in 2–4 lines — what changed, anything unfinished, anything I must watch out for.
    If there are several new handovers since my last one, summarize them all briefly.
+6b. `docs/PIPELINE.md`: messages with `an: team` and `status: offen` from the asset pipeline — show them first,
+   fix what they report (e.g. broken YAML in `ASSET-REQUESTS.md`, check with `python tools/check_asset_requests.py`),
+   write `antwort`, set `status: erledigt`, push.
 7. `docs/team/BOARD.md` → "In Arbeit": list what the other has claimed (don't touch) and what I still hold.
 8. End with a suggestion of what to work on next (from my last handover's "Nächste Schritte" and the backlog),
    as a multiple-choice question.

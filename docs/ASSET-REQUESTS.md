@@ -865,7 +865,7 @@ texel_px_per_m: 64
 palette: docs/style/palette.png
 look: >
   Landeplatte der Frachtdrohne: Gitterplatte mit gelbem Landekreuz und Randlichtern (Emission), daneben ein Terminal-Pfosten mit CRT.
-interaction: Terminal: Paket an Familie schicken
+interaction: "Terminal - Paket an Familie schicken"
 variants: []
 animations: []
 collision: prefab
