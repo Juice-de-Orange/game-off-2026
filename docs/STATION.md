@@ -70,3 +70,18 @@
 - **Spieler:** Zimmer 103 → Motelgang → Halle → Servicegang → Schalter. Hangar (Frachtdrohne) über den Servicegang.
   Der Spieler betritt die Prüfkammer nie.
 - Laufwege bei 4 m/s: alle unter 10 s (Zimmer → Schalter ≈ 7 s).
+
+## Graybox in Unity (P04)
+- Prefab: `Assets/_Project/Prefabs/Station/PF_Station_Graybox.prefab`, eingebaut in `Main.unity` (Instanz `Station_Graybox`).
+- Erzeugt vom Editor-Skript `Assets/_Project/Scripts/Editor/StationGrayboxBuilder.cs`, Menü **GameOff → Build Station Graybox**.
+  Grundriss geändert? Zahlen im Skript anpassen (gleiche Tabellen wie oben), Menü ausführen, NavMesh neu backen.
+  Das Skript ersetzt die Instanz in der offenen Szene und überschreibt das Prefab (vorher claimen!).
+- Struktur: `Floors`, `Ceilings`, `Walls/<Raum>`, `Glass`, `Lights` (ein Punktlicht pro Raum in der Raumfarbe),
+  `Props_Placeholder` (Blöcke mit den Namen aus `ASSET-REQUESTS.md`), `Markers` (PlayerSpawn, CounterCameraAnchor,
+  TravelerStandPoint, ShuttleRamp).
+- Materialien: `Assets/_Project/Art/Materials/Graybox/M_Graybox_*` (nur Graybox, werden durch den Bausatz ersetzt).
+- NavMesh: `NavMeshSurface` am Prefab-Root, Daten in `Assets/_Project/Scenes/Main/`. Agent-Radius **0,3 m**
+  (Personaltüren sind 1,2 m breit). Decken und Glas sind ausgeschlossen.
+- Gemessene Wege (NavMesh, 4 m/s): Zimmer 103 → Schalter 24 m / 6 s · Schalter → Frachtdrohne 13 m / 3 s ·
+  Schalter → Bar 28 m / 7 s · Bar → Zimmer 103 33 m / 8 s · Shuttle → Kammer 6 m / 1,5 s.
+- Noch offen (andere Pakete): Türen sind nur Öffnungen (Schiebetüren mit P05/P08), Spieler-Controller (P03).

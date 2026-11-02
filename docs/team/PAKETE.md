@@ -69,12 +69,15 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Abnahme: In der Sandbox herumlaufen und ein Test-Objekt per E auslösen.
 
 ### P04 — Station als Graybox
-- Größe: M · Priorität: Muss · Status: in Arbeit (max, 02.11.)
+- Größe: M · Priorität: Muss · Status: fertig (max, 02.11.)
 - Braucht: P01
 - Ziel: Begehbare Station aus ProBuilder-Blöcken in Endgröße.
 - Enthalten: Zollschalter/Wachstation, Hangar, Bar, Motel mit eigenem Zimmer, Diner (leerer Raum reicht), Gänge
 - Nicht enthalten: finale Modelle, Licht-Feinschliff
 - Abnahme: Alle Räume in `Main` erreichbar, Laufwege unter ~15 Sekunden.
+- Ergebnis: Grundriss `docs/STATION.md` (+ `docs/station/bauplan.html`). Prefab `Prefabs/Station/PF_Station_Graybox.prefab` in `Main.unity`,
+  erzeugt per Menü **GameOff → Build Station Graybox** (`Scripts/Editor/StationGrayboxBuilder.cs`). NavMesh gebacken (Agent-Radius 0,3 m),
+  alle Räume erreichbar, längster Weg Bar → Zimmer 103 = 8 s. Props sind benannte Platzhalter-Blöcke; Marker für Spawn, Schalter-Kamera, Reisenden-Standpunkt.
 
 ### P05 — Schalter-Ansicht
 - Größe: M · Priorität: Muss · Status: offen
