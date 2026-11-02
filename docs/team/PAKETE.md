@@ -49,7 +49,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   Sandbox-Szenen `Max_Sandbox`/`Martin_Sandbox`, `M_Placeholder.mat`
 - Nicht enthalten: Gameplay
 - Abnahme: Leerer WebGL-Build läuft lokal im Browser, beide haben das Projekt geöffnet.
-- Stand 02.11. (max): Projekt steht und ist gepusht. WebGL-Build gelingt (14,9 MB), Start im echten Browser noch nicht bestätigt; Martin muss das Projekt noch öffnen.
+- Stand 02.11. (max): Projekt steht und ist gepusht. WebGL-Build (14,9 MB) startet lokal im Browser ✔ (von Max bestätigt). Offen: Martin öffnet das Projekt einmal → dann `fertig`.
 
 ### P02 — Startbildschirm & Menü
 - Größe: M · Priorität: Muss · Status: offen (für **martin** reserviert)
