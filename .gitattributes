@@ -34,3 +34,8 @@
 *.jpg       binary
 *.ogg       binary
 *.mp3       binary
+
+# Baked Unity data is binary even though it uses .asset — never convert line endings
+**/LightingData.asset -text binary
+**/NavMesh*.asset -text binary
+*.exr binary
