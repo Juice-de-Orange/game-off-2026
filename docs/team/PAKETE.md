@@ -86,7 +86,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   alle Räume erreichbar, längster Weg Bar → Zimmer 103 = 8 s. Props sind benannte Platzhalter-Blöcke; Marker für Spawn, Schalter-Kamera, Reisenden-Standpunkt.
 
 ### P05 — Schalter-Ansicht
-- Größe: M · Priorität: Muss · Status: offen
+- Größe: M · Priorität: Muss · Status: in Arbeit (max, 02.11.)
 - Braucht: P03
 - Ziel: Am Schalter E drücken → Kamera fährt auf den Tisch, Maus wird frei; Verlassen per Esc/Taste.
 - Enthalten: Cinemachine-Übergang, Tischfläche, Knöpfe Verhaften/Luftschleuse, Stempel Durchlassen/Abweisen
