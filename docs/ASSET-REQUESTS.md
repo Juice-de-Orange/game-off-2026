@@ -992,7 +992,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_Bed.fbx
 package: P04
 scene: Motel
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.0, 2.0, 0.6]
@@ -1019,7 +1019,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_Table.fbx
 package: P04
 scene: Motel
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.8, 0.6, 0.75]
@@ -1046,7 +1046,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx
 package: P04
 scene: Motel
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.6, 0.5, 1.9]
@@ -1101,7 +1101,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_Reception.fbx
 package: P04
 scene: Motel
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.2, 0.5, 1.2]
@@ -1129,7 +1129,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_DoorSign.fbx
 package: P04
 scene: Motel
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.3, 0.05, 0.15]
