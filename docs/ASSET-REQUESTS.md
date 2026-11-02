@@ -686,7 +686,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_DepartureBoard.fbx
 package: P04
 scene: Halle
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [2.0, 2.0, 3.5]
@@ -714,7 +714,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_Bench.fbx
 package: P04
 scene: Halle
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [2.8, 0.6, 0.9]
@@ -741,7 +741,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_VendingMachine.fbx
 package: P04
 scene: Halle
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.0, 0.8, 1.9]
@@ -796,7 +796,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_Sign.fbx
 package: P04
 scene: Halle
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.2, 0.1, 0.4]
