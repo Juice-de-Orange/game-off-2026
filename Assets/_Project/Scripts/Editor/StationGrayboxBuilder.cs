@@ -192,6 +192,7 @@ namespace GameOff.EditorTools
             hatch.GetComponent<MeshRenderer>().enabled = Kit(KitHatch) == null;
             PlaceKit(visual, KitHatch, new Vector3(4f, 0f, -9f), 90f); // front (local -Z) faces into the inspection lock
             BuildEnergyBarrier(root, visual);
+            BuildDoors(root);
 
             BuildProps(props);
             BuildMarkers(markers);
@@ -378,6 +379,112 @@ namespace GameOff.EditorTools
             for (float x = room.X0 + cell * 0.5f; x < room.X1; x += cell)
             for (float z = room.Z0 + cell * 0.5f; z < room.Z1; z += cell)
                 PlaceKit(parent, tile, new Vector3(x, y, z), 0f);
+        }
+
+        // --- Sliding doors (P27) ---
+        private const string KitDoor = "Station/SM_Station_Door_Slide.fbx";
+        private const string KitDoorNarrow = "Station/SM_Station_Door_Slide_Narrow.fbx";
+
+        private readonly struct DoorSpec
+        {
+            public readonly string Name; public readonly bool OnXLine; public readonly float Line, Center, Width;
+            public readonly GameOff.Station.DoorAccess Access;
+            public DoorSpec(string name, bool onXLine, float line, float center, float width, GameOff.Station.DoorAccess access)
+            {
+                Name = name; OnXLine = onXLine; Line = line; Center = center; Width = width; Access = access;
+            }
+        }
+
+        // Must match door openings in the Openings table (docs/STATION.md).
+        private static readonly DoorSpec[] Doors =
+        {
+            new DoorSpec("Door_Room101",        false,   2, -10,   1.2f, GameOff.Station.DoorAccess.Locked),
+            new DoorSpec("Door_Room102",        false,   2, -14,   1.2f, GameOff.Station.DoorAccess.Locked),
+            new DoorSpec("Door_Room103",        false,   2, -18,   1.2f, GameOff.Station.DoorAccess.PlayerOnly),
+            new DoorSpec("Door_Diner",          true,   -8,  -3,   1.6f, GameOff.Station.DoorAccess.Public),
+            new DoorSpec("Door_Bar",            true,    8,   3,   1.6f, GameOff.Station.DoorAccess.Public),
+            new DoorSpec("Door_Service_Hall",   false,  -6,  -7,   1.2f, GameOff.Station.DoorAccess.PlayerOnly),
+            new DoorSpec("Door_Service_Hangar", false, -12,  -7,   1.2f, GameOff.Station.DoorAccess.PlayerOnly),
+            new DoorSpec("Door_Service_Counter",true,   -6,  -7.5f,1.2f, GameOff.Station.DoorAccess.PlayerOnly),
+            new DoorSpec("Door_Lock_Hall",      false,  -6,   2,   1.6f, GameOff.Station.DoorAccess.Scripted),
+            new DoorSpec("Door_Lock_Hangar",    false, -12,   2,   1.6f, GameOff.Station.DoorAccess.Scripted),
+        };
+
+        private static void BuildDoors(GameObject root)
+        {
+            var group = Child(root, "Doors");
+            group.AddComponent<Unity.AI.Navigation.NavMeshModifier>().ignoreFromBuild = true; // doorways stay walkable in the bake
+            var lampMat = EmissiveMaterial(new Color(0.89f, 0.27f, 0.25f));
+
+            foreach (var d in Doors)
+            {
+                var door = new GameObject(d.Name);
+                door.transform.SetParent(group.transform, false);
+                door.transform.SetPositionAndRotation(
+                    d.OnXLine ? new Vector3(d.Line, 0f, d.Center) : new Vector3(d.Center, 0f, d.Line),
+                    Quaternion.Euler(0f, d.OnXLine ? 90f : 0f, 0f));
+
+                // Sensing area on both sides of the door
+                var trigger = door.AddComponent<BoxCollider>();
+                trigger.isTrigger = true;
+                trigger.center = new Vector3(0f, 1.2f, 0f);
+                trigger.size = new Vector3(d.Width + 0.8f, 2.4f, 3.2f);
+
+                // Door leaf: delivered model or placeholder box, with its own solid collider
+                string kit = d.Width < 1.4f ? KitDoorNarrow : KitDoor;
+                Transform leaf;
+                if (Kit(kit) != null)
+                {
+                    var model = (GameObject)PrefabUtility.InstantiatePrefab(Kit(kit));
+                    model.transform.SetParent(door.transform, false);
+                    leaf = model.transform;
+                }
+                else
+                {
+                    leaf = Block(door, "Leaf_Placeholder", new Vector3(0f, 1.1f, 0f), new Vector3(d.Width, 2.2f, 0.12f), _hatch).transform;
+                    Object.DestroyImmediate(leaf.GetComponent<Collider>());
+                    leaf.localPosition = new Vector3(0f, 1.1f, 0f);
+                    GameObjectUtility.SetStaticEditorFlags(leaf.gameObject, 0); // moves at runtime: must not be static-batched
+                }
+                leaf.name = "Leaf";
+                var leafCollider = leaf.gameObject.AddComponent<BoxCollider>();
+                leafCollider.center = leaf.InverseTransformPoint(door.transform.TransformPoint(new Vector3(0f, 1.1f, 0f)));
+                leafCollider.size = new Vector3(d.Width, 2.2f, 0.14f);
+
+                GameObject lamp = null;
+                if (d.Access == GameOff.Station.DoorAccess.Locked)
+                {
+                    lamp = Block(door, "LockedLamp", Vector3.zero, new Vector3(0.12f, 0.08f, 0.32f), lampMat);
+                    Object.DestroyImmediate(lamp.GetComponent<Collider>());
+                    lamp.transform.localPosition = new Vector3(d.Width * 0.5f + 0.15f, 1.6f, 0f);
+                }
+
+                // Travelers (NavMesh agents) must not route through staff or locked doors, nor through a closed scripted door
+                UnityEngine.AI.NavMeshObstacle obstacle = null;
+                if (d.Access != GameOff.Station.DoorAccess.Public)
+                {
+                    obstacle = door.AddComponent<UnityEngine.AI.NavMeshObstacle>();
+                    obstacle.shape = UnityEngine.AI.NavMeshObstacleShape.Box;
+                    obstacle.center = new Vector3(0f, 1.1f, 0f);
+                    obstacle.size = new Vector3(d.Width, 2.2f, 0.4f);
+                    obstacle.carving = true;
+                }
+
+                var audio = door.AddComponent<AudioSource>();
+                audio.playOnAwake = false;
+                audio.spatialBlend = 1f;
+                audio.maxDistance = 15f;
+
+                var sliding = door.AddComponent<GameOff.Station.SlidingDoor>();
+                var so = new SerializedObject(sliding);
+                so.FindProperty("access").enumValueIndex = (int)d.Access;
+                so.FindProperty("panel").objectReferenceValue = leaf;
+                so.FindProperty("slideDistance").floatValue = d.Width;
+                so.FindProperty("audioSource").objectReferenceValue = audio;
+                so.FindProperty("lockedLamp").objectReferenceValue = lamp;
+                so.FindProperty("obstacle").objectReferenceValue = obstacle;
+                so.ApplyModifiedPropertiesWithoutUndo();
+            }
         }
 
         // --- Energy barrier in the hangar mouth (P23) ---

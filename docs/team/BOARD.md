@@ -29,7 +29,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| max | P27 Türen | `Assets/_Project/Scenes/Main.unity`, `Assets/_Project/Prefabs/Station/PF_Station_Graybox.prefab` | 02.11. |
+| | | | |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -51,6 +51,8 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 - [x] P03 Spieler-Controller + Interaktion, Spieler in `Main.unity` (max, 02.11.)
 - [x] P05 Schalteransicht mit Stempeln und Knöpfen (max, 02.11.)
 - [x] P17 Retro-Look 640×360, UI scharf — vorerst AUS, Entscheidung nach Asset-Integration (max, 02.11.)
+- [x] P27 Automatische Türen mit Zugangsstufen (max, 02.11.)
+- [x] Asset-Durchgang: Funktionen festgelegt → Pakete P27–P36 (max, 02.11.)
 - [x] Lieferungen Bar/Halle/Hangar/Bausatz-b/Schalter-b gemergt (PR #4–#8), integriert und eingebaut (max, 02.11.)
 - [x] P24 Himmel & Außenwelt: Sonne, Planeten, Ring, Mond, Außenmodule, SetDay (max, 02.11.)
 - [x] P23 Energiebarriere am Hangartor (Shader, Puls) (max, 02.11.)

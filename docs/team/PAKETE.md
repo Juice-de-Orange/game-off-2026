@@ -294,12 +294,17 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 > was man damit tun kann. Alle Soll; Reihenfolge und Verteilung im Call.
 
 ### P27 — Automatische Türen mit Zugangsstufen
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 02.11.)
+- Größe: S · Priorität: Soll · Status: fertig (max, 02.11.)
 - Braucht: P22, P03 · Assets: `SM_Station_Door_Slide`, `_Narrow` (da), `SM_Station_Wall_Door_2x3_Narrow` (bestellt)
 - Ziel: Schiebetüren öffnen sich zischend beim Näherkommen.
 - Enthalten: Türkomponente (Trigger, Gleiten in die Wandnut, Sounds-Platzhalter), Zugangsstufen: Personaltüren nur für den Spieler,
   Zimmer 101/102 verriegelt (rotes Lämpchen, "LOCKED"-Ton), Reisende (NavMesh) öffnen Publikumstüren; Builder setzt Türen in alle Türöffnungen
 - Abnahme: Alle Türen öffnen/schließen, verriegelte bleiben zu, NavMesh-Wege funktionieren weiter.
+- Ergebnis: `Scripts/Station/SlidingDoor.cs` + `DoorAccess` (Public / PlayerOnly / Locked / Scripted). Builder setzt 10 Türen (Tabelle `Doors`
+  im Builder): Diner, Bar öffentlich; Zimmer 103 + 3 Personaltüren nur Spieler; 101/102 verriegelt (rotes Lämpchen); Prüfkammer-Türen
+  per Skript (`Open()`/`Close()` für P08). Türblatt gleitet in die Wand, Sensor-Trigger beidseitig, NavMesh-Hindernisse halten Reisende
+  aus Personal-/verriegelten Türen und aus geschlossenen Prüfkammertüren. Sounds per Feld (Aufträge `SFX_Door_*`).
+  Getestet: Zimmer 103 raus, 101 bleibt zu, Bar rein, Prüfkammertür bleibt zu bis `Open()`. Schmale Türen noch in Graybox-Wand.
 
 ### P28 — Sitzplätze & Ruhemomente
 - Größe: M · Priorität: Soll · Status: offen

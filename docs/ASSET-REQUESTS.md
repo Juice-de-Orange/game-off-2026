@@ -3151,3 +3151,81 @@ refs: []
 placeholder: PNG 512x256 Atlas
 feedback: []
 ```
+
+### SFX_Door_Open.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Door_Open.ogg
+package: P27
+scene: alle Türen
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Schwere Schiebetür öffnet: kurzes pneumatisches Zischen + metallisches Gleiten, ca. 0,5 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), OGG mono 44,1 kHz, "Decompress On Load".
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: keiner (Tür spielt ohne Clip einfach keinen Ton)
+feedback: []
+```
+
+### SFX_Door_Close.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Door_Close.ogg
+package: P27
+scene: alle Türen
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Schiebetür schließt: Gleiten + dumpfes Einrasten, ca. 0,5 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), OGG mono 44,1 kHz, "Decompress On Load".
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: keiner (Tür spielt ohne Clip einfach keinen Ton)
+feedback: []
+```
+
+### SFX_Door_Locked.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Door_Locked.ogg
+package: P27
+scene: alle Türen
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Verriegelte Tür: kurzer, unfreundlicher Summer/Doppel-Piep, ca. 0,3 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), OGG mono 44,1 kHz, "Decompress On Load".
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: keiner (Tür spielt ohne Clip einfach keinen Ton)
+feedback: []
+```
