@@ -259,3 +259,21 @@ in `docs/ASSET-REQUESTS.md`.
   - **Ausrichtung und Import:** wie M009 (Blick nach Unity +Z, Pivot unten mittig; Rig "Humanoid", Avatar "Create From
     This Model"; Material `M_NPC_<Spezies>` mit der Albedo, Point, keine Mipmaps).
 - antwort: max/Claude, 03.11.: Integriert wie M012, alle 5 Avatare gültig, Ext_-Kurven (Kehlsack, Fühler, Mandibeln, Kiefer, Schwanz) in allen Clips vorhanden.
+
+### M013 — Nachbesserungen aus M008: Abflugtafel, Pflanzkübel, Kiosk-Tresen
+- datum: 2026-11-03
+- von: pipeline
+- an: team
+- betrifft: SM_Hall_DepartureBoard, SM_Hall_Planter, SM_Kiosk_Counter
+- status: offen
+- meldung: Die drei rework-Punkte aus M008 sind umgesetzt, die Einträge stehen auf `Vorschau`:
+  1. `SM_Hall_DepartureBoard` (Branch `assets/P04-hall`): Tafel unverändert (Höhe 3,2 m, Größe wie geliefert); die drei
+     Kabel laufen jetzt bis in einen Deckenflansch auf 6,0 m. Modell 2,0 x 2,0 x 6,0 m, 872 Tris.
+  2. `SM_Hall_Planter` (Branch `assets/P04-extras`, dort wurde er geliefert): neue `T_Hall_Planter_Emission.png`
+     (64 x 64): UV-Röhre und Fensterstreifen der Lampe leuchten Neonviolett, sonst alles schwarz. Modell unverändert
+     (498 Tris); Material: Emission-Map + Emission-Farbe weiß, die Stärke nach Geschmack.
+  3. `SM_Kiosk_Counter` (Branch `assets/P11-P13-kiosk-drone`): Tresen bleibt 1,0 m. Darüber zwei Führungsschienen an
+     den Kanten der 1,6 m breiten Durchreiche, das Rollgitter halb heruntergelassen (2,0 -> 1,5 m) und oben der
+     Gitterkasten (2,0-2,4 m) mit dem violetten Leuchtschild 'GADGETS & SUPPLIES' auf 2,03-2,17 m - genau der Streifen,
+     den man aus der Halle unter dem Sturz (2,2 m) sieht. Modell 0,8 x 2,8 x 2,4 m, 588 Tris. Das alte Schild in der
+     Vitrine und das Gitter vor der Frontscheibe sind weg. Collider bitte auf die neue Höhe anpassen.
