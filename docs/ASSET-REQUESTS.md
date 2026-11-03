@@ -688,10 +688,10 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_DepartureBoard.fbx
 package: P04
 scene: Halle
-status: final
+status: rework
 priority: P1
 needed_by: 2026-11-16
-size_m: [2.0, 2.0, 3.5]
+size_m: [2.0, 2.0, 6.0]
 pivot: bottom_center
 tris_max: 1200
 materials: [Board, Screen]
@@ -708,7 +708,8 @@ animations: []
 collision: prefab
 refs: [docs/style/refs/ai_lounge_terminal_01.webp, docs/style/refs/mw_corridor_signs_01.webp]
 placeholder: Box 2.0 x 2.0 x 3.5 m, Pivot bottom_center, Material-Slots [Board, Screen]
-feedback: []
+feedback:
+  - "2026-11-03 max: (M008/1) Halle ist 6 m hoch - Halteseile bis zur Decke auf 6 m verlaengern, Tafel selbst bleibt in Hoehe und Groesse wie geliefert."
 ```
 
 ### SM_Hall_Bench.fbx
@@ -771,7 +772,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_Planter.fbx
 package: P04
 scene: Halle
-status: Vorschau
+status: rework
 priority: P2
 needed_by: 2026-11-22
 size_m: [1.0, 1.0, 1.4]
@@ -780,6 +781,7 @@ tris_max: 600
 materials: [Planter]
 textures:
   - Assets/_Project/Art/Textures/Hall/T_Hall_Planter_Albedo.png   # 128x128, Point
+  - Assets/_Project/Art/Textures/Hall/T_Hall_Planter_Emission.png   # 64x64, Point
 texel_px_per_m: 64
 palette: docs/style/palette.png
 look: >
@@ -790,7 +792,8 @@ animations: []
 collision: prefab
 refs: []
 placeholder: Box 1.0 x 1.0 x 1.4 m, Pivot bottom_center, Material-Slots [Planter]
-feedback: []
+feedback:
+  - "2026-11-03 max: (M008/3) Violettes Pflanzenlicht soll leuchten - Emission-Textur nachliefern, Modell bleibt."
 ```
 
 ### SM_Hall_Sign.fbx
@@ -855,10 +858,10 @@ feedback:
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_DronePad.fbx
 package: P13
 scene: Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
-size_m: [3.0, 3.0, 0.2]
+size_m: [3.0, 3.0, 1.42]
 pivot: bottom_center
 tris_max: 600
 materials: [Pad]
@@ -875,7 +878,8 @@ animations: []
 collision: prefab
 refs: [docs/style/refs/real_hangar_shuttle_01.webp, docs/style/refs/mw_cargo_hold_01.webp, docs/style/refs/ai_window_docking_ship_01.webp]
 placeholder: Box 3.0 x 3.0 x 0.2 m, Pivot bottom_center, Material-Slots [Pad]
-feedback: []
+feedback:
+  - "2026-11-03 max: (M011) Hoehe mit Terminal-Pfosten 1,42 m angenommen, Lieferung passt."
 ```
 
 ### SM_Hangar_CargoDrone.fbx
@@ -992,7 +996,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_Bed.fbx
 package: P04
 scene: Motel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.0, 2.0, 0.6]
@@ -1019,7 +1023,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_Table.fbx
 package: P04
 scene: Motel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.8, 0.6, 0.75]
@@ -1046,7 +1050,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx
 package: P04
 scene: Motel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.6, 0.5, 1.9]
@@ -1073,7 +1077,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_TV.fbx
 package: P04
 scene: Motel
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-22
 size_m: [0.5, 0.4, 0.4]
@@ -1101,7 +1105,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_Reception.fbx
 package: P04
 scene: Motel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.2, 0.5, 1.2]
@@ -1129,7 +1133,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_DoorSign.fbx
 package: P04
 scene: Motel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.3, 0.05, 0.15]
@@ -1267,10 +1271,10 @@ feedback: []
 path: Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Counter.fbx
 package: P11
 scene: Kiosk
-status: Vorschau
+status: rework
 priority: P1
 needed_by: 2026-11-16
-size_m: [0.8, 2.8, 1.0]
+size_m: [0.8, 2.8, 2.4]
 pivot: bottom_center
 tris_max: 800
 materials: [Counter, Glass]
@@ -1287,7 +1291,8 @@ animations: []
 collision: prefab
 refs: [docs/style/refs/ai_workshop_bench_01.webp, docs/style/refs/ai_counter_console_01.webp]
 placeholder: Box 0.8 x 2.8 x 1.0 m, Pivot bottom_center, Material-Slots [Counter, Glass]
-feedback: []
+feedback:
+  - "2026-11-03 max: (M008/5) Tresen bleibt 1,0 m hoch; Rollgitter schliesst die Oeffnung darueber, violettes Schild haengt oben - Gesamthoehe 2,4 m."
 ```
 
 ### SM_Kiosk_Shelf.fbx
