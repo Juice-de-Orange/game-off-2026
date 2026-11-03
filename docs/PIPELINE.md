@@ -167,7 +167,7 @@ in `docs/ASSET-REQUESTS.md`.
 - von: pipeline
 - an: team
 - betrifft: SM_Ext_TrussSegment, SM_Ext_SolarArray, SM_Ext_HabModule, SM_Ext_Antenna (`SkyExteriorBuilder.cs`)
-- status: offen
+- status: erledigt
 - meldung: Alle fünf sind genau nach `size_m` gebaut ([x, y, z] mit z = oben, wie alle Einträge). Für `SkyExteriorBuilder.cs` heißt das:
   1. `SM_Ext_TrussSegment` [3, 3, 20] steht bei Rotation 0 20 m hoch; der Platzhalter liegt entlang Unity Z. Liegend: zusätzlich 90° um X,
      also `Euler(90, -55, 0)` (Truss_West) und `Euler(90, 50, 0)` (Truss_East). Oder den Eintrag auf [3, 20, 3] ändern (dann rework).
@@ -199,7 +199,7 @@ in `docs/ASSET-REQUESTS.md`.
 - von: pipeline
 - an: team
 - betrifft: `SK_NPC_Human.fbx`, `SK_NPC_Vellani.fbx` (Branch `assets/npc-a`)
-- status: offen
+- status: erledigt
 - meldung: Max wollte NPCs mit Skelett (5 Spezies, hier die ersten 2). Für diese Figuren gibt es **keine Einträge in
   `ASSET-REQUESTS.md`**. Wenn ihr sie dort verfolgen wollt, legt bitte Einträge an (Pfad, Größe, Clips); die Pipeline
   liefert dann gegen diese Einträge.
@@ -232,7 +232,7 @@ in `docs/ASSET-REQUESTS.md`.
 - von: pipeline
 - an: team
 - betrifft: `SK_NPC_Quobb.fbx`, `SK_NPC_Xirrik.fbx`, `SK_NPC_Sorvak.fbx` (Branch `assets/npc-b`)
-- status: offen
+- status: erledigt
 - meldung: Die übrigen 3 der 5 NPC-Spezies (Max: NPCs mit Skelett), gleiche Pipeline wie M009 (`assets/npc-a`).
   Auch für diese Figuren gibt es **keine Einträge in `ASSET-REQUESTS.md`**; wenn ihr sie verfolgen wollt, legt bitte
   Einträge an (Pfad, Größe, Clips).
@@ -258,4 +258,4 @@ in `docs/ASSET-REQUESTS.md`.
     - Talk: Gesten zum Schalter hin, Füße bleiben stehen.
   - **Ausrichtung und Import:** wie M009 (Blick nach Unity +Z, Pivot unten mittig; Rig "Humanoid", Avatar "Create From
     This Model"; Material `M_NPC_<Spezies>` mit der Albedo, Point, keine Mipmaps).
-- antwort:
+- antwort: max/Claude, 03.11.: Integriert wie M012, alle 5 Avatare gültig, Ext_-Kurven (Kehlsack, Fühler, Mandibeln, Kiefer, Schwanz) in allen Clips vorhanden.

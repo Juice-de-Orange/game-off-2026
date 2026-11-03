@@ -177,13 +177,13 @@ namespace GameOff.EditorTools
             ExtProp(root, "Exterior/SM_Ext_HabModule.fbx", "Hab_East", new Vector3(34f, -4f, 36f), Quaternion.Euler(0f, 0f, 90f),
                 () => HabPlaceholder(hull, windows, 5f, 26f));
             ExtProp(root, "Exterior/SM_Ext_TrussSegment.fbx", "Truss_West", new Vector3(-17f, 3f, 16f), Quaternion.Euler(0f, -55f, 0f),
-                () => BoxGo(hull, new Vector3(2f, 2f, 24f)));
+                () => BoxGo(hull, new Vector3(2f, 2f, 24f)), modelRot: Quaternion.Euler(90f, -55f, 0f));
             ExtProp(root, "Exterior/SM_Ext_TrussSegment.fbx", "Truss_East", new Vector3(20f, -1f, 22f), Quaternion.Euler(0f, 50f, 0f),
-                () => BoxGo(hull, new Vector3(2f, 2f, 26f)));
+                () => BoxGo(hull, new Vector3(2f, 2f, 26f)), modelRot: Quaternion.Euler(90f, 50f, 0f));
             ExtProp(root, "Exterior/SM_Ext_SolarArray.fbx", "Solar_North", new Vector3(4f, 22f, 48f), Quaternion.Euler(20f, 8f, 0f),
-                () => BoxGo(solar, new Vector3(34f, 0.3f, 12f)));
+                () => BoxGo(solar, new Vector3(34f, 0.3f, 12f)), modelRot: Quaternion.Euler(110f, 8f, 0f));
             ExtProp(root, "Exterior/SM_Ext_SolarArray.fbx", "Solar_South", new Vector3(-22f, 14f, -74f), Quaternion.Euler(-25f, -15f, 0f),
-                () => BoxGo(solar, new Vector3(34f, 0.3f, 12f)));
+                () => BoxGo(solar, new Vector3(34f, 0.3f, 12f)), modelRot: Quaternion.Euler(65f, -15f, 0f));
             ExtProp(root, "Exterior/SM_Ext_Antenna.fbx", "Antenna", new Vector3(-12f, 7f, 20f), Quaternion.identity,
                 () => BoxGo(hull, new Vector3(0.6f, 18f, 0.6f), new Vector3(0f, 9f, 0f)));
             ExtProp(root, "Exterior/SM_Ext_DockingArm.fbx", "DockingArm", new Vector3(24f, 2f, 32f), Quaternion.identity,
@@ -207,7 +207,8 @@ namespace GameOff.EditorTools
             // Blinking navigation lights
             NavLight(root, "Nav_HabWest", new Vector3(-32f, 3f, 41.5f), red, 0f);
             NavLight(root, "Nav_HabEast", new Vector3(47.5f, -4f, 36f), green, 0.3f);
-            NavLight(root, "Nav_Antenna", new Vector3(-12f, 25.5f, 20f), red, 0.6f);
+            // The delivered antenna has a red emissive tip at 17.5 m (y 24.5, pipeline M009); the blinking bulb sits on it.
+            NavLight(root, "Nav_Antenna", new Vector3(-12f, Kit("Exterior/SM_Ext_Antenna.fbx") != null ? 24.5f : 25.5f, 20f), red, 0.6f);
             NavLight(root, "Nav_Mouth_W", new Vector3(-16.5f, 14.5f, -44f), red, 0.15f);
             NavLight(root, "Nav_Mouth_E", new Vector3(16.5f, 14.5f, -44f), green, 0.45f);
             // Engine glow of the parked ship (placeholder only)
@@ -216,11 +217,13 @@ namespace GameOff.EditorTools
             return root;
         }
 
-        private static GameObject ExtProp(GameObject parent, string kitPath, string name, Vector3 pos, Quaternion rot, System.Func<GameObject> placeholder)
+        /// <param name="modelRot">Rotation for the delivered model when its axes differ from the placeholder (pipeline M009).</param>
+        private static GameObject ExtProp(GameObject parent, string kitPath, string name, Vector3 pos, Quaternion rot, System.Func<GameObject> placeholder,
+            Quaternion? modelRot = null)
         {
             GameObject go;
             var model = Kit(kitPath);
-            if (model != null) go = (GameObject)PrefabUtility.InstantiatePrefab(model);
+            if (model != null) { go = (GameObject)PrefabUtility.InstantiatePrefab(model); rot = modelRot ?? rot; }
             else go = placeholder();
             if (go == null) return null;
             go.name = name;

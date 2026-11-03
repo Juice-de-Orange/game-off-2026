@@ -354,7 +354,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Hatch_Airlock.fbx
 package: P04
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.6, 0.4, 2.2]
@@ -826,7 +826,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Shuttle.fbx
 package: P04
 scene: Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [6.0, 9.0, 3.5]
@@ -883,7 +883,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_CargoDrone.fbx
 package: P13
 scene: Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.6, 1.6, 0.8]
@@ -965,7 +965,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Tank.fbx
 package: P04
 scene: Hangar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-22
 size_m: [1.4, 1.4, 3.5]
@@ -1295,7 +1295,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Shelf.fbx
 package: P11
 scene: Kiosk
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.4, 2.8, 2.0]
@@ -1405,7 +1405,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Sky_Space.png
 package: P04
 scene: Halle, Hangar, Prüfkammer (sichtbar durch Fenster und Hangartor)
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -1435,7 +1435,7 @@ feedback:
 path: Assets/_Project/Art/Models/Station/SM_Station_Window_Curved.fbx
 package: P22
 scene: Aussichtsplattform
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [1.95, 0.4, 6.4]
@@ -1462,7 +1462,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Floor_DeckRound.fbx
 package: P22
 scene: Aussichtsplattform
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [10.0, 5.0, 0.1]
@@ -1490,7 +1490,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Ceiling_DeckRound.fbx
 package: P22
 scene: Aussichtsplattform
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [10.0, 5.0, 0.3]
@@ -1518,7 +1518,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Steps_2m.fbx
 package: P22
 scene: Aussichtsplattform
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.8, 0.36]
@@ -1545,7 +1545,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Window_2x3.fbx
 package: P22
 scene: Bar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 3.0]
@@ -1572,7 +1572,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Wall_4x4.fbx
 package: P22
 scene: Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 0.3, 4.0]
@@ -1599,7 +1599,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Floor_4x4.fbx
 package: P22
 scene: Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 4.0, 0.15]
@@ -1626,7 +1626,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ceiling_4x4.fbx
 package: P22
 scene: Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 4.0, 1.0]
@@ -1654,7 +1654,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_BarrierEmitter.fbx
 package: P23
 scene: Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 1.2, 1.0]
@@ -1682,7 +1682,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Scaffold.fbx
 package: P26
 scene: Hangar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [4.0, 2.0, 5.0]
@@ -1709,7 +1709,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_CraneRail.fbx
 package: P26
 scene: Hangar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [36.0, 2.0, 1.5]
@@ -1736,7 +1736,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_HabModule.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-13
 size_m: [12.0, 12.0, 30.0]
@@ -1764,7 +1764,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_TrussSegment.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-13
 size_m: [3.0, 3.0, 20.0]
@@ -1791,7 +1791,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_SolarArray.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-13
 size_m: [30.0, 1.0, 10.0]
@@ -1818,7 +1818,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_Antenna.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-13
 size_m: [4.0, 4.0, 18.0]
@@ -1846,7 +1846,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_DockingArm.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-13
 size_m: [6.0, 25.0, 6.0]
@@ -1874,7 +1874,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_HangarMouth.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-13
 size_m: [36.0, 10.0, 18.0]
@@ -1902,7 +1902,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_DeckDome.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-13
 size_m: [12.0, 7.0, 8.0]
@@ -1930,7 +1930,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_RadiatorPanel.fbx
 package: P24
 scene: Außen (sichtbar durch Fenster + Startbildschirm)
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [2.0, 12.0, 8.0]
@@ -1958,7 +1958,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Ships/SM_Ship_Freighter.fbx
 package: P25
 scene: Weltraum vor den Fenstern
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-13
 size_m: [40.0, 160.0, 30.0]
@@ -1986,7 +1986,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Ships/SM_Ship_Tanker.fbx
 package: P25
 scene: Weltraum vor den Fenstern
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-13
 size_m: [30.0, 120.0, 30.0]
@@ -2014,7 +2014,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Ships/SM_Ship_Patrol.fbx
 package: P25
 scene: Weltraum vor den Fenstern
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [15.0, 35.0, 8.0]
@@ -2042,7 +2042,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Ships/SM_Ship_TrafficSmall.fbx
 package: P25
 scene: Weltraum vor den Fenstern
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [4.0, 8.0, 2.5]
@@ -2070,7 +2070,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_PipeBundle_2m.fbx
 package: P26
 scene: alle
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [2.0, 0.4, 0.5]
@@ -2097,7 +2097,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_PipeElbow.fbx
 package: P26
 scene: alle
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.6, 0.6, 0.5]
@@ -2124,7 +2124,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_CableBundle.fbx
 package: P26
 scene: alle
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [2.0, 0.2, 0.3]
@@ -2151,7 +2151,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_VentGrate.fbx
 package: P26
 scene: alle
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.8, 0.1, 0.5]
@@ -2178,7 +2178,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_JunctionBox.fbx
 package: P26
 scene: alle
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.5, 0.2, 0.6]
@@ -2206,7 +2206,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_FireExtinguisher.fbx
 package: P26
 scene: alle
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.25, 0.2, 0.7]
@@ -2233,7 +2233,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_TrashBin.fbx
 package: P26
 scene: Halle, Bar, Diner
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.5, 0.5, 0.9]
@@ -2260,7 +2260,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_TrashPile.fbx
 package: P26
 scene: Gänge, Hangar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [1.2, 0.8, 0.3]
@@ -2287,7 +2287,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_SodaCan.fbx
 package: P26
 scene: überall
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.07, 0.07, 0.12]
@@ -2314,7 +2314,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_PlantDead.fbx
 package: P26
 scene: Halle, Motel
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.5, 0.5, 1.0]
@@ -2341,7 +2341,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_CleaningBot.fbx
 package: P26
 scene: Halle
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.6, 0.6, 0.4]
@@ -2369,7 +2369,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_CoinTelescope.fbx
 package: P26
 scene: Aussichtsplattform
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.5, 0.6, 1.5]
@@ -2396,7 +2396,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_DeckBench.fbx
 package: P26
 scene: Aussichtsplattform
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [2.4, 0.6, 0.5]
@@ -2423,7 +2423,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_NeonSign_Open.fbx
 package: P26
 scene: Bar, Diner, Kiosk
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.8, 0.05, 0.3]
@@ -2451,7 +2451,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_WallClock.fbx
 package: P26
 scene: Halle, Schalter
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.5, 0.08, 0.5]
@@ -2479,7 +2479,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_PASpeaker.fbx
 package: P26
 scene: Halle, Gänge
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.4, 0.3, 0.3]
@@ -2506,7 +2506,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_CeilingFan.fbx
 package: P26
 scene: Bar, Diner
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [1.2, 1.2, 0.4]
@@ -2533,7 +2533,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_MopBucket.fbx
 package: P26
 scene: Gänge
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.5, 0.4, 1.2]
@@ -2560,7 +2560,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_GasGiant_Albedo.png
 package: P24
 scene: Himmel
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2587,7 +2587,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Ring.png
 package: P24
 scene: Himmel
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2614,7 +2614,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Home_Albedo.png
 package: P24
 scene: Himmel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2641,7 +2641,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Home_Emission.png
 package: P24
 scene: Himmel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2668,7 +2668,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Sun_Glow.png
 package: P24
 scene: Himmel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2695,7 +2695,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Moon_Albedo.png
 package: P24
 scene: Himmel
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -2722,7 +2722,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Decals/T_Decal_Signs.png
 package: P26
 scene: überall
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -2749,7 +2749,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Decals/T_Decal_Posters.png
 package: P26
 scene: Motel, Bar, Halle
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -2776,7 +2776,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Decals/T_Decal_Grime.png
 package: P26
 scene: überall
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -2859,7 +2859,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Lintel_4x08.fbx
 package: P22
 scene: Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 0.3, 0.8]
@@ -2886,7 +2886,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Porthole_2x3.fbx
 package: P22
 scene: Motel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 3.0]
@@ -2913,7 +2913,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx
 package: P27
 scene: Servicegang, Motel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 3.0]
@@ -2941,7 +2941,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_PillBottle.fbx
 package: P32
 scene: Schalter (Asservatenschrank), Hangar-Kisten
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.06, 0.06, 0.1]
@@ -2968,7 +2968,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_Liquor.fbx
 package: P32
 scene: Schalter (Asservatenschrank), Hangar-Kisten
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.09, 0.09, 0.3]
@@ -2995,7 +2995,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_WeaponParts.fbx
 package: P32
 scene: Schalter (Asservatenschrank), Hangar-Kisten
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.35, 0.12, 0.08]
@@ -3022,7 +3022,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_DataChip.fbx
 package: P32
 scene: Schalter (Asservatenschrank), Hangar-Kisten
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.08, 0.05, 0.01]
@@ -3049,7 +3049,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_CashBundle.fbx
 package: P32
 scene: Schalter (Asservatenschrank), Hangar-Kisten
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.16, 0.07, 0.04]
@@ -3076,7 +3076,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_AlienSpecimen.fbx
 package: P32
 scene: Schalter (Asservatenschrank), Hangar-Kisten
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.12, 0.12, 0.2]
@@ -3103,7 +3103,7 @@ feedback: []
 path: Assets/_Project/Art/UI/UI_Telescope_Overlay.png
 package: P29
 scene: UI
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -3130,7 +3130,7 @@ feedback: []
 path: Assets/_Project/Art/UI/UI_Family_Photo.png
 package: P29
 scene: Motel (Spind), UI
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -3235,7 +3235,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Padded.fbx
 package: P21
 scene: Motel, Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 3.0]
@@ -3262,7 +3262,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Panel.fbx
 package: P21
 scene: Bar, Diner
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 3.0]
@@ -3289,7 +3289,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Pipes.fbx
 package: P21
 scene: Gänge, Hangar-Nähe, Schalter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.35, 3.0]
@@ -3316,7 +3316,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Vent.fbx
 package: P21
 scene: alle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.25, 3.0]
@@ -3343,7 +3343,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Damaged.fbx
 package: P21
 scene: Gänge, Motel, Hangar-Nähe
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.25, 3.0]
@@ -3370,7 +3370,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Screen.fbx
 package: P21
 scene: Halle, Bar, Gänge
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.25, 3.0]
@@ -3398,7 +3398,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Lockers.fbx
 package: P21
 scene: Servicegang, Motelgang, Hangar-Nähe
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.45, 3.0]
@@ -3425,7 +3425,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x1.fbx
 package: P21
 scene: Bar (4 m hohe Wände)
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 1.0]
@@ -3452,7 +3452,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2_Grate.fbx
 package: P21
 scene: Servicegang, Hangar-Ränder
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 2.0, 0.1]
@@ -3479,7 +3479,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Ceiling_2x2_Light.fbx
 package: P21
 scene: alle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 2.0, 0.2]
@@ -3507,7 +3507,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Ceiling_Arch_2x2.fbx
 package: P21
 scene: Servicegang, Motelgang (2 m breite Gänge)
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 2.0, 0.7]
@@ -3535,7 +3535,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_CornerRound.fbx
 package: P21
 scene: alle Räume (Innenecken)
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [0.6, 0.6, 3.0]
@@ -3562,7 +3562,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Pillar_Round.fbx
 package: P21
 scene: Halle, Plattform-Öffnung, Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [0.8, 0.8, 3.0]
@@ -3590,7 +3590,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_DoorTrim_Round.fbx
 package: P27
 scene: alle Türen
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.3, 2.6]
@@ -3618,7 +3618,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_DoorTrim_Round_Narrow.fbx
 package: P27
 scene: Personaltüren, Motel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [1.6, 0.3, 2.6]
@@ -3646,7 +3646,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Arch_2x3.fbx
 package: P21
 scene: Halle ↔ Motelgang
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.3, 3.0]
@@ -3674,7 +3674,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_DeckArch.fbx
 package: P22
 scene: Halle ↔ Aussichtsplattform
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [11.0, 0.8, 6.0]
@@ -3702,7 +3702,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_CeilingDome.fbx
 package: P21
 scene: Halle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [8.0, 8.0, 1.5]
@@ -3730,7 +3730,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Deck_Railing.fbx
 package: P22
 scene: Aussichtsplattform
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-13
 size_m: [1.95, 0.15, 1.0]
@@ -3758,7 +3758,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_RibArch.fbx
 package: P22
 scene: Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [36.0, 1.2, 4.0]
