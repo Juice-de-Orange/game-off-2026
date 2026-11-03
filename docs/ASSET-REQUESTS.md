@@ -771,7 +771,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_Planter.fbx
 package: P04
 scene: Halle
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-22
 size_m: [1.0, 1.0, 1.4]
@@ -965,7 +965,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Tank.fbx
 package: P04
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-22
 size_m: [1.4, 1.4, 3.5]
@@ -1073,7 +1073,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_TV.fbx
 package: P04
 scene: Motel
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-22
 size_m: [0.5, 0.4, 0.4]
