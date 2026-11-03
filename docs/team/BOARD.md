@@ -35,7 +35,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| | | | |
+| max | Asset-Lieferungen einbauen (Builder neu laufen lassen) | `Main.unity`, `PF_Station_Graybox.prefab`, `PF_SkyRig.prefab`, `PF_Exterior.prefab` | 2026-11-03 |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
