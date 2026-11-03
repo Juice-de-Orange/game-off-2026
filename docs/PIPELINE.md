@@ -178,4 +178,18 @@ in `docs/ASSET-REQUESTS.md`.
      liegen auf ±X wie beim Platzhalter.
   4. `SM_Ext_Antenna` hat ein eigenes rotes Blinklicht (Emission) auf 17,5 m, bei y = 7 also auf 24,5. `Nav_Antenna` (y 25,5) schwebt 0,5 m
      über der Spitze: auf 24,5 setzen oder weglassen.
+
+### M011 — Landeplatte: Terminal-Pfosten braucht 1,42 m Höhe (SM_Hangar_DronePad)
+- datum: 2026-11-02
+- von: pipeline
+- an: team
+- betrifft: SM_Hangar_DronePad.fbx (P13, Branch `assets/P26-hangar-extras`)
+- status: offen
+- meldung: Der Eintrag will "daneben ein Terminal-Pfosten mit CRT" (Interaktion "Paket an Familie schicken"), hat aber
+  `size_m: [3.0, 3.0, 0.2]`. Ein bedienbarer Pfosten mit CRT ist ~1,4 m hoch. Geliefert: der Pfosten steht auf der
+  vorderen rechten Ecke der Platte (von vorne gesehen; Unity ca. (+1,2, 0, -1,2) vom Pivot), innerhalb der 3 x 3 m,
+  das Modell ist **3,0 x 3,0 x 1,42 m**. Bitte `size_m` auf `[3.0, 3.0, 1.42]` setzen (Collider: Platte 0,2 m hoch
+  plus Pfosten). Die Oberseite der Platte liegt auf 0,2 m: die Frachtdrohne steht mit Rotation 0 auf dem Pivot der
+  Platte + 0,2 m nach oben, Nase nach vorne (-Z) wie der Pfeil auf der Platte. Die Nummerierung M008/M009 ist auf
+  mehreren Branches doppelt vergeben; diese Meldung nimmt deshalb M011.
 - antwort:
