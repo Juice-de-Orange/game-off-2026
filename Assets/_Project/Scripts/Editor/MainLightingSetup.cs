@@ -151,8 +151,37 @@ namespace GameOff.EditorTools
 
         private static void NavMeshRebake()
         {
+            // Inactive surfaces still own their NavMesh asset, so they count for the cleanup (but are not baked).
+            DeleteOrphanedNavMeshAssets(Object.FindObjectsByType<Unity.AI.Navigation.NavMeshSurface>(FindObjectsInactive.Include, FindObjectsSortMode.None));
             foreach (var surface in Object.FindObjectsByType<Unity.AI.Navigation.NavMeshSurface>(FindObjectsSortMode.None))
                 Unity.AI.Navigation.Editor.NavMeshAssetManager.instance.StartBakingSurfaces(new Object[] { surface });
+        }
+
+        /// <summary>
+        /// The graybox builder creates a fresh NavMeshSurface on every rebuild, so the previous NavMesh asset is no longer
+        /// owned by any surface and the NavMesh package never deletes it ("NavMesh-Station_Graybox 1..N.asset" piled up).
+        /// Deletes NavMesh-*.asset files in the scene's data folder that no surface in the open scene references.
+        /// </summary>
+        private static void DeleteOrphanedNavMeshAssets(Unity.AI.Navigation.NavMeshSurface[] surfaces)
+        {
+            string scenePath = EditorSceneManager.GetActiveScene().path;
+            if (string.IsNullOrEmpty(scenePath)) return;
+            string folder = scenePath.Substring(0, scenePath.Length - ".unity".Length);
+            if (!AssetDatabase.IsValidFolder(folder)) return;
+
+            var inUse = new System.Collections.Generic.HashSet<string>();
+            foreach (var surface in surfaces)
+                if (surface.navMeshData != null) inUse.Add(AssetDatabase.GetAssetPath(surface.navMeshData));
+
+            int deleted = 0;
+            foreach (var guid in AssetDatabase.FindAssets("NavMesh-", new[] { folder }))
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                if (!System.IO.Path.GetFileName(path).StartsWith("NavMesh-") || !path.EndsWith(".asset") || inUse.Contains(path)) continue;
+                if (AssetDatabase.LoadAssetAtPath<UnityEngine.AI.NavMeshData>(path) == null) continue;
+                if (AssetDatabase.DeleteAsset(path)) deleted++;
+            }
+            if (deleted > 0) Debug.Log($"[Lighting] Deleted {deleted} orphaned NavMesh asset(s) in {folder}.");
         }
     }
 }
