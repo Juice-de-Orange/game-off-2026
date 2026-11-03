@@ -688,7 +688,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_DepartureBoard.fbx
 package: P04
 scene: Halle
-status: rework
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [2.0, 2.0, 6.0]
