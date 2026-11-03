@@ -883,7 +883,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_CargoDrone.fbx
 package: P13
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [1.6, 1.6, 0.8]
@@ -1267,7 +1267,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Counter.fbx
 package: P11
 scene: Kiosk
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.8, 2.8, 1.0]
@@ -1295,7 +1295,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Shelf.fbx
 package: P11
 scene: Kiosk
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.4, 2.8, 2.0]
@@ -1405,7 +1405,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Sky_Space.png
 package: P04
 scene: Halle, Hangar, Prüfkammer (sichtbar durch Fenster und Hangartor)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]

@@ -143,3 +143,21 @@ in `docs/ASSET-REQUESTS.md`.
     `SM_Deck_Railing`, `SM_Hangar_RibArch`.
   Der Builder setzt alle automatisch, sobald die Dateien da sind. Reihenfolge: Wandvarianten zuerst, dann Gewölbe/Ecken/Bögen.
 - antwort:
+
+### M008 — Offene Maße und Details aus den Lieferungen vom 02.11.
+- datum: 2026-11-02
+- von: pipeline
+- an: team
+- betrifft: SM_Hall_DepartureBoard, SM_Diner_Counter, SM_Hall_Planter, SM_Motel_TV, SM_Kiosk_Counter, Motel-Farben
+- status: offen
+- meldung: Alles ist so gebaut, wie die Einträge es verlangen. Folgende Punkte bitte entscheiden (Eintrag ändern +
+  `status: rework`, oder "passt so"):
+  1. Abflugtafel: Eintrag 3,5 m hoch, die Halle ist 6 m hoch; die Seile enden bei 3,5 m in einem Flansch statt an der Decke.
+  2. Diner-Tresen: hat eine abgesenkte Ausgabestelle; der Eintrag sagt durchgehend 1,1 m.
+  3. Pflanzkübel: das violette Pflanzenlicht bräuchte eine Emission-Textur, die der Eintrag nicht vorsieht (jetzt nur Albedo).
+  4. Motel-TV: der Pivot liegt laut Eintrag 0,2 m vor der Wand.
+  5. Kiosk-Tresen: 1,0 m wie im Eintrag; Rollgitter und violettes Schild sitzen deshalb in/an der Tresenkante. Sollen sie
+     darüber hängen, braucht der Eintrag mehr Höhe (size_m).
+  6. Motel: das Möbel-Türkis ist Palette C2 (heller), das Stations-Türkis (Tank, Pflanzkübel) C1. Absicht oder angleichen?
+- antwort:
+
