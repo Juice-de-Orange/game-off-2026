@@ -225,4 +225,36 @@ in `docs/ASSET-REQUESTS.md`.
     Die Importoption "Bake Axis Conversion" entfernt sie, wenn sie stört.
   - Import: Rig "Humanoid", Avatar "Create From This Model"; Material `M_NPC_<Spezies>` mit der Albedo (Point, keine
     Mipmaps).
+
+### M010 — NPCs B: 3 weitere Spezies (SK_NPC_Quobb, SK_NPC_Xirrik, SK_NPC_Sorvak)
+- datum: 2026-11-02
+- von: pipeline
+- an: team
+- betrifft: `SK_NPC_Quobb.fbx`, `SK_NPC_Xirrik.fbx`, `SK_NPC_Sorvak.fbx` (Branch `assets/npc-b`)
+- status: offen
+- meldung: Die übrigen 3 der 5 NPC-Spezies (Max: NPCs mit Skelett), gleiche Pipeline wie M009 (`assets/npc-a`).
+  Auch für diese Figuren gibt es **keine Einträge in `ASSET-REQUESTS.md`**; wenn ihr sie verfolgen wollt, legt bitte
+  Einträge an (Pfad, Größe, Clips).
+  - Dateien:
+    - `Assets/_Project/Art/Models/Characters/SK_NPC_Quobb.fbx` (Amphibie, 1854 Tris, 1 Slot `Body`, 1,25 m bis zu den Augen)
+    - `SK_NPC_Xirrik.fbx` (Insektoid, 1712 Tris, 1 Slot `Body`, 1,91 m mit Fühlern)
+    - `SK_NPC_Sorvak.fbx` (Reptiloid, 1978 Tris, 1 Slot `Body`, 1,97 m mit Hörnern, Schwanz 0,8 m nach hinten)
+    - Texturen: `Assets/_Project/Art/Textures/Characters/T_NPC_<Spezies>_Albedo.png` (128 x 128, Point)
+    - `.blend` unter `ArtSource/Models/Characters/`
+    - Vorschauen: `docs/asset-previews/SK_NPC_*.png`, `_Turn`, `_Clips` und `lineup_npc-b.png` (alle fünf am
+      SM_Counter_Desk, der Insektoid am Schalter).
+  - **Rig:** wie M009 (Unity-Humanoid-Namen, T-Pose = Standardpose, Fäustlinge/Krallen ohne Fingerknochen, max. 4
+    Gewichte pro Vertex). Zusatzknochen, die Humanoid ignoriert und die Clips bewegen:
+    - Quobb: `Ext_Throat` (Kehlsack; wird **skaliert**, nicht gedreht: beim Atmen und Reden bläht er sich auf).
+    - Xirrik: `Ext_AntennaA_L/_R`, `Ext_AntennaB_L/_R` (Fühler, je 2 Glieder), `Ext_Mandible_L/_R`.
+    - Sorvak: `Ext_Jaw` (Unterkiefer, öffnet sich beim Reden), `Ext_Tail1`–`Ext_Tail3` (Schwanz).
+    - Falls die Zusatzknochen im Humanoid-Clip nicht mitlaufen: im Animation-Tab unter Mask → Transform die
+      `Ext_`-Knochen aktiv lassen (Humanoid-Clips übernehmen sonst nur die Muskelkurven).
+  - **Clips:** Takes `Idle`, `Walk`, `Talk` in derselben FBX, 30 fps, alle loopen ("Loop Time" an).
+    - Längen: Quobb 2,4 / 1,6 / 2,0 s, Xirrik 2,4 / 1,6 / 2,0 s, Sorvak 2,4 / 1,2 / 2,4 s (Quobb und Xirrik: der
+      Walk-Take enthält zwei Schritte).
+    - Walk auf der Stelle; Agent-Geschwindigkeit: Quobb 0,63 m/s, Xirrik 0,96 m/s, Sorvak 0,83 m/s.
+    - Talk: Gesten zum Schalter hin, Füße bleiben stehen.
+  - **Ausrichtung und Import:** wie M009 (Blick nach Unity +Z, Pivot unten mittig; Rig "Humanoid", Avatar "Create From
+    This Model"; Material `M_NPC_<Spezies>` mit der Albedo, Point, keine Mipmaps).
 - antwort:
