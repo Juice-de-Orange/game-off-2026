@@ -192,4 +192,37 @@ in `docs/ASSET-REQUESTS.md`.
   plus Pfosten). Die Oberseite der Platte liegt auf 0,2 m: die Frachtdrohne steht mit Rotation 0 auf dem Pivot der
   Platte + 0,2 m nach oben, Nase nach vorne (-Z) wie der Pfeil auf der Platte. Die Nummerierung M008/M009 ist auf
   mehreren Branches doppelt vergeben; diese Meldung nimmt deshalb M011.
+
+### M009 — NPCs A: Rig-Pipeline + 2 Spezies (SK_NPC_Human, SK_NPC_Vellani)
+- datum: 2026-11-02
+- von: pipeline
+- an: team
+- betrifft: `SK_NPC_Human.fbx`, `SK_NPC_Vellani.fbx` (Branch `assets/npc-a`)
+- status: offen
+- meldung: Max wollte NPCs mit Skelett (5 Spezies, hier die ersten 2). Für diese Figuren gibt es **keine Einträge in
+  `ASSET-REQUESTS.md`**. Wenn ihr sie dort verfolgen wollt, legt bitte Einträge an (Pfad, Größe, Clips); die Pipeline
+  liefert dann gegen diese Einträge.
+  - Dateien:
+    - `Assets/_Project/Art/Models/Characters/SK_NPC_Human.fbx` (1687 Tris, 1 Slot `Body`, 1,80 m)
+    - `SK_NPC_Vellani.fbx` (1982 Tris, 1 Slot `Body`, 2,20 m mit Kamm)
+    - Texturen: `Assets/_Project/Art/Textures/Characters/T_NPC_<Spezies>_Albedo.png` (128 x 128, Point)
+    - `.blend` unter `ArtSource/Models/Characters/`
+    - Vorschauen: `docs/asset-previews/SK_NPC_*.png` (3/4 + Gesicht auf 2 m), `_Turn` (T-Pose, vorne, seitlich),
+      `_Clips` (Idle, Walk, Talk) und `lineup_npc-a.png` (am SM_Counter_Desk).
+  - **Rig:**
+    - Unity-Humanoid-Namen (Hips, Spine, Chest, UpperChest, Neck, Head, Left/Right Shoulder/UpperArm/LowerArm/Hand/
+      UpperLeg/LowerLeg/Foot/Toes); Fäustlinge ohne Fingerknochen.
+    - Ruhepose = T-Pose. In der FBX ist sie auch die Standardpose, Humanoid-Avatar per Auto-Mapping.
+    - Zusatzteile beim Vellani: `Ext_Crest`, `Ext_Frill_L/_R`. Humanoid ignoriert sie, die Clips bewegen sie.
+    - Max. 4 Gewichte pro Vertex.
+  - **Clips:** als Takes in derselben FBX: `Idle`, `Walk`, `Talk`.
+    - Alle loopen sauber (letzter Frame = erster), bitte "Loop Time" an.
+    - 30 fps; Längen Mensch 2,0 / 1,0 / 2,5 s, Vellani 2,4 / 1,2 / 2,0 s.
+    - Walk läuft auf der Stelle (Laufband). Passende Agent-Geschwindigkeit: Mensch 0,83 m/s, Vellani 0,86 m/s.
+    - Talk: Gesten zum Schalter hin, Füße bleiben stehen.
+  - **Ausrichtung:** Anders als die Props schauen die Figuren nach **Unity +Z** (transform.forward), Pivot unten
+    mittig zwischen den Füßen. Wie jedes Blender-Rig tragen der Knoten `Armature` und das Mesh die Achsdrehung X -90.
+    Die Importoption "Bake Axis Conversion" entfernt sie, wenn sie stört.
+  - Import: Rig "Humanoid", Avatar "Create From This Model"; Material `M_NPC_<Spezies>` mit der Albedo (Point, keine
+    Mipmaps).
 - antwort:
