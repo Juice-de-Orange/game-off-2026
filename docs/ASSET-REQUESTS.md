@@ -2941,7 +2941,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_PillBottle.fbx
 package: P32
 scene: Schalter (Asservatenschrank), Hangar-Kisten
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.06, 0.06, 0.1]
@@ -2968,7 +2968,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_Liquor.fbx
 package: P32
 scene: Schalter (Asservatenschrank), Hangar-Kisten
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.09, 0.09, 0.3]
@@ -2995,7 +2995,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_WeaponParts.fbx
 package: P32
 scene: Schalter (Asservatenschrank), Hangar-Kisten
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.35, 0.12, 0.08]
@@ -3022,7 +3022,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_DataChip.fbx
 package: P32
 scene: Schalter (Asservatenschrank), Hangar-Kisten
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.08, 0.05, 0.01]
@@ -3049,7 +3049,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_CashBundle.fbx
 package: P32
 scene: Schalter (Asservatenschrank), Hangar-Kisten
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.16, 0.07, 0.04]
@@ -3076,7 +3076,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_AlienSpecimen.fbx
 package: P32
 scene: Schalter (Asservatenschrank), Hangar-Kisten
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.12, 0.12, 0.2]
