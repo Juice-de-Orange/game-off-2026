@@ -3235,7 +3235,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Padded.fbx
 package: P21
 scene: Motel, Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 3.0]
@@ -3262,7 +3262,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Panel.fbx
 package: P21
 scene: Bar, Diner
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 3.0]
@@ -3289,7 +3289,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Pipes.fbx
 package: P21
 scene: Gänge, Hangar-Nähe, Schalter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.35, 3.0]
@@ -3316,7 +3316,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Vent.fbx
 package: P21
 scene: alle
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.25, 3.0]
@@ -3425,7 +3425,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x1.fbx
 package: P21
 scene: Bar (4 m hohe Wände)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 1.0]
