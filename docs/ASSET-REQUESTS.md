@@ -1572,7 +1572,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Wall_4x4.fbx
 package: P22
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 0.3, 4.0]
@@ -1599,7 +1599,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Floor_4x4.fbx
 package: P22
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 4.0, 0.15]
@@ -1626,7 +1626,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ceiling_4x4.fbx
 package: P22
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 4.0, 1.0]
@@ -1654,7 +1654,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_BarrierEmitter.fbx
 package: P23
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 1.2, 1.0]
@@ -3758,7 +3758,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_RibArch.fbx
 package: P22
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [36.0, 1.2, 4.0]
