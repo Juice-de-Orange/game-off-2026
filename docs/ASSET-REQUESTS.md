@@ -3507,7 +3507,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Ceiling_Arch_2x2.fbx
 package: P21
 scene: Servicegang, Motelgang (2 m breite Gänge)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 2.0, 0.7]
@@ -3535,7 +3535,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_CornerRound.fbx
 package: P21
 scene: alle Räume (Innenecken)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [0.6, 0.6, 3.0]
@@ -3562,7 +3562,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Pillar_Round.fbx
 package: P21
 scene: Halle, Plattform-Öffnung, Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [0.8, 0.8, 3.0]
@@ -3646,7 +3646,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Arch_2x3.fbx
 package: P21
 scene: Halle ↔ Motelgang
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.3, 3.0]
@@ -3674,7 +3674,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_DeckArch.fbx
 package: P22
 scene: Halle ↔ Aussichtsplattform
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [11.0, 0.8, 6.0]
@@ -3702,7 +3702,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_CeilingDome.fbx
 package: P21
 scene: Halle
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [8.0, 8.0, 1.5]
