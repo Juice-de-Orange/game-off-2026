@@ -3343,7 +3343,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Damaged.fbx
 package: P21
 scene: Gänge, Motel, Hangar-Nähe
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.25, 3.0]
@@ -3370,7 +3370,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Screen.fbx
 package: P21
 scene: Halle, Bar, Gänge
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.25, 3.0]
@@ -3398,7 +3398,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Lockers.fbx
 package: P21
 scene: Servicegang, Motelgang, Hangar-Nähe
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.45, 3.0]
@@ -3452,7 +3452,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2_Grate.fbx
 package: P21
 scene: Servicegang, Hangar-Ränder
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 2.0, 0.1]
@@ -3479,7 +3479,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Ceiling_2x2_Light.fbx
 package: P21
 scene: alle
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 2.0, 0.2]
