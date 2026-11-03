@@ -1435,7 +1435,7 @@ feedback:
 path: Assets/_Project/Art/Models/Station/SM_Station_Window_Curved.fbx
 package: P22
 scene: Aussichtsplattform
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [1.95, 0.4, 6.4]
@@ -1462,7 +1462,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Floor_DeckRound.fbx
 package: P22
 scene: Aussichtsplattform
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [10.0, 5.0, 0.1]
@@ -1490,7 +1490,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Ceiling_DeckRound.fbx
 package: P22
 scene: Aussichtsplattform
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [10.0, 5.0, 0.3]
@@ -1518,7 +1518,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Steps_2m.fbx
 package: P22
 scene: Aussichtsplattform
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.8, 0.36]
@@ -1545,7 +1545,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Window_2x3.fbx
 package: P22
 scene: Bar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 3.0]
