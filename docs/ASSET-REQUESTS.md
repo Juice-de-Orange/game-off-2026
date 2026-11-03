@@ -2341,7 +2341,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_CleaningBot.fbx
 package: P26
 scene: Halle
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.6, 0.6, 0.4]
@@ -2369,7 +2369,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_CoinTelescope.fbx
 package: P26
 scene: Aussichtsplattform
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.5, 0.6, 1.5]
@@ -2396,7 +2396,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_DeckBench.fbx
 package: P26
 scene: Aussichtsplattform
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [2.4, 0.6, 0.5]
@@ -2423,7 +2423,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_NeonSign_Open.fbx
 package: P26
 scene: Bar, Diner, Kiosk
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.8, 0.05, 0.3]
@@ -2479,7 +2479,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_PASpeaker.fbx
 package: P26
 scene: Halle, Gänge
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.4, 0.3, 0.3]
@@ -2506,7 +2506,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_CeilingFan.fbx
 package: P26
 scene: Bar, Diner
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [1.2, 1.2, 0.4]
