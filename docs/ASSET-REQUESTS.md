@@ -1958,7 +1958,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Ships/SM_Ship_Freighter.fbx
 package: P25
 scene: Weltraum vor den Fenstern
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-13
 size_m: [40.0, 160.0, 30.0]
@@ -1986,7 +1986,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Ships/SM_Ship_Tanker.fbx
 package: P25
 scene: Weltraum vor den Fenstern
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-13
 size_m: [30.0, 120.0, 30.0]
@@ -2014,7 +2014,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Ships/SM_Ship_Patrol.fbx
 package: P25
 scene: Weltraum vor den Fenstern
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [15.0, 35.0, 8.0]
@@ -2042,7 +2042,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Ships/SM_Ship_TrafficSmall.fbx
 package: P25
 scene: Weltraum vor den Fenstern
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [4.0, 8.0, 2.5]
