@@ -354,7 +354,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Hatch_Airlock.fbx
 package: P04
 scene: Prüfkammer
-status: rework
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.6, 0.4, 2.2]
@@ -826,7 +826,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Shuttle.fbx
 package: P04
 scene: Hangar
-status: rework
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [6.0, 9.0, 3.5]
