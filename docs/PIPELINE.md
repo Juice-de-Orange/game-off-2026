@@ -193,7 +193,8 @@ in `docs/ASSET-REQUESTS.md`.
   Platte + 0,2 m nach oben, Nase nach vorne (-Z) wie der Pfeil auf der Platte. Die Nummerierung M008/M009 ist auf
   mehreren Branches doppelt vergeben; diese Meldung nimmt deshalb M011.
 
-### M009 — NPCs A: Rig-Pipeline + 2 Spezies (SK_NPC_Human, SK_NPC_Vellani)
+### M012 — NPCs A: Rig-Pipeline + 2 Spezies (SK_NPC_Human, SK_NPC_Vellani)
+*(von der Pipeline als M009 angelegt; umbenannt, weil M009 schon vergeben war)*
 - datum: 2026-11-02
 - von: pipeline
 - an: team
