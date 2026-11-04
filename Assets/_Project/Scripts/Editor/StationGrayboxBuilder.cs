@@ -1589,8 +1589,9 @@ namespace GameOff.EditorTools
             // Hangar
             // Hangar (36 x 28 m): shuttle in the middle, queue lane from its ramp to the inspection lock door (x 1..3)
             KitProp(p, "Hangar/SM_Hangar_Shuttle.fbx", "SM_Hangar_Shuttle", 0, -28, 6, 9, 3.5f, 0, ShuttleYaw);
-            KitProp(p, "Hangar/SM_Hangar_DronePad.fbx", "SM_Hangar_DronePad", -7.5f, -14.5f, 3, 3, 0.2f);
-            KitProp(p, "Hangar/SM_Hangar_CargoDrone.fbx", "SM_Hangar_CargoDrone", -7.5f, -14.5f, 1.6f, 1.6f, 0.8f, 0.2f); // on the pad top (M011)
+            // Drone pad west of the service door (door at x -7, z -12), so the way into the hangar stays free
+            KitProp(p, "Hangar/SM_Hangar_DronePad.fbx", "SM_Hangar_DronePad", -13f, -16.5f, 3, 3, 0.2f);
+            KitProp(p, "Hangar/SM_Hangar_CargoDrone.fbx", "SM_Hangar_CargoDrone", -13f, -16.5f, 1.6f, 1.6f, 0.8f, 0.2f); // on the pad top (M011)
             // Queue lanes from the shuttle ramp to the lock door: 2 m barrier segments along Z (model is 2 m along X → yaw 90)
             for (int i = 0; i < 5; i++)
             {
@@ -1604,7 +1605,7 @@ namespace GameOff.EditorTools
             KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_D", -15.2f, -33, 1.2f, 1.2f, 1, 0, -10f);
             KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_A", -15.4f, -26.2f, 0.6f, 0.6f, 0.5f);
             KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_B", -14.6f, -33.4f, 0.6f, 0.6f, 0.5f, 0, 30f);
-            KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_C", -6f, -12.6f, 0.6f, 0.6f, 0.5f);
+            KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_C", -11.2f, -14.6f, 0.6f, 0.6f, 0.5f); // next to the drone pad
             KitProp(p, "Hangar/SM_Hangar_Tank.fbx", "SM_Hangar_Tank_A", 16.3f, -16, 1.4f, 1.4f, 3.5f);
             KitProp(p, "Hangar/SM_Hangar_Tank.fbx", "SM_Hangar_Tank_B", 16.3f, -18.5f, 1.4f, 1.4f, 3.5f, 0, 40f);
             KitProp(p, "Hangar/SM_Hangar_Scaffold.fbx", "SM_Hangar_Scaffold", 12, -30, 2f, 4f, 5f, 0, 90f); // model is 4 m along X

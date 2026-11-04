@@ -64,7 +64,7 @@
 | Shuttle-Rampe | (0, −23) |
 | Shuttle-Einflug von außen (P25) | (0, 6, −90) |
 | Warteschlange (Absperrgitter X = 1 und 3) | Z −23..−12 |
-| Frachtdrohne (Pad 3×3) | (−7,5, −14,5) |
+| Frachtdrohne (Pad 3×3) | (−13, −16,5) |
 | Bar-Theke | X 14..15, Z 1..7 |
 | Kiosk-Theke | X 8,2..9, Z −5,4..−2,6 |
 | Anzeigesäule Halle | (0, 0), 2×2 |

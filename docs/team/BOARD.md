@@ -35,7 +35,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| max | Hangar: Drohnen-Pad und Kiste von der Service-Tür wegrücken | `Main.unity`, `PF_Station_Graybox.prefab` | 04.11. |
+| | | | |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
