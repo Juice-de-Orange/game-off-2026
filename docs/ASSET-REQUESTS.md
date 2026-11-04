@@ -3819,7 +3819,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_HullPanel_4x4.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [4.0, 0.3, 4.0]
@@ -3846,7 +3846,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_HullPanel_4x4_Ribbed.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [4.0, 0.5, 4.0]
@@ -3873,7 +3873,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_HullEdge_4.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [4.0, 0.6, 0.6]
@@ -3900,7 +3900,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_HullCorner.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.6, 0.6, 0.6]
@@ -3927,7 +3927,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_RoofCap_4x4.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [4.0, 4.0, 0.4]
@@ -3955,7 +3955,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_Greeble_VentBox.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [2.0, 1.5, 1.2]
@@ -3982,7 +3982,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_Greeble_Tank.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [2.0, 2.0, 4.0]
@@ -4009,7 +4009,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_Pipe_Large_4.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [4.0, 0.8, 0.8]
@@ -4036,7 +4036,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_Pipe_Large_Elbow.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.2, 1.2, 0.8]
@@ -4063,7 +4063,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_DockingCollar.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [8.0, 8.0, 3.0]
@@ -4090,7 +4090,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_TrussNode.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [4.0, 4.0, 4.0]
@@ -4118,7 +4118,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_SolarMast.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [2.0, 2.0, 8.0]
@@ -4145,7 +4145,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_AntennaBase.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [4.0, 4.0, 1.5]
@@ -4172,7 +4172,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_HangarRib_Outer.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.0, 2.0, 17.0]
