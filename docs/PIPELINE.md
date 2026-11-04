@@ -277,3 +277,22 @@ in `docs/ASSET-REQUESTS.md`.
      Gitterkasten (2,0-2,4 m) mit dem violetten Leuchtschild 'GADGETS & SUPPLIES' auf 2,03-2,17 m - genau der Streifen,
      den man aus der Halle unter dem Sturz (2,2 m) sieht. Modell 0,8 x 2,8 x 2,4 m, 588 Tris. Das alte Schild in der
      Vitrine und das Gitter vor der Frontscheibe sind weg. Collider bitte auf die neue Höhe anpassen.
+
+### M014 — Angebot: Katzenbild für Zimmer 103 (SM_Motel_CatPainting)
+- datum: 2026-11-03
+- von: pipeline
+- an: team
+- betrifft: SM_Motel_CatPainting (neu, steht nicht auf der Request-Liste)
+- status: offen
+- meldung: Ein Extra für das Spielerzimmer 103: ein gerahmtes Gemälde von Max' eigener Katze (Branch
+  `assets/P04-motel-cat-painting`). Wenn ihr es nicht wollt, einfach den Branch liegen lassen.
+  - **Modell:** `SM_Motel_CatPainting`, 0,53 x 0,045 x 0,63 m (Leinwand 0,40 x 0,50 m), 34 Tris, 1 Slot `Painting`.
+    Pivot `center` wie bei `SM_Prop_WallClock` (mittlere Tiefe: an die Wand mit 0,0225 m Abstand setzen). Die Rückseite
+    ist offen, also nur an eine Wand hängen.
+  - **Textur:** `T_Motel_CatPainting_Albedo.png`, 128 x 128, nur Palettenfarben, keine Emission. Import Point, keine
+    Mipmaps. Die Leinwand hat 160 px/m, der Rahmen 120-200 px/m (Nahsicht-Dichte nach STYLE.md).
+  - **Look:** Rahmen aus dunklem Fake-Holz mit Messinglippe. Das Bild ist ein gemalter brauner Tigerkater vor
+    orangem Grund: der warme Gegenpol zum Teal und Giftgrün im Motel.
+  - **Platzierung (Vorschlag):** über dem Kopfende des Betts, Bildmitte etwa 1,3 m über dem Boden
+    (`docs/asset-previews/lineup_P04-motel-cat-painting.png`).
+- antwort:
