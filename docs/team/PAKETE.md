@@ -100,7 +100,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   + `PlayerVCam` am Kopf. Alle vier Aktionen + Hin/Zurück im Play-Modus getestet.
 
 ### P06 — Dokumente
-- Größe: L · Priorität: Muss · Status: offen
+- Größe: L · Priorität: Muss · Status: in Arbeit (max, 04.11.)
 - Braucht: P05
 - Ziel: Dokumente als scharfe 2D-Karten auf dem Tisch, mit der Maus ziehbar, Daten kommen aus ScriptableObjects.
 - Enthalten: 2–3 Dokumenttypen (z. B. Ausweis, Einreiseerlaubnis, Frachtliste), Drag & Drop, Rückgabe an den Reisenden
