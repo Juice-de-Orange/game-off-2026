@@ -214,6 +214,28 @@
                 },
                 {
                     "name": "",
+                    "id": "d1000000-0000-4000-8000-000000000004",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Leave",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d1000000-0000-4000-8000-000000000005",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Leave",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d1000000-0000-4000-8000-000000000002",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",

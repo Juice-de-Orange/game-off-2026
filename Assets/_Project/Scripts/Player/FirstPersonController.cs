@@ -49,6 +49,18 @@ namespace GameOff.Player
             if (!enabled) SetCursorCaptured(false);
         }
 
+        /// <summary>Moves the player to a spot (e.g. after leaving the counter); yaw from the rotation, camera pitch level.</summary>
+        public void Teleport(Vector3 position, Quaternion rotation)
+        {
+            _controller.enabled = false; // the CharacterController would otherwise overwrite the new position
+            Vector3 forward = Vector3.ProjectOnPlane(rotation * Vector3.forward, Vector3.up);
+            transform.SetPositionAndRotation(position, forward.sqrMagnitude > 0.001f ? Quaternion.LookRotation(forward) : transform.rotation);
+            _controller.enabled = true;
+            _pitch = 0f;
+            cameraPivot.localRotation = Quaternion.identity;
+            _verticalVelocity = 0f;
+        }
+
         private void Update()
         {
             if (_controlEnabled && !IsCursorCaptured() && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)

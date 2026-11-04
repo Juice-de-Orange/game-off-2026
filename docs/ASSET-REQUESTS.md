@@ -4194,3 +4194,59 @@ refs: [docs/style/refs/ai_station_exterior_01.webp]
 placeholder: Box 1.0 x 2.0 x 17.0 m, Pivot bottom_center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
 feedback: []
 ```
+
+### T_Stamp_Approved.png
+```yaml
+path: Assets/_Project/Art/Textures/Counter/T_Stamp_Approved.png
+package: P38
+scene: Schalter
+status: offen
+priority: P2
+needed_by: 2026-11-12
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Counter/T_Stamp_Approved.png   # 128x128, Point, mit Alpha
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Stempelabdruck 'APPROVED' in grüner Stempelfarbe auf transparentem Grund: Rahmen, Schriftzug, kleines Stationssymbol
+  (KESTREL-9), ungleichmäßig eingefärbt mit ausgefransten Kanten wie ein echter Gummistempel. Wird als Quad auf Dokumente gelegt.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 128x128 (Rahmen + Text, per Skript erzeugt)
+feedback: []
+```
+
+### T_Stamp_Denied.png
+```yaml
+path: Assets/_Project/Art/Textures/Counter/T_Stamp_Denied.png
+package: P38
+scene: Schalter
+status: offen
+priority: P2
+needed_by: 2026-11-12
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Counter/T_Stamp_Denied.png   # 128x128, Point, mit Alpha
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Stempelabdruck 'DENIED' in roter Stempelfarbe auf transparentem Grund, gleicher Aufbau wie T_Stamp_Approved
+  (Rahmen, Schriftzug, Stationssymbol, ausgefranste Gummistempel-Kanten).
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 128x128 (Rahmen + Text, per Skript erzeugt)
+feedback: []
+```

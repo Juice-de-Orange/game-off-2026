@@ -397,16 +397,22 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   Kiosk-Regal, Kranschiene). Play-Test: Türen 103/Service öffnen, 101 bleibt zu.
 
 ### P38 — Schalter: Sessel, Aufstehen, Stempel
-- Größe: M · Priorität: Muss · Status: in Arbeit (max, 04.11.)
+- Größe: M · Priorität: Muss · Status: fertig (max, 04.11.)
 - Braucht: — · Folgt auf: P05
 - Ziel: Am Schalter fühlt sich die Bedienung richtig an.
 - Enthalten: Sessel leicht anwählbar, Spieler sitzt auf dem Sessel; Aufstehen mit Q/Esc/Rechtsklick; Stempel hochheben, mit der
   Maus führen und auf ein (Platzhalter-)Dokument stempeln, Abdruck bleibt sichtbar; Schnittstelle `StampTarget` für P06
 - Nicht enthalten: echte Dokumente (P06)
 - Abnahme: Hinsetzen auf Anhieb, Esc steht auf, Stempelabdruck an der geklickten Stelle.
+- Ergebnis: Sitz-Trigger 0,1–1,8 m hoch (auf Augenhöhe anwählbar); Aufstehen mit Q/Esc/Rechtsklick, Spieler steht danach hinter
+  dem Sessel (`StandPoint`), Steuerung kommt erst nach dem Kamera-Blend zurück. Stempel: Klick hebt an (`StampTool`), er schwebt über
+  der Fläche unter der Maus, Klick aufs Blatt (`StampTarget`) drückt und setzt einen Abdruck (lesbar zur Kamera), Q/Esc/Rechtsklick
+  oder Klick daneben legt zurück. Entscheidung weiter über `CounterStation.ActionTriggered`. Tuning in `Data/Counter/StampTuning.asset`,
+  Abdruck-Texturen sind Platzhalter (Requests `T_Stamp_*`). **Für P06:** `StampTarget` auf die echten Dokumente (unskaliertes Objekt mit
+  Collider, Optik als Kind).
 
 ### P39 — Außenstation 2.0
-- Größe: L · Priorität: Soll · Status: offen (für **max** reserviert)
+- Größe: L · Priorität: Soll · Status: in Arbeit (max, 04.11.)
 - Braucht: Lieferung der Hüll-Assets (M015) · Folgt auf: P24
 - Ziel: Die Station ist von außen ein zusammenhängendes Bauwerk.
 - Enthalten: Fachwerk verbindet Station, Habmodule, Solarflügel (auf Masten), Antenne (Sockel auf dem Hallendach), Radiatoren am

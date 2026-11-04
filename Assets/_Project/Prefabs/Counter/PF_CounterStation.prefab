@@ -76,6 +76,96 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.14999998, y: 0.08000004, z: 0.14999998}
   m_Center: {x: 0, y: 0.04000002, z: 0}
+--- !u!1 &1480276877162034300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1911934722357636815}
+  - component: {fileID: 4966050790119275604}
+  - component: {fileID: 4591721540985383303}
+  m_Layer: 0
+  m_Name: Sheet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1911934722357636815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480276877162034300}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0015, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.003, z: 0.21}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6455569929681368615}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &4966050790119275604
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480276877162034300}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &4591721540985383303
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480276877162034300}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 96fd6553a01fd1b4da5eb8939d2b69e4, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2444101241594790315
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,8 +326,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5714069147248374033}
-  - component: {fileID: 2453382638861301093}
   - component: {fileID: 4114838740444064975}
+  - component: {fileID: 5384062276111786718}
   m_Layer: 0
   m_Name: Stamp_Deny (SM_Counter_Stamp_Deny)
   m_TagString: Untagged
@@ -261,27 +351,6 @@ Transform:
   - {fileID: 4140303867491462684}
   m_Father: {fileID: 2685200900720692862}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2453382638861301093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3363175166621370892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52706bad426dd764db4ba268e9e1ffd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Counter.CounterClickable
-  action: 1
-  pressPart: {fileID: 4140303867491462684}
-  pressDepth: 0.04
-  pressDuration: 0.12
-  cover: {fileID: 0}
-  coverOpenAngle: -110
-  onPressed:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!65 &4114838740444064975
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -301,8 +370,23 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.08000001, y: 0.12, z: 0.08000001}
-  m_Center: {x: 0, y: 0.060000002, z: 0}
+  m_Size: {x: 0.14, y: 0.14, z: 0.14}
+  m_Center: {x: 0, y: 0.07, z: 0}
+--- !u!114 &5384062276111786718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3363175166621370892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c21625f09245d5498f136bfe7828e93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Counter.StampTool
+  action: 1
+  ink: {fileID: 2100000, guid: 71a425677983dca48953329b48eb01af, type: 2}
+  tuning: {fileID: 11400000, guid: 0a55a16a2e16f05439f913c85381c9b2, type: 2}
 --- !u!1 &3594926233124413904
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +452,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Click stamps and buttons   \xB7   [Q] Leave counter"
+  m_text: "Click a stamp to pick it up, click the paper to stamp   \xB7   [Q] / [Esc]
+    / right click: put down / leave"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -474,6 +559,7 @@ Transform:
   - {fileID: 3617388322755837677}
   - {fileID: 2685200900720692862}
   - {fileID: 4772686911018211957}
+  - {fileID: 6069012302347245733}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5175086397450220603
@@ -492,6 +578,7 @@ MonoBehaviour:
   player: {fileID: 0}
   deskCamera: {fileID: 73061858623832417}
   viewCamera: {fileID: 0}
+  standPoint: {fileID: 6069012302347245733}
   seatedHud: {fileID: 7965029762473068663}
   hideWhileSeated: []
   leaveAction: {fileID: 7706325425214204278, guid: a90b34442f7b6374d926ab2788df2e89, type: 3}
@@ -500,6 +587,7 @@ MonoBehaviour:
   clickRange: 4
   seatedPriority: 20
   idlePriority: 0
+  leaveBlendTime: 0.6
 --- !u!1 &4482789190988954390
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,8 +640,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9, y: 1.2, z: 0.9}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.9, y: 1.7, z: 0.9}
+  m_Center: {x: 0, y: 0.35, z: 0}
 --- !u!114 &3274283454326563667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,6 +692,7 @@ Transform:
   - {fileID: 8342832844228203766}
   - {fileID: 3122753153785559656}
   - {fileID: 5714069147248374033}
+  - {fileID: 6455569929681368615}
   m_Father: {fileID: 2458861947883275737}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6329554500777494414
@@ -615,8 +704,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3122753153785559656}
-  - component: {fileID: 3162705526101794862}
   - component: {fileID: 5375322813583563084}
+  - component: {fileID: 5775733902631773154}
   m_Layer: 0
   m_Name: Stamp_Approve (SM_Counter_Stamp)
   m_TagString: Untagged
@@ -640,27 +729,6 @@ Transform:
   - {fileID: 1648332124836643130}
   m_Father: {fileID: 2685200900720692862}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3162705526101794862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6329554500777494414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52706bad426dd764db4ba268e9e1ffd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Counter.CounterClickable
-  action: 0
-  pressPart: {fileID: 1648332124836643130}
-  pressDepth: 0.04
-  pressDuration: 0.12
-  cover: {fileID: 0}
-  coverOpenAngle: -110
-  onPressed:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!65 &5375322813583563084
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -680,8 +748,54 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.08000001, y: 0.12, z: 0.08000001}
-  m_Center: {x: 0, y: 0.060000002, z: 0}
+  m_Size: {x: 0.14, y: 0.14, z: 0.14}
+  m_Center: {x: 0, y: 0.07, z: 0}
+--- !u!114 &5775733902631773154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6329554500777494414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c21625f09245d5498f136bfe7828e93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Counter.StampTool
+  action: 0
+  ink: {fileID: 2100000, guid: 3482ce4d3e62871488f6e1f965fe06d7, type: 2}
+  tuning: {fileID: 11400000, guid: 0a55a16a2e16f05439f913c85381c9b2, type: 2}
+--- !u!1 &6576641768510203303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6069012302347245733}
+  m_Layer: 0
+  m_Name: StandPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6069012302347245733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6576641768510203303}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.75, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2458861947883275737}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7965029762473068663
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,6 +880,73 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!1 &8289861837281858771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6455569929681368615}
+  - component: {fileID: 5653763276215206063}
+  - component: {fileID: 5033041647904938724}
+  m_Layer: 0
+  m_Name: Doc_Placeholder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6455569929681368615
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8289861837281858771}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.15, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1911934722357636815}
+  m_Father: {fileID: 2685200900720692862}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5653763276215206063
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8289861837281858771}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3, y: 0.003, z: 0.21}
+  m_Center: {x: 0, y: 0.0015, z: 0}
+--- !u!114 &5033041647904938724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8289861837281858771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febf0c079dc7f4b428eb3f2bfa27e637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Counter.StampTarget
 --- !u!1001 &1255013534001899217
 PrefabInstance:
   m_ObjectHideFlags: 0
