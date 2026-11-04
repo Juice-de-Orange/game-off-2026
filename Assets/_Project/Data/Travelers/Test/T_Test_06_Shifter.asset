@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Test_06_Shifter
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: LONN ABERNATHY
+  species: Human
+  model: {fileID: 919132149155446097, guid: 363abc6a967c59d4db0624da2a352d29, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 2558f785af89c9f458504d11e583e922, type: 2}
+  - {fileID: 11400000, guid: 3bc66f7bf7248ec4c8b364eeb0d6512b, type: 2}
+  intendedVerdict: 0
+  intendedReason: 'The Shifter, day 1: harmless, papers clean'
+  trickIntended: 0
+  storyTag: shifter
+  greeting: Officer! What a fine day to cross a border, wouldn't you say?
+  answers: []

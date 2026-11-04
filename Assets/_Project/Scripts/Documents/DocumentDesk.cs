@@ -29,16 +29,17 @@ namespace GameOff.Documents
         [SerializeField] private DocumentView idCardPrefab;
         [SerializeField] private DocumentView entryPermitPrefab;
         [SerializeField] private DocumentView cargoManifestPrefab;
-        [Header("Testing until travelers exist (P07)")]
-        [SerializeField] private List<DocumentData> testDocuments = new List<DocumentData>();
-        [SerializeField] private bool deliverTestOnSit = true;
+        [SerializeField] private DocumentView citationPrefab;
+        [Tooltip("Where printed slips come out (the printer's paper slot) and where they land on the desk.")]
+        [SerializeField] private Transform printerOut;
+        [SerializeField] private Transform printerSpot;
 
         private readonly List<DocumentView> _onDesk = new List<DocumentView>();
         private readonly List<DocumentView> _inDrawer = new List<DocumentView>();
         private Vector3 _drawerRest;
-        private bool _busy, _testDelivered;
+        private bool _busy;
         private DocumentView _pressed, _inspected;
-        private bool _dragging;
+        private bool _dragging, _drawerPress;
         private Vector2 _pressScreen;
         private Vector3 _dragOffset;
         private Pose _inspectReturn;
@@ -49,6 +50,14 @@ namespace GameOff.Documents
         public event Action<IReadOnlyList<DocumentData>> DocumentsDelivered;
         /// <summary>Raised when the drawer has carried papers back to the traveler.</summary>
         public event Action<IReadOnlyList<DocumentData>> DocumentsReturned;
+        /// <summary>Raised when the drawer refuses to go (ReturnCheck said no), with the reason.</summary>
+        public event Action<string> ReturnRefused;
+
+        /// <summary>
+        /// Asked before the drawer hands papers back: (papers in the drawer, papers still on the desk) → null to allow, or a
+        /// short message why not (e.g. "Stamp the papers first"). Set by the shift logic (P07).
+        /// </summary>
+        public Func<IReadOnlyList<DocumentView>, IReadOnlyList<DocumentView>, string> ReturnCheck;
 
         public bool IsBusy => _busy;
         public IReadOnlyList<DocumentView> OnDesk => _onDesk;
@@ -76,21 +85,17 @@ namespace GameOff.Documents
                 }
                 _pressed = null;
                 _dragging = false;
+                _drawerPress = false;
                 UpdateLayers();
                 return;
             }
             UpdateLayers();
-            if (deliverTestOnSit && !_testDelivered && testDocuments.Count > 0)
-            {
-                _testDelivered = true;
-                Deliver(testDocuments);
-            }
         }
 
-        /// <summary>Hands papers in through the drawer. Ignored while the drawer is moving.</summary>
+        /// <summary>Hands papers in through the drawer; if the drawer is busy, they come as soon as it is free.</summary>
         public void Deliver(IReadOnlyList<DocumentData> documents)
         {
-            if (_busy || documents == null || documents.Count == 0) return;
+            if (documents == null || documents.Count == 0) return;
             StartCoroutine(DeliverRoutine(documents));
         }
 
@@ -112,6 +117,28 @@ namespace GameOff.Documents
             {
                 if (pressed) PutDownInspected(instant: false);
                 return pressed;
+            }
+            if (_drawerPress)
+            {
+                bool moved = (screenPos - _pressScreen).sqrMagnitude > tuning.dragThresholdPixels * tuning.dragThresholdPixels;
+                if (moved && !_busy && _inDrawer.Count > 0)
+                {
+                    // Pull the top paper out of the drawer and keep dragging it
+                    _drawerPress = false;
+                    var top = _inDrawer[_inDrawer.Count - 1];
+                    _inDrawer.RemoveAt(_inDrawer.Count - 1);
+                    _onDesk.Add(top);
+                    top.transform.SetParent(transform, true);
+                    StopGlide(top.transform);
+                    UpdateLayers();
+                    _pressed = top;
+                    _dragging = true;
+                    _dragOffset = Vector3.zero;
+                    SetColliders(top, false);
+                    BringToFront(top);
+                }
+                else if (released) ReleaseDrawerPress();
+                return true;
             }
             if (_pressed != null)
             {
@@ -154,7 +181,10 @@ namespace GameOff.Documents
             }
             if (hit.collider.transform.IsChildOf(drawer) && _inDrawer.Count > 0)
             {
-                StartCoroutine(ReturnRoutine());
+                // Click = send the drawer; drag = take the top paper back out (decided in the _drawerPress branch)
+                _drawerPress = true;
+                _pressScreen = screenPos;
+                if (released) ReleaseDrawerPress();
                 return true;
             }
             return false;
@@ -162,6 +192,7 @@ namespace GameOff.Documents
 
         private IEnumerator DeliverRoutine(IReadOnlyList<DocumentData> documents)
         {
+            while (_busy) yield return null; // e.g. a slip is just being handed back
             _busy = true;
             yield return MoveDrawer(out_: true);
             var arrived = new List<DocumentView>();
@@ -207,6 +238,74 @@ namespace GameOff.Documents
             yield return MoveDrawer(out_: false);
             _busy = false;
             DocumentsReturned?.Invoke(data);
+            // Slips made at runtime (citations) are gone now; free their data too
+            foreach (var d in data)
+                if (d != null && d.IsRuntime) Destroy(d);
+        }
+
+        /// <summary>Takes away every traveler paper on the desk and in the drawer (arrest / airlock); printed slips stay.</summary>
+        public void Confiscate()
+        {
+            if (_inspected != null && _inspected.Type != DocumentType.Citation) _inspected = null;
+            if (_pressed != null && _pressed.Type != DocumentType.Citation)
+            {
+                _pressed = null;
+                _dragging = false;
+            }
+            foreach (var list in new[] { _onDesk, _inDrawer })
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    if (list[i].Type == DocumentType.Citation) continue;
+                    StopGlide(list[i].transform);
+                    Destroy(list[i].gameObject);
+                    list.RemoveAt(i);
+                }
+        }
+
+        /// <summary>A slip comes out of the counter printer and lands next to it (citations, P07).</summary>
+        public void Print(DocumentData data)
+        {
+            if (printerOut == null)
+            {
+                Debug.LogError("[Documents] No printer wired on the counter: run GameOff/Build Documents.", this);
+                return;
+            }
+            var view = Spawn(data);
+            if (view == null) return;
+            view.transform.SetPositionAndRotation(printerOut.position, printerOut.rotation);
+            _onDesk.Add(view);
+            UpdateLayers();
+            var target = printerSpot != null ? printerSpot : printerOut;
+            StartGlide(view.transform, target.position + Vector3.up * (_onDesk.Count * tuning.stackStep), target.rotation, tuning.slideDuration * 1.5f);
+        }
+
+        /// <summary>A click on the drawer (no drag): hand the papers in it back, unless ReturnCheck refuses.</summary>
+        private void ReleaseDrawerPress()
+        {
+            _drawerPress = false;
+            if (_busy || _inDrawer.Count == 0) return;
+            string refusal = ReturnCheck?.Invoke(_inDrawer, _onDesk);
+            if (refusal != null)
+            {
+                ReturnRefused?.Invoke(refusal);
+                StartCoroutine(RattleDrawer());
+            }
+            else StartCoroutine(ReturnRoutine());
+        }
+
+        private IEnumerator RattleDrawer()
+        {
+            // A short shake: the drawer is locked
+            _busy = true;
+            var rest = drawer.localPosition;
+            var side = drawer.localRotation * Vector3.forward * 0.006f;
+            for (int i = 0; i < 6; i++)
+            {
+                drawer.localPosition = rest + (i % 2 == 0 ? side : -side);
+                yield return new WaitForSeconds(0.03f);
+            }
+            drawer.localPosition = rest;
+            _busy = false;
         }
 
         private DocumentView Spawn(DocumentData data)
@@ -215,7 +314,8 @@ namespace GameOff.Documents
             {
                 DocumentType.IdCard => idCardPrefab,
                 DocumentType.EntryPermit => entryPermitPrefab,
-                _ => cargoManifestPrefab,
+                DocumentType.CargoManifest => cargoManifestPrefab,
+                _ => citationPrefab,
             };
             if (prefab == null) return null;
             var view = Instantiate(prefab, transform);

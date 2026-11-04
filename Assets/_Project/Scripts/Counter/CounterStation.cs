@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using GameOff.Documents;
 using GameOff.Player;
+using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -26,6 +27,8 @@ namespace GameOff.Counter
         [SerializeField] private Transform standPoint;
         [Tooltip("Shown only while seated (e.g. the \"[Q] Leave counter\" hint).")]
         [SerializeField] private GameObject seatedHud;
+        [Tooltip("Short messages while seated (\"Stamp the papers first\"); optional.")]
+        [SerializeField] private TMP_Text notice;
         [Tooltip("Hidden while seated (e.g. the player's crosshair).")]
         [SerializeField] private GameObject[] hideWhileSeated = Array.Empty<GameObject>();
         [SerializeField] private InputActionReference leaveAction;
@@ -42,6 +45,7 @@ namespace GameOff.Counter
         private StampTool _held;
         private Coroutine _returnControl;
         private readonly RaycastHit[] _hits = new RaycastHit[16];
+        private Coroutine _noticeRoutine;
 
         /// <summary>
         /// Raised when a counter control (button) is used or a document is stamped: THE decision event for game logic.
@@ -215,6 +219,23 @@ namespace GameOff.Counter
                 closest = hit;
             }
             return best < float.MaxValue;
+        }
+
+        /// <summary>Shows a short message on the desk HUD for a few seconds (P07; spoken announcements come with P41).</summary>
+        public void ShowNotice(string message, float seconds = 3f)
+        {
+            if (notice == null) { Debug.Log("[Counter] " + message); return; }
+            if (_noticeRoutine != null) StopCoroutine(_noticeRoutine);
+            _noticeRoutine = StartCoroutine(NoticeRoutine(message, seconds));
+        }
+
+        private IEnumerator NoticeRoutine(string message, float seconds)
+        {
+            notice.text = message;
+            notice.gameObject.SetActive(true);
+            yield return new WaitForSecondsRealtime(seconds);
+            notice.gameObject.SetActive(false);
+            _noticeRoutine = null;
         }
 
         private void SetHud(bool seated)

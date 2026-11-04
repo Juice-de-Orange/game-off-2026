@@ -11,10 +11,26 @@ namespace GameOff.Documents
         [Tooltip("Portrait on ID card and entry permit (optional).")]
         [SerializeField] private Texture2D photo;
         [SerializeField] private List<DocumentField> fields = new List<DocumentField>();
+        [Tooltip("The seal is forged (only a gadget reveals it, P16). The rules treat it as a crime: arrest.")]
+        [SerializeField] private bool forgedSeal;
 
         public DocumentType Type => type;
         public Texture2D Photo => photo;
         public IReadOnlyList<DocumentField> Fields => fields;
+        public bool ForgedSeal => forgedSeal;
+        /// <summary>Made at runtime (a citation), not a project asset: destroy it when its paper is gone.</summary>
+        public bool IsRuntime { get; private set; }
+
+        /// <summary>A document made at runtime (e.g. a citation slip); not saved as an asset.</summary>
+        public static DocumentData CreateRuntime(DocumentType type, List<DocumentField> fields)
+        {
+            var data = CreateInstance<DocumentData>();
+            data.type = type;
+            data.fields = fields;
+            data.name = type.ToString();
+            data.IsRuntime = true;
+            return data;
+        }
 
         /// <summary>Value of a field by key, or null if the document doesn't have it.</summary>
         public string Get(string key)
@@ -26,11 +42,12 @@ namespace GameOff.Documents
 
 #if UNITY_EDITOR
         /// <summary>Editor setup (test data builder).</summary>
-        public void EditorSet(DocumentType newType, Texture2D newPhoto, List<DocumentField> newFields)
+        public void EditorSet(DocumentType newType, Texture2D newPhoto, List<DocumentField> newFields, bool forged = false)
         {
             type = newType;
             photo = newPhoto;
             fields = newFields;
+            forgedSeal = forged;
         }
 #endif
     }

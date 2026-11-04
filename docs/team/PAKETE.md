@@ -118,13 +118,25 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Festgelegt im Asset-Durchgang (max, 02.11.): Dokumente kommen über die **animierte Durchreiche** (Schublade fährt mit Klacken herein, Papiere gleiten auf den Tisch; Rückgabe = in die Schublade ziehen, sie fährt hinaus). Modelle: `SM_Counter_DocSlot`, `SM_Station_Window_Small_Slot`.
 
 ### P07 — Reisende & Regeln
-- Größe: L · Priorität: Muss · Status: in Arbeit (max, 04.11.)
+- Größe: L · Priorität: Muss · Status: fertig (max, 04.11.)
 - Braucht: P06
 - Ziel: Datenmodell und Prüflogik: Ist der Reisende korrekt?
 - Enthalten: `TravelerData` (Aussehen, Dokumente, eingebaute Fehler, Gepäck), `DayRules` (Regeln pro Tag),
   Auswertung richtig/falsch je Entscheidung, Regel-Bulletin als Dokument
 - Nicht enthalten: Inhalte für alle Tage (P15), Bewegung der Reisenden (P14)
 - Abnahme: 3 Test-Reisende mit unterschiedlichen Fehlern werden korrekt bewertet.
+- Ergebnis: Regeln wie in DESIGN.md "Regeln am Schalter". `TravelerData`, `DayRules` (Regeln per [SerializeReference]: gesperrte
+  Herkunft, Pflichtpapier, verbotene Ware, Quarantäne; Fahndungsliste mit Verhaften/Terminieren), `RuleEvaluator` (Grundregeln +
+  Tagesregeln, Priorität Pflicht-Schleuse > Verhaften > Abweisen > Durchlassen), `DecisionJudge`. Vergleiche exakt bzw. ganze Wörter
+  (kein "ARMS" in "FARMSTUFF"). **Fehlerfreiheit:** `GameOff/Validate Travelers` + 41 EditMode-Tests (`Tests/Editor/`), u. a. alle Tage
+  im Projekt: berechnete Entscheidung muss der beabsichtigten entsprechen, Beinahe-Treffer werden gemeldet, jedes Pflichtfeld muss im
+  Prefab stehen. `CounterShift`: Stempel auf den Papieren + alles in die Schublade → Entscheidung (ohne Stempel / unvollständig
+  blockiert die Schublade mit Hinweis, Papiere lassen sich wieder herausziehen); Verhaften/Schleuse-Knopf zieht die Papiere ein.
+  Fehler → Verwarnzettel aus dem Drucker (2 Verwarnungen, dann PENALTY). Test-Tag `Data/Days/Day1_Test` mit 6 Reisenden.
+  **Für P08:** `CounterShift.DecisionMade(traveler, chosen, Judgement)` — `Judgement.Correct/MoraleCost/Disobeyed`, `CounterShift.Citations`.
+  **Für P09:** `CounterShift.BeginDay(DayRules)`, Event `ShiftEnded`. **Für P15:** Inhalte im Format von `TravelerContentBuilder`
+  (oder direkt als Assets), danach `GameOff/Validate Travelers` bzw. Tests laufen lassen; `trickIntended` für absichtliche Beinahe-Treffer
+  (The Shifter), `storyTag`.
 
 ### P08 — Entscheidungen & Moral
 - Größe: M · Priorität: Muss · Status: offen

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using GameOff.Counter;
 using GameOff.Documents;
+using GameOff.Travelers;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -22,6 +23,8 @@ namespace GameOff.EditorTools
         private const string DataFolder = "Assets/_Project/Data/Documents/";
         private const string CounterPrefab = "Assets/_Project/Prefabs/Counter/PF_CounterStation.prefab";
         private const string DocSlotModel = "Assets/_Project/Art/Models/Counter/SM_Counter_DocSlot.fbx";
+        private const string PrinterModel = "Assets/_Project/Art/Models/Counter/SM_Counter_Printer.fbx";
+        private const string TestDayPath = "Assets/_Project/Data/Days/Day1_Test.asset";
         private const float LabelSize = 0.0035f, ValueSize = 0.0055f, TitleSize = 0.006f; // cap heights in meters
         private static readonly Color Ink = new Color(0.12f, 0.12f, 0.14f), LabelInk = new Color(0.35f, 0.35f, 0.38f);
 
@@ -68,6 +71,7 @@ namespace GameOff.EditorTools
                     Label("DURATION", -0.066f, -0.01f), Value("duration", -0.066f, -0.015f, 0.06f),
                     Label("VALID UNTIL", 0.0f, -0.01f), Value("expires", 0.0f, -0.015f, 0.066f),
                     Label("ISSUED AT", -0.066f, -0.035f), Value("issued", -0.066f, -0.04f, 0.13f),
+                    Label("ROUTE", -0.066f, -0.06f), Value("route", -0.066f, -0.065f, 0.105f),
                 }, log);
             var manifest = BuildPrefab(DocumentType.CargoManifest, new Vector2(0.21f, 0.30f), 1.6f, font, null, default,
                 new List<Text>
@@ -80,9 +84,20 @@ namespace GameOff.EditorTools
                     Label("DECLARED GOODS", -0.096f, 0.058f), Value("cargo", -0.096f, 0.05f, 0.19f),
                 }, log);
 
+            var citation = BuildPrefab(DocumentType.Citation, new Vector2(0.08f, 0.14f), 1f, font, null, default,
+                new List<Text>
+                {
+                    new Text("Title", "CITATION", -0.034f, 0.066f, 0.07f, TitleSize * 1.2f, Color.white),
+                    new Text("Subtitle", "KESTREL-9 TRANSIT AUTHORITY", -0.034f, 0.046f, 0.07f, LabelSize * 0.9f, LabelInk),
+                    Label("NO.", -0.034f, 0.034f), Value("id", -0.034f, 0.03f, 0.03f),
+                    Label("DATE", 0.002f, 0.034f), Value("date", 0.002f, 0.03f, 0.034f),
+                    Label("VIOLATION", -0.034f, 0.014f), Value("reason", -0.034f, 0.01f, 0.068f),
+                    Label("PENALTY", -0.034f, -0.032f),
+                    new Text("Field_penalty", "", -0.034f, -0.036f, 0.068f, ValueSize, new Color(0.66f, 0.12f, 0.1f)),
+                }, log);
+
             var tuning = Asset<DocumentTuning>(DataFolder + "DocumentTuning.asset");
-            var tests = TestDocuments(photoTex);
-            WireCounter(id, permit, manifest, tuning, tests, log);
+            WireCounter(id, permit, manifest, citation, tuning, log);
             AssetDatabase.SaveAssets();
             return "DocumentPrefabBuilder:\n" + string.Join("\n", log);
         }
@@ -237,38 +252,12 @@ namespace GameOff.EditorTools
             return asset;
         }
 
-        /// <summary>One consistent test traveler with all three documents (until P07 brings real travelers).</summary>
-        private static List<DocumentData> TestDocuments(Texture2D photo)
-        {
-            var id = Asset<DocumentData>(DataFolder + "Test/Doc_Test_IdCard.asset");
-            id.EditorSet(DocumentType.IdCard, photo, new List<DocumentField>
-            {
-                new DocumentField("name", "VESNA OKARU"), new DocumentField("species", "HUMAN"), new DocumentField("origin", "TORVIK COLONY"),
-                new DocumentField("id", "KX-4471-09"), new DocumentField("expires", "2291-03-14"),
-            });
-            var permit = Asset<DocumentData>(DataFolder + "Test/Doc_Test_EntryPermit.asset");
-            permit.EditorSet(DocumentType.EntryPermit, photo, new List<DocumentField>
-            {
-                new DocumentField("name", "VESNA OKARU"), new DocumentField("id", "KX-4471-09"), new DocumentField("purpose", "CARGO DELIVERY"),
-                new DocumentField("duration", "2 CYCLES"), new DocumentField("expires", "2290-11-30"), new DocumentField("issued", "ASKA-3 CONSULATE"),
-            });
-            var manifest = Asset<DocumentData>(DataFolder + "Test/Doc_Test_CargoManifest.asset");
-            manifest.EditorSet(DocumentType.CargoManifest, null, new List<DocumentField>
-            {
-                new DocumentField("name", "VESNA OKARU"), new DocumentField("ship", "MV HALDE"), new DocumentField("origin", "TORVIK"),
-                new DocumentField("destination", "KESTREL-9"),
-                new DocumentField("cargo", "12x  HYDROPONIC NUTRIENT PACK\n 4x  WATER FILTER CARTRIDGE\n 1x  MEDICAL KIT (SEALED)\n 2x  SPARE PARTS CRATE"),
-            });
-            foreach (var d in new[] { id, permit, manifest }) EditorUtility.SetDirty(d);
-            return new List<DocumentData> { id, permit, manifest };
-        }
-
         /// <summary>
         /// PF_CounterStation: the drawer (moved here from the station builder, same spot), the paper spots on the desk and the
         /// DocumentDesk with its references. Removes the P38 placeholder sheet.
         /// </summary>
-        private static void WireCounter(DocumentView id, DocumentView permit, DocumentView manifest, DocumentTuning tuning,
-            List<DocumentData> tests, List<string> log)
+        private static void WireCounter(DocumentView id, DocumentView permit, DocumentView manifest, DocumentView citation,
+            DocumentTuning tuning, List<string> log)
         {
             var root = PrefabUtility.LoadPrefabContents(CounterPrefab);
             try
@@ -319,6 +308,44 @@ namespace GameOff.EditorTools
                 area.localPosition = new Vector3(1.3f, 0.001f, 0f);
                 area.localRotation = Quaternion.identity;
 
+                // Citation printer on the desk, slot toward the officer (yaw 90: model front -Z → world -X)
+                var printer = controls.Find("Printer");
+                var printerAsset = AssetDatabase.LoadAssetAtPath<GameObject>(PrinterModel);
+                if (printer != null && printerAsset != null && printer.Find("Printer_Placeholder") != null)
+                {
+                    Object.DestroyImmediate(printer.gameObject); // the delivered model replaces the grey box
+                    printer = null;
+                }
+                if (printer == null)
+                {
+                    if (printerAsset != null) printer = ((GameObject)PrefabUtility.InstantiatePrefab(printerAsset)).transform;
+                    else
+                    {
+                        printer = new GameObject("Printer").transform;
+                        var box = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        box.name = "Printer_Placeholder";
+                        box.transform.SetParent(printer, false);
+                        box.transform.localPosition = new Vector3(0f, 0.04f, 0f);
+                        box.transform.localScale = new Vector3(0.22f, 0.08f, 0.18f);
+                        box.GetComponent<MeshRenderer>().sharedMaterial = UnlitMaterial("M_Printer_Placeholder", null, new Color(0.32f, 0.32f, 0.3f));
+                    }
+                    printer.name = "Printer";
+                    printer.SetParent(controls, false);
+                }
+                // In view: right of the drawer, above the buttons (world x -0.45, z -9.8)
+                printer.localPosition = new Vector3(1.55f, 0f, -0.8f);
+                printer.localRotation = Quaternion.Euler(0f, 90f, 0f);
+                var printerOut = printer.Find("PaperOut");
+                if (printerOut == null) printerOut = new GameObject("PaperOut").transform;
+                printerOut.SetParent(printer, false);
+                printerOut.localPosition = new Vector3(0f, 0.06f, -0.1f); // in front of the slot
+                printerOut.localRotation = Quaternion.identity;
+                var printerSpot = controls.Find("PrinterSpot");
+                if (printerSpot == null) printerSpot = new GameObject("PrinterSpot").transform;
+                printerSpot.SetParent(controls, false);
+                printerSpot.localPosition = new Vector3(1.3f, 0.001f, -0.72f);
+                printerSpot.localRotation = Quaternion.Euler(0f, 100f, 0f);
+
                 var desk = root.GetComponent<DocumentDesk>();
                 if (desk == null) desk = root.AddComponent<DocumentDesk>(); // no ?? on Unity objects (fake null)
                 var so = new SerializedObject(desk);
@@ -334,17 +361,50 @@ namespace GameOff.EditorTools
                 so.FindProperty("idCardPrefab").objectReferenceValue = id;
                 so.FindProperty("entryPermitPrefab").objectReferenceValue = permit;
                 so.FindProperty("cargoManifestPrefab").objectReferenceValue = manifest;
-                var testsProp = so.FindProperty("testDocuments");
-                testsProp.arraySize = tests.Count;
-                for (int i = 0; i < tests.Count; i++) testsProp.GetArrayElementAtIndex(i).objectReferenceValue = tests[i];
+                so.FindProperty("citationPrefab").objectReferenceValue = citation;
+                so.FindProperty("printerOut").objectReferenceValue = printerOut;
+                so.FindProperty("printerSpot").objectReferenceValue = printerSpot;
                 so.ApplyModifiedPropertiesWithoutUndo();
+
+                // The shift: travelers of the test day until the day flow (P09) hands in real days
+                var shift = root.GetComponent<CounterShift>();
+                if (shift == null) shift = root.AddComponent<CounterShift>();
+                var sso = new SerializedObject(shift);
+                sso.FindProperty("station").objectReferenceValue = root.GetComponent<CounterStation>();
+                sso.FindProperty("desk").objectReferenceValue = desk;
+                var testDay = AssetDatabase.LoadAssetAtPath<DayRules>(TestDayPath);
+                if (testDay == null) log.Add("WARNING  no " + TestDayPath + " - run GameOff/Build Test Day, else no travelers come");
+                sso.FindProperty("day").objectReferenceValue = testDay;
+                sso.ApplyModifiedPropertiesWithoutUndo();
 
                 var cso = new SerializedObject(root.GetComponent<CounterStation>());
                 cso.FindProperty("documents").objectReferenceValue = desk;
                 cso.ApplyModifiedPropertiesWithoutUndo();
-                var hint = root.GetComponentInChildren<TextMeshProUGUI>(true);
-                if (hint != null)
-                    hint.text = "Drag papers  ·  click a paper to read it  ·  papers into the drawer, click it to hand back  ·  stamps: click, then click the paper  ·  [Q]/[Esc]/right click: back / leave";
+                var hintT = root.transform.Find("SeatedHUD/Hint");
+                if (hintT == null) throw new System.InvalidOperationException("PF_CounterStation has no SeatedHUD/Hint");
+                var hint = hintT.GetComponent<TextMeshProUGUI>();
+                hint.text = "Stamp APPROVED or DENIED, hand all papers back through the drawer (click it)  ·  or press ARREST / AIRLOCK  ·  click a paper to read it  ·  [Q]/[Esc]/right click: back / leave";
+                // Notice line above the hint (\"Stamp the papers first\" and the like), hidden until used
+                var noticeT = root.transform.Find("SeatedHUD/Notice");
+                if (noticeT == null)
+                {
+                    noticeT = Object.Instantiate(hint.gameObject, hint.transform.parent).transform;
+                    noticeT.name = "Notice";
+                }
+                var notice = noticeT.GetComponent<TextMeshProUGUI>();
+                var hintRect = hint.rectTransform;
+                var noticeRect = notice.rectTransform;
+                noticeRect.anchorMin = hintRect.anchorMin;
+                noticeRect.anchorMax = hintRect.anchorMax;
+                noticeRect.pivot = hintRect.pivot;
+                noticeRect.sizeDelta = hintRect.sizeDelta;
+                noticeRect.anchoredPosition = hintRect.anchoredPosition + new Vector2(0f, 60f);
+                notice.fontSize = hint.fontSize * 1.6f;
+                notice.color = new Color(1f, 0.72f, 0.3f);
+                notice.text = "";
+                noticeT.gameObject.SetActive(false);
+                cso.FindProperty("notice").objectReferenceValue = notice;
+                cso.ApplyModifiedPropertiesWithoutUndo();
                 PrefabUtility.SaveAsPrefabAsset(root, CounterPrefab);
                 log.Add("counter wired: drawer, 3 spots, DocumentDesk");
             }

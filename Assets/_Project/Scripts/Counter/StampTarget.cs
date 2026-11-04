@@ -15,8 +15,12 @@ namespace GameOff.Counter
         /// <summary>Raised after a mark was placed (for the document's own look). Game decisions: CounterStation.ActionTriggered.</summary>
         public event Action<CounterAction> Stamped;
 
+        private static int s_stampCounter;
+
         public bool IsStamped { get; private set; }
         public CounterAction LastStamp { get; private set; }
+        /// <summary>Increases with every stamp anywhere, so the most recent stamp among several papers can be found.</summary>
+        public int StampOrder { get; private set; }
 
         /// <summary>
         /// Places an ink mark at the hit point, facing out of the surface. textUp: the direction the top of the text should
@@ -42,6 +46,7 @@ namespace GameOff.Counter
             }
             IsStamped = true;
             LastStamp = action;
+            StampOrder = ++s_stampCounter;
             Stamped?.Invoke(action);
         }
     }

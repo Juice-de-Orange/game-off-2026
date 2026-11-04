@@ -10,18 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bddc5e85903ecd443a8bdbe5f40e8659, type: 3}
-  m_Name: Doc_Test_IdCard
+  m_Name: Doc_04_Quill_EntryPermit
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
-  type: 0
+  type: 1
   photo: {fileID: 2800000, guid: 1ccd4f3aa8d05bf41aa88c71a3177e78, type: 3}
   fields:
   - key: name
-    value: VESNA OKARU
-  - key: species
-    value: HUMAN
-  - key: origin
-    value: TORVIK COLONY
+    value: QUILL BARRAGH
   - key: id
-    value: KX-4471-09
+    value: QB-7720-05
+  - key: purpose
+    value: BUSINESS
+  - key: duration
+    value: 3 CYCLES
   - key: expires
-    value: 2291-03-14
+    value: 2290-11-20
+  - key: issued
+    value: ASKA-3 CONSULATE
+  - key: route
+    value: QUOB ATOLL > KESTREL-9
+  forgedSeal: 0

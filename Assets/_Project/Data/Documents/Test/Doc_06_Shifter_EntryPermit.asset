@@ -10,19 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bddc5e85903ecd443a8bdbe5f40e8659, type: 3}
-  m_Name: Doc_Test_CargoManifest
+  m_Name: Doc_06_Shifter_EntryPermit
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
-  type: 2
-  photo: {fileID: 0}
+  type: 1
+  photo: {fileID: 2800000, guid: 1ccd4f3aa8d05bf41aa88c71a3177e78, type: 3}
   fields:
   - key: name
-    value: VESNA OKARU
-  - key: ship
-    value: MV HALDE
-  - key: origin
-    value: TORVIK
-  - key: destination
-    value: KESTREL-9
-  - key: cargo
-    value: "12x  HYDROPONIC NUTRIENT PACK\n 4x  WATER FILTER CARTRIDGE\n 1x  MEDICAL
-      KIT (SEALED)\n 2x  SPARE PARTS CRATE"
+    value: LONN ABERNATHY
+  - key: id
+    value: AB-0777-77
+  - key: purpose
+    value: TOURISM
+  - key: duration
+    value: 1 CYCLE
+  - key: expires
+    value: 2290-11-06
+  - key: issued
+    value: ASKA-3 CONSULATE
+  - key: route
+    value: ASKA-3 > KESTREL-9
+  forgedSeal: 0

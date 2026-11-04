@@ -4358,3 +4358,59 @@ refs: []
 placeholder: PNG 128x160 (per Skript erzeugt)
 feedback: []
 ```
+
+### T_Doc_Citation.png
+```yaml
+path: Assets/_Project/Art/Textures/Documents/T_Doc_Citation.png
+package: P07
+scene: Schalter (Verwarnzettel aus dem Drucker)
+status: offen
+priority: P2
+needed_by: 2026-11-12
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Documents/T_Doc_Citation.png   # 256x448, Bilinear
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Hintergrund des Verwarnzettels (8 x 14 cm): Thermodruckpapier, leicht rosa-weiß, oben ein rotes Kopfband (13 % der Höhe) mit
+  Platz für den Titel, unten gezackte Abrisskante, schwache Linien. KEINE Texte; Titel, Grund und Strafe setzt das Spiel.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 256x448 (per Skript erzeugt)
+feedback: []
+```
+
+### SM_Counter_Printer.fbx
+```yaml
+path: Assets/_Project/Art/Models/Counter/SM_Counter_Printer.fbx
+package: P07
+scene: Schalter
+status: offen
+priority: P2
+needed_by: 2026-11-12
+size_m: [0.22, 0.18, 0.08]
+pivot: bottom_center
+tris_max: 400
+materials: [Printer]
+textures:
+  - Assets/_Project/Art/Textures/Counter/T_Counter_Printer_Albedo.png   # 128x128, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  Kleiner Belegdrucker auf dem Schaltertisch (klobig, Alien-Isolation-Stil), beige-graues Gehäuse, Papierschlitz vorne (Unity -Z)
+  auf 6 cm Höhe, rote Status-LED, Aufkleber 'CITATIONS'. Aus dem Schlitz kommen die Verwarnzettel.
+interaction: "druckt Verwarnzettel (Skript)"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: graue Box 0.22 x 0.08 x 0.18 m vom DocumentPrefabBuilder
+feedback: []
+```

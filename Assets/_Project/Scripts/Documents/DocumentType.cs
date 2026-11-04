@@ -5,6 +5,8 @@ namespace GameOff.Documents
     {
         IdCard,
         EntryPermit,
-        CargoManifest
+        CargoManifest,
+        /// <summary>Citation slip from the counter printer after a wrong decision (P07). Not part of a traveler's papers.</summary>
+        Citation
     }
 }
