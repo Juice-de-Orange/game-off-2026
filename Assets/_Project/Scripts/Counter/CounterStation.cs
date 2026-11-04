@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using GameOff.Documents;
 using GameOff.Player;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -19,6 +20,8 @@ namespace GameOff.Counter
         [SerializeField] private FirstPersonController player;
         [SerializeField] private CinemachineCamera deskCamera;
         [SerializeField] private Camera viewCamera;
+        [Tooltip("Papers on the desk (P06); optional. Gets the pointer before the buttons do.")]
+        [SerializeField] private DocumentDesk documents;
         [Tooltip("Where the officer stands after leaving (behind the chair, facing the desk).")]
         [SerializeField] private Transform standPoint;
         [Tooltip("Shown only while seated (e.g. the \"[Q] Leave counter\" hint).")]
@@ -49,6 +52,8 @@ namespace GameOff.Counter
         public event Action<bool> SeatedChanged;
 
         public bool IsSeated => _seated;
+        /// <summary>The camera the mouse rays come from (desk view while seated).</summary>
+        public Camera ViewCamera => viewCamera;
 
         private void Awake()
         {
@@ -125,20 +130,27 @@ namespace GameOff.Counter
 
             if (leaveAction.action.WasPressedThisFrame())
             {
+                // One step back at a time: stamp down, then the paper held up for reading, then stand up.
                 if (_held != null) PutBackHeld();
-                else Leave();
+                else if (documents == null || !documents.Cancel()) Leave();
                 return;
             }
 
             var screenPos = pointAction.action.ReadValue<Vector2>();
             bool clicked = clickAction.action.WasPressedThisFrame();
-            if (_held != null) UpdateHeld(screenPos, clicked);
-            else if (clicked) TryClick(screenPos);
+            if (_held != null)
+            {
+                UpdateHeld(screenPos, clicked);
+                return;
+            }
+            // Papers first (drag, read, drawer); only a click they don't use goes to stamps and buttons.
+            bool usedByDocuments = documents != null && documents.HandlePointer(screenPos, clicked, clickAction.action.WasReleasedThisFrame());
+            if (!usedByDocuments && clicked) TryClick(screenPos);
         }
 
         private void TryClick(Vector2 screenPos)
         {
-            if (!Raycast(screenPos, out RaycastHit hit)) return;
+            if (!RaycastPointer(screenPos, out RaycastHit hit)) return;
             var stamp = hit.collider.GetComponentInParent<StampTool>();
             if (stamp != null)
             {
@@ -157,7 +169,7 @@ namespace GameOff.Counter
         private void UpdateHeld(Vector2 screenPos, bool clicked)
         {
             if (_held.IsPressing) return;
-            bool hasHit = Raycast(screenPos, out RaycastHit hit);
+            bool hasHit = RaycastPointer(screenPos, out RaycastHit hit);
             if (hasHit) _held.Hover(hit.point, hit.normal);
             if (!clicked) return;
             var target = hasHit ? hit.collider.GetComponentInParent<StampTarget>() : null;
@@ -180,12 +192,18 @@ namespace GameOff.Counter
             _held = null;
         }
 
-        /// <summary>Mouse ray from the desk camera; ignores triggers and the player's own body.</summary>
-        private bool Raycast(Vector2 screenPos, out RaycastHit closest)
+        /// <summary>Ray from the desk camera through the mouse position (screen pixels).</summary>
+        public Ray PointerRay(Vector2 screenPos)
         {
             // Viewport coordinates: the camera may render into a low-res texture (RetroLook), the mouse is in screen pixels.
             var viewport = new Vector3(screenPos.x / Mathf.Max(1, Screen.width), screenPos.y / Mathf.Max(1, Screen.height), 0f);
-            Ray ray = viewCamera.ViewportPointToRay(viewport);
+            return viewCamera.ViewportPointToRay(viewport);
+        }
+
+        /// <summary>Closest hit under the mouse; ignores triggers and the player's own body.</summary>
+        public bool RaycastPointer(Vector2 screenPos, out RaycastHit closest)
+        {
+            Ray ray = PointerRay(screenPos);
             closest = default;
             float best = float.MaxValue;
             int count = Physics.RaycastNonAlloc(ray, _hits, clickRange, ~0, QueryTriggerInteraction.Ignore); // no garbage per frame (WebGL)

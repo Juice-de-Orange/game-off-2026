@@ -4250,3 +4250,111 @@ refs: []
 placeholder: PNG 128x128 (Rahmen + Text, per Skript erzeugt)
 feedback: []
 ```
+
+### T_Doc_IdCard.png
+```yaml
+path: Assets/_Project/Art/Textures/Documents/T_Doc_IdCard.png
+package: P06
+scene: Schalter (Dokumente, gelesen in voller Auflösung)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Documents/T_Doc_IdCard.png   # 512x341, Bilinear (Dokumente werden scharf gezeichnet, nicht Point)
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Hintergrund des Ausweises (12 x 8 cm, Querformat): Plastikkarten-Look in Petrol/Mintgrau, oben ein Kopfband (16 % der Höhe) in Petrol für den Titel, feine Guilloche-Sicherheitslinien, kleines KESTREL-9-Hologramm unten rechts. KEINE Feldbeschriftungen und KEINE Werte: Titel, Labels und Daten setzt das Spiel als scharfen Text darüber (Felder links Foto 32x40 mm, rechts Textspalte).
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 512x341 (per Skript erzeugt)
+feedback: []
+```
+
+### T_Doc_EntryPermit.png
+```yaml
+path: Assets/_Project/Art/Textures/Documents/T_Doc_EntryPermit.png
+package: P06
+scene: Schalter (Dokumente, gelesen in voller Auflösung)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Documents/T_Doc_EntryPermit.png   # 512x717, Bilinear (Dokumente werden scharf gezeichnet, nicht Point)
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Hintergrund der Einreiseerlaubnis (15 x 21 cm, Hochformat): leicht vergilbtes Behördenpapier, Kopfband (9 % der Höhe) in Rostrot für den Titel, Rahmenlinie, Guilloche-Wasserzeichen, leerer Siegelkreis unten rechts, Fotofeld oben rechts nur als feiner Rahmen. KEINE Texte außer evtl. einem winzigen Formularcode; Labels und Daten setzt das Spiel.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 512x717 (per Skript erzeugt)
+feedback: []
+```
+
+### T_Doc_CargoManifest.png
+```yaml
+path: Assets/_Project/Art/Textures/Documents/T_Doc_CargoManifest.png
+package: P06
+scene: Schalter (Dokumente, gelesen in voller Auflösung)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Documents/T_Doc_CargoManifest.png   # 512x731, Bilinear (Dokumente werden scharf gezeichnet, nicht Point)
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Hintergrund der Frachtliste (21 x 30 cm, Hochformat): Durchschlagpapier/Formular in kühlem Grauweiß, Kopfband (9 % der Höhe) in Dunkelgrau, Linien für die Warenliste ab 40 % der Höhe, Lochrand links, Kaffeefleck. KEINE Feldtexte; Labels und Daten setzt das Spiel.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 512x731 (per Skript erzeugt)
+feedback: []
+```
+
+### T_Doc_Photo_Placeholder.png
+```yaml
+path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Placeholder.png
+package: P06
+scene: Schalter (Dokumente, gelesen in voller Auflösung)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Placeholder.png   # 128x160, Bilinear (Dokumente werden scharf gezeichnet, nicht Point)
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Neutrales Passfoto-Platzhalterbild (grauer Hintergrund, Silhouette), solange Reisende (P07/P15) noch keine eigenen Porträts haben.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 128x160 (per Skript erzeugt)
+feedback: []
+```

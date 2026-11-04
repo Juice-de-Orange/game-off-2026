@@ -28,6 +28,7 @@ namespace GameOff.Counter
             {
                 var mark = GameObject.CreatePrimitive(PrimitiveType.Quad);
                 mark.name = $"Ink_{action}";
+                mark.layer = gameObject.layer; // same render layer as the document (sharp layer)
                 Destroy(mark.GetComponent<Collider>());
                 mark.GetComponent<MeshRenderer>().sharedMaterial = ink;
                 // A quad shows its face toward local -Z: look along -normal so the face points out of the surface.

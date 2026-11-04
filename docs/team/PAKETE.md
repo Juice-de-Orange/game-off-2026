@@ -100,12 +100,21 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   + `PlayerVCam` am Kopf. Alle vier Aktionen + Hin/Zurück im Play-Modus getestet.
 
 ### P06 — Dokumente
-- Größe: L · Priorität: Muss · Status: in Arbeit (max, 04.11.)
+- Größe: L · Priorität: Muss · Status: fertig (max, 04.11.)
 - Braucht: P05
 - Ziel: Dokumente als scharfe 2D-Karten auf dem Tisch, mit der Maus ziehbar, Daten kommen aus ScriptableObjects.
 - Enthalten: 2–3 Dokumenttypen (z. B. Ausweis, Einreiseerlaubnis, Frachtliste), Drag & Drop, Rückgabe an den Reisenden
 - Nicht enthalten: Prüflogik (P07), Gadgets
 - Abnahme: Ein Test-Reisender legt Dokumente hin, man kann sie lesen, ziehen und zurückgeben.
+- Ergebnis: Dokumente sind 3D-Papiere (Entscheidung 04.11.): Ausweis 12×8 cm, Einreiseerlaubnis 15×21 cm, Frachtliste 21×30 cm
+  (`Prefabs/Documents/PF_Doc_*`, gebaut von `GameOff/Build Documents`), Text in Share Tech Mono, Daten aus `DocumentData`
+  (`Data/Documents/`). Schublade fährt zum Reisenden und bringt die Papiere, sie gleiten auf den Tisch; ziehen, Klick = vor die Kamera
+  zum Lesen (Klick/Esc/Rechtsklick legt zurück), stempeln direkt auf dem Papier, Papiere in die Schublade ziehen, Klick auf die
+  Schublade gibt sie zurück. Bei Retro-Look an zeichnet eine Overlay-Kamera die Papiere im Sitzen in voller Auflösung.
+  **Für P07:** `DocumentDesk.Deliver(IReadOnlyList<DocumentData>)`, Events `DocumentsDelivered` / `DocumentsReturned`, Entscheidung weiter
+  über `CounterStation.ActionTriggered`; Feld-Keys: name, species, origin, id, expires, purpose, duration, issued, ship, destination, cargo
+  (`DocumentData.Get(key)`); ob ein Papier gestempelt ist: `StampTarget.IsStamped/LastStamp`. Testlieferung beim Hinsetzen
+  (`deliverTestOnSit`) abschalten, sobald echte Reisende kommen.
 - Festgelegt im Asset-Durchgang (max, 02.11.): Dokumente kommen über die **animierte Durchreiche** (Schublade fährt mit Klacken herein, Papiere gleiten auf den Tisch; Rückgabe = in die Schublade ziehen, sie fährt hinaus). Modelle: `SM_Counter_DocSlot`, `SM_Station_Window_Small_Slot`.
 
 ### P07 — Reisende & Regeln

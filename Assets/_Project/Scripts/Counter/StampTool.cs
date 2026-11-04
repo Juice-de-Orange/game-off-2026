@@ -20,6 +20,10 @@ namespace GameOff.Counter
         private Quaternion _restRotation;
         private Collider[] _colliders;
         private Coroutine _press;
+        private (GameObject Go, int Layer)[] _restLayers;
+
+        /// <summary>Layer drawn at full resolution over the retro image (documents and what is held over them).</summary>
+        public const string SharpLayer = GameOff.Core.Layers.Documents;
 
         public CounterAction Action => action;
         public bool IsHeld { get; private set; }
@@ -36,6 +40,15 @@ namespace GameOff.Counter
         {
             IsHeld = true;
             SetColliders(false); // the mouse ray must hit what is under the stamp, not the stamp
+            // Held over the papers, it is drawn with them on the sharp layer (RetroLook), else it would vanish under them.
+            int sharp = LayerMask.NameToLayer(SharpLayer);
+            if (sharp >= 0)
+            {
+                var all = GetComponentsInChildren<Transform>(true);
+                _restLayers = new (GameObject, int)[all.Length];
+                for (int i = 0; i < all.Length; i++) _restLayers[i] = (all[i].gameObject, all[i].gameObject.layer);
+                foreach (var t in all) t.gameObject.layer = sharp;
+            }
         }
 
         /// <summary>Follows the surface point under the mouse, floating off the surface (along its normal).</summary>
@@ -61,6 +74,9 @@ namespace GameOff.Counter
             IsHeld = false;
             transform.SetLocalPositionAndRotation(_restPosition, _restRotation);
             SetColliders(true);
+            if (_restLayers != null)
+                foreach (var (go, layer) in _restLayers) go.layer = layer;
+            _restLayers = null;
         }
 
         private IEnumerator Press(StampTarget target, Vector3 point, Vector3 normal, Vector3 textUp, Action<CounterAction> onStamped)

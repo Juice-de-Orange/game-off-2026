@@ -507,7 +507,7 @@ namespace GameOff.EditorTools
             }
         }
         // Counter furniture orientation (officer sits at x = -2 looking +X; checked visually).
-        private const float DeskYaw = 0f, ChairYaw = 90f, DocSlotYaw = 90f;
+        private const float DeskYaw = 0f, ChairYaw = 90f;
         // Shuttle: rear ramp must face north toward the queue lanes and the inspection lock (checked visually).
         private const float ShuttleYaw = 0f;
 
@@ -1544,7 +1544,7 @@ namespace GameOff.EditorTools
             KitProp(p, "Counter/SM_Counter_Chair.fbx", "SM_Counter_Chair", -2, -9, 0.6f, 0.6f, 1.0f, 0, ChairYaw);
             KitProp(p, "Counter/SM_Counter_Locker.fbx", "SM_Counter_Locker", -4, -6.45f, 1.0f, 0.5f, 1.8f);
             WallProp(p, "Counter/SM_Counter_Board.fbx", "SM_Counter_Board", false, -6, -1, -1.5f, 1.4f, 1.0f, 0.7f);
-            KitProp(p, "Counter/SM_Counter_DocSlot.fbx", "SM_Counter_DocSlot", -0.3f, -9, 0.4f, 0.5f, 0.15f, 0.85f, DocSlotYaw);
+            // The document drawer (SM_Counter_DocSlot) lives in PF_CounterStation (animated, P06).
             WallProp(p, "Counter/SM_Counter_Speaker.fbx", "SM_Counter_Speaker", false, -6, -1, -2.5f, 2.3f, 0.4f, 0.3f);
             KitProp(p, "Counter/SM_Counter_WarningLamp.fbx", "SM_Counter_WarningLamp", 2f, -9f, 0.25f, 0.25f, 0.3f, 3f); // pivot top_center → hangs from the ceiling
             // Hall (benches face north toward the observation deck: module front = local -Z → yaw 180)
