@@ -297,3 +297,18 @@ in `docs/ASSET-REQUESTS.md`.
   - **Platzierung (Vorschlag):** über dem Kopfende des Betts, Bildmitte etwa 1,3 m über dem Boden
     (`docs/asset-previews/lineup_P04-motel-cat-painting.png`).
 - antwort: max, 04.11.: Angenommen, danke! Gemergt (PR #13) und in Zimmer 103 über dem Bett aufgehängt; Eintrag in `ASSET-REQUESTS.md` nachgetragen (final).
+
+### M015 — Außenstation 2.0: Hülle und Verbindungsteile (14 neue Einträge, P39)
+- datum: 2026-11-04
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`, Paket P39 (alle `SM_Ext_*` mit `package: P39`)
+- status: offen
+- meldung: Die Station hat von außen keine Hülle (man sieht die Rückseiten der Innenwände), und Fachwerk, Solarflügel und
+  Antenne schweben unverbunden herum. Neu, alle P1 bis 12.11.:
+  1. Hülle: `SM_Ext_HullPanel_4x4`, `_Ribbed`, `SM_Ext_HullEdge_4`, `SM_Ext_HullCorner`, `SM_Ext_RoofCap_4x4`, `SM_Ext_HangarRib_Outer`.
+  2. Verbindungen: `SM_Ext_TrussNode`, `SM_Ext_DockingCollar`, `SM_Ext_SolarMast`, `SM_Ext_AntennaBase`.
+  3. Greebles: `SM_Ext_Greeble_VentBox`, `SM_Ext_Greeble_Tank`, `SM_Ext_Pipe_Large_4`, `SM_Ext_Pipe_Large_Elbow`.
+  Stil wie die KESTREL-Habmodule (die gefallen Max sehr), niedrige Texeldichte. Hüllplatten müssen nahtlos kacheln.
+  Reihenfolge: Hülle zuerst, dann Verbindungen, dann Greebles. Der Builder setzt alle automatisch, sobald die Dateien da sind.
+- antwort:

@@ -3813,3 +3813,384 @@ refs: []
 placeholder: none (direkt geliefert)
 feedback: []
 ```
+
+### SM_Ext_HullPanel_4x4.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_HullPanel_4x4.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [4.0, 0.3, 4.0]
+pivot: center
+tris_max: 400
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HullPanel_4x4_Albedo.png   # 128x128, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Außenhüllplatte 4 x 4 m für Wände und Dächer: Stahlplatten mit Nietreihen, Wartungsluke, Dreck- und Brandspuren, dunkles Grau mit beigen Flecken wie die KESTREL-Habmodule. Vorderseite (-Y im Blender = Unity -Z) zeigt nach außen. Kachelbar: Kanten müssen nahtlos aneinanderpassen. Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 4.0 x 0.3 x 4.0 m, Pivot center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_HullPanel_4x4_Ribbed.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_HullPanel_4x4_Ribbed.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [4.0, 0.5, 4.0]
+pivot: center
+tris_max: 600
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HullPanel_4x4_Ribbed_Albedo.png   # 128x128, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Variante der Hüllplatte mit zwei waagrechten Versteifungsrippen und Kabelkanal; für große Flächen (Hangar-Seiten), damit sie nicht flach wirken. Gleiche Kanten wie SM_Ext_HullPanel_4x4. Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 4.0 x 0.5 x 4.0 m, Pivot center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_HullEdge_4.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_HullEdge_4.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [4.0, 0.6, 0.6]
+pivot: center
+tris_max: 300
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HullEdge_4_Albedo.png   # 128x128, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Kantenleiste 4 m für Außenkanten der Hülle (Wand trifft Dach, Wand trifft Wand): abgerundetes Profil (8 Segmente) mit Gelb-Schwarz-Warnstreifen alle 2 m. Liegt entlang X. Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 4.0 x 0.6 x 0.6 m, Pivot center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_HullCorner.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_HullCorner.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [0.6, 0.6, 0.6]
+pivot: center
+tris_max: 200
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HullCorner_Albedo.png   # 128x128, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Eckstück, wo drei Kantenleisten zusammentreffen: Kugelsegment/abgerundeter Würfel, passt an SM_Ext_HullEdge_4. Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 0.6 x 0.6 x 0.6 m, Pivot center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_RoofCap_4x4.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_RoofCap_4x4.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [4.0, 4.0, 0.4]
+pivot: bottom_center
+tris_max: 500
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_RoofCap_4x4_Albedo.png   # 128x128, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_RoofCap_4x4_Emission.png   # 64x64, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Dachplatte 4 x 4 m für die niedrigen Räume (Motel, Diner, Bar): flache Platte mit Lüftungsgittern, kleinen Kästen und einem roten Positionslicht (Emission). Kachelbar. Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 4.0 x 4.0 x 0.4 m, Pivot bottom_center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_Greeble_VentBox.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_Greeble_VentBox.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [2.0, 1.5, 1.2]
+pivot: bottom_center
+tris_max: 300
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_Greeble_VentBox_Albedo.png   # 128x128, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Großes Lüftungs-/Technikgehäuse fürs Dach und die Hüllseiten: Kasten mit Lamellen, Rohranschluss, Warnaufkleber. Steht auf der Hülle. Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 2.0 x 1.5 x 1.2 m, Pivot bottom_center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_Greeble_Tank.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_Greeble_Tank.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [2.0, 2.0, 4.0]
+pivot: bottom_center
+tris_max: 400
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_Greeble_Tank_Albedo.png   # 128x128, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Außentank mit Halteklammern in verblichenem Weiß, Beschriftung 'O2'; steht aufrecht oder liegt (per Rotation) auf der Hülle. Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 2.0 x 2.0 x 4.0 m, Pivot bottom_center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_Pipe_Large_4.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_Pipe_Large_4.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [4.0, 0.8, 0.8]
+pivot: center
+tris_max: 200
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_Pipe_Large_4_Albedo.png   # 128x128, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Großrohr 4 m (Durchmesser 0,6 m, 10 Segmente) mit Flanschen an beiden Enden und Halteschellen; verläuft über die Hülle. Liegt entlang X. Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 4.0 x 0.8 x 0.8 m, Pivot center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_Pipe_Large_Elbow.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_Pipe_Large_Elbow.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [1.2, 1.2, 0.8]
+pivot: center
+tris_max: 200
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_Pipe_Large_Elbow_Albedo.png   # 128x128, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  90-Grad-Bogen zum Großrohr, gleicher Durchmesser und Flansch. Anschlüsse an +X und +Y (Blender). Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 1.2 x 1.2 x 0.8 m, Pivot center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_DockingCollar.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_DockingCollar.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [8.0, 8.0, 3.0]
+pivot: center
+tris_max: 500
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_DockingCollar_Albedo.png   # 128x128, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Andockflansch, an dem ein Truss-Arm seitlich auf ein Habmodul (Zylinder, Durchmesser 12 m) trifft: Unterseite gewölbt passend zum Zylinder (Radius 6 m), oben eine quadratische Aufnahme für den 3 x 3 m Truss-Querschnitt, dazwischen Verstrebungen und Kabel. Truss-Richtung = +Z (oben). Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 8.0 x 8.0 x 3.0 m, Pivot center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_TrussNode.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_TrussNode.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [4.0, 4.0, 4.0]
+pivot: center
+tris_max: 400
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_TrussNode_Albedo.png   # 128x128, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_TrussNode_Emission.png   # 64x64, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Knotenwürfel für das Fachwerk: nimmt an allen 6 Seiten ein SM_Ext_TrussSegment (3 x 3 m Querschnitt) auf, Gitterstruktur mit Positionslicht. Dient als Verbindung Truss-Stationswand und Truss-Truss. Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 4.0 x 4.0 x 4.0 m, Pivot center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_SolarMast.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_SolarMast.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [2.0, 2.0, 8.0]
+pivot: bottom_center
+tris_max: 300
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_SolarMast_Albedo.png   # 128x128, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Mast mit Drehgelenk (Gimbal) oben, trägt einen SM_Ext_SolarArray; unten Flansch, der auf ein TrussNode oder das Ende eines Truss passt. Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 2.0 x 2.0 x 8.0 m, Pivot bottom_center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_AntennaBase.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_AntennaBase.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [4.0, 4.0, 1.5]
+pivot: bottom_center
+tris_max: 300
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_AntennaBase_Albedo.png   # 128x128, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Sockelplatte für SM_Ext_Antenna auf dem Hallendach: verstrebter Fuß mit Kabelkanälen und Wartungsleiter-Ansatz. Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 4.0 x 4.0 x 1.5 m, Pivot bottom_center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```
+
+### SM_Ext_HangarRib_Outer.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_HangarRib_Outer.fbx
+package: P39
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: offen
+priority: P1
+needed_by: 2026-11-12
+size_m: [1.0, 2.0, 17.0]
+pivot: bottom_center
+tris_max: 300
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HangarRib_Outer_Albedo.png   # 128x128, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HangarRib_Outer_Emission.png   # 64x64, Point
+texel_px_per_m: 6
+palette: docs/style/palette.png
+look: >
+  Äußere Tragrippe für die Hangar-Seitenwände (alle 7 m, passend zu den inneren SM_Hangar_RibArch): Stahlträger 17 m hoch, oben abgewinkelt aufs Dach, mit Positionslichtern. Wird nur aus der Ferne gesehen: niedrige Texeldichte (4-8 px/m), Browser-Downloadgröße im Blick.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/style/refs/ai_station_exterior_01.webp]
+placeholder: Box 1.0 x 2.0 x 17.0 m, Pivot bottom_center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
+feedback: []
+```

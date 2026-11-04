@@ -378,3 +378,32 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Enthalten: Neonschild "THE LAST ORBIT" flackert (ein Buchstabe fällt aus); an Tag 3 fallen Schilder und Lichter häufiger aus;
   `LightFlicker` wiederverwenden, Stärke pro Tag
 - Abnahme: Tag 1 ruhig, Tag 3 sichtbar instabil.
+
+### P37 — Station-Fixes innen
+- Größe: M · Priorität: Muss · Status: in Arbeit (max, 04.11.)
+- Braucht: — · Folgt auf: P21, P22, P27
+- Ziel: Die Station sieht von innen stimmig aus, keine Clipping-, Flimmer- oder Türfehler mehr.
+- Enthalten: Wandmodule nach echter Tiefe ausrichten (Lüftungen/Screens/Bögen clippen nicht), Wand-Props (Schilder, Boards,
+  Bilder) auf der echten Wandfläche, keine Varianten hinter Wand-Props; Türen auf Zellmitten mit Türwand-Modulen (auch 1,2 m),
+  Hangar-Türen mit Laibung, Türrahmen ohne Z-Fighting, Motel-Türen/Trigger repariert; Kiosk-Front (breitere Durchreiche, Sturz);
+  gelieferte Modelle statt Platzhalter (Hangar, Motel, Kiosk-Regal, Kranschiene)
+- Nicht enthalten: Außenhülle (P39), Schalter-Interaktion (P38)
+- Abnahme: Durch jede Tür laufen, von beiden Seiten sauber; keine Lüftung/kein Schild in der Wand; keine grauen Platzhalter im Hangar.
+
+### P38 — Schalter: Sessel, Aufstehen, Stempel
+- Größe: M · Priorität: Muss · Status: offen (für **max** reserviert)
+- Braucht: — · Folgt auf: P05
+- Ziel: Am Schalter fühlt sich die Bedienung richtig an.
+- Enthalten: Sessel leicht anwählbar, Spieler sitzt auf dem Sessel; Aufstehen mit Q/Esc/Rechtsklick; Stempel hochheben, mit der
+  Maus führen und auf ein (Platzhalter-)Dokument stempeln, Abdruck bleibt sichtbar; Schnittstelle `StampTarget` für P06
+- Nicht enthalten: echte Dokumente (P06)
+- Abnahme: Hinsetzen auf Anhieb, Esc steht auf, Stempelabdruck an der geklickten Stelle.
+
+### P39 — Außenstation 2.0
+- Größe: L · Priorität: Soll · Status: offen (für **max** reserviert)
+- Braucht: Lieferung der Hüll-Assets (M015) · Folgt auf: P24
+- Ziel: Die Station ist von außen ein zusammenhängendes Bauwerk.
+- Enthalten: Fachwerk verbindet Station, Habmodule, Solarflügel (auf Masten), Antenne (Sockel auf dem Hallendach), Radiatoren am
+  Hangar, Andockarm zum Frachter; Außenhülle aus Platten um alle Räume (Platzhalter, bis die Pipeline liefert), Kanten, Rohre,
+  Greebles; Fenster und Aussichtskuppel bleiben frei
+- Abnahme: Rundflug außen: nichts schwebt, keine Innenwand-Rückseiten sichtbar.
