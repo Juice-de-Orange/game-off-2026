@@ -200,6 +200,7 @@ namespace GameOff.EditorTools
             BuildEnergyBarrier(root, visual);
             BuildDoors(root);
             BuildRoundDetails(visual);
+            BuildHull(root);
 
             BuildProps(props);
             BuildMarkers(markers);
@@ -652,6 +653,283 @@ namespace GameOff.EditorTools
                 so.FindProperty("lockedLamp").objectReferenceValue = lamp;
                 so.FindProperty("obstacle").objectReferenceValue = obstacle;
                 so.ApplyModifiedPropertiesWithoutUndo();
+            }
+        }
+
+        // --- Outer hull (P39): plates over every face of the station that is seen from outside ---
+        private const string KitHullPanel = "Exterior/SM_Ext_HullPanel_4x4.fbx";
+        private const string KitHullPanelRibbed = "Exterior/SM_Ext_HullPanel_4x4_Ribbed.fbx";
+        private const string KitRoofCap = "Exterior/SM_Ext_RoofCap_4x4.fbx";
+        private const string KitHangarRibOuter = "Exterior/SM_Ext_HangarRib_Outer.fbx";
+        private const string KitGreebleVent = "Exterior/SM_Ext_Greeble_VentBox.fbx";
+        private const string KitGreebleTank = "Exterior/SM_Ext_Greeble_Tank.fbx";
+        private const string KitPipeLarge = "Exterior/SM_Ext_Pipe_Large_4.fbx";
+        private const float HullCell = 4f, HullGap = 0.04f, HullOffset = 0.15f, HullThickness = 0.2f;
+        private static Material _hullA, _hullB, _hullTrim;
+
+        /// <summary>
+        /// Outer hull: every wall part not covered by a neighboring room (also above lower neighbors), every roof and the
+        /// underside, in 4 m plates (delivered SM_Ext_HullPanel_4x4 / RoofCap, else graybox plates in two shades).
+        /// Openings to space (windows, hangar mouth, deck, outer hatch) stay open. Hangar gets outer ribs, roofs get greebles.
+        /// Not part of the baked GI (seen from far away, lit by the planet light); no colliders.
+        /// </summary>
+        private static void BuildHull(GameObject root)
+        {
+            var hull = Child(root, "Hull");
+            hull.AddComponent<Unity.AI.Navigation.NavMeshModifier>().ignoreFromBuild = true;
+            _hullA = GetOrCreateMaterial("M_Graybox_Hull_A", new Color(0.40f, 0.42f, 0.44f), false);
+            _hullB = GetOrCreateMaterial("M_Graybox_Hull_B", new Color(0.33f, 0.34f, 0.36f), false);
+            _hullTrim = GetOrCreateMaterial("M_Graybox_Hull_Trim", new Color(0.22f, 0.22f, 0.24f), false);
+
+            foreach (var room in Rooms)
+            {
+                float roofTop = RoofTop(room);
+                foreach (var (onXLine, line, outward, from, to) in RoomSides(room))
+                    foreach (var (a, b, coveredTo) in ExposedSpans(room, onXLine, line, outward, from, to))
+                    {
+                        // At an outer corner the plates run on past the corner (closing the corner gap), unless another room
+                        // sits there (inner corner) or the facade continues in line; above a lower in-line neighbor only a strip.
+                        float bottom = coveredTo > 0f ? coveredTo : -FloorThickness - 0.3f;
+                        float ext = HullOffset + HullThickness * 0.5f;
+                        float a2 = a, b2 = b;
+                        foreach (var (atStart, corner) in new[] { (true, from), (false, to) })
+                        {
+                            if (!Mathf.Approximately(atStart ? a : b, corner)) continue;
+                            float dir = atStart ? -1f : 1f;
+                            if (RoomAt(onXLine, corner + dir * 0.1f, line + outward * 0.1f)) continue; // inner corner
+                            float inLine = InLineNeighborTop(room, onXLine, line, outward, corner);
+                            if (inLine < 0f) { if (atStart) a2 = a - ext; else b2 = b + ext; }
+                            else if (inLine < roofTop - 0.01f)
+                                HullWall(hull, room, onXLine, line, outward, atStart ? a - ext : b, atStart ? a : b + ext, Mathf.Max(bottom, inLine), roofTop);
+                        }
+                        HullWall(hull, room, onXLine, line, outward, a2, b2, bottom, roofTop);
+                    }
+                HullHorizontal(hull, room, roofTop, true);
+                HullHorizontal(hull, room, -FloorThickness - 0.3f, false);
+            }
+            HangarRibs(hull);
+            RoofGreebles(hull);
+            foreach (var r in hull.GetComponentsInChildren<Renderer>())
+                GameObjectUtility.SetStaticEditorFlags(r.gameObject, StaticEditorFlags.BatchingStatic);
+        }
+
+        /// <summary>Top of a room's ceiling from outside (tiles, corridor vault or the hangar's 1 m ceiling truss).</summary>
+        private static float RoofTop(Room room)
+        {
+            if (room.Name == "Hangar") return room.Height;
+            if (IsCorridor(room) && Kit(KitCeilingArch) != null) return room.Height + KitHeight(KitCeilingArch);
+            return room.Height + 0.2f;
+        }
+
+        private static IEnumerable<(bool, float, int, float, float)> RoomSides(Room room)
+        {
+            yield return (true, room.X0, -1, room.Z0, room.Z1);
+            yield return (true, room.X1, 1, room.Z0, room.Z1);
+            yield return (false, room.Z0, -1, room.X0, room.X1);
+            yield return (false, room.Z1, 1, room.X0, room.X1);
+        }
+
+        /// <summary>
+        /// Parts of one room side seen from outside: split at neighbor boundaries; coveredTo = height up to which a neighbor
+        /// on the other side hides the wall (0 = open to space). Fully hidden parts are left out.
+        /// </summary>
+        private static List<(float, float, float)> ExposedSpans(Room room, bool onXLine, float line, int outward, float from, float to)
+        {
+            var neighbors = new List<Room>();
+            var cuts = new List<float> { from, to };
+            foreach (var other in Rooms)
+            {
+                if (other.Name == room.Name) continue;
+                float otherLine = onXLine ? (outward > 0 ? other.X0 : other.X1) : (outward > 0 ? other.Z0 : other.Z1);
+                float o0 = onXLine ? other.Z0 : other.X0, o1 = onXLine ? other.Z1 : other.X1;
+                if (!Mathf.Approximately(otherLine, line) || o1 <= from + 0.01f || o0 >= to - 0.01f) continue;
+                neighbors.Add(other);
+                cuts.Add(Mathf.Clamp(o0, from, to));
+                cuts.Add(Mathf.Clamp(o1, from, to));
+            }
+            cuts.Sort();
+            var spans = new List<(float, float, float)>();
+            for (int i = 0; i + 1 < cuts.Count; i++)
+            {
+                float a = cuts[i], b = cuts[i + 1];
+                if (b - a < 0.05f) continue;
+                float covered = 0f;
+                foreach (var n in neighbors)
+                {
+                    float o0 = onXLine ? n.Z0 : n.X0, o1 = onXLine ? n.Z1 : n.X1;
+                    if (o0 <= a + 0.01f && o1 >= b - 0.01f) covered = Mathf.Max(covered, RoofTop(n));
+                }
+                if (covered < RoofTop(room) - 0.01f) spans.Add((a, b, covered)); // vaulted corridors stick out above flat neighbors
+            }
+            return spans;
+        }
+
+        /// <summary>One exposed wall part as 4 m plates, set just outside the wall line; openings on this line are cut out.</summary>
+        private static void HullWall(GameObject hull, Room room, bool onXLine, float line, int outward, float a, float b, float bottom, float top)
+        {
+            float across = line + outward * HullOffset;
+            float yaw = onXLine ? (outward > 0 ? -90f : 90f) : (outward > 0 ? 180f : 0f); // panel front (-Z) faces outward
+            for (float u = a; u < b - 0.01f; u += HullCell)
+            for (float v = bottom; v < top - 0.01f; v += HullCell)
+            {
+                float u1 = Mathf.Min(u + HullCell, b), v1 = Mathf.Min(v + HullCell, top);
+                bool cut = false;
+                foreach (var o in Openings)
+                    if (o.OnXLine == onXLine && Mathf.Approximately(o.Line, line) && o.Center - o.Width * 0.5f < u1 && o.Center + o.Width * 0.5f > u
+                        && o.Sill < v1 && o.Head > v)
+                        cut = true;
+                var mat = StableHash(room.Name, line, u, v) % 3 == 0 ? _hullB : _hullA;
+                if (!cut && HullPanel(hull, room.Name == "Hangar" ? KitHullPanelRibbed : KitHullPanel,
+                        onXLine ? new Vector3(across, (v + v1) * 0.5f, (u + u1) * 0.5f) : new Vector3((u + u1) * 0.5f, (v + v1) * 0.5f, across),
+                        Quaternion.Euler(0f, yaw, 0f), u1 - u, v1 - v))
+                    continue;
+                // Graybox plate(s); BuildWall cuts the openings (hangar mouth, windows, deck, outer hatch).
+                BuildWall(hull, room, onXLine, line, across, u + HullGap, u1 - HullGap, v + HullGap, v1 - HullGap, mat, true, false);
+            }
+        }
+
+        /// <summary>
+        /// Roof top of the room whose wall on the same side continues this facade in line at the given corner, or -1 if none.
+        /// </summary>
+        private static float InLineNeighborTop(Room room, bool onXLine, float line, int outward, float corner)
+        {
+            float top = -1f;
+            foreach (var other in Rooms)
+            {
+                if (other.Name == room.Name) continue;
+                float otherLine = onXLine ? (outward > 0 ? other.X1 : other.X0) : (outward > 0 ? other.Z1 : other.Z0);
+                float o0 = onXLine ? other.Z0 : other.X0, o1 = onXLine ? other.Z1 : other.X1;
+                if (Mathf.Approximately(otherLine, line) && (Mathf.Approximately(o0, corner) || Mathf.Approximately(o1, corner)))
+                    top = Mathf.Max(top, RoofTop(other));
+            }
+            return top;
+        }
+
+        /// <summary>True if the floor-plan point (along the wall, across it) lies inside any room.</summary>
+        private static bool RoomAt(bool onXLine, float along, float across)
+        {
+            float x = onXLine ? across : along, z = onXLine ? along : across;
+            foreach (var r in Rooms)
+                if (x > r.X0 && x < r.X1 && z > r.Z0 && z < r.Z1) return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Overhang of a roof/underside on one side: only where no neighbor of the same (or greater) height sits there, so plates
+        /// of neighboring rooms never overlap in one plane (z-fighting).
+        /// </summary>
+        private static float HullPad(Room room, bool onXLine, float line, int outward, float y, bool roof)
+        {
+            foreach (var other in Rooms)
+            {
+                if (other.Name == room.Name) continue;
+                float otherLine = onXLine ? (outward > 0 ? other.X0 : other.X1) : (outward > 0 ? other.Z0 : other.Z1);
+                float o0 = onXLine ? other.Z0 : other.X0, o1 = onXLine ? other.Z1 : other.X1;
+                float r0 = onXLine ? room.Z0 : room.X0, r1 = onXLine ? room.Z1 : room.X1;
+                if (!Mathf.Approximately(otherLine, line) || o1 <= r0 + 0.01f || o0 >= r1 - 0.01f) continue;
+                if (!roof || RoofTop(other) >= y - 0.01f) return 0f;
+            }
+            return HullOffset + HullThickness * 0.5f;
+        }
+
+        /// <summary>Roof (or underside) of a room in 4 m plates, reaching over the wall plates on open sides.</summary>
+        private static void HullHorizontal(GameObject hull, Room room, float y, bool roof)
+        {
+            float x0 = room.X0 - HullPad(room, true, room.X0, -1, y, roof), x1 = room.X1 + HullPad(room, true, room.X1, 1, y, roof);
+            float z0 = room.Z0 - HullPad(room, false, room.Z0, -1, y, roof), z1 = room.Z1 + HullPad(room, false, room.Z1, 1, y, roof);
+            float cy = roof ? y + HullThickness * 0.5f + 0.02f : y + HullThickness * 0.5f;
+            for (float x = x0; x < x1 - 0.01f; x += HullCell)
+            for (float z = z0; z < z1 - 0.01f; z += HullCell)
+            {
+                float xe = Mathf.Min(x + HullCell, x1), ze = Mathf.Min(z + HullCell, z1);
+                var center = new Vector3((x + xe) * 0.5f, cy, (z + ze) * 0.5f);
+                if (roof && Kit(KitRoofCap) != null)
+                {
+                    // Roof cap: 4 x 4 m flat plate (0.4 m), pivot bottom center
+                    var cap = PlaceKit(hull, KitRoofCap, new Vector3(center.x, y + 0.02f, center.z), 0f);
+                    cap.transform.localScale = new Vector3((xe - x) / HullCell, 1f, (ze - z) / HullCell);
+                    continue;
+                }
+                if (roof && HullPanel(hull, KitHullPanel, center, Quaternion.Euler(90f, 0f, 0f), xe - x, ze - z)) continue;
+                var mat = StableHash(room.Name, x, z, y) % 3 == 0 ? _hullB : _hullA;
+                var plate = Block(hull, $"Hull_{room.Name}_{(roof ? "Roof" : "Under")}_{x:0}_{z:0}", center,
+                    new Vector3(xe - x - HullGap * 2f, HullThickness, ze - z - HullGap * 2f), mat);
+                Object.DestroyImmediate(plate.GetComponent<Collider>());
+            }
+        }
+
+        /// <summary>Delivered hull panel scaled to the cell (pivot center, front -Z); false if not delivered yet.</summary>
+        private static bool HullPanel(GameObject hull, string kit, Vector3 center, Quaternion rotation, float width, float height)
+        {
+            if (Kit(kit) == null) return false;
+            var go = PlaceKit(hull, kit, center, 0f);
+            go.transform.rotation = rotation;
+            go.transform.localScale = new Vector3(width / HullCell, height / HullCell, 1f);
+            return true;
+        }
+
+        /// <summary>Outer ribs on the hangar's long sides every 7 m (matching the inner rib arches), with a beam over the roof.</summary>
+        private static void HangarRibs(GameObject hull)
+        {
+            var hangar = System.Array.Find(Rooms, r => r.Name == "Hangar");
+            float top = RoofTop(hangar);
+            for (float z = -15f; z > hangar.Z0; z -= 7f)
+            {
+                foreach (int side in new[] { -1, 1 })
+                {
+                    float x = side < 0 ? hangar.X0 - 0.75f : hangar.X1 + 0.75f;
+                    if (Kit(KitHangarRibOuter) != null)
+                    {
+                        // Delivered rib is 2 m deep: its center stands 1 m outside the hull plates
+                        float kx = side < 0 ? hangar.X0 - HullOffset - HullThickness * 0.5f - 1f : hangar.X1 + HullOffset + HullThickness * 0.5f + 1f;
+                        PlaceKit(hull, KitHangarRibOuter, new Vector3(kx, -0.4f, z), side < 0 ? 90f : -90f);
+                        continue;
+                    }
+                    var rib = Block(hull, $"HangarRib_{(side < 0 ? "W" : "E")}_{-z:0}", new Vector3(x, top * 0.5f, z), new Vector3(1f, top + 0.8f, 1.6f), _hullTrim);
+                    Object.DestroyImmediate(rib.GetComponent<Collider>());
+                }
+                if (Kit(KitHangarRibOuter) != null) continue;
+                var beam = Block(hull, $"HangarRib_Roof_{-z:0}", new Vector3(0f, top + 0.7f, z), new Vector3(hangar.X1 - hangar.X0 + 2.5f, 0.8f, 1.6f), _hullTrim);
+                Object.DestroyImmediate(beam.GetComponent<Collider>());
+            }
+        }
+
+        /// <summary>Technical clutter on the roofs (vent boxes, tanks, pipe runs) so they read as machinery, not flat boxes.</summary>
+        private static void RoofGreebles(GameObject hull)
+        {
+            var group = Child(hull, "Greebles");
+            float hangarTop = RoofTop(System.Array.Find(Rooms, r => r.Name == "Hangar")) + HullThickness + 0.02f;
+            float hallTop = HallHeight + 0.2f + HullThickness + 0.02f;
+            // (position on the roof, kind, yaw): 0 = vent box, 1 = tank lying, 2 = pipe run 4 m
+            var items = new (Vector3 Pos, int Kind, float Yaw)[]
+            {
+                (new Vector3(-12f, hangarTop, -18f), 0, 0f), (new Vector3(-6f, hangarTop, -18f), 0, 0f), (new Vector3(10f, hangarTop, -20f), 0, 90f),
+                (new Vector3(12f, hangarTop, -34f), 0, 0f), (new Vector3(-13f, hangarTop, -33f), 1, 90f), (new Vector3(-9f, hangarTop, -33f), 1, 90f),
+                (new Vector3(4f, hangarTop, -26f), 2, 0f), (new Vector3(8f, hangarTop, -26f), 2, 0f), (new Vector3(-4f, hangarTop, -26f), 2, 0f),
+                (new Vector3(-4f, hallTop, -4f), 0, 0f), (new Vector3(5.5f, hallTop, -4.5f), 1, 0f),
+                (new Vector3(13f, RoofTop(System.Array.Find(Rooms, r => r.Name == "Bar")) + HullThickness + 0.02f, 6f), 0, 90f), (new Vector3(-14f, RoofTop(System.Array.Find(Rooms, r => r.Name == "Diner")) + HullThickness + 0.02f, -3f), 0, 0f),
+            };
+            foreach (var (pos, kind, yaw) in items)
+            {
+                string kit = kind == 0 ? KitGreebleVent : kind == 1 ? KitGreebleTank : KitPipeLarge;
+                if (Kit(kit) != null)
+                {
+                    var go = PlaceKit(group, kit, pos, yaw);
+                    if (kind == 1)
+                    {
+                        // Tank (2 m wide, 4 m tall, pivot bottom center) lies on its side, centered on the spot, resting on the roof
+                        var lying = Quaternion.Euler(0f, yaw, 90f);
+                        go.transform.SetPositionAndRotation(pos + Vector3.up * 1f - lying * new Vector3(0f, 2f, 0f), lying);
+                    }
+                    else if (kind == 2) go.transform.position = pos + Vector3.up * 0.4f; // pipe pivot is its center
+                    continue;
+                }
+                GameObject block;
+                if (kind == 0) block = Block(group, "Greeble_VentBox", pos + Vector3.up * 0.75f, new Vector3(2f, 1.5f, 1.2f), _hullTrim);
+                else if (kind == 1) block = Block(group, "Greeble_Tank", pos + Vector3.up * 1f, new Vector3(4f, 2f, 2f), _hullA);
+                else block = Block(group, "Greeble_Pipe", pos + Vector3.up * 0.4f, new Vector3(4f, 0.6f, 0.6f), _hullTrim);
+                block.transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+                Object.DestroyImmediate(block.GetComponent<Collider>());
             }
         }
 

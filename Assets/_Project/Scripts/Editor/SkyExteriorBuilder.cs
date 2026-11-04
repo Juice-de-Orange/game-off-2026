@@ -171,26 +171,59 @@ namespace GameOff.EditorTools
             var green = Emissive("M_Ext_NavGreen", new Color(0.61f, 0.88f, 0.35f), 4f);
             var engine = Emissive("M_Ext_EngineGlow", new Color(0.37f, 0.78f, 1f), 3f);
 
-            // Habitat modules west and east of the observation deck (seen from the deck and the bar window)
-            ExtProp(root, "Exterior/SM_Ext_HabModule.fbx", "Hab_West", new Vector3(-32f, 3f, 26f), Quaternion.Euler(90f, 20f, 0f),
-                () => HabPlaceholder(hull, windows, 6f, 30f));
-            ExtProp(root, "Exterior/SM_Ext_HabModule.fbx", "Hab_East", new Vector3(34f, -4f, 36f), Quaternion.Euler(0f, 0f, 90f),
-                () => HabPlaceholder(hull, windows, 5f, 26f));
-            ExtProp(root, "Exterior/SM_Ext_TrussSegment.fbx", "Truss_West", new Vector3(-17f, 3f, 16f), Quaternion.Euler(0f, -55f, 0f),
-                () => BoxGo(hull, new Vector3(2f, 2f, 24f)), modelRot: Quaternion.Euler(90f, -55f, 0f));
-            ExtProp(root, "Exterior/SM_Ext_TrussSegment.fbx", "Truss_East", new Vector3(20f, -1f, 22f), Quaternion.Euler(0f, 50f, 0f),
-                () => BoxGo(hull, new Vector3(2f, 2f, 26f)), modelRot: Quaternion.Euler(90f, 50f, 0f));
-            ExtProp(root, "Exterior/SM_Ext_SolarArray.fbx", "Solar_North", new Vector3(4f, 22f, 48f), Quaternion.Euler(20f, 8f, 0f),
-                () => BoxGo(solar, new Vector3(34f, 0.3f, 12f)), modelRot: Quaternion.Euler(110f, 8f, 0f));
-            ExtProp(root, "Exterior/SM_Ext_SolarArray.fbx", "Solar_South", new Vector3(-22f, 14f, -74f), Quaternion.Euler(-25f, -15f, 0f),
-                () => BoxGo(solar, new Vector3(34f, 0.3f, 12f)), modelRot: Quaternion.Euler(65f, -15f, 0f));
-            ExtProp(root, "Exterior/SM_Ext_Antenna.fbx", "Antenna", new Vector3(-12f, 7f, 20f), Quaternion.identity,
-                () => BoxGo(hull, new Vector3(0.6f, 18f, 0.6f), new Vector3(0f, 9f, 0f)));
-            ExtProp(root, "Exterior/SM_Ext_DockingArm.fbx", "DockingArm", new Vector3(24f, 2f, 32f), Quaternion.identity,
-                () => BoxGo(hull, new Vector3(3f, 3f, 16f)));
-            var ship = ExtProp(root, "Ships/SM_Ship_Freighter.fbx", "ParkedShip", new Vector3(24f, 2f, 52f), Quaternion.Euler(0f, 90f, 0f),
+            // Connected layout (P39): a node on the hall roof, a spine north to a central node, arms west/east ending in docking
+            // collars on the two habitat modules. Solar wings on masts on the nodes, antenna on a base on the hall roof,
+            // radiators on the hangar sides, docking arm from the east hab to the parked freighter. All distances follow the
+            // measured model sizes (truss 3 x 3 x 20 along its Y, node 4 m cube, hab r 6 / 30 long along its Y).
+            const float y = SpineHeight;
+            var truss = "Exterior/SM_Ext_TrussSegment.fbx";
+            Node(root, hull, "Node_Roof", new Vector3(SpineX, y, 2f));
+            ExtProp(root, truss, "Truss_Spine", new Vector3(SpineX, y, 14f), Quaternion.identity,
+                () => BoxGo(hull, new Vector3(3f, 3f, 20f)), modelRot: Quaternion.Euler(90f, 0f, 0f));
+            Node(root, hull, "Node_North", new Vector3(SpineX, y, NorthZ));
+            ExtProp(root, truss, "Truss_West", new Vector3(SpineX - 12f, y, NorthZ), Quaternion.identity,
+                () => BoxGo(hull, new Vector3(20f, 3f, 3f)), modelRot: Quaternion.Euler(0f, 0f, 90f));
+            ExtProp(root, truss, "Truss_East", new Vector3(SpineX + 12f, y, NorthZ), Quaternion.identity,
+                () => BoxGo(hull, new Vector3(20f, 3f, 3f)), modelRot: Quaternion.Euler(0f, 0f, 90f));
+            Node(root, hull, "Node_East", new Vector3(SpineX + 24f, y, NorthZ));
+            float westEnd = WestEnd, eastEnd = EastEnd; // truss end at the west, node face at the east
+            // Collar: its +Y takes the truss, its curved -Y sits on the hab (3 m thick, sinks 0.5 m into the hab's curve)
+            // (placeholder in the model's own axes: 3 m along Y, the rotation turns it like the model)
+            ExtProp(root, "Exterior/SM_Ext_DockingCollar.fbx", "Collar_West", new Vector3(westEnd - 1.5f, y, NorthZ), Quaternion.Euler(0f, 0f, -90f),
+                () => BoxGo(hull, new Vector3(6f, 3f, 6f)));
+            ExtProp(root, "Exterior/SM_Ext_DockingCollar.fbx", "Collar_East", new Vector3(eastEnd + 1.5f, y, NorthZ), Quaternion.Euler(0f, 0f, 90f),
+                () => BoxGo(hull, new Vector3(6f, 3f, 6f)));
+            float habWestX = HabWestX, habEastX = HabEastX;
+            // Habs lie north-south (axis along Z); the roll turns the KESTREL lettering toward the deck/bar windows.
+            ExtProp(root, "Exterior/SM_Ext_HabModule.fbx", "Hab_West", new Vector3(habWestX, y, NorthZ), HabRotation(HabRollWest),
+                () => HabPlaceholder(hull, windows, HabRadius, 30f));
+            ExtProp(root, "Exterior/SM_Ext_HabModule.fbx", "Hab_East", new Vector3(habEastX, y, NorthZ), HabRotation(HabRollEast),
+                () => HabPlaceholder(hull, windows, HabRadius, 30f));
+            // Docking arm from the east hab's north end (z + 15) to the freighter (scaled 0.25: 40 m long, 10 m wide after yaw 90)
+            ExtProp(root, "Exterior/SM_Ext_DockingArm.fbx", "DockingArm", new Vector3(habEastX, y, NorthZ + 15f + 12.5f), Quaternion.identity,
+                () => BoxGo(hull, new Vector3(3f, 3f, 25f)));
+            var ship = ExtProp(root, "Ships/SM_Ship_Freighter.fbx", "ParkedShip", new Vector3(habEastX, y, NorthZ + 15f + 25f + 5f), Quaternion.Euler(0f, 90f, 0f),
                 () => BoxGo(hull, new Vector3(10f, 6f, 26f)));
             ship.transform.localScale = Kit("Ships/SM_Ship_Freighter.fbx") != null ? Vector3.one * 0.25f : Vector3.one;
+            // Solar wings on 8 m masts on top of the north and east nodes (cells up); the east one runs north-south so they don't overlap
+            float mastBase = y + 2f, wingY = mastBase + 8f + 0.5f;
+            Mast(root, hull, "SolarMast_North", new Vector3(SpineX, mastBase, NorthZ));
+            Mast(root, hull, "SolarMast_East", new Vector3(SpineX + 24f, mastBase, NorthZ));
+            ExtProp(root, "Exterior/SM_Ext_SolarArray.fbx", "Solar_North", new Vector3(SpineX, wingY, NorthZ), Quaternion.identity,
+                () => BoxGo(solar, new Vector3(30f, 0.3f, 10f)), modelRot: Quaternion.Euler(90f, 0f, 0f));
+            ExtProp(root, "Exterior/SM_Ext_SolarArray.fbx", "Solar_East", new Vector3(SpineX + 24f, wingY, NorthZ), Quaternion.Euler(0f, 90f, 0f),
+                () => BoxGo(solar, new Vector3(30f, 0.3f, 10f)), modelRot: Quaternion.Euler(90f, 90f, 0f));
+            // Antenna on its base on the hall roof (roof plates end at 6.42 m)
+            ExtProp(root, "Exterior/SM_Ext_AntennaBase.fbx", "AntennaBase", AntennaPos, Quaternion.identity,
+                () => BoxGo(hull, new Vector3(3f, 1.5f, 3f), new Vector3(0f, 0.75f, 0f)));
+            ExtProp(root, "Exterior/SM_Ext_Antenna.fbx", "Antenna", AntennaPos + Vector3.up * 1.5f, Quaternion.identity,
+                () => BoxGo(hull, new Vector3(0.6f, 18f, 0.6f), new Vector3(0f, 9f, 0f)));
+            // Radiator fins standing out from the hangar's long sides, between the outer ribs
+            foreach (float z in new[] { -18.5f, -32.5f })
+                foreach (int side in new[] { -1, 1 })
+                    ExtProp(root, "Exterior/SM_Ext_RadiatorPanel.fbx", $"Radiator_{(side < 0 ? "W" : "E")}_{-z:0}",
+                        new Vector3(side * (18.25f + 6f), 10f, z), Quaternion.identity,
+                        () => BoxGo(hull, new Vector3(12f, 8f, 0.4f)), modelRot: Quaternion.Euler(0f, 90f, 0f));
             ExtProp(root, "Exterior/SM_Ext_DeckDome.fbx", "DeckDome", new Vector3(0f, -0.5f, 6f), Quaternion.identity, () => null);
 
             // Frame around the hangar mouth, seen from inside the hangar through the barrier
@@ -205,10 +238,11 @@ namespace GameOff.EditorTools
             });
 
             // Blinking navigation lights
-            NavLight(root, "Nav_HabWest", new Vector3(-32f, 3f, 41.5f), red, 0f);
-            NavLight(root, "Nav_HabEast", new Vector3(47.5f, -4f, 36f), green, 0.3f);
-            // The delivered antenna has a red emissive tip at 17.5 m (y 24.5, pipeline M009); the blinking bulb sits on it.
-            NavLight(root, "Nav_Antenna", new Vector3(-12f, Kit("Exterior/SM_Ext_Antenna.fbx") != null ? 24.5f : 25.5f, 20f), red, 0.6f);
+            NavLight(root, "Nav_HabWest", new Vector3(HabWestX, SpineHeight, NorthZ + 15.5f), red, 0f);
+            NavLight(root, "Nav_HabEast", new Vector3(HabEastX, SpineHeight + HabRadius + 0.4f, NorthZ - 10f), green, 0.3f);
+            NavLight(root, "Nav_NodeNorth", new Vector3(SpineX, SpineHeight + 2.4f, NorthZ + 2.4f), red, 0.8f);
+            // The delivered antenna has a red emissive tip at 17.5 m (pipeline M009); the blinking bulb sits on it.
+            NavLight(root, "Nav_Antenna", AntennaPos + Vector3.up * (1.5f + (Kit("Exterior/SM_Ext_Antenna.fbx") != null ? 17.5f : 18.5f)), red, 0.6f);
             NavLight(root, "Nav_Mouth_W", new Vector3(-16.5f, 14.5f, -44f), red, 0.15f);
             NavLight(root, "Nav_Mouth_E", new Vector3(16.5f, 14.5f, -44f), green, 0.45f);
             // Engine glow of the parked ship (placeholder only)
@@ -232,6 +266,26 @@ namespace GameOff.EditorTools
             foreach (var r in go.GetComponentsInChildren<Renderer>()) r.receiveShadows = true;
             return go;
         }
+
+        // Layout of the connected exterior (P39). The hall roof plates end at 6.42 m (StationGrayboxBuilder hull: 6 m + ceiling
+        // tiles 0.2 + gap 0.02 + plate 0.2); the 4 m roof node stands on them.
+        private const float HallRoofTop = 6.42f, SpineHeight = HallRoofTop + 2f, SpineX = -6f, NorthZ = 26f, HabRadius = 6f;
+        private const float WestEnd = SpineX - 22f, EastEnd = SpineX + 26f; // west truss end, east node face
+        private const float HabWestX = WestEnd - 3f - HabRadius + 0.5f, HabEastX = EastEnd + 3f + HabRadius - 0.5f; // collar 3 m, sinks 0.5 m
+        private const float HabRollWest = -90f, HabRollEast = 90f; // turn the KESTREL lettering toward the station (checked visually)
+        private static readonly Vector3 AntennaPos = new Vector3(3f, HallRoofTop, 2f);
+
+        /// <summary>Hab lying north-south (model axis Y → world Z), rolled around its own axis.</summary>
+        private static Quaternion HabRotation(float roll) => Quaternion.Euler(90f, 0f, 0f) * Quaternion.Euler(0f, roll, 0f);
+
+        /// <summary>Truss junction (SM_Ext_TrussNode, 4 m cube, pivot center) or a graybox cube.</summary>
+        private static void Node(GameObject root, Material hull, string name, Vector3 pos) =>
+            ExtProp(root, "Exterior/SM_Ext_TrussNode.fbx", name, pos, Quaternion.identity, () => BoxGo(hull, new Vector3(4f, 4f, 4f)));
+
+        /// <summary>8 m solar mast (SM_Ext_SolarMast, pivot bottom center) standing on a node.</summary>
+        private static void Mast(GameObject root, Material hull, string name, Vector3 basePos) =>
+            ExtProp(root, "Exterior/SM_Ext_SolarMast.fbx", name, basePos, Quaternion.identity,
+                () => BoxGo(hull, new Vector3(1f, 8f, 1f), new Vector3(0f, 4f, 0f)));
 
         private static GameObject HabPlaceholder(Material hull, Material windows, float radius, float length)
         {

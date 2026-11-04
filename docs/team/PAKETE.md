@@ -412,10 +412,16 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   Collider, Optik als Kind).
 
 ### P39 — Außenstation 2.0
-- Größe: L · Priorität: Soll · Status: in Arbeit (max, 04.11.)
+- Größe: L · Priorität: Soll · Status: fertig (max, 04.11.)
 - Braucht: Lieferung der Hüll-Assets (M015) · Folgt auf: P24
 - Ziel: Die Station ist von außen ein zusammenhängendes Bauwerk.
 - Enthalten: Fachwerk verbindet Station, Habmodule, Solarflügel (auf Masten), Antenne (Sockel auf dem Hallendach), Radiatoren am
   Hangar, Andockarm zum Frachter; Außenhülle aus Platten um alle Räume (Platzhalter, bis die Pipeline liefert), Kanten, Rohre,
   Greebles; Fenster und Aussichtskuppel bleiben frei
 - Abnahme: Rundflug außen: nichts schwebt, keine Innenwand-Rückseiten sichtbar.
+- Ergebnis: Neues Layout im `SkyExteriorBuilder`: Knoten auf dem Hallendach → Strebe nach Norden → Zentralknoten → Streben West/Ost →
+  Andockflansche → Habmodule (liegen N-S, Schriftzug zur Station gedreht); Solarflügel auf Masten auf den Knoten, Antenne mit Sockel auf
+  dem Hallendach, Radiatoren am Hangar, Andockarm Ost-Hab → Frachter. Hülle (`StationGrayboxBuilder.BuildHull`) aus 4-m-Platten über
+  allen Außenflächen inkl. Dächern und Unterseite, Öffnungen (Fenster, Hangarmaul, Deck, Außenluke) bleiben frei; Hangar mit Außenrippen,
+  Dächer mit Technik-Kästen/Tanks/Rohren. Alles noch Graybox-Platzhalter in Hüllgrau: die Pipeline-Lieferungen aus M015 tauschen sich
+  beim nächsten Builder-Lauf automatisch ein (Achsen/Pivots nach den Einträgen).
