@@ -114,6 +114,12 @@ ArtSource/           .blend/.psd/WAV working files, outside Assets/ (Git LFS)
 Asset naming, specs and the placeholder → final swap are defined in `docs/ASSETS.md` and `docs/STYLE.md`.
 - Build features as **prefabs** in your own sandbox scene, then integrate into `Main.unity` with a claim.
   This keeps work on the shared scene short.
+- **Generated content — don't hand-edit:** the station (`PF_Station_Graybox`), the exterior (`PF_Exterior`, `PF_SkyRig`), the
+  document prefabs and the counter wiring are built by editor tools (menu `GameOff/`: Build Station Graybox, Build Sky & Exterior,
+  Build Documents, Build Test Day, Integrate Asset Deliveries, Setup Main Lighting + Bake). Change the builder code in
+  `Scripts/Editor/`, run the menu, rebake; manual edits in those prefabs are lost on the next run.
+- **Counter rules are tested:** after changing travelers, days or rules run `GameOff/Validate Travelers` and the EditMode tests
+  (Test Runner, or `unity command test run --mode EditMode`). Every traveler's computed verdict must match its intended one.
 - Tuning values (speed, damage, timings) go into ScriptableObjects in `Data/`, not hard-coded —
   both people can tweak them without touching scripts or scenes.
 

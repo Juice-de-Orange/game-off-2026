@@ -9,7 +9,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 |---|---|---|
 | 01.11. | Theme kommt ca. **22:37 MEZ** → jeder für sich Gedanken, Repo öffentlich | ✅ Theme "Shift" · Repo noch privat (Call) |
 | 02.11. | Abend-Call: Theme ins Konzept einweben, `DESIGN.md` finalisieren, Unity-Projekt anlegen | 🔶 Projekt + Station 2.0 stehen; Call offen |
-| 03.11. | Prototyp: Kern-Mechanik spielbar (graue Klötze reichen) | 🔶 Laufen, Schalter, Knöpfe, Türen da; Dokumente/Regeln (P06/P07) fehlen |
+| 03.11. | Prototyp: Kern-Mechanik spielbar (graue Klötze reichen) | ✅ 04.11.: Schicht am Schalter spielbar (Dokumente, Stempel, Regeln, Verwarnzettel); Geld/Tage fehlen noch (P08–P10) |
 | 05.11. | Erster WebGL-Testbuild auf itch.io (Draft) — danach jede Woche ein Build | 🔶 Build läuft lokal (18 MB); Upload P19 offen |
 | 09.11. | Checkpoint: Trägt der Kern-Loop? Wenn nicht, jetzt umsteuern | ⏳ |
 | 16.11. | Vertical Slice: ein Level komplett mit Ziel, Sieg/Niederlage, Menü, Neustart | ⏳ |
@@ -23,6 +23,13 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - Neu angelegt: P22–P36 (Station 2.0 + Mechaniken aus Max' Asset-Durchgang) — **im Call verteilen**
 - Pipeline: ~90 Aufträge offen (M003, M006, M007); Builder setzt alles automatisch ein, sobald es geliefert ist
 - Nächste Gameplay-Schritte für den Kern-Loop: P06 Dokumente → P07 Regeln → P08 Entscheidungen → P09 Tagesablauf → P10 Geld/Familie
+
+### Stand 04.11. abends (max)
+- Fertig heute: P37 Station-Fixes innen, P38 Schalter (Sessel, Aufstehen, Stempel), P39 Außenstation 2.0, **P06 Dokumente**, **P07 Reisende & Regeln**
+- Spielregeln festgelegt (DESIGN.md "Regeln am Schalter", DECISIONS 04.11.), inkl. Pflicht-Luftschleuse und **The Shifter**
+- 41 EditMode-Tests + `GameOff/Validate Travelers` sichern die Regeln und alle Inhalte ab
+- Pipeline: 22 neue Aufträge (Außenhülle M015, Dokument-Hintergründe, Verwarnzettel, Drucker, Stempel-Abdrücke) → P42
+- Als Nächstes: P41 → P40 → P08 → P09 → P10 → P15 (Reihenfolge in PAKETE.md)
 
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
@@ -51,6 +58,12 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 - [ ] 
 
 ## Erledigt
+- [x] P07 Reisende & Regeln: Regel-Engine, Bewertung, Validator + 41 Tests, Schicht-Ablauf, Verwarnzettel, Test-Tag (max, 04.11.)
+- [x] P06 Dokumente als 3D-Papiere: Schublade, ziehen, lesen, stempeln, zurückgeben; scharfe Ebene für den Retro-Look (max, 04.11.)
+- [x] P39 Außenstation 2.0: verbundenes Fachwerk, Habs, Solar, Antenne, Außenhülle (Platzhalter bis zur Lieferung) (max, 04.11.)
+- [x] P38 Schalter: Sessel anwählbar, Aufstehen mit Q/Esc/Rechtsklick, Stempel hochheben und stempeln (max, 04.11.)
+- [x] P37 Station-Fixes innen: Türen, Wand-Props, Kiosk-Front, Hangar-Fassade, alle Platzhalter ersetzt (max, 04.11.)
+- [x] Lieferungen M013/M014 gemergt (PR #10–#13) und eingebaut; 32 alte Asset-Branches gelöscht, Auto-Delete an (max, 04.11.)
 - [x] Stations-Grundriss freigegeben (`docs/STATION.md`), 48 Asset-Anforderungen für die Pipeline (max, 02.11.)
 - [x] P01 Unity-Projekt angelegt (WebGL-Testbuild steht noch aus) (max, 02.11.)
 - [x] P04 Station als Graybox in `Main.unity` (max, 02.11.)

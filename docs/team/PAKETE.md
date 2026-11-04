@@ -21,6 +21,16 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 **Größen:** `S` ≈ ein halber Tag · `M` ≈ 1–2 Tage · `L` ≈ 3–4 Tage. Ein Paket größer als `L` wird aufgeteilt.
 **Priorität:** `Muss` / `Soll` / `Kann` wie in `DESIGN.md`. Muss-Pakete zuerst.
 
+## Reihenfolge (Stand 04.11. abends, max)
+Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächste offene Muss-Paket.
+1. **P41** Regeln an der Pinnwand (Bulletin, Fahndungsliste, Durchsagen, im Sitzen umschauen) — ohne das kennt der Spieler die Regeln nicht
+2. **P40** Reisende in der Prüfkammer & Gespräch (NPC am Fenster, Sprechblasen mit Alien-Übersetzung, Nachfragen per Feld-Klick)
+3. **P08** Entscheidungen & Moral (Geld/Abzug aus `CounterShift.DecisionMade`, Moral, Beschlagnahme, Schleusen-Effekt)
+4. **P09** Tagesablauf (3 Tage, `CounterShift.BeginDay`/`ShiftEnded`) → **P10** Geld, Familie & Abrechnung
+5. **P15** Inhalte für 3 Tage inkl. Story von **The Shifter** (siehe `DESIGN.md`) → **P12** Enden
+6. Parallel: **P02** Startbildschirm (martin), **P19** WebGL-Build & itch-Upload, **P42** Lieferungen einbauen (max, sobald die Pipeline liefert)
+7. Danach Soll-Pakete (P13, P14, P16, P25–P36) nach Zeit.
+
 ## Vorlage
 ```
 ### Pxx — <Name>
@@ -465,4 +475,15 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   gezeichnet; Lautsprecher-Durchsagen mit Untertitel (Schichtbeginn, neue Regel, Verwarnung); im Sitzen umschauen (A/D bzw. Pfeiltasten,
   ±70°), Klick auf einen Zettel holt ihn zum Lesen heran
 - Abnahme: Alle Regeln von Tag 1 sind im Sitzen lesbar; Durchsage zu Schichtbeginn erscheint.
+
+### P42 — Pipeline-Lieferungen vom 04.11. einbauen
+- Größe: S · Priorität: Soll · Status: offen (für **max** reserviert, sobald geliefert)
+- Braucht: Lieferungen zu M015 · Folgt auf: P39, P38, P06, P07
+- Ziel: Die Platzhalter von heute werden durch die bestellten Modelle und Grafiken ersetzt.
+- Enthalten: PRs mergen (je Lieferung ein neuer Branch + PR, siehe `ASSETS.md`), `GameOff/Integrate Asset Deliveries`, dann die
+  Builder neu laufen lassen: `Build Station Graybox` (Außenhülle, Dachplatten, Hangar-Rippen, Greebles), `Build Sky & Exterior`
+  (Knoten, Andockflansche, Solarmasten, Antennensockel), `Build Documents` (Dokument-Hintergründe, Verwarnzettel, Drucker-Modell
+  ersetzt die graue Box); Stempel-Abdrücke `T_Stamp_*`; Licht neu backen; Achsen/Pivots prüfen (Builder rechnen mit den Einträgen)
+- Nicht enthalten: neue Funktionen
+- Abnahme: Rundflug außen und Blick auf den Schaltertisch ohne graue Platzhalter; Konsole sauber; Tests grün.
 
