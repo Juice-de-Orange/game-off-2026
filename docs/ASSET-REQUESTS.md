@@ -688,7 +688,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_DepartureBoard.fbx
 package: P04
 scene: Halle
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [2.0, 2.0, 6.0]
@@ -772,7 +772,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_Planter.fbx
 package: P04
 scene: Halle
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-22
 size_m: [1.0, 1.0, 1.4]
@@ -1271,7 +1271,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Counter.fbx
 package: P11
 scene: Kiosk
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.8, 2.8, 2.4]
@@ -3783,5 +3783,33 @@ animations: []
 collision: prefab
 refs: [docs/style/refs/real_hangar_shuttle_01.webp]
 placeholder: Box 36.0 x 1.2 x 4.0 m, Pivot top_center, Material-Slots [Rib]
+feedback: []
+```
+
+### SM_Motel_CatPainting.fbx
+```yaml
+path: Assets/_Project/Art/Models/Motel/SM_Motel_CatPainting.fbx
+package: P04
+scene: Motel
+status: final
+priority: P3
+needed_by: 2026-11-04
+size_m: [0.53, 0.045, 0.63]
+pivot: center
+tris_max: 100
+materials: [Painting]
+textures:
+  - Assets/_Project/Art/Textures/Motel/T_Motel_CatPainting_Albedo.png   # 128x128, Point
+texel_px_per_m: 160
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline (M014), von Max angenommen: gerahmtes Gemälde von Max' Katze (brauner Tigerkater vor orangem Grund),
+  dunkler Fake-Holzrahmen mit Messinglippe. Hängt in Zimmer 103 über dem Kopfende des Betts, Bildmitte 1,3 m.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: none (direkt geliefert)
 feedback: []
 ```

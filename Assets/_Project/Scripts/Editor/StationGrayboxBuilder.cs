@@ -1022,9 +1022,10 @@ namespace GameOff.EditorTools
             KitProp(p, "Hall/SM_Hall_Sign.fbx", "SM_Hall_Sign_Staff", -7f, -5.6f, 1.2f, 0.1f, 0.4f, 3.2f, 180f); // pivot top_center
             KitProp(p, "Hall/SM_Hall_Sign.fbx", "SM_Hall_Sign_Motel", -7.6f, 1f, 0.1f, 1.2f, 0.4f, 3.2f, -90f);
             KitProp(p, "Hall/SM_Hall_Sign.fbx", "SM_Hall_Sign_Bar", 7.6f, 3f, 0.1f, 1.2f, 0.4f, 3.2f, 90f);
-            Prop(p, "SM_Hall_Planter", 7.2f, 5.2f, 1, 1, 1.4f);
+            KitProp(p, "Hall/SM_Hall_Planter.fbx", "SM_Hall_Planter", 7.2f, 5.2f, 1, 1, 1.4f);
             // Kiosk
-            Prop(p, "SM_Kiosk_Counter", 8.6f, -4, 0.8f, 2.8f, 1.0f);
+            // Sign and glass face local -X = the hall side; the grille box tops out at 2.4 m.
+            KitProp(p, "Kiosk/SM_Kiosk_Counter.fbx", "SM_Kiosk_Counter", 8.6f, -4, 0.8f, 2.8f, 2.4f);
             Prop(p, "SM_Kiosk_Shelf", 11.6f, -4, 0.4f, 2.8f, 2.0f);
             // Bar
             // The bar counter model is 3 m along X with the guest side at local -Z → yaw 90 faces the guests (west).
@@ -1048,6 +1049,8 @@ namespace GameOff.EditorTools
             Prop(p, "SM_Motel_Bed", -19.4f, 4.9f, 1.0f, 2.0f, 0.6f);
             Prop(p, "SM_Motel_Table", -17, 5.6f, 0.8f, 0.6f, 0.75f);
             Prop(p, "SM_Motel_Locker", -16.5f, 2.5f, 0.6f, 0.5f, 1.9f);
+            // Room 103: cat painting over the bed head, front = local -Z, pivot center; north wall face at z 5.8
+            KitProp(p, "Motel/SM_Motel_CatPainting.fbx", "SM_Motel_CatPainting", -19.4f, 5.7775f, 0.53f, 0.045f, 0.63f, 1.3f);
             // Hangar
             // Hangar (36 x 28 m): shuttle in the middle, queue lane from its ramp to the inspection lock door (x 1..3)
             KitProp(p, "Hangar/SM_Hangar_Shuttle.fbx", "SM_Hangar_Shuttle", 0, -28, 6, 9, 3.5f, 0, ShuttleYaw);

@@ -103,9 +103,22 @@ namespace GameOff.EditorTools
 
             // Main slot = first non-glass slot; it gets M_<Name>, every other slot M_<Name>_<Slot>.
             string mainSlot = slots.FirstOrDefault(s => s != "Glass");
+            var externalMap = importer.GetExternalObjectMap();
             foreach (string slot in slots)
             {
-                if (remapped.Contains(slot)) continue;
+                if (remapped.Contains(slot))
+                {
+                    // Rework deliveries can add an emission map later: give the existing main material that map too.
+                    if (slot == mainSlot && emission != null
+                        && externalMap.FirstOrDefault(kv => kv.Key.type == typeof(Material) && kv.Key.name == slot).Value is Material existing
+                        && existing.GetTexture("_EmissionMap") != emission)
+                    {
+                        ApplyEmission(existing, emission);
+                        EditorUtility.SetDirty(existing);
+                        report.Add($"emission {file}.{slot} -> {existing.name}");
+                    }
+                    continue;
+                }
                 if (slot != "Glass" && albedo == null)
                 {
                     // Leave the slot unmapped so a later run picks it up once the texture has arrived.
@@ -234,10 +247,7 @@ namespace GameOff.EditorTools
             mat.SetTexture("_MainTex", albedo); // the template's own texture must not leak into the copy
             if (emission != null)
             {
-                mat.SetTexture("_EmissionMap", emission);
-                mat.SetColor("_EmissionColor", EmissionColor);
-                mat.EnableKeyword("_EMISSION");
-                mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.BakedEmissive;
+                ApplyEmission(mat, emission);
             }
             else
             {
@@ -250,6 +260,14 @@ namespace GameOff.EditorTools
             AssetDatabase.CreateAsset(mat, path);
             report.Add("material " + path + (emission != null ? " (+emission)" : ""));
             return mat;
+        }
+
+        private static void ApplyEmission(Material mat, Texture2D emission)
+        {
+            mat.SetTexture("_EmissionMap", emission);
+            mat.SetColor("_EmissionColor", EmissionColor);
+            mat.EnableKeyword("_EMISSION");
+            mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.BakedEmissive;
         }
 
         private static string StripPrefix(string file)

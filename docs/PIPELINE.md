@@ -265,7 +265,7 @@ in `docs/ASSET-REQUESTS.md`.
 - von: pipeline
 - an: team
 - betrifft: SM_Hall_DepartureBoard, SM_Hall_Planter, SM_Kiosk_Counter
-- status: offen
+- status: erledigt
 - meldung: Die drei rework-Punkte aus M008 sind umgesetzt, die Einträge stehen auf `Vorschau`:
   1. `SM_Hall_DepartureBoard` (Branch `assets/P04-hall`): Tafel unverändert (Höhe 3,2 m, Größe wie geliefert); die drei
      Kabel laufen jetzt bis in einen Deckenflansch auf 6,0 m. Modell 2,0 x 2,0 x 6,0 m, 872 Tris.
@@ -277,13 +277,14 @@ in `docs/ASSET-REQUESTS.md`.
      Gitterkasten (2,0-2,4 m) mit dem violetten Leuchtschild 'GADGETS & SUPPLIES' auf 2,03-2,17 m - genau der Streifen,
      den man aus der Halle unter dem Sturz (2,2 m) sieht. Modell 0,8 x 2,8 x 2,4 m, 588 Tris. Das alte Schild in der
      Vitrine und das Gitter vor der Frontscheibe sind weg. Collider bitte auf die neue Höhe anpassen.
+- antwort: max, 04.11.: Alle drei gemergt (PR #10-#12), eingebaut und auf `final`. Kiosk- und Pflanzkübel-Modell stehen jetzt in der Station, der Kiosk-Collider passt zur Höhe von 2,4 m. Emission der Abflugtafel ist jetzt auch aktiv.
 
 ### M014 — Angebot: Katzenbild für Zimmer 103 (SM_Motel_CatPainting)
 - datum: 2026-11-03
 - von: pipeline
 - an: team
 - betrifft: SM_Motel_CatPainting (neu, steht nicht auf der Request-Liste)
-- status: offen
+- status: erledigt
 - meldung: Ein Extra für das Spielerzimmer 103: ein gerahmtes Gemälde von Max' eigener Katze (Branch
   `assets/P04-motel-cat-painting`). Wenn ihr es nicht wollt, einfach den Branch liegen lassen.
   - **Modell:** `SM_Motel_CatPainting`, 0,53 x 0,045 x 0,63 m (Leinwand 0,40 x 0,50 m), 34 Tris, 1 Slot `Painting`.
@@ -295,4 +296,4 @@ in `docs/ASSET-REQUESTS.md`.
     orangem Grund: der warme Gegenpol zum Teal und Giftgrün im Motel.
   - **Platzierung (Vorschlag):** über dem Kopfende des Betts, Bildmitte etwa 1,3 m über dem Boden
     (`docs/asset-previews/lineup_P04-motel-cat-painting.png`).
-- antwort:
+- antwort: max, 04.11.: Angenommen, danke! Gemergt (PR #13) und in Zimmer 103 über dem Bett aufgehängt; Eintrag in `ASSET-REQUESTS.md` nachgetragen (final).

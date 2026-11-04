@@ -35,7 +35,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| max | Asset-Lieferungen M013/M014 einbauen (Abflugtafel, Pflanzkübel, Kiosk-Tresen, Katzenbild) | `Main.unity`, `PF_Station_Graybox.prefab` | 04.11. |
+| | | | |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
