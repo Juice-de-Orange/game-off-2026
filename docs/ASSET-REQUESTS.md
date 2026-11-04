@@ -772,7 +772,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_Planter.fbx
 package: P04
 scene: Halle
-status: rework
+status: Vorschau
 priority: P2
 needed_by: 2026-11-22
 size_m: [1.0, 1.0, 1.4]
