@@ -380,7 +380,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Abnahme: Tag 1 ruhig, Tag 3 sichtbar instabil.
 
 ### P37 — Station-Fixes innen
-- Größe: M · Priorität: Muss · Status: in Arbeit (max, 04.11.)
+- Größe: M · Priorität: Muss · Status: fertig (max, 04.11.)
 - Braucht: — · Folgt auf: P21, P22, P27
 - Ziel: Die Station sieht von innen stimmig aus, keine Clipping-, Flimmer- oder Türfehler mehr.
 - Enthalten: Wandmodule nach echter Tiefe ausrichten (Lüftungen/Screens/Bögen clippen nicht), Wand-Props (Schilder, Boards,
@@ -389,9 +389,15 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   gelieferte Modelle statt Platzhalter (Hangar, Motel, Kiosk-Regal, Kranschiene)
 - Nicht enthalten: Außenhülle (P39), Schalter-Interaktion (P38)
 - Abnahme: Durch jede Tür laufen, von beiden Seiten sauber; keine Lüftung/kein Schild in der Wand; keine grauen Platzhalter im Hangar.
+- Ergebnis: Türen außerhalb des 2-m-Rasters bekommen eine eigene Zelle mit Türwand-Modul (auch 1,2 m schmal), Reststreifen als
+  gestauchte Grundwand; Hangar-Unterreihe mit Türen/Fenster ist eine Stations-Fassade. Service↔Schalter-Tür nach Z −9 verlegt,
+  Schalter→Hangar-Fenster auf X −6..−2 (zwei Fenster-Module), Bullauge 103 auf Z 5 (Bullaugen-Wand). Varianten nicht in Eckzellen und
+  nicht hinter Wand-Props; Wand-Props sitzen mit der Rückseite auf der Wandfläche; Rundecken entfallen nur an Öffnungen des eigenen
+  Raums (Motel-Bogen war dadurch zugestellt). Kiosk-Front mit Sturz, Brüstung und Pfosten. Alle Platzhalter ersetzt (Hangar, Motel,
+  Kiosk-Regal, Kranschiene). Play-Test: Türen 103/Service öffnen, 101 bleibt zu.
 
 ### P38 — Schalter: Sessel, Aufstehen, Stempel
-- Größe: M · Priorität: Muss · Status: offen (für **max** reserviert)
+- Größe: M · Priorität: Muss · Status: in Arbeit (max, 04.11.)
 - Braucht: — · Folgt auf: P05
 - Ziel: Am Schalter fühlt sich die Bedienung richtig an.
 - Enthalten: Sessel leicht anwählbar, Spieler sitzt auf dem Sessel; Aufstehen mit Q/Esc/Rechtsklick; Stempel hochheben, mit der

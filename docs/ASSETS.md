@@ -94,6 +94,8 @@ ArtSource/                 Arbeitsdateien (.blend, .psd, Rohaufnahmen) — auße
 - Der Start ist an die Freigabe von `docs/STYLE.md` durch Max gebunden. Danach kommt zuerst ein Muster aus 3 Assets (`assets/P00-sample`).
 - Sie liefert auf einem eigenen Branch `assets/<Paket>`: jede Datei am finalen Pfad (**nie** die `.meta`), Arbeitsdatei unter `ArtSource/`,
   Vorschaubild unter `docs/asset-previews/`. Dann ein **Pull Request**. Auf `main` schreibt sie nie.
+- **Jede Lieferung, auch jede Nacharbeit, bekommt einen neuen Branch von aktuellem `main` und einen eigenen PR.** Gemergte
+  Branches löscht GitHub automatisch (seit 04.11.); auf alte Branches nicht weiterpushen, sonst entsteht kein PR.
 - **Freigabe und Merge macht immer Max** (Art-Verantwortung). Martin kann Anpassungen anfordern, gibt aber nicht frei.
   Status im Eintrag: `Vorschau` → `final`.
 - Commit-Format der Pipeline: `assets(Pxx): SM_Bar_Counter.fbx final - 820 tris, 1 material`.

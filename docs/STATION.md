@@ -35,10 +35,10 @@
 | Zimmertüren 101 / 102 / 103 | Z = 2 | X = −10 / −14 / −18 | 1,2 × 2,2 |
 | Halle ↔ Diner | X = −8 | Z = −3 | 1,6 × 2,2 |
 | Halle ↔ Bar | X = 8 | Z = 3 | 1,6 × 2,2 |
-| Kiosk-Durchreiche (Theke) | X = 8 | Z = −4 | 1,6 breit, 1,0–2,2 hoch |
+| Kiosk-Durchreiche (Theke) | X = 8 | Z = −4 | 2,8 breit, 1,0–2,2 hoch, Sturz darüber |
 | Halle ↔ Servicegang | Z = −6 | X = −7 | 1,2 × 2,2 |
 | Servicegang ↔ Hangar | Z = −12 | X = −7 | 1,2 × 2,2 |
-| Servicegang ↔ Schalter | X = −6 | Z = −7,5 | 1,2 × 2,2 |
+| Servicegang ↔ Schalter | X = −6 | Z = −9 | 1,2 × 2,2 |
 | Prüfkammer → Halle (Durchlassen) | Z = −6 | X = 2 | 1,6 × 2,2 |
 | Hangar → Prüfkammer (Ankunft/Abweisen) | Z = −12 | X = 2 | 1,6 × 2,2 |
 | **Außenschott** Prüfkammer → All | X = 4 | Z = −9 | 1,6 × 2,2 |
@@ -51,8 +51,8 @@
 | Glasfront Aussichtsplattform | Halbkreis r = 5 | 8 Segmente à 1,95 m | 0,14–6 m (Brüstung 0,5 m über Plattformboden) |
 | Barfenster | Z = 8 | X 10..18 | 0,9–2,4 m (Modul `SM_Station_Wall_Window_2x3`) |
 | Scheibe Schalter → Prüfkammer (mit Dokument-Durchreiche, `SM_Station_Window_Small_Slot`) | X = 0 | Z −11..−7 | 0,9–2,2 m |
-| Fenster Schalter → Hangar (`SM_Station_Window_Small`) | Z = −12 | X −5..−1 | 0,9–2,2 m |
-| Bullauge Zimmer 103 | X = −20 | Z = 4 | Ø 0,6 m, Mitte 1,5 m |
+| Fenster Schalter → Hangar (2× `SM_Station_Wall_Window_2x3`) | Z = −12 | X −6..−2 | 0,9–2,4 m |
+| Bullauge Zimmer 103 (`SM_Station_Wall_Porthole_2x3`) | X = −20 | Z = 5 | Ø 0,6 m, Mitte 1,5 m |
 
 ## Wichtige Positionen (für Spawnpunkte, NavMesh, Interaktion)
 | Punkt | Position (X, Z) |

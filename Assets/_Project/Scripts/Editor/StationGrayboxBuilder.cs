@@ -68,10 +68,10 @@ namespace GameOff.EditorTools
             new Opening(false,  2, -18,   1.2f, 0, 2.2f),   // Room 103
             new Opening(true,  -8,  -3,   1.6f, 0, 2.2f),   // Hall <-> diner
             new Opening(true,   8,   3,   1.6f, 0, 2.2f),   // Hall <-> bar
-            new Opening(true,   8,  -4,   1.6f, 1.0f, 2.2f),// Kiosk hatch (counter height)
+            new Opening(true,   8,  -4,   2.8f, 1.0f, 2.2f),// Kiosk hatch: counter height up to the sign strip under the lintel
             new Opening(false, -6,  -7,   1.2f, 0, 2.2f),   // Hall <-> service corridor
             new Opening(false,-12,  -7,   1.2f, 0, 2.2f),   // Service corridor <-> hangar
-            new Opening(true,  -6,  -7.5f,1.2f, 0, 2.2f),   // Service corridor <-> counter
+            new Opening(true,  -6,  -9,   1.2f, 0, 2.2f),   // Service corridor <-> counter (cell center, slides into the wall)
             new Opening(false, -6,   2,   1.6f, 0, 2.2f),   // Lock -> hall (approve)
             new Opening(false,-12,   2,   1.6f, 0, 2.2f),   // Hangar -> lock (arrive / deny)
             new Opening(true,   4,  -9,   1.6f, 0, 2.2f),   // Outer airlock hatch (closed slab added separately)
@@ -80,8 +80,8 @@ namespace GameOff.EditorTools
             // Windows
             new Opening(false,  8,  14,   8.0f, 0.9f, 2.4f, true), // Bar window (north), matches SM_Station_Wall_Window_2x3
             new Opening(true,   0,  -9,   4.0f, 0.9f, 2.2f, true), // Counter -> lock
-            new Opening(false,-12,  -3,   4.0f, 0.9f, 2.2f, true), // Counter -> hangar (sill 0.9 = SM_Station_Window_Small)
-            new Opening(true, -20,   4,   0.6f, 1.2f, 1.8f, true), // Porthole room 103
+            new Opening(false,-12,  -4,   4.0f, 0.9f, 2.4f, true), // Counter -> hangar: two SM_Station_Wall_Window_2x3 cells
+            new Opening(true, -20,   5,   0.6f, 1.2f, 1.8f, true), // Porthole room 103 (cell center, SM_Station_Wall_Porthole_2x3)
         };
 
         private static readonly Dictionary<Area, Color> AreaColors = new Dictionary<Area, Color>
@@ -113,6 +113,7 @@ namespace GameOff.EditorTools
         public static void Build()
         {
             CreateMaterials();
+            DoorModuleSides.Clear();
 
             // Replace an existing instance in the open scene so re-running doesn't stack copies.
             foreach (var existing in Object.FindObjectsByType<Transform>(FindObjectsInactive.Include, FindObjectsSortMode.None))
@@ -184,7 +185,8 @@ namespace GameOff.EditorTools
                 var size = o.OnXLine ? new Vector3(0.05f, h, o.Width) : new Vector3(o.Width, h, 0.05f);
                 var pane = Block(glass, $"Glass_{pos.x:0}_{pos.z:0}", pos, size, _glass);
                 pane.GetComponent<MeshRenderer>().enabled =
-                    !(IsWindowModuleOpening(o) && Kit(KitWindowWall) != null) && ModuleForOpening(o) == null;
+                    !(IsWindowModuleOpening(o) && Kit(KitWindowWall) != null) && !(IsPortholeOpening(o) && Kit(KitWallPorthole) != null)
+                    && ModuleForOpening(o) == null;
             }
             PlaceOpeningModules(Child(visual, "WindowModules"));
 
@@ -193,7 +195,8 @@ namespace GameOff.EditorTools
             // Closed outer airlock hatch and hangar barrier
             var hatch = Block(root, "Airlock_OuterHatch_Collider", new Vector3(4.1f, 1.1f, -9), new Vector3(0.2f, 2.2f, 1.6f), _hatch);
             hatch.GetComponent<MeshRenderer>().enabled = Kit(KitHatch) == null;
-            PlaceKit(visual, KitHatch, new Vector3(4f, 0f, -9f), 90f); // front (local -Z) faces into the inspection lock
+            // Pivot hinge_left: the hatch spans local X 0..1.6 (= world -Z at yaw 90), so the hinge sits at the opening's north edge.
+            PlaceKit(visual, KitHatch, new Vector3(4f, 0f, -9f + KitDoorWidth * 0.5f), 90f); // front (local -Z) faces into the lock
             BuildEnergyBarrier(root, visual);
             BuildDoors(root);
             BuildRoundDetails(visual);
@@ -263,6 +266,9 @@ namespace GameOff.EditorTools
         private const string KitCeiling = "Station/SM_Station_Ceiling_2x2.fbx";
         private const string KitWall = "Station/SM_Station_Wall_2x3.fbx";
         private const string KitDoorWall = "Station/SM_Station_Wall_Door_2x3.fbx";
+        private const string KitDoorWallNarrow = "Station/SM_Station_Wall_Door_2x3_Narrow.fbx";
+        private const string KitLintel = "Station/SM_Station_Lintel_4x08.fbx";
+        private const string KitWallPorthole = "Station/SM_Station_Wall_Porthole_2x3.fbx";
         private const string KitWindowWall = "Station/SM_Station_Wall_Window_2x3.fbx";
         private const string KitHangarWall = "Hangar/SM_Hangar_Wall_4x4.fbx";
         private const string KitHangarFloor = "Hangar/SM_Hangar_Floor_4x4.fbx";
@@ -271,7 +277,7 @@ namespace GameOff.EditorTools
         private const string KitDeckFloor = "Station/SM_Station_Floor_DeckRound.fbx";
         private const string KitDeckCeiling = "Station/SM_Station_Ceiling_DeckRound.fbx";
         private const string KitSteps = "Station/SM_Station_Steps_2m.fbx";
-        private const float KitCell = 2f, KitWallHeight = 3f, KitDoorWidth = 1.6f, KitDoorHeight = 2.2f;
+        private const float KitCell = 2f, KitWallHeight = 3f, KitDoorWidth = 1.6f, KitDoorWidthNarrow = 1.2f, KitDoorHeight = 2.2f;
         private const float WindowSill = 0.9f, WindowHead = 2.4f; // SM_Station_Wall_Window_2x3
 
         /// <summary>Module set used for a room: the hangar uses big 4 x 4 m modules once they exist.</summary>
@@ -347,11 +353,12 @@ namespace GameOff.EditorTools
         /// Picks the wall module for one cell: the room type's base wall (padded in motel/counter, wood panels in bar/diner),
         /// and in about a third of the cells a detail variant that fits the room. Upper rows only get pipes/vents.
         /// </summary>
-        private static string WallVariant(Room room, float line, float mid, float bottom)
+        private static string WallVariant(Room room, float line, float mid, float bottom, bool allowDecor = true)
         {
             string baseWall = room.Area == Area.Motel || room.Area == Area.Counter ? KitWallPadded
                 : room.Area == Area.Bar || room.Area == Area.Diner ? KitWallPanel : KitWall;
             if (Kit(baseWall) == null) baseWall = KitWall;
+            if (!allowDecor) return baseWall;
 
             string[] decor;
             if (bottom > 0f) decor = new[] { KitWallPipes, KitWallVent };
@@ -386,17 +393,26 @@ namespace GameOff.EditorTools
                     };
                     foreach (var (pos, yaw) in corners)
                         for (float y = 0f; y + KitWallHeight <= room.Height + 0.01f; y += KitWallHeight)
-                            PlaceKit(group, KitCornerRound, pos + Vector3.up * y, yaw);
+                            if (!OpeningNearCorner(room, pos, y))
+                                PlaceKit(group, KitCornerRound, pos + Vector3.up * y, yaw);
                 }
             }
             if (Kit(KitPillarRound) != null)
                 foreach (var x in new[] { -5.6f, 5.6f })
                     for (float y = 0f; y < HallHeight - 0.01f; y += KitWallHeight)
                         PlaceKit(group, KitPillarRound, new Vector3(x, y, 5.5f), 0f);
+            // Door trims only on wall sides without a door-wall module (those bring their own frame), set onto the wall face
+            // instead of the wall center, where they used to z-fight with the graybox reveal.
             foreach (var d in Doors)
             {
                 string trim = d.Width < 1.4f ? KitDoorTrimNarrow : KitDoorTrim;
-                PlaceKit(group, trim, d.OnXLine ? new Vector3(d.Line, 0f, d.Center) : new Vector3(d.Center, 0f, d.Line), d.OnXLine ? 90f : 0f);
+                foreach (int side in new[] { -1, 1 })
+                {
+                    if (DoorModuleSides.Contains(DoorSideKey(d.OnXLine, d.Line, d.Center, side))) continue;
+                    float across = d.Line + side * WallFace;
+                    float yaw = d.OnXLine ? (side < 0 ? 90f : -90f) : (side < 0 ? 0f : 180f); // front (-Z) faces that side's room
+                    PlaceKit(group, trim, d.OnXLine ? new Vector3(across, 0f, d.Center) : new Vector3(d.Center, 0f, across), yaw);
+                }
             }
             PlaceKit(group, KitDeckArch, new Vector3(0f, 0f, DeckCenter.z), 0f);
             PlaceKit(group, KitHallDome, new Vector3(0f, HallHeight, 0f), 0f);
@@ -412,6 +428,26 @@ namespace GameOff.EditorTools
             if (Kit(KitHangarRib) != null)
                 for (float z = -15f; z > -40f; z -= 7f)
                     PlaceKit(group, KitHangarRib, new Vector3(0f, 16f, z), 0f);
+        }
+
+        /// <summary>
+        /// True if a door, arch or window on one of the two walls of this inner corner reaches into the 0.6 m of the round
+        /// corner piece (it would block the passage or cover the frame). Only openings of this room's wall and only in the
+        /// corner piece's row (rowBottom..+3 m) count.
+        /// </summary>
+        private static bool OpeningNearCorner(Room room, Vector3 corner, float rowBottom)
+        {
+            const float reach = 0.6f + WallFace + 0.05f;
+            foreach (var o in Openings)
+            {
+                float along = o.OnXLine ? corner.z : corner.x, across = o.OnXLine ? corner.x : corner.z;
+                if (Mathf.Abs(across - o.Line) > WallFace + 0.01f) continue;
+                float wallFrom = o.OnXLine ? room.Z0 : room.X0, wallTo = o.OnXLine ? room.Z1 : room.X1;
+                if (o.Center < wallFrom || o.Center > wallTo) continue;        // opening belongs to a neighboring room
+                if (o.Head <= rowBottom || o.Sill >= rowBottom + KitWallHeight) continue;
+                if (Mathf.Abs(along - o.Center) - o.Width * 0.5f < reach) return true;
+            }
+            return false;
         }
 
         /// <summary>2 m wide corridors get a vaulted ceiling instead of flat tiles (arch spans the corridor width).</summary>
@@ -437,9 +473,11 @@ namespace GameOff.EditorTools
         private static string ModuleForOpening(Opening o)
         {
             if (!o.Glass) return null;
+            // Openings that wall modules fill completely (window walls, porthole wall) need no separate module.
+            if (IsWindowModuleOpening(o) && Kit(KitWindowWall) != null) return null;
+            if (IsPortholeOpening(o) && Kit(KitWallPorthole) != null) return null;
             string path = null;
             if (o.OnXLine && Mathf.Approximately(o.Line, 0f) && Mathf.Approximately(o.Width, 4f)) path = KitWindowSlot;      // counter -> lock
-            else if (!o.OnXLine && Mathf.Approximately(o.Line, -12f) && Mathf.Approximately(o.Width, 4f)) path = KitWindowSmall; // counter -> hangar
             else if (o.OnXLine && Mathf.Approximately(o.Line, -20f) && o.Width < 1f) path = KitPorthole;                     // room 103
             return path != null && Kit(path) != null ? path : null;
         }
@@ -533,7 +571,7 @@ namespace GameOff.EditorTools
             new DoorSpec("Door_Bar",            true,    8,   3,   1.6f, GameOff.Station.DoorAccess.Public),
             new DoorSpec("Door_Service_Hall",   false,  -6,  -7,   1.2f, GameOff.Station.DoorAccess.PlayerOnly),
             new DoorSpec("Door_Service_Hangar", false, -12,  -7,   1.2f, GameOff.Station.DoorAccess.PlayerOnly),
-            new DoorSpec("Door_Service_Counter",true,   -6,  -7.5f,1.2f, GameOff.Station.DoorAccess.PlayerOnly),
+            new DoorSpec("Door_Service_Counter",true,   -6,  -9,   1.2f, GameOff.Station.DoorAccess.PlayerOnly),
             new DoorSpec("Door_Lock_Hall",      false,  -6,   2,   1.6f, GameOff.Station.DoorAccess.Scripted),
             new DoorSpec("Door_Lock_Hangar",    false, -12,   2,   1.6f, GameOff.Station.DoorAccess.Scripted),
         };
@@ -556,7 +594,8 @@ namespace GameOff.EditorTools
                 var trigger = door.AddComponent<BoxCollider>();
                 trigger.isTrigger = true;
                 trigger.center = new Vector3(0f, 1.2f, 0f);
-                trigger.size = new Vector3(d.Width + 0.8f, 2.4f, 3.2f);
+                // Locked doors only react right in front of them, so walking down the 2 m motel corridor stays quiet.
+                trigger.size = new Vector3(d.Width + 0.8f, 2.4f, d.Access == GameOff.Station.DoorAccess.Locked ? 1.4f : 3.2f);
 
                 // Door leaf: delivered model or placeholder box, with its own solid collider
                 string kit = d.Width < 1.4f ? KitDoorNarrow : KitDoor;
@@ -582,7 +621,8 @@ namespace GameOff.EditorTools
                 GameObject lamp = null;
                 if (d.Access == GameOff.Station.DoorAccess.Locked)
                 {
-                    lamp = Block(door, "LockedLamp", Vector3.zero, new Vector3(0.12f, 0.08f, 0.32f), lampMat);
+                    // Deeper than the 0.4 m wall so it shows on both wall faces.
+                    lamp = Block(door, "LockedLamp", Vector3.zero, new Vector3(0.12f, 0.08f, 2f * WallFace + 0.04f), lampMat);
                     Object.DestroyImmediate(lamp.GetComponent<Collider>());
                     lamp.transform.localPosition = new Vector3(d.Width * 0.5f + 0.15f, 1.6f, 0f);
                 }
@@ -809,6 +849,30 @@ namespace GameOff.EditorTools
             else { list.Add(a); list.Add(c); list.Add(b); }
         }
 
+        /// <summary>
+        /// Z range (min, max) of a kit model relative to its pivot, in the scale it is placed with; (0, 0) if missing.
+        /// Same convention as KitHeight: world offsets from the asset root (unrotated), so root scale is included.
+        /// </summary>
+        private static (float Min, float Max) KitZRange(string relativePath)
+        {
+            var model = Kit(relativePath);
+            if (model == null) return (0f, 0f);
+            float min = float.MaxValue, max = float.MinValue;
+            foreach (var filter in model.GetComponentsInChildren<MeshFilter>())
+            {
+                if (filter.sharedMesh == null) continue;
+                var b = filter.sharedMesh.bounds;
+                for (int i = 0; i < 8; i++)
+                {
+                    var corner = new Vector3((i & 1) == 0 ? b.min.x : b.max.x, (i & 2) == 0 ? b.min.y : b.max.y, (i & 4) == 0 ? b.min.z : b.max.z);
+                    float z = filter.transform.TransformPoint(corner).z - model.transform.position.z;
+                    min = Mathf.Min(min, z);
+                    max = Mathf.Max(max, z);
+                }
+            }
+            return max > min ? (min, max) : (0f, 0f);
+        }
+
         private static float KitHeight(string relativePath)
         {
             // Mesh bounds are reliable on an asset that was never placed in a scene (Renderer.bounds may not be).
@@ -828,69 +892,261 @@ namespace GameOff.EditorTools
         }
 
         /// <summary>
-        /// Visual wall in module cells (2 x 3 m, or 4 x 4 m in the hangar): plain cell → wall module; window cell → window-wall module; cell with a centered 1.6 x 2.2 m door → door-wall module;
-        /// anything else (windows, narrow doors, partial heights) → visible graybox fill for that cell.
+        /// Visual wall in module cells (2 x 3 m, or 4 x 4 m in the hangar): plain cell → wall module; window cell → window-wall module;
+        /// door cell → door-wall module (1.6 m or narrow 1.2 m). On the bottom row the 2 m grid is shifted around doors that are not
+        /// on a cell center, so every door gets its module; the leftover strips get the base wall squeezed to their width.
+        /// Hangar: bottom cells with doors/windows become a station facade (2 m modules + 1 m filler). The kiosk hatch gets its own front.
+        /// Anything else → visible graybox fill for that cell.
         /// </summary>
         private static void BuildWallVisual(GameObject parent, Room room, ModuleSet set, bool onXLine, float line, float offsetLine,
             float from, float to, float yaw, Material mat)
         {
-            bool wallKit = Kit(set.Wall) != null, doorKit = set.Cell == KitCell && Kit(KitDoorWall) != null;
-            bool windowKit = set.Cell == KitCell && Kit(KitWindowWall) != null;
-            // South/north walls stop at the side walls for the graybox fill (no overlapping corners).
-            float fillFrom = onXLine ? from : from + WallThickness, fillTo = onXLine ? to : to - WallThickness;
-
-            for (float cell = from; cell < to - 0.01f; cell += set.Cell)
+            var w = new WallRun
             {
-                float cellEnd = Mathf.Min(cell + set.Cell, to), mid = (cell + cellEnd) * 0.5f;
-                for (float bottom = 0f; bottom < room.Height - 0.01f; bottom += set.Height)
+                Parent = parent, Room = room, OnXLine = onXLine, Line = line, OffsetLine = offsetLine, From = from, To = to, Yaw = yaw, Mat = mat,
+                // South/north walls stop at the side walls for the graybox fill (no overlapping corners).
+                FillFrom = onXLine ? from : from + WallThickness, FillTo = onXLine ? to : to - WallThickness,
+                Side = offsetLine > line ? 1 : -1, // the room lies on this side of the wall line
+                RoundCorners = room.Name != "Hangar" && Kit(KitCornerRound) != null,
+            };
+            for (float bottom = 0f; bottom < room.Height - 0.01f; bottom += set.Height)
+            {
+                float top = Mathf.Min(bottom + set.Height, room.Height);
+                var spans = CellSpans(from, to, set.Cell, onXLine, line, bottom == 0f);
+                for (int i = 0; i < spans.Count; i++)
                 {
-                    float top = Mathf.Min(bottom + set.Height, room.Height);
-                    var ops = new List<Opening>();
-                    foreach (var raw in Openings)
-                        if (VisualOpening(raw) is var o && o.OnXLine == onXLine && Mathf.Approximately(o.Line, line)
-                            && o.Center - o.Width * 0.5f < cellEnd && o.Center + o.Width * 0.5f > cell
-                            && o.Sill < top && o.Head > bottom)
-                            ops.Add(o);
-
-                    bool fullCell = Mathf.Approximately(cellEnd - cell, set.Cell) && Mathf.Approximately(top - bottom, set.Height);
-                    var pos = onXLine ? new Vector3(offsetLine, bottom, mid) : new Vector3(mid, bottom, offsetLine);
-                    if (fullCell && ops.Count == 0 && wallKit)
+                    var (cell, cellEnd) = spans[i];
+                    var ops = OpeningsIn(onXLine, line, cell, cellEnd, bottom, top);
+                    if (set.Cell == KitCell)
                     {
-                        PlaceKit(parent, set.Cell == KitCell ? WallVariant(room, line, mid, bottom) : set.Wall, pos, yaw);
+                        StationCell(w, cell, cellEnd, bottom, top, ops);
                         continue;
                     }
-                    // 1 m top strip in 4 m rooms (bar)
-                    if (ops.Count == 0 && wallKit && set.Cell == KitCell && Mathf.Approximately(cellEnd - cell, KitCell)
-                        && Mathf.Approximately(top - bottom, 1f) && Kit(KitWallFiller) != null)
+                    // Hangar: a station facade where small openings (doors, counter window) are, the big 4 x 4 m modules elsewhere.
+                    // Neighboring facade cells are merged, so a door on a 4 m cell boundary still gets its 2 m cell.
+                    if (IsFacadeCell(ops, bottom, top))
                     {
-                        PlaceKit(parent, KitWallFiller, pos, yaw);
+                        while (i + 1 < spans.Count && IsFacadeCell(OpeningsIn(onXLine, line, spans[i + 1].Item1, spans[i + 1].Item2, bottom, top), bottom, top))
+                            cellEnd = spans[++i].Item2;
+                        foreach (var (a, b) in CellSpans(cell, cellEnd, KitCell, onXLine, line, true))
+                        {
+                            StationCell(w, a, b, 0f, KitWallHeight, OpeningsIn(onXLine, line, a, b, 0f, KitWallHeight));
+                            var filler = PlaceKit(parent, KitWallFiller, w.At((a + b) * 0.5f, KitWallHeight), yaw);
+                            if (filler != null) filler.transform.localScale = new Vector3((b - a) / KitCell, 1f, 1f);
+                            else BuildWall(parent, room, onXLine, line, offsetLine, a, b, KitWallHeight, top, mat, true, false);
+                        }
                         continue;
                     }
-                    // Open round arch (hall ↔ motel corridor): one 2 m opening centered in the cell, up to 2.6 m
-                    // (doors are 1.2/1.6 m wide, so the 2.0 m width + 2.6 m head check only matches the open arch passage)
-                    if (fullCell && set.Cell == KitCell && ops.Count == 1 && bottom == 0f && Kit(KitWallArch) != null
-                        && Mathf.Approximately(ops[0].Width, KitCell) && Mathf.Approximately(ops[0].Center, mid) && !ops[0].Glass
-                        && ops[0].Sill == 0f && Mathf.Approximately(ops[0].Head, ArchHead))
-                    {
-                        PlaceKit(parent, KitWallArch, pos, yaw);
-                        continue;
-                    }
-                    if (fullCell && windowKit && ops.Count == 1 && bottom == 0f && IsWindowModuleOpening(ops[0])
-                        && ops[0].Center - ops[0].Width * 0.5f <= cell + 0.01f && ops[0].Center + ops[0].Width * 0.5f >= cellEnd - 0.01f)
-                    {
-                        PlaceKit(parent, KitWindowWall, pos, yaw);
-                        continue;
-                    }
-                    if (fullCell && doorKit && ops.Count == 1 && bottom == 0f
-                        && Mathf.Approximately(ops[0].Width, KitDoorWidth) && Mathf.Approximately(ops[0].Center, mid)
-                        && ops[0].Sill == 0f && Mathf.Approximately(ops[0].Head, KitDoorHeight))
-                    {
-                        PlaceKit(parent, KitDoorWall, pos, yaw);
-                        continue;
-                    }
-                    BuildWall(parent, room, onXLine, line, offsetLine, Mathf.Max(cell, fillFrom), Mathf.Min(cellEnd, fillTo), bottom, top, mat, true, false);
+                    bool full = Mathf.Approximately(cellEnd - cell, set.Cell) && Mathf.Approximately(top - bottom, set.Height);
+                    if (full && ops.Count == 0 && Kit(set.Wall) != null) PlaceKit(parent, set.Wall, w.At((cell + cellEnd) * 0.5f, bottom), yaw);
+                    else BuildWall(parent, room, onXLine, line, offsetLine, Mathf.Max(cell, w.FillFrom), Mathf.Min(cellEnd, w.FillTo), bottom, top, mat, true, false);
                 }
             }
+        }
+
+        /// <summary>Bottom hangar cell (4 m high) whose openings all fit into station modules (up to 3 m).</summary>
+        private static bool IsFacadeCell(List<Opening> ops, float bottom, float top) =>
+            bottom == 0f && ops.Count > 0 && ops.TrueForAll(o => o.Head <= KitWallHeight + 0.01f)
+            && Kit(KitWall) != null && Mathf.Approximately(top, KitWallHeight + 1f);
+
+        /// <summary>One wall line of one room, as seen by the visual pass.</summary>
+        private class WallRun
+        {
+            public GameObject Parent; public Room Room; public bool OnXLine; public float Line, OffsetLine, From, To, FillFrom, FillTo, Yaw;
+            public Material Mat; public int Side; public bool RoundCorners;
+            public Vector3 At(float along, float y) => OnXLine ? new Vector3(OffsetLine, y, along) : new Vector3(along, y, OffsetLine);
+        }
+
+        private static List<Opening> OpeningsIn(bool onXLine, float line, float from, float to, float bottom, float top)
+        {
+            var ops = new List<Opening>();
+            foreach (var raw in Openings)
+                if (VisualOpening(raw) is var o && o.OnXLine == onXLine && Mathf.Approximately(o.Line, line)
+                    && o.Center - o.Width * 0.5f < to && o.Center + o.Width * 0.5f > from && o.Sill < top && o.Head > bottom)
+                    ops.Add(o);
+            return ops;
+        }
+
+        /// <summary>A 2 m (or shorter) station wall cell between bottom and top.</summary>
+        private static void StationCell(WallRun w, float cell, float cellEnd, float bottom, float top, List<Opening> ops)
+        {
+            float mid = (cell + cellEnd) * 0.5f;
+            bool wallKit = Kit(KitWall) != null;
+            bool fullCell = Mathf.Approximately(cellEnd - cell, KitCell) && Mathf.Approximately(top - bottom, KitWallHeight);
+            var pos = w.At(mid, bottom);
+            if (bottom == 0f && wallKit && ops.Exists(IsKioskHatch))
+            {
+                // Built once for the whole hatch (it spans two cells); the second cell is covered by it.
+                var kiosk = ops.Find(IsKioskHatch);
+                if (cell <= kiosk.Center - KitCell + 0.01f) BuildKioskFront(w, kiosk);
+                return;
+            }
+            if (fullCell && ops.Count == 0 && wallKit)
+            {
+                // Detail variants stick out of the wall: not in corner cells (round corner pieces) or behind wall props.
+                bool cornerCell = w.RoundCorners && (cell <= w.From + 0.01f || cellEnd >= w.To - 0.01f);
+                bool decor = !cornerCell && !HasWallProp(w.OnXLine, w.Line, cell, cellEnd, bottom, top);
+                PlaceKit(w.Parent, WallVariant(w.Room, w.Line, mid, bottom, decor), pos, w.Yaw);
+                return;
+            }
+            // Strip next to a shifted door cell: the plain base wall squeezed to the strip width (local X runs along the wall).
+            if (ops.Count == 0 && wallKit && cellEnd - cell < KitCell - 0.01f && Mathf.Approximately(top - bottom, KitWallHeight))
+            {
+                PlaceKit(w.Parent, WallVariant(w.Room, w.Line, mid, bottom, false), pos, w.Yaw).transform.localScale =
+                    new Vector3((cellEnd - cell) / KitCell, 1f, 1f);
+                return;
+            }
+            // 1 m top strip in 4 m rooms (bar)
+            if (ops.Count == 0 && wallKit && Mathf.Approximately(cellEnd - cell, KitCell) && Mathf.Approximately(top - bottom, 1f)
+                && Kit(KitWallFiller) != null)
+            {
+                PlaceKit(w.Parent, KitWallFiller, pos, w.Yaw);
+                return;
+            }
+            // Open round arch (hall ↔ motel corridor): one 2 m opening centered in the cell, up to 2.6 m
+            if (fullCell && ops.Count == 1 && bottom == 0f && Kit(KitWallArch) != null
+                && Mathf.Approximately(ops[0].Width, KitCell) && Mathf.Approximately(ops[0].Center, mid) && !ops[0].Glass
+                && ops[0].Sill == 0f && Mathf.Approximately(ops[0].Head, ArchHead))
+            {
+                PlaceKit(w.Parent, KitWallArch, pos, w.Yaw);
+                return;
+            }
+            if (fullCell && Kit(KitWindowWall) != null && ops.Count == 1 && bottom == 0f && IsWindowModuleOpening(ops[0])
+                && ops[0].Center - ops[0].Width * 0.5f <= cell + 0.01f && ops[0].Center + ops[0].Width * 0.5f >= cellEnd - 0.01f)
+            {
+                PlaceKit(w.Parent, KitWindowWall, pos, w.Yaw);
+                return;
+            }
+            if (fullCell && ops.Count == 1 && bottom == 0f && IsPortholeOpening(ops[0]) && Mathf.Approximately(ops[0].Center, mid)
+                && Kit(KitWallPorthole) != null)
+            {
+                PlaceKit(w.Parent, KitWallPorthole, pos, w.Yaw);
+                return;
+            }
+            if (fullCell && ops.Count == 1 && bottom == 0f && IsDoorOpening(ops[0])
+                && Mathf.Approximately(ops[0].Center, mid) && DoorWallFor(ops[0]) is string doorWall)
+            {
+                PlaceKit(w.Parent, doorWall, pos, w.Yaw);
+                DoorModuleSides.Add(DoorSideKey(w.OnXLine, w.Line, mid, w.Side));
+                return;
+            }
+            BuildWall(w.Parent, w.Room, w.OnXLine, w.Line, w.OffsetLine, Mathf.Max(cell, w.FillFrom), Mathf.Min(cellEnd, w.FillTo),
+                bottom, top, w.Mat, true, false);
+        }
+
+        /// <summary>
+        /// Cell spans along one wall: the regular grid, except on the bottom row of 2 m walls where a door that is not on a cell
+        /// center gets its own 2 m span (centered on the door) and the neighbors become shorter strips.
+        /// </summary>
+        private static List<(float, float)> CellSpans(float from, float to, float cell, bool onXLine, float line, bool bottomRow)
+        {
+            var cuts = new List<float>();
+            for (float c = from; c < to - 0.01f; c += cell) cuts.Add(c);
+            cuts.Add(to);
+            if (bottomRow && Mathf.Approximately(cell, KitCell))
+                foreach (var o in Openings)
+                {
+                    if (!IsDoorOpening(o) || o.OnXLine != onXLine || !Mathf.Approximately(o.Line, line)) continue;
+                    float a = o.Center - KitCell * 0.5f, b = o.Center + KitCell * 0.5f;
+                    if (a < from - 0.01f || b > to + 0.01f) continue;
+                    cuts.RemoveAll(c => c > a + 0.01f && c < b - 0.01f);
+                    cuts.Add(a);
+                    cuts.Add(b);
+                }
+            cuts.Sort();
+            var spans = new List<(float, float)>();
+            for (int i = 0; i + 1 < cuts.Count; i++)
+                if (cuts[i + 1] - cuts[i] > 0.05f) spans.Add((cuts[i], cuts[i + 1]));
+            return spans;
+        }
+
+        private static bool IsDoorOpening(Opening o) =>
+            !o.Glass && o.Sill == 0f && Mathf.Approximately(o.Head, KitDoorHeight)
+            && (Mathf.Approximately(o.Width, KitDoorWidth) || Mathf.Approximately(o.Width, KitDoorWidthNarrow));
+
+        /// <summary>Door-wall module for a door opening (1.6 m or narrow 1.2 m), or null if not delivered.</summary>
+        private static string DoorWallFor(Opening o)
+        {
+            string path = Mathf.Approximately(o.Width, KitDoorWidthNarrow) ? KitDoorWallNarrow : KitDoorWall;
+            return Kit(path) != null ? path : null;
+        }
+
+        /// <summary>Distance of a room's wall face from the wall line (two 0.2 m modules back to back).</summary>
+        private const float WallFace = 0.2f;
+
+        /// <summary>
+        /// Things on or against walls (onXLine, line, position along the wall, height). Cells behind them always get the plain
+        /// base wall, because detail variants (vents, pipes, lockers) stick out up to 0.25 m and would clip into them.
+        /// </summary>
+        private static readonly (bool OnXLine, float Line, float Along, float Y)[] WallPropAnchors =
+        {
+            (false, -6, -1.5f, 1.75f), (false, -6, -2.5f, 2.45f), (false, -6, -4f, 0.9f),       // counter: board, speaker, locker
+            (false, 0, -15f, 0.5f), (false, 0, -13f, 0.5f), (false, 0, -11f, 0.5f), (false, 0, -9f, 0.5f), // diner counter
+            (false, 0, -12f, 2.3f),                                                               // diner menu board
+            (false, -6, -14.5f, 0.6f), (false, -6, -13.5f, 0.6f), (false, -6, -11f, 0.6f), (false, -6, -10f, 0.6f), // booths
+            (true, 18, 3f, 1f), (true, 18, 5f, 1f), (true, 18, 4f, 3.1f),                          // bar shelf, neon sign
+            (true, -8, 4.5f, 1f),                                                                 // vending machine
+            (true, 12, -5f, 1f), (true, 12, -3f, 1f),                                             // kiosk shelf
+            (true, -20, 3.9f, 0.3f), (true, -20, 5.5f, 0.3f), (false, 6, -17f, 0.4f),             // room 103: bed, table
+            (false, 6, -18.42f, 1.3f), (false, 2, -16.5f, 1f),                                    // room 103: painting, locker
+            (false, 0, -9f, 0.6f),                                                                // motel reception
+        };
+
+        private static bool HasWallProp(bool onXLine, float line, float cell, float cellEnd, float bottom, float top)
+        {
+            foreach (var a in WallPropAnchors)
+                if (a.OnXLine == onXLine && Mathf.Approximately(a.Line, line) && a.Along > cell - 0.3f && a.Along < cellEnd + 0.3f
+                    && a.Y > bottom - 0.5f && a.Y < top + 0.5f)
+                    return true;
+            return false;
+        }
+
+        /// <summary>
+        /// A wall-mounted prop with its back on the wall face of the given side (front = local -Z faces that room).
+        /// along/y: position along the wall and pivot height; w/h: graybox size if the model is missing.
+        /// </summary>
+        private static void WallProp(GameObject parent, string kitPath, string name, bool onXLine, float line, int side,
+            float along, float y, float w, float h)
+        {
+            // The back (local max Z) touches the wall face, whatever the pivot depth; graybox fallback 0.1 m deep, centered.
+            var (zMin, zMax) = KitZRange(kitPath);
+            float depth = zMax > zMin ? zMax - zMin : 0.1f, back = zMax > zMin ? zMax : 0.05f;
+            float across = line + side * (WallFace + back + 0.005f);
+            float yaw = onXLine ? (side < 0 ? 90f : -90f) : (side < 0 ? 0f : 180f);
+            KitProp(parent, kitPath, name, onXLine ? across : along, onXLine ? along : across,
+                onXLine ? depth : w, onXLine ? w : depth, h, y, yaw);
+        }
+
+        private static bool IsPortholeOpening(Opening o) => o.Glass && o.Width < 1f;
+
+        private static bool IsKioskHatch(Opening o) => !o.Glass && o.OnXLine && Mathf.Approximately(o.Line, 8f) && o.Sill > 0.5f;
+
+        /// <summary>Wall sides (per door) that got a door-wall module; door trims only go where there is none.</summary>
+        private static readonly HashSet<string> DoorModuleSides = new HashSet<string>();
+        private static string DoorSideKey(bool onXLine, float line, float center, int side) => $"{onXLine}|{line:0.00}|{center:0.00}|{side}";
+
+        /// <summary>
+        /// Kiosk hatch front (hall and kiosk side): 1 m wall strips under the counter, the 4 m lintel over the hatch
+        /// (the sign strip of SM_Kiosk_Counter shows just below it) and narrow side posts. Covers the two cells of the hatch.
+        /// </summary>
+        private static void BuildKioskFront(WallRun w, Opening hatch)
+        {
+            float c = hatch.Center, half = hatch.Width * 0.5f;
+            string baseWall = WallVariant(w.Room, hatch.Line, c, 0f, false);
+            foreach (float along in new[] { c - KitCell * 0.5f, c + KitCell * 0.5f })
+                if (PlaceKit(w.Parent, KitWallFiller, w.At(along, 0f), w.Yaw) == null)
+                    PlaceKit(w.Parent, baseWall, w.At(along, 0f), w.Yaw).transform.localScale = new Vector3(1f, hatch.Sill / KitWallHeight, 1f);
+            float postWidth = KitCell - half; // from the cell edge to the hatch edge
+            foreach (float along in new[] { c - half - postWidth * 0.5f, c + half + postWidth * 0.5f })
+            {
+                var post = PlaceKit(w.Parent, baseWall, w.At(along, hatch.Sill), w.Yaw);
+                post.transform.localScale = new Vector3(postWidth / KitCell, (hatch.Head - hatch.Sill) / KitWallHeight, 1f); // lintel above
+            }
+            // Lintel from the hatch head up to the top of the row; graybox strip if the model is missing.
+            if (PlaceKit(w.Parent, KitLintel, w.At(c, hatch.Head), w.Yaw) is GameObject lintel)
+                lintel.transform.localScale = new Vector3(1f, (KitWallHeight - hatch.Head) / KitHeight(KitLintel), 1f);
+            else
+                WallPiece(w.Parent, w.OnXLine, w.OffsetLine, c - KitCell, c + KitCell, hatch.Head, KitWallHeight, w.Mat, true, false);
         }
 
         /// <summary>
@@ -1009,9 +1265,9 @@ namespace GameOff.EditorTools
             KitProp(p, "Counter/SM_Counter_Desk.fbx", "SM_Counter_Desk", -0.7f, -9, 1.2f, 4.0f, 0.85f, 0, DeskYaw);
             KitProp(p, "Counter/SM_Counter_Chair.fbx", "SM_Counter_Chair", -2, -9, 0.6f, 0.6f, 1.0f, 0, ChairYaw);
             KitProp(p, "Counter/SM_Counter_Locker.fbx", "SM_Counter_Locker", -4, -6.45f, 1.0f, 0.5f, 1.8f);
-            KitProp(p, "Counter/SM_Counter_Board.fbx", "SM_Counter_Board", -1.5f, -6.15f, 1.0f, 0.05f, 0.7f, 1.4f);
+            WallProp(p, "Counter/SM_Counter_Board.fbx", "SM_Counter_Board", false, -6, -1, -1.5f, 1.4f, 1.0f, 0.7f);
             KitProp(p, "Counter/SM_Counter_DocSlot.fbx", "SM_Counter_DocSlot", -0.3f, -9, 0.4f, 0.5f, 0.15f, 0.85f, DocSlotYaw);
-            KitProp(p, "Counter/SM_Counter_Speaker.fbx", "SM_Counter_Speaker", -2.5f, -6.25f, 0.4f, 0.15f, 0.3f, 2.3f);
+            WallProp(p, "Counter/SM_Counter_Speaker.fbx", "SM_Counter_Speaker", false, -6, -1, -2.5f, 2.3f, 0.4f, 0.3f);
             KitProp(p, "Counter/SM_Counter_WarningLamp.fbx", "SM_Counter_WarningLamp", 2f, -9f, 0.25f, 0.25f, 0.3f, 3f); // pivot top_center → hangs from the ceiling
             // Hall (benches face north toward the observation deck: module front = local -Z → yaw 180)
             KitProp(p, "Hall/SM_Hall_DepartureBoard.fbx", "SM_Hall_DepartureBoard", 0, 0, 2, 2, 3.5f);
@@ -1026,13 +1282,13 @@ namespace GameOff.EditorTools
             // Kiosk
             // Sign and glass face local -X = the hall side; the grille box tops out at 2.4 m.
             KitProp(p, "Kiosk/SM_Kiosk_Counter.fbx", "SM_Kiosk_Counter", 8.6f, -4, 0.8f, 2.8f, 2.4f);
-            Prop(p, "SM_Kiosk_Shelf", 11.6f, -4, 0.4f, 2.8f, 2.0f);
+            KitProp(p, "Kiosk/SM_Kiosk_Shelf.fbx", "SM_Kiosk_Shelf", 11.6f, -4, 0.4f, 2.8f, 2.0f);
             // Bar
             // The bar counter model is 3 m along X with the guest side at local -Z → yaw 90 faces the guests (west).
             KitProp(p, "Bar/SM_Bar_Counter.fbx", "SM_Bar_Counter_A", 14.5f, 2.5f, 0.7f, 3.0f, 1.1f, 0, 90);
             KitProp(p, "Bar/SM_Bar_Counter.fbx", "SM_Bar_Counter_B", 14.5f, 5.5f, 0.7f, 3.0f, 1.1f, 0, 90);
             KitProp(p, "Bar/SM_Bar_Shelf.fbx", "SM_Bar_Shelf", 17.6f, 4, 0.3f, 3.0f, 2.2f, 0, 90f);
-            KitProp(p, "Bar/SM_Bar_NeonSign.fbx", "SM_Bar_NeonSign", 17.8f, 4f, 0.1f, 2.0f, 0.6f, 3.1f, 90f);
+            WallProp(p, "Bar/SM_Bar_NeonSign.fbx", "SM_Bar_NeonSign", true, 18, -1, 4f, 3.1f, 2.0f, 0.6f); // pivot center
             // Standing tables along the north window
             KitProp(p, "Bar/SM_Bar_Table.fbx", "SM_Bar_Table_A", 10.8f, 7.1f, 0.8f, 0.8f, 1.1f);
             KitProp(p, "Bar/SM_Bar_Table.fbx", "SM_Bar_Table_B", 12.5f, 7.1f, 0.8f, 0.8f, 1.1f);
@@ -1042,20 +1298,21 @@ namespace GameOff.EditorTools
             KitProp(p, "Diner/SM_Diner_Counter.fbx", "SM_Diner_Counter", -12, -0.6f, 6.0f, 0.7f, 1.1f);
             KitProp(p, "Diner/SM_Diner_Booth.fbx", "SM_Diner_Booth_A", -14, -5.2f, 2.2f, 1.4f, 1.2f, 0, 180f);
             KitProp(p, "Diner/SM_Diner_Booth.fbx", "SM_Diner_Booth_B", -10.5f, -5.2f, 2.2f, 1.4f, 1.2f, 0, 180f);
-            KitProp(p, "Diner/SM_Diner_MenuBoard.fbx", "SM_Diner_MenuBoard", -12f, -0.15f, 2.0f, 0.1f, 0.8f, 2.3f); // pivot center
+            WallProp(p, "Diner/SM_Diner_MenuBoard.fbx", "SM_Diner_MenuBoard", false, 0, -1, -12f, 2.3f, 2.0f, 0.8f); // pivot center
             for (int i = 0; i < 4; i++) KitProp(p, "Bar/SM_Bar_Stool.fbx", $"SM_Diner_Stool_{i + 1}", -14.2f + i * 1.5f, -1.4f, 0.4f, 0.4f, 0.75f);
             // Motel
-            Prop(p, "SM_Motel_Reception", -9, 0.35f, 1.2f, 0.5f, 1.2f);
-            Prop(p, "SM_Motel_Bed", -19.4f, 4.9f, 1.0f, 2.0f, 0.6f);
-            Prop(p, "SM_Motel_Table", -17, 5.6f, 0.8f, 0.6f, 0.75f);
-            Prop(p, "SM_Motel_Locker", -16.5f, 2.5f, 0.6f, 0.5f, 1.9f);
-            // Room 103: cat painting over the bed head, front = local -Z, pivot center; north wall face at z 5.8
-            KitProp(p, "Motel/SM_Motel_CatPainting.fbx", "SM_Motel_CatPainting", -19.4f, 5.7775f, 0.53f, 0.045f, 0.63f, 1.3f);
+            // Motel: reception against the corridor's south wall, facing guests (north); room 103 furniture against its walls
+            KitProp(p, "Motel/SM_Motel_Reception.fbx", "SM_Motel_Reception", -9, 0.45f, 1.2f, 0.5f, 1.2f, 0, 180f);
+            KitProp(p, "Motel/SM_Motel_Bed.fbx", "SM_Motel_Bed", -19.29f, 4.8f, 1.0f, 2.0f, 0.6f);
+            KitProp(p, "Motel/SM_Motel_Table.fbx", "SM_Motel_Table", -17, 5.5f, 0.8f, 0.6f, 0.75f);
+            KitProp(p, "Motel/SM_Motel_Locker.fbx", "SM_Motel_Locker", -16.5f, 2.45f, 0.6f, 0.5f, 1.9f, 0, 180f);
+            // Room 103: cat painting on the north wall (position chosen by Max), pivot center
+            WallProp(p, "Motel/SM_Motel_CatPainting.fbx", "SM_Motel_CatPainting", false, 6, -1, -18.42f, 1.3f, 0.53f, 0.63f);
             // Hangar
             // Hangar (36 x 28 m): shuttle in the middle, queue lane from its ramp to the inspection lock door (x 1..3)
             KitProp(p, "Hangar/SM_Hangar_Shuttle.fbx", "SM_Hangar_Shuttle", 0, -28, 6, 9, 3.5f, 0, ShuttleYaw);
-            Prop(p, "SM_Hangar_DronePad", -7.5f, -14.5f, 3, 3, 0.2f);
-            Prop(p, "SM_Hangar_CargoDrone", -7.5f, -14.5f, 1.6f, 1.6f, 0.8f, 0.2f);
+            KitProp(p, "Hangar/SM_Hangar_DronePad.fbx", "SM_Hangar_DronePad", -7.5f, -14.5f, 3, 3, 0.2f);
+            KitProp(p, "Hangar/SM_Hangar_CargoDrone.fbx", "SM_Hangar_CargoDrone", -7.5f, -14.5f, 1.6f, 1.6f, 0.8f, 0.2f); // on the pad top (M011)
             // Queue lanes from the shuttle ramp to the lock door: 2 m barrier segments along Z (model is 2 m along X → yaw 90)
             for (int i = 0; i < 5; i++)
             {
@@ -1070,9 +1327,11 @@ namespace GameOff.EditorTools
             KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_A", -15.4f, -26.2f, 0.6f, 0.6f, 0.5f);
             KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_B", -14.6f, -33.4f, 0.6f, 0.6f, 0.5f, 0, 30f);
             KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_C", -6f, -12.6f, 0.6f, 0.6f, 0.5f);
-            Prop(p, "SM_Hangar_Tank_A", 16.3f, -16, 1.4f, 1.4f, 3.5f);
-            Prop(p, "SM_Hangar_Tank_B", 16.3f, -18.5f, 1.4f, 1.4f, 3.5f);
-            Prop(p, "SM_Hangar_Scaffold", 12, -30, 2f, 4f, 5f);
+            KitProp(p, "Hangar/SM_Hangar_Tank.fbx", "SM_Hangar_Tank_A", 16.3f, -16, 1.4f, 1.4f, 3.5f);
+            KitProp(p, "Hangar/SM_Hangar_Tank.fbx", "SM_Hangar_Tank_B", 16.3f, -18.5f, 1.4f, 1.4f, 3.5f, 0, 40f);
+            KitProp(p, "Hangar/SM_Hangar_Scaffold.fbx", "SM_Hangar_Scaffold", 12, -30, 2f, 4f, 5f, 0, 90f); // model is 4 m along X
+            // Crane rail under the ceiling tiles (y 15), between the rib arches at z -22 and -29
+            KitProp(p, "Hangar/SM_Hangar_CraneRail.fbx", "SM_Hangar_CraneRail", 0, -25.5f, 36f, 2f, 1.5f, 15f);
         }
 
         private static void BuildMarkers(GameObject parent)
