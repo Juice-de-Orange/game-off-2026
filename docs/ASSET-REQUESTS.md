@@ -4200,7 +4200,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Counter/T_Stamp_Approved.png
 package: P38
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-12
 size_m: [0, 0, 0]
@@ -4228,7 +4228,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Counter/T_Stamp_Denied.png
 package: P38
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-12
 size_m: [0, 0, 0]
