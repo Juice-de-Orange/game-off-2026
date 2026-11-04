@@ -118,7 +118,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 - Festgelegt im Asset-Durchgang (max, 02.11.): Dokumente kommen über die **animierte Durchreiche** (Schublade fährt mit Klacken herein, Papiere gleiten auf den Tisch; Rückgabe = in die Schublade ziehen, sie fährt hinaus). Modelle: `SM_Counter_DocSlot`, `SM_Station_Window_Small_Slot`.
 
 ### P07 — Reisende & Regeln
-- Größe: L · Priorität: Muss · Status: offen
+- Größe: L · Priorität: Muss · Status: in Arbeit (max, 04.11.)
 - Braucht: P06
 - Ziel: Datenmodell und Prüflogik: Ist der Reisende korrekt?
 - Enthalten: `TravelerData` (Aussehen, Dokumente, eingebaute Fehler, Gepäck), `DayRules` (Regeln pro Tag),
@@ -434,3 +434,23 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
   allen Außenflächen inkl. Dächern und Unterseite, Öffnungen (Fenster, Hangarmaul, Deck, Außenluke) bleiben frei; Hangar mit Außenrippen,
   Dächer mit Technik-Kästen/Tanks/Rohren. Alles noch Graybox-Platzhalter in Hüllgrau: die Pipeline-Lieferungen aus M015 tauschen sich
   beim nächsten Builder-Lauf automatisch ein (Achsen/Pivots nach den Einträgen).
+
+### P40 — Reisende in der Prüfkammer & Gespräch
+- Größe: M · Priorität: Muss · Status: offen (für **max** reserviert)
+- Braucht: P07 · Folgt auf: —
+- Ziel: Man hat ein Gegenüber: der Reisende steht in der Prüfkammer am Fenster und redet.
+- Enthalten: NPC-Modell (SK_NPC_*) erscheint am Fenster und geht nach der Entscheidung durch die richtige Tür ab (einfaches
+  Ein-/Ausblenden, Laufen ist P14); Sprechblase über dem Reisenden mit Begrüßung; Alien-Spezies sprechen erst in Glyphen, die per
+  „Entschlüsseln“-Welle (links nach rechts, ~0,4 s/Zeile, leichter Cyan-Schimmer) übersetzt werden; Nachfragen per Klick auf ein Feld
+  des hochgehaltenen Dokuments (Antwort aus `TravelerData`)
+- Abnahme: Jeder Test-Reisende steht in der Kammer, begrüßt, antwortet auf Feld-Klicks; Aliens werden lesbar „übersetzt“.
+
+### P41 — Regeln an der Pinnwand
+- Größe: M · Priorität: Muss · Status: offen (für **max** reserviert)
+- Braucht: P07 · Folgt auf: P33
+- Ziel: Man kennt die Regeln des Tages während der Schicht.
+- Enthalten: Tagesbulletin + Fahndungsliste (mit Befehl Verhaften/Terminieren) als Zettel an der Pinnwand im Schalterraum, scharf
+  gezeichnet; Lautsprecher-Durchsagen mit Untertitel (Schichtbeginn, neue Regel, Verwarnung); im Sitzen umschauen (A/D bzw. Pfeiltasten,
+  ±70°), Klick auf einen Zettel holt ihn zum Lesen heran
+- Abnahme: Alle Regeln von Tag 1 sind im Sitzen lesbar; Durchsage zu Schichtbeginn erscheint.
+

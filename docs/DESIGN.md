@@ -40,6 +40,29 @@ Sprache des Spiels: Englisch.
 | Verhaften (Knopf) | Wache führt ab, beschlagnahmte Gegenstände landen bei dir | Unschuldig verhaftet → größerer Abzug |
 | Luftschleuse (Knopf) | Sofortige Eliminierung, kein Zeitverlust | Unschuldige: hoher Abzug. Jede Nutzung senkt einen versteckten Moral-Wert → färbt Familienbriefe und Ende |
 
+## Regeln am Schalter (festgelegt 04.11., Max)
+**Fehlerarten:** Papiere widersprechen sich (Name/ID) · Papier abgelaufen oder fehlt · Tagesregeln aus dem Bulletin (wechseln täglich:
+gesperrte Herkunft, Pflichtpapiere für bestimmte Spezies, verbotene Waren, Quarantäne) · Fälschung (Siegel, nur mit Gadget) und Schmuggel.
+
+| Fall | Richtige Entscheidung |
+|---|---|
+| Alles in Ordnung | Durchlassen |
+| Papierfehler, gesperrte Herkunft, fehlendes Pflichtpapier | Abweisen |
+| Schmuggel, Fälschung, Fahndung „verhaften“ | Verhaften (Luftschleuse zählt auch als richtig, kostet aber Moral) |
+| Seuchen-Quarantäne, Fahndung „auf Sicht terminieren“ | **Luftschleuse ist Pflicht** (Verhaften = Befehl verweigert) |
+
+Priorität bei mehreren Fehlern: Pflicht-Schleuse > Verhaften > Abweisen > Durchlassen. Die richtige Entscheidung wird aus den Daten
+berechnet; jeder Reisende hat zusätzlich eine beabsichtigte Lösung, Prüfwerkzeug + Tests vergleichen beides (keine Logikfehler im Spiel).
+
+**Feedback:** Fehler → sofort Verwarnzettel aus dem Drucker am Tisch (mit Grund); die ersten zwei pro Tag sind Verwarnungen, danach Abzug.
+**Regeln lesen:** Bulletin + Fahndungsliste an der Pinnwand, Lautsprecher-Durchsagen; im Sitzen kann man sich umschauen.
+**Reisende:** stehen in der Prüfkammer am Fenster, begrüßen dich; Nachfragen per Klick auf ein Feld eines Dokuments. Alien-Sprache
+erscheint erst als Glyphen und wird kurz „entschlüsselt“.
+
+**The Shifter:** wiederkehrender Reisender, jeden Tag mit neuer Identität (Name, Herkunft, Detail), erkennbar an einer Kleinigkeit.
+Tag 1–2 harmloser, charmanter Grenzgänger. Tag 3 steht er auf der Fahndungsliste: „auf Sicht terminieren“, ohne Begründung. Hast du ihm
+geholfen, steckt er dir etwas für die Familie zu. Gehorchen (Schleuse), verhaften oder heimlich durchlassen färbt Briefe und Ende.
+
 ## Station (kompakt, kurze Laufwege — Grundriss Stand 2.0: `docs/STATION.md`, Bild: `docs/station/bauplan.html`)
 | Ort | Funktion im Spiel |
 |---|---|
