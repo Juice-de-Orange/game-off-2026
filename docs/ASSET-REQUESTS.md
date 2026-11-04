@@ -4256,7 +4256,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_IdCard.png
 package: P06
 scene: Schalter (Dokumente, gelesen in voller Auflösung)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0, 0, 0]
@@ -4283,7 +4283,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_EntryPermit.png
 package: P06
 scene: Schalter (Dokumente, gelesen in voller Auflösung)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0, 0, 0]
@@ -4310,7 +4310,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_CargoManifest.png
 package: P06
 scene: Schalter (Dokumente, gelesen in voller Auflösung)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0, 0, 0]
@@ -4337,7 +4337,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Placeholder.png
 package: P06
 scene: Schalter (Dokumente, gelesen in voller Auflösung)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-12
 size_m: [0, 0, 0]
