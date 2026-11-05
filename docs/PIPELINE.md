@@ -303,7 +303,7 @@ in `docs/ASSET-REQUESTS.md`.
 - von: max
 - an: pipeline
 - betrifft: `ASSET-REQUESTS.md`, Paket P39 (alle `SM_Ext_*` mit `package: P39`)
-- status: offen
+- status: erledigt
 - meldung: Die Station hat von außen keine Hülle (man sieht die Rückseiten der Innenwände), und Fachwerk, Solarflügel und
   Antenne schweben unverbunden herum. Neu, alle P1 bis 12.11.:
   1. Hülle: `SM_Ext_HullPanel_4x4`, `_Ribbed`, `SM_Ext_HullEdge_4`, `SM_Ext_HullCorner`, `SM_Ext_RoofCap_4x4`, `SM_Ext_HangarRib_Outer`.
@@ -312,3 +312,5 @@ in `docs/ASSET-REQUESTS.md`.
   Stil wie die KESTREL-Habmodule (die gefallen Max sehr), niedrige Texeldichte. Hüllplatten müssen nahtlos kacheln.
   Reihenfolge: Hülle zuerst, dann Verbindungen, dann Greebles. Der Builder setzt alle automatisch, sobald die Dateien da sind.
 - antwort:
+- antwort: max/Claude, 05.11.: Alle Lieferungen vom 04.11. (P39, P06, P07, P38) freigegeben, gemergt, eingebaut und neu gebacken (P42). Die Branches hatten keine Pull Requests und lagen deshalb unbemerkt da: Bitte künftig einen PR öffnen oder hier melden, dass ein Branch bereitliegt.
+

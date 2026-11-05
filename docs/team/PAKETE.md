@@ -545,7 +545,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - **Für P09/P08 (martin):** Verwarnzettel bleiben am nächsten Tag auf dem Tisch liegen, nach einem Dev-Sprung auch die Papiere des letzten Reisenden. Bitte bei der Abnahme von P09 entscheiden, ob `BeginDay` den Tisch leeren soll. **P09 kann jetzt abgenommen werden.**
 
 ### P42 — Pipeline-Lieferungen vom 04.11. einbauen
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 05.11.)
+- Größe: S · Priorität: Soll · Status: fertig (max, 05.11.)
 - Braucht: Lieferungen zu M015 · Folgt auf: P39, P38, P06, P07
 - Ziel: Die Platzhalter von heute werden durch die bestellten Modelle und Grafiken ersetzt.
 - Enthalten: PRs mergen (je Lieferung ein neuer Branch + PR, siehe `ASSETS.md`), `GameOff/Integrate Asset Deliveries`, dann die
@@ -554,6 +554,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   ersetzt die graue Box); Stempel-Abdrücke `T_Stamp_*`; Licht neu backen; Achsen/Pivots prüfen (Builder rechnen mit den Einträgen)
 - Nicht enthalten: neue Funktionen
 - Abnahme: Rundflug außen und Blick auf den Schaltertisch ohne graue Platzhalter; Konsole sauber; Tests grün.
+- Ergebnis (max, 05.11.): Lieferungen P39, P06, P07, P38 von max freigegeben und gemergt; alle Einträge `final`. Station hat die Außenhülle, Tisch hat Drucker, echte Papiere, Stempel-Abdrücke. Licht neu gebacken (39 s). **Neu: GameOff → Rebuild All After Deliveries** führt alle Builder in der richtigen Reihenfolge aus, danach `Setup Main Lighting + Bake`. Geprüft im WebGL-Build: Menü mit Hülle von außen, Tisch, Frachtliste, Verwarnzettel, Stempel; Rundflug außen nur aus dem Menü-Blickwinkel. Wellenmuster von Zettel und Frachtliste stört beim Lesen nicht, kein Rework nötig. 71/71 EditMode-Tests.
 
 
 ### P43 — Optionsmenü mit Kategorien

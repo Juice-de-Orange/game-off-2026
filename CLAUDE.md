@@ -120,7 +120,7 @@ Asset naming, specs and the placeholder → final swap are defined in `docs/ASSE
   (menu `GameOff/`: Build Station Graybox, Build Sky & Exterior, Build Documents, Build Test Day, Integrate Asset Deliveries,
   Setup Main Lighting + Bake, Build Menu Scenes, Build Traffic into Main). Change the builder code in `Scripts/Editor/`, run the menu, rebake; manual edits
   in those prefabs are lost on the next run. The menu shows the station as background: after rebuilding station or exterior,
-  run Build Menu Scenes too.
+  run Build Menu Scenes too. After asset deliveries, **GameOff/Rebuild All After Deliveries** runs all of them in order; bake after it.
 - **Counter rules are tested:** after changing travelers, days or rules run `GameOff/Validate Travelers` and the EditMode tests
   (Test Runner, or `unity command test run --mode EditMode`). Every traveler's computed verdict must match its intended one.
 - Tuning values (speed, damage, timings) go into ScriptableObjects in `Data/`, not hard-coded —

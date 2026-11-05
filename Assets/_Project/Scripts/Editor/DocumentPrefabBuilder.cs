@@ -485,8 +485,8 @@ namespace GameOff.EditorTools
             barRect.anchorMin = new Vector2(0.1f, 0f);
             barRect.anchorMax = new Vector2(0.9f, 0f);
             barRect.pivot = new Vector2(0.5f, 0f);
-            barRect.sizeDelta = new Vector2(0f, 64f);
-            barRect.anchoredPosition = new Vector2(0f, 110f);
+            barRect.sizeDelta = new Vector2(0f, 42f);
+            barRect.anchoredPosition = new Vector2(0f, 58f); // below the stamps and buttons
             var barImage = barT.GetComponent<UnityEngine.UI.Image>();
             barImage.color = new Color(0f, 0f, 0f, 0.72f);
             barImage.raycastTarget = false;
@@ -497,7 +497,7 @@ namespace GameOff.EditorTools
             textRect.pivot = new Vector2(0.5f, 0.5f);
             textRect.offsetMin = new Vector2(16f, 4f);
             textRect.offsetMax = new Vector2(-16f, -4f);
-            subtitle.fontSize = hint.fontSize * 1.5f;
+            subtitle.fontSize = hint.fontSize * 1.1f;
             subtitle.color = new Color(0.89f, 0.87f, 0.81f);
             subtitle.alignment = TextAlignmentOptions.Center;
             subtitle.raycastTarget = false;
