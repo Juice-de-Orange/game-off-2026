@@ -70,9 +70,12 @@ namespace GameOff.Counter
                 text.ForceMeshUpdate();
                 float duration = Mathf.Max(1, text.textInfo.lineCount) * tuning.translateSecondsPerLine;
                 float t = 0f;
+                string glyphs = AlienText.Scramble(line);
+                int shown = -1;
                 while (t < duration)
                 {
-                    text.text = AlienText.Reveal(line, Mathf.FloorToInt(line.Length * t / duration), tuning.translateEdge);
+                    int revealed = Mathf.FloorToInt(line.Length * t / duration);
+                    if (revealed != shown) text.text = AlienText.Reveal(line, glyphs, shown = revealed, tuning.translateEdge);
                     if (panel.gameObject.activeInHierarchy) t += Time.unscaledDeltaTime;
                     yield return null;
                 }
@@ -105,7 +108,9 @@ namespace GameOff.Counter
             var area = canvasArea.rect.size;
             float x = Mathf.Clamp(view.x + BesideHead, Margin, Mathf.Max(Margin, 1f - Margin - panel.sizeDelta.x / area.x));
             float y = Mathf.Clamp(view.y, Margin + panel.sizeDelta.y / area.y, TopLimit);
-            panel.anchorMin = panel.anchorMax = new Vector2(x, y);
+            var anchor = new Vector2(x, y);
+            if ((panel.anchorMin - anchor).sqrMagnitude < 1e-6f) return; // a standing speaker doesn't rebuild the canvas every frame
+            panel.anchorMin = panel.anchorMax = anchor;
             panel.anchoredPosition = Vector2.zero;
         }
     }

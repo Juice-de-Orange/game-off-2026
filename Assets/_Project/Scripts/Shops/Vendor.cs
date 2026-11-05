@@ -50,6 +50,11 @@ namespace GameOff.Shops
 
         private void OnInteract()
         {
+            if (stock == null)
+            {
+                Debug.LogError($"[Shops] {vendorName} has no stock: run GameOff/Build Economy into Main.", this);
+                return;
+            }
             AudioManager.PlayPreview(AudioChannel.Voice); // placeholder until the vendors have voicelines
             if (IsOpen || dialogs == null)
             {

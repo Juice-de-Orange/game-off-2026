@@ -91,6 +91,7 @@ namespace GameOff.Travelers
             _evaluation = null;
             _returnedStamp = null;
             _citations = 0;
+            desk.ClearForNewDay();
             DayBegun?.Invoke();
         }
 

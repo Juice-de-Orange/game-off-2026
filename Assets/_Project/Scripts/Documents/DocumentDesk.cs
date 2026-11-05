@@ -46,7 +46,9 @@ namespace GameOff.Documents
         private Vector2 _pressScreen;
         private Vector3 _dragOffset;
         private Pose _inspectReturn;
-        private readonly Dictionary<Transform, Coroutine> _glides = new Dictionary<Transform, Coroutine>();
+        private readonly Dictionary<Transform, (Coroutine routine, Vector3 position, Quaternion rotation)> _glides =
+            new Dictionary<Transform, (Coroutine, Vector3, Quaternion)>();
+        private readonly HashSet<Transform> _gliding = new HashSet<Transform>();
         private int _sharpLayer = -1, _worldLayer;
 
         /// <summary>Raised when delivered papers lie on the desk.</summary>
@@ -97,6 +99,41 @@ namespace GameOff.Documents
                 return;
             }
             UpdateLayers();
+        }
+
+        /// <summary>
+        /// A new day (B05): the desk is cleared and every movement stops, whatever was going on. Pinned notes stay; the pinboard
+        /// changes them itself. Citation numbers start again each day, so old slips must not stay.
+        /// </summary>
+        public void ClearForNewDay()
+        {
+            StopAllCoroutines();
+            _glides.Clear();
+            _gliding.Clear();
+            _inspected = null;
+            _pressed = null;
+            _dragging = false;
+            _drawerPress = false;
+            _busy = false;
+            drawer.localPosition = _drawerRest;
+            foreach (var view in _onDesk) DestroyPaper(view);
+            foreach (var view in _inDrawer) DestroyPaper(view);
+            foreach (var view in drawerTray.GetComponentsInChildren<DocumentView>(true)) // caught in a delivery
+                if (!_onDesk.Contains(view) && !_inDrawer.Contains(view)) DestroyPaper(view);
+            _onDesk.Clear();
+            _inDrawer.Clear();
+            foreach (var note in _pinned)
+            {
+                note.transform.localPosition = Vector3.zero;
+                note.transform.localRotation = Quaternion.identity;
+                note.HighlightField(null);
+            }
+        }
+
+        private static void DestroyPaper(DocumentView view)
+        {
+            if (view.Data != null && view.Data.IsRuntime) Destroy(view.Data);
+            Destroy(view.gameObject);
         }
 
         /// <summary>Hangs a note at a spot (page top = its local +Z, page face = its local +Y). It can be clicked to read it.</summary>
@@ -170,6 +207,7 @@ namespace GameOff.Documents
                     _dragOffset = Vector3.zero;
                     SetColliders(top, false);
                     BringToFront(top);
+                    if (released) FinishDrag(screenPos); // moved and let go within one frame
                 }
                 else if (released) ReleaseDrawerPress();
                 return true;
@@ -185,14 +223,12 @@ namespace GameOff.Documents
                 if (_dragging) _pressed.transform.position = DragTarget(screenPos) + Vector3.up * tuning.dragLift;
                 if (released)
                 {
-                    if (_dragging)
+                    if (_dragging) FinishDrag(screenPos);
+                    else
                     {
-                        Drop(_pressed, PointerOnDrawer(screenPos));
-                        SetColliders(_pressed, true);
+                        Inspect(_pressed);
+                        _pressed = null;
                     }
-                    else Inspect(_pressed);
-                    _pressed = null;
-                    _dragging = false;
                 }
                 return true;
             }
@@ -211,7 +247,7 @@ namespace GameOff.Documents
             if (!hitSomething) return false;
             if (doc != null && _onDesk.Contains(doc))
             {
-                StopGlide(doc.transform); // e.g. still gliding back from reading: the hand wins
+                FinishGlide(doc.transform); // e.g. still gliding back from reading: the hand wins, but from its proper resting pose
                 BringToFront(doc);
                 if (released)
                 {
@@ -369,6 +405,14 @@ namespace GameOff.Documents
             return view;
         }
 
+        private void FinishDrag(Vector2 screenPos)
+        {
+            Drop(_pressed, !_busy && PointerOnDrawer(screenPos)); // a moving drawer takes nothing: its tray has no fixed place yet
+            SetColliders(_pressed, true);
+            _pressed = null;
+            _dragging = false;
+        }
+
         /// <summary>Lays a dragged paper down: into the drawer if the mouse is on it, else flat on the desk on top of the pile.</summary>
         private void Drop(DocumentView doc, bool onDrawer)
         {
@@ -383,6 +427,12 @@ namespace GameOff.Documents
                 return;
             }
             var pos = doc.transform.position;
+            // Never under the drawer, where the mouse couldn't reach it again and the shift could not go on
+            if (drawer.TryGetComponent<Collider>(out var drawerCollider) && deskSpots.Length > 0)
+            {
+                var box = drawerCollider.bounds;
+                if (box.Contains(new Vector3(pos.x, box.center.y, pos.z))) pos = deskSpots[0].position;
+            }
             pos.y = DeskTop + _onDesk.Count * tuning.stackStep;
             doc.transform.position = pos;
         }
@@ -475,17 +525,28 @@ namespace GameOff.Documents
         private void StartGlide(Transform t, Vector3 position, Quaternion rotation, float duration)
         {
             StopGlide(t);
-            _glides[t] = StartCoroutine(GlideRoutine(t, position, rotation, duration));
+            var routine = StartCoroutine(GlideRoutine(t, position, rotation, duration));
+            if (t != null && _gliding.Contains(t)) _glides[t] = (routine, position, rotation);
         }
 
         private void StopGlide(Transform t)
         {
-            if (_glides.TryGetValue(t, out var running) && running != null) StopCoroutine(running);
+            if (_glides.TryGetValue(t, out var running) && running.routine != null) StopCoroutine(running.routine);
             _glides.Remove(t);
+            _gliding.Remove(t);
+        }
+
+        /// <summary>Ends a running movement at its target, so the next one doesn't start from a tilted pose in mid-air.</summary>
+        private void FinishGlide(Transform t)
+        {
+            if (!_glides.TryGetValue(t, out var running)) return;
+            StopGlide(t);
+            t.SetPositionAndRotation(running.position, running.rotation);
         }
 
         private IEnumerator GlideRoutine(Transform t, Vector3 position, Quaternion rotation, float duration)
         {
+            _gliding.Add(t);
             Vector3 p0 = t.position;
             Quaternion r0 = t.rotation;
             for (float time = 0f; time < duration; time += Time.deltaTime)
@@ -496,6 +557,7 @@ namespace GameOff.Documents
             }
             t.SetPositionAndRotation(position, rotation);
             _glides.Remove(t);
+            _gliding.Remove(t);
         }
 
         /// <summary>

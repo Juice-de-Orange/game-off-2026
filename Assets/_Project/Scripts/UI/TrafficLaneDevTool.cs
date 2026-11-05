@@ -78,14 +78,13 @@ namespace GameOff.UI
         private bool _look; // Tab: player looks around instead of a free mouse
         private bool _fast;
         private bool _active;
+        private bool _tookControl; // only give back what this tool took: the counter and the letter own the control otherwise
 
         private void Awake()
         {
             _toggleMouse = new InputAction("TrafficDevMouse", InputActionType.Button, "<Keyboard>/tab");
-            if (traffic == null || traffic.Tuning == null) { enabled = false; return; }
-            BuildViews();
-            BuildPanel();
-            _root.SetActive(false);
+            if (traffic == null || traffic.Tuning == null) enabled = false;
+            // The panel (about 130 objects) is built the first time the tool is switched on: most players never do.
         }
 
         private void OnEnable()
@@ -105,6 +104,8 @@ namespace GameOff.UI
         private void OnDestroy()
         {
             _toggleMouse.Dispose();
+            foreach (var v in _views)
+                if (v.boxMaterial != null) Destroy(v.boxMaterial);
 #if UNITY_EDITOR
             if (traffic != null && traffic.Tuning != null) UnityEditor.AssetDatabase.SaveAssetIfDirty(traffic.Tuning);
 #endif
@@ -114,14 +115,21 @@ namespace GameOff.UI
 
         private void SetActive(bool on)
         {
-            if (_root == null || on == _active) return;
+            if (on == _active) return;
+            if (_root == null)
+            {
+                if (!on) return;
+                BuildViews();
+                BuildPanel();
+            }
             _active = on;
             _root.SetActive(on);
             _look = false;
             if (!on)
             {
                 // Paused (switched off in the options): Resume gives the control back itself.
-                if (player != null && !player.ControlEnabled && Time.timeScale > 0f) player.SetControlEnabled(true);
+                if (player != null && _tookControl && Time.timeScale > 0f) player.SetControlEnabled(true);
+                _tookControl = false;
                 _fast = false;
                 traffic.SpeedFactor = 1f;
             }
@@ -134,13 +142,18 @@ namespace GameOff.UI
             bool paused = Time.timeScale == 0f; // the pause menu owns the mouse then
             if (player != null && !paused)
             {
-                if (_toggleMouse.WasPressedThisFrame())
+                if (_toggleMouse.WasPressedThisFrame() && (_look || _tookControl))
                 {
                     _look = !_look;
+                    _tookControl = !_look;
                     player.SetControlEnabled(_look);
                 }
                 // Free mouse whenever the mode is on – also after Resume, a closed window or standing up from the counter.
-                else if (!_look && player.ControlEnabled) player.SetControlEnabled(false);
+                else if (!_look && player.ControlEnabled)
+                {
+                    _tookControl = true;
+                    player.SetControlEnabled(false);
+                }
             }
             bool mouse = !_look;
             _panelGroup.interactable = mouse;

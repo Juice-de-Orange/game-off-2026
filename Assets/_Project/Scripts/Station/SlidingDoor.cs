@@ -70,7 +70,7 @@ namespace GameOff.Station
 
         private void Update()
         {
-            _inside.RemoveWhere(c => c == null || !c.enabled || !c.gameObject.activeInHierarchy);
+            if (_inside.Count > 0) _inside.RemoveWhere(c => c == null || !c.enabled || !c.gameObject.activeInHierarchy);
 
             bool wantOpen = _scriptedOpen || AnyoneAllowedInside();
             if (wantOpen) _lastAllowedTime = Time.time;
@@ -83,8 +83,9 @@ namespace GameOff.Station
             }
 
             float target = opening ? 1f : 0f;
+            float before = _open;
             _open = Mathf.MoveTowards(_open, target, Time.deltaTime / Mathf.Max(0.01f, openSeconds));
-            if (panel != null)
+            if (panel != null && !Mathf.Approximately(_open, before)) // at rest it moves nothing, so physics and culling have nothing to update
             {
                 float eased = _open * _open * (3f - 2f * _open);
                 panel.localPosition = _closedLocalPos + Vector3.left * (slideDistance * eased);

@@ -39,6 +39,18 @@ namespace GameOff.Tests
         }
 
         [Test]
+        public void EveryScheduledDay_HasRules()
+        {
+            // A day without rules can never start a shift, so the bed never lets the player go on (softlock)
+            foreach (string guid in AssetDatabase.FindAssets("t:DaySchedule"))
+            {
+                var schedule = AssetDatabase.LoadAssetAtPath<GameOff.Day.DaySchedule>(AssetDatabase.GUIDToAssetPath(guid));
+                Assert.Greater(schedule.Count, 0, schedule.name);
+                foreach (var entry in schedule.Days) Assert.IsNotNull(entry.rules, schedule.name);
+            }
+        }
+
+        [Test]
         public void EmptyDay_SaysSo()
         {
             var day = ScriptableObject.CreateInstance<DayRules>();

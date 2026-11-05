@@ -94,7 +94,7 @@ namespace GameOff.Travelers
         {
             StopRoutine();
             bubble.Hide();
-            if (_figure != null) _routine = StartCoroutine(Leave(DoorFor(chosen)));
+            if (_figure != null) _routine = StartCoroutine(WalkOff(DoorFor(chosen)));
         }
 
         private Transform DoorFor(Verdict verdict) => verdict switch
@@ -105,7 +105,7 @@ namespace GameOff.Travelers
             _ => hangarDoor,
         };
 
-        private IEnumerator Leave(Transform door)
+        private IEnumerator WalkOff(Transform door)
         {
             var figure = _figure.transform;
             var toDoor = Vector3.ProjectOnPlane(door.position - figure.position, Vector3.up);

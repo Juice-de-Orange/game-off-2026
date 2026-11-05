@@ -29,14 +29,25 @@ namespace GameOff.Counter
         {
             shift.ShiftStarted += OnShiftStarted;
             shift.DecisionMade += OnDecisionMade;
+            shift.DayBegun += Clear;
         }
 
         private void OnDisable()
         {
             shift.ShiftStarted -= OnShiftStarted;
             shift.DecisionMade -= OnDecisionMade;
+            shift.DayBegun -= Clear;
             _queue.Clear();
             _speaking = null; // the coroutine stops with the component
+            subtitleRoot.SetActive(false);
+        }
+
+        /// <summary>A new day: yesterday's lines are not said anymore, even if the officer left before hearing them.</summary>
+        private void Clear()
+        {
+            if (_speaking != null) StopCoroutine(_speaking);
+            _speaking = null;
+            _queue.Clear();
             subtitleRoot.SetActive(false);
         }
 

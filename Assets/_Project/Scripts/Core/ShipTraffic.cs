@@ -13,6 +13,8 @@ namespace GameOff.Core
     {
         [SerializeField] private ShipTrafficTuning tuning;
 
+        private const float MaxStepSeconds = 0.1f; // after a long frame a ship continues, it doesn't jump across the sky
+
         private readonly Dictionary<GameObject, List<Transform>> _pool = new Dictionary<GameObject, List<Transform>>();
         private int _active;
 
@@ -49,6 +51,7 @@ namespace GameOff.Core
             {
                 if (_active < tuning.maxActive) yield return Fly(lane);
                 yield return Wait(Random.Range(lane.interval.x, lane.interval.y));
+                yield return null; // never spin within one frame, even with an interval of 0 and an empty lane
             }
         }
 
@@ -68,7 +71,7 @@ namespace GameOff.Core
             ship.rotation = Quaternion.LookRotation(end - start, Vector3.up) * Quaternion.Euler(0f, tuning.modelYaw, 0f);
             ship.gameObject.SetActive(true);
             _active++;
-            for (float t = 0f; t < duration; t += Time.unscaledDeltaTime * SpeedFactor)
+            for (float t = 0f; t < duration; t += Step)
             {
                 ship.position = Vector3.Lerp(start, end, t / duration);
                 yield return null;
@@ -97,7 +100,9 @@ namespace GameOff.Core
 
         private IEnumerator Wait(float seconds)
         {
-            for (float t = 0f; t < seconds; t += Time.unscaledDeltaTime * SpeedFactor) yield return null;
+            for (float t = 0f; t < seconds; t += Step) yield return null;
         }
+
+        private float Step => Mathf.Min(Time.unscaledDeltaTime, MaxStepSeconds) * SpeedFactor;
     }
 }

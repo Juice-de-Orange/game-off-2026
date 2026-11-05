@@ -21,7 +21,10 @@ namespace GameOff.Counter
 
         /// <param name="revealed">Characters already translated.</param>
         /// <param name="edge">How many characters after those are shown translated but still cyan.</param>
-        public static string Reveal(string plain, int revealed, int edge)
+        public static string Reveal(string plain, int revealed, int edge) => Reveal(plain, Scramble(plain), revealed, edge);
+
+        /// <param name="glyphs">Scramble(plain), made once per line.</param>
+        public static string Reveal(string plain, string glyphs, int revealed, int edge)
         {
             int done = System.Math.Clamp(revealed, 0, plain.Length);
             int edgeEnd = System.Math.Min(plain.Length, done + System.Math.Max(0, edge));
@@ -31,7 +34,7 @@ namespace GameOff.Counter
             {
                 text.Append("<color=").Append(EdgeColor).Append('>');
                 text.Append(plain, done, edgeEnd - done);
-                text.Append(Scramble(plain.Substring(edgeEnd)));
+                text.Append(glyphs, edgeEnd, glyphs.Length - edgeEnd);
                 text.Append("</color>");
             }
             return text.ToString();

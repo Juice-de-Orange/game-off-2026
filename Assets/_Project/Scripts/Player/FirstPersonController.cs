@@ -17,7 +17,15 @@ namespace GameOff.Player
         [SerializeField] private InputActionReference moveAction;
         [SerializeField] private InputActionReference lookAction;
 
+        private const float MaxStepSeconds = 0.05f; // a long frame (loading) must not become one huge step through the floor
+        private const float MaxFallSpeed = 20f;
+        private const float SpawnClearance = 0.05f; // above the floor when placed: touching it exactly can miss it
+        private const float RescueAfterFalling = 3f; // meters below the last solid ground; no drop in the station is that deep
+
         private CharacterController _controller;
+        private Vector3 _lastGround;
+        private float _sensitivitySetting = 1f;
+        private bool _invertY;
         private float _pitch;
         private float _verticalVelocity;
         private bool _controlEnabled = true;
@@ -29,18 +37,29 @@ namespace GameOff.Player
             _controller = GetComponent<CharacterController>();
             _pitch = cameraPivot.localEulerAngles.x;
             if (_pitch > 180f) _pitch -= 360f;
+            _lastGround = transform.position;
         }
 
         private void OnEnable()
         {
             moveAction.action.Enable();
             lookAction.action.Enable();
+            GameSettings.Changed += ReadSettings;
+            ReadSettings();
         }
 
         private void OnDisable()
         {
             moveAction.action.Disable();
             lookAction.action.Disable();
+            GameSettings.Changed -= ReadSettings;
+        }
+
+        // Read once and on changes: PlayerPrefs are native calls, not for every frame of looking around
+        private void ReadSettings()
+        {
+            _sensitivitySetting = GameSettings.MouseSensitivity;
+            _invertY = GameSettings.InvertY;
         }
 
         /// <summary>
@@ -60,8 +79,11 @@ namespace GameOff.Player
         {
             _controller.enabled = false; // the CharacterController would otherwise overwrite the new position
             Vector3 forward = Vector3.ProjectOnPlane(rotation * Vector3.forward, Vector3.up);
+            position += Vector3.up * SpawnClearance;
             transform.SetPositionAndRotation(position, forward.sqrMagnitude > 0.001f ? Quaternion.LookRotation(forward) : transform.rotation);
+            Physics.SyncTransforms(); // the controller's next move must see the new position (auto sync is off)
             _controller.enabled = true;
+            _lastGround = position;
             _pitch = 0f;
             cameraPivot.localRotation = Quaternion.identity;
             _verticalVelocity = 0f;
@@ -79,9 +101,9 @@ namespace GameOff.Player
 
         private void Look(Vector2 delta)
         {
-            float sensitivity = tuning.mouseSensitivity * GameSettings.MouseSensitivity; // option from the menu
+            float sensitivity = tuning.mouseSensitivity * _sensitivitySetting; // option from the menu
             transform.Rotate(0f, delta.x * sensitivity, 0f);
-            float pitchInput = GameSettings.InvertY ? -delta.y : delta.y; // option from the menu (P43)
+            float pitchInput = _invertY ? -delta.y : delta.y; // option from the menu (P43)
             _pitch = Mathf.Clamp(_pitch - pitchInput * sensitivity, -tuning.maxPitch, tuning.maxPitch);
             cameraPivot.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
         }
@@ -91,10 +113,18 @@ namespace GameOff.Player
             Vector3 horizontal = transform.right * input.x + transform.forward * input.y;
             horizontal = Vector3.ClampMagnitude(horizontal, 1f) * tuning.walkSpeed;
 
-            if (_controller.isGrounded && _verticalVelocity < 0f) _verticalVelocity = -2f; // keep grounded on steps
-            _verticalVelocity -= tuning.gravity * Time.deltaTime;
+            if (_controller.isGrounded)
+            {
+                _lastGround = transform.position;
+                if (_verticalVelocity < 0f) _verticalVelocity = -2f; // keep grounded on steps
+            }
+            float dt = Mathf.Min(Time.deltaTime, MaxStepSeconds);
+            _verticalVelocity = Mathf.Max(_verticalVelocity - tuning.gravity * dt, -MaxFallSpeed);
 
-            _controller.Move((horizontal + Vector3.up * _verticalVelocity) * Time.deltaTime);
+            _controller.Move((horizontal + Vector3.up * _verticalVelocity) * dt);
+
+            // Safety net: fell through something after all (B01). Back to where we last stood instead of falling forever.
+            if (transform.position.y < _lastGround.y - RescueAfterFalling) Teleport(_lastGround, transform.rotation);
         }
 
         private static bool IsCursorCaptured() => Cursor.lockState == CursorLockMode.Locked;
