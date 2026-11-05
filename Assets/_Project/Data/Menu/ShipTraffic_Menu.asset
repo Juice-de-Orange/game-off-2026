@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd8f5fd71f38ac4d97c7f91852166fb, type: 3}
+  m_Name: ShipTraffic_Menu
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Core.ShipTrafficTuning
+  lanes:
+  - name: "Far \xB7 freighters"
+    from: {x: -450, y: 60, z: 260}
+    to: {x: 450, y: 40, z: 260}
+    randomOffset: {x: 0, y: 25, z: 60}
+    ships:
+    - {fileID: 919132149155446097, guid: 45021751bc2df5b46a35665961895992, type: 3}
+    - {fileID: 919132149155446097, guid: 1619334e05d809446adfa745ac941e30, type: 3}
+    scale: 0.6
+    speed: {x: 12, y: 20}
+    interval: {x: 20, y: 40}
+    firstDelay: {x: 0, y: 3}
+    reverseChance: 0.5
+  - name: "Middle \xB7 patrol"
+    from: {x: -220, y: 55, z: 45}
+    to: {x: 260, y: 45, z: 45}
+    randomOffset: {x: 0, y: 8, z: 15}
+    ships:
+    - {fileID: 919132149155446097, guid: 8c7c5530943a7214693da04b55873d62, type: 3}
+    scale: 1
+    speed: {x: 35, y: 50}
+    interval: {x: 30, y: 60}
+    firstDelay: {x: 8, y: 15}
+    reverseChance: 0.5
+  - name: "Near \xB7 commuters"
+    from: {x: -110, y: 30, z: -82}
+    to: {x: 70, y: 20, z: -70}
+    randomOffset: {x: 0, y: 5, z: 8}
+    ships:
+    - {fileID: 919132149155446097, guid: 25b765ec163f9fc46b8ce91b1a9522a9, type: 3}
+    scale: 1.5
+    speed: {x: 18, y: 26}
+    interval: {x: 10, y: 20}
+    firstDelay: {x: 3, y: 8}
+    reverseChance: 0.5
+  maxActive: 4
+  modelYaw: 180

@@ -611,7 +611,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     - Händler-Vorrat pro Tag: Sortiment ist unbegrenzt, bis das Balancing etwas anderes verlangt.
 
 ### P47 — Menü-Hintergrund: Schiffsverkehr
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 05.11.)
+- Größe: S · Priorität: Soll · Status: fertig (martin, 05.11.)
 - Braucht: P02 · Folgt auf: P02
 - Ziel: Im Hauptmenü fliegen ab und zu Schiffe an der Station vorbei – das All wirkt lebendig.
 - Enthalten: wiederverwendbarer Baustein **`ShipTraffic`** (feste Bahnen mit zufälligen Abständen und Richtungen, Schiffsliste pro Bahn,
@@ -620,3 +620,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   alle Modelle aus `Art/Models/Ships/` (geliefert)
 - Nicht enthalten: Verkehr im Spiel, Shuttle-Landung, Rampe, Kopplung an den Tagesablauf (alles P25 – nutzt diesen Baustein)
 - Abnahme: Im Menü sieht man innerhalb von ~10 s ein Schiff; nichts fliegt durch die Station oder die Kamera; im WebGL-Build flüssig.
+- Ergebnis (martin, 05.11.):
+  - **Baustein** `Scripts/Core/ShipTraffic.cs` + `TrafficLane.cs` + `ShipTrafficTuning.cs`: Bahnen (von/bis, Streuung, Schiffe, Größe, Tempo,
+    Abstand, erste Verzögerung, Richtungswechsel), Obergrenze `maxActive`, `modelYaw` = 180 (Schiffs-FBX zeigen mit der Nase nach −Z).
+    Schiffe werden einmal erzeugt und wiederverwendet, ohne Lichter, Schatten und Kollision; läuft mit unskalierter Zeit.
+  - **Menü:** `Data/Menu/ShipTraffic_Menu.asset` (hinten Frachter/Tanker alle 20–40 s, Mitte Patrouille 30–60 s, vorn Pendler 10–20 s;
+    Abstand zur Station nachgerechnet ≥ 21 m). Wird nur angelegt, wenn es fehlt – Werte im Inspector ändern, dann **GameOff → Build Menu
+    Scene Only** (neu: baut nur `Menu.unity`, Boot und Main bleiben unberührt).
+  - **Für P25:** eigenes `ShipTrafficTuning` für Main (seltener) anlegen und ein `ShipTraffic`-Objekt damit in Main setzen.
+  - Getestet im Editor und im WebGL-Build (Chrome), 0 Fehler/Warnungen.

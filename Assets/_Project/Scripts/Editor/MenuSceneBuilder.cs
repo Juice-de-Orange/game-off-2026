@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using GameOff.Audio;
+using GameOff.Core;
 using GameOff.Counter;
 using GameOff.Player;
 using GameOff.UI;
@@ -34,6 +35,8 @@ namespace GameOff.EditorTools
         private const string FontAssetPath = "Assets/_Project/Fonts/ShareTechMono SDF.asset";
         private const string CreditsFile = "CREDITS.md";
         private const string SkyboxPath = "Assets/_Project/Art/Materials/Station/M_Sky_Space.mat";
+        private const string TrafficTuningPath = "Assets/_Project/Data/Menu/ShipTraffic_Menu.asset"; // P47, created once, tune in the inspector
+        private const string ShipFolder = "Assets/_Project/Art/Models/Ships/";
         private static readonly string[] BackdropPrefabs =
         {
             "Assets/_Project/Prefabs/Environment/PF_SkyRig.prefab",
@@ -59,6 +62,23 @@ namespace GameOff.EditorTools
 
         private static TMP_FontAsset _font;
         private static GameObject _audioPrefab;
+
+        /// <summary>Only Menu.unity (e.g. after tuning the ship traffic or a station rebuild) – Boot and Main stay untouched.</summary>
+        [MenuItem("GameOff/Build Menu Scene Only")]
+        public static void BuildMenuOnlyFromMenu()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            Debug.Log(BuildMenuOnly());
+        }
+
+        public static string BuildMenuOnly()
+        {
+            _font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontAssetPath);
+            _audioPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(AudioManagerPrefab);
+            var log = new List<string>();
+            BuildMenu(log);
+            return "[MenuSceneBuilder] " + string.Join("; ", log);
+        }
 
         [MenuItem("GameOff/Build Menu Scenes")]
         public static void BuildFromMenu()
@@ -401,6 +421,46 @@ namespace GameOff.EditorTools
             SetVector(drift, "target", BackdropTarget);
             SetVector(drift, "lookOffset", BackdropLookOffset);
             log.Add($"station backdrop ({placed}/{BackdropPrefabs.Length} prefabs)");
+
+            var traffic = new GameObject("ShipTraffic").AddComponent<ShipTraffic>();
+            Set(traffic, "tuning", TrafficTuning(log));
+        }
+
+        /// <summary>
+        /// P47 lanes around the station (target ~(2, 9, 5); the menu camera swings around x -40, z -108 looking north-east).
+        /// Far: freighters/tankers in front of the planet · middle: customs patrol · near: small commuters. Created only if missing.
+        /// </summary>
+        private static ShipTrafficTuning TrafficTuning(List<string> log)
+        {
+            var tuning = AssetDatabase.LoadAssetAtPath<ShipTrafficTuning>(TrafficTuningPath);
+            if (tuning != null) return tuning;
+            GameObject Ship(string name) => AssetDatabase.LoadAssetAtPath<GameObject>(ShipFolder + name + ".fbx");
+            tuning = ScriptableObject.CreateInstance<ShipTrafficTuning>();
+            tuning.maxActive = 4;
+            tuning.modelYaw = 180f; // the ship FBX noses point to -Z
+            tuning.lanes.Add(new TrafficLane
+            {
+                name = "Far · freighters", from = new Vector3(-450f, 60f, 260f), to = new Vector3(450f, 40f, 260f),
+                randomOffset = new Vector3(0f, 25f, 60f), ships = { Ship("SM_Ship_Freighter"), Ship("SM_Ship_Tanker") },
+                scale = 0.6f, speed = new Vector2(12f, 20f), interval = new Vector2(20f, 40f), firstDelay = new Vector2(0f, 3f),
+            });
+            tuning.lanes.Add(new TrafficLane
+            {
+                name = "Middle · patrol", from = new Vector3(-220f, 55f, 45f), to = new Vector3(260f, 45f, 45f),
+                randomOffset = new Vector3(0f, 8f, 15f), ships = { Ship("SM_Ship_Patrol") },
+                scale = 1f, speed = new Vector2(35f, 50f), interval = new Vector2(30f, 60f), firstDelay = new Vector2(8f, 15f),
+            });
+            tuning.lanes.Add(new TrafficLane
+            {
+                name = "Near · commuters", from = new Vector3(-110f, 30f, -82f), to = new Vector3(70f, 20f, -70f),
+                randomOffset = new Vector3(0f, 5f, 8f), ships = { Ship("SM_Ship_TrafficSmall") },
+                scale = 1.5f, speed = new Vector2(18f, 26f), interval = new Vector2(10f, 20f), firstDelay = new Vector2(3f, 8f),
+            });
+            Directory.CreateDirectory(Path.GetDirectoryName(TrafficTuningPath));
+            AssetDatabase.CreateAsset(tuning, TrafficTuningPath);
+            AssetDatabase.SaveAssets();
+            log.Add("ShipTraffic_Menu created");
+            return tuning;
         }
 
         // ---------- Pause menu ----------
