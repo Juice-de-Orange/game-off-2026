@@ -93,7 +93,8 @@ ArtSource/                 Arbeitsdateien (.blend, .psd, Rohaufnahmen) — auße
   und im Session-Briefing.
 - Der Start ist an die Freigabe von `docs/STYLE.md` durch Max gebunden. Danach kommt zuerst ein Muster aus 3 Assets (`assets/P00-sample`).
 - Sie liefert auf einem eigenen Branch `assets/<Paket>`: jede Datei am finalen Pfad (**nie** die `.meta`), Arbeitsdatei unter `ArtSource/`,
-  Vorschaubild unter `docs/asset-previews/`. Dann ein **Pull Request**. Auf `main` schreibt sie nie.
+  Vorschaubild unter `docs/asset-previews/`. Auf `main` schreibt sie nie.
+- **Die Pipeline kann selbst keine Pull Requests anlegen (M002):** Sie pusht den Branch, der Lead schickt Max den PR-Link in den Chat. Eine Lieferung ohne PR ist also ein normaler Zustand. **Das Session-Briefing und `/sync` zeigen Branches, die noch nicht auf `main` sind**; so bleibt nichts liegen wie bei P42.
 - **Jede Lieferung, auch jede Nacharbeit, bekommt einen neuen Branch von aktuellem `main` und einen eigenen PR.** Gemergte
   Branches löscht GitHub automatisch (seit 04.11.); auf alte Branches nicht weiterpushen, sonst entsteht kein PR.
 - **Freigabe und Merge macht immer Max** (Art-Verantwortung). Martin kann Anpassungen anfordern, gibt aber nicht frei.
@@ -121,6 +122,7 @@ auf `main` pushen. Beispiel: `- "2026-11-10 martin: Tresen 20 cm niedriger, Spie
 Die Pipeline arbeitet den Eintrag erneut ab und liefert wieder per Pull Request.
 
 ## Integration nach dem Merge (Max)
+0. **Der schnelle Weg:** `git pull`, dann **GameOff → Rebuild All After Deliveries** (alle Builder in der richtigen Reihenfolge), dann **GameOff → Setup Main Lighting + Bake**. Danach Tests und ein Blick ins Spiel. `Main.unity`, `Menu.unity`, `Boot.unity` und die generierten Prefabs vorher claimen.
 1. `git pull`, Unity öffnen und den Import abwarten.
 2. Prüfen: Ersetzte Dateien haben **keine neue** `.meta` bekommen. Für neue Dateien ohne Platzhalter erzeugt Unity
    eine `.meta` → **sofort committen und pushen**, damit Martin dieselbe GUID bekommt.

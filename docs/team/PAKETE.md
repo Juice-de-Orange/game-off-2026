@@ -21,16 +21,14 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 **Größen:** `S` ≈ ein halber Tag · `M` ≈ 1–2 Tage · `L` ≈ 3–4 Tage. Ein Paket größer als `L` wird aufgeteilt.
 **Priorität:** `Muss` / `Soll` / `Kann` wie in `DESIGN.md`. Muss-Pakete zuerst.
 
-## Reihenfolge (Stand 04.11. abends, max)
+## Reihenfolge (Stand 05.11. abends, max)
 Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächste offene Muss-Paket.
-1. **P41** Regeln an der Pinnwand (Bulletin, Fahndungsliste, Durchsagen, im Sitzen umschauen) — ohne das kennt der Spieler die Regeln nicht
-2. **P40** Reisende in der Prüfkammer & Gespräch (NPC am Fenster, Sprechblasen mit Alien-Übersetzung, Nachfragen per Feld-Klick)
-3. **P08** Entscheidungen & Moral (Geld/Abzug aus `CounterShift.DecisionMade`, Moral, Beschlagnahme, Schleusen-Effekt)
-4. **P09** Tagesablauf (3 Tage, `CounterShift.BeginDay`/`ShiftEnded`) → **P10** Geld, Familie & Abrechnung
-5. **P15** Inhalte für 3 Tage inkl. Story von **The Shifter** (siehe `DESIGN.md`) → **P12** Enden
-6. Parallel: **P02** Startbildschirm (martin, fertig) → **P43** Optionen in Reitern → **P18** Audio-Grundgerüst (martin, fertig) →
-   **P46** Geld, Inventar & Handelsfenster (martin) – **P08, P10, P11, P13 erst danach**, weil sie darauf aufbauen; **P19** WebGL-Build & itch-Upload, **P42** Lieferungen einbauen (max, sobald die Pipeline liefert)
-7. Danach Soll-Pakete (P13, P14, P16, P25–P36) nach Zeit.
+1. **Kern-Loop-Call** (Frage `kern-loop`, vor dem Checkpoint 09.11.): legt Umfang, Geldwerte, Enden und die neuen Pakete P44/P45 fest
+2. **P09** Tagesablauf abnehmen (martin): Reisende lassen sich jetzt abfertigen
+3. **P08** Entscheidungen & Moral → **P10** Geld, Familie & Abrechnung
+4. **P15** Inhalte für 3 Tage inkl. **The Shifter** (auch echte Antworten der Reisenden) → **P12** Enden
+5. **P11** Kiosk, **P13** Heimschicken (Muss-Frage im Call), **P19** itch-Upload
+6. Danach Soll-Pakete nach Zeit: P50 Türschilder, P52 Händlerfiguren (bestellt), P14 Reisende laufen, P16, P25–P36; P53 Wohnmodul erst nach Entwurf und Absprache
 
 ## Vorlage
 ```
@@ -288,6 +286,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Größe: S · Priorität: Muss · Status: offen
 - Braucht: P01
 - Ziel: Erster Build auf itch.io (Entwurf) bis 05.11., danach wiederholbarer Ablauf.
+- Hinweis (max, 05.11.): `GameOff.EditorTools.WebBuild.Build` ist der Build-Einstieg. Die Vorlage für itch muss abgelehnte Maussperren abfangen und 16:9 halten wie `Assets/WebGLTemplates/Kestrel9/index.html` (Ausnahme: Impressum-Fußzeile nur für die Live-Version), siehe P49.
 - Abnahme: Build läuft auf itch.io in Chrome und Firefox, Ablauf ist in `docs/` beschrieben.
 
 ### P20 — Licht & Stimmung der Station
@@ -435,6 +434,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Größe: M · Priorität: Soll · Status: offen
 - Braucht: P07, P09 · Assets: `SM_Counter_Board`, `SM_Counter_Speaker`, `SM_Counter_WarningLamp` (da)
 - Ziel: Der unsichtbare Vorgesetzte und die Regeln sind im Raum präsent.
+- Hinweis (max, 05.11.): Zettel im Sitzen und Durchsagen macht schon P41; hier bleiben Nahansicht im Stehen, Fotos/Memos und die Lampen.
 - Enthalten: Pinnwand [E] Nahansicht: Tagesregeln, Fahndungsfotos, Memos — jeden Morgen kommen Zettel dazu, alte bleiben; Lautsprecher-Lämpchen
   leuchtet bei Durchsagen (Lob, Rüge, neue Anweisung mitten in der Schicht, Text bis Voicelines kommen); Warnlampe dreht rot bei
   Verhaftung/Luftschleuse, gelb wenn ein Reisender eintritt
@@ -668,7 +668,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: Reiter DEV im Optionsmenü (`GameSettings.DevTools`, Standard: Editor an, Build aus); Build-Skript `WebBuild`, eigene Web-Vorlage; Docker-Container auf Geoffrey hinter nginx; GitHub-Actions-Workflow (nachts + per Knopf, baut nur bei geänderten Spieldateien), Rollback; `docs/DEPLOY.md`
 - Nicht enthalten: Repo öffentlich machen, itch-Upload (P19), Schrift und Splash (Martin)
 - Abnahme: `https://kestrel9.maxlworks.com` lädt und ist spielbar; Schalter wirkt sofort in Haupt- und Pausemenü; ein Workflow-Lauf spielt eine neue Version ein, ein Lauf ohne Änderung baut nicht; die anderen Sites auf Geoffrey laufen unverändert.
-- Stand (max, 05.11.): **Live unter https://kestrel9.maxlworks.com** (Ablauf, Rollback, Secrets: `docs/DEPLOY.md`).
+- Stand (max, 05.11. abends): **Live unter https://kestrel9.maxlworks.com** (Ablauf, Handeinspielen, Rollback, Secrets: `docs/DEPLOY.md`), aktuell mit P40, P41, P42, P54, P55, P56.
   - Geprüft: Spiel lädt öffentlich und startet bis Zimmer 103, nur eigene Domain wird geladen; Deploy über den beschränkten Schlüssel; kaputte Version rollt von selbst zurück; falscher Image-Name wird abgewiesen; andere Sites unverändert; 61/61 EditMode-Tests.
   - **Offen für die Abnahme:** Unity-Lizenz + Secrets (max), dann erster Workflow-Lauf; rote Hitboxen und Dev-Knöpfe im Spiel mit Schalter an/aus noch nicht gesehen (nur Menü und Speicherung geprüft).
   - **Für P19 (itch):** Die dortige Web-Vorlage muss abgelehnte Maussperren genauso abfangen wie `Assets/WebGLTemplates/Kestrel9/index.html` (`errorHandler`), sonst stoppt Unitys `alert` das Spiel. Ein 16:9-Bild ist dort ebenfalls nötig: Das Menü ist für 960×540 gebaut und wird in schmalen Fenstern links abgeschnitten.
@@ -691,7 +691,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Hinweis: Größeres Bullauge heißt neues Wandmodul über die Pipeline und neuer Lichtbake. Wird das Wohnmodul (P53) gebaut, zuerst dort klären, wo Zimmer 103 am Ende liegt.
 
 ### P52 — Mehr Figuren: Händler an Kiosk und Bar
-- Größe: M · Priorität: Soll · Status: offen (Idee max, 05.11.)
+- Größe: M · Priorität: Soll · Status: bestellt, wartet auf Lieferung (max baut ein)
 - Braucht: P46 · Folgt auf: P46
 - Ziel: Statt grauer Boxen stehen echte Figuren an Kiosk und Bar.
 - Enthalten: `SM_NPC_Holly.fbx` (ältere Frau), `SM_NPC_Barkeeper.fbx` (vierarmiges Alien mit Atemmaske, Schlauch zum Rucksack), `SM_NPC_Dealer.fbx` (sitzt shady auf einem Barhocker, dunkle, abgewetzte Kleidung mit Kapuze), Beschreibungen von Martin (Handover 05.11.); Einträge in `ASSET-REQUESTS.md`; nach der Lieferung `GameOff/Build Economy into Main`

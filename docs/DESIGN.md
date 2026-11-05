@@ -1,11 +1,11 @@
 # Game Design
 
-> **Status: ENTWURF (31.10.)** — Konzept von Max & Martin vor der Theme-Bekanntgabe, von Claude ausgearbeitet.
-> Punkte mit ❓ sind noch offen. Nach der Theme-Bekanntgabe (01.11., ca. 22:37 MEZ) wird das Theme eingewoben.
+> **Status: in Arbeit (Stand 05.11.)** — Konzept von Max & Martin, von Claude ausgearbeitet. Punkte mit ❓ sind noch offen,
+> viele davon klärt der Kern-Loop-Call (`docs/team/questions/2026-11-05_martin-an-max_kern-loop.md`).
 > Änderungen am Kern nur nach Absprache (Entscheidung zusätzlich in `DECISIONS.md` loggen).
 
 ## Theme
-<Theme + unsere Interpretation in 1–2 Sätzen — folgt nach der Bekanntgabe.>
+**Shift** (Bekanntgabe 01.11.). Grundidee: die Arbeitsschicht. ❓ Die Ausformulierung und ob ein Politik-Umschwung oder der Zerfall der Station fest dazukommt, klärt der Kern-Loop-Call (Thema 1).
 "Theme Interpretation" ist eine eigene Bewertungskategorie im Jam → das Theme muss sichtbar ins Spiel.
 
 ## Pitch
@@ -14,7 +14,7 @@ und entscheidest: durchlassen, abweisen, verhaften — oder die Luftschleuse öf
 deine Familie auf dem Heimatplaneten am Leben. Nach der Schicht läufst du frei über die Station, kaufst
 Gadgets, handelst unter der Theke und schickst Pakete nach Hause.
 
-Arbeitstitel: ❓ (nach dem Theme)
+Titel im Spiel: **Kestrel-9** (Untertitel „Customs & Excise · Night Shift“).
 Sprache des Spiels: Englisch.
 
 ## Kern-Loop (ein Spieltag)
@@ -94,7 +94,7 @@ flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit di
 
 ## Steuerung
 - Ego-Perspektive, **WASD + Maus**, **E** = interagieren.
-- Am Schalter: E → Kamera fährt fest auf den Tisch, Dokumente sind scharfe 2D-Karten, mit der Maus ziehen und vergleichen.
+- Am Schalter: E → Kamera fährt auf den Tisch. Dokumente sind 3D-Papiere: ziehen, per Klick hochhalten und lesen, stempeln. **A/D** oder Pfeile schauen sich um (Pinnwand links). Klick auf ein Feld eines hochgehaltenen Papiers = Nachfrage an den Reisenden. **Q / Esc / Rechtsklick** = zurück, aufstehen.
 - Nur Tastatur & Maus (Browser). Kein Gamepad, kein Mobile.
 
 ## Umfang

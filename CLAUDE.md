@@ -41,7 +41,7 @@ All work is split into clearly scoped packages. This is the team's central devel
 - Rework of a finished package = a new follow-up package (`Folgt auf: Pxx`), never reopen.
 - Done = acceptance criteria met, no console errors, pushed, status `fertig`, short "Ergebnis" note.
 - Need an asset? Order it yourself: add an entry to `docs/ASSET-REQUESTS.md`, run `python tools/check_asset_requests.py`, push to `main` (that is the order, see "Asset bestellen" in `docs/ASSETS.md`), create a placeholder at the final path, keep building. Only large orders or style changes need Max first.
-- Max's asset pipeline delivers via pull requests from `assets/<package>` branches (never pushes to `main`). **Only Max approves and merges** asset PRs, then integrates them in Unity (steps in `docs/ASSETS.md`).
+- Max's asset pipeline delivers on `assets/<package>` branches (never pushes to `main`). It can't open pull requests itself (M002); its lead sends Max the link, and the session briefing and `/sync` list branches not yet on `main`. **Only Max approves and merges** deliveries, then integrates them in Unity (steps in `docs/ASSETS.md`).
 - Want an asset changed? Both people may request it: add a dated line to the entry's `feedback` and set `status: rework` in `docs/ASSET-REQUESTS.md`, push to `main`. Never edit pipeline-delivered files by hand.
 
 ### Before editing a scene, prefab or shared asset → `/claim`
@@ -111,6 +111,7 @@ Assets/
     Data/            ScriptableObjects (tuning values, travelers, day rules, prices)
   ThirdParty/        imported external assets, unmodified (credit in CREDITS.md)
 ArtSource/           .blend/.psd/WAV working files, outside Assets/ (Git LFS)
+deploy/              Live version: Dockerfile, nginx, server templates (`docs/DEPLOY.md`)
 ```
 Asset naming, specs and the placeholder → final swap are defined in `docs/ASSETS.md` and `docs/STYLE.md`.
 - Build features as **prefabs** in your own sandbox scene, then integrate into `Main.unity` with a claim.
@@ -118,9 +119,10 @@ Asset naming, specs and the placeholder → final swap are defined in `docs/ASSE
 - **Generated content — don't hand-edit:** the station (`PF_Station_Graybox`), the exterior (`PF_Exterior`, `PF_SkyRig`), the
   document prefabs, the counter wiring and the front end (`Boot.unity`, `Menu.unity`, `PF_PauseMenu`) are built by editor tools
   (menu `GameOff/`: Build Station Graybox, Build Sky & Exterior, Build Documents, Build Test Day, Integrate Asset Deliveries,
-  Setup Main Lighting + Bake, Build Menu Scenes, Build Traffic into Main). Change the builder code in `Scripts/Editor/`, run the menu, rebake; manual edits
+  Setup Main Lighting + Bake, Build Menu Scenes, Build Traffic into Main, Build Travelers). Change the builder code in `Scripts/Editor/`, run the menu, rebake; manual edits
   in those prefabs are lost on the next run. The menu shows the station as background: after rebuilding station or exterior,
   run Build Menu Scenes too. After asset deliveries, **GameOff/Rebuild All After Deliveries** runs all of them in order; bake after it.
+- **Unity changes files by itself** when opening, playing or building: `ShareTechMono SDF.asset`, `Orbitron SDF.asset`, `ProjectSettings.asset`, `Assets/Resources/`. Restore them before committing unless you changed them on purpose.
 - **Counter rules are tested:** after changing travelers, days or rules run `GameOff/Validate Travelers` and the EditMode tests
   (Test Runner, or `unity command test run --mode EditMode`). Every traveler's computed verdict must match its intended one.
 - Tuning values (speed, damage, timings) go into ScriptableObjects in `Data/`, not hard-coded —

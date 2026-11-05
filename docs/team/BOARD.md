@@ -10,7 +10,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 | 01.11. | Theme kommt ca. **22:37 MEZ** → jeder für sich Gedanken, Repo öffentlich | ✅ Theme "Shift" · Repo noch privat (Call) |
 | 02.11. | Abend-Call: Theme ins Konzept einweben, `DESIGN.md` finalisieren, Unity-Projekt anlegen | 🔶 Projekt + Station 2.0 stehen; Call offen |
 | 03.11. | Prototyp: Kern-Mechanik spielbar (graue Klötze reichen) | ✅ 04.11.: Schicht am Schalter spielbar (Dokumente, Stempel, Regeln, Verwarnzettel); Geld/Tage fehlen noch (P08–P10) |
-| 05.11. | Erster WebGL-Testbuild auf itch.io (Draft) — danach jede Woche ein Build | 🔶 Build läuft lokal (18 MB); 05.11. martin: Build mit Menü (20 MB) in Chrome getestet ✔; Upload P19 offen |
+| 05.11. | Erster WebGL-Testbuild auf itch.io (Draft) — danach jede Woche ein Build | 🔶 Build läuft lokal (18 MB); 05.11. martin: Build mit Menü (20 MB) in Chrome getestet ✔; Upload P19 offen · Live seit 05.11. abends: https://kestrel9.maxlworks.com (P49); itch-Entwurf (P19) noch offen |
 | 09.11. | Checkpoint: Trägt der Kern-Loop? Wenn nicht, jetzt umsteuern | ⏳ |
 | 16.11. | Vertical Slice: ein Level komplett mit Ziel, Sieg/Niederlage, Menü, Neustart | ⏳ |
 | 22.11. | **Feature-Freeze**: keine neuen Features mehr, nur Inhalte & Polish | ⏳ |
@@ -41,6 +41,13 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - Fertig: **P46 Geld, Inventar & Handelsfenster** (Grundgerüst für alle Items/Geld – Anleitung in PAKETE.md → P46 → Ergebnis), Händler-Platzhalter, Drohne
 - Gebaut, Abnahme offen: **P09 Tagesablauf** (wartet auf abfertigbare Reisende)
 - Kern-Loop-Abfrage an max für den gemeinsamen Call; P08/P10/P11/P13 erst nach P46; 54/54 Tests grün
+
+### Stand 05.11. abends (max)
+- Fertig: **P41** Pinnwand + Durchsagen, **P40** Reisende in der Kammer, **P42** Lieferungen eingebaut (Stationshülle, Papiere, Drucker, Stempel), **P54** Orbitron am Schalter; von martin **P47, P55, P56** (Schiffsverkehr, Dev-Werkzeug)
+- **Live-Version:** https://kestrel9.maxlworks.com (`docs/DEPLOY.md`). Automatische Updates warten noch auf Unity-Lizenz + Secrets (P49), bis dahin spielt max von Hand ein
+- Bestellt: Holly, Barkeeper, Dealer (P52). Neue Ideen als Pakete: P50 Türschilder, P51 Zimmer 103, P53 Wohnmodul begehbar. Assets bestellen geht jetzt ohne Rückfrage (`docs/ASSETS.md`)
+- 71/71 EditMode-Tests grün, WebGL-Build 20 MB
+- **Als Nächstes:** Kern-Loop-Call (vor dem Checkpoint 09.11.), martin nimmt P09 ab, dann P08 → P10 → P15 → P12 (`PAKETE.md`)
 
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
@@ -77,6 +84,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | Nr | Was passiert | Wie nachstellen | Gefunden | Wer | Status |
 |---|---|---|---|---|---|
 | B01 | Spieler fällt beim Laden von Main **sofort durch den Boden** der Station | Unity: Play neu gestartet, über das Menü ins Spiel (Start Shift). Tritt nicht jedes Mal auf: Claude konnte es am 05.11. nicht nachstellen (Menü → Main dreimal, Play aus dem Menü mit Messung pro Frame: Spieler steht stabil bei y = 0,03). Unklar, ob es beim Tageswechsel (Teleport ins Bett-Zimmer, P09) auch passieren kann. Ideen: Spawn genau auf Bodenhöhe (`PlayerSpawn` y = 0, Kapsel-Unterkante = Boden), erster Frame nach dem Laden mit großem `deltaTime`. Möglicher Schutz: etwas über dem Boden spawnen + Auffangen unter dem Boden (zurück zur letzten sicheren Position) | martin, 05.11. | — | offen |
+| B05 | **Verwarnzettel bleiben am nächsten Tag auf dem Tisch liegen** (nach einem Dev-Sprung auch die Papiere des letzten Reisenden) | Falsch entscheiden, dann neuer Tag | max, 05.11. (P41) | martin (bei der Abnahme von P09 entscheiden) | offen |
 | B04 | Ware beim Händler **sinkt beim Kauf nicht** (man kann z. B. beliebig viele Painkillers kaufen) | Händler öffnen, denselben Gegenstand mehrfach kaufen | martin, 05.11. | — | offen – in P46 bewusst unbegrenzt, wird in **P11** gelöst (Händler-Inventar mit Vorrat) |
 | B03 | Nach dem Schließen von Fenstern (Brief, Handel, BACK) musste man erst klicken, bevor die Kamera sich dreht | WebGL, Fenster mit Klick schließen | martin, 05.11. | martin | behoben (martin, 05.11.): Maus wird beim Zurückgeben der Steuerung sofort gefangen |
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
@@ -123,7 +131,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 - [x] Session-Briefing zeigt Asset-PRs und Asset-Status (max, 31.10.)
 
 ## Vor dem 01.11. noch offen
-- [ ] martin: Setup nach Anleitung durchlaufen, klonen (Einladung angenommen ✔ 31.10.)
+- [x] martin: Setup nach Anleitung durchlaufen, klonen (Einladung angenommen ✔ 31.10.)
 - [x] martin: itch.io-Benutzernamen an Max schicken → `iMaterix`
 - [x] beide: gemeinsamen Chat einrichten (Discord)
 - [x] beide: Ablauf zum Start: Theme anschauen, Gedanken machen, Abend-Call, gemeinsam festlegen
@@ -134,13 +142,13 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 - [ ] max: Tools installieren/testen: Blender (FBX-Export nach `docs/ASSETS.md`), Texturtool, Audacity
 - [x] max: Deploy-Key mit Schreibrecht für die Asset-Pipeline eintragen (31.10., Titel `asset-pipeline`)
 - [ ] max: Ab 01.11. (Repo öffentlich): `main` per Ruleset schützen — nur max/martin pushen direkt, Pipeline nur per PR
-- [ ] **beide, Call 02.11.: Repo öffentlich machen.** Vorher die urheberrechtlich geschützten Referenzbilder (`docs/style/refs/ai_*`, `mw_*`)
+- [ ] **beide, im Kern-Loop-Call klären: Repo öffentlich machen (Pflicht bis zur Abgabe).** Vorher die urheberrechtlich geschützten Referenzbilder (`docs/style/refs/ai_*`, `mw_*`)
   aus der Git-Historie entfernen (einmaliger Force-Push nach Absprache, Martin klont danach neu), Bilder lokal/privat weiter nutzen.
   Max hat zugestimmt (02.11.), Martin muss noch zustimmen. Repo ist bis dahin privat (Pflicht: öffentlich bis 01.12.).
-- [ ] beide, Call 02.11.: **Audio höher priorisieren** — Audio ist eine der 6 Bewertungskategorien (P18 + Atmo-Sounds als Muss?).
+- [ ] beide, im Kern-Loop-Call: **Audio höher priorisieren** — Audio ist eine der 6 Bewertungskategorien (P18 + Atmo-Sounds als Muss?).
 - [x] Lizenz: Code MIT (`LICENSE`), eigene Assets vorbehalten, KI-Offenlegung im README (max, 02.11.)
 - [x] max: 35 Referenzbilder in `docs/style/refs/` (31.10.)
-- [ ] max: `docs/STYLE.md` + Palette prüfen, nach dem Theme freigeben → Pipeline baut 3 Muster-Assets
+- [x] max: `docs/STYLE.md` + Palette prüfen, nach dem Theme freigeben → Pipeline baut 3 Muster-Assets
 - [ ] max: ElevenLabs-Lizenz klären (Free-Plan erlaubt keine kommerzielle Nutzung, verlangt Namensnennung)
 - [x] beide: Art-Style-Richtung: Mouthwashing-Grafik + Alien-Isolation-Assets (final am 02.11. nach dem Theme)
 - [x] beide: Tech-Stack bestätigt (31.10., in `DECISIONS.md`)

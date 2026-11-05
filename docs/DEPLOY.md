@@ -11,6 +11,8 @@ GitHub Actions (.github/workflows/deploy-web.yml), nachts 03:00 Uhr MEZ oder per
   → docker save | ssh geoffrey → /opt/kestrel9/deploy.sh
        prüft den Image-Namen, startet das Image, prüft die Antwort, bei Fehler zurück auf die vorige Version
 ```
+**Stand 05.11.:** Der Workflow baut noch nicht, weil die Secrets fehlen. Bis dahin spielt max von Hand ein (unten).
+
 Wer sofort eine neue Version will: GitHub → Actions → **Deploy web version** → **Run workflow**.
 Schlägt ein Lauf fehl, bleibt die letzte Version online, und GitHub schickt eine Mail.
 
@@ -31,6 +33,16 @@ Unity muss dafür geschlossen sein:
 Unity.exe -batchmode -nographics -buildTarget WebGL -projectPath . -executeMethod GameOff.EditorTools.WebBuild.Build -customBuildPath <Ordner außerhalb des Repos> -quit -logFile -
 ```
 
+Danach Unitys eigene Änderungen zurücksetzen: `ShareTechMono SDF.asset`, `Orbitron SDF.asset`, `ProjectSettings.asset`, `Assets/Resources/`.
+
+## Von Hand einspielen
+1. Commit pushen und dafür lokal bauen (oben). Der Commit bestimmt die Version: `S=$(git rev-parse <commit>)`.
+2. Build als `site/` zusammen mit `deploy/Dockerfile` und `deploy/nginx.conf` nach Geoffrey in einen leeren Ordner kopieren, dort `docker build --build-arg GIT_SHA=$S -t kestrel9:$S .`
+3. `docker save kestrel9:$S | SSH_ORIGINAL_COMMAND="deploy $S" /opt/kestrel9/deploy.sh` (startet, prüft, rollt bei Fehler zurück).
+4. Prüfen: `curl https://kestrel9.maxlworks.com/version.txt`. Besucher sind nur Sekunden unterbrochen.
+
+**Lokal im Browser testen:** Build-Ordner mit `python -m http.server` ausliefern. Den Stuhl kann die Automatisierung nicht erreichen; dafür in einer Testkopie der `index.html` die Instanz merken (`.then(function (i) { window.k9 = i; ...`), dann `k9.SendMessage('PF_CounterStation','Sit')`. Echte Tasten und den Weg zum Stuhl prüft ein Mensch.
+
 ## Secrets (GitHub → Settings → Secrets and variables → Actions)
 | Name | Inhalt |
 |---|---|
@@ -38,7 +50,7 @@ Unity.exe -batchmode -nographics -buildTarget WebGL -projectPath . -executeMetho
 | `UNITY_EMAIL`, `UNITY_PASSWORD` | Unity-Login |
 | `DEPLOY_KEY` | Privater SSH-Schlüssel, in `authorized_keys` von `max@geoffrey` auf `deploy.sh` festgelegt |
 
-Fehlen Secrets, baut der Workflow nicht und zeigt nur eine Warnung.
+Fehlen Secrets, baut der Workflow nicht und zeigt nur eine Warnung. Setzen in einem eigenen Terminal, damit nichts im Verlauf steht: `python deploy/set-secrets.py` (liest den privaten Schlüssel aus `~/.ssh/kestrel9_deploy_key`, fragt den Unity-Login ab).
 
 ## Dev-Werkzeuge
 Im Build standardmäßig aus, Besucher schalten sie unter Options → DEV ein. **Vor der Abgabe:** Reiter im `MenuSceneBuilder` entfernen und

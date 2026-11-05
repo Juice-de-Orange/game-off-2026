@@ -91,7 +91,7 @@ in `docs/ASSET-REQUESTS.md`.
 - von: max
 - an: pipeline
 - betrifft: `ASSET-REQUESTS.md`, Pakete P22–P26
-- status: offen
+- status: erledigt
 - meldung: 50 neue Einträge (41 Modelle, 9 Texturen). Bitte in dieser Reihenfolge:
   1. P22 Bausatz-Ergänzungen bis 09.11.: `SM_Station_Window_Curved`, `SM_Station_Floor_DeckRound`, `SM_Station_Ceiling_DeckRound`,
      `SM_Station_Steps_2m`, `SM_Station_Wall_Window_2x3`, `SM_Hangar_Wall_4x4`, `SM_Hangar_Floor_4x4`, `SM_Hangar_Ceiling_4x4`,
@@ -101,7 +101,7 @@ in `docs/ASSET-REQUESTS.md`.
      nur aus der Ferne gesehen; Browser-Downloadgröße im Blick behalten.
   4. P26 Details bis 16.11.
   Geändert: `T_Sky_Space` nur noch Sterne + Nebel (Planeten sind eigene Objekte); `SM_Station_Window_Panorama` entfällt.
-- antwort:
+- antwort: max/Claude, 05.11.: Alle Einträge geliefert und `final`; `SM_Station_Window_Panorama` entfällt.
 
 ### M004 — Hangartor: Eintrag 16 x 7 m, Grundriss 2.0 hat 28 x 12 m
 - datum: 2026-11-02
@@ -119,21 +119,21 @@ in `docs/ASSET-REQUESTS.md`.
 - von: max
 - an: pipeline
 - betrifft: `ASSET-REQUESTS.md`
-- status: offen
+- status: erledigt
 - meldung: Max hat alle gelieferten Assets durchgesehen und Funktionen festgelegt. Daraus:
   - **rework** `SM_Hangar_Shuttle`: Heckrampe als eigenes Unterobjekt `Ramp` mit Pivot an der Angel (klappt per Skript hoch/runter).
   - **rework** `SM_Station_Hatch_Airlock`: siehe M005 Punkt 5.
   - **neu**: `SM_Station_Lintel_4x08`, `SM_Station_Wall_Porthole_2x3`, `SM_Station_Wall_Door_2x3_Narrow`,
     Beschlagnahme-Gegenstände `SM_Item_*` (6 Stück), `UI_Telescope_Overlay`, `UI_Family_Photo` (3 Zustände).
   Reihenfolge: zuerst die drei Bausatz-Teile und die beiden Reworks, dann Items/UI.
-- antwort:
+- antwort: max/Claude, 05.11.: Alle Einträge geliefert und `final`; offen bleiben nur `SFX_Door_*` (P27).
 
 ### M007 — Mehr Abwechslung und Rundungen (21 neue Einträge)
 - datum: 2026-11-02
 - von: max
 - an: pipeline
 - betrifft: `ASSET-REQUESTS.md`, Bausatz
-- status: offen
+- status: erledigt
 - meldung: Max findet die Wände zu gleich und die Station zu eckig. Neu (alle P1 bis 09.11., außer Geländer):
   - Wandvarianten als **eigene Dateien** (bisher nur als "Varianten" im Grundwand-Eintrag, wurden nicht geliefert):
     `_Padded`, `_Panel`, `_Pipes`, `_Vent`, `_Damaged`, `_Screen`, `_Lockers`, dazu `SM_Station_Wall_2x1`, `SM_Station_Floor_2x2_Grate`,
@@ -142,7 +142,7 @@ in `docs/ASSET-REQUESTS.md`.
     `SM_Station_DoorTrim_Round` (+ `_Narrow`), `SM_Station_Wall_Arch_2x3`, `SM_Station_DeckArch`, `SM_Hall_CeilingDome`,
     `SM_Deck_Railing`, `SM_Hangar_RibArch`.
   Der Builder setzt alle automatisch, sobald die Dateien da sind. Reihenfolge: Wandvarianten zuerst, dann Gewölbe/Ecken/Bögen.
-- antwort:
+- antwort: max/Claude, 05.11.: Alle Einträge geliefert und `final`.
 
 ### M008 — Offene Maße und Details aus den Lieferungen vom 02.11.
 - datum: 2026-11-02
@@ -312,5 +312,15 @@ in `docs/ASSET-REQUESTS.md`.
   Stil wie die KESTREL-Habmodule (die gefallen Max sehr), niedrige Texeldichte. Hüllplatten müssen nahtlos kacheln.
   Reihenfolge: Hülle zuerst, dann Verbindungen, dann Greebles. Der Builder setzt alle automatisch, sobald die Dateien da sind.
 - antwort:
-- antwort: max/Claude, 05.11.: Alle Lieferungen vom 04.11. (P39, P06, P07, P38) freigegeben, gemergt, eingebaut und neu gebacken (P42). Die Branches hatten keine Pull Requests und lagen deshalb unbemerkt da: Bitte künftig einen PR öffnen oder hier melden, dass ein Branch bereitliegt.
+- antwort: max/Claude, 05.11.: Alle Lieferungen vom 04.11. (P39, P06, P07, P38) freigegeben, gemergt, eingebaut und neu gebacken (P42). Die Branches lagen seit dem 04.11. ohne PR auf GitHub. Für künftige Lieferungen siehe M016.
 
+### M016 — Fertige Branches weiter melden; neue Aufträge P52
+- datum: 2026-11-05
+- von: max
+- an: pipeline
+- betrifft: Lieferablauf (`assets/*`-Branches), `SM_NPC_Holly`, `SM_NPC_Barkeeper`, `SM_NPC_Dealer`
+- status: offen
+- meldung: Die Lieferungen P39, P06, P07 und P38 vom 04.11. lagen ohne PR auf GitHub, bis sie am 05.11. zufällig auffielen. Der Ablauf aus M002 bleibt:
+  Branch pushen, der Lead schickt Max den PR-Link in den Chat. Bitte weiter jede fertige Lieferung melden. Das Session-Briefing des Teams zeigt solche Branches jetzt zusätzlich an.
+  Neu: Martin darf ab jetzt ebenfalls direkt bestellen (`ASSETS.md`). Drei neue Figuren stehen in `ASSET-REQUESTS.md` (P52, statisch ohne Rig, Blick +Z, bis 16.11.).
+- antwort:

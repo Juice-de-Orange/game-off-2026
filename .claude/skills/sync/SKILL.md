@@ -21,6 +21,8 @@ description: Team sync at session start or on request - pull latest changes, sho
 6b. `docs/PIPELINE.md`: messages with `an: team` and `status: offen` from the asset pipeline — show them first,
    fix what they report (e.g. broken YAML in `ASSET-REQUESTS.md`, check with `python tools/check_asset_requests.py`),
    write `antwort`, set `status: erledigt`, push.
+6c. Asset deliveries: open PRs (`gh pr list`) **and** `origin/assets/*` branches with commits not on `main` (`git rev-list --count origin/main..<branch>`).
+   The pipeline can't open PRs itself (M002), so a finished delivery may only exist as a branch. Tell Max, show the previews from the branch; only Max approves.
 7. `docs/team/BOARD.md` → "In Arbeit": list what the other has claimed (don't touch) and what I still hold.
 8. End with a suggestion of what to work on next (from my last handover's "Nächste Schritte" and the backlog),
    as a multiple-choice question.

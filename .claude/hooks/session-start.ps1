@@ -95,6 +95,15 @@ if ($LASTEXITCODE -eq 0) {
     Write-Output "Asset pull requests: could not check (gh not logged in?)."
 }
 
+# The pipeline can't open pull requests (M002): a finished delivery may only exist as a branch.
+$assetBranches = @(git branch -r --list 'origin/assets/*' 2>$null | ForEach-Object { $_.Trim() } |
+    Where-Object { [int](git rev-list --count "origin/main..$_" 2>$null) -gt 0 } |
+    ForEach-Object { "  - $_" })
+if ($assetBranches.Count -gt 0) {
+    Write-Output "ASSET BRANCHES NOT ON MAIN YET (deliveries without a merge; only max approves):"
+    $assetBranches | Write-Output
+}
+
 Write-Output "Follow the session rhythm in CLAUDE.md: greet the person in German, then run /sync."
 Write-Output "=== END TEAM BRIEFING ==="
 exit 0

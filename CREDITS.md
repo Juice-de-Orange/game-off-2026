@@ -1,5 +1,8 @@
 # Credits
 
+**Team:** Martin (iMaterix), Max (Juice-de-Orange). **Lead Playtester:** Pep (SuperGoat).
+The in-game credits come from `MenuSceneBuilder` (team) and from the table below (assets).
+
 Every third-party asset used in the game, with source and license.
 Only use assets whose license allows use in a public, open-source game jam entry
 (CC0 is easiest; CC-BY requires attribution here).

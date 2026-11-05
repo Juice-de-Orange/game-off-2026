@@ -54,6 +54,11 @@
 | Fenster Schalter → Hangar (2× `SM_Station_Wall_Window_2x3`) | Z = −12 | X −6..−2 | 0,9–2,4 m |
 | Bullauge Zimmer 103 (`SM_Station_Wall_Porthole_2x3`) | X = −20 | Z = 5 | Ø 0,6 m, Mitte 1,5 m |
 
+## Am Schalter im Sitzen (Stand P40/P41)
+- **Blick:** Kamera 1,55 m hoch, 20° geneigt, mit A/D ±70° drehbar (`SeatedLookTuning`), die Neigung geht dabei auf waagerecht.
+- **Pinnwand:** `SM_Counter_Board` an der Nordwand des Schalterraums, Mitte (−1,5 / 1,75 / −6,23), etwa 80° links vom Tisch; zwei Zettel, Position in `DocumentPrefabBuilder.WireBoard` (Kopie, bei Verschieben mit anpassen).
+- **Reisender:** auf der Standmarkierung (2, −9), Blick zum Schalter. Abgang etwa 1 m Richtung Tür: durchlassen und verhaften Nordtür, abweisen Hangartür, Schleuse Außenschott.
+
 ## Wichtige Positionen (für Spawnpunkte, NavMesh, Interaktion)
 | Punkt | Position (X, Z) |
 |---|---|
@@ -118,7 +123,7 @@
   und senkt die Sonne von 16° auf 3° → das Licht durch die Fenster ändert sich jeden Tag (Theme "Shift"). Im Editor: Feld `previewDay`.
 - Shader: `GameOff/SkyPlanet` (Tag/Nacht nach `_GameOffSunDir`, Atmosphärenrand), `GameOff/SkyGlow` (Billboard im Vertex-Shader),
   `GameOff/PlanetRing`. Kein Nebel auf Himmelsobjekten.
-- **Außenwelt** (Platzhalter bis zur Lieferung): Wohnmodule West/Ost, Träger, Solarflügel Nord/Süd, Antenne, Andockarm mit geparktem Schiff,
+- **Außenwelt** (Hülle und Verbindungsteile geliefert, P42): Wohnmodule West/Ost (nur Außenmodell, begehbar erst mit P53), Träger, Solarflügel Nord/Süd, Antenne, Andockarm mit geparktem Schiff,
   Einfassung der Hangaröffnung, blinkende Positionslichter (`BlinkLight`). Sichtbar von Plattform, Bar und Hangar.
 - Nebeldichte auf 0,012 gesenkt, damit die Außenwelt durch die Fenster sichtbar bleibt.
 - Platzhalter-Texturen (prozedural) liegen an den finalen Pfaden unter `Art/Textures/Sky/` — die Pipeline ersetzt nur die Dateien.

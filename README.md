@@ -2,8 +2,9 @@
 
 Our entry for [GitHub Game Off 2026](https://itch.io/jam/game-off-2026).
 
-- **Theme:** announced November 1st, 2026 (~22:37 CET)
-- **Concept (draft):** first-person customs inspector on a small, run-down space station — check travelers'
+- **Theme:** Shift
+- **Play the current build:** https://kestrel9.maxlworks.com (work in progress, updated from `main`)
+- **Concept:** *Kestrel-9*, a first-person customs inspector on a small, run-down space station — check travelers'
   papers, let them pass, arrest them or open the airlock, and keep your family back home alive.
   See [docs/DESIGN.md](docs/DESIGN.md).
 - **Engine:** Unity 6000.3.23f1 (exact version — do not upgrade)
@@ -22,7 +23,7 @@ Our entry for [GitHub Game Off 2026](https://itch.io/jam/game-off-2026).
 - Scenes/prefabs/shared assets are claimed before editing (`/claim`), each person tests in their own sandbox scene.
 - Assets: rules in [docs/ASSETS.md](docs/ASSETS.md), style in [docs/STYLE.md](docs/STYLE.md),
   requests in [docs/ASSET-REQUESTS.md](docs/ASSET-REQUESTS.md) (delivered via pull requests, approved by Max).
-- Builds never go into git — they go to itch.io.
+- Builds never go into git: they go to itch.io and to the live version ([docs/DEPLOY.md](docs/DEPLOY.md)).
 - Every external asset (art, sound, font, music) goes into [CREDITS.md](CREDITS.md) with its license.
 - Coordination happens in [docs/team/](docs/team/BOARD.md) via the Claude Code commands
   `/sync`, `/claim`, `/ask`, `/handover` — rules in [CLAUDE.md](CLAUDE.md).
