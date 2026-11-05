@@ -142,9 +142,9 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 - [ ] max: Tools installieren/testen: Blender (FBX-Export nach `docs/ASSETS.md`), Texturtool, Audacity
 - [x] max: Deploy-Key mit Schreibrecht für die Asset-Pipeline eintragen (31.10., Titel `asset-pipeline`)
 - [ ] max: Ab 01.11. (Repo öffentlich): `main` per Ruleset schützen — nur max/martin pushen direkt, Pipeline nur per PR
-- [ ] **beide, im Kern-Loop-Call klären: Repo öffentlich machen (Pflicht bis zur Abgabe).** Vorher die urheberrechtlich geschützten Referenzbilder (`docs/style/refs/ai_*`, `mw_*`)
+- [ ] **Repo öffentlich machen (Pflicht bis zur Abgabe). Max und Martin haben das geklärt (max, 05.11.); die Umsetzung steht noch aus.** Vorher die urheberrechtlich geschützten Referenzbilder (`docs/style/refs/ai_*`, `mw_*`)
   aus der Git-Historie entfernen (einmaliger Force-Push nach Absprache, Martin klont danach neu), Bilder lokal/privat weiter nutzen.
-  Max hat zugestimmt (02.11.), Martin muss noch zustimmen. Repo ist bis dahin privat (Pflicht: öffentlich bis 01.12.).
+  Auf GitHub ist es am 05.11. noch privat, die Bilder liegen noch in der Historie. Pflicht: öffentlich bis 01.12.
 - [ ] beide, im Kern-Loop-Call: **Audio höher priorisieren** — Audio ist eine der 6 Bewertungskategorien (P18 + Atmo-Sounds als Muss?).
 - [x] Lizenz: Code MIT (`LICENSE`), eigene Assets vorbehalten, KI-Offenlegung im README (max, 02.11.)
 - [x] max: 35 Referenzbilder in `docs/style/refs/` (31.10.)
