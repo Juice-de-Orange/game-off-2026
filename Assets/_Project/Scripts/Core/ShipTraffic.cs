@@ -16,6 +16,17 @@ namespace GameOff.Core
         private readonly Dictionary<GameObject, List<Transform>> _pool = new Dictionary<GameObject, List<Transform>>();
         private int _active;
 
+        /// <summary>Time-lapse factor for the traffic dev tool (P56); 1 = normal.</summary>
+        public float SpeedFactor { get; set; } = 1f;
+
+        public ShipTrafficTuning Tuning => tuning;
+
+        /// <summary>Sends one ship down the lane right away (dev tool), ignoring maxActive and the interval.</summary>
+        public void LaunchNow(TrafficLane lane)
+        {
+            if (isActiveAndEnabled && lane.ships.Count > 0) StartCoroutine(Fly(lane));
+        }
+
         private void OnEnable()
         {
             if (tuning == null) return;
@@ -57,7 +68,7 @@ namespace GameOff.Core
             ship.rotation = Quaternion.LookRotation(end - start, Vector3.up) * Quaternion.Euler(0f, tuning.modelYaw, 0f);
             ship.gameObject.SetActive(true);
             _active++;
-            for (float t = 0f; t < duration; t += Time.unscaledDeltaTime)
+            for (float t = 0f; t < duration; t += Time.unscaledDeltaTime * SpeedFactor)
             {
                 ship.position = Vector3.Lerp(start, end, t / duration);
                 yield return null;
@@ -84,9 +95,9 @@ namespace GameOff.Core
             return copy.transform;
         }
 
-        private static IEnumerator Wait(float seconds)
+        private IEnumerator Wait(float seconds)
         {
-            for (float t = 0f; t < seconds; t += Time.unscaledDeltaTime) yield return null;
+            for (float t = 0f; t < seconds; t += Time.unscaledDeltaTime * SpeedFactor) yield return null;
         }
     }
 }

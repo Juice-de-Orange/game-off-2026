@@ -118,7 +118,7 @@ Asset naming, specs and the placeholder → final swap are defined in `docs/ASSE
 - **Generated content — don't hand-edit:** the station (`PF_Station_Graybox`), the exterior (`PF_Exterior`, `PF_SkyRig`), the
   document prefabs, the counter wiring and the front end (`Boot.unity`, `Menu.unity`, `PF_PauseMenu`) are built by editor tools
   (menu `GameOff/`: Build Station Graybox, Build Sky & Exterior, Build Documents, Build Test Day, Integrate Asset Deliveries,
-  Setup Main Lighting + Bake, Build Menu Scenes). Change the builder code in `Scripts/Editor/`, run the menu, rebake; manual edits
+  Setup Main Lighting + Bake, Build Menu Scenes, Build Traffic into Main). Change the builder code in `Scripts/Editor/`, run the menu, rebake; manual edits
   in those prefabs are lost on the next run. The menu shows the station as background: after rebuilding station or exterior,
   run Build Menu Scenes too.
 - **Counter rules are tested:** after changing travelers, days or rules run `GameOff/Validate Travelers` and the EditMode tests
