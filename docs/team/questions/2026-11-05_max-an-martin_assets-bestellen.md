@@ -1,7 +1,7 @@
 ---
 von: max
 an: martin
-status: offen
+status: erledigt
 erstellt: 2026-11-05 19:40
 blockiert: nein
 ---
@@ -27,3 +27,5 @@ Ist der Ablauf für dich klar?
 Du bestellst ab jetzt selbst. Blockiert nichts.
 
 ## Antwort
+
+**Martin, 05.11.: A) Ja, klar.** Martin bestellt ab jetzt selbst über seinen Claude (Eintrag in `ASSET-REQUESTS.md`, Prüfskript, Push auf `main`).

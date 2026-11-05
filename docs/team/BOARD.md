@@ -54,6 +54,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P09 Tagesablauf (wartet auf abfertigbare Reisende für die Abnahme) | — | 05.11. |
+| martin | P55 Verkehr vor Plattform- und Barfenster | `Main.unity` (nur neues `PF_Traffic`) | 05.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
