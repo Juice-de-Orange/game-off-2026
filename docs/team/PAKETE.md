@@ -757,3 +757,11 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   **COPY ALL** = alle Bahnen so kopieren, **RESET** = zurück zum letzten Speicherstand, **SHIP NOW** + **TIME x4** zum schnellen
   Anschauen. Rote, blinkende Linie = zu nah an der Station (< 15 m inkl. Streuung und Schiffsbreite).
   Achtung: Alle drei Bahnen liegen vom Fenster aus fast auf derselben Höhe am Himmel (~31° über dem Fachwerk) → Linien überdecken sich.
+
+### P57 — Nachtlauf: Bugs beheben, Spiel optimieren
+- Größe: L · Priorität: Muss · Status: in Arbeit (max, 05.11.)
+- Braucht: — · Folgt auf: P40, P41, P42, P55
+- Ziel: Bekannte und neu gefundene Bugs sind behoben, Ruckler sind belegt und reduziert, Spiel lädt und läuft spürbar besser.
+- Enthalten: B01, B05, Softlock Papier unter der Schublade, einfache Bugs; Messung im WebGL-Build; Grundlast (Occlusion, Schatten, HDR), Download und RAM, Skripte
+- Nicht enthalten: neue Funktionen, Spielregeln und Spielwerte (P58)
+- Abnahme: Vorher-Nachher-Zahlen im Ergebnis; Tests grün; vollständiger Durchlauf im WebGL-Build ohne neue Konsolenfehler.
