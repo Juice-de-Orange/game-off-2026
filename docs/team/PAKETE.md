@@ -185,6 +185,16 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: `DayManager`, Morgen-Brief + Bulletin, Schichtende nach Anzahl Reisender, Bett in der Unterkunft beendet den Tag
 - Nicht enthalten: Abrechnung (P10)
 - Abnahme: Drei Tage hintereinander durchspielbar (mit Test-Reisenden).
+- Stand 05.11. (martin): gebaut und im Editor getestet, **noch nicht abgenommen**: Das echte Schichtende (alle Reisenden abgefertigt)
+  ist noch nicht gespielt, weil am Schalter gerade P40/P41 entstehen; im Editor nur simuliert bzw. per Dev-Knopf.
+  - `Scripts/Day/`: `DayManager` (Morgen → Schicht → Feierabend → Nacht → nächster Tag, nach dem letzten Tag Platzhalter-Ende),
+    `DayFlowUI` (Brief, Hinweise, Abblende, Bett-Abfrage, Ende), `DaySchedule` + `DayEntry` (`Data/Days/DaySchedule.asset`: 3 × `Day1_Test`,
+    Platzhalter-Briefe, „New today“-Zeile; Annahme Bulletin siehe Frage an max).
+  - `Prefabs/Day/PF_DayFlow.prefab` in Main, gebaut von **GameOff → Build Day Flow into Main** (`DayFlowBuilder`). Bett-Hitbox wird an
+    das Bett-Modell `SM_Motel_Bed` angepasst. Bett fragt immer nach („End day N?“ / „Travelers are still waiting“).
+  - Nutzt `CounterShift.BeginDay`/`ShiftEnded` und `SkyRig.SetDay` unverändert. Ereignisse: `DayStarted`, `ShiftOver`, `DayEnded`, `RunFinished`.
+  - **Dev-Werkzeuge** (`DayManager.showDevTools`, an): roter **Dev_end_Day**-Knopf im Bett-Fenster + sichtbare Bett-Hitbox.
+    **Vor der Abgabe ausschalten.** Bekannt: Dev_end_Day mitten im Reisenden lässt dessen Papiere bis zum nächsten Tag auf dem Tisch.
 
 ### P10 — Geld, Familie & Abrechnung
 - Größe: M · Priorität: Muss · Status: offen

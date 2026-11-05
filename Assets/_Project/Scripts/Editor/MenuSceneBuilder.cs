@@ -49,13 +49,13 @@ namespace GameOff.EditorTools
         private const string GameSubtitle = "CUSTOMS & EXCISE  ·  NIGHT SHIFT";
 
         // STYLE.md palette
-        private static readonly Color Backdrop = Hex("0D0F14");
-        private static readonly Color Panel = Hex("1B1F27");
-        private static readonly Color ButtonIdle = Hex("2C323C");
-        private static readonly Color ButtonHover = Hex("444B55");
-        private static readonly Color Amber = Hex("FFD36B");
-        private static readonly Color TextLight = Hex("E2DDCF");
-        private static readonly Color TextDim = Hex("8B9096");
+        internal static readonly Color Backdrop = Hex("0D0F14");
+        internal static readonly Color Panel = Hex("1B1F27");
+        internal static readonly Color ButtonIdle = Hex("2C323C");
+        internal static readonly Color ButtonHover = Hex("444B55");
+        internal static readonly Color Amber = Hex("FFD36B");
+        internal static readonly Color TextLight = Hex("E2DDCF");
+        internal static readonly Color TextDim = Hex("8B9096");
 
         private static TMP_FontAsset _font;
         private static GameObject _audioPrefab;
@@ -546,7 +546,7 @@ namespace GameOff.EditorTools
             if (parent != null) es.transform.SetParent(parent, false);
         }
 
-        private static Transform CreateCanvas(string name, int sortingOrder)
+        internal static Transform CreateCanvas(string name, int sortingOrder)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
             var canvas = go.GetComponent<Canvas>();
@@ -570,8 +570,9 @@ namespace GameOff.EditorTools
             return go.transform;
         }
 
-        private static TMP_Text Label(Transform parent, string name, string text, float size, Color color, Vector2 pos, Vector2 box)
+        internal static TMP_Text Label(Transform parent, string name, string text, float size, Color color, Vector2 pos, Vector2 box)
         {
+            if (_font == null) _font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontAssetPath);
             var go = new GameObject(name, typeof(RectTransform), typeof(TextMeshProUGUI));
             go.transform.SetParent(parent, false);
             var rt = go.GetComponent<RectTransform>();
@@ -587,10 +588,10 @@ namespace GameOff.EditorTools
             return tmp;
         }
 
-        private static Button MenuButton(Transform parent, string name, string text, Vector2 pos) =>
+        internal static Button MenuButton(Transform parent, string name, string text, Vector2 pos) =>
             MenuButton(parent, name, text, pos, new Vector2(280f, 50f), 24);
 
-        private static Button MenuButton(Transform parent, string name, string text, Vector2 pos, Vector2 size, float fontSize)
+        internal static Button MenuButton(Transform parent, string name, string text, Vector2 pos, Vector2 size, float fontSize)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button));
             go.transform.SetParent(parent, false);
@@ -645,7 +646,7 @@ namespace GameOff.EditorTools
             return sliderGo.GetComponent<Slider>();
         }
 
-        private static void Stretch(RectTransform rt)
+        internal static void Stretch(RectTransform rt)
         {
             rt.anchorMin = Vector2.zero;
             rt.anchorMax = Vector2.one;
@@ -653,7 +654,7 @@ namespace GameOff.EditorTools
             rt.offsetMax = Vector2.zero;
         }
 
-        private static void Set(Object target, string field, Object value)
+        internal static void Set(Object target, string field, Object value)
         {
             var so = new SerializedObject(target);
             var prop = so.FindProperty(field);
@@ -669,7 +670,7 @@ namespace GameOff.EditorTools
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
-        private static void SetArray(Object target, string field, Object[] values)
+        internal static void SetArray(Object target, string field, Object[] values)
         {
             var so = new SerializedObject(target);
             var prop = so.FindProperty(field);

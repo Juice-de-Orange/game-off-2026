@@ -48,7 +48,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| martin | P09 Tagesablauf (nur `PF_DayFlow` in Main einsetzen) | `Main.unity` | 05.11. |
+| martin | P09 Tagesablauf (wartet auf abfertigbare Reisende für die Abnahme) | — | 05.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -62,6 +62,15 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 
 ### Kann (wenn Zeit bleibt)
 - [ ] 
+
+## Bugs
+Gefundene Fehler, die nicht sofort behoben werden. Wer einen behebt: Status `behoben (<name>, <Datum>, <Commit>)`, Zeile bleibt stehen.
+Wer einen anfängt, trägt sich unter „Wer“ ein.
+
+| Nr | Was passiert | Wie nachstellen | Gefunden | Wer | Status |
+|---|---|---|---|---|---|
+| B01 | Spieler fällt beim Laden von Main **sofort durch den Boden** der Station | Unity: Play neu gestartet, über das Menü ins Spiel (Start Shift). Tritt nicht jedes Mal auf: Claude konnte es am 05.11. nicht nachstellen (Menü → Main dreimal, Play aus dem Menü mit Messung pro Frame: Spieler steht stabil bei y = 0,03). Unklar, ob es beim Tageswechsel (Teleport ins Bett-Zimmer, P09) auch passieren kann. Ideen: Spawn genau auf Bodenhöhe (`PlayerSpawn` y = 0, Kapsel-Unterkante = Boden), erster Frame nach dem Laden mit großem `deltaTime`. Möglicher Schutz: etwas über dem Boden spawnen + Auffangen unter dem Boden (zurück zur letzten sicheren Position) | martin, 05.11. | — | offen |
+| B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
 - [x] P18 Audio-Grundgerüst: GameMixer (Music/SFX/Voice), AudioManager mit PlayMusic/PlaySfx/PlaySfxAt/PlayVoice, 4 Lautstärkeregler mit Vorschau-Ton (martin, 05.11.)
