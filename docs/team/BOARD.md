@@ -54,6 +54,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P09 Tagesablauf (wartet auf abfertigbare Reisende für die Abnahme) | — | 05.11. |
+| martin | Alle Texte in Orbitron + [E]-Hinweis im Menüknopf-Stil | `Boot.unity`, `Menu.unity`, `Main.unity` (nur PF_PauseMenu/PF_DayFlow/PF_Economy), `PF_PauseMenu.prefab`, `PF_Player.prefab`, `InteractionPromptUI.cs`, `TMP Settings.asset` | 05.11. |
 | max | P41 Regeln an der Pinnwand | `PF_CounterStation.prefab`, `PF_Doc_*.prefab`, `DayManager.cs` (eine Zeile) | 05.11. |
 
 ## Backlog
