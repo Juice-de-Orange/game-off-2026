@@ -1,14 +1,18 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using Object = UnityEngine.Object;
 
 namespace GameOff.EditorTools
 {
     /// <summary>
-    /// Proves that the occlusion bake hides nothing visible (P57): renders each view with and without occlusion from every walkable
-    /// spot of the station, doors out of the way, and reports views that differ. Run it after a bake. Saves nothing.
+    /// Proves that an optimization changes nothing the player can see (P57): renders each view from every walkable spot of the
+    /// station twice, with and without it, doors out of the way, and reports views that differ. Saves nothing in the scene.
+    /// The worst view lands in Logs/OcclusionCheck_on.png and _off.png.
     /// </summary>
     public static class OcclusionCheck
     {
@@ -25,18 +29,37 @@ namespace GameOff.EditorTools
             if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) Run();
         }
 
-        public static void Run() => Run(true);
+        /// <summary>Occlusion on and off, sun included. Run it after a bake.</summary>
+        public static void Run() => Compare("occlusion", true, null);
 
         /// <summary>Geometry alone: the sun's realtime shadows change with culled casters, so they get their own question.</summary>
-        public static void RunWithoutSun() => Run(false);
+        public static void RunWithoutSun() => Compare("occlusion without sun", false, null);
 
-        private static void Run(bool sun)
+        /// <summary>Beyond the shadow distance the sun shines through every wall, so this one can light up long rooms.</summary>
+        public static void CheckShadowDistance()
         {
+            UseWebQuality();
+            var asset = (UniversalRenderPipelineAsset)UnityEngine.Rendering.GraphicsSettings.currentRenderPipeline;
+            float current = asset.shadowDistance;
+            Compare($"shadow distance {current} against 100", true, far => asset.shadowDistance = far ? 100f : current);
+            asset.shadowDistance = current;
+        }
+
+        /// <summary>The editor may stand on the PC level, which the web build doesn't have.</summary>
+        private static void UseWebQuality()
+        {
+            int level = Array.IndexOf(QualitySettings.names, "Mobile");
+            if (level >= 0) QualitySettings.SetQualityLevel(level, true);
+        }
+
+        private static void Compare(string title, bool sun, Action<bool> variant)
+        {
+            UseWebQuality();
             var scene = EditorSceneManager.OpenScene(MainScene, OpenSceneMode.Single);
             if (!sun)
                 foreach (var l in Object.FindObjectsByType<Light>(FindObjectsSortMode.None))
                     if (l.type == LightType.Directional && l.lightmapBakeType != LightmapBakeType.Baked) l.enabled = false;
-            foreach (var door in Object.FindObjectsByType<GameOff.Station.SlidingDoor>(FindObjectsSortMode.None))
+            foreach (var door in Object.FindObjectsByType<Station.SlidingDoor>(FindObjectsSortMode.None))
             {
                 foreach (var r in door.GetComponentsInChildren<Renderer>(true))
                     r.enabled = false;
@@ -61,29 +84,30 @@ namespace GameOff.EditorTools
             var off = new Texture2D(Width, Height, TextureFormat.RGB24, false);
 
             var spots = WalkableSpots();
-            int views = 0, bad = 0, worst = 0, savedWorst = 0;
+            int views = 0, bad = 0, worst = 0;
             var report = new StringBuilder();
             foreach (var spot in spots)
                 for (int yaw = 0; yaw < 360; yaw += 45)
                     foreach (float pitch in new[] { 0f, 35f, -35f })
                     {
                         go.transform.SetPositionAndRotation(spot, Quaternion.Euler(pitch, yaw, 0f));
+                        variant?.Invoke(true);
                         Capture(cam, target, on, true);
-                        Capture(cam, target, off, false);
+                        variant?.Invoke(false);
+                        Capture(cam, target, off, variant != null); // without a variant the difference is occlusion itself
                         int diff = CountDifferent(on, off);
                         views++;
-                        worst = Mathf.Max(worst, diff);
                         if (diff <= PixelTolerance) continue;
                         if (++bad <= 30) report.AppendLine($"  {spot} yaw {yaw} pitch {pitch}: {diff} px");
-                        if (diff > savedWorst)
+                        if (diff > worst)
                         {
-                            savedWorst = diff;
+                            worst = diff;
                             System.IO.File.WriteAllBytes("Logs/OcclusionCheck_on.png", on.EncodeToPNG());
                             System.IO.File.WriteAllBytes("Logs/OcclusionCheck_off.png", off.EncodeToPNG());
                         }
                     }
 
-            Debug.Log($"[OcclusionCheck] {spots.Count} spots, {views} views, {bad} differ (worst {worst} of {Width * Height} px)\n{report}");
+            Debug.Log($"[OcclusionCheck] {title}: {spots.Count} spots, {views} views, {bad} differ (worst {worst} of {Width * Height} px)\n{report}");
             Object.DestroyImmediate(go);
             Object.DestroyImmediate(target);
             Object.DestroyImmediate(on);

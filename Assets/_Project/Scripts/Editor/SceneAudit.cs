@@ -54,6 +54,19 @@ namespace GameOff.EditorTools
             foreach (var group in meshes.GroupBy(r => r.transform.root.name))
                 biggest.Add((group.Key, group.Count()));
             report.AppendLine("by root: " + string.Join(", ", biggest.OrderByDescending(b => b.Item2).Take(8).Select(b => $"{b.Item1}={b.Item2}")));
+            foreach (var root in scene.GetRootGameObjects())
+            {
+                if (root.GetComponentsInChildren<Renderer>(true).Length < 100) continue;
+                for (int c = 0; c < root.transform.childCount; c++)
+                {
+                    var group = root.transform.GetChild(c);
+                    var inGroup = group.GetComponentsInChildren<Renderer>(true);
+                    if (inGroup.Length == 0) continue;
+                    long groupTris = inGroup.Select(r => r.GetComponent<MeshFilter>()).Where(f => f != null && f.sharedMesh != null)
+                        .Sum(f => { long n = 0; for (int s = 0; s < f.sharedMesh.subMeshCount; s++) n += f.sharedMesh.GetIndexCount(s) / 3; return n; });
+                    report.AppendLine($"  {root.name}/{group.name}: {inGroup.Length} renderers, {inGroup.Count(r => r.shadowCastingMode != UnityEngine.Rendering.ShadowCastingMode.Off)} cast, {groupTris} tris");
+                }
+            }
             Debug.Log(report.ToString());
         }
     }
