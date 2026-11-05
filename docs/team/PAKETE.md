@@ -355,6 +355,9 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: Großschiffe (Frachter, Tanker, Patrouille, kleine Pendler) auf festen Bahnen mit Zufallsabständen; Shuttle fliegt durch die
   Barriere ein/aus (`ShuttleTraffic.Arrive()/Depart()`, Barriere pulst), Schnittstelle für P09 (Tagesablauf ruft Arrive/Depart)
 - Abnahme: Alle paar Minuten fliegt etwas sichtbar vorbei; Arrive/Depart per Testknopf im Editor sichtbar.
+- Hinweis (martin, 05.11.): Für die vorbeifliegenden Schiffe gibt es mit **P47** schon den Baustein `ShipTraffic` (Bahnen, Schiffsliste,
+  Zufallsabstände, Obergrenze, Wiederverwenden, keine Lichter/Schatten) samt Tuning-Asset – für Main nur ein eigenes Tuning (seltener)
+  und eine Instanz anlegen. Alle Schiffsmodelle (`Art/Models/Ships/`) sind geliefert.
 - Festgelegt im Asset-Durchgang (max, 02.11.): Shuttle mit **Rampe** (Rework bestellt): landen → Rampe klappt zischend herunter → Reisende steigen nacheinander aus und stellen sich an; abends Rampe hoch und Abflug.
 
 ### P26 — Details & Ausstattung
@@ -606,3 +609,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
       **nicht** die Labels (Labels = Anzeige + Händler-Filter).
     - Benutzen von Gegenständen (P30, z. B. Nova Cola trinken): Knopf im Inventar kommt dort dazu.
     - Händler-Vorrat pro Tag: Sortiment ist unbegrenzt, bis das Balancing etwas anderes verlangt.
+
+### P47 — Menü-Hintergrund: Schiffsverkehr
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 05.11.)
+- Braucht: P02 · Folgt auf: P02
+- Ziel: Im Hauptmenü fliegen ab und zu Schiffe an der Station vorbei – das All wirkt lebendig.
+- Enthalten: wiederverwendbarer Baustein **`ShipTraffic`** (feste Bahnen mit zufälligen Abständen und Richtungen, Schiffsliste pro Bahn,
+  Tempo, Obergrenze gleichzeitiger Schiffe, Schiffe werden wiederverwendet statt neu erzeugt, keine Lichter, keine Schatten, keine
+  Kollision); drei Bahnen im Menü (hinten Frachter/Tanker, Mitte Patrouille, vorn Pendler); Werte in einem Tuning-Asset unter `Data/`;
+  alle Modelle aus `Art/Models/Ships/` (geliefert)
+- Nicht enthalten: Verkehr im Spiel, Shuttle-Landung, Rampe, Kopplung an den Tagesablauf (alles P25 – nutzt diesen Baustein)
+- Abnahme: Im Menü sieht man innerhalb von ~10 s ein Schiff; nichts fliegt durch die Station oder die Kamera; im WebGL-Build flüssig.
