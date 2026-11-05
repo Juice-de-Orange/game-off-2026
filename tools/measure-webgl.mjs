@@ -139,7 +139,7 @@ try {
   const long = scenario === 'full' ? 1 : 0.5;
   await measure('menu', 30 * long);
   await intoShift(true);
-  if (process.env.K9_NOTRAFFIC) await send('PF_Traffic', 'StopAllCoroutines');
+  if (process.env.K9_NOTRAFFIC) await send('PF_Traffic', 'OnDisable');
   await measure('room', 15 * long);
   await send('PF_CounterStation', 'Sit');
   await sleep(2000);

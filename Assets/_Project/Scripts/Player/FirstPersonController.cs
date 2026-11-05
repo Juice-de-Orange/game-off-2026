@@ -118,13 +118,24 @@ namespace GameOff.Player
                 _lastGround = transform.position;
                 if (_verticalVelocity < 0f) _verticalVelocity = -2f; // keep grounded on steps
             }
-            float dt = Mathf.Min(Time.deltaTime, MaxStepSeconds);
-            _verticalVelocity = Mathf.Max(_verticalVelocity - tuning.gravity * dt, -MaxFallSpeed);
+            // Only the fall is limited. Walking keeps its real speed on slow devices, and the controller sweeps it against walls anyway.
+            float fallStep = Mathf.Min(Time.deltaTime, MaxStepSeconds);
+            _verticalVelocity = Mathf.Max(_verticalVelocity - tuning.gravity * fallStep, -MaxFallSpeed);
 
-            _controller.Move((horizontal + Vector3.up * _verticalVelocity) * dt);
+            _controller.Move(horizontal * Time.deltaTime + Vector3.up * (_verticalVelocity * fallStep));
 
             // Safety net: fell through something after all (B01). Back to where we last stood instead of falling forever.
-            if (transform.position.y < _lastGround.y - RescueAfterFalling) Teleport(_lastGround, transform.rotation);
+            if (transform.position.y < _lastGround.y - RescueAfterFalling) Rescue();
+        }
+
+        /// <summary>Unlike Teleport this keeps the view, and the last ground stays what it was.</summary>
+        private void Rescue()
+        {
+            _controller.enabled = false;
+            transform.position = _lastGround + Vector3.up * SpawnClearance;
+            Physics.SyncTransforms();
+            _controller.enabled = true;
+            _verticalVelocity = 0f;
         }
 
         private static bool IsCursorCaptured() => Cursor.lockState == CursorLockMode.Locked;

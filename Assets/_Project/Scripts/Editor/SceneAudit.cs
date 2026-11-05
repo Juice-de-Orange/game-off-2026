@@ -14,6 +14,11 @@ namespace GameOff.EditorTools
     public static class SceneAudit
     {
         [MenuItem("GameOff/Audit Main Scene")]
+        public static void FromMenu()
+        {
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) Run();
+        }
+
         public static void Run()
         {
             var scene = EditorSceneManager.OpenScene("Assets/_Project/Scenes/Main.unity", OpenSceneMode.Single);
@@ -24,17 +29,18 @@ namespace GameOff.EditorTools
             foreach (var r in meshes)
             {
                 var filter = r.GetComponent<MeshFilter>();
-                if (filter != null && filter.sharedMesh != null && filter.sharedMesh.isReadable) tris += filter.sharedMesh.triangles.Length / 3;
-                else if (filter != null && filter.sharedMesh != null) tris += (long)filter.sharedMesh.GetIndexCount(0) / 3;
+                if (filter == null || filter.sharedMesh == null) continue;
+                for (int s = 0; s < filter.sharedMesh.subMeshCount; s++) tris += (long)filter.sharedMesh.GetIndexCount(s) / 3;
             }
             report.AppendLine($"renderers {renderers.Count}, active {renderers.Count(r => r.gameObject.activeInHierarchy)}, triangles {tris}");
             report.AppendLine($"shadow casters {renderers.Count(r => r.shadowCastingMode != UnityEngine.Rendering.ShadowCastingMode.Off)}");
             report.AppendLine($"materials {renderers.SelectMany(r => r.sharedMaterials).Where(m => m != null).Distinct().Count()}");
-            report.AppendLine($"meshes {meshes.Select(r => r.GetComponent<MeshFilter>()?.sharedMesh).Where(m => m != null).Distinct().Count()}");
+            report.AppendLine($"meshes {meshes.Select(r => r.GetComponent<MeshFilter>()).Where(f => f != null).Select(f => f.sharedMesh).Where(m => m != null).Distinct().Count()}");
             report.AppendLine($"occluder static {renderers.Count(r => GameObjectUtility.GetStaticEditorFlags(r.gameObject).HasFlag(StaticEditorFlags.OccluderStatic))}, occludee static {renderers.Count(r => GameObjectUtility.GetStaticEditorFlags(r.gameObject).HasFlag(StaticEditorFlags.OccludeeStatic))}, batching static {renderers.Count(r => GameObjectUtility.GetStaticEditorFlags(r.gameObject).HasFlag(StaticEditorFlags.BatchingStatic))}, contribute GI {renderers.Count(r => GameObjectUtility.GetStaticEditorFlags(r.gameObject).HasFlag(StaticEditorFlags.ContributeGI))}");
 
             var lights = scene.GetRootGameObjects().SelectMany(r => r.GetComponentsInChildren<Light>(true)).ToList();
             report.AppendLine($"lights {lights.Count}: " + string.Join(", ", lights.GroupBy(l => $"{l.lightmapBakeType}/{l.shadows}").Select(g => $"{g.Key}={g.Count()}")));
+            report.AppendLine("realtime lights: " + string.Join(", ", lights.Where(l => l.lightmapBakeType != LightmapBakeType.Baked).Select(l => $"{l.name} ({l.type}, {l.shadows}, on {l.enabled && l.gameObject.activeInHierarchy})")));
 
             var byMaterial = renderers.SelectMany(r => r.sharedMaterials).Where(m => m != null)
                 .GroupBy(m => m.shader.name).OrderByDescending(g => g.Count()).Take(6);

@@ -176,6 +176,7 @@ namespace GameOff.EditorTools
             optionsPanel.gameObject.SetActive(false);
             creditsPanel.gameObject.SetActive(false);
 
+            OcclusionSetup.BakeOpenScene();
             EditorSceneManager.SaveScene(scene);
             log.Add("Menu built");
         }
@@ -443,6 +444,18 @@ namespace GameOff.EditorTools
             var drift = cam.GetComponent<MenuCameraDrift>();
             SetVector(drift, "target", BackdropTarget);
             SetVector(drift, "lookOffset", BackdropLookOffset);
+
+            // Occlusion only works while the camera is inside a baked view volume, and without an area that volume ends at the station.
+            var so = new SerializedObject(drift);
+            float radius = so.FindProperty("radius").floatValue, height = so.FindProperty("height").floatValue, bob = so.FindProperty("bobHeight").floatValue;
+            float center = so.FindProperty("centerAngle").floatValue, swing = so.FindProperty("swingAngle").floatValue;
+            var bounds = new Bounds(BackdropTarget + new Vector3(0f, height, 0f), Vector3.zero);
+            for (float a = center - swing; a <= center + swing; a += 2f)
+                bounds.Encapsulate(BackdropTarget + new Vector3(Mathf.Sin(a * Mathf.Deg2Rad) * radius, height, Mathf.Cos(a * Mathf.Deg2Rad) * radius));
+            bounds.Expand(new Vector3(4f, bob * 2f + 4f, 4f));
+            var area = new GameObject("MenuCameraOcclusionArea").AddComponent<OcclusionArea>();
+            area.center = bounds.center;
+            area.size = bounds.size;
             log.Add($"station backdrop ({placed}/{BackdropPrefabs.Length} prefabs)");
 
             var traffic = new GameObject("ShipTraffic").AddComponent<ShipTraffic>();

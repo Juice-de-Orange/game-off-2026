@@ -765,3 +765,39 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: B01, B05, Softlock Papier unter der Schublade, einfache Bugs; Messung im WebGL-Build; Grundlast (Occlusion, Schatten, HDR), Download und RAM, Skripte
 - Nicht enthalten: neue Funktionen, Spielregeln und Spielwerte (P58)
 - Abnahme: Vorher-Nachher-Zahlen im Ergebnis; Tests grün; vollständiger Durchlauf im WebGL-Build ohne neue Konsolenfehler.
+
+### P58 — Entscheidungen aus dem Nachtlauf
+- Größe: S · Priorität: Soll · Status: offen, wartet auf Max und Martin
+- Braucht: — · Folgt auf: P57
+- Ziel: Die im Nachtlauf gefundenen Fragen zu Spielregeln und Spielwerten sind entschieden. Was daraus zu bauen ist, wird ein eigenes Paket oder geht in das genannte.
+- Nicht enthalten: Änderungen an Spielregeln ohne Entscheidung. P57 hat hier bewusst nichts geändert.
+
+**1. Händlervorrat (B04)**
+- Befund: Ware beim Händler sinkt beim Kauf nicht.
+- Beleg: In P46 bewusst unbegrenzt, Lösung ist für P11 vorgesehen.
+- Optionen: (a) in P11 Vorrat pro Händler, füllt sich jeden Morgen auf; Kosten: S, gehört schon zu P11. (b) unbegrenzt lassen; kostet nichts, verstärkt aber Punkt 2.
+- Empfehlung: (a).
+
+**2. Geld aus dem Nichts durch Handel**
+- Befund: Kiosk verkauft zum Grundwert, der Schwarzmarkt kauft zum 1,2-fachen. Wer pendelt, verdient ohne Risiko unbegrenzt.
+- Beleg: `Data/Economy/Stock_Kiosk_Test.asset` (`sellFactor: 1`), `Stock_BlackMarket_Test.asset` (`buyFactor: 1.2`). Die Werte stammen aus Test-Daten.
+- Optionen: (a) Schwarzmarkt kauft nur beschlagnahmte oder verbotene Ware; Kosten: klein, Regel über Tags. (b) `buyFactor` unter 1; Kosten: ein Wert, aber der Schwarzmarkt verliert seinen Reiz. (c) so lassen, bis der Vorrat aus Punkt 1 die Menge begrenzt.
+- Empfehlung: (a), passt zur Geschichte.
+
+**3. Schleusenklappe bleibt offen**
+- Befund: Die Schutzklappe über dem roten Knopf geht beim ersten Klick auf und danach nie wieder zu. Ab dem zweiten Einsatz löst ein einziger Klick die Schleuse aus, der doppelte Schutz vor dem Fehlklick fehlt.
+- Beleg: `Scripts/Counter/CounterClickable.cs:41-47`, `_coverOpen` wird nirgends zurückgesetzt.
+- Optionen: (a) Klappe schließt nach dem Auslösen und jeden Morgen; Kosten: wenige Zeilen. (b) so lassen.
+- Empfehlung: (a). Das ist eine Spielgefühl-Frage und deshalb nicht von mir entschieden.
+
+**4. Gefälschtes Siegel ohne Gadget nicht erkennbar**
+- Befund: Ein gefälschtes Siegel verlangt „Verhaften“, ist laut Design aber nur mit Gadget sichtbar. Wer das Gadget nicht hat, kann nur raten und bekommt trotzdem einen Fehler.
+- Beleg: `Scripts/Travelers/RuleEvaluator.cs:62-63`, `docs/DESIGN.md` Abschnitt Fälschung und Gadgets (UV-Lampe).
+- Optionen: (a) Reisende mit gefälschtem Siegel erst an Tagen, an denen die Lampe verfügbar ist; Kosten: Inhaltsprüfung im Validator. (b) ohne Gadget kein Fehler; Kosten: Sonderfall in der Regel. (c) gewollt lassen.
+- Empfehlung: (a).
+
+**5. Drohne hat keine Öffnungszeit**
+- Befund: Die Fracht-Drohne ist jederzeit nutzbar, die Händler nur nach der Schicht.
+- Beleg: `Scripts/Shops/DroneTerminal.cs:43`, im Gegensatz zu `Vendor`.
+- Optionen: (a) wie Händler nur nach der Schicht; Kosten: wenige Zeilen. (b) so lassen, weil das Paket nach Hause erst mit P13 wirkt.
+- Empfehlung: mit P13 entscheiden.

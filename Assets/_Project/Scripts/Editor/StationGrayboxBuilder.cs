@@ -213,6 +213,9 @@ namespace GameOff.EditorTools
             glass.AddComponent<Unity.AI.Navigation.NavMeshModifier>().ignoreFromBuild = true;
             fixtures.AddComponent<Unity.AI.Navigation.NavMeshModifier>().ignoreFromBuild = true;
 
+            OcclusionSetup.MarkStatic(root);
+            StaticOcclusionCulling.Clear(); // the bake refers to the station that was just deleted
+
             AssetFolders.EnsureForAsset(PrefabPath);
             PrefabUtility.SaveAsPrefabAssetAndConnect(root, PrefabPath, InteractionMode.AutomatedAction);
             Selection.activeGameObject = root;

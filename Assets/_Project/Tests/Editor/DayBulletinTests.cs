@@ -42,11 +42,13 @@ namespace GameOff.Tests
         public void EveryScheduledDay_HasRules()
         {
             // A day without rules can never start a shift, so the bed never lets the player go on (softlock)
-            foreach (string guid in AssetDatabase.FindAssets("t:DaySchedule"))
+            var guids = AssetDatabase.FindAssets("t:DaySchedule");
+            Assert.Greater(guids.Length, 0, "no DaySchedule found");
+            foreach (string guid in guids)
             {
                 var schedule = AssetDatabase.LoadAssetAtPath<GameOff.Day.DaySchedule>(AssetDatabase.GUIDToAssetPath(guid));
                 Assert.Greater(schedule.Count, 0, schedule.name);
-                foreach (var entry in schedule.Days) Assert.IsNotNull(entry.rules, schedule.name);
+                foreach (var entry in schedule.Days) Assert.IsTrue(entry.rules != null, schedule.name); // != null also sees Unity's fake null
             }
         }
 

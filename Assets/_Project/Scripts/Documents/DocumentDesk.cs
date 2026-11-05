@@ -427,10 +427,14 @@ namespace GameOff.Documents
                 return;
             }
             var pos = doc.transform.position;
-            // Never under the drawer, where the mouse couldn't reach it again and the shift could not go on
+            // Never under the closed drawer, where the mouse couldn't reach it again and the shift could not go on.
+            // The drawer may be moving right now, so its place at rest counts, not where it is at the moment.
             if (drawer.TryGetComponent<Collider>(out var drawerCollider) && deskSpots.Length > 0)
             {
+                Physics.SyncTransforms();
                 var box = drawerCollider.bounds;
+                Vector3 rest = drawer.parent != null ? drawer.parent.TransformPoint(_drawerRest) : _drawerRest;
+                box.center += rest - drawer.position;
                 if (box.Contains(new Vector3(pos.x, box.center.y, pos.z))) pos = deskSpots[0].position;
             }
             pos.y = DeskTop + _onDesk.Count * tuning.stackStep;
@@ -478,6 +482,7 @@ namespace GameOff.Documents
             {
                 var t = _onDesk[i].transform;
                 if (_onDesk[i] == _inspected) continue;
+                FinishGlide(t); // a running glide would land it on its old height, level with another paper
                 var pos = t.position;
                 pos.y = DeskTop + (i + 1) * tuning.stackStep;
                 t.position = pos;

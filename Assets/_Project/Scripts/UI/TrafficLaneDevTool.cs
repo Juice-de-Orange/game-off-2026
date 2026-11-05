@@ -142,11 +142,21 @@ namespace GameOff.UI
             bool paused = Time.timeScale == 0f; // the pause menu owns the mouse then
             if (player != null && !paused)
             {
-                if (_toggleMouse.WasPressedThisFrame() && (_look || _tookControl))
+                if (_toggleMouse.WasPressedThisFrame())
                 {
-                    _look = !_look;
-                    _tookControl = !_look;
-                    player.SetControlEnabled(_look);
+                    // Only what this tool holds: with the counter or a window in charge, Tab must not hand control to the player.
+                    if (_look && player.ControlEnabled)
+                    {
+                        _look = false;
+                        _tookControl = true;
+                        player.SetControlEnabled(false);
+                    }
+                    else if (!_look && _tookControl)
+                    {
+                        _look = true;
+                        _tookControl = false;
+                        player.SetControlEnabled(true);
+                    }
                 }
                 // Free mouse whenever the mode is on – also after Resume, a closed window or standing up from the counter.
                 else if (!_look && player.ControlEnabled)

@@ -21,6 +21,7 @@ namespace GameOff.EditorTools
         {
             Setup();
             NavMeshRebake();
+            OcclusionSetup.BakeOpenScene();
             Lightmapping.BakeAsync();
             Debug.Log("[Lighting] Bake started. Save the scene when the progress bar in the bottom right is done.");
         }
@@ -31,6 +32,7 @@ namespace GameOff.EditorTools
             var scene = EditorSceneManager.OpenScene("Assets/_Project/Scenes/Main.unity", OpenSceneMode.Single);
             Setup();
             NavMeshRebake();
+            OcclusionSetup.BakeOpenScene();
             bool baked = Lightmapping.Bake();
             EditorSceneManager.SaveScene(scene);
             Debug.Log($"[Lighting] Bake finished: {baked}");
