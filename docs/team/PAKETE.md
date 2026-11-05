@@ -358,10 +358,10 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 ### P25 — Verkehr: vorbeifliegende Schiffe & Shuttle-Ankunft
 - Größe: M · Priorität: Soll · Status: offen
 - Braucht: P23, P24
-- Ziel: Lebendiges All und sichtbarer Schichtbeginn.
-- Enthalten: Großschiffe (Frachter, Tanker, Patrouille, kleine Pendler) auf festen Bahnen mit Zufallsabständen; Shuttle fliegt durch die
+- Ziel: Sichtbarer Schichtbeginn: das Shuttle mit den Reisenden.
+- Enthalten: ~~Großschiffe auf festen Bahnen~~ → übernimmt **P55** (martin, 05.11.); Shuttle fliegt durch die
   Barriere ein/aus (`ShuttleTraffic.Arrive()/Depart()`, Barriere pulst), Schnittstelle für P09 (Tagesablauf ruft Arrive/Depart)
-- Abnahme: Alle paar Minuten fliegt etwas sichtbar vorbei; Arrive/Depart per Testknopf im Editor sichtbar.
+- Abnahme: Arrive/Depart per Testknopf im Editor sichtbar; Tagesablauf ruft Arrive/Depart.
 - Hinweis (martin, 05.11.): Für die vorbeifliegenden Schiffe gibt es mit **P47** schon den Baustein `ShipTraffic` (Bahnen, Schiffsliste,
   Zufallsabstände, Obergrenze, Wiederverwenden, keine Lichter/Schatten) samt Tuning-Asset – für Main nur ein eigenes Tuning (seltener)
   und eine Instanz anlegen. Alle Schiffsmodelle (`Art/Models/Ships/`) sind geliefert.
@@ -708,3 +708,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: `DocumentPrefabBuilder` auf `Orbitron SDF`: Prüfdokumente, Verwarnzettel, Pinnwand-Zettel, Texte in `PF_CounterStation` (Hinweiszeile, Meldung, Untertitel); Felder und Größen anpassen, weil Orbitron breiter ist
 - Nicht enthalten: neue Layouts, Martins Bereiche
 - Abnahme: Im WebGL-Build sind alle Texte am Schalter in Orbitron, kein Feld läuft über, und die Regeln sind gut lesbar.
+
+### P55 — Verkehr vor Plattform- und Barfenster
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 05.11.)
+- Braucht: P24, P47 · Folgt auf: P47 (übernimmt die vorbeifliegenden Großschiffe aus P25)
+- Ziel: Auch im Spiel fliegen Schiffe vor der Glasfront der Aussichtsplattform und dem Barfenster vorbei – so oft wie im Hauptmenü.
+- Enthalten: `ShipTraffic` (P47) mit eigenem Tuning `Data/Traffic/ShipTraffic_Main.asset`; Bahnen nördlich der Station quer vor beiden
+  Fenstern (hinten Frachter/Tanker, Mitte Patrouille, vorn Pendler), beide Richtungen; `PF_Traffic` in Main, gebaut von
+  **GameOff → Build Traffic into Main**; Abstandsprüfung zu Station und Außenwelt im Builder; Schiffe vor dem Heimatplaneten
+- Nicht enthalten: Shuttle-Landung, Rampe, Tagesablauf (P25), Sound der Schiffe, Verkehr am Hangar-Tor
+- Abnahme: Von der Plattform und am Barfenster sieht man innerhalb von ~10 s ein Schiff; nichts fliegt durch Station, Außenwelt oder
+  hinter dem Planeten; im WebGL-Build flüssig.
