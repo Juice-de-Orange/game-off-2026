@@ -31,6 +31,12 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - Pipeline: 22 neue Aufträge (Außenhülle M015, Dokument-Hintergründe, Verwarnzettel, Drucker, Stempel-Abdrücke) → P42
 - Als Nächstes: P41 → P40 → P08 → P09 → P10 → P15 (Reihenfolge in PAKETE.md)
 
+### Stand 05.11. mittags (martin)
+- Fertig heute: P01 (abgeschlossen), **P02 Startbildschirm & Menü** (Station im All als Hintergrund, Pause), **P43 Optionen in Reitern** + Vollbild-Knopf, **P18 Audio-Grundgerüst**
+- `Main.unity` hat jetzt `PF_PauseMenu` + `PF_AudioManager` (generiert von GameOff → Build Menu Scenes)
+- WebGL-Build mit Menü (20 MB) in Chrome getestet, 41/41 Tests grün
+- Als Nächstes (martin): P19 itch-Upload mit Web-Vorlage „Minimal“
+
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
 - **martin**: Startbildschirm — alles vom Spielstart bis zum Menü. Baut mit Platzhalter-Assets, Max ersetzt sie.
