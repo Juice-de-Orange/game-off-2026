@@ -7,8 +7,8 @@ using UnityEngine.UI;
 namespace GameOff.UI
 {
     /// <summary>
-    /// Options in tabs (P43, follows P02): AUDIO, CONTROLS. Every change applies at once and is saved in GameSettings;
-    /// each tab has its own "Reset to defaults". The same panel is used in the main menu and the pause menu.
+    /// Options in tabs (P43, follows P02): AUDIO, CONTROLS, DEV (P49). Every change applies at once and is saved in GameSettings;
+    /// AUDIO and CONTROLS have their own "Reset to defaults". The same panel is used in the main menu and the pause menu.
     /// Fullscreen is not here but a corner button in both menus (FullscreenButton).
     /// AUDIO has one slider per GameMixer channel (P18); releasing a slider plays a short preview tone on that channel.
     /// Built by MenuSceneBuilder.
@@ -30,6 +30,10 @@ namespace GameOff.UI
         [SerializeField] private Button invertY;
         [SerializeField] private TMP_Text invertYValue;
         [SerializeField] private Button resetControls;
+
+        [Header("Dev")]
+        [SerializeField] private Button devTools;
+        [SerializeField] private TMP_Text devToolsValue;
 
         [Header("Look")]
         [SerializeField] private Color tabIdle = new Color(0.17f, 0.2f, 0.24f);
@@ -62,6 +66,8 @@ namespace GameOff.UI
             sensitivity.maxValue = GameSettings.MaxSensitivity;
             sensitivity.onValueChanged.AddListener(v => { GameSettings.MouseSensitivity = v; Refresh(); });
             invertY.onClick.AddListener(() => { GameSettings.InvertY = !GameSettings.InvertY; Refresh(); });
+            // The DEV tab goes away for the jam submission (BOARD backlog), so it may be missing
+            if (devTools != null) devTools.onClick.AddListener(() => { GameSettings.DevTools = !GameSettings.DevTools; Refresh(); });
 
             resetAudio.onClick.AddListener(() => { GameSettings.ResetAudio(); Refresh(); });
             resetControls.onClick.AddListener(() => { GameSettings.ResetControls(); Refresh(); });
@@ -121,6 +127,7 @@ namespace GameOff.UI
             sensitivity.SetValueWithoutNotify(GameSettings.MouseSensitivity);
             sensitivityValue.text = $"{sensitivity.value:0.00}x";
             invertYValue.text = GameSettings.InvertY ? "ON" : "OFF";
+            if (devToolsValue != null) devToolsValue.text = GameSettings.DevTools ? "ON" : "OFF";
         }
     }
 }

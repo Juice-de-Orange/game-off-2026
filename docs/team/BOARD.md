@@ -54,14 +54,13 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P09 Tagesablauf (wartet auf abfertigbare Reisende für die Abnahme) | — | 05.11. |
-| max | P49 Live-Version + Dev-Schalter | `GameSettings.cs`, `OptionsPanel.cs`, `MenuSceneBuilder.cs`, `DayManager.cs`, `DayFlowUI.cs`, `Vendor.cs`, `DroneTerminal.cs`, `Boot.unity`, `Menu.unity`, `Main.unity`, `PF_PauseMenu.prefab` | 05.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
 die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 
 ### Muss (ohne das kein Spiel)
-- [ ] **Vor der Abgabe:** `showDevTools` am DayManager (`PF_DayFlow` in Main) ausschalten – sonst rote Hitboxen und Dev-Knöpfe im Spiel
+- [ ] **Vor der Abgabe:** `showDevTools` am DayManager (`PF_DayFlow` in Main) ausschalten und den Reiter DEV im `MenuSceneBuilder` entfernen (P49) – sonst rote Hitboxen und Dev-Knöpfe im Spiel
 
 ### Soll (macht es gut)
 - [ ] 

@@ -17,6 +17,7 @@ namespace GameOff.Core
         private const string VoiceVolumeKey = "settings.voiceVolume";
         private const string SensitivityKey = "settings.mouseSensitivity";
         private const string InvertYKey = "settings.invertY";
+        private const string DevToolsKey = "settings.devTools";
 
         public const float DefaultVolume = 0.8f;
         public const float DefaultMusicVolume = 0.7f;
@@ -27,6 +28,9 @@ namespace GameOff.Core
 
         public const float MinSensitivity = 0.25f;
         public const float MaxSensitivity = 3f;
+
+        /// <summary>Dev tools start on in the editor and off in a build (P49): visitors of the live version opt in themselves.</summary>
+        public static bool DefaultDevTools => Application.isEditor;
 
         /// <summary>Raised after any value changed (AudioManager re-applies the mixer volumes).</summary>
         public static event Action Changed;
@@ -70,6 +74,17 @@ namespace GameOff.Core
             set
             {
                 PlayerPrefs.SetInt(InvertYKey, value ? 1 : 0);
+                Changed?.Invoke();
+            }
+        }
+
+        /// <summary>Dev tools switched on in the options (P49). DayManager.DevTools combines it with its inspector switch.</summary>
+        public static bool DevTools
+        {
+            get => PlayerPrefs.GetInt(DevToolsKey, DefaultDevTools ? 1 : 0) == 1;
+            set
+            {
+                PlayerPrefs.SetInt(DevToolsKey, value ? 1 : 0);
                 Changed?.Invoke();
             }
         }

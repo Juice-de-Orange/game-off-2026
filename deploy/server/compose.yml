@@ -1,0 +1,29 @@
+# The live version on Geoffrey (P49, docs/DEPLOY.md). Installed as /opt/kestrel9/compose.yml; deploy.sh writes the tag into .env.
+# Reachable only through the host nginx (deploy/server/nginx-site.conf).
+name: kestrel9
+services:
+  web:
+    image: kestrel9:${KESTREL9_TAG:?run through deploy.sh}
+    pull_policy: never
+    container_name: kestrel9-web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:18092:8080"
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 256m
+    cpus: 1
+    pids_limit: 64
+    labels:
+      # A local image can't be pulled; updates come only through deploy.sh.
+      com.centurylinklabs.watchtower.enable: "false"
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: "2"

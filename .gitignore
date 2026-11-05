@@ -126,3 +126,6 @@ Desktop.ini
 
 # Claude Code local settings (per person)
 .claude/settings.local.json
+
+# Unity build inside the Docker context (docs/DEPLOY.md)
+/deploy/site/

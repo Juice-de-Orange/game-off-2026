@@ -1,3 +1,4 @@
+using GameOff.Core;
 using GameOff.Day;
 using GameOff.Economy;
 using GameOff.Player;
@@ -20,11 +21,21 @@ namespace GameOff.Shops
         /// <summary>An item was sent home (P13 hooks in here).</summary>
         public event System.Action<ItemData> Sent;
 
-        private void OnEnable() => interactable.OnInteract.AddListener(OnInteract);
+        private void OnEnable()
+        {
+            interactable.OnInteract.AddListener(OnInteract);
+            GameSettings.Changed += ApplyDevTools;
+        }
 
-        private void OnDisable() => interactable.OnInteract.RemoveListener(OnInteract);
+        private void OnDisable()
+        {
+            interactable.OnInteract.RemoveListener(OnInteract);
+            GameSettings.Changed -= ApplyDevTools;
+        }
 
-        private void Start()
+        private void Start() => ApplyDevTools();
+
+        private void ApplyDevTools()
         {
             if (debugView != null) debugView.SetActive(day == null || day.DevTools);
         }

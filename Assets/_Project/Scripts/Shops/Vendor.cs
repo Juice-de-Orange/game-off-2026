@@ -1,4 +1,5 @@
 using GameOff.Audio;
+using GameOff.Core;
 using GameOff.Day;
 using GameOff.Economy;
 using GameOff.Player;
@@ -26,11 +27,21 @@ namespace GameOff.Shops
         [Tooltip("Translucent box over the trigger, visible only with the dev tools.")]
         [SerializeField] private GameObject debugView;
 
-        private void OnEnable() => interactable.OnInteract.AddListener(OnInteract);
+        private void OnEnable()
+        {
+            interactable.OnInteract.AddListener(OnInteract);
+            GameSettings.Changed += ApplyDevTools;
+        }
 
-        private void OnDisable() => interactable.OnInteract.RemoveListener(OnInteract);
+        private void OnDisable()
+        {
+            interactable.OnInteract.RemoveListener(OnInteract);
+            GameSettings.Changed -= ApplyDevTools;
+        }
 
-        private void Start()
+        private void Start() => ApplyDevTools();
+
+        private void ApplyDevTools()
         {
             if (debugView != null) debugView.SetActive(day == null || day.DevTools);
         }

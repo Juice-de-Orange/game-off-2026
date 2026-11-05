@@ -1,0 +1,104 @@
+# Nightly update of the live version (P49, docs/DEPLOY.md): builds main if game files changed since the version
+# that is live, and hands the image to /opt/kestrel9/deploy.sh on Geoffrey. On failure the last version stays online.
+name: Deploy web version
+
+on:
+  schedule:
+    - cron: "0 2 * * *" # 03:00 CET
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Build even if no game files changed
+        type: boolean
+        default: false
+
+concurrency:
+  group: deploy-web
+
+permissions:
+  contents: read
+
+env:
+  LIVE_URL: https://kestrel9.maxlworks.com
+  DEPLOY_HOST: 144.91.89.2
+  DEPLOY_HOST_KEY: 144.91.89.2 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL1uXUK+HRF9RWCnBRsbsTT7bqX81HfgFm5685z/K9F6
+
+jobs:
+  check:
+    if: github.ref == 'refs/heads/main' # "Run workflow" offers every branch; only main goes live
+    runs-on: ubuntu-latest
+    outputs:
+      build: ${{ steps.decide.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: decide
+        env:
+          FORCE: ${{ inputs.force }}
+          HAS_SECRETS: ${{ secrets.UNITY_LICENSE != '' && secrets.UNITY_EMAIL != '' && secrets.UNITY_PASSWORD != '' && secrets.DEPLOY_KEY != '' }}
+        run: |
+          live=$(curl -fsS --max-time 15 "$LIVE_URL/version.txt" || true)
+          echo "live: ${live:-unknown}, main: $GITHUB_SHA"
+          build=true
+          if [ "$HAS_SECRETS" != "true" ]; then
+            echo "::warning::Secrets are missing (docs/DEPLOY.md), not building."
+            build=false
+          elif [ "$FORCE" = "true" ]; then
+            echo "Forced."
+          elif [ -z "$live" ] || ! git cat-file -e "$live^{commit}" 2>/dev/null; then
+            echo "Live version unknown, building."
+          elif git diff --quiet "$live" "$GITHUB_SHA" -- Assets Packages ProjectSettings deploy; then
+            echo "No game files changed since the live version."
+            build=false
+          fi
+          echo "build=$build" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    needs: check
+    if: needs.check.outputs.build == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          large-packages: false
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: unity-library-webgl-${{ hashFiles('Packages/packages-lock.json', 'ProjectSettings/ProjectVersion.txt') }}-${{ github.sha }}
+          restore-keys: unity-library-webgl-${{ hashFiles('Packages/packages-lock.json', 'ProjectSettings/ProjectVersion.txt') }}-
+      - uses: game-ci/unity-builder@v6
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: WebGL
+          unityVersion: 6000.3.23f1
+          buildMethod: GameOff.EditorTools.WebBuild.Build
+          buildName: site
+          versioning: None
+      - name: Build image
+        run: |
+          sudo cp -r build/WebGL/site deploy/site
+          sudo chown -R "$(id -u):$(id -g)" deploy/site
+          du -sh deploy/site
+          test -f deploy/site/index.html
+          ls deploy/site/Build/*.loader.js
+          docker build --build-arg "GIT_SHA=$GITHUB_SHA" -t "kestrel9:$GITHUB_SHA" deploy
+      - name: Deploy to Geoffrey
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_HOST_KEY" > ~/.ssh/known_hosts
+          docker save "kestrel9:$GITHUB_SHA" | ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o BatchMode=yes "max@$DEPLOY_HOST" "deploy $GITHUB_SHA"
+      - name: Check the live site
+        run: test "$(curl -fsS --max-time 30 "$LIVE_URL/version.txt")" = "$GITHUB_SHA"

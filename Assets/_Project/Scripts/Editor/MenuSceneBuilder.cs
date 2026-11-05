@@ -177,20 +177,20 @@ namespace GameOff.EditorTools
         }
 
         /// <summary>
-        /// Options in tabs (P43): AUDIO / CONTROLS, one page each, rows 50 px apart from RowTop down,
-        /// "Reset to defaults" at the bottom of every page. New settings = one more row on the matching page here.
+        /// Options in tabs (P43, DEV from P49): AUDIO / CONTROLS / DEV, one page each, rows 50 px apart from RowTop down,
+        /// "Reset to defaults" at the bottom of the AUDIO and CONTROLS pages. New settings = one more row on the matching page here.
         /// </summary>
         private static Transform BuildOptionsPanel(Transform parent, out Button back)
         {
             var panel = PanelRoot(parent, "OptionsPanel");
             Label(panel, "Heading", "OPTIONS", 40, Amber, new Vector2(0f, 205f), new Vector2(600f, 50f));
 
-            string[] tabNames = { "AUDIO", "CONTROLS" };
+            string[] tabNames = { "AUDIO", "CONTROLS", "DEV" };
             var tabs = new Button[tabNames.Length];
             var pages = new GameObject[tabNames.Length];
             for (int i = 0; i < tabNames.Length; i++)
             {
-                tabs[i] = MenuButton(panel, $"Tab_{tabNames[i]}", tabNames[i], new Vector2((i - 0.5f) * 175f, 145f), new Vector2(165f, 40f), 20);
+                tabs[i] = MenuButton(panel, $"Tab_{tabNames[i]}", tabNames[i], new Vector2((i - (tabNames.Length - 1) / 2f) * 175f, 145f), new Vector2(165f, 40f), 20);
                 var page = new GameObject($"Page_{tabNames[i]}", typeof(RectTransform));
                 page.transform.SetParent(panel, false);
                 Stretch(page.GetComponent<RectTransform>());
@@ -217,6 +217,12 @@ namespace GameOff.EditorTools
             keys.alignment = TextAlignmentOptions.TopLeft;
             var resetControls = MenuButton(controls, "ResetButton", "RESET TO DEFAULTS", new Vector2(0f, ResetY), new Vector2(280f, 40f), 18);
 
+            // DEV (P49): remove this tab for the jam submission (BOARD backlog)
+            var dev = pages[2].transform;
+            var devTools = ToggleRow(dev, "DevTools", "DEV TOOLS", new Vector2(0f, RowTop), out var devToolsValue);
+            var devHelp = Label(dev, "Help", DevToolsHelp, 15, TextDim, new Vector2(0f, RowTop - 1.75f * RowStep), new Vector2(KeyBoxWidth, 80f));
+            devHelp.alignment = TextAlignmentOptions.TopLeft;
+
             back = MenuButton(panel, "BackButton", "BACK", new Vector2(0f, -215f));
 
             var options = panel.gameObject.AddComponent<OptionsPanel>();
@@ -230,6 +236,8 @@ namespace GameOff.EditorTools
             Set(options, "invertY", invertY);
             Set(options, "invertYValue", invertYValue);
             Set(options, "resetControls", resetControls);
+            Set(options, "devTools", devTools);
+            Set(options, "devToolsValue", devToolsValue);
             for (int i = 1; i < pages.Length; i++) pages[i].SetActive(false);
             return panel;
         }
@@ -240,6 +248,10 @@ namespace GameOff.EditorTools
         // color space, so the leftover 1.5 % of a bright scene still shows as roughly 20 % brightness on screen.
         private const float SubPageDim = 0.985f;
         private const float KeyBoxWidth = 520f;
+
+        private const string DevToolsHelp =
+            "Red test buttons (end the day, open closed shops) and visible hitboxes.\n" +
+            "Test items are added the next time a new game starts.";
 
         // Read-only key list (rebinding is out of scope, DECISIONS.md 05.11.). Key column left, action from <pos>.
         private const string KeyOverview =

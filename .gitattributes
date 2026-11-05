@@ -39,3 +39,8 @@
 **/LightingData.asset -text binary
 **/NavMesh*.asset -text binary
 *.exr binary
+
+# Scripts for the Linux server (docs/DEPLOY.md)
+*.sh        text eol=lf
+deploy/**   text eol=lf
+.github/**  text eol=lf

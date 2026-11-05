@@ -30,7 +30,7 @@ namespace GameOff.Day
         [SerializeField] private float fadeSeconds = 1.2f;
         [Tooltip("Black screen between the days (P10 shows the settlement here later).")]
         [SerializeField] private float nightSeconds = 1f;
-        [Tooltip("Dev tools: red Dev_end_Day button in the bed dialog and the visible bed hitbox. TURN OFF for the jam build.")]
+        [Tooltip("Master switch for the dev tools (red Dev_end_Day button, visible bed hitbox); players switch them in the options (GameSettings.DevTools). TURN OFF for the jam build.")]
         [SerializeField] private bool showDevTools = true;
         [Tooltip("Translucent box showing the bed trigger (only with showDevTools).")]
         [SerializeField] private GameObject bedDebugView;
@@ -49,7 +49,7 @@ namespace GameOff.Day
 
         public int Day => _day;
         /// <summary>Dev tools on (Dev_end_Day, visible hitboxes, vendors open during the shift via a dev button).</summary>
-        public bool DevTools => showDevTools;
+        public bool DevTools => showDevTools && GameSettings.DevTools;
         public int DayCount => schedule.Count;
         public Phase CurrentPhase => _phase;
 
@@ -58,6 +58,7 @@ namespace GameOff.Day
             shift.ShiftEnded += OnShiftEnded;
             bed.OnInteract.AddListener(OnBed);
             ui.EndMenuRequested += BackToMenu;
+            GameSettings.Changed += ApplyDevTools;
         }
 
         private void OnDisable()
@@ -65,13 +66,19 @@ namespace GameOff.Day
             shift.ShiftEnded -= OnShiftEnded;
             bed.OnInteract.RemoveListener(OnBed);
             ui.EndMenuRequested -= BackToMenu;
+            GameSettings.Changed -= ApplyDevTools;
         }
 
         private void Start()
         {
-            if (bedDebugView != null) bedDebugView.SetActive(showDevTools);
+            ApplyDevTools();
             ui.SetBlack(true);
             StartCoroutine(BeginDay(1));
+        }
+
+        private void ApplyDevTools()
+        {
+            if (bedDebugView != null) bedDebugView.SetActive(DevTools);
         }
 
         private IEnumerator BeginDay(int day)
@@ -113,7 +120,7 @@ namespace GameOff.Day
         {
             if (ui.IsDialogOpen || (_phase != Phase.Shift && _phase != Phase.Evening)) return;
             player.SetControlEnabled(false); // frees the mouse for the dialog
-            Action dev = showDevTools ? DevEndDay : null;
+            Action dev = DevTools ? DevEndDay : null;
             if (_phase == Phase.Evening)
                 ui.ShowDialog($"End day {_day}?", "Go to sleep. The next shift starts tomorrow morning.", "SLEEP",
                     () => StartCoroutine(EndDay()), null, ResumeAfterDialog);
