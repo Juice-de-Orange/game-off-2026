@@ -28,7 +28,8 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 3. **P08** Entscheidungen & Moral (Geld/Abzug aus `CounterShift.DecisionMade`, Moral, Beschlagnahme, Schleusen-Effekt)
 4. **P09** Tagesablauf (3 Tage, `CounterShift.BeginDay`/`ShiftEnded`) → **P10** Geld, Familie & Abrechnung
 5. **P15** Inhalte für 3 Tage inkl. Story von **The Shifter** (siehe `DESIGN.md`) → **P12** Enden
-6. Parallel: **P02** Startbildschirm (martin, fertig) → **P43** Optionen in Reitern → **P18** Audio-Grundgerüst (martin), **P19** WebGL-Build & itch-Upload, **P42** Lieferungen einbauen (max, sobald die Pipeline liefert)
+6. Parallel: **P02** Startbildschirm (martin, fertig) → **P43** Optionen in Reitern → **P18** Audio-Grundgerüst (martin, fertig) →
+   **P46** Geld, Inventar & Handelsfenster (martin) – **P08, P10, P11, P13 erst danach**, weil sie darauf aufbauen; **P19** WebGL-Build & itch-Upload, **P42** Lieferungen einbauen (max, sobald die Pipeline liefert)
 7. Danach Soll-Pakete (P13, P14, P16, P25–P36) nach Zeit.
 
 ## Vorlage
@@ -170,7 +171,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 ### P08 — Entscheidungen & Moral
 - Größe: M · Priorität: Muss · Status: offen
-- Braucht: P07
+- Braucht: P07, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Durchlassen/Abweisen/Verhaften/Luftschleuse mit Folgen.
 - Enthalten: Lohn/Abzug je Entscheidung, Beschlagnahme bei Verhaftung (Gegenstände ins Inventar),
   versteckter Moral-Wert (sinkt bei Luftschleuse, stark bei Unschuldigen), einfache Effekte (Wache, Schleuse)
@@ -198,7 +199,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 ### P10 — Geld, Familie & Abrechnung
 - Größe: M · Priorität: Muss · Status: offen
-- Braucht: P09
+- Braucht: P09, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Abrechnungsbildschirm am Tagesende wie ein Haushaltsbuch.
 - Enthalten: Lohn, Miete, Familienbedarfe (Essen, Wärme, Medizin) zum Ankreuzen, Zustand der Familienmitglieder,
   Folgen bei Nichtbezahlen, Werte in einem ScriptableObject
@@ -207,7 +208,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 ### P11 — Läden: Gadget-Shop & Bar-Schwarzmarkt
 - Größe: M · Priorität: Muss · Status: offen
-- Braucht: P03, P08
+- Braucht: P03, P08, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Kaufen und Verkaufen über ein gemeinsames Shop-System.
 - Enthalten: Shop-UI, Bar (illegale Gegenstände kaufen, Beschlagnahmtes verkaufen), Dokumentenscanner kaufbar
 - Nicht enthalten: Gadget-Funktion (P16)
@@ -222,7 +223,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 ### P13 — Hangar: Pakete an die Familie
 - Größe: S · Priorität: Soll · Status: offen
-- Braucht: P10, P11
+- Braucht: P10, P11, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Gegenstände aus dem Inventar per Frachtdrohne nach Hause schicken.
 - Enthalten: Versand-UI im Hangar, Wirkung auf Familienbedarf, Risiko bei Schmuggelware
 - Abnahme: Ein Medikament schicken senkt den Medizinbedarf am Abend.
@@ -554,3 +555,17 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     Im Browser schaltet das Plugin beim Loslassen der Maus um (Unity allein bräuchte zwei Klicks); das Symbol folgt dem echten Zustand.
   - Unterseiten (Options/Credits) dunkeln die Station mit 98,5 % ab: Das Projekt mischt UI im linearen Farbraum, darunter scheint sie zu stark durch.
   - Getestet im Editor und im WebGL-Build in Chrome (Vollbild mit einem Klick, Esc, Invert, Reset, Werte nach Neuladen), 0 Fehler/Warnungen.
+
+### P46 — Geld, Inventar & Handelsfenster (Grundgerüst)
+- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 05.11.)
+- Braucht: P03 · Folgt auf: —
+- Ziel: **Eine gemeinsame Grundstruktur für Geld- und Inventarverwaltung**, die alle späteren Pakete nur benutzen statt eigene zu bauen.
+  **P08, P10, P11 und P13 werden erst gebaut, wenn P46 fertig ist.**
+- Enthalten: **Kontostand** (Startgeld, Einnahmen/Ausgaben mit Grund, Ereignis bei Änderung, Anzeige im HUD); **Gegenstände** als
+  ScriptableObjects (`ItemData`: Name, Preis, Symbol, Schmuggelware) und ein **Inventar** (hinzufügen, entfernen, Liste); ein
+  **allgemeines Handelsfenster** (Angebot ↔ Inventar, Kaufen/Verkaufen), wiederverwendbar für jeden Händler und als „Send home“
+  für die Drohne; alle Zahlen (Startgeld, Preise) in einem Tuning-Asset unter `Data/`; Test-Gegenstände und Test-Händler in der Sandbox
+- Nicht enthalten: Lohn/Abzug aus Entscheidungen (P08), Abrechnung am Abend (P10), Kiosk-Inhalt und Scanner (P11), Drohne im Hangar (P13),
+  echte Preise und Balancing (nach dem Kern-Loop-Call)
+- Abnahme: Mit dem Test-Händler lässt sich kaufen und verkaufen, Kontostand und Inventar stimmen und bleiben über den Tageswechsel
+  erhalten; eine zweite Fenster-Variante „Send home“ entfernt Gegenstände; Schnittstellen in der Ergebnis-Notiz beschrieben.

@@ -162,7 +162,8 @@ Vorschlag als Startpunkt (Max hat P41/P40 reserviert):
 | P41 / P40 | Pinnwand / Reisende in der Kammer | max |
 | P08 | Geld & Moral aus den Entscheidungen | ? |
 | P10 | Abrechnung (Miete, Essen, Wärme, Medizin) + Game Over Miete | ? |
-| P11 (neu zugeschnitten) | Kiosk + Inventar + Scanner kaufen | ? |
+| P46 (neu) | Geld, Inventar & Handelsfenster (Grundgerüst, Voraussetzung für P08/P10/P11/P13) | martin (in Arbeit) |
+| P11 (neu zugeschnitten) | Kiosk + Scanner kaufen (nutzt P46) | ? |
 | P13 (→ Muss) | Heimschicken per Drohne | ? |
 | P44 (neu) | Tutorial-Tag & Aufgaben nach der Schicht | martin? |
 | P45 (neu) | Zeitbonus am Schalter | ? |
@@ -170,6 +171,10 @@ Vorschlag als Startpunkt (Max hat P41/P40 reserviert):
 | P12 | Enden + Game-Over-Bildschirme | beide |
 
 Bis zum **Checkpoint 09.11.**: Vorschlag P08 + P10 + P45, damit man einen Tag mit Geld durchspielen kann.
+
+**Nachtrag 05.11. (martin):** Martin baut jetzt **P46 Geld, Inventar & Handelsfenster (Grundgerüst)** – Kontostand, Gegenstände,
+Inventar und ein allgemeines Handelsfenster (auch als „Send home“ für die Drohne). **P08, P10, P11 und P13 bauen darauf auf und
+werden erst begonnen, wenn P46 fertig ist** (steht so in `PAKETE.md`). Wer P08/P10/P11/P13 übernimmt, bleibt im Call offen.
 
 **Beschluss:**
 
