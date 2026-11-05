@@ -78,6 +78,7 @@ If your person seems to be wrapping up ("ich hör auf", "bis morgen", "gute Nach
 | `templates/` | Templates for handovers and questions | rarely |
 | `../DESIGN.md` | Game design: theme, core loop, scope (must/should/could) | both, after agreement |
 | `../DECISIONS.md` | Append-only log of decisions with reason | both, append only |
+| `../DEPLOY.md` | Live version on kestrel9.maxlworks.com: build, nightly update, rollback, secrets | both |
 
 One file per handover/question means the two people never edit the same file at the same time → no merge conflicts.
 
