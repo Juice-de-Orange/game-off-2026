@@ -28,7 +28,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 3. **P08** Entscheidungen & Moral (Geld/Abzug aus `CounterShift.DecisionMade`, Moral, Beschlagnahme, Schleusen-Effekt)
 4. **P09** Tagesablauf (3 Tage, `CounterShift.BeginDay`/`ShiftEnded`) → **P10** Geld, Familie & Abrechnung
 5. **P15** Inhalte für 3 Tage inkl. Story von **The Shifter** (siehe `DESIGN.md`) → **P12** Enden
-6. Parallel: **P02** Startbildschirm (martin), **P19** WebGL-Build & itch-Upload, **P42** Lieferungen einbauen (max, sobald die Pipeline liefert)
+6. Parallel: **P02** Startbildschirm (martin, fertig) → **P43** Optionen in Reitern → **P18** Audio-Grundgerüst (martin), **P19** WebGL-Build & itch-Upload, **P42** Lieferungen einbauen (max, sobald die Pipeline liefert)
 7. Danach Soll-Pakete (P13, P14, P16, P25–P36) nach Zeit.
 
 ## Vorlage
@@ -88,6 +88,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Szenennamen: `Scripts/Core/SceneNames.cs`. Getestet im Editor und im WebGL-Build (Chrome, auch Vollbild), 0 Fehler/Warnungen.
   - Offen, in Frage an max (`questions/2026-11-05_martin-an-max_schrift-und-unity-splash.md`): Orbitron für Titel, Unity-Splash abschalten,
     Variante B (Menü direkt in Main mit Kameraflug) als Folgepaket.
+  - Optionen überarbeitet (Reiter Audio/Controls/Display) → Folgepaket **P43**.
 
 ### P03 — Spieler: Laufen & Interagieren
 - Größe: S · Priorität: Muss · Status: fertig (max, 02.11.)
@@ -248,7 +249,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 ### P18 — Audio-Grundgerüst
 - Größe: S · Priorität: Soll · Status: offen
-- Braucht: P01
+- Braucht: P01, P43 (die Regler Music/Effects/Voice kommen in den Reiter AUDIO aus P43)
 - Ziel: AudioMixer (Musik/SFX/Voice), einfacher Weg, Sounds abzuspielen, Lautstärke aus dem Menü (P02).
 - Abnahme: Lautstärkeregler wirken getrennt.
 
@@ -506,3 +507,15 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: neue Funktionen
 - Abnahme: Rundflug außen und Blick auf den Schaltertisch ohne graue Platzhalter; Konsole sauber; Tests grün.
 
+
+### P43 — Optionsmenü mit Kategorien
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 05.11.)
+- Braucht: P02 · Folgt auf: P02
+- Ziel: Optionen übersichtlich in Reitern statt einer langen Liste von Reglern, gleiches Panel im Haupt- und Pausemenü.
+- Enthalten: Reiter **AUDIO** (Master; Music/Effects/Voice kommen mit P18), **CONTROLS** (Maus-Empfindlichkeit, Y-Achse umkehren,
+  Tastenübersicht zum Lesen), **DISPLAY** (Vollbild an/aus); pro Reiter „Reset to defaults“; alles wirkt sofort und wird gespeichert
+  (`GameSettings`); Esc führt zurück
+- Nicht enthalten: Retro-Look-Schalter (Entscheidung max, P17), Untertitel (kommen mit den Voicelines), Tastenbelegung ändern,
+  Grafikqualität/Auflösung, Sprache, Helligkeit (bewusst weggelassen, siehe `DECISIONS.md` 05.11.)
+- Abnahme: Im Haupt- und Pausemenü lassen sich alle Reiter öffnen, jede Einstellung wirkt sofort, bleibt nach Neuladen erhalten
+  und lässt sich zurücksetzen; im WebGL-Build getestet.

@@ -36,4 +36,4 @@ Nur anhängen, nie löschen. Wird eine Entscheidung revidiert, neuen Eintrag sch
 | 04.11. | max | Asset-Lieferungen: jede Lieferung (auch Nacharbeit) auf neuem Branch mit eigenem PR; gemergte Branches löscht GitHub automatisch | Die Pipeline hatte auf alte Branches gepusht, dadurch entstanden keine PRs |
 | 04.11. | max | Station und Außenwelt werden komplett von Editor-Buildern erzeugt (inkl. Außenhülle); Änderungen nur im Builder-Code, nie von Hand in `PF_Station_Graybox`/`PF_Exterior` | Lieferungen tauschen sich automatisch ein; Handänderungen gingen beim nächsten Lauf verloren |
 | 04.11. | max | Reihenfolge Kern-Loop: P41 → P40 → P08 → P09 → P10 → P15 → P12 | Erst müssen Regeln sichtbar und Reisende greifbar sein, dann Folgen, Tage und Inhalte |
-
+| 05.11. | martin | Optionsmenü in 3 Reitern (Audio / Controls / Display) statt einer Liste; bewusst ohne Tastenbelegung ändern, Grafikqualität/Auflösung, Sprache, Helligkeit (P43) | Übersicht für Jam-Spieler; im Browser bestimmt die itch-Seite Größe und Qualität; spart Zeit |
