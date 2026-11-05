@@ -213,6 +213,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: Shop-UI, Bar (illegale Gegenstände kaufen, Beschlagnahmtes verkaufen), Dokumentenscanner kaufbar
 - Nicht enthalten: Gadget-Funktion (P16)
 - Abnahme: Scanner kaufen, beschlagnahmtes Item an der Bar verkaufen, Geld stimmt.
+- **Hinweis vor Beginn (martin, 05.11.):** Das Shop-UI ist mit **P46** schon fertig (Handelsfenster, Kaufen/Verkaufen, Faktoren, abgelehnte
+  Labels). **Noch offen und zuerst zu lösen:** Die Ware beim Händler **wird beim Kauf nicht weniger** – das Sortiment ist in P46 bewusst
+  unbegrenzt (Bug-Liste **B04**). Für P11 vorgesehen (Zuschnitt im Kern-Loop-Call, siehe Frage an max):
+  - **Händler-Inventar:** begrenzter Vorrat pro Gegenstand, sinkt beim Kauf, füllt sich morgens auf; Verkauftes landet beim Händler
+  - **Preisliste:** echte Gegenstände und Preise für Holly, Barkeeper und Dealer statt der Test-Inhalte (evtl. Preisfaktor pro Tag)
+  - **Angebote:** Tagesangebote/Rabatte, Ware nur an bestimmten Tagen, Sortiment pro Tag (z. B. Dealer an Tag 3 anders)
+  - evtl. Teilung: **P11 Kiosk** (Muss) + **Schwarzmarkt** als eigenes Soll-Paket
 
 ### P12 — Enden
 - Größe: S · Priorität: Muss · Status: offen

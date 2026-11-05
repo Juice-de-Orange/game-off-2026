@@ -184,6 +184,16 @@ werden erst begonnen, wenn P46 fertig ist** (steht so in `PAKETE.md`). Wer P08/P
 - **Idee zum Theme „Shift“:** ein Preisfaktor pro Tag in `EconomyTuning` (Preise steigen von Tag zu Tag, passend zum politischen
   Umschwung). Ein Wert pro Tag, große Wirkung. [ ] ja [ ] nein [ ] später
 
+**Nachtrag 05.11. (martin) – Händler, bevor jemand mit P11 weitermacht:**
+- **Problem (Bug B04):** Die Ware beim Händler **sinkt beim Kauf nicht** – das Sortiment ist in P46 bewusst unbegrenzt. Muss als Erstes gelöst werden.
+- Martin sieht bei den Händlern noch viel Arbeit, die in P11 gehört (das Shop-UI selbst ist mit P46 schon fertig):
+  - **Händler-Inventar** mit begrenztem Vorrat, der beim Kauf sinkt und sich morgens auffüllt; Verkauftes landet beim Händler
+  - **Preisliste** mit echten Gegenständen und Preisen für Holly, Barkeeper, Dealer
+  - **Angebote** (Tagesangebote, Rabatte, Ware nur an bestimmten Tagen, Sortiment pro Tag)
+- Vorschlag: **P11 Kiosk** (Muss: Holly, Scanner, Vorrat/Preisliste/Angebote) und den **Schwarzmarkt** als eigenes Soll-Paket.
+  [ ] einverstanden [ ] P11 bleibt ein Paket [ ] anders: ____
+- Details stehen bei P11 in `PAKETE.md` („Hinweis vor Beginn“).
+
 **Beschluss:**
 
 ---
