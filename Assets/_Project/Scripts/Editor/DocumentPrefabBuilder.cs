@@ -407,7 +407,7 @@ namespace GameOff.EditorTools
                 var hintT = root.transform.Find("SeatedHUD/Hint");
                 if (hintT == null) throw new System.InvalidOperationException("PF_CounterStation has no SeatedHUD/Hint");
                 var hint = hintT.GetComponent<TextMeshProUGUI>();
-                hint.text = "Stamp, then hand all papers back through the drawer  ·  or ARREST / AIRLOCK  ·  click a paper or note to read it  ·  [A]/[D] look around  ·  [Q]/[Esc]: back / leave";
+                hint.text = "Stamp, then hand all papers back through the drawer  ·  or ARREST / AIRLOCK  ·  click a paper or note to read it, a field to ask about it  ·  [A]/[D] look around  ·  [Q]/[Esc]: back / leave";
                 // Notice line above the hint (\"Stamp the papers first\" and the like), hidden until used
                 var noticeT = root.transform.Find("SeatedHUD/Notice");
                 if (noticeT == null)
@@ -430,6 +430,7 @@ namespace GameOff.EditorTools
                 cso.FindProperty("notice").objectReferenceValue = notice;
                 cso.ApplyModifiedPropertiesWithoutUndo();
                 WireBoard(root, desk, shift, hint, log);
+                WireTraveler(root, desk, shift, hint, log);
                 foreach (var text in root.GetComponentsInChildren<TMP_Text>(true)) text.font = font; // hint, notice, subtitle, labels (P54)
                 PrefabUtility.SaveAsPrefabAsset(root, CounterPrefab);
                 log.Add("counter wired: drawer, 3 spots, DocumentDesk, pinboard, look-around, announcements");
@@ -515,14 +516,88 @@ namespace GameOff.EditorTools
             log.Add("pinboard spots, SeatedLook, Announcer");
         }
 
+        /// <summary>P40: the traveler's marking and doors in the inspection lock, the speech bubble, a desk view that shows them.</summary>
+        private static void WireTraveler(GameObject root, DocumentDesk desk, CounterShift shift, TextMeshProUGUI hint, List<string> log)
+        {
+            var station = root.GetComponent<CounterStation>();
+            // World positions from STATION.md (lock x 0..4, z -12..-6; the counter stands at -2, 0, -9)
+            var stand = LockPoint(root.transform, "Traveler_Stand", new Vector3(4f, 0f, 0f), Quaternion.Euler(0f, -90f, 0f));
+            var hallDoor = LockPoint(root.transform, "Traveler_DoorHall", new Vector3(4f, 0f, 3f), Quaternion.identity);
+            var hangarDoor = LockPoint(root.transform, "Traveler_DoorHangar", new Vector3(4f, 0f, -3f), Quaternion.identity);
+            var outerDoor = LockPoint(root.transform, "Traveler_DoorOuter", new Vector3(6f, 0f, 0f), Quaternion.identity);
+
+            // The desk view must reach over the tallest traveler (Vellani, 2.2 m); the desk itself stays in view
+            var deskCamera = (Component)new SerializedObject(station).FindProperty("deskCamera").objectReferenceValue;
+            deskCamera.transform.localRotation = Quaternion.Euler(20f, 90f, 0f);
+
+            var parent = hint.transform.parent;
+            var panelT = parent.Find("SpeechBubble");
+            if (panelT == null)
+            {
+                panelT = new GameObject("SpeechBubble", typeof(RectTransform), typeof(UnityEngine.UI.Image)).transform;
+                panelT.SetParent(parent, false);
+                var line = Object.Instantiate(hint.gameObject, panelT);
+                line.name = "Text";
+            }
+            var panel = (RectTransform)panelT;
+            panel.pivot = new Vector2(0f, 1f);
+            panel.anchorMin = panel.anchorMax = new Vector2(0.5f, 0.5f);
+            var image = panelT.GetComponent<UnityEngine.UI.Image>();
+            image.color = new Color(0.89f, 0.87f, 0.81f, 0.95f);
+            image.raycastTarget = false;
+            var text = panelT.Find("Text").GetComponent<TextMeshProUGUI>();
+            var textRect = text.rectTransform;
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.pivot = new Vector2(0.5f, 0.5f);
+            textRect.offsetMin = new Vector2(12f, 12f);
+            textRect.offsetMax = new Vector2(-12f, -12f);
+            text.fontSize = hint.fontSize * 1.1f;
+            text.color = new Color(0.1f, 0.1f, 0.12f);
+            text.alignment = TextAlignmentOptions.TopLeft;
+            text.raycastTarget = false;
+            text.text = "";
+            panelT.gameObject.SetActive(false);
+
+            var tuning = Asset<DialogueTuning>(CounterDataFolder + "DialogueTuning.asset");
+            var bubble = root.GetComponent<SpeechBubble>();
+            if (bubble == null) bubble = root.AddComponent<SpeechBubble>();
+            var bso = new SerializedObject(bubble);
+            bso.FindProperty("station").objectReferenceValue = station;
+            bso.FindProperty("tuning").objectReferenceValue = tuning;
+            bso.FindProperty("panel").objectReferenceValue = panel;
+            bso.FindProperty("canvasArea").objectReferenceValue = parent;
+            bso.FindProperty("text").objectReferenceValue = text;
+            bso.ApplyModifiedPropertiesWithoutUndo();
+
+            var presenter = root.GetComponent<TravelerPresenter>();
+            if (presenter == null) presenter = root.AddComponent<TravelerPresenter>();
+            var pso = new SerializedObject(presenter);
+            pso.FindProperty("shift").objectReferenceValue = shift;
+            pso.FindProperty("desk").objectReferenceValue = desk;
+            pso.FindProperty("bubble").objectReferenceValue = bubble;
+            pso.FindProperty("tuning").objectReferenceValue = tuning;
+            pso.FindProperty("standSpot").objectReferenceValue = stand;
+            pso.FindProperty("hallDoor").objectReferenceValue = hallDoor;
+            pso.FindProperty("hangarDoor").objectReferenceValue = hangarDoor;
+            pso.FindProperty("outerDoor").objectReferenceValue = outerDoor;
+            pso.ApplyModifiedPropertiesWithoutUndo();
+            log.Add("TravelerPresenter, SpeechBubble, desk view 20 degrees");
+        }
+
+        private static Transform LockPoint(Transform root, string name, Vector3 position, Quaternion rotation)
+        {
+            var point = root.Find(name);
+            if (point == null) point = new GameObject(name).transform;
+            point.SetParent(root, false);
+            point.localPosition = position;
+            point.localRotation = rotation;
+            return point;
+        }
+
         private static Transform BoardSpot(Transform board, string name, float x)
         {
-            var spot = board.Find(name);
-            if (spot == null) spot = new GameObject(name).transform;
-            spot.SetParent(board, false);
-            spot.localPosition = new Vector3(x, 0f, 0f);
-            spot.localRotation = Quaternion.identity;
-            return spot;
+            return LockPoint(board, name, new Vector3(x, 0f, 0f), Quaternion.identity);
         }
 
         private static InputActionReference PlayerAction(string action)

@@ -15,7 +15,7 @@ namespace GameOff.Travelers
         [SerializeField] private string displayName;
         [Tooltip("Human, Vellani, Quobb, Xirrik, Sorvak. Non-human species speak in alien glyphs that get translated (P40).")]
         [SerializeField] private string species = "Human";
-        [Tooltip("Character model shown in the inspection lock (P40).")]
+        [Tooltip("Character prefab PF_NPC_<Species> shown in the inspection lock (P40; GameOff/Build Travelers).")]
         [SerializeField] private GameObject model;
         [SerializeField] private List<DocumentData> documents = new List<DocumentData>();
         [Header("Author's intention (checked against the rules)")]

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
   displayName: VESNA OKARU
   species: Human
-  model: {fileID: 919132149155446097, guid: 363abc6a967c59d4db0624da2a352d29, type: 3}
+  model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
   documents:
   - {fileID: 11400000, guid: bd25da2003770ae499564cc21f7af170, type: 2}
   - {fileID: 11400000, guid: d99877bb958cde04c8e279e74cc774ae, type: 2}

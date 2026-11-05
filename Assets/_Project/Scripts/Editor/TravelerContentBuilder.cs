@@ -16,7 +16,6 @@ namespace GameOff.EditorTools
         private const string TravelerFolder = "Assets/_Project/Data/Travelers/Test/";
         private const string DocFolder = "Assets/_Project/Data/Documents/Test/";
         private const string PhotoPath = "Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Placeholder.png";
-        private const string ModelFolder = "Assets/_Project/Art/Models/Characters/";
 
         [MenuItem("GameOff/Build Test Day")]
         public static void BuildFromMenu() => Debug.Log(Build());
@@ -88,7 +87,8 @@ namespace GameOff.EditorTools
             DocumentData[] docs, string tag)
         {
             var t = Asset<TravelerData>(TravelerFolder + $"T_Test_{file}.asset");
-            var model = AssetDatabase.LoadAssetAtPath<GameObject>(ModelFolder + $"SK_NPC_{species}.fbx");
+            var model = AssetDatabase.LoadAssetAtPath<GameObject>(TravelerPrefabBuilder.PrefabFolder + $"PF_NPC_{species}.prefab");
+            if (model == null) Debug.LogError($"[TestDay] No PF_NPC_{species}: run GameOff/Build Travelers first, or {name} stays invisible.");
             int n = 0;
             foreach (var d in docs)
             {

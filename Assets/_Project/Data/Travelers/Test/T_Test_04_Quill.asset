@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
   displayName: QUILL BARRAGH
   species: Quobb
-  model: {fileID: 919132149155446097, guid: e594c8aabd2eb7747a45daabc2beb81a, type: 3}
+  model: {fileID: 2190294317704143118, guid: 2599d4a5607b12d4092e5eb3b17cd21a, type: 3}
   documents:
   - {fileID: 11400000, guid: bf82f0cad77c78f4c8953b4c8143d765, type: 2}
   - {fileID: 11400000, guid: 80d8d488472163144a66764ba597051f, type: 2}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
   displayName: IXA REN
   species: Xirrik
-  model: {fileID: 919132149155446097, guid: 716c6310803dcbb4683de63f854f4de6, type: 3}
+  model: {fileID: 8372028664995244572, guid: 6fc5658331bc5e8408dc013c0086e1be, type: 3}
   documents:
   - {fileID: 11400000, guid: 2e211bc1ecdbb3a4b919209f5384cd95, type: 2}
   - {fileID: 11400000, guid: 16c55331a271a1a48a6c0906946739a6, type: 2}

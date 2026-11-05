@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
   displayName: DARRO VENN
   species: Vellani
-  model: {fileID: 919132149155446097, guid: e492945ac2719904ab7560e1feef23c6, type: 3}
+  model: {fileID: 7545026988212257677, guid: 5d6ec526c1583de48a952ef7a4217cbc, type: 3}
   documents:
   - {fileID: 11400000, guid: 570f628b6fea24c45b633d398cf3db57, type: 2}
   - {fileID: 11400000, guid: 5889f234ac915df4bb42427435d96d30, type: 2}

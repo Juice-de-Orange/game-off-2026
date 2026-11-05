@@ -55,6 +55,8 @@ namespace GameOff.Documents
         public event Action<IReadOnlyList<DocumentData>> DocumentsReturned;
         /// <summary>Raised when the drawer refuses to go (ReturnCheck said no), with the reason.</summary>
         public event Action<string> ReturnRefused;
+        /// <summary>The officer clicked a printed field on a traveler's paper held up for reading (P40): document, field key.</summary>
+        public event Action<DocumentData, string> FieldClicked;
 
         /// <summary>
         /// Asked before the drawer hands papers back: (papers in the drawer, papers still on the desk) → null to allow, or a
@@ -143,8 +145,12 @@ namespace GameOff.Documents
         {
             if (_inspected != null)
             {
-                if (pressed) PutDownInspected(instant: false);
-                return pressed;
+                string field = _inspected.AcceptsQuestions ? _inspected.FieldAt(station.PointerRay(screenPos)) : null;
+                _inspected.HighlightField(field);
+                if (!pressed) return false;
+                if (field != null) FieldClicked?.Invoke(_inspected.Data, field);
+                else PutDownInspected(instant: false);
+                return true;
             }
             if (_drawerPress)
             {
@@ -446,6 +452,7 @@ namespace GameOff.Documents
         {
             var doc = _inspected;
             _inspected = null;
+            doc.HighlightField(null);
             StopGlide(doc.transform);
             if (instant) doc.transform.SetPositionAndRotation(_inspectReturn.position, _inspectReturn.rotation);
             else StartGlide(doc.transform, _inspectReturn.position, _inspectReturn.rotation, tuning.inspectDuration);

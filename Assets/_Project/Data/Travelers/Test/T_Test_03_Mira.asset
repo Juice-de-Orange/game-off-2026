@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
   displayName: MIRA TALSK
   species: Sorvak
-  model: {fileID: 919132149155446097, guid: bb4dc0516bc3e0b43a35225ae124a6f9, type: 3}
+  model: {fileID: 2456880688624481046, guid: 1e6468b746c5f0e47b03509118fc1380, type: 3}
   documents:
   - {fileID: 11400000, guid: 6a5daa8092fe52948aa074a01cc306dd, type: 2}
   - {fileID: 11400000, guid: a75cbe35d7abd1442a09bb76be4e6ea5, type: 2}
