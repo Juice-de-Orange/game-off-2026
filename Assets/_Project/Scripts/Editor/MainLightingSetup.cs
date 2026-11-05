@@ -42,13 +42,14 @@ namespace GameOff.EditorTools
             // Sky
             var skyTex = AssetDatabase.LoadAssetAtPath<Texture2D>(SkyTexturePath);
             var importer = (TextureImporter)AssetImporter.GetAtPath(SkyTexturePath);
-            if (importer != null && (importer.filterMode != FilterMode.Point || importer.mipmapEnabled || importer.wrapModeU != TextureWrapMode.Repeat))
+            if (importer != null && (importer.filterMode != FilterMode.Point || importer.mipmapEnabled || importer.wrapModeU != TextureWrapMode.Repeat
+                || importer.textureCompression != TextureImporterCompression.Compressed))
             {
                 importer.filterMode = FilterMode.Point;
                 importer.mipmapEnabled = false;
                 importer.wrapModeU = TextureWrapMode.Repeat;
                 importer.wrapModeV = TextureWrapMode.Clamp;
-                importer.textureCompression = TextureImporterCompression.Uncompressed;
+                importer.textureCompression = TextureImporterCompression.Compressed; // 6 MB uncompressed was a third of the whole build (P57)
                 importer.SaveAndReimport();
             }
             var sky = AssetDatabase.LoadAssetAtPath<Material>(SkyMaterialPath);

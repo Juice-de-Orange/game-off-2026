@@ -61,7 +61,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P09 Tagesablauf (wartet auf abfertigbare Reisende für die Abnahme) | — | 05.11. |
-| max | P57 Nachtlauf Bugs + Optimierung | `Main.unity`, `Menu.unity`, `Boot.unity`, `PF_Station_Graybox`, `PF_Exterior`, `PF_CounterStation`, `PF_Traffic`, `PF_Doc_*`, `ProjectSettings.asset`, `QualitySettings.asset`, `Mobile_RPAsset`, `FirstPersonController.cs`, `TrafficLaneDevTool.cs`, `ShipTraffic.cs` | 05.11. |
+| max | P57 Nachtlauf Bugs + Optimierung | `Main.unity`, `Menu.unity`, `Boot.unity`, `PF_Station_Graybox`, `PF_Exterior`, `PF_CounterStation`, `PF_Traffic`, `PF_Doc_*`, `ProjectSettings.asset`, `QualitySettings.asset`, `Mobile_RPAsset`, `Mobile_Renderer`, `PC_Renderer`, `TMP Settings`, `T_Sky_Space`, `FirstPersonController.cs`, `TrafficLaneDevTool.cs`, `ShipTraffic.cs` | 05.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
