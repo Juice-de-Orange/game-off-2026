@@ -25,6 +25,18 @@ namespace GameOff.EditorTools
             Debug.Log("[Lighting] Bake started. Save the scene when the progress bar in the bottom right is done.");
         }
 
+        /// <summary>The same with -batchmode: opens Main, bakes while waiting, saves. Takes a while.</summary>
+        public static void SetupAndBakeNow()
+        {
+            var scene = EditorSceneManager.OpenScene("Assets/_Project/Scenes/Main.unity", OpenSceneMode.Single);
+            Setup();
+            NavMeshRebake();
+            bool baked = Lightmapping.Bake();
+            EditorSceneManager.SaveScene(scene);
+            Debug.Log($"[Lighting] Bake finished: {baked}");
+            if (!baked && Application.isBatchMode) EditorApplication.Exit(1);
+        }
+
         public static void Setup()
         {
             // Sky
