@@ -49,14 +49,13 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P09 Tagesablauf (wartet auf abfertigbare Reisende für die Abnahme) | — | 05.11. |
-| martin | P46 Geld, Inventar & Handelsfenster (einsetzen: `PF_Economy` in Main; Tastenübersicht + I neu bauen; Maus nach dem Schließen von Fenstern sofort fangen) | `Main.unity`, `Menu.unity`, `PF_PauseMenu.prefab`, `FirstPersonController.cs` | 05.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
 die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 
 ### Muss (ohne das kein Spiel)
-- [ ] 
+- [ ] **Vor der Abgabe:** `showDevTools` am DayManager (`PF_DayFlow` in Main) ausschalten – sonst rote Hitboxen und Dev-Knöpfe im Spiel
 
 ### Soll (macht es gut)
 - [ ] 
@@ -71,9 +70,11 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | Nr | Was passiert | Wie nachstellen | Gefunden | Wer | Status |
 |---|---|---|---|---|---|
 | B01 | Spieler fällt beim Laden von Main **sofort durch den Boden** der Station | Unity: Play neu gestartet, über das Menü ins Spiel (Start Shift). Tritt nicht jedes Mal auf: Claude konnte es am 05.11. nicht nachstellen (Menü → Main dreimal, Play aus dem Menü mit Messung pro Frame: Spieler steht stabil bei y = 0,03). Unklar, ob es beim Tageswechsel (Teleport ins Bett-Zimmer, P09) auch passieren kann. Ideen: Spawn genau auf Bodenhöhe (`PlayerSpawn` y = 0, Kapsel-Unterkante = Boden), erster Frame nach dem Laden mit großem `deltaTime`. Möglicher Schutz: etwas über dem Boden spawnen + Auffangen unter dem Boden (zurück zur letzten sicheren Position) | martin, 05.11. | — | offen |
+| B03 | Nach dem Schließen von Fenstern (Brief, Handel, BACK) musste man erst klicken, bevor die Kamera sich dreht | WebGL, Fenster mit Klick schließen | martin, 05.11. | martin | behoben (martin, 05.11.): Maus wird beim Zurückgeben der Steuerung sofort gefangen |
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P46 Geld, Inventar & Handelsfenster: Kontostand, Inventar (I), Handelsfenster, Händler-Platzhalter Holly/Barkeeper/Dealer, Drohne „Send home“, 13 Tests (martin, 05.11.)
 - [x] P18 Audio-Grundgerüst: GameMixer (Music/SFX/Voice), AudioManager mit PlayMusic/PlaySfx/PlaySfxAt/PlayVoice, 4 Lautstärkeregler mit Vorschau-Ton (martin, 05.11.)
 - [x] P43 Optionen in Reitern (Audio/Controls), Invert Y, Tastenübersicht, Reset; Vollbild-Knopf oben rechts in Haupt- und Pausemenü (martin, 05.11.)
 - [x] P02 Startbildschirm & Menü: Boot-Splash, Hauptmenü mit Station im All als Hintergrund, Optionen, Credits, Pausemenü; WebGL getestet (martin, 05.11.)

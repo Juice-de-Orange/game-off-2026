@@ -71,7 +71,8 @@ namespace GameOff.Day
         /// <summary>
         /// Bed dialog. confirm == null hides the confirm button (e.g. travelers still waiting); dev == null hides the red dev button.
         /// </summary>
-        public void ShowDialog(string title, string body, string confirmLabel, Action confirm, Action dev, Action cancel)
+        public void ShowDialog(string title, string body, string confirmLabel, Action confirm, Action dev, Action cancel,
+            string devLabel = "Dev_end_Day")
         {
             dialogTitle.text = title;
             dialogBody.text = body;
@@ -81,6 +82,7 @@ namespace GameOff.Day
             dialogConfirm.gameObject.SetActive(confirm != null);
             if (confirm != null) dialogConfirm.GetComponentInChildren<TMP_Text>().text = confirmLabel;
             dialogDev.gameObject.SetActive(dev != null);
+            if (dev != null) dialogDev.GetComponentInChildren<TMP_Text>().text = devLabel;
             // BACK alone sits in the middle, next to SLEEP on the right (positions from DayFlowBuilder).
             var back = (RectTransform)dialogCancel.transform;
             back.anchoredPosition = new Vector2(confirm != null ? 140f : 0f, back.anchoredPosition.y);

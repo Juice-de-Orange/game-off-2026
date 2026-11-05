@@ -193,7 +193,7 @@ namespace GameOff.EditorTools
             var controls = pages[1].transform;
             var sensitivity = SliderRow(controls, "Sensitivity", "MOUSE SENSITIVITY", new Vector2(0f, RowTop), out var sensitivityValue);
             var invertY = ToggleRow(controls, "InvertY", "INVERT Y-AXIS", new Vector2(0f, RowTop - RowStep), out var invertYValue);
-            var keys = Label(controls, "Keys", KeyOverview, 16, TextDim, new Vector2(0f, RowTop - 2.75f * RowStep), new Vector2(KeyBoxWidth, 120f));
+            var keys = Label(controls, "Keys", KeyOverview, 15, TextDim, new Vector2(0f, RowTop - 2.75f * RowStep), new Vector2(KeyBoxWidth, 120f));
             keys.alignment = TextAlignmentOptions.TopLeft;
             var resetControls = MenuButton(controls, "ResetButton", "RESET TO DEFAULTS", new Vector2(0f, ResetY), new Vector2(280f, 40f), 18);
 
@@ -226,6 +226,7 @@ namespace GameOff.EditorTools
             "<color=#E2DDCF>W A S D</color><pos=210>walk\n" +
             "<color=#E2DDCF>MOUSE</color><pos=210>look around\n" +
             "<color=#E2DDCF>E</color><pos=210>use / sit down\n" +
+            "<color=#E2DDCF>I</color><pos=210>inventory\n" +
             "<color=#E2DDCF>LEFT CLICK</color><pos=210>press, stamp, drag papers\n" +
             "<color=#E2DDCF>Q / ESC / RIGHT CLICK</color><pos=210>step back / stand up\n" +
             "<color=#E2DDCF>ESC / P</color><pos=210>pause";

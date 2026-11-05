@@ -43,11 +43,16 @@ namespace GameOff.Player
             lookAction.action.Disable();
         }
 
-        /// <summary>Turn player movement/look on or off, e.g. while sitting at the counter or in a menu.</summary>
+        /// <summary>
+        /// Turn player movement/look on or off, e.g. while sitting at the counter or in a menu. Turning it back on captures the
+        /// mouse again right away (P46): this is called just after the click or key press that closed the window, which the
+        /// browser still accepts as the user's action, so the camera turns at once instead of waiting for another click.
+        /// </summary>
         public void SetControlEnabled(bool enabled)
         {
             _controlEnabled = enabled;
-            if (!enabled) SetCursorCaptured(false);
+            SetCursorCaptured(enabled);
+            if (enabled) PointerLockBridge.Request();
         }
 
         /// <summary>Moves the player to a spot (e.g. after leaving the counter); yaw from the rotation, camera pitch level.</summary>

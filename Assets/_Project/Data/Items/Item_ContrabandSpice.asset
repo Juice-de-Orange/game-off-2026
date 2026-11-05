@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777e03cad483684198013defb55935a, type: 3}
+  m_Name: Item_ContrabandSpice
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemData
+  displayName: Contraband spice
+  description: Confiscated at the counter. Worth more under the bar than at the kiosk.
+  baseValue: 12
+  tags:
+  - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
+  icon: {fileID: 0}

@@ -243,7 +243,7 @@ namespace GameOff.EditorTools
         private static string Ok(Object o) => o != null ? "ok" : "MISSING";
 
         /// <summary>URP Unlit, transparent red (created once).</summary>
-        private static Material DebugMaterial()
+        internal static Material DebugMaterial()
         {
             var mat = AssetDatabase.LoadAssetAtPath<Material>(DebugMaterialPath);
             if (mat != null) return mat;

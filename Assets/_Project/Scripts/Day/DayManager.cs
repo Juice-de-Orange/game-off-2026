@@ -48,6 +48,8 @@ namespace GameOff.Day
         public event Action RunFinished;
 
         public int Day => _day;
+        /// <summary>Dev tools on (Dev_end_Day, visible hitboxes, vendors open during the shift via a dev button).</summary>
+        public bool DevTools => showDevTools;
         public int DayCount => schedule.Count;
         public Phase CurrentPhase => _phase;
 

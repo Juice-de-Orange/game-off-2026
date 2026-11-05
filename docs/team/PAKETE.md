@@ -557,7 +557,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Getestet im Editor und im WebGL-Build in Chrome (Vollbild mit einem Klick, Esc, Invert, Reset, Werte nach Neuladen), 0 Fehler/Warnungen.
 
 ### P46 — Geld, Inventar & Handelsfenster (Grundgerüst)
-- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 05.11.)
+- Größe: M · Priorität: Muss · Status: fertig (martin, 05.11.)
 - Braucht: P03 · Folgt auf: —
 - Ziel: **Eine gemeinsame Grundstruktur für Geld- und Inventarverwaltung**, die alle späteren Pakete nur benutzen statt eigene zu bauen.
   **P08, P10, P11 und P13 werden erst gebaut, wenn P46 fertig ist.**
@@ -569,3 +569,40 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   echte Preise und Balancing (nach dem Kern-Loop-Call)
 - Abnahme: Mit dem Test-Händler lässt sich kaufen und verkaufen, Kontostand und Inventar stimmen und bleiben über den Tageswechsel
   erhalten; eine zweite Fenster-Variante „Send home“ entfernt Gegenstände; Schnittstellen in der Ergebnis-Notiz beschrieben.
+- Ergebnis (martin, 05.11.):
+  - **Zugriff für alle Pakete:** `PlayerEconomy.Instance` (`Scripts/Economy/`, liegt in Main in `PF_Economy`, gilt für einen Durchlauf):
+    - `Wallet.Add(10, "Wage · Vesna")` Einnahme · `Wallet.TrySpend(60, "Kiosk · Scanner")` Kauf (false ohne genug Geld) ·
+      `Wallet.Charge(30, "Rent")` Pflichtzahlung, darf ins Minus (P10 entscheidet über Game Over) · `Wallet.Balance`, `Wallet.Changed`
+    - `Wallet.Today`: Kontobewegungen des Tages mit Grund; wird jeden Morgen geleert (`DayManager.DayStarted`)
+    - `Inventory.Add(item)` / `Remove(item)` / `Count(item)` / `Items`, `Inventory.Changed`; gleiche Gegenstände stapeln sich (keine Herkunft)
+  - **Daten** (Inspector, nicht Code): `Data/Items/Item_*.asset` (`ItemData`: Name, Beschreibung, Grundwert, Labels),
+    `Data/Items/Tags/Tag_*.asset` (`ItemTag`: Name + Farbe), `Data/Economy/Stock_*.asset` (`VendorStock`: Titel, Sortiment,
+    Verkaufs-/Ankaufsfaktor, abgelehnte Labels, nur nach der Schicht offen), `Data/Economy/EconomyTuning.asset` (Startgeld 40, Währung CR).
+    Test-Inhalte: 6 Gegenstände, 4 Labels, 3 Sortimente (Kiosk, Bar leer, Schwarzmarkt) – werden nur angelegt, wenn sie fehlen.
+  - **Fenster:** `TradeWindow` (Entwurf A: Angebot | deine Gegenstände | Details + BUY/SELL, Kontostand oben rechts) mit
+    `OpenTrade(stock)` und `OpenSendHome(titel, info, onSend)`; `InventoryWindow` (Entwurf 1, Taste **I**, nur beim freien Laufen):
+    Gegenstände, Details mit Labels/Wert, **TODAY**. Der Kontostand ist nur in diesen Fenstern sichtbar.
+  - **Welt** (`Scripts/Shops/`): `Vendor` (E: Platzhalter-Stimmton auf dem Voice-Kanal, dann Handelsfenster; „nur nach der Schicht“
+    zeigt sonst „<Name> is closed“) für **Holly** (Kiosk), **Barkeeper** und **Dealer** (Barhocker 4); `DroneTerminal` an
+    `SM_Hangar_CargoDrone` (Hitbox umschließt Drohne + Pad, Send home, Ereignis `Sent` für P13). Figuren = graue Boxen, bis `Art/Models/Characters/SM_NPC_Holly.fbx`,
+    `SM_NPC_Barkeeper.fbx`, `SM_NPC_Dealer.fbx` geliefert sind (Bestellung erst nach Absprache) → dann neu bauen.
+  - Gebaut von **GameOff → Build Economy into Main** (`EconomyBuilder`). Dev-Werkzeuge (`DayManager.showDevTools`): rote Hitboxen,
+    roter **Dev_force_Trade** bei geschlossenen Händlern, Startgegenstände Contraband spice + Pocket watch zum Testen.
+  - Getestet im Editor: kaufen (zu teuer → „Not enough credits“), verkaufen, Kiosk lehnt CONTRABAND ab, Schwarzmarkt zahlt mehr,
+    Drohne entfernt Gegenstände, Geld/Inventar bleiben über den Tageswechsel, TODAY wird morgens geleert. 0 Fehler/Warnungen.
+  - **Einmalige Gegenstände:** `ItemData.unique` (z. B. Scanner, Story-Gegenstände) – höchstens einer im Inventar, Händler verkaufen
+    ihn dann nicht noch einmal („You already have one.“). `Inventory.CanAdd(item)` prüft das.
+  - **Neuen Gegenstand anlegen:** Rechtsklick in `Data/Items/` → Create → GameOff → Economy → Item, Datei `Item_<PascalName>.asset`
+    (Name, Beschreibung, Grundwert, Labels, ggf. unique). Labels: `Data/Items/Tags/Tag_<NAME>.asset`. Sortimente:
+    `Data/Economy/Stock_<Händler>.asset`. Danach EditMode-Tests laufen lassen.
+  - **Maus nach Fenstern:** `FirstPersonController.SetControlEnabled(true)` fängt die Maus sofort wieder (im Browser über
+    `PointerLockBridge` → `PointerLock.jslib`, solange der Klick/Tastendruck noch als Nutzeraktion zählt). Gilt für Brief, Handel,
+    Inventar, Bett, Pause, Aufstehen. Nach Esc braucht es weiter einen Klick (Browser-Regel).
+  - **Tests:** `Tests/Editor/EconomyTests.cs` (13 Tests: Kontostand, TODAY, Inventar, unique, Preise, abgelehnte Labels, alle Assets gültig).
+  - **Bewusst offen (gehört zu anderen Paketen):**
+    - Beschlagnahme (P08): Reisende führen ihre Fracht bisher nur als Text (`TravelerData`, Max). Für „Beschlagnahme ins Inventar“
+      brauchen sie echte `ItemData` → Frage an max in der Kern-Loop-Abfrage.
+    - Wirkung bei der Familie (P13/P10), z. B. Medizin schicken deckt den Medizinbedarf: dafür ein eigenes Feld am Gegenstand,
+      **nicht** die Labels (Labels = Anzeige + Händler-Filter).
+    - Benutzen von Gegenständen (P30, z. B. Nova Cola trinken): Knopf im Inventar kommt dort dazu.
+    - Händler-Vorrat pro Tag: Sortiment ist unbegrenzt, bis das Balancing etwas anderes verlangt.

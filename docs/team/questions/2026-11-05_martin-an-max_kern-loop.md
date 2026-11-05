@@ -176,6 +176,14 @@ Bis zum **Checkpoint 09.11.**: Vorschlag P08 + P10 + P45, damit man einen Tag mi
 Inventar und ein allgemeines Handelsfenster (auch als „Send home“ für die Drohne). **P08, P10, P11 und P13 bauen darauf auf und
 werden erst begonnen, wenn P46 fertig ist** (steht so in `PAKETE.md`). Wer P08/P10/P11/P13 übernimmt, bleibt im Call offen.
 
+**Nachtrag 05.11. (martin) – zwei Punkte aus P46 für den Call:**
+- **Beschlagnahme braucht echte Gegenstände:** Reisende führen ihre Fracht bisher nur als Text (`TravelerData`, Frachtliste,
+  Regel „verbotene Waren“ vergleicht Wörter). Für P08 („Beschlagnahme ins Inventar“) müsste ein Reisender `ItemData` mitführen
+  (z. B. Liste `carriedItems`, die zur Frachtliste passt). Das betrifft deinen Code.
+  [ ] Max ergänzt `TravelerData` [ ] Martin ergänzt es mit Claim [ ] anders: ____
+- **Idee zum Theme „Shift“:** ein Preisfaktor pro Tag in `EconomyTuning` (Preise steigen von Tag zu Tag, passend zum politischen
+  Umschwung). Ein Wert pro Tag, große Wirkung. [ ] ja [ ] nein [ ] später
+
 **Beschluss:**
 
 ---

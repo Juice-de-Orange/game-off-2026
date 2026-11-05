@@ -35,16 +35,9 @@ namespace GameOff.UI
         private const float LockGrace = 0.5f;
         private static bool IsWebGL => Application.platform == RuntimePlatform.WebGLPlayer;
 
-#if UNITY_WEBGL && !UNITY_EDITOR
-        // Plugins/WebGL/PointerLock.jslib. In the browser, Cursor.lockState keeps saying "Locked" after the user's Esc
-        // released the lock (the first Esc never reaches the game), so ask the browser directly.
-        [System.Runtime.InteropServices.DllImport("__Internal")]
-        private static extern int GameOff_IsPointerLocked();
-
-        private static bool IsPointerLocked() => GameOff_IsPointerLocked() == 1;
-#else
-        private static bool IsPointerLocked() => Cursor.lockState == CursorLockMode.Locked;
-#endif
+        // In the browser, Cursor.lockState keeps saying "Locked" after the user's Esc released the lock (the first Esc never
+        // reaches the game), so ask the browser directly (PointerLockBridge → Plugins/WebGL/PointerLock.jslib).
+        private static bool IsPointerLocked() => PointerLockBridge.IsLocked;
 
         public bool IsPaused => _paused;
 
@@ -112,14 +105,7 @@ namespace GameOff.UI
             _paused = false;
             root.SetActive(false);
             SetTime(false);
-            player.SetControlEnabled(true);
-            // Desktop/editor: capture right away. In WebGL the next click captures (FirstPersonController), because
-            // the browser only grants a pointer lock on a fresh user gesture.
-            if (!IsWebGL)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
+            player.SetControlEnabled(true); // captures the mouse again (in the browser right after the Resume click)
             _wasCaptured = IsPointerLocked();
             _capturedSince = Time.unscaledTime;
             _lastBlockedFrame = Time.frameCount;

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13e58fa0b282a6e4a859e5d0bade9679, type: 3}
+  m_Name: Stock_Kiosk_Test
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.VendorStock
+  title: "KIOSK \xB7 HOLLY"
+  items:
+  - {fileID: 11400000, guid: 5d248fac0f017814fa23f240e7f025aa, type: 2}
+  - {fileID: 11400000, guid: 247f021f035f8f04593273eb8afa1517, type: 2}
+  - {fileID: 11400000, guid: 04bda7305b9639e499630ecc7e65086b, type: 2}
+  - {fileID: 11400000, guid: a2d217b5d6ca9d445b1d1c210919a72a, type: 2}
+  sellFactor: 1
+  buyFactor: 0.5
+  refusedTags:
+  - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
+  openAfterShiftOnly: 1
+  emptyText: Sold out.
