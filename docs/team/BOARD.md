@@ -37,6 +37,11 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - WebGL-Build mit Menü (20 MB) in Chrome getestet, 41/41 Tests grün
 - Als Nächstes (martin): P19 itch-Upload mit Web-Vorlage „Minimal“
 
+### Stand 05.11. nachmittags (martin)
+- Fertig: **P46 Geld, Inventar & Handelsfenster** (Grundgerüst für alle Items/Geld – Anleitung in PAKETE.md → P46 → Ergebnis), Händler-Platzhalter, Drohne
+- Gebaut, Abnahme offen: **P09 Tagesablauf** (wartet auf abfertigbare Reisende)
+- Kern-Loop-Abfrage an max für den gemeinsamen Call; P08/P10/P11/P13 erst nach P46; 54/54 Tests grün
+
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
 - **martin**: Startbildschirm — alles vom Spielstart bis zum Menü. Baut mit Platzhalter-Assets, Max ersetzt sie.
