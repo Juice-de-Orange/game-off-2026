@@ -41,6 +41,8 @@ Danach Unitys eigene Änderungen zurücksetzen: `ShareTechMono SDF.asset`, `Orbi
 3. `docker save kestrel9:$S | SSH_ORIGINAL_COMMAND="deploy $S" /opt/kestrel9/deploy.sh` (startet, prüft, rollt bei Fehler zurück).
 4. Prüfen: `curl https://kestrel9.maxlworks.com/version.txt`. Besucher sind nur Sekunden unterbrochen.
 
+**Messen und durchspielen:** `node tools/measure-webgl.mjs <Build> <Ausgabe> [full|quick]`, mit `K9_CPU=4` für ein schwächeres Gerät; `node tools/drive-webgl.mjs <Build> <Ausgabe>` spielt per Skript mit echten Eingaben. Beide starten ein eigenes Chrome ohne Fenster und liefern nichts mit dem Spiel aus.
+
 **Lokal im Browser testen:** Build-Ordner mit `python -m http.server` ausliefern. Den Stuhl kann die Automatisierung nicht erreichen; dafür in einer Testkopie der `index.html` die Instanz merken (`.then(function (i) { window.k9 = i; ...`), dann `k9.SendMessage('PF_CounterStation','Sit')`. Echte Tasten und den Weg zum Stuhl prüft ein Mensch.
 
 ## Secrets (GitHub → Settings → Secrets and variables → Actions)

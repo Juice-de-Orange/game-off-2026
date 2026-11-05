@@ -1,7 +1,7 @@
 // Measures a local WebGL build in its own headless Chrome (P57): frame times without the vsync cap, memory, console errors,
 // screenshots, driven by real mouse and key events, the same scenario every run. Independent of the desktop session.
 //   node tools/measure-webgl.mjs <build folder> <output folder> [scenario: full|quick]
-// Env: K9_CPU=4 slows the CPU down fourfold (a weaker device); K9_NOTRAFFIC=1 stops the ships in Main before measuring.
+// Env: K9_CPU=4 slows the CPU down fourfold (a weaker device); K9_NOTRAFFIC=1 removes the ships in Main before measuring; K9_CYCLES=8 menu round trips.
 // Output: <output>/result.json and screenshots. Nothing here ships with the game: the hook is injected by this server only.
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
@@ -160,7 +160,7 @@ try {
       await hold('space', 150);
       await sleep(1500);
     }
-    for (let cycle = 1; cycle <= 3; cycle++) {
+    for (let cycle = 1; cycle <= Number(process.env.K9_CYCLES ?? 3); cycle++) {
       await hold('p', 150);
       await sleep(400);
       await click(...MENU_IN_PAUSE);

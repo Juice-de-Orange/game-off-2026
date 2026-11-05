@@ -23,7 +23,7 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 
 ## Reihenfolge (Stand 05.11. abends, max)
 Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächste offene Muss-Paket.
-1. **Kern-Loop-Call** (Frage `kern-loop`, vor dem Checkpoint 09.11.): legt Umfang, Geldwerte, Enden und die neuen Pakete P44/P45 fest
+1. **Kern-Loop-Call** (Frage `kern-loop`, vor dem Checkpoint 09.11.): legt Umfang, Geldwerte, Enden und die neuen Pakete P44/P45 fest; dabei auch die Entscheidungen aus **P58**
 2. **P09** Tagesablauf abnehmen (martin): Reisende lassen sich jetzt abfertigen
 3. **P08** Entscheidungen & Moral → **P10** Geld, Familie & Abrechnung
 4. **P15** Inhalte für 3 Tage inkl. **The Shifter** (auch echte Antworten der Reisenden) → **P12** Enden
@@ -759,12 +759,33 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Achtung: Alle drei Bahnen liegen vom Fenster aus fast auf derselben Höhe am Himmel (~31° über dem Fachwerk) → Linien überdecken sich.
 
 ### P57 — Nachtlauf: Bugs beheben, Spiel optimieren
-- Größe: L · Priorität: Muss · Status: in Arbeit (max, 05.11.)
+- Größe: L · Priorität: Muss · Status: fertig (max, 06.11.)
 - Braucht: — · Folgt auf: P40, P41, P42, P55
 - Ziel: Bekannte und neu gefundene Bugs sind behoben, Ruckler sind belegt und reduziert, Spiel lädt und läuft spürbar besser.
 - Enthalten: B01, B05, Softlock Papier unter der Schublade, einfache Bugs; Messung im WebGL-Build; Grundlast (Occlusion, Schatten, HDR), Download und RAM, Skripte
 - Nicht enthalten: neue Funktionen, Spielregeln und Spielwerte (P58)
 - Abnahme: Vorher-Nachher-Zahlen im Ergebnis; Tests grün; vollständiger Durchlauf im WebGL-Build ohne neue Konsolenfehler.
+- Ergebnis: Die Schiffe verursachen die Ruckler nicht, die Grundlast war es. Gemessen in `tools/measure-webgl.mjs` (Chrome ohne Bildratenbremse, 1600 × 900, RTX 2070 Super, Ryzen 2700X), „CPU ×4“ steht für ein schwächeres Gerät:
+
+  | Wert | Vorher | Nachher |
+  |---|---|---|
+  | Download | 19,4 MB | 14,7 MB |
+  | Speicher im Spiel, belegt | 130 MB | 80 MB |
+  | Speicher gesamt | 138 MB | 128 MB |
+  | fps Menü, CPU ×4 | 18,5 | 25,0 |
+  | fps Zimmer, CPU ×4 | 16,0 | 59,6 |
+  | fps Schalter, CPU ×4 | 25,2 | 38,4 |
+  | fps Pinnwand, CPU ×4 | 24,9 | 43,8 |
+  | fps Stehen am Schalter, CPU ×4 | 21,4 | 38,2 |
+  | Schalter, CPU ×4: mittlerer Frame / 99 % | 39,9 ms / 79,0 ms | 25,2 ms / 60,1 ms |
+  | fps ohne Bremse: Menü / Zimmer / Schalter | 98 / 103 / 152 | 150 / 353 / 212 |
+
+  - **Geholfen:** Occlusion Culling (Zimmer ×3), Static Batching (15–25 %, kostet 2,5 MB), PC-Stufe im Web-Build ausgeschlossen, Himmel komprimiert, HDR und ungenutzte Licht-Funktionen aus, Code-Stripping Medium, kleinere Code-Generierung. Skripte: Tür, Sprechblase, Einstellungen im Spieler, Dev-Werkzeug nur noch bei Bedarf.
+  - **Geprüft und verworfen:** Schattendistanz 25 m (Sonne auf fernen Hangarwänden), weniger Schattenwerfer für die Sonne (das Innere wird in 99 % der Ansichten heller). Der Echtzeit-Schatten kostet weiter etwa ein Drittel des Frames, siehe P58 Punkt 6.
+  - **Bugs:** B05 behoben und im Build bestätigt. B01 abgesichert, aber nie nachgestellt, also nicht bestätigt. Dazu: Papier unter der Schublade, schiefe und klebende Papiere, alte Durchsage am Morgen, Tab im Dev-Werkzeug, mögliche Endlosschleife im Verkehr, Null-Absicherung beim Händler.
+  - **Speicher:** kein Leck. Zehn Wechsel Menü und Spiel: nach dem Aufbau stabil bei 79 und 83 MB, gesamt bleibt 128 MB.
+  - **Geprüft:** 72 EditMode-Tests grün; Durchlauf im WebGL-Build (`tools/drive-webgl.mjs`): Lesen, Ziehen, Stempeln, Schublade, Verhaften, Schleuse, Verwarnzettel, Tageswechsel, leerer Tisch am Morgen, Pause, Kauf, Drohne, Schwarzmarkt, Menü und zurück; keine neuen Konsolenfehler. Bildvergleich `OcclusionCheck`: 3.192 Ansichten von 133 begehbaren Punkten, ohne Sonne kein Unterschied.
+  - **Nicht geprüft:** echte Tasten und der Weg zum Stuhl, Geräte außer diesem PC, andere Browser als Chrome. Der Papierschutz an der Schublade lief nur als Code, der Fall wurde im Build nicht ausgelöst. Vereinzelte einzelne lange Frames (148–180 ms in 3 von etwa 10 Läufen ohne Bremse) bleiben ungeklärt: nie mit CPU ×4, an wechselnden Stellen.
 
 ### P58 — Entscheidungen aus dem Nachtlauf
 - Größe: S · Priorität: Soll · Status: offen, wartet auf Max und Martin
@@ -801,3 +822,21 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Beleg: `Scripts/Shops/DroneTerminal.cs:43`, im Gegensatz zu `Vendor`.
 - Optionen: (a) wie Händler nur nach der Schicht; Kosten: wenige Zeilen. (b) so lassen, weil das Paket nach Hause erst mit P13 wirkt.
 - Empfehlung: mit P13 entscheiden.
+
+**6. Echtzeit-Sonne im Inneren**
+- Befund: Die Sonne ist das einzige Echtzeit-Schattenlicht und kostet etwa ein Drittel des Frames, obwohl das Innere gebacken ist. Jenseits der Schattendistanz von 50 m scheint sie durch Wände und hellt ferne Flächen auf. Das war schon vorher so.
+- Beleg: Ganz ohne Schatten CPU ×4: Schalter 31 → 42 fps, Zimmer 52 → 65, aber das Innere wird ausgewaschen (Vergleichsbilder im Handover beschrieben). `OcclusionCheck.CheckShadowDistance`: 50 gegen 100 m unterscheidet sich in 2.399 von 3.192 Ansichten.
+- Optionen: (a) Sonne wirkt nur außen, das Innere bekommt seine Sonnenflecken gebacken; Kosten: M, Licht-Layer, neuer Bake, Sonnenflecken wandern nicht mehr mit den Tagen. (b) so lassen; kostet nichts und bleibt beim jetzigen Aussehen.
+- Empfehlung: (a), falls das Spiel auf schwachen Geräten noch zu langsam ist. Art-Entscheidung, deshalb nicht von mir gemacht.
+
+**7. Heller Streifen im Hangar durch Occlusion**
+- Befund: Blendet Occlusion einen Schattenwerfer aus, kann auf der Hangarwand kurz ein schmaler Sonnenstreifen erscheinen.
+- Beleg: `OcclusionCheck.Run`: 122 von 3.192 Ansichten, höchstens 0,8 % der Bildfläche; ohne Sonne keine Ansicht.
+- Optionen: (a) akzeptieren. (b) verschwindet mit Punkt 6 (a). (c) Hangar-Teile vom Ausblenden ausnehmen; Kosten: klein, aber etwas mehr Grundlast.
+- Empfehlung: (a), Max schaut es sich im Hangar an.
+
+**8. Dev-Sprung im Sitzen**
+- Befund: Nach „End Day“ im Sitzen bleibt man sitzen, und der nächste Reisende kommt erst nach Aufstehen und erneutem Hinsetzen.
+- Beleg: Im WebGL-Build gesehen. Betrifft nur das Dev-Werkzeug, der normale Ablauf führt über das Bett.
+- Optionen: (a) `DevEndDay` steht den Spieler vorher auf. (b) so lassen, der Reiter DEV fliegt vor der Abgabe ohnehin raus.
+- Empfehlung: (b).
