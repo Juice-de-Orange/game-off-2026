@@ -498,6 +498,9 @@ namespace GameOff.EditorTools
             textRect.offsetMin = new Vector2(16f, 4f);
             textRect.offsetMax = new Vector2(-16f, -4f);
             subtitle.fontSize = hint.fontSize * 1.1f;
+            subtitle.fontSizeMax = subtitle.fontSize;
+            subtitle.fontSizeMin = subtitle.fontSize * 0.6f;
+            subtitle.enableAutoSizing = true; // a long line stays inside the bar
             subtitle.color = new Color(0.89f, 0.87f, 0.81f);
             subtitle.alignment = TextAlignmentOptions.Center;
             subtitle.raycastTarget = false;
