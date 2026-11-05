@@ -4364,7 +4364,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_Citation.png
 package: P07
 scene: Schalter (Verwarnzettel aus dem Drucker)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-12
 size_m: [0, 0, 0]
@@ -4392,7 +4392,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_Printer.fbx
 package: P07
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-12
 size_m: [0.22, 0.18, 0.08]
