@@ -10,14 +10,14 @@ using UnityEngine.InputSystem;
 namespace GameOff.EditorTools
 {
     /// <summary>
-    /// Builds everything for the documents on the counter (P06), idempotent: Share Tech Mono TMP font asset, document
+    /// Builds everything for the documents on the counter (P06), idempotent: Orbitron TMP font asset (P54), document
     /// materials, the three document prefabs (layout below), test documents, tuning, and wires the DocumentDesk with the
     /// drawer into PF_CounterStation. Document background art is replaced by the pipeline at the same paths.
     /// </summary>
     public static class DocumentPrefabBuilder
     {
-        private const string FontPath = "Assets/_Project/Fonts/ShareTechMono-Regular.ttf";
-        private const string FontAssetPath = "Assets/_Project/Fonts/ShareTechMono SDF.asset";
+        private const string FontPath = "Assets/_Project/Fonts/Orbitron-Regular.ttf";
+        private const string FontAssetPath = "Assets/_Project/Fonts/Orbitron SDF.asset";
         private const string TexFolder = "Assets/_Project/Art/Textures/Documents/";
         private const string MatFolder = "Assets/_Project/Art/Materials/Documents/";
         private const string PrefabFolder = "Assets/_Project/Prefabs/Documents/";
@@ -106,12 +106,12 @@ namespace GameOff.EditorTools
                 {
                     new Text("Subtitle", "KESTREL-9 TRANSIT AUTHORITY", -0.135f, 0.195f, 0.2f, LabelSize, LabelInk),
                     new Text("Field_title", "", -0.135f, 0.175f, 0.2f, TitleSize, Ink),
-                    new Text("Field_date", "", 0.075f, 0.195f, 0.06f, LabelSize * 0.7f, LabelInk),
+                    new Text("Field_date", "", 0.05f, 0.195f, 0.085f, LabelSize * 0.7f, LabelInk),
                     new Text("Field_body", "", -0.135f, 0.14f, 0.27f, ValueSize, Ink),
                 }, log, stampable: false);
 
             var tuning = Asset<DocumentTuning>(DataFolder + "DocumentTuning.asset");
-            WireCounter(id, permit, manifest, citation, notice, tuning, log);
+            WireCounter(id, permit, manifest, citation, notice, font, tuning, log);
             AssetDatabase.SaveAssets();
             return "DocumentPrefabBuilder:\n" + string.Join("\n", log);
         }
@@ -127,11 +127,11 @@ namespace GameOff.EditorTools
                 var font = AssetDatabase.LoadAssetAtPath<Font>(FontPath);
                 asset = TMP_FontAsset.CreateFontAsset(font, 90, 9, UnityEngine.TextCore.LowLevel.GlyphRenderMode.SDFAA, 1024, 1024,
                     AtlasPopulationMode.Dynamic);
-                asset.name = "ShareTechMono SDF";
+                asset.name = "Orbitron SDF";
                 AssetDatabase.CreateAsset(asset, FontAssetPath);
-                asset.atlasTextures[0].name = "ShareTechMono SDF Atlas";
+                asset.atlasTextures[0].name = "Orbitron SDF Atlas";
                 AssetDatabase.AddObjectToAsset(asset.atlasTextures[0], asset);
-                asset.material.name = "ShareTechMono SDF Material";
+                asset.material.name = "Orbitron SDF Material";
                 AssetDatabase.AddObjectToAsset(asset.material, asset);
                 log.Add("font " + FontAssetPath);
             }
@@ -200,8 +200,16 @@ namespace GameOff.EditorTools
                 tmp.color = t.Color;
                 tmp.text = t.Content;
                 tmp.alignment = TextAlignmentOptions.TopLeft;
-                tmp.textWrappingMode = TextWrappingModes.Normal;
+                bool multiline = t.Name == "Field_body" || t.Name == "Field_cargo" || t.Name == "Field_reason";
+                tmp.textWrappingMode = multiline ? TextWrappingModes.Normal : TextWrappingModes.NoWrap;
                 tmp.overflowMode = TextOverflowModes.Overflow;
+                if (!multiline)
+                {
+                    // Orbitron is wide: a long name or date shrinks to fit its field instead of running into the next one
+                    tmp.fontSizeMax = tmp.fontSize;
+                    tmp.fontSizeMin = tmp.fontSize * 0.6f;
+                    tmp.enableAutoSizing = true;
+                }
                 var rect = tmp.rectTransform;
                 rect.pivot = new Vector2(0f, 1f);
                 rect.sizeDelta = new Vector2(t.W, 0.08f);
@@ -272,7 +280,7 @@ namespace GameOff.EditorTools
         /// DocumentDesk with its references. Removes the P38 placeholder sheet.
         /// </summary>
         private static void WireCounter(DocumentView id, DocumentView permit, DocumentView manifest, DocumentView citation, DocumentView noticeDoc,
-            DocumentTuning tuning, List<string> log)
+            TMP_FontAsset font, DocumentTuning tuning, List<string> log)
         {
             var root = PrefabUtility.LoadPrefabContents(CounterPrefab);
             try
@@ -399,7 +407,7 @@ namespace GameOff.EditorTools
                 var hintT = root.transform.Find("SeatedHUD/Hint");
                 if (hintT == null) throw new System.InvalidOperationException("PF_CounterStation has no SeatedHUD/Hint");
                 var hint = hintT.GetComponent<TextMeshProUGUI>();
-                hint.text = "Stamp APPROVED or DENIED, hand all papers back through the drawer (click it)  ·  or press ARREST / AIRLOCK  ·  click a paper to read it  ·  [A]/[D] look around, click a note on the board  ·  [Q]/[Esc]/right click: back / leave";
+                hint.text = "Stamp, then hand all papers back through the drawer  ·  or ARREST / AIRLOCK  ·  click a paper or note to read it  ·  [A]/[D] look around  ·  [Q]/[Esc]: back / leave";
                 // Notice line above the hint (\"Stamp the papers first\" and the like), hidden until used
                 var noticeT = root.transform.Find("SeatedHUD/Notice");
                 if (noticeT == null)
@@ -422,6 +430,7 @@ namespace GameOff.EditorTools
                 cso.FindProperty("notice").objectReferenceValue = notice;
                 cso.ApplyModifiedPropertiesWithoutUndo();
                 WireBoard(root, desk, shift, hint, log);
+                foreach (var text in root.GetComponentsInChildren<TMP_Text>(true)) text.font = font; // hint, notice, subtitle, labels (P54)
                 PrefabUtility.SaveAsPrefabAsset(root, CounterPrefab);
                 log.Add("counter wired: drawer, 3 spots, DocumentDesk, pinboard, look-around, announcements");
             }

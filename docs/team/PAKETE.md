@@ -702,9 +702,10 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Im Entwurf zu klären: Welches Modul, wie viele Zimmer; ob das Innere den Außenzylinder ersetzt oder hineinpasst; wo die Verbindung ansetzt (Motelgang-Westende?) und wie sie von außen aussieht; bleibt Zimmer 103, wo es ist, oder zieht es um (Laufwege, Bett, `PF_DayFlow`, P51); was Größe und Lichtbake für den WebGL-Build bedeuten (heute 19 MB).
 
 ### P54 — Orbitron am Schalter
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 05.11.)
+- Größe: S · Priorität: Soll · Status: fertig (max, 05.11.)
 - Braucht: P41 · Folgt auf: P41
 - Ziel: Der Schalter nutzt dieselbe Schrift wie der Rest des Spiels (Beschluss von martin, 05.11.).
 - Enthalten: `DocumentPrefabBuilder` auf `Orbitron SDF`: Prüfdokumente, Verwarnzettel, Pinnwand-Zettel, Texte in `PF_CounterStation` (Hinweiszeile, Meldung, Untertitel); Felder und Größen anpassen, weil Orbitron breiter ist
 - Nicht enthalten: neue Layouts, Martins Bereiche
 - Abnahme: Im WebGL-Build sind alle Texte am Schalter in Orbitron, kein Feld läuft über, und die Regeln sind gut lesbar.
+- Ergebnis (max, 05.11.): `DocumentPrefabBuilder` nutzt `Orbitron SDF` für Papiere und alle Texte in `PF_CounterStation`. Einzeilige Felder schrumpfen bis auf 60 %, statt überzulaufen; `Field_body`, `Field_cargo`, `Field_reason` brechen um. Hinweiszeile gekürzt. Ausweis, Genehmigung, Frachtliste, Verwarnzettel und Bulletin im WebGL-Build geprüft; Fahndungsliste nutzt dasselbe Layout, in Orbitron aber nicht einzeln angesehen.
