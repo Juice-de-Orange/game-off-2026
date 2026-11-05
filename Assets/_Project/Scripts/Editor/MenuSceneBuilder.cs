@@ -33,6 +33,9 @@ namespace GameOff.EditorTools
         private const string AudioManagerPrefab = "Assets/_Project/Prefabs/Audio/PF_AudioManager.prefab";
         private const string MixerPath = "Assets/_Project/Audio/GameMixer.mixer"; // created once by hand/script, groups Master > Music, SFX, Voice
         private const string FontAssetPath = "Assets/_Project/Fonts/ShareTechMono SDF.asset";
+        // Titles and menu headings use Orbitron (STYLE.md / DECISIONS 31.10., max 05.11.); everything else stays Share Tech Mono.
+        private const string TitleFontPath = "Assets/_Project/Fonts/Orbitron-Regular.ttf";
+        private const string TitleFontAssetPath = "Assets/_Project/Fonts/Orbitron SDF.asset";
         private const string CreditsFile = "CREDITS.md";
         private const string SkyboxPath = "Assets/_Project/Art/Materials/Station/M_Sky_Space.mat";
         private const string TrafficTuningPath = "Assets/_Project/Data/Menu/ShipTraffic_Menu.asset"; // P47, created once, tune in the inspector
@@ -61,6 +64,7 @@ namespace GameOff.EditorTools
         internal static readonly Color TextDim = Hex("8B9096");
 
         private static TMP_FontAsset _font;
+        private static TMP_FontAsset _titleFont;
         private static GameObject _audioPrefab;
 
         /// <summary>Only Menu.unity (e.g. after tuning the ship traffic or a station rebuild) – Boot and Main stay untouched.</summary>
@@ -114,7 +118,7 @@ namespace GameOff.EditorTools
             group.transform.SetParent(canvas, false);
             Stretch(group.GetComponent<RectTransform>());
             Label(group.transform, "Presents", "iMATERIX  &  JUICE-DE-ORANGE", 26, TextDim, new Vector2(0f, 40f), new Vector2(800f, 40f));
-            Label(group.transform, "Title", GameTitle, 64, Amber, new Vector2(0f, -20f), new Vector2(800f, 80f));
+            Title(Label(group.transform, "Title", GameTitle, 64, Amber, new Vector2(0f, -20f), new Vector2(800f, 80f)));
             Label(group.transform, "Jam", "made for GitHub Game Off 2026", 18, TextDim, new Vector2(0f, -200f), new Vector2(800f, 30f));
 
             var splash = new GameObject("BootSplash").AddComponent<BootSplash>();
@@ -145,7 +149,7 @@ namespace GameOff.EditorTools
             strip.GetComponent<Image>().color = new Color(Backdrop.r, Backdrop.g, Backdrop.b, 0.72f);
             strip.GetComponent<Image>().raycastTarget = false;
             float x = -480f + MenuStripWidth / 2f; // reference width 960 → left edge at -480
-            Label(mainPanel, "Title", GameTitle, 64, Amber, new Vector2(x, 170f), new Vector2(MenuStripWidth, 80f));
+            Title(Label(mainPanel, "Title", GameTitle, 64, Amber, new Vector2(x, 170f), new Vector2(MenuStripWidth - 30f, 80f)));
             Label(mainPanel, "Subtitle", GameSubtitle, 16, TextDim, new Vector2(x, 122f), new Vector2(MenuStripWidth, 26f));
             var start = MenuButton(mainPanel, "StartButton", "START SHIFT", new Vector2(x, 30f));
             var options = MenuButton(mainPanel, "OptionsButton", "OPTIONS", new Vector2(x, -35f));
@@ -183,7 +187,7 @@ namespace GameOff.EditorTools
         private static Transform BuildOptionsPanel(Transform parent, out Button back)
         {
             var panel = PanelRoot(parent, "OptionsPanel");
-            Label(panel, "Heading", "OPTIONS", 40, Amber, new Vector2(0f, 205f), new Vector2(600f, 50f));
+            Title(Label(panel, "Heading", "OPTIONS", 40, Amber, new Vector2(0f, 205f), new Vector2(600f, 50f)));
 
             string[] tabNames = { "AUDIO", "CONTROLS", "DEV" };
             var tabs = new Button[tabNames.Length];
@@ -348,7 +352,7 @@ namespace GameOff.EditorTools
         private static Transform BuildCreditsPanel(Transform parent, out Button back)
         {
             var panel = PanelRoot(parent, "CreditsPanel");
-            Label(panel, "Heading", "CREDITS", 40, Amber, new Vector2(0f, 200f), new Vector2(700f, 50f));
+            Title(Label(panel, "Heading", "CREDITS", 40, Amber, new Vector2(0f, 200f), new Vector2(700f, 50f)));
             var text = Label(panel, "Body", CreditsText(), 18, TextLight, new Vector2(0f, 10f), new Vector2(760f, 320f));
             text.alignment = TextAlignmentOptions.Top;
             back = MenuButton(panel, "BackButton", "BACK", new Vector2(0f, -210f));
@@ -489,7 +493,7 @@ namespace GameOff.EditorTools
             dim.GetComponent<Image>().color = new Color(Backdrop.r, Backdrop.g, Backdrop.b, 0.85f);
 
             var mainPanel = PanelRoot(dim.transform, "MainPanel", false);
-            Label(mainPanel, "Heading", "PAUSED", 48, Amber, new Vector2(0f, 130f), new Vector2(600f, 60f));
+            Title(Label(mainPanel, "Heading", "PAUSED", 48, Amber, new Vector2(0f, 130f), new Vector2(600f, 60f)));
             var resume = MenuButton(mainPanel, "ResumeButton", "RESUME", new Vector2(0f, 30f));
             var options = MenuButton(mainPanel, "OptionsButton", "OPTIONS", new Vector2(0f, -35f));
             var menu = MenuButton(mainPanel, "MenuButton", "MAIN MENU", new Vector2(0f, -100f));
@@ -641,6 +645,38 @@ namespace GameOff.EditorTools
             image.color = background ? Backdrop : Color.clear;
             image.raycastTarget = background;
             return go.transform;
+        }
+
+        /// <summary>Switches a label to the Orbitron title font; it may shrink to fit its box (Orbitron is wide).</summary>
+        private static TMP_Text Title(TMP_Text label)
+        {
+            var font = TitleFont();
+            if (font == null) return label;
+            label.font = font;
+            label.enableAutoSizing = true;
+            label.fontSizeMax = label.fontSize;
+            label.fontSizeMin = label.fontSize * 0.5f;
+            return label;
+        }
+
+        /// <summary>Orbitron TMP font asset (dynamic, like Share Tech Mono), created once next to the TTF.</summary>
+        private static TMP_FontAsset TitleFont()
+        {
+            if (_titleFont != null) return _titleFont;
+            _titleFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(TitleFontAssetPath);
+            if (_titleFont != null) return _titleFont;
+            var font = AssetDatabase.LoadAssetAtPath<Font>(TitleFontPath);
+            if (font == null) { Debug.LogWarning($"[MenuSceneBuilder] {TitleFontPath} missing, titles stay Share Tech Mono"); return null; }
+            _titleFont = TMP_FontAsset.CreateFontAsset(font, 90, 9, UnityEngine.TextCore.LowLevel.GlyphRenderMode.SDFAA, 1024, 1024,
+                AtlasPopulationMode.Dynamic);
+            _titleFont.name = "Orbitron SDF";
+            AssetDatabase.CreateAsset(_titleFont, TitleFontAssetPath);
+            _titleFont.atlasTextures[0].name = "Orbitron SDF Atlas";
+            AssetDatabase.AddObjectToAsset(_titleFont.atlasTextures[0], _titleFont);
+            _titleFont.material.name = "Orbitron SDF Material";
+            AssetDatabase.AddObjectToAsset(_titleFont.material, _titleFont);
+            AssetDatabase.SaveAssets();
+            return _titleFont;
         }
 
         internal static TMP_Text Label(Transform parent, string name, string text, float size, Color color, Vector2 pos, Vector2 box)

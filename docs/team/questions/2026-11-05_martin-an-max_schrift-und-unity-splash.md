@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: beantwortet
+status: erledigt
 erstellt: 2026-11-05 09:58
 blockiert: nein
 ---
@@ -62,3 +62,5 @@ Ich habe Frage 1 und 2 bewusst nicht angefasst, weil ich mir nicht sicher war. F
 - **Frage 2 – A:** Unity-Splash abschalten. Bitte stell du die Projekteinstellung um.
 - **Frage 3 – A:** Ja, später als eigenes Folgepaket. Es steht als **P48** (Kann, für die Polish-Woche) in `PAKETE.md`.
   Bis dahin bleibt Variante A.
+
+**Umgesetzt (martin, 05.11.):** Orbitron (`Fonts/Orbitron-Regular.ttf` + `Orbitron SDF.asset`, `CREDITS.md`) für Spieltitel, OPTIONS, CREDITS, PAUSED im `MenuSceneBuilder`; Unity-Splash in den Projekteinstellungen aus. Variante B bleibt P48.
