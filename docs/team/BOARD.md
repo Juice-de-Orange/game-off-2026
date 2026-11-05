@@ -54,6 +54,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P09 Tagesablauf (wartet auf abfertigbare Reisende für die Abnahme) | — | 05.11. |
+| martin | Orbitron für Titel/Überschriften + Unity-Splash aus (Antwort von max) | `Boot.unity`, `Menu.unity`, `Main.unity` (nur Pausemenü), `PF_PauseMenu.prefab`, `ProjectSettings.asset` (Splash) | 05.11. |
 | max | P41 Regeln an der Pinnwand | `PF_CounterStation.prefab`, `PF_Doc_*.prefab`, `DayManager.cs` (eine Zeile) | 05.11. |
 
 ## Backlog
