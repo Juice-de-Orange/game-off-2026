@@ -50,7 +50,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 > prüfen, anpassen und freigeben. Erst danach werden Pakete genommen (außer P01 und P02).
 
 ### P01 — Projekt-Setup
-- Größe: S · Priorität: Muss · Status: in Arbeit (max, 02.11.)
+- Größe: S · Priorität: Muss · Status: fertig (max, 02.11.; abgeschlossen von martin, 05.11.)
 - Braucht: — · Folgt auf: —
 - Ziel: Unity-Projekt steht, beide können klonen und öffnen.
 - Enthalten: Unity 6000.3.23f1, Vorlage Universal 3D (URP), Ordnerstruktur nach `CLAUDE.md`/`docs/ASSETS.md`,
@@ -60,15 +60,34 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: Gameplay
 - Abnahme: Leerer WebGL-Build läuft lokal im Browser, beide haben das Projekt geöffnet.
 - Stand 02.11. (max): Projekt steht und ist gepusht. WebGL-Build (14,9 MB) startet lokal im Browser ✔ (von Max bestätigt). Offen: Martin öffnet das Projekt einmal → dann `fertig`.
+- Stand 05.11. (martin): Martin hat das Projekt mit 6000.3.23f1 geöffnet (erster Import ohne Fehler) und einen WebGL-Build gebaut und im Browser getestet ✔ → `fertig`.
 
 ### P02 — Startbildschirm & Menü
-- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 05.11.)
+- Größe: M · Priorität: Muss · Status: fertig (martin, 05.11.)
 - Braucht: P01
 - Ziel: Alles vom Spielstart bis zum Menü.
 - Enthalten: Boot-/Splash-Screen, Hauptmenü (Start, Optionen: Lautstärke/Maus-Empfindlichkeit, Credits, Beenden
   ausgeblendet im Web), Übergang ins Spiel (`Main`), Pausemenü (Esc)
 - Nicht enthalten: Spielinhalte, finale Grafik (Platzhalter)
 - Abnahme: Start → Menü → Spiel → Pause → zurück ins Menü funktioniert im WebGL-Build.
+- Ergebnis (martin, 05.11.):
+  - **Generiert, nicht von Hand ändern:** `Boot.unity`, `Menu.unity`, `Prefabs/UI/PF_PauseMenu.prefab` und dessen Instanz in `Main.unity`
+    baut **GameOff → Build Menu Scenes** (`Scripts/Editor/MenuSceneBuilder.cs`). Änderungen im Builder machen, dann neu bauen.
+  - **Boot:** Splash (Team alphabetisch, Titel), blendet ein/aus, Taste/Klick überspringt → Menu (`Scripts/UI/BootSplash.cs`).
+  - **Menu:** Start Shift / Options / Credits / Quit (Quit im Web ausgeblendet), Esc führt aus Unterseiten zurück (`MainMenu.cs`).
+    Credits kommen beim Bauen aus `CREDITS.md` (Assets alphabetisch) → nach neuen Credits Build Menu Scenes neu laufen lassen.
+  - **Menü-Hintergrund (Variante A):** Instanzen von `PF_SkyRig`, `PF_Exterior`, `PF_Station_Graybox` + Kamera, die langsam um die
+    Station schwenkt (`MenuCameraDrift.cs`). Echtzeit-Lampen der Station werfen nur im Menü keine Schatten (Instanz-Override, Leistung im Web).
+    **Nach jedem Neubau der Station/Außenwelt einmal Build Menu Scenes**, damit das Menü aktuell ist. Gebackenes Licht gibt es im Menü nicht.
+  - **Optionen:** Lautstärke + Maus-Empfindlichkeit (Faktor auf `PlayerTuning.mouseSensitivity`), gespeichert in PlayerPrefs
+    (`Scripts/Core/GameSettings.cs`, im Browser auch nach Neuladen). `FirstPersonController` liest `GameSettings.MouseSensitivity`.
+  - **Pause in Main** (`PauseMenu.cs`): Esc oder P beim freien Laufen → Zeit steht, Ton pausiert, Maus frei; Resume / Options / Main Menu.
+    Am Schalter bleibt Esc beim Schalter (Schritt zurück/aufstehen), erst im Stehen pausiert Esc. Im Browser schluckt Chrome das erste Esc
+    (gibt nur die Maus frei) → `Plugins/WebGL/PointerLock.jslib` fragt den Browser direkt, verlorene Maus-Sperre pausiert. Im Vollbild
+    verlässt Chrome dabei auch das Vollbild (nicht abstellbar). Nach Resume im Browser einmal ins Bild klicken.
+  - Szenennamen: `Scripts/Core/SceneNames.cs`. Getestet im Editor und im WebGL-Build (Chrome, auch Vollbild), 0 Fehler/Warnungen.
+  - Offen, in Frage an max (`questions/2026-11-05_martin-an-max_schrift-und-unity-splash.md`): Orbitron für Titel, Unity-Splash abschalten,
+    Variante B (Menü direkt in Main mit Kameraflug) als Folgepaket.
 
 ### P03 — Spieler: Laufen & Interagieren
 - Größe: S · Priorität: Muss · Status: fertig (max, 02.11.)

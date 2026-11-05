@@ -10,7 +10,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 | 01.11. | Theme kommt ca. **22:37 MEZ** → jeder für sich Gedanken, Repo öffentlich | ✅ Theme "Shift" · Repo noch privat (Call) |
 | 02.11. | Abend-Call: Theme ins Konzept einweben, `DESIGN.md` finalisieren, Unity-Projekt anlegen | 🔶 Projekt + Station 2.0 stehen; Call offen |
 | 03.11. | Prototyp: Kern-Mechanik spielbar (graue Klötze reichen) | ✅ 04.11.: Schicht am Schalter spielbar (Dokumente, Stempel, Regeln, Verwarnzettel); Geld/Tage fehlen noch (P08–P10) |
-| 05.11. | Erster WebGL-Testbuild auf itch.io (Draft) — danach jede Woche ein Build | 🔶 Build läuft lokal (18 MB); Upload P19 offen |
+| 05.11. | Erster WebGL-Testbuild auf itch.io (Draft) — danach jede Woche ein Build | 🔶 Build läuft lokal (18 MB); 05.11. martin: Build mit Menü (20 MB) in Chrome getestet ✔; Upload P19 offen |
 | 09.11. | Checkpoint: Trägt der Kern-Loop? Wenn nicht, jetzt umsteuern | ⏳ |
 | 16.11. | Vertical Slice: ein Level komplett mit Ziel, Sieg/Niederlage, Menü, Neustart | ⏳ |
 | 22.11. | **Feature-Freeze**: keine neuen Features mehr, nur Inhalte & Polish | ⏳ |
@@ -42,7 +42,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| martin | P02 Startbildschirm & Menü | `Boot.unity`, `Menu.unity`, `Main.unity` (nur Pausemenü einsetzen), `FirstPersonController.cs` (Maus-Empfindlichkeit aus Optionen) | 05.11. |
+| | | | |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -58,6 +58,8 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 - [ ] 
 
 ## Erledigt
+- [x] P02 Startbildschirm & Menü: Boot-Splash, Hauptmenü mit Station im All als Hintergrund, Optionen, Credits, Pausemenü; WebGL getestet (martin, 05.11.)
+- [x] P01 abgeschlossen: Martin hat das Projekt geöffnet und einen WebGL-Build getestet (martin, 05.11.)
 - [x] P07 Reisende & Regeln: Regel-Engine, Bewertung, Validator + 41 Tests, Schicht-Ablauf, Verwarnzettel, Test-Tag (max, 04.11.)
 - [x] P06 Dokumente als 3D-Papiere: Schublade, ziehen, lesen, stempeln, zurückgeben; scharfe Ebene für den Retro-Look (max, 04.11.)
 - [x] P39 Außenstation 2.0: verbundenes Fachwerk, Habs, Solar, Antenne, Außenhülle (Platzhalter bis zur Lieferung) (max, 04.11.)

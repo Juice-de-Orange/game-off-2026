@@ -1,3 +1,4 @@
+using GameOff.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -73,8 +74,9 @@ namespace GameOff.Player
 
         private void Look(Vector2 delta)
         {
-            transform.Rotate(0f, delta.x * tuning.mouseSensitivity, 0f);
-            _pitch = Mathf.Clamp(_pitch - delta.y * tuning.mouseSensitivity, -tuning.maxPitch, tuning.maxPitch);
+            float sensitivity = tuning.mouseSensitivity * GameSettings.MouseSensitivity; // option from the menu
+            transform.Rotate(0f, delta.x * sensitivity, 0f);
+            _pitch = Mathf.Clamp(_pitch - delta.y * sensitivity, -tuning.maxPitch, tuning.maxPitch);
             cameraPivot.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
         }
 
