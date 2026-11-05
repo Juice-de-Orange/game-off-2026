@@ -50,6 +50,10 @@ Im Build standardmäßig aus, Besucher schalten sie unter Options → DEV ein. *
   `docker compose -f /opt/kestrel9/compose.yml up -d --no-build --pull never`
 - Abschalten: `docker compose -f /opt/kestrel9/compose.yml down`. Die Zeile im SNI-Router und `sites-enabled/kestrel9` können bleiben.
 
+## Maussperre im Browser
+Lehnt der Browser die Maussperre ab (Fenster ohne Fokus, kurz nach Esc), öffnet Unitys Loader ein blockierendes `alert`, und das Spiel steht.
+Die Vorlage `Kestrel9` fängt das über `errorHandler` ab. **Für den itch-Build (P19) muss die dort verwendete Vorlage dasselbe tun.**
+
 ## Datenschutz
 Die Datenschutzerklärung von maxlworks.com verspricht wenig Logging. Deshalb haben Container und nginx-Site kein Access-Log; nur das Log
 des SNI-Routers erfasst die Subdomain (14 Rotationen). Das Spiel speichert Einstellungen lokal im Browser (IndexedDB) und sendet nichts an uns.

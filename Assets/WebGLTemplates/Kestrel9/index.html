@@ -54,6 +54,9 @@
         companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
         productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
         productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
+        // Browsers may refuse the mouse lock (window not focused, just after Esc). Unity's loader would stop the game with an
+        // alert for that; the next click locks anyway. True = handled, every other error still reaches the player.
+        errorHandler: function (message) { return /pointer ?lock|exited the lock/i.test(String(message)); },
       }, function (progress) {
         document.querySelector("#bar").style.width = Math.round(progress * 100) + "%";
       }).then(function () {
