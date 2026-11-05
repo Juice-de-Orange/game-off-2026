@@ -16,7 +16,7 @@ using UnityEngine.UI;
 namespace GameOff.EditorTools
 {
     /// <summary>
-    /// Builds the front end (P02), idempotent: Boot.unity (splash), Menu.unity (main menu, options, credits),
+    /// Builds the front end (P02; options in tabs: P43), idempotent: Boot.unity (splash), Menu.unity (main menu, options, credits),
     /// PF_PauseMenu.prefab, and places the pause menu in Main.unity wired to the player and the counter.
     /// Credits text is taken from CREDITS.md at build time, so rerun after adding credits.
     /// Placeholder look (Share Tech Mono, palette from STYLE.md); final UI art replaces the sprites later.
@@ -128,8 +128,9 @@ namespace GameOff.EditorTools
             var optionsPanel = BuildOptionsPanel(canvas, out var optionsBack);
             var creditsPanel = BuildCreditsPanel(canvas, out var creditsBack);
             // Sub pages dim the station instead of hiding it.
-            optionsPanel.GetComponent<Image>().color = new Color(Backdrop.r, Backdrop.g, Backdrop.b, 0.85f);
-            creditsPanel.GetComponent<Image>().color = new Color(Backdrop.r, Backdrop.g, Backdrop.b, 0.85f);
+            optionsPanel.GetComponent<Image>().color = new Color(Backdrop.r, Backdrop.g, Backdrop.b, SubPageDim);
+            creditsPanel.GetComponent<Image>().color = new Color(Backdrop.r, Backdrop.g, Backdrop.b, SubPageDim);
+            FullscreenCorner(canvas); // last child: on top of every menu page
 
             var menu = new GameObject("MainMenu").AddComponent<MainMenu>();
             Set(menu, "mainPanel", mainPanel.gameObject);
@@ -147,20 +148,153 @@ namespace GameOff.EditorTools
             log.Add("Menu built");
         }
 
+        /// <summary>
+        /// Options in tabs (P43): AUDIO / CONTROLS, one page each, rows 50 px apart from RowTop down,
+        /// "Reset to defaults" at the bottom of every page. New settings = one more row on the matching page here.
+        /// </summary>
         private static Transform BuildOptionsPanel(Transform parent, out Button back)
         {
             var panel = PanelRoot(parent, "OptionsPanel");
-            Label(panel, "Heading", "OPTIONS", 40, Amber, new Vector2(0f, 150f), new Vector2(600f, 50f));
-            var volume = SliderRow(panel, "Volume", "VOLUME", new Vector2(0f, 60f), out var volumeValue);
-            var sensitivity = SliderRow(panel, "Sensitivity", "MOUSE SENSITIVITY", new Vector2(0f, -10f), out var sensitivityValue);
-            back = MenuButton(panel, "BackButton", "BACK", new Vector2(0f, -130f));
+            Label(panel, "Heading", "OPTIONS", 40, Amber, new Vector2(0f, 205f), new Vector2(600f, 50f));
+
+            string[] tabNames = { "AUDIO", "CONTROLS" };
+            var tabs = new Button[tabNames.Length];
+            var pages = new GameObject[tabNames.Length];
+            for (int i = 0; i < tabNames.Length; i++)
+            {
+                tabs[i] = MenuButton(panel, $"Tab_{tabNames[i]}", tabNames[i], new Vector2((i - 0.5f) * 175f, 145f), new Vector2(165f, 40f), 20);
+                var page = new GameObject($"Page_{tabNames[i]}", typeof(RectTransform));
+                page.transform.SetParent(panel, false);
+                Stretch(page.GetComponent<RectTransform>());
+                pages[i] = page;
+            }
+
+            // AUDIO (P18 adds Music / Effects / Voice below Master)
+            var audio = pages[0].transform;
+            var volume = SliderRow(audio, "Master", "MASTER VOLUME", new Vector2(0f, RowTop), out var volumeValue);
+            var resetAudio = MenuButton(audio, "ResetButton", "RESET TO DEFAULTS", new Vector2(0f, ResetY), new Vector2(280f, 40f), 18);
+
+            // CONTROLS
+            var controls = pages[1].transform;
+            var sensitivity = SliderRow(controls, "Sensitivity", "MOUSE SENSITIVITY", new Vector2(0f, RowTop), out var sensitivityValue);
+            var invertY = ToggleRow(controls, "InvertY", "INVERT Y-AXIS", new Vector2(0f, RowTop - RowStep), out var invertYValue);
+            var keys = Label(controls, "Keys", KeyOverview, 16, TextDim, new Vector2(0f, RowTop - 2.75f * RowStep), new Vector2(KeyBoxWidth, 120f));
+            keys.alignment = TextAlignmentOptions.TopLeft;
+            var resetControls = MenuButton(controls, "ResetButton", "RESET TO DEFAULTS", new Vector2(0f, ResetY), new Vector2(280f, 40f), 18);
+
+            back = MenuButton(panel, "BackButton", "BACK", new Vector2(0f, -215f));
 
             var options = panel.gameObject.AddComponent<OptionsPanel>();
+            SetArray(options, "tabButtons", tabs);
+            SetArray(options, "pages", pages);
             Set(options, "volume", volume);
             Set(options, "volumeValue", volumeValue);
+            Set(options, "resetAudio", resetAudio);
             Set(options, "sensitivity", sensitivity);
             Set(options, "sensitivityValue", sensitivityValue);
+            Set(options, "invertY", invertY);
+            Set(options, "invertYValue", invertYValue);
+            Set(options, "resetControls", resetControls);
+            for (int i = 1; i < pages.Length; i++) pages[i].SetActive(false);
             return panel;
+        }
+
+        private const float RowTop = 80f, RowStep = 50f, ResetY = -150f;
+
+        // Options/credits over the station: readable, station still faintly visible. The project blends UI in linear
+        // color space, so the leftover 1.5 % of a bright scene still shows as roughly 20 % brightness on screen.
+        private const float SubPageDim = 0.985f;
+        private const float KeyBoxWidth = 520f;
+
+        // Read-only key list (rebinding is out of scope, DECISIONS.md 05.11.). Key column left, action from <pos>.
+        private const string KeyOverview =
+            "<color=#E2DDCF>W A S D</color><pos=210>walk\n" +
+            "<color=#E2DDCF>MOUSE</color><pos=210>look around\n" +
+            "<color=#E2DDCF>E</color><pos=210>use / sit down\n" +
+            "<color=#E2DDCF>LEFT CLICK</color><pos=210>press, stamp, drag papers\n" +
+            "<color=#E2DDCF>Q / ESC / RIGHT CLICK</color><pos=210>step back / stand up\n" +
+            "<color=#E2DDCF>ESC / P</color><pos=210>pause";
+
+        /// <summary>
+        /// Fullscreen corner button (P43, variant A): 40×40 in the top-right corner, four corners drawn from thin UI rects
+        /// (outward = enter, inward = leave), "FULLSCREEN" below on hover. No asset needed, stays sharp at any size.
+        /// </summary>
+        private static void FullscreenCorner(Transform parent)
+        {
+            var button = MenuButton(parent, "FullscreenButton", "", Vector2.zero, new Vector2(40f, 40f), 12);
+            Object.DestroyImmediate(button.GetComponentInChildren<TMP_Text>().gameObject);
+            var rt = button.GetComponent<RectTransform>();
+            rt.anchorMin = rt.anchorMax = rt.pivot = Vector2.one;
+            rt.anchoredPosition = new Vector2(-16f, -16f);
+
+            var parts = new List<Graphic>();
+            const float outer = 11f, inner = 4f, arm = 7f;
+            var expand = IconGroup(button.transform, "ExpandIcon");
+            var collapse = IconGroup(button.transform, "CollapseIcon");
+            foreach (var corner in new[] { new Vector2(-1f, 1f), new Vector2(1f, 1f), new Vector2(-1f, -1f), new Vector2(1f, -1f) })
+            {
+                // Expand: vertex at the outer corner, arms run along the edges toward the middle.
+                CornerMark(expand, corner * outer, -corner.x, -corner.y, arm, parts);
+                // Collapse: vertex near the center, arms run outward.
+                CornerMark(collapse, corner * inner, corner.x, corner.y, arm, parts);
+            }
+            collapse.gameObject.SetActive(false);
+
+            var hover = Label(button.transform, "HoverLabel", "FULLSCREEN", 13, Amber, new Vector2(-60f, -36f), new Vector2(160f, 20f));
+            hover.alignment = TextAlignmentOptions.MidlineRight;
+            hover.gameObject.SetActive(false);
+
+            var fullscreen = button.gameObject.AddComponent<FullscreenButton>();
+            Set(fullscreen, "button", button);
+            Set(fullscreen, "expandIcon", expand.gameObject);
+            Set(fullscreen, "collapseIcon", collapse.gameObject);
+            SetArray(fullscreen, "iconParts", parts.ToArray());
+            Set(fullscreen, "hoverLabel", hover);
+        }
+
+        private static Transform IconGroup(Transform parent, string name)
+        {
+            var go = new GameObject(name, typeof(RectTransform));
+            go.transform.SetParent(parent, false);
+            go.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+            return go.transform;
+        }
+
+        /// <summary>An L: from the vertex one arm along x (dirX), one along y (dirY).</summary>
+        private static void CornerMark(Transform parent, Vector2 vertex, float dirX, float dirY, float arm, List<Graphic> parts)
+        {
+            const float thickness = 2f;
+            parts.Add(Bar(parent, vertex + new Vector2(dirX * (arm - thickness) / 2f, 0f), new Vector2(arm, thickness)));
+            parts.Add(Bar(parent, vertex + new Vector2(0f, dirY * (arm - thickness) / 2f), new Vector2(thickness, arm)));
+        }
+
+        private static Graphic Bar(Transform parent, Vector2 pos, Vector2 size)
+        {
+            var go = new GameObject("Bar", typeof(RectTransform), typeof(Image));
+            go.transform.SetParent(parent, false);
+            var rt = go.GetComponent<RectTransform>();
+            rt.anchoredPosition = pos;
+            rt.sizeDelta = size;
+            var image = go.GetComponent<Image>();
+            image.color = TextLight;
+            image.raycastTarget = false;
+            return image;
+        }
+
+        /// <summary>Caption on the left, an ON/OFF button on the right (simpler and clearer than a checkbox at 960×540).</summary>
+        private static Button ToggleRow(Transform parent, string name, string caption, Vector2 pos, out TMP_Text value)
+        {
+            var row = new GameObject(name, typeof(RectTransform));
+            row.transform.SetParent(parent, false);
+            var rowRt = row.GetComponent<RectTransform>();
+            rowRt.anchoredPosition = pos;
+            rowRt.sizeDelta = new Vector2(640f, 50f);
+            var label = Label(row.transform, "Caption", caption, 20, TextLight, new Vector2(-200f, 0f), new Vector2(240f, 40f));
+            label.alignment = TextAlignmentOptions.MidlineLeft;
+            var button = MenuButton(row.transform, "Toggle", "OFF", new Vector2(90f, 0f), new Vector2(140f, 36f), 20);
+            value = button.GetComponentInChildren<TMP_Text>();
+            value.color = Amber;
+            return button;
         }
 
         private static Transform BuildCreditsPanel(Transform parent, out Button back)
@@ -276,6 +410,7 @@ namespace GameOff.EditorTools
             var optionsPanel = BuildOptionsPanel(dim.transform, out var optionsBack);
             optionsPanel.GetComponent<Image>().color = Color.clear; // dim backdrop is enough here
             optionsPanel.gameObject.SetActive(false);
+            FullscreenCorner(dim.transform); // only visible while paused (dim is the pause root)
 
             CreateEventSystem(rootGo.transform);
             var pause = rootGo.AddComponent<PauseMenu>();
@@ -383,13 +518,16 @@ namespace GameOff.EditorTools
             return tmp;
         }
 
-        private static Button MenuButton(Transform parent, string name, string text, Vector2 pos)
+        private static Button MenuButton(Transform parent, string name, string text, Vector2 pos) =>
+            MenuButton(parent, name, text, pos, new Vector2(280f, 50f), 24);
+
+        private static Button MenuButton(Transform parent, string name, string text, Vector2 pos, Vector2 size, float fontSize)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button));
             go.transform.SetParent(parent, false);
             var rt = go.GetComponent<RectTransform>();
             rt.anchoredPosition = pos;
-            rt.sizeDelta = new Vector2(280f, 50f);
+            rt.sizeDelta = size;
             var image = go.GetComponent<Image>();
             image.color = Color.white;
             var button = go.GetComponent<Button>();
@@ -400,7 +538,7 @@ namespace GameOff.EditorTools
             colors.pressedColor = Panel;
             colors.fadeDuration = 0.05f;
             button.colors = colors;
-            var label = Label(go.transform, "Label", text, 24, TextLight, Vector2.zero, Vector2.zero);
+            var label = Label(go.transform, "Label", text, fontSize, TextLight, Vector2.zero, Vector2.zero);
             Stretch(label.rectTransform);
             return button;
         }

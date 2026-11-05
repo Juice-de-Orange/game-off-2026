@@ -509,13 +509,25 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 
 ### P43 — Optionsmenü mit Kategorien
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 05.11.)
+- Größe: S · Priorität: Soll · Status: fertig (martin, 05.11.)
 - Braucht: P02 · Folgt auf: P02
 - Ziel: Optionen übersichtlich in Reitern statt einer langen Liste von Reglern, gleiches Panel im Haupt- und Pausemenü.
 - Enthalten: Reiter **AUDIO** (Master; Music/Effects/Voice kommen mit P18), **CONTROLS** (Maus-Empfindlichkeit, Y-Achse umkehren,
-  Tastenübersicht zum Lesen), **DISPLAY** (Vollbild an/aus); pro Reiter „Reset to defaults“; alles wirkt sofort und wird gespeichert
-  (`GameSettings`); Esc führt zurück
+  Tastenübersicht zum Lesen); pro Reiter „Reset to defaults“; alles wirkt sofort und wird gespeichert (`GameSettings`); Esc führt zurück;
+  **Vollbild-Knopf** oben rechts im Haupt- und Pausemenü (Symbol mit vier Ecken, „FULLSCREEN“ beim Drüberfahren, folgt dem echten
+  Zustand), kein Tastenkürzel. Statt eines Reiters DISPLAY (Änderung 05.11. auf Martins Wunsch: Vollbild ist die einzige
+  Anzeige-Einstellung im Browser und gehört sichtbar ins Menü, nicht versteckt in die Optionen)
 - Nicht enthalten: Retro-Look-Schalter (Entscheidung max, P17), Untertitel (kommen mit den Voicelines), Tastenbelegung ändern,
   Grafikqualität/Auflösung, Sprache, Helligkeit (bewusst weggelassen, siehe `DECISIONS.md` 05.11.)
 - Abnahme: Im Haupt- und Pausemenü lassen sich alle Reiter öffnen, jede Einstellung wirkt sofort, bleibt nach Neuladen erhalten
   und lässt sich zurücksetzen; im WebGL-Build getestet.
+- Ergebnis (martin, 05.11.):
+  - Gebaut von **GameOff → Build Menu Scenes** (`MenuSceneBuilder.BuildOptionsPanel`, `FullscreenCorner`). Neue Einstellung =
+    eine Zeile im passenden Reiter dort (Zeilen 50 px Abstand ab `RowTop`), Wert in `GameSettings`, Anzeige in `OptionsPanel.Refresh`.
+  - `Scripts/UI/OptionsPanel.cs`: Reiter AUDIO (Master) und CONTROLS (Empfindlichkeit, Invert Y, Tastenübersicht), Reset pro Reiter.
+  - `Scripts/Core/GameSettings.cs`: neu `InvertY`, Standardwerte als Konstanten, `ResetAudio`/`ResetControls`.
+    `FirstPersonController` kehrt die Y-Achse um, wenn `GameSettings.InvertY` an ist.
+  - `Scripts/UI/FullscreenButton.cs` + `Plugins/WebGL/Fullscreen.jslib`: Vollbild-Knopf oben rechts (Haupt- und Pausemenü).
+    Im Browser schaltet das Plugin beim Loslassen der Maus um (Unity allein bräuchte zwei Klicks); das Symbol folgt dem echten Zustand.
+  - Unterseiten (Options/Credits) dunkeln die Station mit 98,5 % ab: Das Projekt mischt UI im linearen Farbraum, darunter scheint sie zu stark durch.
+  - Getestet im Editor und im WebGL-Build in Chrome (Vollbild mit einem Klick, Esc, Invert, Reset, Werte nach Neuladen), 0 Fehler/Warnungen.

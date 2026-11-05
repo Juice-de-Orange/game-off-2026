@@ -76,7 +76,8 @@ namespace GameOff.Player
         {
             float sensitivity = tuning.mouseSensitivity * GameSettings.MouseSensitivity; // option from the menu
             transform.Rotate(0f, delta.x * sensitivity, 0f);
-            _pitch = Mathf.Clamp(_pitch - delta.y * sensitivity, -tuning.maxPitch, tuning.maxPitch);
+            float pitchInput = GameSettings.InvertY ? -delta.y : delta.y; // option from the menu (P43)
+            _pitch = Mathf.Clamp(_pitch - pitchInput * sensitivity, -tuning.maxPitch, tuning.maxPitch);
             cameraPivot.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
         }
 
