@@ -54,7 +54,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P09 Tagesablauf (wartet auf abfertigbare Reisende für die Abnahme) | — | 05.11. |
-| martin | Orbitron für Titel/Überschriften + Unity-Splash aus (Antwort von max) | `Boot.unity`, `Menu.unity`, `Main.unity` (nur Pausemenü), `PF_PauseMenu.prefab`, `ProjectSettings.asset` (Splash) | 05.11. |
 | max | P41 Regeln an der Pinnwand | `PF_CounterStation.prefab`, `PF_Doc_*.prefab`, `DayManager.cs` (eine Zeile) | 05.11. |
 
 ## Backlog
@@ -82,6 +81,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] Orbitron für Spieltitel und Menü-Überschriften (Credits + Lizenz), Unity-Splash abgeschaltet – Antwort von max umgesetzt (martin, 05.11.)
 - [x] P47 Menü-Hintergrund: Schiffsverkehr (Frachter, Tanker, Patrouille, Pendler) mit wiederverwendbarem `ShipTraffic` für P25 (martin, 05.11.)
 - [x] P46 Geld, Inventar & Handelsfenster: Kontostand, Inventar (I), Handelsfenster, Händler-Platzhalter Holly/Barkeeper/Dealer, Drohne „Send home“, 13 Tests (martin, 05.11.)
 - [x] P18 Audio-Grundgerüst: GameMixer (Music/SFX/Voice), AudioManager mit PlayMusic/PlaySfx/PlaySfxAt/PlayVoice, 4 Lautstärkeregler mit Vorschau-Ton (martin, 05.11.)
