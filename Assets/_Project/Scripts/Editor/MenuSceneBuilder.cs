@@ -367,6 +367,9 @@ namespace GameOff.EditorTools
                 "<color=#FFD36B>A game by</color>",
                 "Martin (iMaterix)  ·  Max (Juice-de-Orange)",
                 "",
+                "<color=#FFD36B>Lead Playtester</color>",
+                "Pep (SuperGoat)",
+                "",
                 "<color=#FFD36B>Third-party assets</color>",
             };
             if (File.Exists(CreditsFile))
