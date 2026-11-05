@@ -42,7 +42,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| | | | |
+| martin | P02 Startbildschirm & Menü | `Boot.unity`, `Menu.unity`, `Main.unity` (nur Pausemenü einsetzen), `FirstPersonController.cs` (Maus-Empfindlichkeit aus Optionen) | 05.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,

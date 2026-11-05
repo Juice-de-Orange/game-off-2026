@@ -62,7 +62,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Stand 02.11. (max): Projekt steht und ist gepusht. WebGL-Build (14,9 MB) startet lokal im Browser ✔ (von Max bestätigt). Offen: Martin öffnet das Projekt einmal → dann `fertig`.
 
 ### P02 — Startbildschirm & Menü
-- Größe: M · Priorität: Muss · Status: offen (für **martin** reserviert)
+- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 05.11.)
 - Braucht: P01
 - Ziel: Alles vom Spielstart bis zum Menü.
 - Enthalten: Boot-/Splash-Screen, Hauptmenü (Start, Optionen: Lautstärke/Maus-Empfindlichkeit, Credits, Beenden
