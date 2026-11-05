@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: beantwortet
 erstellt: 2026-11-05 19:24
 blockiert: nein
 ---
@@ -42,3 +42,5 @@ Falls du mit „alles Orbitron“ nicht einverstanden bist, schreib es hier rein
 Deine Teile bleiben in ihrer bisherigen Schrift, bis du sie umstellst.
 
 ## Antwort
+
+**Max, 05.11.: A.** Überall Orbitron. Claude baut das sofort als Folgepaket **P54** (Folgt auf P41): Schalter-HUD, Dokumente, Verwarnzettel und Pinnwand-Zettel, und prüft im Build, ob alle Felder noch passen. Neues aus P40 startet über die TMP-Standardschrift von selbst richtig.

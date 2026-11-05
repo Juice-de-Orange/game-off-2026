@@ -700,3 +700,11 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Der Spieler läuft ohne Ladezeit von der Station ins Wohnmodul, die Zimmer sind erreichbar, von außen stimmt das Modell mit innen überein, und der WebGL-Build bleibt flüssig.
 - Ausgangslage (05.11.): Die Motelzimmer 101–103 liegen im Hauptblock (x −20..−8, z 0..6, Höhe 3 m). Das Wohnmodul existiert nur als Außenmodell `SM_Ext_HabModule` (liegender Zylinder 12 × 12 × 30 m, zwei Stück: `Hab_West`, `Hab_East` in `SkyExteriorBuilder`) ohne Innenraum.
 - Im Entwurf zu klären: Welches Modul, wie viele Zimmer; ob das Innere den Außenzylinder ersetzt oder hineinpasst; wo die Verbindung ansetzt (Motelgang-Westende?) und wie sie von außen aussieht; bleibt Zimmer 103, wo es ist, oder zieht es um (Laufwege, Bett, `PF_DayFlow`, P51); was Größe und Lichtbake für den WebGL-Build bedeuten (heute 19 MB).
+
+### P54 — Orbitron am Schalter
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 05.11.)
+- Braucht: P41 · Folgt auf: P41
+- Ziel: Der Schalter nutzt dieselbe Schrift wie der Rest des Spiels (Beschluss von martin, 05.11.).
+- Enthalten: `DocumentPrefabBuilder` auf `Orbitron SDF`: Prüfdokumente, Verwarnzettel, Pinnwand-Zettel, Texte in `PF_CounterStation` (Hinweiszeile, Meldung, Untertitel); Felder und Größen anpassen, weil Orbitron breiter ist
+- Nicht enthalten: neue Layouts, Martins Bereiche
+- Abnahme: Im WebGL-Build sind alle Texte am Schalter in Orbitron, kein Feld läuft über, und die Regeln sind gut lesbar.
