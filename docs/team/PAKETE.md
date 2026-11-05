@@ -179,7 +179,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Festgelegt im Asset-Durchgang (max, 02.11.): Luftschleuse: Außenschott **klappt nach außen ins All** (Rework mit Angel bestellt), Sog, Warnlampe dreht rot, Reisender wird hinausgerissen. Verhaftung: Warnlampe rot. Beschlagnahmtes landet physisch im Asservatenschrank (P32).
 
 ### P09 — Tagesablauf
-- Größe: M · Priorität: Muss · Status: offen
+- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 05.11.)
 - Braucht: P03
 - Ziel: Morgen → Schicht → Feierabend → Schlafen → nächster Tag, 3 Tage.
 - Enthalten: `DayManager`, Morgen-Brief + Bulletin, Schichtende nach Anzahl Reisender, Bett in der Unterkunft beendet den Tag
