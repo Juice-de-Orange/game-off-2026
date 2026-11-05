@@ -512,7 +512,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   beim nächsten Builder-Lauf automatisch ein (Achsen/Pivots nach den Einträgen).
 
 ### P40 — Reisende in der Prüfkammer & Gespräch
-- Größe: M · Priorität: Muss · Status: in Arbeit (max, 05.11.)
+- Größe: M · Priorität: Muss · Status: fertig (max, 05.11.)
 - Braucht: P07 · Folgt auf: —
 - Ziel: Man hat ein Gegenüber: der Reisende steht in der Prüfkammer am Fenster und redet.
 - Enthalten: NPC-Modell (SK_NPC_*) erscheint am Fenster und geht nach der Entscheidung durch die richtige Tür ab (einfaches
@@ -520,6 +520,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   „Entschlüsseln“-Welle (links nach rechts, ~0,4 s/Zeile, leichter Cyan-Schimmer) übersetzt werden; Nachfragen per Klick auf ein Feld
   des hochgehaltenen Dokuments (Antwort aus `TravelerData`)
 - Abnahme: Jeder Test-Reisende steht in der Kammer, begrüßt, antwortet auf Feld-Klicks; Aliens werden lesbar „übersetzt“.
+- Ergebnis (max, 05.11.):
+  - **Figuren:** `GameOff/Build Travelers` baut `PF_NPC_<Spezies>` + `AC_NPC_<Spezies>` (Idle, Talk, Walk). `Travelers/TravelerPresenter` stellt sie auf die Standmarkierung; nach der Entscheidung gehen sie etwa 1 m zur Tür und verschwinden (durchlassen/verhaften Nordtür, abweisen Hangartür, Schleuse Außenschott).
+  - **Sprechblase:** `Counter/SpeechBubble`, im `SeatedHUD` neben dem Kopf; ihre Zeit läuft nur, solange man sie sieht. Glyphen + Welle: `Counter/AlienText` (griechische und kyrillische Zeichen aus der Ausweichschrift). Werte: `Data/Counter/DialogueTuning.asset`.
+  - **Nachfragen:** Beim Lesen eines Reisendenpapiers färbt sich das Feld unter der Maus; Klick → `DocumentDesk.FieldClicked` → `Travelers/TravelerDialogue`. Allgemeine Antworten wiederholen nur Gedrucktes.
+  - **Für P15:** `TravelerData.answers` ist bei allen Test-Reisenden leer, und `AnswerFor` kennt nur den Feldnamen, nicht das Papier. Für Fälle, in denen Ausweis und Genehmigung sich widersprechen, muss P15 das erweitern.
+  - Schreibtischansicht jetzt 20° geneigt, die Durchsage steht unten, damit Köpfe frei bleiben. Nach neuen Figuren-Lieferungen zuerst `Build Travelers`, dann `Build Test Day`.
+  - Geprüft: 71/71 EditMode-Tests, WebGL-Build lokal in Chrome: alle fünf Spezies, Begrüßung, Feld-Klick, Übersetzungswelle, Abgang per ARREST. **Nicht geprüft:** Abgang per Stempel und Schleuse im Bild (gleicher Code, andere Tür); Position der Durchsage nach dem Umzug prüfe ich in P42.
 
 ### P41 — Regeln an der Pinnwand
 - Größe: M · Priorität: Muss · Status: fertig (max, 05.11.)

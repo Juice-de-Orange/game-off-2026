@@ -471,7 +471,7 @@ namespace GameOff.EditorTools
             lso.FindProperty("tuning").objectReferenceValue = Asset<SeatedLookTuning>(CounterDataFolder + "SeatedLookTuning.asset");
             lso.ApplyModifiedPropertiesWithoutUndo();
 
-            // Subtitle bar at the top of the seated HUD
+            // Subtitle bar low in the seated HUD, above the notice line: at the top it would cover the traveler's head (P40)
             var barT = hint.transform.parent.Find("SubtitleBar");
             if (barT == null)
             {
@@ -482,11 +482,11 @@ namespace GameOff.EditorTools
                 line.name = "Text";
             }
             var barRect = (RectTransform)barT;
-            barRect.anchorMin = new Vector2(0.1f, 1f);
-            barRect.anchorMax = new Vector2(0.9f, 1f);
-            barRect.pivot = new Vector2(0.5f, 1f);
+            barRect.anchorMin = new Vector2(0.1f, 0f);
+            barRect.anchorMax = new Vector2(0.9f, 0f);
+            barRect.pivot = new Vector2(0.5f, 0f);
             barRect.sizeDelta = new Vector2(0f, 64f);
-            barRect.anchoredPosition = new Vector2(0f, -44f); // below the date line in the corner
+            barRect.anchoredPosition = new Vector2(0f, 110f);
             var barImage = barT.GetComponent<UnityEngine.UI.Image>();
             barImage.color = new Color(0f, 0f, 0f, 0.72f);
             barImage.raycastTarget = false;

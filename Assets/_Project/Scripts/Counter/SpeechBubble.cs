@@ -13,7 +13,7 @@ namespace GameOff.Counter
     /// </summary>
     public class SpeechBubble : MonoBehaviour
     {
-        private const float TopLimit = 0.84f; // keeps clear of the loudspeaker subtitle bar
+        private const float TopLimit = 0.96f;
         private const float Margin = 0.02f;
         private const float BesideHead = 0.07f; // share of the screen width, so the bubble doesn't cover the speaker
 
