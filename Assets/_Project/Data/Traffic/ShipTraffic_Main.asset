@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd8f5fd71f38ac4d97c7f91852166fb, type: 3}
+  m_Name: ShipTraffic_Main
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Core.ShipTrafficTuning
+  lanes:
+  - name: Cargo
+    from: {x: -450, y: 190, z: 389.68976}
+    to: {x: 450, y: 170, z: 389.68976}
+    randomOffset: {x: 0, y: 15, z: 20}
+    ships:
+    - {fileID: 3612219857381029998, guid: f3d9df8227b5ab84aa15905608238e90, type: 3}
+    - {fileID: 994234253610865359, guid: bc2490b7ef8666c458e98c8190a3446d, type: 3}
+    scale: 1
+    speed: {x: 12, y: 20}
+    interval: {x: 20, y: 40}
+    firstDelay: {x: 0, y: 3}
+    reverseChance: 0.5
+    devColor: {r: 1, g: 0.6, b: 0.15, a: 1}
+  - name: Patrol
+    from: {x: -320, y: 105, z: 160}
+    to: {x: 320, y: 95, z: 160}
+    randomOffset: {x: 0, y: 8, z: 15}
+    ships:
+    - {fileID: 6933644589489988200, guid: 1e51c2d49d1de86419e055ece9715823, type: 3}
+    scale: 1.6
+    speed: {x: 35, y: 50}
+    interval: {x: 30, y: 60}
+    firstDelay: {x: 8, y: 15}
+    reverseChance: 0.5
+    devColor: {r: 0.3, g: 0.55, b: 1, a: 1}
+  - name: Civilian
+    from: {x: -220, y: 68, z: 108}
+    to: {x: 220, y: 60, z: 100}
+    randomOffset: {x: 0, y: 5, z: 6}
+    ships:
+    - {fileID: 4952913101198436776, guid: cf4373fbd0342e44f9ba273282abbab0, type: 3}
+    scale: 2.5
+    speed: {x: 18, y: 26}
+    interval: {x: 10, y: 20}
+    firstDelay: {x: 3, y: 8}
+    reverseChance: 0.5
+    devColor: {r: 0.2, g: 0.9, b: 0.95, a: 1}
+  maxActive: 4
+  modelYaw: 180

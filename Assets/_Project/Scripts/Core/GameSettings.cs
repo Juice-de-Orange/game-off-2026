@@ -18,6 +18,7 @@ namespace GameOff.Core
         private const string SensitivityKey = "settings.mouseSensitivity";
         private const string InvertYKey = "settings.invertY";
         private const string DevToolsKey = "settings.devTools";
+        private const string TrafficLineDevKey = "settings.trafficLineDev";
 
         public const float DefaultVolume = 0.8f;
         public const float DefaultMusicVolume = 0.7f;
@@ -85,6 +86,17 @@ namespace GameOff.Core
             set
             {
                 PlayerPrefs.SetInt(DevToolsKey, value ? 1 : 0);
+                Changed?.Invoke();
+            }
+        }
+
+        /// <summary>Traffic lane dev tool (P56): lanes as coloured lines + edit panel in Main. Own switch, independent of DevTools.</summary>
+        public static bool TrafficLineDev
+        {
+            get => PlayerPrefs.GetInt(TrafficLineDevKey, 0) == 1;
+            set
+            {
+                PlayerPrefs.SetInt(TrafficLineDevKey, value ? 1 : 0);
                 Changed?.Invoke();
             }
         }

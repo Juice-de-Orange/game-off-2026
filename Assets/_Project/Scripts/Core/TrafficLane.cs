@@ -26,5 +26,7 @@ namespace GameOff.Core
         public Vector2 firstDelay = new Vector2(1f, 6f);
         [Tooltip("Chance that a flight goes to → from instead of from → to.")]
         [Range(0f, 1f)] public float reverseChance = 0.5f;
+        [Tooltip("Colour of the lane in the traffic dev tool (P56).")]
+        public Color devColor = Color.white;
     }
 }

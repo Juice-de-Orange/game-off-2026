@@ -34,6 +34,8 @@ namespace GameOff.UI
         [Header("Dev")]
         [SerializeField] private Button devTools;
         [SerializeField] private TMP_Text devToolsValue;
+        [SerializeField] private Button trafficLines;
+        [SerializeField] private TMP_Text trafficLinesValue;
 
         [Header("Look")]
         [SerializeField] private Color tabIdle = new Color(0.17f, 0.2f, 0.24f);
@@ -68,6 +70,7 @@ namespace GameOff.UI
             invertY.onClick.AddListener(() => { GameSettings.InvertY = !GameSettings.InvertY; Refresh(); });
             // The DEV tab goes away for the jam submission (BOARD backlog), so it may be missing
             if (devTools != null) devTools.onClick.AddListener(() => { GameSettings.DevTools = !GameSettings.DevTools; Refresh(); });
+            if (trafficLines != null) trafficLines.onClick.AddListener(() => { GameSettings.TrafficLineDev = !GameSettings.TrafficLineDev; Refresh(); });
 
             resetAudio.onClick.AddListener(() => { GameSettings.ResetAudio(); Refresh(); });
             resetControls.onClick.AddListener(() => { GameSettings.ResetControls(); Refresh(); });
@@ -128,6 +131,7 @@ namespace GameOff.UI
             sensitivityValue.text = $"{sensitivity.value:0.00}x";
             invertYValue.text = GameSettings.InvertY ? "ON" : "OFF";
             if (devToolsValue != null) devToolsValue.text = GameSettings.DevTools ? "ON" : "OFF";
+            if (trafficLinesValue != null) trafficLinesValue.text = GameSettings.TrafficLineDev ? "ON" : "OFF";
         }
     }
 }

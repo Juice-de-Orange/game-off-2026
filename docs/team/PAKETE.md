@@ -718,7 +718,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 05.11.): `DocumentPrefabBuilder` nutzt `Orbitron SDF` für Papiere und alle Texte in `PF_CounterStation`. Einzeilige Felder schrumpfen bis auf 60 %, statt überzulaufen; `Field_body`, `Field_cargo`, `Field_reason` brechen um. Hinweiszeile gekürzt. Ausweis, Genehmigung, Frachtliste, Verwarnzettel und Bulletin im WebGL-Build geprüft; Fahndungsliste nutzt dasselbe Layout, in Orbitron aber nicht einzeln angesehen.
 
 ### P55 — Verkehr vor Plattform- und Barfenster
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 05.11.)
+- Größe: S · Priorität: Soll · Status: fertig (martin, 05.11.)
 - Braucht: P24, P47 · Folgt auf: P47 (übernimmt die vorbeifliegenden Großschiffe aus P25)
 - Ziel: Auch im Spiel fliegen Schiffe vor der Glasfront der Aussichtsplattform und dem Barfenster vorbei – so oft wie im Hauptmenü.
 - Enthalten: `ShipTraffic` (P47) mit eigenem Tuning `Data/Traffic/ShipTraffic_Main.asset`; Bahnen nördlich der Station quer vor beiden
@@ -727,3 +727,32 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: Shuttle-Landung, Rampe, Tagesablauf (P25), Sound der Schiffe, Verkehr am Hangar-Tor
 - Abnahme: Von der Plattform und am Barfenster sieht man innerhalb von ~10 s ein Schiff; nichts fliegt durch Station, Außenwelt oder
   hinter dem Planeten; im WebGL-Build flüssig.
+- Ergebnis (martin, 05.11.): `PF_Traffic` in Main (Wurzelobjekt), gebaut von **GameOff → Build Traffic into Main**. Drei Bahnen
+  nördlich der Station, hoch genug über dem Außen-Fachwerk (Abstand ≥ 46 m): hinten Frachter/Tanker (z 300), Mitte Patrouille (z 160),
+  vorn Pendler (z ≈ 105), max. 4 Schiffe gleichzeitig. Tuning: `Data/Traffic/ShipTraffic_Main.asset` (im Inspector ändern; der
+  Builder legt es nur an, wenn es fehlt). **Nebel:** Mains Nebel hat die Schiffe verschluckt → eigener Shader `GameOff/ShipNoFog`
+  (`Art/Shaders/ShipNoFog.shader`, Umgebungslicht + Sonne `_GameOffSunDir` + Emission, kein Nebel). Der Builder erzeugt daraus
+  `Art/Materials/Ships/NoFog/M_Ship_*_NoFog.mat` (Texturen/Farben aus Max' `M_Ship_*` – nach neuer Schiffslieferung einfach neu
+  bauen) und `Prefabs/Environment/Ships/PF_Ship_*_NoFog.prefab`. Das Menü (P47) nutzt weiter die normalen Schiffe. Feinschliff
+  (Bahnen, Größen, Licht) später als Optimierung.
+
+### P56 — Dev-Werkzeug: Verkehrslinien sichtbar und einstellbar
+- Größe: M · Priorität: Kann · Status: fertig (martin, 05.11.)
+- Braucht: P55, P49 · Folgt auf: P55
+- Ziel: Mit dem Schalter **TRAFFIC_LINE_DEV** (Optionen → DEV) sieht man die Verkehrsbahnen vor den Fenstern als farbige Linien und
+  kann sie live in einem kleinen Dev-Panel einstellen – in Unity landen die Werte direkt im Tuning-Asset.
+- Enthalten: Linie je Bahn, so dick wie ihr Schiff, mit Farbe + Schild (**CARGO** orange, **CIVILIAN** cyan, **PATROL** blau);
+  durchsichtige Streuungs-Box; Warnung, wenn eine Bahn der Station näher als 15 m kommt; Panel: Bahn wählen, Entfernung, Höhe,
+  Seitlich, Neigung, Drehung, Länge, Schiffsgröße, Tempo, Abstand, Streuung; Knöpfe „Schiff jetzt“, Zeitraffer ×4, „Werte kopieren“,
+  „Zurücksetzen“, „Bahn speichern“ (SAVE LANE, Wunsch Martin); Maus frei, solange der Modus an ist; Tab = Umschauen. Eigener Schalter, unabhängig von DEV TOOLS.
+- Nicht enthalten: Bahnen anlegen/löschen, Schiffstypen wechseln, Menü-Verkehr (P47), Ziehgriffe in der Szenenansicht
+- Abnahme: Schalter an → Linien + Panel erscheinen, Regler verschieben die Linie sofort, neue Schiffe fliegen auf der neuen Bahn;
+  nach dem Play-Modus stehen die Werte im Asset; im WebGL-Build kopiert „Werte kopieren“ die Werte; Schalter aus → alles weg.
+- Ergebnis (martin, 05.11.): eigener Schalter **TRAFFIC_LINE_DEV** im DEV-Tab (unabhängig von DEV TOOLS, Wunsch Martin). `TrafficLaneDevTool`
+  (`Scripts/UI/`) sitzt auf `PF_Traffic` und baut Linien + Panel selbst (Shader `GameOff/DevLine`: kein Nebel, immer obenauf).
+  Bahnen heißen jetzt **Cargo / Patrol / Civilian**, Farbe im Feld `devColor` der Bahn. Bedienung: Sobald der Modus an ist, ist die **Maus frei** fürs Panel (Spieler steht);
+  **Tab** = Umschauen/Laufen ⇄ zurück zur Maus; Bahn oben wählen; Regler wirken sofort (neue Flüge). **SAVE LANE**: in Unity sofort ins Asset
+  `ShipTraffic_Main` gespeichert; im WebGL-Build als JSON in die Zwischenablage → in Unity **GameOff → Paste Traffic Lanes**.
+  **COPY ALL** = alle Bahnen so kopieren, **RESET** = zurück zum letzten Speicherstand, **SHIP NOW** + **TIME x4** zum schnellen
+  Anschauen. Rote, blinkende Linie = zu nah an der Station (< 15 m inkl. Streuung und Schiffsbreite).
+  Achtung: Alle drei Bahnen liegen vom Fenster aus fast auf derselben Höhe am Himmel (~31° über dem Fachwerk) → Linien überdecken sich.

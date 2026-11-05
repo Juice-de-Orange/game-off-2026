@@ -55,7 +55,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 |---|---|---|---|
 | martin | P09 Tagesablauf (wartet auf abfertigbare Reisende für die Abnahme) | — | 05.11. |
 | max | P40 Reisende in der Kammer | `PF_CounterStation.prefab`, `PF_Doc_*.prefab`, `Data/Travelers/Test/*`, `Data/Days/Day1_Test.asset` | 05.11. |
-| martin | P55 Verkehr vor Plattform- und Barfenster | `Main.unity` (nur neues `PF_Traffic`) | 05.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -93,6 +92,8 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 - [x] P02 Startbildschirm & Menü: Boot-Splash, Hauptmenü mit Station im All als Hintergrund, Optionen, Credits, Pausemenü; WebGL getestet (martin, 05.11.)
 - [x] P01 abgeschlossen: Martin hat das Projekt geöffnet und einen WebGL-Build getestet (martin, 05.11.)
 - [x] P07 Reisende & Regeln: Regel-Engine, Bewertung, Validator + 41 Tests, Schicht-Ablauf, Verwarnzettel, Test-Tag (max, 04.11.)
+- [x] P56 Dev-Werkzeug Verkehrslinien: Linien + Panel, SAVE LANE, Paste Traffic Lanes (martin, 05.11.)
+- [x] P55 Schiffsverkehr vor Plattform- und Barfenster, nebelfreie Schiffe (martin, 05.11.)
 - [x] P06 Dokumente als 3D-Papiere: Schublade, ziehen, lesen, stempeln, zurückgeben; scharfe Ebene für den Retro-Look (max, 04.11.)
 - [x] P39 Außenstation 2.0: verbundenes Fachwerk, Habs, Solar, Antenne, Außenhülle (Platzhalter bis zur Lieferung) (max, 04.11.)
 - [x] P38 Schalter: Sessel anwählbar, Aufstehen mit Q/Esc/Rechtsklick, Stempel hochheben und stempeln (max, 04.11.)
