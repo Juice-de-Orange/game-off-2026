@@ -33,7 +33,7 @@ namespace GameOff.EditorTools
         private const string AudioManagerPrefab = "Assets/_Project/Prefabs/Audio/PF_AudioManager.prefab";
         private const string MixerPath = "Assets/_Project/Audio/GameMixer.mixer"; // created once by hand/script, groups Master > Music, SFX, Voice
         private const string FontAssetPath = "Assets/_Project/Fonts/ShareTechMono SDF.asset";
-        // Titles and menu headings use Orbitron (STYLE.md / DECISIONS 31.10., max 05.11.); everything else stays Share Tech Mono.
+        // All text uses Orbitron (martin 05.11., revises DECISIONS 31.10.); Share Tech Mono stays as fallback for missing glyphs.
         private const string TitleFontPath = "Assets/_Project/Fonts/Orbitron-Regular.ttf";
         private const string TitleFontAssetPath = "Assets/_Project/Fonts/Orbitron SDF.asset";
         private const string CreditsFile = "CREDITS.md";
@@ -77,7 +77,7 @@ namespace GameOff.EditorTools
 
         public static string BuildMenuOnly()
         {
-            _font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontAssetPath);
+            _font = BaseFont();
             _audioPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(AudioManagerPrefab);
             var log = new List<string>();
             BuildMenu(log);
@@ -95,7 +95,7 @@ namespace GameOff.EditorTools
 
         public static string Build()
         {
-            _font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontAssetPath);
+            _font = BaseFont();
             var log = new List<string>();
             _audioPrefab = BuildAudioManagerPrefab(log);
             BuildBoot(log);
@@ -659,12 +659,15 @@ namespace GameOff.EditorTools
             return label;
         }
 
-        /// <summary>Orbitron TMP font asset (dynamic, like Share Tech Mono), created once next to the TTF.</summary>
-        private static TMP_FontAsset TitleFont()
+        /// <summary>
+        /// Orbitron TMP font asset (dynamic, like Share Tech Mono), created once next to the TTF. Fallbacks for characters Orbitron
+        /// lacks: Share Tech Mono, then Liberation Sans.
+        /// </summary>
+        internal static TMP_FontAsset TitleFont()
         {
-            if (_titleFont != null) return _titleFont;
+            if (_titleFont != null) return EnsureFallbacks(_titleFont);
             _titleFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(TitleFontAssetPath);
-            if (_titleFont != null) return _titleFont;
+            if (_titleFont != null) return EnsureFallbacks(_titleFont);
             var font = AssetDatabase.LoadAssetAtPath<Font>(TitleFontPath);
             if (font == null) { Debug.LogWarning($"[MenuSceneBuilder] {TitleFontPath} missing, titles stay Share Tech Mono"); return null; }
             _titleFont = TMP_FontAsset.CreateFontAsset(font, 90, 9, UnityEngine.TextCore.LowLevel.GlyphRenderMode.SDFAA, 1024, 1024,
@@ -676,12 +679,33 @@ namespace GameOff.EditorTools
             _titleFont.material.name = "Orbitron SDF Material";
             AssetDatabase.AddObjectToAsset(_titleFont.material, _titleFont);
             AssetDatabase.SaveAssets();
-            return _titleFont;
+            return EnsureFallbacks(_titleFont);
+        }
+
+        private const string LiberationFontAssetPath = "Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset";
+
+        private static TMP_FontAsset EnsureFallbacks(TMP_FontAsset font)
+        {
+            font.fallbackFontAssetTable ??= new List<TMP_FontAsset>();
+            bool changed = false;
+            foreach (var path in new[] { FontAssetPath, LiberationFontAssetPath })
+            {
+                var fallback = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(path);
+                if (fallback == null || font.fallbackFontAssetTable.Contains(fallback)) continue;
+                font.fallbackFontAssetTable.Add(fallback);
+                changed = true;
+            }
+            if (changed)
+            {
+                EditorUtility.SetDirty(font);
+                AssetDatabase.SaveAssetIfDirty(font);
+            }
+            return font;
         }
 
         internal static TMP_Text Label(Transform parent, string name, string text, float size, Color color, Vector2 pos, Vector2 box)
         {
-            if (_font == null) _font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontAssetPath);
+            if (_font == null) _font = BaseFont();
             var go = new GameObject(name, typeof(RectTransform), typeof(TextMeshProUGUI));
             go.transform.SetParent(parent, false);
             var rt = go.GetComponent<RectTransform>();
@@ -694,8 +718,18 @@ namespace GameOff.EditorTools
             tmp.color = color;
             tmp.alignment = TextAlignmentOptions.Center;
             tmp.raycastTarget = false;
+            // Orbitron is wide: text may shrink a bit to stay inside its box instead of running out of it.
+            tmp.enableAutoSizing = true;
+            tmp.fontSizeMax = size;
+            tmp.fontSizeMin = Mathf.Max(8f, size * 0.6f);
             return tmp;
         }
+
+        /// <summary>
+        /// Font for every text the builders create: Orbitron (martin 05.11., all text, revises DECISIONS 31.10.); Share Tech Mono
+        /// only if the Orbitron asset can't be made.
+        /// </summary>
+        private static TMP_FontAsset BaseFont() => TitleFont() ?? AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontAssetPath);
 
         internal static Button MenuButton(Transform parent, string name, string text, Vector2 pos) =>
             MenuButton(parent, name, text, pos, new Vector2(280f, 50f), 24);

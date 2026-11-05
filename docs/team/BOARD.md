@@ -54,7 +54,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P09 Tagesablauf (wartet auf abfertigbare Reisende für die Abnahme) | — | 05.11. |
-| martin | Alle Texte in Orbitron + [E]-Hinweis im Menüknopf-Stil | `Boot.unity`, `Menu.unity`, `Main.unity` (nur PF_PauseMenu/PF_DayFlow/PF_Economy), `PF_PauseMenu.prefab`, `PF_Player.prefab`, `InteractionPromptUI.cs`, `TMP Settings.asset` | 05.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -82,6 +81,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] Alle Texte in Orbitron (Menü, HUD, Fenster, Brief; TMP-Standard), [E]-Hinweis im Menüknopf-Stil (`GameOff → Apply HUD Style`); Schalter-HUD und Dokumente → Notiz an max (martin, 05.11.)
 - [x] Orbitron für Spieltitel und Menü-Überschriften (Credits + Lizenz), Unity-Splash abgeschaltet – Antwort von max umgesetzt (martin, 05.11.)
 - [x] P47 Menü-Hintergrund: Schiffsverkehr (Frachter, Tanker, Patrouille, Pendler) mit wiederverwendbarem `ShipTraffic` für P25 (martin, 05.11.)
 - [x] P46 Geld, Inventar & Handelsfenster: Kontostand, Inventar (I), Handelsfenster, Händler-Platzhalter Holly/Barkeeper/Dealer, Drohne „Send home“, 13 Tests (martin, 05.11.)

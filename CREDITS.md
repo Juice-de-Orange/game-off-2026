@@ -7,8 +7,8 @@ Only use assets whose license allows use in a public, open-source game jam entry
 | Asset | Type | Author | Source (URL) | License |
 |-------|------|--------|--------------|---------|
 | Liberation Sans (TextMeshPro default font, placeholder) | Font | Red Hat / Liberation Fonts project, shipped with Unity TextMeshPro | https://github.com/liberationfonts/liberation-fonts | SIL OFL 1.1 |
-| Share Tech Mono (documents, UI) | Font | Carrois Type Design, Ralph du Carrois | https://fonts.google.com/specimen/Share+Tech+Mono | SIL OFL 1.1 (license file next to the font: `Assets/_Project/Fonts/ShareTechMono-OFL.txt`) |
-| Orbitron (titles, menu headings) | Font | Matt McInerney / The Orbitron Project Authors | https://fonts.google.com/specimen/Orbitron | SIL OFL 1.1 (license file next to the font: `Assets/_Project/Fonts/Orbitron-OFL.txt`) |
+| Share Tech Mono (fallback for missing characters) | Font | Carrois Type Design, Ralph du Carrois | https://fonts.google.com/specimen/Share+Tech+Mono | SIL OFL 1.1 (license file next to the font: `Assets/_Project/Fonts/ShareTechMono-OFL.txt`) |
+| Orbitron (all game text) | Font | Matt McInerney / The Orbitron Project Authors | https://fonts.google.com/specimen/Orbitron | SIL OFL 1.1 (license file next to the font: `Assets/_Project/Fonts/Orbitron-OFL.txt`) |
 
 ## Useful sources
 

@@ -125,7 +125,7 @@ flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit di
 - **Musik & SFX:** freie Assets (Lizenz in `CREDITS.md`).
 - **Voicelines:** selbst aufnehmen, mit ElevenLabs in verschiedene Stimmen umwandeln. Ein Aufnahmetag,
   wenn alle Texte feststehen (nach dem Feature-Freeze).
-- **Schrift:** Orbitron (Titel, Menü) + Share Tech Mono (Dokumente, UI), beide OFL / Google Fonts.
+- **Schrift:** **Orbitron für alle Texte** (Menü, HUD, Fenster, Brief, Dokumente; martin 05.11.), Share Tech Mono nur noch als Ausweichschrift für fehlende Zeichen. Beide OFL / Google Fonts.
 - **Sprache:** Englisch (Texte und Voicelines).
 - Asset-Regeln: `docs/ASSETS.md`.
 

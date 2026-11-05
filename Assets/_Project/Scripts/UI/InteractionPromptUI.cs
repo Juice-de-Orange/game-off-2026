@@ -17,7 +17,7 @@ namespace GameOff.UI
         {
             if (_shown == prompt && root.activeSelf) return;
             _shown = prompt;
-            label.text = $"[E] {prompt}";
+            label.text = $"[E]  {prompt}"; // menu-button look (HudStyleBuilder): key, two spaces, action in capitals
             root.SetActive(true);
         }
 
