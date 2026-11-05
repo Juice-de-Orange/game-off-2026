@@ -512,7 +512,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   beim nächsten Builder-Lauf automatisch ein (Achsen/Pivots nach den Einträgen).
 
 ### P40 — Reisende in der Prüfkammer & Gespräch
-- Größe: M · Priorität: Muss · Status: offen (für **max** reserviert)
+- Größe: M · Priorität: Muss · Status: in Arbeit (max, 05.11.)
 - Braucht: P07 · Folgt auf: —
 - Ziel: Man hat ein Gegenüber: der Reisende steht in der Prüfkammer am Fenster und redet.
 - Enthalten: NPC-Modell (SK_NPC_*) erscheint am Fenster und geht nach der Entscheidung durch die richtige Tür ab (einfaches
