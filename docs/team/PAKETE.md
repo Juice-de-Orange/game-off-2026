@@ -522,7 +522,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Jeder Test-Reisende steht in der Kammer, begrüßt, antwortet auf Feld-Klicks; Aliens werden lesbar „übersetzt“.
 
 ### P41 — Regeln an der Pinnwand
-- Größe: M · Priorität: Muss · Status: offen (für **max** reserviert, als Nächstes nach P49)
+- Größe: M · Priorität: Muss · Status: in Arbeit (max, 05.11.)
 - Braucht: P07 · Folgt auf: P33
 - Ziel: Man kennt die Regeln des Tages während der Schicht.
 - Enthalten: Tagesbulletin + Fahndungsliste (mit Befehl Verhaften/Terminieren) als Zettel an der Pinnwand im Schalterraum, scharf
@@ -647,7 +647,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Menü zeigt die Station mit gebackenem Licht; „Start Shift“ landet ohne Szenenwechsel beim Spieler in Zimmer 103; läuft im WebGL-Build. Nur in der Polish-Woche, nur wenn alle Muss-Pakete fertig sind.
 
 ### P49 — Live-Version auf kestrel9.maxlworks.com + Dev-Schalter im Menü
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 05.11.)
+- Größe: M · Priorität: Soll · Status: wartet auf Unity-Lizenz + Secrets (max)
 - Braucht: P02, P43 · Folgt auf: P43
 - Ziel: Der aktuelle Stand ist jederzeit öffentlich spielbar und aktualisiert sich nachts von selbst; Dev-Werkzeuge lassen sich im Menü schalten.
 - Enthalten: Reiter DEV im Optionsmenü (`GameSettings.DevTools`, Standard: Editor an, Build aus); Build-Skript `WebBuild`, eigene Web-Vorlage; Docker-Container auf Geoffrey hinter nginx; GitHub-Actions-Workflow (nachts + per Knopf, baut nur bei geänderten Spieldateien), Rollback; `docs/DEPLOY.md`
