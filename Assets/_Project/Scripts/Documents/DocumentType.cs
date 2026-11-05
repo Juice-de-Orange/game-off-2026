@@ -7,6 +7,8 @@ namespace GameOff.Documents
         EntryPermit,
         CargoManifest,
         /// <summary>Citation slip from the counter printer after a wrong decision (P07). Not part of a traveler's papers.</summary>
-        Citation
+        Citation,
+        /// <summary>Note on the counter's pinboard: bulletin, wanted list (P41). Not part of a traveler's papers.</summary>
+        Notice
     }
 }

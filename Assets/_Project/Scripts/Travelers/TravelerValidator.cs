@@ -59,7 +59,7 @@ namespace GameOff.Travelers
             foreach (var doc in t.Documents)
             {
                 if (doc == null) { problems.Add($"{who}: empty document slot"); continue; }
-                if (doc.Type == DocumentType.Citation) { problems.Add($"{who}: a citation is not a traveler document"); continue; }
+                if (doc.Type == DocumentType.Citation || doc.Type == DocumentType.Notice) { problems.Add($"{who}: a {DocumentNames.Of(doc.Type)} is not a traveler document"); continue; }
                 if (RequiredFields.TryGetValue(doc.Type, out var keys))
                     foreach (var key in keys)
                         if (string.IsNullOrWhiteSpace(doc.Get(key))) problems.Add($"{who}: {DocumentNames.Of(doc.Type)} has no \"{key}\"");

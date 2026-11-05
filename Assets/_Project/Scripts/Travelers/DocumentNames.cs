@@ -11,6 +11,7 @@ namespace GameOff.Travelers
             DocumentType.EntryPermit => "entry permit",
             DocumentType.CargoManifest => "cargo manifest",
             DocumentType.Citation => "citation",
+            DocumentType.Notice => "notice",
             _ => type.ToString(),
         };
     }

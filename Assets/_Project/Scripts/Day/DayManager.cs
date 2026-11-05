@@ -87,7 +87,7 @@ namespace GameOff.Day
             _phase = Phase.Morning;
             var entry = schedule.Get(day);
             if (sky != null) sky.SetDay(day);
-            shift.BeginDay(entry.rules);
+            shift.BeginDay(entry.rules, entry.newToday);
             player.Teleport(wakeUpPoint.position, wakeUpPoint.rotation);
             player.SetControlEnabled(false);
             bed.SetPrompt("Sleep");

@@ -35,8 +35,14 @@ namespace GameOff.Travelers
         public event Action<TravelerData, Verdict, Judgement> DecisionMade;
         public event Action<TravelerData> TravelerArrived;
         public event Action ShiftEnded;
+        /// <summary>A new day's rules are in force (the pinboard changes its notes).</summary>
+        public event Action DayBegun;
+        /// <summary>The officer sat down for the first time today, just before the first traveler.</summary>
+        public event Action ShiftStarted;
 
         public DayRules Day => day;
+        /// <summary>The day's new rule in one line, for the announcement; empty if there is none.</summary>
+        public string NewToday { get; private set; } = "";
         public TravelerData Current => _current;
         public int Citations => _citations;
 
@@ -72,10 +78,11 @@ namespace GameOff.Travelers
         }
 
         /// <summary>Starts a day (P09 will call this each morning); sitting down starts the first traveler.</summary>
-        public void BeginDay(DayRules newDay)
+        public void BeginDay(DayRules newDay, string newToday = "")
         {
             StopAllCoroutines(); // a pending "next traveler" belongs to the old day
             day = newDay;
+            NewToday = newToday ?? "";
             _index = -1;
             _started = false;
             _deciding = false;
@@ -84,12 +91,14 @@ namespace GameOff.Travelers
             _evaluation = null;
             _returnedStamp = null;
             _citations = 0;
+            DayBegun?.Invoke();
         }
 
         private void OnSeated(bool seated)
         {
             if (!seated || _started || day == null) return;
             _started = true;
+            ShiftStarted?.Invoke();
             NextTraveler();
         }
 

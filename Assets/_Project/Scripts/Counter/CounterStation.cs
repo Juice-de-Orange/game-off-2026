@@ -56,6 +56,7 @@ namespace GameOff.Counter
         public event Action<bool> SeatedChanged;
 
         public bool IsSeated => _seated;
+        public bool IsHoldingStamp => _held != null;
         /// <summary>The camera the mouse rays come from (desk view while seated).</summary>
         public Camera ViewCamera => viewCamera;
 
@@ -178,7 +179,7 @@ namespace GameOff.Counter
             if (!clicked) return;
             var target = hasHit ? hit.collider.GetComponentInParent<StampTarget>() : null;
             if (target != null)
-                _held.StampOn(target, hit.point, hit.normal, viewCamera.transform.up, OnStamped);
+                _held.StampOn(target, hit.point, hit.normal, transform.right, OnStamped); // page top on the desk, wherever the officer looks (SeatedLook)
             else
                 PutBackHeld(); // clicking next to a document puts the stamp down again
         }

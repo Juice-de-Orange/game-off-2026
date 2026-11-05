@@ -5,6 +5,7 @@ using GameOff.Travelers;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace GameOff.EditorTools
 {
@@ -26,7 +27,10 @@ namespace GameOff.EditorTools
         private const string PrinterModel = "Assets/_Project/Art/Models/Counter/SM_Counter_Printer.fbx";
         private const string TestDayPath = "Assets/_Project/Data/Days/Day1_Test.asset";
         private const float LabelSize = 0.0035f, ValueSize = 0.0055f, TitleSize = 0.006f; // cap heights in meters
+        private const string InputActionsPath = "Assets/_Project/Data/Input/PlayerControls.inputactions";
+        private const string CounterDataFolder = "Assets/_Project/Data/Counter/";
         private static readonly Color Ink = new Color(0.12f, 0.12f, 0.14f), LabelInk = new Color(0.35f, 0.35f, 0.38f);
+        private static readonly Color NoticePaper = new Color(0.86f, 0.84f, 0.76f);
 
         /// <summary>Text on a page: x/z = top-left corner in page coordinates (meters, page center = 0), w = box width.</summary>
         private readonly struct Text
@@ -96,8 +100,18 @@ namespace GameOff.EditorTools
                     new Text("Field_penalty", "", -0.034f, -0.036f, 0.068f, ValueSize, new Color(0.66f, 0.12f, 0.1f)),
                 }, log);
 
+            // Pinboard note (P41): big page, so the rules fit; can't be stamped
+            var notice = BuildPrefab(DocumentType.Notice, new Vector2(0.30f, 0.42f), 2.2f, font, null, default,
+                new List<Text>
+                {
+                    new Text("Subtitle", "KESTREL-9 TRANSIT AUTHORITY", -0.135f, 0.195f, 0.2f, LabelSize, LabelInk),
+                    new Text("Field_title", "", -0.135f, 0.175f, 0.2f, TitleSize, Ink),
+                    new Text("Field_date", "", 0.075f, 0.195f, 0.06f, LabelSize * 0.7f, LabelInk),
+                    new Text("Field_body", "", -0.135f, 0.14f, 0.27f, ValueSize, Ink),
+                }, log, stampable: false);
+
             var tuning = Asset<DocumentTuning>(DataFolder + "DocumentTuning.asset");
-            WireCounter(id, permit, manifest, citation, tuning, log);
+            WireCounter(id, permit, manifest, citation, notice, tuning, log);
             AssetDatabase.SaveAssets();
             return "DocumentPrefabBuilder:\n" + string.Join("\n", log);
         }
@@ -134,14 +148,14 @@ namespace GameOff.EditorTools
 
         /// <param name="textScale">Bigger pages get bigger type, so every page reads well when held up (it fills the same screen height).</param>
         private static DocumentView BuildPrefab(DocumentType type, Vector2 size, float textScale, TMP_FontAsset font, Material photoMat, Rect photoRect,
-            List<Text> texts, List<string> log)
+            List<Text> texts, List<string> log, bool stampable = true)
         {
             int layer = LayerMask.NameToLayer(StampTool.SharpLayer);
             var root = new GameObject("PF_Doc_" + type);
             var box = root.AddComponent<BoxCollider>();
             box.center = new Vector3(0f, 0.0006f, 0f);
             box.size = new Vector3(size.x, 0.0012f, size.y);
-            root.AddComponent<StampTarget>();
+            if (stampable) root.AddComponent<StampTarget>();
             var view = root.AddComponent<DocumentView>();
 
             // Page: a quad lying flat (face up, texture top = local +Z)
@@ -152,7 +166,8 @@ namespace GameOff.EditorTools
             sheet.transform.localPosition = new Vector3(0f, 0.0005f, 0f);
             sheet.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
             sheet.transform.localScale = new Vector3(size.x, size.y, 1f);
-            sheet.GetComponent<MeshRenderer>().sharedMaterial = UnlitMaterial("M_Doc_" + type, Texture($"T_Doc_{type}.png"));
+            sheet.GetComponent<MeshRenderer>().sharedMaterial = UnlitMaterial("M_Doc_" + type, Texture($"T_Doc_{type}.png"),
+                type == DocumentType.Notice ? NoticePaper : (Color?)null);
             // The underside, so a paper held up never shows through from behind
             var back = Object.Instantiate(sheet, root.transform);
             back.name = "Back";
@@ -256,7 +271,7 @@ namespace GameOff.EditorTools
         /// PF_CounterStation: the drawer (moved here from the station builder, same spot), the paper spots on the desk and the
         /// DocumentDesk with its references. Removes the P38 placeholder sheet.
         /// </summary>
-        private static void WireCounter(DocumentView id, DocumentView permit, DocumentView manifest, DocumentView citation,
+        private static void WireCounter(DocumentView id, DocumentView permit, DocumentView manifest, DocumentView citation, DocumentView noticeDoc,
             DocumentTuning tuning, List<string> log)
         {
             var root = PrefabUtility.LoadPrefabContents(CounterPrefab);
@@ -362,6 +377,7 @@ namespace GameOff.EditorTools
                 so.FindProperty("entryPermitPrefab").objectReferenceValue = permit;
                 so.FindProperty("cargoManifestPrefab").objectReferenceValue = manifest;
                 so.FindProperty("citationPrefab").objectReferenceValue = citation;
+                so.FindProperty("noticePrefab").objectReferenceValue = noticeDoc;
                 so.FindProperty("printerOut").objectReferenceValue = printerOut;
                 so.FindProperty("printerSpot").objectReferenceValue = printerSpot;
                 so.ApplyModifiedPropertiesWithoutUndo();
@@ -383,7 +399,7 @@ namespace GameOff.EditorTools
                 var hintT = root.transform.Find("SeatedHUD/Hint");
                 if (hintT == null) throw new System.InvalidOperationException("PF_CounterStation has no SeatedHUD/Hint");
                 var hint = hintT.GetComponent<TextMeshProUGUI>();
-                hint.text = "Stamp APPROVED or DENIED, hand all papers back through the drawer (click it)  ·  or press ARREST / AIRLOCK  ·  click a paper to read it  ·  [Q]/[Esc]/right click: back / leave";
+                hint.text = "Stamp APPROVED or DENIED, hand all papers back through the drawer (click it)  ·  or press ARREST / AIRLOCK  ·  click a paper to read it  ·  [A]/[D] look around, click a note on the board  ·  [Q]/[Esc]/right click: back / leave";
                 // Notice line above the hint (\"Stamp the papers first\" and the like), hidden until used
                 var noticeT = root.transform.Find("SeatedHUD/Notice");
                 if (noticeT == null)
@@ -405,10 +421,107 @@ namespace GameOff.EditorTools
                 noticeT.gameObject.SetActive(false);
                 cso.FindProperty("notice").objectReferenceValue = notice;
                 cso.ApplyModifiedPropertiesWithoutUndo();
+                WireBoard(root, desk, shift, hint, log);
                 PrefabUtility.SaveAsPrefabAsset(root, CounterPrefab);
-                log.Add("counter wired: drawer, 3 spots, DocumentDesk");
+                log.Add("counter wired: drawer, 3 spots, DocumentDesk, pinboard, look-around, announcements");
             }
             finally { PrefabUtility.UnloadPrefabContents(root); }
+        }
+
+        /// <summary>P41: the note spots on the pinboard, looking around while seated, loudspeaker lines with a subtitle bar.</summary>
+        private static void WireBoard(GameObject root, DocumentDesk desk, CounterShift shift, TextMeshProUGUI hint, List<string> log)
+        {
+            var station = root.GetComponent<CounterStation>();
+            var board = root.transform.Find("BoardSpots");
+            if (board == null) board = new GameObject("BoardSpots").transform;
+            board.SetParent(root.transform, false);
+            // Mirrors SM_Counter_Board in StationGrayboxBuilder.BuildProps: 1 x 0.7 m, center at world (-1.5, 1.75), front at z -6.255;
+            // the counter stands at (-2, 0, -9). Page top up, page face into the room (-Z).
+            board.localPosition = new Vector3(0.5f, 1.75f, 2.74f);
+            board.localRotation = Quaternion.LookRotation(Vector3.up, Vector3.back);
+            var bulletinSpot = BoardSpot(board, "Bulletin", -0.17f);
+            var wantedSpot = BoardSpot(board, "Wanted", 0.17f);
+            var pinBoard = root.GetComponent<PinBoard>();
+            if (pinBoard == null) pinBoard = root.AddComponent<PinBoard>();
+            var pso = new SerializedObject(pinBoard);
+            pso.FindProperty("shift").objectReferenceValue = shift;
+            pso.FindProperty("desk").objectReferenceValue = desk;
+            pso.FindProperty("bulletinSpot").objectReferenceValue = bulletinSpot;
+            pso.FindProperty("wantedSpot").objectReferenceValue = wantedSpot;
+            pso.ApplyModifiedPropertiesWithoutUndo();
+
+            var deskCamera = (Component)new SerializedObject(station).FindProperty("deskCamera").objectReferenceValue;
+            var look = root.GetComponent<SeatedLook>();
+            if (look == null) look = root.AddComponent<SeatedLook>();
+            var lso = new SerializedObject(look);
+            lso.FindProperty("station").objectReferenceValue = station;
+            lso.FindProperty("desk").objectReferenceValue = desk;
+            lso.FindProperty("deskCamera").objectReferenceValue = deskCamera.transform;
+            lso.FindProperty("moveAction").objectReferenceValue = PlayerAction("Move");
+            lso.FindProperty("tuning").objectReferenceValue = Asset<SeatedLookTuning>(CounterDataFolder + "SeatedLookTuning.asset");
+            lso.ApplyModifiedPropertiesWithoutUndo();
+
+            // Subtitle bar at the top of the seated HUD
+            var barT = hint.transform.parent.Find("SubtitleBar");
+            if (barT == null)
+            {
+                var barGo = new GameObject("SubtitleBar", typeof(RectTransform), typeof(UnityEngine.UI.Image));
+                barT = barGo.transform;
+                barT.SetParent(hint.transform.parent, false);
+                var line = Object.Instantiate(hint.gameObject, barT);
+                line.name = "Text";
+            }
+            var barRect = (RectTransform)barT;
+            barRect.anchorMin = new Vector2(0.1f, 1f);
+            barRect.anchorMax = new Vector2(0.9f, 1f);
+            barRect.pivot = new Vector2(0.5f, 1f);
+            barRect.sizeDelta = new Vector2(0f, 64f);
+            barRect.anchoredPosition = new Vector2(0f, -44f); // below the date line in the corner
+            var barImage = barT.GetComponent<UnityEngine.UI.Image>();
+            barImage.color = new Color(0f, 0f, 0f, 0.72f);
+            barImage.raycastTarget = false;
+            var subtitle = barT.Find("Text").GetComponent<TextMeshProUGUI>();
+            var textRect = subtitle.rectTransform;
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.pivot = new Vector2(0.5f, 0.5f);
+            textRect.offsetMin = new Vector2(16f, 4f);
+            textRect.offsetMax = new Vector2(-16f, -4f);
+            subtitle.fontSize = hint.fontSize * 1.5f;
+            subtitle.color = new Color(0.89f, 0.87f, 0.81f);
+            subtitle.alignment = TextAlignmentOptions.Center;
+            subtitle.raycastTarget = false;
+            subtitle.text = "";
+            barT.gameObject.SetActive(false);
+
+            var announcer = root.GetComponent<Announcer>();
+            if (announcer == null) announcer = root.AddComponent<Announcer>();
+            var aso = new SerializedObject(announcer);
+            aso.FindProperty("shift").objectReferenceValue = shift;
+            aso.FindProperty("station").objectReferenceValue = station;
+            aso.FindProperty("lines").objectReferenceValue = Asset<Announcements>(CounterDataFolder + "Announcements.asset");
+            aso.FindProperty("subtitleRoot").objectReferenceValue = barT.gameObject;
+            aso.FindProperty("subtitle").objectReferenceValue = subtitle;
+            aso.ApplyModifiedPropertiesWithoutUndo();
+            log.Add("pinboard spots, SeatedLook, Announcer");
+        }
+
+        private static Transform BoardSpot(Transform board, string name, float x)
+        {
+            var spot = board.Find(name);
+            if (spot == null) spot = new GameObject(name).transform;
+            spot.SetParent(board, false);
+            spot.localPosition = new Vector3(x, 0f, 0f);
+            spot.localRotation = Quaternion.identity;
+            return spot;
+        }
+
+        private static InputActionReference PlayerAction(string action)
+        {
+            foreach (var asset in AssetDatabase.LoadAllAssetsAtPath(InputActionsPath))
+                if (asset is InputActionReference reference && reference.action != null && reference.action.name == action && reference.action.actionMap.name == "Player")
+                    return reference;
+            throw new System.InvalidOperationException($"{InputActionsPath} has no Player/{action} reference");
         }
     }
 }

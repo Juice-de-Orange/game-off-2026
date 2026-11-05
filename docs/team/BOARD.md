@@ -61,6 +61,7 @@ Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freig
 die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 
 ### Muss (ohne das kein Spiel)
+- [ ] Durchsagen einsprechen (P41 spielt bisher einen Platzhalter-Ton; Clips in `Data/Counter/Announcements.asset`, Texte dort). Die Pipeline macht keine Voicelines, ElevenLabs-Lizenz noch offen
 - [ ] **Vor der Abgabe:** `showDevTools` am DayManager (`PF_DayFlow` in Main) ausschalten und den Reiter DEV im `MenuSceneBuilder` entfernen (P49) – sonst rote Hitboxen und Dev-Knöpfe im Spiel
 
 ### Soll (macht es gut)

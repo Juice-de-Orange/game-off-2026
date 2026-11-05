@@ -11,6 +11,16 @@ namespace GameOff.Travelers
     /// </summary>
     public static class RuleEvaluator
     {
+        /// <summary>The base rules as printed on the bulletin (P41). Keep in step with CheckBaseRules.</summary>
+        public static readonly string[] StandingRules =
+        {
+            "Everyone needs an ID card and an entry permit. If not: DENY.",
+            "Name and ID number must match on all papers. If not: DENY.",
+            "Expired papers: DENY.",
+            "Forged seal: ARREST.",
+            "Wanted persons: follow the order on the wanted list.",
+        };
+
         public static EvaluationResult Evaluate(TravelerData traveler, DayRules day)
         {
             var violations = new List<Violation>();

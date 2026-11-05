@@ -12,6 +12,7 @@ namespace GameOff.Documents
     /// and they glide onto the desk. Press + move = drag over the desk; click without moving = hold the paper up for reading
     /// (click / Esc / right click puts it back). Drag a paper onto the drawer to put it in; click the drawer to hand
     /// everything in it back (DocumentsReturned). CounterStation forwards the pointer while the officer is seated.
+    /// Pinned notes (P41) hang elsewhere and can only be read: they are never moved and don't count as papers on the desk.
     /// </summary>
     public class DocumentDesk : MonoBehaviour
     {
@@ -30,12 +31,14 @@ namespace GameOff.Documents
         [SerializeField] private DocumentView entryPermitPrefab;
         [SerializeField] private DocumentView cargoManifestPrefab;
         [SerializeField] private DocumentView citationPrefab;
+        [SerializeField] private DocumentView noticePrefab;
         [Tooltip("Where printed slips come out (the printer's paper slot) and where they land on the desk.")]
         [SerializeField] private Transform printerOut;
         [SerializeField] private Transform printerSpot;
 
         private readonly List<DocumentView> _onDesk = new List<DocumentView>();
         private readonly List<DocumentView> _inDrawer = new List<DocumentView>();
+        private readonly List<DocumentView> _pinned = new List<DocumentView>();
         private Vector3 _drawerRest;
         private bool _busy;
         private DocumentView _pressed, _inspected;
@@ -60,6 +63,8 @@ namespace GameOff.Documents
         public Func<IReadOnlyList<DocumentView>, IReadOnlyList<DocumentView>, string> ReturnCheck;
 
         public bool IsBusy => _busy;
+        /// <summary>A paper is being read or moved, or the drawer is pressed.</summary>
+        public bool IsHandlingPaper => _inspected != null || _pressed != null || _drawerPress;
         public IReadOnlyList<DocumentView> OnDesk => _onDesk;
         private float DeskTop => deskSpots.Length > 0 ? deskSpots[0].position.y : transform.position.y;
 
@@ -90,6 +95,29 @@ namespace GameOff.Documents
                 return;
             }
             UpdateLayers();
+        }
+
+        /// <summary>Hangs a note at a spot (page top = its local +Z, page face = its local +Y). It can be clicked to read it.</summary>
+        public DocumentView Pin(DocumentData data, Transform spot)
+        {
+            var view = Spawn(data);
+            if (view == null) return null;
+            view.transform.SetParent(spot, false);
+            view.transform.localPosition = Vector3.zero;
+            view.transform.localRotation = Quaternion.identity;
+            _pinned.Add(view);
+            UpdateLayers();
+            return view;
+        }
+
+        /// <summary>Takes a pinned note down for good, with its data if that was made at runtime.</summary>
+        public void Unpin(DocumentView view)
+        {
+            if (view == null || !_pinned.Remove(view)) return;
+            if (_inspected == view) _inspected = null;
+            StopGlide(view.transform);
+            if (view.Data != null && view.Data.IsRuntime) Destroy(view.Data);
+            Destroy(view.gameObject);
         }
 
         /// <summary>Hands papers in through the drawer; if the drawer is busy, they come as soon as it is free.</summary>
@@ -162,9 +190,19 @@ namespace GameOff.Documents
                 }
                 return true;
             }
-            if (_busy) return pressed; // no new presses while the drawer moves
-            if (!pressed || !station.RaycastPointer(screenPos, out var hit)) return false;
-            var doc = hit.collider.GetComponentInParent<DocumentView>();
+            if (!pressed)
+                return false;
+            bool hitSomething = station.RaycastPointer(screenPos, out var hit);
+            var doc = hitSomething ? hit.collider.GetComponentInParent<DocumentView>() : null;
+            if (doc != null && _pinned.Contains(doc)) // also while the drawer moves: the rules are needed most when papers come in
+            {
+                StopGlide(doc.transform);
+                Inspect(doc);
+                _inspectReturn = new Pose(doc.transform.parent.position, doc.transform.parent.rotation); // even if it was still gliding back
+                return true;
+            }
+            if (_busy) return true; // no other new presses while the drawer moves
+            if (!hitSomething) return false;
             if (doc != null && _onDesk.Contains(doc))
             {
                 StopGlide(doc.transform); // e.g. still gliding back from reading: the hand wins
@@ -246,7 +284,7 @@ namespace GameOff.Documents
         /// <summary>Takes away every traveler paper on the desk and in the drawer (arrest / airlock); printed slips stay.</summary>
         public void Confiscate()
         {
-            if (_inspected != null && _inspected.Type != DocumentType.Citation) _inspected = null;
+            if (_inspected != null && _inspected.Type != DocumentType.Citation && !_pinned.Contains(_inspected)) _inspected = null;
             if (_pressed != null && _pressed.Type != DocumentType.Citation)
             {
                 _pressed = null;
@@ -315,6 +353,7 @@ namespace GameOff.Documents
                 DocumentType.IdCard => idCardPrefab,
                 DocumentType.EntryPermit => entryPermitPrefab,
                 DocumentType.CargoManifest => cargoManifestPrefab,
+                DocumentType.Notice => noticePrefab,
                 _ => citationPrefab,
             };
             if (prefab == null) return null;
@@ -352,7 +391,9 @@ namespace GameOff.Documents
         private Vector3 DragTarget(Vector2 screenPos)
         {
             Vector3 point;
-            if (station.RaycastPointer(screenPos, out var hit) && (hit.collider.transform.IsChildOf(drawer) || hit.collider.GetComponentInParent<DocumentView>() != null))
+            // Papers land on what is under the mouse, but pinned notes hang on the wall: not a surface for them
+            if (station.RaycastPointer(screenPos, out var hit) && !_pinned.Contains(hit.collider.GetComponentInParent<DocumentView>())
+                && (hit.collider.transform.IsChildOf(drawer) || hit.collider.GetComponentInParent<DocumentView>() != null))
                 point = hit.point;
             else if (!DeskPoint(screenPos, out point))
                 return _pressed.transform.position - Vector3.up * tuning.dragLift;
@@ -459,6 +500,7 @@ namespace GameOff.Documents
             if (_sharpLayer < 0) return;
             foreach (var v in _onDesk) SetLayer(v, station.IsSeated ? _sharpLayer : _worldLayer);
             foreach (var v in _inDrawer) SetLayer(v, _worldLayer);
+            foreach (var v in _pinned) SetLayer(v, station.IsSeated ? _sharpLayer : _worldLayer);
         }
 
         private static void SetLayer(DocumentView doc, int layer)
