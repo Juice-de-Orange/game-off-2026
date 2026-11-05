@@ -101,6 +101,20 @@ ArtSource/                 Arbeitsdateien (.blend, .psd, Rohaufnahmen) — auße
 - Commit-Format der Pipeline: `assets(Pxx): SM_Bar_Counter.fbx final - 820 tris, 1 material`.
 - Material, Prefab, Importeinstellungen und Szenen macht das Team im Unity-Editor, nicht die Pipeline.
 
+## Asset bestellen (Max und Martin)
+**Ein Eintrag in `docs/ASSET-REQUESTS.md` auf `main` ist die Bestellung.** Beide dürfen bestellen, ohne vorher zu fragen. Claude erledigt das auf Zuruf („bestell X“):
+1. Am Ende von `docs/ASSET-REQUESTS.md` einen Eintrag anhängen: Überschrift `### <Dateiname>`, darunter der YAML-Block aus der Vorlage dort, mit `status: offen`.
+   `package` (Pxx), Maße, Pivot und `look` sind am wichtigsten: Die Pipeline baut, was dort steht.
+2. Prüfen: `python tools/check_asset_requests.py` (muss `0 broken` melden).
+3. Commit + **Push auf `main`**. Erst dann sieht es die Pipeline; sie liest die Datei etwa stündlich.
+4. Weiterbauen: Platzhalter am finalen Pfad anlegen (Regeln unten) oder, wie bei den Händlern, den Builder eine graue Box setzen lassen.
+
+Danach passiert der Rest ohne dich: Die Pipeline liefert per Pull Request, **Max** gibt frei und baut es ein. Den Stand zeigt `status` im Eintrag.
+
+**Erst mit Max absprechen:** nur große Aufträge (viele Assets, neue Räume wie P53) und alles, was den Stil ändert (`docs/STYLE.md`).
+Eine Notiz wie „Bestellung nach Absprache“ im Paket reicht nicht: Solange kein Eintrag auf `main` liegt, baut niemand etwas.
+Nicht bestellbar: Voicelines (`VO_`), siehe „Was die Pipeline (nicht) kann“.
+
 ## Anpassungen anfordern (Max und Martin)
 In `docs/ASSET-REQUESTS.md` beim Eintrag eine datierte Zeile in `feedback` ergänzen und `status: rework` setzen,
 auf `main` pushen. Beispiel: `- "2026-11-10 martin: Tresen 20 cm niedriger, Spieler sieht sonst nicht drüber"`.

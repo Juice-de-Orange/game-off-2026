@@ -522,13 +522,20 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Jeder Test-Reisende steht in der Kammer, begrüßt, antwortet auf Feld-Klicks; Aliens werden lesbar „übersetzt“.
 
 ### P41 — Regeln an der Pinnwand
-- Größe: M · Priorität: Muss · Status: in Arbeit (max, 05.11.)
+- Größe: M · Priorität: Muss · Status: fertig (max, 05.11.)
 - Braucht: P07 · Folgt auf: P33
 - Ziel: Man kennt die Regeln des Tages während der Schicht.
 - Enthalten: Tagesbulletin + Fahndungsliste (mit Befehl Verhaften/Terminieren) als Zettel an der Pinnwand im Schalterraum, scharf
   gezeichnet; Lautsprecher-Durchsagen mit Untertitel (Schichtbeginn, neue Regel, Verwarnung); im Sitzen umschauen (A/D bzw. Pfeiltasten,
   ±70°), Klick auf einen Zettel holt ihn zum Lesen heran
 - Abnahme: Alle Regeln von Tag 1 sind im Sitzen lesbar; Durchsage zu Schichtbeginn erscheint.
+- Ergebnis (max, 05.11.):
+  - **Zettel:** `Counter/PinBoard` hängt Bulletin und Fahndungsliste an `SM_Counter_Board`, neu bei jedem `CounterShift.DayBegun`. Text: `Travelers/DayBulletin` (Grundregeln: `RuleEvaluator.StandingRules`, von Hand neben dem Prüfcode; Tagesregeln: `BulletinText`). Prefab `PF_Doc_Notice`, Typ `DocumentType.Notice`, nicht stempelbar. `DocumentDesk.Pin/Unpin`.
+  - **Umschauen:** `Counter/SeatedLook`, Werte in `Data/Counter/SeatedLookTuning.asset` (±70°, Neigung geht dabei auf waagerecht). Nutzt `Player/Move`, das Eingabe-Asset ist unverändert.
+  - **Durchsagen:** `Counter/Announcer`, Texte und spätere Clips in `Data/Counter/Announcements.asset`. Schichtbeginn über `CounterShift.ShiftStarted`, neue Regel über `BeginDay(rules, newToday)` (eine Zeile in `DayManager`), Verwarnung über `DecisionMade`. Platzhalter-Ton, Sprachaufnahmen stehen im Backlog.
+  - Alles gebaut von **GameOff → Build Documents**. Die Zettelposition in `WireBoard` ist eine Kopie der Pinnwand aus `StationGrayboxBuilder.BuildProps`: wird die Pinnwand verschoben, dort mit anpassen.
+  - Geprüft: 64/64 EditMode-Tests, WebGL-Build lokal in Chrome (Durchsagen, Umschauen, beide Zettel lesen, Sperren beim Lesen und mit Stempel, neuer Tag). **Nicht echt geprüft:** Hinsetzen wurde per Skript ausgelöst und A/D simuliert, echte Tasten testet max beim Spielen.
+  - **Für P09/P08 (martin):** Verwarnzettel bleiben am nächsten Tag auf dem Tisch liegen, nach einem Dev-Sprung auch die Papiere des letzten Reisenden. Bitte bei der Abnahme von P09 entscheiden, ob `BeginDay` den Tisch leeren soll. **P09 kann jetzt abgenommen werden.**
 
 ### P42 — Pipeline-Lieferungen vom 04.11. einbauen
 - Größe: S · Priorität: Soll · Status: offen (für **max** reserviert, sobald geliefert)
@@ -595,7 +602,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - **Welt** (`Scripts/Shops/`): `Vendor` (E: Platzhalter-Stimmton auf dem Voice-Kanal, dann Handelsfenster; „nur nach der Schicht“
     zeigt sonst „<Name> is closed“) für **Holly** (Kiosk), **Barkeeper** und **Dealer** (Barhocker 4); `DroneTerminal` an
     `SM_Hangar_CargoDrone` (Hitbox umschließt Drohne + Pad, Send home, Ereignis `Sent` für P13). Figuren = graue Boxen, bis `Art/Models/Characters/SM_NPC_Holly.fbx`,
-    `SM_NPC_Barkeeper.fbx`, `SM_NPC_Dealer.fbx` geliefert sind (Bestellung erst nach Absprache) → dann neu bauen.
+    `SM_NPC_Barkeeper.fbx`, `SM_NPC_Dealer.fbx` geliefert sind (bestellt am 05.11., P52) → dann neu bauen.
   - Gebaut von **GameOff → Build Economy into Main** (`EconomyBuilder`). Dev-Werkzeuge (`DayManager.showDevTools`): rote Hitboxen,
     roter **Dev_force_Trade** bei geschlossenen Händlern, Startgegenstände Contraband spice + Pocket watch zum Testen.
   - Getestet im Editor: kaufen (zu teuer → „Not enough credits“), verkaufen, Kiosk lehnt CONTRABAND ab, Schwarzmarkt zahlt mehr,
@@ -657,3 +664,39 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Geprüft: Spiel lädt öffentlich und startet bis Zimmer 103, nur eigene Domain wird geladen; Deploy über den beschränkten Schlüssel; kaputte Version rollt von selbst zurück; falscher Image-Name wird abgewiesen; andere Sites unverändert; 61/61 EditMode-Tests.
   - **Offen für die Abnahme:** Unity-Lizenz + Secrets (max), dann erster Workflow-Lauf; rote Hitboxen und Dev-Knöpfe im Spiel mit Schalter an/aus noch nicht gesehen (nur Menü und Speicherung geprüft).
   - **Für P19 (itch):** Die dortige Web-Vorlage muss abgelehnte Maussperren genauso abfangen wie `Assets/WebGLTemplates/Kestrel9/index.html` (`errorHandler`), sonst stoppt Unitys `alert` das Spiel. Ein 16:9-Bild ist dort ebenfalls nötig: Das Menü ist für 960×540 gebaut und wird in schmalen Fenstern links abgeschnitten.
+
+### P50 — Türen zeigen, wohin sie führen
+- Größe: M · Priorität: Soll · Status: offen (Idee max, 05.11.)
+- Braucht: — · Folgt auf: P27
+- Ziel: Man findet sich zurecht, weil jede Tür zeigt, wohin sie führt, und das Station-typisch abwechslungsreich statt immer gleich.
+- Enthalten: Hinweis an jeder Tür, zum Raum passend und unterschiedlich (Schilder, Wandschablonen, Leuchtschrift, Bodenmarkierung, Plakat …); Durchgang über die Builder (`StationGrayboxBuilder`), vorhandene Modelle zuerst nutzen (`SM_Hall_Sign`, `SM_Motel_DoorSign`, `T_Decal_Signs`, `SM_Bar_NeonSign`), fehlende Varianten über `ASSET-REQUESTS.md`
+- Nicht enthalten: Türlogik und Zugangsstufen (P27), Wegweiser-Karte oder HUD
+- Abnahme: Von jeder Tür aus erkennt man im Spiel ohne Karte das Ziel; nicht alle Hinweise sehen gleich aus; lesbar im WebGL-Build.
+
+### P51 — Zimmer 103 wohnlicher
+- Größe: S · Priorität: Kann · Status: offen, **vorgemerkt, noch nicht bauen und nichts bestellen** (Idee max, 05.11.)
+- Braucht: — · Folgt auf: M014 (Katzenbild)
+- Ziel: Das Zimmer des Spielers fühlt sich persönlich an.
+- Enthalten: Bullauge größer (heute Ø 0,6 m, `SM_Station_Wall_Porthole_2x3`, Zimmer 103); Katzenbild etwas höher (`SM_Motel_CatPainting`, heute y 1,3 m, `StationGrayboxBuilder.BuildProps`); neues Gemälde vom Hund **Elo** (Bestellung erst, wenn das Paket dran ist; dann fragt Claude Max nach einem Foto als Vorlage, wie beim Katzenbild)
+- Nicht enthalten: weitere Möbel, andere Zimmer
+- Abnahme: Alle drei Punkte im Zimmer zu sehen; Licht neu gebacken; das Bullauge passt zum Außenmodell.
+- Hinweis: Größeres Bullauge heißt neues Wandmodul über die Pipeline und neuer Lichtbake. Wird das Wohnmodul (P53) gebaut, zuerst dort klären, wo Zimmer 103 am Ende liegt.
+
+### P52 — Mehr Figuren: Händler an Kiosk und Bar
+- Größe: M · Priorität: Soll · Status: offen (Idee max, 05.11.)
+- Braucht: P46 · Folgt auf: P46
+- Ziel: Statt grauer Boxen stehen echte Figuren an Kiosk und Bar.
+- Enthalten: `SM_NPC_Holly.fbx` (ältere Frau), `SM_NPC_Barkeeper.fbx` (vierarmiges Alien mit Atemmaske, Schlauch zum Rucksack), `SM_NPC_Dealer.fbx` (sitzt shady auf einem Barhocker, dunkle, abgewetzte Kleidung mit Kapuze), Beschreibungen von Martin (Handover 05.11.); Einträge in `ASSET-REQUESTS.md`; nach der Lieferung `GameOff/Build Economy into Main`
+- Nicht enthalten: Dialoge, Animationen über eine Idle-Haltung hinaus, weitere Bewohner (kommen mit P53)
+- Abnahme: Die drei Figuren stehen an ihren Plätzen statt der Boxen, Handel funktioniert unverändert.
+- Stand 05.11.: **Bei der Pipeline bestellt** (drei Einträge `SM_NPC_*` in `ASSET-REQUESTS.md`, `needed_by` 16.11.). Das Paket wartet auf die Lieferung, Einbau macht max.
+
+### P53 — Wohnmodul begehbar: Zimmer für alle Figuren
+- Größe: L · Priorität: Soll · Status: offen, **erst Entwurf, dann Entscheidung** (Idee max, 05.11.)
+- Braucht: Entwurf + Absprache max/martin (Umfang gegen Feature-Freeze 22.11.) · Folgt auf: P04, P27
+- Ziel: Das Motel hat genug Platz, und jede Figur kann ein eigenes Zimmer haben, was die Immersion trägt.
+- Enthalten: großer Blender-Auftrag an die Pipeline: Innenraum des Wohnmoduls (Gänge, Zimmer) und eine begehbare Verbindung von der Station dorthin; Einbau über die Builder inkl. NavMesh und Lichtbake
+- Nicht enthalten: Tagesabläufe der Bewohner, Inhalte der Zimmer über die Grundausstattung hinaus
+- Abnahme: Der Spieler läuft ohne Ladezeit von der Station ins Wohnmodul, die Zimmer sind erreichbar, von außen stimmt das Modell mit innen überein, und der WebGL-Build bleibt flüssig.
+- Ausgangslage (05.11.): Die Motelzimmer 101–103 liegen im Hauptblock (x −20..−8, z 0..6, Höhe 3 m). Das Wohnmodul existiert nur als Außenmodell `SM_Ext_HabModule` (liegender Zylinder 12 × 12 × 30 m, zwei Stück: `Hab_West`, `Hab_East` in `SkyExteriorBuilder`) ohne Innenraum.
+- Im Entwurf zu klären: Welches Modul, wie viele Zimmer; ob das Innere den Außenzylinder ersetzt oder hineinpasst; wo die Verbindung ansetzt (Motelgang-Westende?) und wie sie von außen aussieht; bleibt Zimmer 103, wo es ist, oder zieht es um (Laufwege, Bett, `PF_DayFlow`, P51); was Größe und Lichtbake für den WebGL-Build bedeuten (heute 19 MB).

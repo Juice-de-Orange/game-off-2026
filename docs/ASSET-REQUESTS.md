@@ -4414,3 +4414,91 @@ refs: []
 placeholder: graue Box 0.22 x 0.08 x 0.18 m vom DocumentPrefabBuilder
 feedback: []
 ```
+
+### SM_NPC_Holly.fbx
+```yaml
+path: Assets/_Project/Art/Models/Characters/SM_NPC_Holly.fbx
+package: P52
+scene: Kiosk
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.55, 0.45, 1.7]
+pivot: bottom_center
+tris_max: 3000
+materials: [Body]
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Holly_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Holly, die Kioskbesitzerin: ältere Frau hinter der Kiosk-Durchreiche, abgetragene Arbeitskleidung, freundlich und müde.
+  Statische Figur ohne Rig in einer ruhigen Haltung, im selben Stil wie die Reisenden SK_NPC_*.
+  Blickrichtung in Unity lokal +Z: der EconomyBuilder dreht die Figur danach. Hitbox und Handel hängen am Prefab.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Graue Box aus GameOff/Build Economy into Main (EconomyBuilder), kein FBX am Pfad. Sobald das FBX da ist, setzt der Builder es ein.
+feedback: []
+```
+
+### SM_NPC_Barkeeper.fbx
+```yaml
+path: Assets/_Project/Art/Models/Characters/SM_NPC_Barkeeper.fbx
+package: P52
+scene: Bar
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.8, 0.6, 1.9]
+pivot: bottom_center
+tris_max: 3000
+materials: [Body]
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Barkeeper_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Barkeeper: vierarmiges Alien hinter der Bar-Theke, mit Atemmaske und Schlauch zu einem Rucksack.
+  Statische Figur ohne Rig in einer ruhigen Haltung, im selben Stil wie die Reisenden SK_NPC_*.
+  Blickrichtung in Unity lokal +Z: der EconomyBuilder dreht die Figur danach. Hitbox und Handel hängen am Prefab.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Graue Box aus GameOff/Build Economy into Main (EconomyBuilder), kein FBX am Pfad. Sobald das FBX da ist, setzt der Builder es ein.
+feedback: []
+```
+
+### SM_NPC_Dealer.fbx
+```yaml
+path: Assets/_Project/Art/Models/Characters/SM_NPC_Dealer.fbx
+package: P52
+scene: Bar
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.6, 0.6, 1.3]
+pivot: bottom_center
+tris_max: 3000
+materials: [Body]
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Dealer_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Dealer vom Schwarzmarkt: sitzt shady auf einem Barhocker (Hocker gehört nicht zum Modell, Pivot = Sitzfläche, 0,45 m über dem Boden),
+  dunkle, abgewetzte Kleidung mit Kapuze, Gesicht im Schatten.
+  Statische Figur ohne Rig in einer ruhigen Haltung, im selben Stil wie die Reisenden SK_NPC_*.
+  Blickrichtung in Unity lokal +Z: der EconomyBuilder dreht die Figur danach. Hitbox und Handel hängen am Prefab.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Graue Box aus GameOff/Build Economy into Main (EconomyBuilder), kein FBX am Pfad. Sobald das FBX da ist, setzt der Builder es ein.
+feedback: []
+```

@@ -40,7 +40,7 @@ All work is split into clearly scoped packages. This is the team's central devel
 - One package per person at a time. Build only what is in scope; anything else becomes a new package.
 - Rework of a finished package = a new follow-up package (`Folgt auf: Pxx`), never reopen.
 - Done = acceptance criteria met, no console errors, pushed, status `fertig`, short "Ergebnis" note.
-- Need an asset? Add it to `docs/ASSET-REQUESTS.md`, create a placeholder at the final path (rules in `docs/ASSETS.md`), keep building.
+- Need an asset? Order it yourself: add an entry to `docs/ASSET-REQUESTS.md`, run `python tools/check_asset_requests.py`, push to `main` (that is the order, see "Asset bestellen" in `docs/ASSETS.md`), create a placeholder at the final path, keep building. Only large orders or style changes need Max first.
 - Max's asset pipeline delivers via pull requests from `assets/<package>` branches (never pushes to `main`). **Only Max approves and merges** asset PRs, then integrates them in Unity (steps in `docs/ASSETS.md`).
 - Want an asset changed? Both people may request it: add a dated line to the entry's `feedback` and set `status: rework` in `docs/ASSET-REQUESTS.md`, push to `main`. Never edit pipeline-delivered files by hand.
 
