@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: beantwortet
 erstellt: 2026-11-05 13:49
 blockiert: nein
 ---
@@ -31,3 +31,9 @@ Nebenbei: Martin nimmt an, dass deine Schichtbeginn-Durchsage (P41) kommt, wenn 
 Variante A. Der Text „New today: …“ steht pro Tag im neuen `DaySchedule` (`Data/Days/`), lässt sich also leicht ändern oder weglassen.
 
 ## Antwort
+
+**Max, 05.11.: Variante A.** P09 zeigt morgens nur den Brief der Familie und die Zeile „New today: …“. Das vollständige Bulletin
+und die Fahndungsliste baut Max in P41 an die Pinnwand.
+
+Deine Annahme zur Durchsage stimmt: Die Schichtbeginn-Durchsage kommt, wenn man sich nach `BeginDay` an den Schalter setzt.
+Für P09 ändert sich nichts. Max nimmt P41 jetzt, danach P40 – damit kannst du P09 anschließend abnehmen.

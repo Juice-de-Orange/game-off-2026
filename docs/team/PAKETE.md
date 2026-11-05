@@ -515,7 +515,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Jeder Test-Reisende steht in der Kammer, begrüßt, antwortet auf Feld-Klicks; Aliens werden lesbar „übersetzt“.
 
 ### P41 — Regeln an der Pinnwand
-- Größe: M · Priorität: Muss · Status: offen (für **max** reserviert)
+- Größe: M · Priorität: Muss · Status: in Arbeit (max, 05.11.)
 - Braucht: P07 · Folgt auf: P33
 - Ziel: Man kennt die Regeln des Tages während der Schicht.
 - Enthalten: Tagesbulletin + Fahndungsliste (mit Befehl Verhaften/Terminieren) als Zettel an der Pinnwand im Schalterraum, scharf
@@ -629,3 +629,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     Scene Only** (neu: baut nur `Menu.unity`, Boot und Main bleiben unberührt).
   - **Für P25:** eigenes `ShipTrafficTuning` für Main (seltener) anlegen und ein `ShipTraffic`-Objekt damit in Main setzen.
   - Getestet im Editor und im WebGL-Build (Chrome), 0 Fehler/Warnungen.
+
+### P48 — Menü direkt in Main mit Kameraflug
+- Größe: M · Priorität: Kann · Status: offen
+- Braucht: P09 · Folgt auf: P02
+- Ziel: Das Menü sieht aus wie das Spiel, und „Start Shift“ geht nahtlos ins Spiel über.
+- Enthalten: Spielstart direkt in `Main.unity` mit Außenkamera (echtes gebackenes Licht), Menü darüber, bei „Start Shift“ Kameraflug in
+  Zimmer 103 zum Spieler
+- Nicht enthalten: neue Menüpunkte, Änderungen am Tagesablauf
+- Abnahme: Menü zeigt die Station mit gebackenem Licht; „Start Shift“ landet ohne Szenenwechsel beim Spieler in Zimmer 103; läuft im WebGL-Build. Nur in der Polish-Woche, nur wenn alle Muss-Pakete fertig sind.

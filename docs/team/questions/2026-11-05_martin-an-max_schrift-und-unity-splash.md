@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: beantwortet
 erstellt: 2026-11-05 09:58
 blockiert: nein
 ---
@@ -55,3 +55,10 @@ Ich habe Frage 1 und 2 bewusst nicht angefasst, weil ich mir nicht sicher war. F
 - Der Unity-Splash bleibt an, bis du antwortest.
 
 ## Antwort
+
+**Max, 05.11.:**
+- **Frage 1 – A:** Orbitron fehlt nur. Bitte hol sie nach `Assets/_Project/Fonts/`, trag sie in `CREDITS.md` ein und stell Titel und
+  Menü-Überschriften im Builder um.
+- **Frage 2 – A:** Unity-Splash abschalten. Bitte stell du die Projekteinstellung um.
+- **Frage 3 – A:** Ja, später als eigenes Folgepaket. Es steht als **P48** (Kann, für die Polish-Woche) in `PAKETE.md`.
+  Bis dahin bleibt Variante A.
