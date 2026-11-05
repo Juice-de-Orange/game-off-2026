@@ -248,7 +248,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Retro-Look final aussehen soll, wird entschieden, wenn die Assets drin sind (dann ggf. Folgepaket).
 
 ### P18 — Audio-Grundgerüst
-- Größe: S · Priorität: Soll · Status: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 05.11.)
 - Braucht: P01, P43 (die Regler Music/Effects/Voice kommen in den Reiter AUDIO aus P43)
 - Ziel: AudioMixer (Musik/SFX/Voice), einfacher Weg, Sounds abzuspielen, Lautstärke aus dem Menü (P02).
 - Abnahme: Lautstärkeregler wirken getrennt.
