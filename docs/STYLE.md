@@ -46,8 +46,8 @@ aber nicht Horror.
   Schalter = Cyan, Bar = Orange/Violett, Diner = Bernstein, Hangar = Alarmrot/Weiß, Motel = Giftgrün.
 
 ## Schrift
-- Titel, Menü, Stationsschilder: **Orbitron** (OFL).
-- Dokumente, UI-Texte, Displays: **Share Tech Mono** (OFL).
+- **Alle Texte: Orbitron** (OFL) – Titel, Menü, HUD, Fenster, Brief, Dokumente, Displays, Stationsschilder (martin 05.11., revidiert 31.10.).
+- Share Tech Mono (OFL) bleibt nur als Ausweichschrift für Zeichen, die Orbitron fehlen (Fallback am `Orbitron SDF.asset`).
 - Schilder und Decals: erfundene Firmennamen und Texte, Englisch, Großbuchstaben, gern mit Seriennummern und Warnhinweisen.
 
 ## Referenzen
