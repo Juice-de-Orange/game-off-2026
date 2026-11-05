@@ -545,7 +545,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - **Für P09/P08 (martin):** Verwarnzettel bleiben am nächsten Tag auf dem Tisch liegen, nach einem Dev-Sprung auch die Papiere des letzten Reisenden. Bitte bei der Abnahme von P09 entscheiden, ob `BeginDay` den Tisch leeren soll. **P09 kann jetzt abgenommen werden.**
 
 ### P42 — Pipeline-Lieferungen vom 04.11. einbauen
-- Größe: S · Priorität: Soll · Status: offen (für **max** reserviert, sobald geliefert)
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 05.11.)
 - Braucht: Lieferungen zu M015 · Folgt auf: P39, P38, P06, P07
 - Ziel: Die Platzhalter von heute werden durch die bestellten Modelle und Grafiken ersetzt.
 - Enthalten: PRs mergen (je Lieferung ein neuer Branch + PR, siehe `ASSETS.md`), `GameOff/Integrate Asset Deliveries`, dann die
