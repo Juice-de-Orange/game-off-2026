@@ -1,3 +1,4 @@
+using GameOff.Audio;
 using GameOff.Core;
 using TMPro;
 using UnityEngine;
@@ -9,7 +10,8 @@ namespace GameOff.UI
     /// Options in tabs (P43, follows P02): AUDIO, CONTROLS. Every change applies at once and is saved in GameSettings;
     /// each tab has its own "Reset to defaults". The same panel is used in the main menu and the pause menu.
     /// Fullscreen is not here but a corner button in both menus (FullscreenButton).
-    /// Built by MenuSceneBuilder; P18 adds the Music/Effects/Voice sliders to the AUDIO tab.
+    /// AUDIO has one slider per GameMixer channel (P18); releasing a slider plays a short preview tone on that channel.
+    /// Built by MenuSceneBuilder.
     /// </summary>
     public class OptionsPanel : MonoBehaviour
     {
@@ -17,9 +19,9 @@ namespace GameOff.UI
         [SerializeField] private Button[] tabButtons;
         [SerializeField] private GameObject[] pages;
 
-        [Header("Audio")]
-        [SerializeField] private Slider volume;
-        [SerializeField] private TMP_Text volumeValue;
+        [Header("Audio (index = AudioChannel: Master, Music, Sfx, Voice)")]
+        [SerializeField] private Slider[] volumeSliders;
+        [SerializeField] private TMP_Text[] volumeValues;
         [SerializeField] private Button resetAudio;
 
         [Header("Controls")]
@@ -45,11 +47,19 @@ namespace GameOff.UI
                 tabButtons[i].onClick.AddListener(() => SelectTab(index));
             }
 
-            volume.minValue = 0f;
-            volume.maxValue = 1f;
+            for (int i = 0; i < volumeSliders.Length; i++)
+            {
+                var channel = (AudioChannel)i;
+                var slider = volumeSliders[i];
+                slider.minValue = 0f;
+                slider.maxValue = 1f;
+                slider.onValueChanged.AddListener(v => { SetVolume(channel, v); Refresh(); });
+                var release = slider.GetComponent<SliderRelease>();
+                if (release != null) release.Released += () => AudioManager.PlayPreview(channel);
+            }
+
             sensitivity.minValue = GameSettings.MinSensitivity;
             sensitivity.maxValue = GameSettings.MaxSensitivity;
-            volume.onValueChanged.AddListener(v => { GameSettings.Volume = v; Refresh(); });
             sensitivity.onValueChanged.AddListener(v => { GameSettings.MouseSensitivity = v; Refresh(); });
             invertY.onClick.AddListener(() => { GameSettings.InvertY = !GameSettings.InvertY; Refresh(); });
 
@@ -81,11 +91,34 @@ namespace GameOff.UI
             }
         }
 
+        private static float GetVolume(AudioChannel channel) => channel switch
+        {
+            AudioChannel.Music => GameSettings.MusicVolume,
+            AudioChannel.Sfx => GameSettings.SfxVolume,
+            AudioChannel.Voice => GameSettings.VoiceVolume,
+            _ => GameSettings.Volume,
+        };
+
+        private static void SetVolume(AudioChannel channel, float value)
+        {
+            switch (channel)
+            {
+                case AudioChannel.Music: GameSettings.MusicVolume = value; break;
+                case AudioChannel.Sfx: GameSettings.SfxVolume = value; break;
+                case AudioChannel.Voice: GameSettings.VoiceVolume = value; break;
+                default: GameSettings.Volume = value; break;
+            }
+        }
+
         private void Refresh()
         {
-            volume.SetValueWithoutNotify(GameSettings.Volume);
+            for (int i = 0; i < volumeSliders.Length; i++)
+            {
+                float v = GetVolume((AudioChannel)i);
+                volumeSliders[i].SetValueWithoutNotify(v);
+                volumeValues[i].text = $"{Mathf.RoundToInt(v * 100f)}%";
+            }
             sensitivity.SetValueWithoutNotify(GameSettings.MouseSensitivity);
-            volumeValue.text = $"{Mathf.RoundToInt(volume.value * 100f)}%";
             sensitivityValue.text = $"{sensitivity.value:0.00}x";
             invertYValue.text = GameSettings.InvertY ? "ON" : "OFF";
         }

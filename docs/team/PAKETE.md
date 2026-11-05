@@ -248,10 +248,23 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Retro-Look final aussehen soll, wird entschieden, wenn die Assets drin sind (dann ggf. Folgepaket).
 
 ### P18 — Audio-Grundgerüst
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 05.11.)
+- Größe: S · Priorität: Soll · Status: fertig (martin, 05.11.)
 - Braucht: P01, P43 (die Regler Music/Effects/Voice kommen in den Reiter AUDIO aus P43)
 - Ziel: AudioMixer (Musik/SFX/Voice), einfacher Weg, Sounds abzuspielen, Lautstärke aus dem Menü (P02).
 - Abnahme: Lautstärkeregler wirken getrennt.
+- Ergebnis (martin, 05.11.):
+  - **Mixer** `Audio/GameMixer.mixer`: Master → Music / SFX / Voice, freigegebene Lautstärken `MasterVolume`, `MusicVolume`,
+    `SfxVolume`, `VoiceVolume`. Im Web-Build kann Unity am Mixer **nur die Gruppenlautstärke** ändern, keine Effekte (Unity-Doku 6000.3).
+  - **`Scripts/Audio/AudioManager.cs`** + `Prefabs/Audio/PF_AudioManager.prefab` (in Boot, Menu und Main, es läuft immer genau einer;
+    Main lässt sich direkt starten). Abspielen ohne Referenz: `AudioManager.PlayMusic(clip)` (Schleife, Überblendung),
+    `PlaySfx(clip)` (2D), `PlaySfxAt(clip, position)` (3D), `PlayVoice(clip)`. Gruppen für eigene AudioSources: `AudioManager.SfxGroup` usw.
+  - **AudioSources ohne Mixer-Gruppe** (z. B. die Türen aus dem Stations-Builder) hängt der AudioManager bei jedem Szenenwechsel an SFX.
+    Neue Quellen besser direkt einer Gruppe zuweisen.
+  - **Optionen** (Reiter AUDIO aus P43): Master, Music, Effects, Voice in `GameSettings` (0..1, AudioManager rechnet in dB um).
+    Beim Loslassen eines Reglers spielt ein im Code erzeugter Vorschau-Ton in dieser Gruppe (`SliderRelease`), keine Assets nötig.
+  - Pause: Spielgeräusche pausieren (`AudioListener.pause`), Musik, UI-Klicks (`Sfx2D`) und Vorschau laufen weiter.
+  - Im Browser startet Ton erst nach dem ersten Klick/Tastendruck (Browser-Regel) – der Splash fängt das ab.
+  - Getestet im Editor (Mixer-Werte, Routing aller 10 Türen) und im WebGL-Build mit Ton in Chrome. Echte Sounds fehlen noch (Max/Pipeline).
 
 ### P19 — WebGL-Build & itch-Upload
 - Größe: S · Priorität: Muss · Status: offen

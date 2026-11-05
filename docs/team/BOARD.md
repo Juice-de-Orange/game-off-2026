@@ -42,7 +42,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| martin | P18 Audio-Grundgerüst | `Menu.unity`, `Main.unity` (nur Pausemenü), `PF_PauseMenu.prefab` | 05.11. |
+| | | | |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -58,6 +58,7 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 - [ ] 
 
 ## Erledigt
+- [x] P18 Audio-Grundgerüst: GameMixer (Music/SFX/Voice), AudioManager mit PlayMusic/PlaySfx/PlaySfxAt/PlayVoice, 4 Lautstärkeregler mit Vorschau-Ton (martin, 05.11.)
 - [x] P43 Optionen in Reitern (Audio/Controls), Invert Y, Tastenübersicht, Reset; Vollbild-Knopf oben rechts in Haupt- und Pausemenü (martin, 05.11.)
 - [x] P02 Startbildschirm & Menü: Boot-Splash, Hauptmenü mit Station im All als Hintergrund, Optionen, Credits, Pausemenü; WebGL getestet (martin, 05.11.)
 - [x] P01 abgeschlossen: Martin hat das Projekt geöffnet und einen WebGL-Build getestet (martin, 05.11.)

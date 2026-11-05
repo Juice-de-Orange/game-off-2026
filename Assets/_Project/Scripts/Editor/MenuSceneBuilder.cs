@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using GameOff.Audio;
 using GameOff.Counter;
 using GameOff.Player;
 using GameOff.UI;
@@ -8,6 +9,7 @@ using TMPro;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
@@ -16,7 +18,7 @@ using UnityEngine.UI;
 namespace GameOff.EditorTools
 {
     /// <summary>
-    /// Builds the front end (P02; options in tabs: P43), idempotent: Boot.unity (splash), Menu.unity (main menu, options, credits),
+    /// Builds the front end (P02; options in tabs: P43; audio: P18), idempotent: Boot.unity (splash), Menu.unity (main menu, options, credits),
     /// PF_PauseMenu.prefab, and places the pause menu in Main.unity wired to the player and the counter.
     /// Credits text is taken from CREDITS.md at build time, so rerun after adding credits.
     /// Placeholder look (Share Tech Mono, palette from STYLE.md); final UI art replaces the sprites later.
@@ -27,6 +29,8 @@ namespace GameOff.EditorTools
         private const string MenuScene = "Assets/_Project/Scenes/Menu.unity";
         private const string MainScene = "Assets/_Project/Scenes/Main.unity";
         private const string PauseMenuPrefab = "Assets/_Project/Prefabs/UI/PF_PauseMenu.prefab";
+        private const string AudioManagerPrefab = "Assets/_Project/Prefabs/Audio/PF_AudioManager.prefab";
+        private const string MixerPath = "Assets/_Project/Audio/GameMixer.mixer"; // created once by hand/script, groups Master > Music, SFX, Voice
         private const string FontAssetPath = "Assets/_Project/Fonts/ShareTechMono SDF.asset";
         private const string CreditsFile = "CREDITS.md";
         private const string SkyboxPath = "Assets/_Project/Art/Materials/Station/M_Sky_Space.mat";
@@ -54,6 +58,7 @@ namespace GameOff.EditorTools
         private static readonly Color TextDim = Hex("8B9096");
 
         private static TMP_FontAsset _font;
+        private static GameObject _audioPrefab;
 
         [MenuItem("GameOff/Build Menu Scenes")]
         public static void BuildFromMenu()
@@ -68,6 +73,7 @@ namespace GameOff.EditorTools
         {
             _font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontAssetPath);
             var log = new List<string>();
+            _audioPrefab = BuildAudioManagerPrefab(log);
             BuildBoot(log);
             BuildMenu(log);
             var pausePrefab = BuildPausePrefab(log);
@@ -81,6 +87,7 @@ namespace GameOff.EditorTools
         private static void BuildBoot(List<string> log)
         {
             var scene = OpenCleared(BootScene);
+            PlaceAudioManager(scene);
             CreateCamera();
             var canvas = CreateCanvas("SplashCanvas", 0);
             var group = new GameObject("Splash", typeof(RectTransform), typeof(CanvasGroup));
@@ -101,6 +108,7 @@ namespace GameOff.EditorTools
         private static void BuildMenu(List<string> log)
         {
             var scene = OpenCleared(MenuScene);
+            PlaceAudioManager(scene);
             BuildStationBackdrop(scene, log);
             CreateEventSystem(null);
             var canvas = CreateCanvas("MenuCanvas", 0);
@@ -169,9 +177,16 @@ namespace GameOff.EditorTools
                 pages[i] = page;
             }
 
-            // AUDIO (P18 adds Music / Effects / Voice below Master)
+            // AUDIO (P18): one row per AudioChannel, same order as the enum (Master, Music, Sfx, Voice)
             var audio = pages[0].transform;
-            var volume = SliderRow(audio, "Master", "MASTER VOLUME", new Vector2(0f, RowTop), out var volumeValue);
+            string[] channelNames = { "MASTER VOLUME", "MUSIC", "EFFECTS", "VOICE" };
+            var volumeSliders = new Slider[channelNames.Length];
+            var volumeValues = new TMP_Text[channelNames.Length];
+            for (int i = 0; i < channelNames.Length; i++)
+            {
+                volumeSliders[i] = SliderRow(audio, ((AudioChannel)i).ToString(), channelNames[i], new Vector2(0f, RowTop - i * RowStep), out volumeValues[i]);
+                volumeSliders[i].gameObject.AddComponent<SliderRelease>(); // preview tone on release
+            }
             var resetAudio = MenuButton(audio, "ResetButton", "RESET TO DEFAULTS", new Vector2(0f, ResetY), new Vector2(280f, 40f), 18);
 
             // CONTROLS
@@ -187,8 +202,8 @@ namespace GameOff.EditorTools
             var options = panel.gameObject.AddComponent<OptionsPanel>();
             SetArray(options, "tabButtons", tabs);
             SetArray(options, "pages", pages);
-            Set(options, "volume", volume);
-            Set(options, "volumeValue", volumeValue);
+            SetArray(options, "volumeSliders", volumeSliders);
+            SetArray(options, "volumeValues", volumeValues);
             Set(options, "resetAudio", resetAudio);
             Set(options, "sensitivity", sensitivity);
             Set(options, "sensitivityValue", sensitivityValue);
@@ -428,6 +443,58 @@ namespace GameOff.EditorTools
             return prefab;
         }
 
+        // ---------- Audio (P18) ----------
+
+        /// <summary>PF_AudioManager: AudioManager + two music sources (crossfade), a 2D SFX source and a voice source, wired to GameMixer.</summary>
+        private static GameObject BuildAudioManagerPrefab(List<string> log)
+        {
+            var mixer = AssetDatabase.LoadAssetAtPath<AudioMixer>(MixerPath);
+            if (mixer == null) { log.Add($"MIXER MISSING: {MixerPath}"); return null; }
+            AudioMixerGroup Group(string name) => mixer.FindMatchingGroups(name).FirstOrDefault(g => g.name == name);
+            var music = Group("Music");
+            var sfx = Group("SFX");
+            var voice = Group("Voice");
+
+            Directory.CreateDirectory(Path.GetDirectoryName(AudioManagerPrefab));
+            var root = new GameObject("PF_AudioManager");
+            AudioSource Source(string name, AudioMixerGroup group, bool loop, bool ignorePause)
+            {
+                var go = new GameObject(name, typeof(AudioSource));
+                go.transform.SetParent(root.transform, false);
+                var source = go.GetComponent<AudioSource>();
+                source.outputAudioMixerGroup = group;
+                source.playOnAwake = false;
+                source.loop = loop;
+                source.spatialBlend = 0f;
+                source.ignoreListenerPause = ignorePause;
+                return source;
+            }
+            var musicA = Source("MusicA", music, true, true);
+            var musicB = Source("MusicB", music, true, true);
+            var sfx2D = Source("Sfx2D", sfx, false, true); // UI clicks must work in the pause menu
+            var voiceSource = Source("Voice", voice, false, false);
+
+            var manager = root.AddComponent<AudioManager>();
+            Set(manager, "mixer", mixer);
+            Set(manager, "musicGroup", music);
+            Set(manager, "sfxGroup", sfx);
+            Set(manager, "voiceGroup", voice);
+            Set(manager, "musicA", musicA);
+            Set(manager, "musicB", musicB);
+            Set(manager, "sfx2D", sfx2D);
+            Set(manager, "voice", voiceSource);
+
+            var prefab = PrefabUtility.SaveAsPrefabAsset(root, AudioManagerPrefab);
+            Object.DestroyImmediate(root);
+            log.Add("PF_AudioManager built");
+            return prefab;
+        }
+
+        private static void PlaceAudioManager(Scene scene)
+        {
+            if (_audioPrefab != null) PrefabUtility.InstantiatePrefab(_audioPrefab, scene);
+        }
+
         private static void PlaceInMain(GameObject prefab, List<string> log)
         {
             var scene = EditorSceneManager.OpenScene(MainScene, OpenSceneMode.Single);
@@ -439,9 +506,11 @@ namespace GameOff.EditorTools
             Set(pause, "player", player);
             Set(pause, "counter", counter);
             PrefabUtility.RecordPrefabInstancePropertyModifications(pause);
+            foreach (var old in scene.GetRootGameObjects().Where(g => g.name == _audioPrefab.name)) Object.DestroyImmediate(old);
+            PlaceAudioManager(scene);
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
-            log.Add($"pause menu placed in Main (player {(player != null ? "ok" : "MISSING")}, counter {(counter != null ? "ok" : "missing")})");
+            log.Add($"pause menu + audio manager placed in Main (player {(player != null ? "ok" : "MISSING")}, counter {(counter != null ? "ok" : "missing")})");
         }
 
         private static void CheckBuildSettings(List<string> log)
