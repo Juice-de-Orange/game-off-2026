@@ -514,6 +514,8 @@ namespace GameOff.EditorTools
         // Shuttle: rear ramp must face north toward the queue lanes and the inspection lock (checked visually).
         private const float ShuttleYaw = 0f;
 
+        private static AudioClip DoorClip(string name) => AssetDatabase.LoadAssetAtPath<AudioClip>($"Assets/_Project/Audio/SFX/SFX_Door_{name}.ogg");
+
         private static GameObject Kit(string relativePath) => AssetDatabase.LoadAssetAtPath<GameObject>(KitRoot + relativePath);
 
         /// <summary>Kit models need lightmap UVs for the baked lighting. Sets the import flag once per model.</summary>
@@ -653,6 +655,9 @@ namespace GameOff.EditorTools
                 so.FindProperty("panel").objectReferenceValue = leaf;
                 so.FindProperty("slideDistance").floatValue = d.Width;
                 so.FindProperty("audioSource").objectReferenceValue = audio;
+                so.FindProperty("openClip").objectReferenceValue = DoorClip("Open");
+                so.FindProperty("closeClip").objectReferenceValue = DoorClip("Close");
+                so.FindProperty("lockedClip").objectReferenceValue = DoorClip("Locked");
                 so.FindProperty("lockedLamp").objectReferenceValue = lamp;
                 so.FindProperty("obstacle").objectReferenceValue = obstacle;
                 so.ApplyModifiedPropertiesWithoutUndo();

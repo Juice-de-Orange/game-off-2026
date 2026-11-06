@@ -864,7 +864,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Rumpf (P2): `T_Ext_HullFiller_A_Albedo`, `_B_Albedo`, kachelnd, für Unterseite und Reststücke
   - Ton: `SFX_PA_Chime` (P2), `SFX_Vendor_Greet` (P3)
   - Kleinkram (P3): `SM_Station_LockLamp`
-  - Schon früher bestellt und noch offen: `SFX_Door_Open`, `SFX_Door_Close`, `SFX_Door_Locked` (P27)
+  - Früher bestellt, geliefert und eingebaut (06.11., von Max angehört): `SFX_Door_Open`, `SFX_Door_Close`, `SFX_Door_Locked` (P27)
 - Einbau nach der Lieferung, jeweils Builder ändern: `StationGrayboxBuilder` (Wandmodule, Leuchten, Lampe; die Blöcke bleiben unsichtbar als Kollision; Rumpf-Material mit Kachel statt Farbe), `TravelerContentBuilder` (Foto je Art statt Silhouette), `Announcer` und `Vendor` (Ton statt Testton). Danach `Rebuild All`, Bake, `Check Occlusion Bake`, `GameOff/List Placeholders` muss leer sein.
 - Nicht enthalten, weil nicht bei der Pipeline bestellbar oder keine Grafik: gesprochene Durchsagen (Voicelines, ElevenLabs offen), Platzhalter-Briefe und -Texte (P15), Platzhalter-Ende (P12), Test-Sortimente der Händler (P11).
 - Abnahme: `GameOff/List Placeholders` meldet nichts mehr; Foto passt zur Figur in der Kammer; Tests grün.
