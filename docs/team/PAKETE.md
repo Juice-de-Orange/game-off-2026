@@ -768,7 +768,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Stand 05.11.: **Bei der Pipeline bestellt** (drei Einträge `SM_NPC_*` in `ASSET-REQUESTS.md`, `needed_by` 16.11.). Das Paket wartet auf die Lieferung, Einbau macht max.
 
 ### P53 — Wohnmodul begehbar: Zimmer für alle Figuren
-- Größe: L · Priorität: Soll · Status: offen, Einbau nach P60 und P61 (Max, 06.11.); Entwurf und Teile sind geliefert (`docs/station/wohnmodul.md`)
+- Größe: L · Priorität: Soll · Status: in Arbeit (max, 06.11.); Entwurf und Teile sind geliefert (`docs/station/wohnmodul.md`)
 - Braucht: Entwurf + Absprache max/martin (Umfang gegen Feature-Freeze 22.11.) · Folgt auf: P04, P27
 - Ziel: Das Motel hat genug Platz, und jede Figur kann ein eigenes Zimmer haben, was die Immersion trägt.
 - Enthalten: großer Blender-Auftrag an die Pipeline: Innenraum des Wohnmoduls (Gänge, Zimmer) und eine begehbare Verbindung von der Station dorthin; Einbau über die Builder inkl. NavMesh und Lichtbake
