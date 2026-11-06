@@ -38,6 +38,7 @@ namespace GameOff.UI
 
         private readonly bool[] _paid = new bool[3];
         private int _travelersToday;
+        private int _correctToday;
         private bool _open;
         private bool _returned;
 
@@ -96,12 +97,18 @@ namespace GameOff.UI
             }
         }
 
-        private void OnDayBegun() => _travelersToday = 0;
-        private void OnDecision(TravelerData traveler, Verdict chosen, Judgement judgement) => _travelersToday++;
+        private void OnDayBegun() => _travelersToday = _correctToday = 0;
+
+        // P70: only correctly decided travelers are paid (Martin, 06.11.); wrong ones bring nothing.
+        private void OnDecision(TravelerData traveler, Verdict chosen, Judgement judgement)
+        {
+            _travelersToday++;
+            if (judgement.Correct) _correctToday++;
+        }
 
         // ---------- Numbers ----------
 
-        private int Wage => Payroll.Wage(_travelersToday, Tuning);
+        private int Wage => Payroll.Wage(_correctToday, Tuning);
         private int Citations => shift != null ? shift.Citations : 0;
         private int FreeWarnings => shift != null ? shift.FreeWarnings : 0;
         private int Penalty => Payroll.Penalty(Citations, FreeWarnings, Tuning);
@@ -164,7 +171,7 @@ namespace GameOff.UI
         private void Book(int day)
         {
             var wallet = Economy.Wallet;
-            if (Wage > 0) wallet.Add(Wage, $"Wage · {_travelersToday} travelers");
+            if (Wage > 0) wallet.Add(Wage, $"Wage · {_correctToday} of {_travelersToday} correct");
             if (Penalty > 0) wallet.Charge(Penalty, $"Penalty · {Payroll.PenalizedCitations(Citations, FreeWarnings)} citations");
             wallet.Charge(Tuning.rent, "Rent · room 103");
             for (int i = 0; i < 3; i++)
@@ -180,7 +187,7 @@ namespace GameOff.UI
             var e = Economy;
             var t = Tuning;
             var sb = new StringBuilder();
-            sb.AppendLine(Line($"Wage  ·  {_travelersToday} travelers × {t.wagePerTraveler}", Wage));
+            sb.AppendLine(Line($"Wage  ·  {_correctToday} of {_travelersToday} correct × {t.wagePerTraveler}", Wage));
             int penalized = Payroll.PenalizedCitations(Citations, FreeWarnings);
             if (penalized > 0) sb.AppendLine(Line($"Penalty  ·  {penalized} citations beyond {FreeWarnings} warnings", -Penalty));
             sb.AppendLine(Line("Rent  ·  room 103", -t.rent));

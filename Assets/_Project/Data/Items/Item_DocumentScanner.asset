@@ -15,6 +15,10 @@ MonoBehaviour:
   displayName: Document scanner
   description: Marks forged fields on papers. Use it at the counter (P16).
   baseValue: 60
+  dailyChange:
+  - 0
+  - 0
+  - -0.1
   tags:
   - {fileID: 11400000, guid: 03bb08c020997444ca31535c02f20e1a, type: 2}
   unique: 1

@@ -38,8 +38,9 @@ namespace GameOff.Economy
         public bool OpenAfterShiftOnly => openAfterShiftOnly;
         public string EmptyText => emptyText;
 
-        public int PriceFor(ItemData item) => Mathf.Max(0, Mathf.RoundToInt(item.BaseValue * sellFactor));
-        public int OfferFor(ItemData item) => Mathf.Max(0, Mathf.RoundToInt(item.BaseValue * buyFactor));
+        // From today's market price (P70: base × fixed daily change; P68 adds labels and events).
+        public int PriceFor(ItemData item) => Market.Rounded(Market.PriceOf(item) * sellFactor);
+        public int OfferFor(ItemData item) => Market.Rounded(Market.PriceOf(item) * buyFactor);
 
         public bool Buys(ItemData item)
         {

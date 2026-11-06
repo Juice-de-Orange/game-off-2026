@@ -16,6 +16,14 @@ MonoBehaviour:
   entries:
   - item: {fileID: 11400000, guid: 95ed42a555ca29c44adb1a7a87f3c5aa, type: 2}
     dailyAmount: 3
+  - item: {fileID: 11400000, guid: df59c3f9bd707eb4db4315f3127fb1bb, type: 2}
+    dailyAmount: 2
+  - item: {fileID: 11400000, guid: 67974c849890c5b4aadcb23660d4f06f, type: 2}
+    dailyAmount: 1
+  - item: {fileID: 11400000, guid: e0d6da73f80ef0b4bbca1641d443c69c, type: 2}
+    dailyAmount: 2
+  - item: {fileID: 11400000, guid: 2c71f878a38669942bdf6ea5d18990f3, type: 2}
+    dailyAmount: 1
   items: []
   sellFactor: 1.5
   buyFactor: 1.2

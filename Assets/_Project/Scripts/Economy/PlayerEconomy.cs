@@ -59,6 +59,7 @@ namespace GameOff.Economy
             Instance = this;
             Wallet = new Wallet(tuning != null ? tuning.startCredits : 0);
             Inventory = new Inventory();
+            Market.Day = 1;
             var cold = new List<bool>();
             if (household != null) foreach (var m in household.members) cold.Add(m.feelsCold);
             Household = new Household(cold);
@@ -84,6 +85,7 @@ namespace GameOff.Economy
         private void OnDayStarted(int day)
         {
             Wallet.BeginDay();
+            Market.Day = day;
             if (day > 1) foreach (var supply in _supplies.Values) supply.Refill();
         }
 

@@ -15,6 +15,10 @@ MonoBehaviour:
   displayName: Fusion cell
   description: Keeps a small heater running for a night. Hard to come by back home.
   baseValue: 11
+  dailyChange:
+  - 0
+  - 0.15
+  - 0.2
   tags:
   - {fileID: 11400000, guid: b383f9fa0014ed44c9c87250378ff26d, type: 2}
   unique: 0

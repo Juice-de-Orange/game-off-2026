@@ -15,6 +15,11 @@ MonoBehaviour:
   displayName: Nova Cola
   description: Warm, flat and sweet. Keeps you awake at the counter.
   baseValue: 2
+  dailyChange:
+  - 0
+  - 0
+  - 0
   tags:
-  - {fileID: 11400000, guid: 74c26e4bb62f1884ab816ec412ab79fc, type: 2}
+  - {fileID: 11400000, guid: df73a66dd95c513448baced3fe575726, type: 2}
+  unique: 0
   icon: {fileID: 0}

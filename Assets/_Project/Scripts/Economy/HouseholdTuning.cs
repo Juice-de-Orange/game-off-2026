@@ -11,6 +11,7 @@ namespace GameOff.Economy
     public class HouseholdTuning : ScriptableObject
     {
         [Header("Income")]
+        [Tooltip("Paid per correctly decided traveler (P70); wrong decisions bring nothing.")]
         public int wagePerTraveler = 15;
         [Tooltip("Deducted for every citation beyond the free warnings of the day (CounterShift.FreeWarnings).")]
         public int penaltyPerCitation = 10;
@@ -39,7 +40,7 @@ namespace GameOff.Economy
         public int MoneyCost(FamilyNeed need) => MoneyCost(PriceItemOf(need), moneyFactor);
 
         public static int MoneyCost(ItemData priceItem, float factor) =>
-            priceItem == null ? 0 : Mathf.RoundToInt(priceItem.BaseValue * factor);
+            priceItem == null ? 0 : Market.Rounded(Market.PriceOf(priceItem) * factor);
 
         [Header("Family")]
         public List<FamilyMember> members = new List<FamilyMember>();

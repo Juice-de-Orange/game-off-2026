@@ -985,6 +985,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   | ALIEN | fremde, nicht-menschliche Waren |
   | PERISHABLE | verdirbt nach einigen Tagen (Regel erst mit P10/P11) |
   | POWER | Energie für die Heizung zu Hause, z. B. Fusion Cell; deckt den Bedarf Wärme (P13, martin 06.11.) |
+  | LUXURY | Genussmittel, z. B. Nova Cola; deckt keinen Bedarf (P70, martin 06.11.) |
 
   Kategorie-Labels (DRUG, TECH, WEAPON, VALUABLE, ALIEN) sind das, worauf sich Gerüchte und Wunschlisten beziehen.
   Labels hängen am Gegenstandstyp, nicht am einzelnen Stück: Beschlagnahmte Ware sind eigene Gegenstände mit `CONFISCATED`
@@ -1070,7 +1071,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Drei Nächte ohne Versorgung führen sichtbar zur angekündigten Folge; mit Versorgung erholt sich die Familie.
 
 ### P70 — Preisliste & Sortiment
-- Größe: S–M · Priorität: Muss · Status: in Arbeit (martin, 06.11.)
+- Größe: S–M · Priorität: Muss · Status: fertig (martin, 06.11.)
 - Braucht: P46, P64, P13 · Folgt auf: P11 (Rest „Preisliste“) · Vor P68 und P71
 - Ziel: Echte Waren statt Test-Inhalten – die Dinge, auf die sich Bedarfe, Ereignisse und Gerüchte beziehen.
 - Enthalten: Waren mit Basismarktpreis, Labels und Tagesmenge (Texte Englisch): je Bedarf 2–3 Waren (FOOD, POWER, MEDICINE),
@@ -1078,6 +1079,22 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Sortiment für **Holly (Kiosk)** und den **Dealer (Schwarzmarkt)**; die **Bar** verkauft und kauft nichts (P65). Test-Inhalte ersetzen.
 - Nicht enthalten: Modelle/Icons (Liste im Fenster reicht), Ereignisse (P68), Durchrechnen (P71).
 - Abnahme: Kiosk und Dealer zeigen das neue Sortiment; jeder Bedarf lässt sich mit mindestens zwei Waren decken; Tests grün.
+- Ergebnis (martin, 06.11., von Martin in Unity getestet): vollständige Preisliste (alles vorläufig, in Assets einstellbar):
+  - **Lohn** 15 CR pro **richtig** entschiedenem Reisenden, falsche bringen 0 CR (Abrechnung: „5 of 6 correct × 15“); Abzug 10 CR je
+    Verwarnzettel über die 2 freien. **Miete** 30 CR (Pflicht). **Bett** = Marktpreis der Referenzware × 1,35 (Ration, Fusion cell,
+    Painkillers) → Tag 1: Essen 11, Wärme 15, Medizin 20; Tag 3: 14 / 18 / 26.
+  - **Marktpreis** = Grundpreis × (1 + feste Schwankung des Tages) – `ItemData.dailyChange` (Tag 1/2/3), `Market.PriceOf`; Händler × Verkaufs-
+    bzw. Ankaufsfaktor, Bett × 1,35, gerundet am Ende. P68 setzt Label-Faktoren und Ereignisse obendrauf.
+  - **Holly (Kiosk, ×1,0 / Ankauf ×0,5):** Protein bar 5 (FOOD, 4/Tag), Ration pack 8 (FOOD, 3), Canned stew 12 (FOOD, 2),
+    Fresh fruit 14 (FOOD+PERISHABLE, 1), Battery pack 6 (POWER, 3), Fusion cell 11 (POWER, 2), Cough syrup 9 (MEDICINE, 2),
+    Painkillers 15 (MEDICINE, 2), Nova Cola 2 (**LUXURY**, 5), Document scanner 60 (GADGET, 1).
+  - **Dealer (Schwarzmarkt, ×1,5 / Ankauf ×1,2):** Contraband spice 12 (CONTRABAND+DRUG, 3), Stim injector 18 (CONTRABAND+DRUG+MEDICINE, 2),
+    Antibiotics 30 (CONTRABAND+MEDICINE, 1), Data chip 25 (CONTRABAND+TECH, 2), Pistol 60 (CONTRABAND+WEAPON, 1).
+  - **Ohne Händler:** Pocket watch 20, Silver ring 35 (VALUABLE), Alien trinket 30 (ALIEN+VALUABLE). Bar handelt nicht (P65).
+  - Schwankungen Tag 1/2/3 stehen je Ware im Asset (Tendenz: bis Tag 3 knapper und teurer); P71 rechnet nach, P68/P15 passen an die Story an.
+  - Neues Label **LUXURY** (Genussmittel; Nova Cola, FOOD entfernt, sonst deckte eine 2-CR-Cola das Familienessen).
+  - Geprüft: 85/85 EditMode-Tests (neu: Marktpreis/Bett je Tag, ≥ 2 Waren je Bedarf im Kiosk, Nova Cola ohne FOOD, Schwankung 0 oder 3 Tage);
+    Play-Modus: Listen, Preise Tag 1 und Tag 3, Lohn nur für richtige.
 
 ### P71 — Balancing über 3 Tage
 - Größe: S · Priorität: Muss · Status: offen, geplant (martin, 06.11.)

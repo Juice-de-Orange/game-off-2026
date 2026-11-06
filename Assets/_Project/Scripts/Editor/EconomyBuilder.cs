@@ -156,6 +156,8 @@ namespace GameOff.EditorTools
             AddEntry(data.Stocks["Stock_Kiosk_Test"], data.Items["fusion"], 2, log);
             SetNeeds(data.Household, (food, data.Items["ration"]), (power, data.Items["fusion"]), (medicine, data.Items["painkillers"]), log);
 
+            BuildPriceList(data, contraband, medicine, gadget, food, power, drug, valuable, log, ref created);
+
             AssetDatabase.SaveAssets();
             if (created > 0) log.Add($"{created} test assets created");
             return data;
@@ -202,6 +204,81 @@ namespace GameOff.EditorTools
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(stock);
             log.Add($"{stock.name}: {entries.arraySize} entries with daily amounts");
+        }
+
+        /// <summary>
+        /// P70 price list (Martin, 06.11.): real goods with base market price, tags, daily amount and a fixed price change per day
+        /// (day 1 / 2 / 3). Creates missing items, sets daily changes only where none are set, adds stock entries that are missing.
+        /// Holly (kiosk) sells everyday goods, the dealer contraband; valuables have no vendor (confiscation/rewards later).
+        /// </summary>
+        private static void BuildPriceList(Data data, ItemTag contraband, ItemTag medicine, ItemTag gadget, ItemTag food, ItemTag power,
+            ItemTag drug, ItemTag valuable, List<string> log, ref int created)
+        {
+            var perishable = Tag("PERISHABLE", "9BE05A", ref created);
+            var tech = Tag("TECH", "5EC8FF", ref created);
+            var weapon = Tag("WEAPON", "444B55", ref created);
+            var alien = Tag("ALIEN", "C27BD6", ref created);
+            var luxury = Tag("LUXURY", "B9824A", ref created);
+            var kiosk = data.Stocks["Stock_Kiosk_Test"];
+            var dealer = data.Stocks["Stock_BlackMarket_Test"];
+
+            // Nova Cola is a small luxury, not family food: with FOOD a 2 CR can would cover the family's dinner.
+            if (RemoveTag(data.Items["cola"], food)) log.Add("Nova Cola: FOOD removed");
+            AddToList(data.Items["cola"], "tags", new Object[] { luxury });
+
+            int made = 0;
+            void Goods(string key, string file, string name, string text, int value, ItemTag[] tags, VendorStock stock, int amount, params float[] change)
+            {
+                if (!data.Items.TryGetValue(key, out var item)) data.Items[key] = item = Item(file, name, text, value, ref made, tags);
+                SetDailyChange(item, change);
+                if (stock != null) AddEntry(stock, item, amount, log);
+            }
+
+            Goods("protein", "ProteinBar", "Protein bar", "Tastes of nothing. Fills a stomach for a day.", 5, new[] { food }, kiosk, 4, 0f, 0f, 0.2f);
+            Goods("ration", "RationPack", "", "", 8, null, kiosk, 3, 0f, 0.1f, 0.25f);
+            Goods("stew", "CannedStew", "Canned stew", "Real meat, they say. A warm meal for the whole family.", 12, new[] { food }, kiosk, 2, 0f, 0f, 0.1f);
+            Goods("fruit", "FreshFruit", "Fresh fruit", "Grown on the station's hydro deck. Won't last long.", 14, new[] { food, perishable }, kiosk, 1, 0f, -0.1f, 0.3f);
+            Goods("battery", "BatteryPack", "Battery pack", "Enough charge for a heater and a lamp, one night.", 6, new[] { power }, kiosk, 3, 0f, 0.1f, 0f);
+            Goods("fusion", "FusionCell", "", "", 11, null, kiosk, 2, 0f, 0.15f, 0.2f);
+            Goods("syrup", "CoughSyrup", "Cough syrup", "Sweet, sticky and better than nothing.", 9, new[] { medicine }, kiosk, 2, 0f, 0f, 0.15f);
+            Goods("painkillers", "Painkillers", "", "", 15, null, kiosk, 2, 0f, 0.1f, 0.3f);
+            Goods("cola", "NovaCola", "", "", 2, null, kiosk, 5, 0f, 0f, 0f);
+            Goods("scanner", "DocumentScanner", "", "", 60, null, kiosk, 1, 0f, 0f, -0.1f);
+            Goods("spice", "ContrabandSpice", "", "", 12, null, dealer, 3, 0f, 0.2f, -0.1f);
+            Goods("stim", "StimInjector", "Stim injector", "Keeps you standing. Not legal anywhere decent.", 18, new[] { contraband, drug, medicine }, dealer, 2, 0f, 0f, 0.2f);
+            Goods("antibiotics", "Antibiotics", "Antibiotics", "Military stock. The clinic back home would kill for these.", 30, new[] { contraband, medicine }, dealer, 1, 0f, 0.1f, 0.4f);
+            Goods("chip", "DataChip", "Data chip", "Someone's records. Someone else wants them.", 25, new[] { contraband, tech }, dealer, 2, 0f, -0.1f, 0f);
+            Goods("pistol", "Pistol", "Pistol", "Small, old and loaded.", 60, new[] { contraband, weapon }, dealer, 1, 0f, 0f, 0.1f);
+            Goods("watch", "PocketWatch", "", "", 20, null, null, 0, 0f, 0f, 0f);
+            Goods("ring", "SilverRing", "Silver ring", "Engraved on the inside. The name is scratched out.", 35, new[] { valuable }, null, 0, 0f, 0.1f, 0f);
+            Goods("trinket", "AlienTrinket", "Alien trinket", "Warm to the touch. Nobody knows what it does.", 30, new[] { alien, valuable }, null, 0, 0f, 0f, 0.2f);
+            created += made;
+        }
+
+        private static void SetDailyChange(ItemData item, float[] change)
+        {
+            var so = new SerializedObject(item);
+            var p = so.FindProperty("dailyChange");
+            if (p.arraySize > 0 || change.Length == 0) return; // tuned by hand: leave it
+            p.arraySize = change.Length;
+            for (int i = 0; i < change.Length; i++) p.GetArrayElementAtIndex(i).floatValue = change[i];
+            so.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(item);
+        }
+
+        private static bool RemoveTag(ItemData item, ItemTag tag)
+        {
+            var so = new SerializedObject(item);
+            var p = so.FindProperty("tags");
+            for (int i = 0; i < p.arraySize; i++)
+            {
+                if (p.GetArrayElementAtIndex(i).objectReferenceValue != tag) continue;
+                p.DeleteArrayElementAtIndex(i);
+                so.ApplyModifiedPropertiesWithoutUndo();
+                EditorUtility.SetDirty(item);
+                return true;
+            }
+            return false;
         }
 
         /// <summary>Adds an item to a stock if it isn't sold there yet (existing assets too).</summary>

@@ -184,6 +184,43 @@ namespace GameOff.Tests
             Assert.AreEqual(0, HouseholdTuning.MoneyCost(null, 1.35f));
         }
 
+        // ---------- Market price (P70) ----------
+
+        [TearDown]
+        public void ResetMarketDay() => GameOff.Economy.Market.Day = 1;
+
+        private ItemData Changing(int value, params float[] change)
+        {
+            var item = ItemWith(null, value);
+            var so = new SerializedObject(item);
+            var p = so.FindProperty("dailyChange");
+            p.arraySize = change.Length;
+            for (int i = 0; i < change.Length; i++) p.GetArrayElementAtIndex(i).floatValue = change[i];
+            so.ApplyModifiedPropertiesWithoutUndo();
+            return item;
+        }
+
+        [Test]
+        public void MarketPrice_FollowsTheFixedChangeOfTheDay_AndVendorsAndBedStartFromIt()
+        {
+            var ration = Changing(8, 0f, 0.1f, 0.25f);
+            var kiosk = Make<VendorStock>();
+            var so = new SerializedObject(kiosk);
+            so.FindProperty("sellFactor").floatValue = 1f;
+            so.FindProperty("buyFactor").floatValue = 0.5f;
+            so.ApplyModifiedPropertiesWithoutUndo();
+
+            GameOff.Economy.Market.Day = 1;
+            Assert.AreEqual(8, kiosk.PriceFor(ration));
+            Assert.AreEqual(11, HouseholdTuning.MoneyCost(ration, 1.35f));
+            GameOff.Economy.Market.Day = 3;
+            Assert.AreEqual(10, kiosk.PriceFor(ration));
+            Assert.AreEqual(5, kiosk.OfferFor(ration));
+            Assert.AreEqual(14, HouseholdTuning.MoneyCost(ration, 1.35f), "8 × 1.25 × 1.35 = 13.5, rounded once at the end");
+            GameOff.Economy.Market.Day = 4;
+            Assert.AreEqual(8, kiosk.PriceFor(ration), "days without a value = no change");
+        }
+
         // ---------- Content ----------
 
         [Test]
@@ -195,8 +232,11 @@ namespace GameOff.Tests
                 Assert.Greater(t.members.Count, 0, $"{t.name}: no family");
                 Assert.AreEqual(4, t.letterLines.Length, $"{t.name}: one letter line per condition");
                 foreach (var m in t.members) Assert.IsFalse(string.IsNullOrWhiteSpace(m.name), $"{t.name}: nameless family member");
+                var kiosk = AssetDatabase.LoadAssetAtPath<VendorStock>("Assets/_Project/Data/Economy/Stock_Kiosk_Test.asset");
                 foreach (FamilyNeed need in System.Enum.GetValues(typeof(FamilyNeed)))
                 {
+                    if (kiosk != null)
+                        Assert.GreaterOrEqual(kiosk.Items.Count(i => i != null && i.HasTag(t.TagOf(need))), 2, $"kiosk: fewer than two goods for {need}");
                     Assert.IsNotNull(t.TagOf(need), $"{t.name}: {need} has no tag");
                     Assert.IsNotNull(t.PriceItemOf(need), $"{t.name}: {need} has no price item");
                     Assert.IsTrue(t.PriceItemOf(need).HasTag(t.TagOf(need)), $"{t.name}: the {need} price item doesn't carry the {need} tag");
@@ -206,6 +246,15 @@ namespace GameOff.Tests
             {
                 var stock = AssetDatabase.LoadAssetAtPath<VendorStock>(AssetDatabase.GUIDToAssetPath(guid));
                 foreach (var e in stock.Entries) Assert.GreaterOrEqual(e.dailyAmount, 1, $"{stock.name}: daily amount below 1");
+            }
+            var food = AssetDatabase.LoadAssetAtPath<ItemTag>("Assets/_Project/Data/Items/Tags/Tag_FOOD.asset");
+            foreach (var guid in AssetDatabase.FindAssets("t:ItemData"))
+            {
+                var item = AssetDatabase.LoadAssetAtPath<ItemData>(AssetDatabase.GUIDToAssetPath(guid));
+                int days = new SerializedObject(item).FindProperty("dailyChange").arraySize;
+                Assert.IsTrue(days == 0 || days == 3, $"{item.name}: daily change for {days} days (expected none or 3)");
+                Assert.IsFalse(string.IsNullOrWhiteSpace(item.Description), $"{item.name}: no description");
+                if (item.name == "Item_NovaCola") Assert.IsFalse(item.HasTag(food), "Nova Cola must not cover the family's food");
             }
         }
     }

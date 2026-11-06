@@ -15,6 +15,11 @@ MonoBehaviour:
   displayName: Painkillers
   description: Strong enough for a bad cough. Not much more.
   baseValue: 15
+  dailyChange:
+  - 0
+  - 0.1
+  - 0.3
   tags:
   - {fileID: 11400000, guid: 64529f16bdb07784f8a6dcc11678a666, type: 2}
+  unique: 0
   icon: {fileID: 0}
