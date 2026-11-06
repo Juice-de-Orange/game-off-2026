@@ -335,3 +335,13 @@ in `docs/ASSET-REQUESTS.md`.
   Die Passfotos sollen aus den vorhandenen `SK_NPC_*` gerendert werden, damit Foto und Figur zusammenpassen. Die drei `SFX_Door_*` sind seit dem 02.11. offen; bitte mitliefern oder hier melden, was fehlt. Die Auswahl nach Gehör macht das Team.
   Bitte jede fertige Lieferung wie in M016 melden.
 - antwort:
+
+### M018 — Neuer Auftrag P61: Soundeffekte
+- datum: 2026-11-06
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`, alle 18 Einträge mit `package: P61`
+- status: offen
+- meldung: Im Spiel gibt es noch keine einzige Sounddatei. Bitte freie Sounds heraussuchen (CC0 bevorzugt, sonst CC-BY mit Eintrag in `CREDITS.md`), nach OGG wandeln, mono. Zuerst die P1-Einträge am Schalter.
+  Raumklänge höchstens 30 s und nahtlos loopend, die Downloadgröße zählt. Die Auswahl nach Gehör macht das Team, also gern je Effekt ein bis zwei Alternativen unter `ArtSource/Audio/` mitliefern. Keine Musik, keine Stimmen.
+- antwort:

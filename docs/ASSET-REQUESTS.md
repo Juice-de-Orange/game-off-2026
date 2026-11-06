@@ -271,7 +271,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Window_Panorama.fbx
 package: P04
 scene: Halle
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-12
 size_m: [8.0, 0.4, 4.5]
@@ -383,7 +383,7 @@ feedback:
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Door_Big.fbx
 package: P04
 scene: Hangar
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-12
 size_m: [16.0, 1.0, 7.0]
@@ -4878,5 +4878,473 @@ animations: []
 collision: prefab
 refs: []
 placeholder: Synthetischer Testton AudioManager.PlayPreview(Voice) in Vendor.OnInteract.
+feedback: []
+```
+
+### SFX_Stamp_Approve.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Stamp_Approve.ogg
+package: P61
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Schwerer Gummistempel knallt auf Papier, trocken und befriedigend, ca. 0,3 s. Etwas heller als SFX_Stamp_Deny. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Stamp_Deny.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Stamp_Deny.ogg
+package: P61
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Derselbe Stempel, dumpfer und härter, ca. 0,3 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Paper_Slide.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Paper_Slide.ogg
+package: P61
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Papier wird über einen Metalltisch geschoben, kurz und leise, ca. 0,3 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Paper_Pickup.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup.ogg
+package: P61
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Blatt wird angehoben und zum Lesen hochgehalten, leises Rascheln, ca. 0,3 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Drawer_Open.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Drawer_Open.ogg
+package: P61
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Durchreiche-Schublade aus Metall fährt aus: Schieben auf Schienen mit Anschlag, ca. 0,6 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Drawer_Close.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Drawer_Close.ogg
+package: P61
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Dieselbe Schublade fährt zurück und rastet ein, ca. 0,6 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Printer_Citation.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Printer_Citation.ogg
+package: P61
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Alter Nadeldrucker spuckt einen Verwarnzettel aus: kurzes Rattern und Abreißen, ca. 1,2 s. Soll leicht unangenehm sein. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Button_Arrest.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Button_Arrest.ogg
+package: P61
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Großer Pilzknopf wird gedrückt, gefolgt von einem kurzen Alarm-Blip, ca. 0,6 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Cover_Flip.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Cover_Flip.ogg
+package: P61
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Metallene Schutzklappe klappt auf oder zu, ein trockenes Klacken, ca. 0,2 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Airlock_Fire.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Airlock_Fire.ogg
+package: P61
+scene: InspectionLock
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Schleuse wird ausgelöst: schweres Verriegeln, dann Druckabfall und Zischen, das in Stille abreißt, ca. 2,5 s. Der härteste Sound im Spiel. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Footstep_Metal_01.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Footstep_Metal_01.ogg
+package: P61
+scene: alle Räume
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Ein Schritt mit Arbeitsstiefel auf Metallboden, leise, ca. 0,2 s. Einzeln, ohne Hall. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Footstep_Metal_02.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Footstep_Metal_02.ogg
+package: P61
+scene: alle Räume
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Zweite Variante von SFX_Footstep_Metal_01, gleiche Lautstärke, ca. 0,2 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Footstep_Metal_03.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Footstep_Metal_03.ogg
+package: P61
+scene: alle Räume
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Dritte Variante von SFX_Footstep_Metal_01, gleiche Lautstärke, ca. 0,2 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_UI_Click.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_UI_Click.ogg
+package: P61
+scene: UI
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Kurzer, mechanischer Klick für Menü und Fenster, ca. 0,1 s. Passt zu alter Behördentechnik, kein moderner Pling. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Trade_Buy.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Trade_Buy.ogg
+package: P61
+scene: Kiosk, Bar
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Kauf abgeschlossen: Münzen oder Kassenklacken, ca. 0,4 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Amb_Station_Loop.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Amb_Station_Loop.ogg
+package: P61
+scene: Halle, Schalter, Motel
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Grundton der Station: tiefes Lüftungsbrummen mit seltenem Knacken im Metall. Nahtlos loopend, höchstens 30 s, weil die Downloadgröße zählt. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Amb_Bar_Loop.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Amb_Bar_Loop.ogg
+package: P61
+scene: Bar
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Raumklang der Bar: Stimmengemurmel ohne verständliche Wörter, gelegentlich Gläser. Nahtlos loopend, höchstens 30 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
+feedback: []
+```
+
+### SFX_Amb_Hangar_Loop.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Amb_Hangar_Loop.ogg
+package: P61
+scene: Hangar
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Raumklang des Hangars: große Halle, entfernte Maschinen, leises Summen des Kraftfelds. Nahtlos loopend, höchstens 30 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
 feedback: []
 ```

@@ -867,3 +867,15 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Einbau nach der Lieferung, jeweils Builder ändern: `StationGrayboxBuilder` (Wandmodule, Leuchten, Lampe; die Blöcke bleiben unsichtbar als Kollision; Rumpf-Material mit Kachel statt Farbe), `TravelerContentBuilder` (Foto je Art statt Silhouette), `Announcer` und `Vendor` (Ton statt Testton). Danach `Rebuild All`, Bake, `Check Occlusion Bake`, `GameOff/List Placeholders` muss leer sein.
 - Nicht enthalten, weil nicht bei der Pipeline bestellbar oder keine Grafik: gesprochene Durchsagen (Voicelines, ElevenLabs offen), Platzhalter-Briefe und -Texte (P15), Platzhalter-Ende (P12), Test-Sortimente der Händler (P11).
 - Abnahme: `GameOff/List Placeholders` meldet nichts mehr; Foto passt zur Figur in der Kammer; Tests grün.
+
+### P61 — Ton am Schalter und in der Station
+- Größe: M · Priorität: Soll · Status: bestellt, wartet auf Lieferung (max baut ein, Auswahl nach Gehör: Max und Martin)
+- Braucht: P18 · Folgt auf: P18
+- Ziel: Was der Spieler tut, ist zu hören, und die Station klingt nach einem Ort. Bisher liegt keine einzige Sounddatei im Projekt.
+- Bestellt (18 Einträge `package: P61` in `ASSET-REQUESTS.md`, bis 16.11.):
+  - Schalter (P1): `SFX_Stamp_Approve`, `SFX_Stamp_Deny`, `SFX_Paper_Slide`, `SFX_Drawer_Open`, `SFX_Drawer_Close`, `SFX_Printer_Citation`, `SFX_Button_Arrest`, `SFX_Cover_Flip`, `SFX_Airlock_Fire`
+  - Allgemein (P2): `SFX_Paper_Pickup`, `SFX_Footstep_Metal_01` bis `_03`, `SFX_UI_Click`, `SFX_Amb_Station_Loop`
+  - Räume und Handel (P3): `SFX_Amb_Bar_Loop`, `SFX_Amb_Hangar_Loop`, `SFX_Trade_Buy`
+- Einbau nach der Lieferung: Felder und Aufrufe in `DocumentDesk`, `CounterClickable`, `CounterStation`, `FirstPersonController`, UI und Handelsfenster; Raumklänge je Bereich. Alles über `AudioManager` und die Mixer-Gruppen aus P18.
+- Nicht enthalten: Musik (noch offen, Max), Stimmen.
+- Abnahme: Jede Aktion am Schalter ist zu hören, Lautstärkeregler wirken, keine Konsolenfehler, Download nach dem Einbau gemessen.
