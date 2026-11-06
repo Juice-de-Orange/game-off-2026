@@ -230,6 +230,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Größe: S · Priorität: Soll · Status: offen
 - Braucht: P10, P11, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Gegenstände aus dem Inventar per Frachtdrohne nach Hause schicken.
+- Offen (Max, 06.11., P58): Die Drohne hat keine Öffnungszeit, die Händler öffnen nur nach der Schicht. Beim Bau entscheiden.
 - Enthalten: Versand-UI im Hangar, Wirkung auf Familienbedarf, Risiko bei Schmuggelware
 - Abnahme: Ein Medikament schicken senkt den Medizinbedarf am Abend.
 
@@ -243,6 +244,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Größe: M · Priorität: Muss · Status: offen
 - Braucht: P07
 - Ziel: Alle Reisenden, Regeln, Briefe und Texte für 3 Tage (~15 Fälle, Englisch).
+- Regel (Max, 06.11., P58): Reisende mit gefälschtem Siegel erst an Tagen, an denen die UV-Lampe verfügbar ist; der Validator soll das prüfen.
 - Abnahme: Kompletter Durchlauf 10–15 Minuten ohne Platzhaltertexte.
 
 ### P16 — Gadget: Dokumentenscanner
@@ -788,10 +790,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - **Nicht geprüft:** echte Tasten und der Weg zum Stuhl, Geräte außer diesem PC, andere Browser als Chrome. Der Papierschutz an der Schublade lief nur als Code, der Fall wurde im Build nicht ausgelöst. Vereinzelte einzelne lange Frames (148–180 ms in 3 von etwa 10 Läufen ohne Bremse) bleiben ungeklärt: nie mit CPU ×4, an wechselnden Stellen.
 
 ### P58 — Entscheidungen aus dem Nachtlauf
-- Größe: S · Priorität: Soll · Status: offen, wartet auf Max und Martin
+- Größe: S · Priorität: Soll · Status: fertig bis auf Punkt 2, der liegt bei Martin (max, 06.11.)
 - Braucht: — · Folgt auf: P57
 - Ziel: Die im Nachtlauf gefundenen Fragen zu Spielregeln und Spielwerten sind entschieden. Was daraus zu bauen ist, wird ein eigenes Paket oder geht in das genannte.
 - Nicht enthalten: Änderungen an Spielregeln ohne Entscheidung. P57 hat hier bewusst nichts geändert.
+
+- Ergebnis (Max, 06.11.): 1 Vorrat, morgens aufgefüllt → P11. 2 Frage an Martin (`questions/2026-11-06_max-an-martin_schwarzmarkt-ankauf.md`). 3 Klappe schließt wieder → P59. 4 gefälschte Siegel erst ab der Lampe → P15. 5 mit P13 entscheiden. 6 so lassen, später auf echten schwachen Geräten prüfen. 7 akzeptiert. 8 gestrichen: kein Bug.
 
 **1. Händlervorrat (B04)**
 - Befund: Ware beim Händler sinkt beim Kauf nicht.
@@ -835,8 +839,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Optionen: (a) akzeptieren. (b) verschwindet mit Punkt 6 (a). (c) Hangar-Teile vom Ausblenden ausnehmen; Kosten: klein, aber etwas mehr Grundlast.
 - Empfehlung: (a), Max schaut es sich im Hangar an.
 
-**8. Dev-Sprung im Sitzen**
-- Befund: Nach „End Day“ im Sitzen bleibt man sitzen, und der nächste Reisende kommt erst nach Aufstehen und erneutem Hinsetzen.
-- Beleg: Im WebGL-Build gesehen. Betrifft nur das Dev-Werkzeug, der normale Ablauf führt über das Bett.
-- Optionen: (a) `DevEndDay` steht den Spieler vorher auf. (b) so lassen, der Reiter DEV fliegt vor der Abgabe ohnehin raus.
-- Empfehlung: (b).
+**8. Dev-Sprung im Sitzen: gestrichen**
+- Der Befund war falsch: `DevEndDay` ist im Spiel nur über den Bett-Dialog erreichbar, dort sitzt man nie. Ausgelöst hatte es nur das Testskript per `SendMessage`.
+
+### P59 — Schleusenklappe schließt nach dem Auslösen
+- Größe: XS · Priorität: Soll · Status: in Arbeit (max, 06.11.)
+- Braucht: — · Folgt auf: P58
+- Ziel: Die Schutzklappe schützt bei jedem Reisenden vor dem Fehlklick, nicht nur beim ersten.
+- Enthalten: Klappe geht nach dem Auslösen wieder zu. Beim Aufstehen schließt sie schon heute.
+- Abnahme: Im WebGL-Build braucht auch der zweite Reisende zwei Klicks.

@@ -194,6 +194,10 @@ werden erst begonnen, wenn P46 fertig ist** (steht so in `PAKETE.md`). Wer P08/P
   [ ] einverstanden [ ] P11 bleibt ein Paket [ ] anders: ____
 - Details stehen bei P11 in `PAKETE.md` („Hinweis vor Beginn“).
 
+**Nachtrag 06.11. (max) – zwei Punkte zusätzlich für den Call:**
+- **Termin fürs öffentliche Repo:** Die Referenzbilder (`docs/style/refs/ai_*`, `mw_*`) müssen vorher aus der Historie (einmaliger Force-Push, Martin klont danach neu). Beide müssen zu dem Termin alles gepusht haben.
+- **Aus P58 schon entschieden:** Händlervorrat begrenzt und morgens aufgefüllt (P11), gefälschte Siegel erst ab der UV-Lampe (P15). Die Geldlücke Kiosk und Schwarzmarkt entscheidet Martin (eigene Frage).
+
 **Beschluss:**
 
 ---

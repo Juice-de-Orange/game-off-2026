@@ -61,6 +61,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P09 Tagesablauf (wartet auf abfertigbare Reisende für die Abnahme) | — | 05.11. |
+| max | P52 Figuren einbauen, P59 Klappe | `Main.unity`, `Menu.unity`, `Boot.unity`, `PF_Station_Graybox`, `PF_Exterior`, `PF_CounterStation`, `PF_Traffic`, `PF_Doc_*`, `PF_DayFlow`, `PF_Economy`, `PF_PauseMenu`, `CounterClickable.cs` | 06.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -85,7 +86,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 |---|---|---|---|---|---|
 | B01 | Spieler fällt beim Laden von Main **sofort durch den Boden** der Station | Unity: Play neu gestartet, über das Menü ins Spiel (Start Shift). Tritt nicht jedes Mal auf: Claude konnte es am 05.11. nicht nachstellen (Menü → Main dreimal, Play aus dem Menü mit Messung pro Frame: Spieler steht stabil bei y = 0,03). Unklar, ob es beim Tageswechsel (Teleport ins Bett-Zimmer, P09) auch passieren kann. Ideen: Spawn genau auf Bodenhöhe (`PlayerSpawn` y = 0, Kapsel-Unterkante = Boden), erster Frame nach dem Laden mit großem `deltaTime`. Möglicher Schutz: etwas über dem Boden spawnen + Auffangen unter dem Boden (zurück zur letzten sicheren Position) | martin, 05.11. | max | abgesichert, **nicht bestätigt** (max, 06.11., P57): nie nachgestellt. Fallschritt gedeckelt, Spawn 5 cm über dem Boden, Rettung auf den letzten sicheren Boden. Tritt es nochmal auf, bitte melden |
 | B05 | **Verwarnzettel bleiben am nächsten Tag auf dem Tisch liegen** (nach einem Dev-Sprung auch die Papiere des letzten Reisenden) | Falsch entscheiden, dann neuer Tag | max, 05.11. (P41) | max | behoben (max, 06.11., P57): Tisch wird jeden Morgen geleert, im WebGL-Build bestätigt |
-| B04 | Ware beim Händler **sinkt beim Kauf nicht** (man kann z. B. beliebig viele Painkillers kaufen) | Händler öffnen, denselben Gegenstand mehrfach kaufen | martin, 05.11. | — | offen – Entscheidung in **P58** Punkt 1, Umsetzung in P11 |
+| B04 | Ware beim Händler **sinkt beim Kauf nicht** (man kann z. B. beliebig viele Painkillers kaufen) | Händler öffnen, denselben Gegenstand mehrfach kaufen | martin, 05.11. | — | offen – entschieden (Max, 06.11.): Vorrat, morgens aufgefüllt; Umsetzung in **P11** |
 | B03 | Nach dem Schließen von Fenstern (Brief, Handel, BACK) musste man erst klicken, bevor die Kamera sich dreht | WebGL, Fenster mit Klick schließen | martin, 05.11. | martin | behoben (martin, 05.11.): Maus wird beim Zurückgeben der Steuerung sofort gefangen |
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
@@ -142,7 +143,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 - [ ] max: Tools installieren/testen: Blender (FBX-Export nach `docs/ASSETS.md`), Texturtool, Audacity
 - [x] max: Deploy-Key mit Schreibrecht für die Asset-Pipeline eintragen (31.10., Titel `asset-pipeline`)
 - [ ] max: Ab 01.11. (Repo öffentlich): `main` per Ruleset schützen — nur max/martin pushen direkt, Pipeline nur per PR
-- [ ] **Repo öffentlich machen (Pflicht bis zur Abgabe). Max und Martin haben das geklärt (max, 05.11.); die Umsetzung steht noch aus.** Vorher die urheberrechtlich geschützten Referenzbilder (`docs/style/refs/ai_*`, `mw_*`)
+- [ ] **Repo öffentlich machen (Pflicht bis zur Abgabe). Max und Martin haben das geklärt (max, 05.11.); die Umsetzung steht noch aus, den Termin legen Max und Martin im Kern-Loop-Call fest (max, 06.11.).** Vorher die urheberrechtlich geschützten Referenzbilder (`docs/style/refs/ai_*`, `mw_*`)
   aus der Git-Historie entfernen (einmaliger Force-Push nach Absprache, Martin klont danach neu), Bilder lokal/privat weiter nutzen.
   Auf GitHub ist es am 05.11. noch privat, die Bilder liegen noch in der Historie. Pflicht: öffentlich bis 01.12.
 - [ ] beide, im Kern-Loop-Call: **Audio höher priorisieren** — Audio ist eine der 6 Bewertungskategorien (P18 + Atmo-Sounds als Muss?).
