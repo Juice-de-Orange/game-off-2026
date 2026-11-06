@@ -4508,7 +4508,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_WindowWall_6x3.fbx
 package: P60
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [6.0, 0.2, 3.0]
@@ -4535,7 +4535,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Lock_WindowWall_6x3.fbx
 package: P60
 scene: InspectionLock
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [6.0, 0.2, 3.0]
@@ -4562,7 +4562,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_WallEnd_1x6.fbx
 package: P60
 scene: Hall
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [1.0, 0.2, 6.0]
@@ -4589,7 +4589,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_LightStrip.fbx
 package: P60
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [1.4, 0.2, 0.06]
@@ -4617,7 +4617,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_LockLamp.fbx
 package: P60
 scene: Motel
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.12, 0.44, 0.08]
@@ -4645,7 +4645,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Exterior/T_Ext_HullFiller_A_Albedo.png
 package: P60
 scene: Exterior
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4672,7 +4672,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Exterior/T_Ext_HullFiller_B_Albedo.png
 package: P60
 scene: Exterior
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
