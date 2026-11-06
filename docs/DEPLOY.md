@@ -33,7 +33,7 @@ Unity muss dafür geschlossen sein:
 Unity.exe -batchmode -nographics -buildTarget WebGL -projectPath . -executeMethod GameOff.EditorTools.WebBuild.Build -customBuildPath <Ordner außerhalb des Repos> -quit -logFile -
 ```
 
-Danach Unitys eigene Änderungen zurücksetzen: `ShareTechMono SDF.asset`, `Orbitron SDF.asset`, `ProjectSettings.asset`, `Assets/Resources/`.
+Danach Unitys eigene Änderungen zurücksetzen: `ShareTechMono SDF.asset`, `Orbitron SDF.asset`, `ProjectSettings.asset`, `Assets/Resources/`, `LiberationSans SDF - Fallback.asset`.
 
 ## Von Hand einspielen
 1. Commit pushen und dafür lokal bauen (oben). Der Commit bestimmt die Version: `S=$(git rev-parse <commit>)`.
