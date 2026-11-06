@@ -16,6 +16,8 @@ namespace GameOff.Economy
         [SerializeField] private float buyFactor = 0.5f;
         [Tooltip("The vendor doesn't buy items with these tags.")]
         [SerializeField] private List<ItemTag> refusedTags = new List<ItemTag>();
+        [Tooltip("Empty = buys everything not refused. Otherwise only items with at least one of these tags (P64: black market).")]
+        [SerializeField] private List<ItemTag> onlyTags = new List<ItemTag>();
         [Tooltip("Open only after the shift (P09 evening). Off = always open.")]
         [SerializeField] private bool openAfterShiftOnly = true;
         [Tooltip("Shown when the stock is empty, e.g. \"Black market comes later.\"")]
@@ -34,7 +36,10 @@ namespace GameOff.Economy
             if (buyFactor <= 0f) return false;
             foreach (var tag in refusedTags)
                 if (item.HasTag(tag)) return false;
-            return true;
+            if (onlyTags.Count == 0) return true;
+            foreach (var tag in onlyTags)
+                if (item.HasTag(tag)) return true;
+            return false;
         }
     }
 }

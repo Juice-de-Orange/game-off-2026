@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: erledigt
 erstellt: 2026-11-05 14:23
 blockiert: nein
 ---

@@ -75,6 +75,15 @@ namespace GameOff.EditorTools
             EditorSceneManager.SaveScene(scene);
         }
 
+        /// <summary>Only the data (tags, items, stocks, trade rules) – touches no scene or prefab (P64).</summary>
+        [MenuItem("GameOff/Update Economy Data")]
+        public static void UpdateDataFromMenu()
+        {
+            var log = new List<string>();
+            EnsureData(log);
+            Debug.Log("[EconomyBuilder] data updated; " + string.Join("; ", log));
+        }
+
         public static string Build(Scene scene)
         {
             var log = new List<string>();
@@ -119,9 +128,52 @@ namespace GameOff.EditorTools
             data.Stocks["Stock_BlackMarket_Test"] = Stock("Stock_BlackMarket_Test", "UNDER THE COUNTER", 1.5f, 1.2f, "Nothing today.",
                 new[] { data.Items["spice"] }, new ItemTag[0], ref created);
 
+            // Shared label set (P64, agreed 06.11.): category labels are what rumours (P65) and wish lists refer to.
+            var confiscated = Tag("CONFISCATED", "E2463F", ref created);
+            var drug = Tag("DRUG", "B9824A", ref created);
+            Tag("TECH", "5EC8FF", ref created);
+            Tag("WEAPON", "444B55", ref created);
+            var valuable = Tag("VALUABLE", "FFD36B", ref created);
+            Tag("ALIEN", "C27BD6", ref created);
+            Tag("PERISHABLE", "9BE05A", ref created);
+            ApplyTradeRules(data, new[] { contraband, confiscated }, drug, valuable, log);
+
             AssetDatabase.SaveAssets();
             if (created > 0) log.Add($"{created} test assets created");
             return data;
+        }
+
+        /// <summary>
+        /// P64: contraband and confiscated goods are bought only under the counter, and the black market buys nothing else.
+        /// Runs on existing assets too (LoadOrCreate only creates missing ones); only adds, never removes what was tuned by hand.
+        /// </summary>
+        private static void ApplyTradeRules(Data data, ItemTag[] illegal, ItemTag drug, ItemTag valuable, List<string> log)
+        {
+            int changed = 0;
+            changed += AddToList(data.Stocks["Stock_Kiosk_Test"], "refusedTags", illegal);
+            changed += AddToList(data.Stocks["Stock_Bar_Test"], "refusedTags", illegal);
+            changed += AddToList(data.Stocks["Stock_BlackMarket_Test"], "onlyTags", illegal);
+            changed += AddToList(data.Items["spice"], "tags", new[] { drug });
+            changed += AddToList(data.Items["watch"], "tags", new[] { valuable });
+            if (changed > 0) log.Add($"trade rules: {changed} labels added");
+        }
+
+        private static int AddToList(Object target, string field, Object[] values)
+        {
+            var so = new SerializedObject(target);
+            var p = so.FindProperty(field);
+            int added = 0;
+            foreach (var v in values)
+            {
+                bool has = false;
+                for (int i = 0; i < p.arraySize; i++) has |= p.GetArrayElementAtIndex(i).objectReferenceValue == v;
+                if (has) continue;
+                p.arraySize++;
+                p.GetArrayElementAtIndex(p.arraySize - 1).objectReferenceValue = v;
+                added++;
+            }
+            if (added > 0) { so.ApplyModifiedPropertiesWithoutUndo(); EditorUtility.SetDirty(target); }
+            return added;
         }
 
         private static T LoadOrCreate<T>(string path, System.Action<T> init, ref int created) where T : ScriptableObject

@@ -1,7 +1,7 @@
 ---
 von: max
 an: martin
-status: offen
+status: beantwortet
 erstellt: 2026-11-06 07:50
 blockiert: nein
 ---
@@ -20,3 +20,6 @@ Der Nachtlauf (P57, P58 Punkt 2) hat gefunden: Der Kiosk verkauft zum Grundwert 
 Nichts wird geändert. Fest steht schon (Max, 06.11.): Der Händlervorrat wird begrenzt und morgens aufgefüllt, das gehört in P11.
 
 ## Antwort
+**A** (Martin, 06.11.): Ware mit dem Label `CONTRABAND` oder `CONFISCATED` kauft nur der Schwarzmarkt. Kiosk und alle anderen
+Händler lehnen beide Labels ab, der Schwarzmarkt kauft nur Ware mit mindestens einem der beiden. Gebaut wird das in **P64**
+(Martins Bereich, Economy). Das Label `CONFISCATED` gibt es noch nicht, es kommt mit P64.

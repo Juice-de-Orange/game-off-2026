@@ -48,6 +48,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - Bestellt: Holly, Barkeeper, Dealer (P52). Neue Ideen als Pakete: P50 Türschilder, P51 Zimmer 103, P53 Wohnmodul begehbar. Assets bestellen geht jetzt ohne Rückfrage (`docs/ASSETS.md`)
 - 71/71 EditMode-Tests grün, WebGL-Build 20 MB
 - **Als Nächstes:** Kern-Loop-Call (vor dem Checkpoint 09.11.), martin nimmt P09 ab, dann P08 → P10 → P15 → P12 (`PAKETE.md`)
+  - Nachtrag 06.11. (martin): Kern-Loop-Call hat stattgefunden. P19 itch-Upload ist auf später verschoben. P58 Punkt 2 entschieden → P64
 
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
@@ -60,7 +61,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| martin | P09 Tagesablauf (wartet auf abfertigbare Reisende für die Abnahme) | — | 05.11. |
+| max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -90,6 +91,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P64 Schwarzmarkt kauft nur Ware mit `CONTRABAND`/`CONFISCATED`, Kiosk und Bar lehnen sie ab; gemeinsame Label-Liste (11 Labels), Menü `GameOff → Update Economy Data`, 73 Tests (martin, 06.11.)
 - [x] Alle Texte in Orbitron (Menü, HUD, Fenster, Brief; TMP-Standard), [E]-Hinweis im Menüknopf-Stil (`GameOff → Apply HUD Style`); Schalter-HUD und Dokumente → Notiz an max (martin, 05.11.)
 - [x] Orbitron für Spieltitel und Menü-Überschriften (Credits + Lizenz), Unity-Splash abgeschaltet – Antwort von max umgesetzt (martin, 05.11.)
 - [x] P47 Menü-Hintergrund: Schiffsverkehr (Frachter, Tanker, Patrouille, Pendler) mit wiederverwendbarem `ShipTraffic` für P25 (martin, 05.11.)

@@ -22,5 +22,7 @@ MonoBehaviour:
   buyFactor: 0.5
   refusedTags:
   - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
+  - {fileID: 11400000, guid: 987504bd07ab3c14985cc1e8f37c39db, type: 2}
+  onlyTags: []
   openAfterShiftOnly: 1
   emptyText: Sold out.
