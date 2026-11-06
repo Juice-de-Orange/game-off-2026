@@ -123,10 +123,20 @@
   und senkt die Sonne von 16° auf 3° → das Licht durch die Fenster ändert sich jeden Tag (Theme "Shift"). Im Editor: Feld `previewDay`.
 - Shader: `GameOff/SkyPlanet` (Tag/Nacht nach `_GameOffSunDir`, Atmosphärenrand), `GameOff/SkyGlow` (Billboard im Vertex-Shader),
   `GameOff/PlanetRing`. Kein Nebel auf Himmelsobjekten.
-- **Außenwelt** (Hülle und Verbindungsteile geliefert, P42): Wohnmodule West/Ost (nur Außenmodell, begehbar erst mit P53), Träger, Solarflügel Nord/Süd, Antenne, Andockarm mit geparktem Schiff,
+- **Außenwelt** (Hülle und Verbindungsteile geliefert, P42): Wohnmodule West/Ost (West begehbar seit P53, siehe „Wohnmodul“; Ost nur Außenmodell), Träger, Solarflügel Nord/Süd, Antenne, Andockarm mit geparktem Schiff,
   Einfassung der Hangaröffnung, blinkende Positionslichter (`BlinkLight`). Sichtbar von Plattform, Bar und Hangar.
 - Nebeldichte auf 0,012 gesenkt, damit die Außenwelt durch die Fenster sichtbar bleibt.
 - Platzhalter-Texturen (prozedural) liegen an den finalen Pfaden unter `Art/Textures/Sky/` — die Pipeline ersetzt nur die Dateien.
+
+## Wohnmodul (P53)
+Plan und Teile: `docs/station/wohnmodul.md`. Gebaut von `StationHabBuilder` (Menü `GameOff/Build Hab Module into Main`, Teil von Rebuild All) aus der Tabelle `HabLayout`, Prefab `PF_Station_Hab`, nur in Main.
+- **Weg:** `Door_HabTube` (x −20, z 1) → Podest → Treppe bis y 7,42 (für den Spieler eine Rampe mit 31,7°) → Bogen nach Norden → Schott bei z 14 → Flur x −37,6..−35,4 bis z 38.
+- **Zimmer:** 201–212 rechts und links vom Flur, 201–208 und 212 verriegelt, 209–211 offen. Keine Bewohner, nur Grundausstattung.
+- **Kollision:** einfache Boxen wie in der Station, die Modelle haben keine.
+- **Navigation:** eigene Surface, `Link_MotelCorridor` verbindet sie durch die Tür mit der Station.
+- **Sonne:** `SunBlockers` sind Quader nur für den Schatten und werden nicht gecullt, sonst fällt Sonnenlicht durch die Hülle. Das Modul hat keine Fenster.
+- **Licht:** gebacken in der Lichtfarbe von Zimmer 103, je Zimmer eine Lampe, Lichtsonden über `ProbePositions`.
+- **Außen:** `Hab_West` nutzt `SM_Ext_HabModule_Entry`, die Röhre steht in `HabLayout.Outside` und kommt von `SkyExteriorBuilder`; sie teilt sich das Material `M_Ext_HabModule`.
 
 ## Abwechslung & Rundungen (Builder, vorbereitet 02.11.)
 - Der Builder setzt automatisch, sobald die Pipeline liefert (Aufträge M007): Wandvarianten pro Raumtyp (gepolstert in Motel/Schalter,

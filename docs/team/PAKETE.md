@@ -434,8 +434,9 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: Rohre, Kabel, Lüftungen, Verteilerkästen, Feuerlöscher, Müll, Pflanzen, Schilder/Poster/Schmutz-Decals, Putzroboter (fährt per
   Skript), Leuchtschilder, Ventilatoren, Uhr, Lautsprecher, Münzfernrohr und Bänke auf der Plattform, Gerüst und Kran im Hangar
 - Abnahme: Jeder Raum hat sichtbare Details; Draw Calls/Build-Größe im WebGL-Rahmen (Build < 40 MB).
-- Stand (max, 06.11.): Alle gelieferten `SM_Prop_*`, `SM_Motel_TV` und `SM_Motel_DoorSign` stehen im Spiel, 43 Stücke, im Builder unter `BuildDecor`. Halle, Schalter, Gänge, Bar, Diner, Kiosk, Hangar, Plattform und Motel; im Editor je Raum angesehen.
-  - Offen: Putzroboter und Ventilatoren bewegen sich nicht, Münzfernrohr ohne Funktion (P29), Poster und Schmutz-Decals gibt es noch nicht.
+- Stand (max, 06.11.): Alle gelieferten `SM_Prop_*`, `SM_Motel_TV` und `SM_Motel_DoorSign` stehen im Spiel, 42 Stücke, im Builder unter `BuildDecor`. Halle, Schalter, Gänge, Bar, Diner, Kiosk, Hangar, Plattform und Motel; im Editor je Raum angesehen.
+  - Offen: Putzroboter und Ventilatoren bewegen sich nicht und sind noch statisch gebaut (Flags, Lichtbake und Occlusion müssen dafür mit angefasst werden), Münzfernrohr ohne Funktion (P29), Poster und Schmutz-Decals gibt es noch nicht.
+  - Nachtrag aus der Code-Prüfung: Die Türschilder zeigten alle 101, jetzt je eigene Atlaszeile über `M_Motel_DoorSign_102/_103`. Feuerlöscher und Verteilerkasten im Hangar hingen vor dem Fenster, jetzt auf der Wand. Hinter Wand-Deko stehen keine Detail-Wandmodule mehr. Eimer, Kabel und Pflanze ragen nicht mehr in die Wand.
   - Download 17,7 statt 17,3 MB, Speicher 82 statt 80 MB (zusammen mit P51). Bildrate im Wechsel, CPU ×4, Median aus drei Paaren: Schalter 28,1 gegen 28,6 fps, Zimmer 48,3 gegen 44,3, Menü 23,5 gegen 20,2, Pinnwand 36,9 gegen 43,7, Stehen 32,0 gegen 38,9. Die letzten beiden liegen niedriger, die Einzelläufe überlappen aber (30–45 fps), ein echter Verlust ist nicht belegt und nicht ausgeschlossen.
   - `OcclusionCheck` findet 132 statt 133 begehbare Punkte: Ein Bodenobjekt steht auf einem Rasterpunkt, alle anderen Punkte sind weiter erreichbar. Der Weg zu Fuß ist damit im Editor geprüft, nicht mit echten Tasten.
 
@@ -768,7 +769,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Stand 05.11.: **Bei der Pipeline bestellt** (drei Einträge `SM_NPC_*` in `ASSET-REQUESTS.md`, `needed_by` 16.11.). Das Paket wartet auf die Lieferung, Einbau macht max.
 
 ### P53 — Wohnmodul begehbar: Zimmer für alle Figuren
-- Größe: L · Priorität: Soll · Status: in Arbeit (max, 06.11.); Entwurf und Teile sind geliefert (`docs/station/wohnmodul.md`)
+- Größe: L · Priorität: Soll · Status: fertig (max, 06.11.)
 - Braucht: Entwurf + Absprache max/martin (Umfang gegen Feature-Freeze 22.11.) · Folgt auf: P04, P27
 - Ziel: Das Motel hat genug Platz, und jede Figur kann ein eigenes Zimmer haben, was die Immersion trägt.
 - Enthalten: großer Blender-Auftrag an die Pipeline: Innenraum des Wohnmoduls (Gänge, Zimmer) und eine begehbare Verbindung von der Station dorthin; Einbau über die Builder inkl. NavMesh und Lichtbake
@@ -776,6 +777,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Der Spieler läuft ohne Ladezeit von der Station ins Wohnmodul, die Zimmer sind erreichbar, von außen stimmt das Modell mit innen überein, und der WebGL-Build bleibt flüssig.
 - Ausgangslage (05.11.): Die Motelzimmer 101–103 liegen im Hauptblock (x −20..−8, z 0..6, Höhe 3 m). Das Wohnmodul existiert nur als Außenmodell `SM_Ext_HabModule` (liegender Zylinder 12 × 12 × 30 m, zwei Stück: `Hab_West`, `Hab_East` in `SkyExteriorBuilder`) ohne Innenraum.
 - Im Entwurf zu klären: Welches Modul, wie viele Zimmer; ob das Innere den Außenzylinder ersetzt oder hineinpasst; wo die Verbindung ansetzt (Motelgang-Westende?) und wie sie von außen aussieht; bleibt Zimmer 103, wo es ist, oder zieht es um (Laufwege, Bett, `PF_DayFlow`, P51); was Größe und Lichtbake für den WebGL-Build bedeuten (heute 19 MB).
+- Ergebnis (max, 06.11.): Das Wohnmodul ist ohne Ladezeit begehbar: Tür am Westende des Motelgangs, Röhre mit Treppe, Schott, Flur, 12 Zimmer. Eigener Builder `StationHabBuilder`, eigenes Prefab `PF_Station_Hab`, nur in Main. 201–208 und 212 verriegelt, 209–211 offen. Außen `SM_Ext_HabModule_Entry` und die Röhre.
+  - Geprüft: Weg mit echten Tasten im Build von Zimmer 103 bis Flurende und in ein offenes Zimmer; 158 statt 132 begehbare Punkte im Flood-Fill, 0 Unterschiede im Occlusion-Bildvergleich (3.792 Ansichten); 90/90 Tests; keine neuen Konsolenfehler; Tageswechsel über `DevEndDay` und drei Runden Menü und zurück. Nicht geprüft: Mausführung und Gefühl auf der Treppe, andere Geräte, Abfertigung im Modul-Stand mit echten Tasten.
+  - NavMesh: eigene Surface plus `NavMeshLink` durch die Röhrentür. Offene Zimmer: Pfad vollständig, verriegelte: Pfad endet an der Tür. Beim Einbau fiel auf, dass `NavMeshRebake` nie etwas gespeichert hat (asynchron, zu spät für SaveScene und `-batchmode`), Main hatte also gar kein NavMesh. Jetzt synchron, 38 KB Station und 22 KB Modul in `Scenes/Main/`.
+  - Sonne: Die Innenwände hatten helle Flecken (Spalt am Bogen, Lücken kleiner als der Shadow-Bias). Dagegen helfen fünf große Quader `SunBlockers`, die nur Schatten werfen. Außen an der Röhre sieht man dadurch dunkle Bänder; von Main aus kaum zu sehen, im Menü gibt es die Blöcke nicht.
+  - Zahlen: Download 18,0 statt 17,7 MB, Speicher 81–84 statt 82 MB. Bildrate gegen den Stand davor mit CPU ×4, Median aus je drei Läufen im Wechsel: Menü 19,1 gegen 20,1 fps, Zimmer 41,7 gegen 43,8, Schalter 24,4 gegen 24,6, Pinnwand 29,3 gegen 31,0, Stehen 23,4 gegen 28,6. Die Streuung ist groß (Stehen je nach Satz 19–41 fps), zwei weitere Sätze zeigen keinen Verlust; ein kleiner Verlust beim Stehen ist nicht ausgeschlossen.
+  - Offen: am Flurende Nord bleiben links und rechts vom Bildschirm 10 cm Spalt zum Schott (2 m Wand im 2,2 m Flur, so im Bauplan). Die Hab-Teile `SM_Station_Hab_*` sind fertig; nicht verwendete Kit-Teile stehen im Handover.
 
 ### P54 — Orbitron am Schalter
 - Größe: S · Priorität: Soll · Status: fertig (max, 05.11.)

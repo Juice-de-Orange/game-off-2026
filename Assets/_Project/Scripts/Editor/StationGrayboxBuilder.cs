@@ -77,6 +77,7 @@ namespace GameOff.EditorTools
             new Opening(true,   4,  -9,   1.6f, 0, 2.2f),   // Outer airlock hatch (closed slab added separately)
             new Opening(false,-40,   0,  28.0f, 0, 12.0f),  // Hangar mouth to space (energy barrier, P23)
             new Opening(false,  6,   0,  10.0f, 0, 6.0f),   // Hall → observation deck (full height, deck built separately)
+            new Opening(true, -20,   1,   1.2f, 0, 2.2f),   // Motel corridor -> pressure tube of the hab module (P53)
             // Windows
             new Opening(false,  8,  14,   8.0f, 0.9f, 2.4f, true), // Bar window (north), matches SM_Station_Wall_Window_2x3
             new Opening(true,   0,  -9,   4.0f, 0.9f, 2.2f, true), // Counter -> lock
@@ -445,6 +446,7 @@ namespace GameOff.EditorTools
                 foreach (int side in new[] { -1, 1 })
                 {
                     if (DoorModuleSides.Contains(DoorSideKey(d.OnXLine, d.Line, d.Center, side))) continue;
+                    if (d.Name == "Door_HabTube" && side < 0) continue; // the tube's frame stands on that side
                     float across = d.Line + side * WallFace;
                     float yaw = d.OnXLine ? (side < 0 ? 90f : -90f) : (side < 0 ? 0f : 180f); // front (-Z) faces that side's room
                     PlaceKit(group, trim, d.OnXLine ? new Vector3(across, 0f, d.Center) : new Vector3(d.Center, 0f, across), yaw);
@@ -551,6 +553,13 @@ namespace GameOff.EditorTools
         private static GameObject Kit(string relativePath) => AssetDatabase.LoadAssetAtPath<GameObject>(KitRoot + relativePath);
 
         /// <summary>Kit models need lightmap UVs for the baked lighting. Sets the import flag once per model.</summary>
+        /// <summary>What Build sets up for the helpers it shares, for a builder that runs without it.</summary>
+        public static void PrepareForExtraBuild()
+        {
+            CreateMaterials();
+            PrepareKitImport();
+        }
+
         private static void PrepareKitImport()
         {
             foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { KitRoot.TrimEnd('/') }))
@@ -562,7 +571,7 @@ namespace GameOff.EditorTools
             }
         }
 
-        private static GameObject PlaceKit(GameObject parent, string relativePath, Vector3 position, float yaw)
+        public static GameObject PlaceKit(GameObject parent, string relativePath, Vector3 position, float yaw)
         {
             var model = Kit(relativePath);
             if (model == null) return null;
@@ -602,6 +611,7 @@ namespace GameOff.EditorTools
         // Must match door openings in the Openings table (docs/STATION.md).
         private static readonly DoorSpec[] Doors =
         {
+            new DoorSpec("Door_HabTube",        true,  -20,   1,   1.2f, GameOff.Station.DoorAccess.Public),
             new DoorSpec("Door_Room101",        false,   2, -10,   1.2f, GameOff.Station.DoorAccess.Locked),
             new DoorSpec("Door_Room102",        false,   2, -14,   1.2f, GameOff.Station.DoorAccess.Locked),
             new DoorSpec("Door_Room103",        false,   2, -18,   1.2f, GameOff.Station.DoorAccess.PlayerOnly),
@@ -620,85 +630,91 @@ namespace GameOff.EditorTools
             group.AddComponent<Unity.AI.Navigation.NavMeshModifier>().ignoreFromBuild = true; // doorways stay walkable in the bake
             var lampMat = EmissiveMaterial(new Color(0.89f, 0.27f, 0.25f));
 
-            foreach (var d in Doors)
+            foreach (var d in Doors) BuildDoor(group, d, 0f, lampMat);
+        }
+
+        /// <summary>A door of the hab module: it stands on another floor than the station's.</summary>
+        public static void BuildDoorAt(GameObject group, string name, bool onXLine, float line, float center, float width, GameOff.Station.DoorAccess access, float floorY) =>
+            BuildDoor(group, new DoorSpec(name, onXLine, line, center, width, access), floorY, EmissiveMaterial(new Color(0.89f, 0.27f, 0.25f)));
+
+        private static void BuildDoor(GameObject group, DoorSpec d, float floorY, Material lampMat)
+        {
+            var door = new GameObject(d.Name);
+            door.transform.SetParent(group.transform, false);
+            door.transform.SetPositionAndRotation(
+                d.OnXLine ? new Vector3(d.Line, floorY, d.Center) : new Vector3(d.Center, floorY, d.Line),
+                Quaternion.Euler(0f, d.OnXLine ? 90f : 0f, 0f));
+
+            // Sensing area on both sides of the door
+            var trigger = door.AddComponent<BoxCollider>();
+            trigger.isTrigger = true;
+            trigger.center = new Vector3(0f, 1.2f, 0f);
+            // Locked doors only react right in front of them, so walking down the 2 m motel corridor stays quiet.
+            trigger.size = new Vector3(d.Width + 0.8f, 2.4f, d.Access == GameOff.Station.DoorAccess.Locked ? 1.4f : 3.2f);
+
+            // Door leaf: delivered model or placeholder box, with its own solid collider
+            string kit = d.Width < 1.4f ? KitDoorNarrow : KitDoor;
+            Transform leaf;
+            if (Kit(kit) != null)
             {
-                var door = new GameObject(d.Name);
-                door.transform.SetParent(group.transform, false);
-                door.transform.SetPositionAndRotation(
-                    d.OnXLine ? new Vector3(d.Line, 0f, d.Center) : new Vector3(d.Center, 0f, d.Line),
-                    Quaternion.Euler(0f, d.OnXLine ? 90f : 0f, 0f));
-
-                // Sensing area on both sides of the door
-                var trigger = door.AddComponent<BoxCollider>();
-                trigger.isTrigger = true;
-                trigger.center = new Vector3(0f, 1.2f, 0f);
-                // Locked doors only react right in front of them, so walking down the 2 m motel corridor stays quiet.
-                trigger.size = new Vector3(d.Width + 0.8f, 2.4f, d.Access == GameOff.Station.DoorAccess.Locked ? 1.4f : 3.2f);
-
-                // Door leaf: delivered model or placeholder box, with its own solid collider
-                string kit = d.Width < 1.4f ? KitDoorNarrow : KitDoor;
-                Transform leaf;
-                if (Kit(kit) != null)
-                {
-                    var model = (GameObject)PrefabUtility.InstantiatePrefab(Kit(kit));
-                    model.transform.SetParent(door.transform, false);
-                    leaf = model.transform;
-                }
-                else
-                {
-                    leaf = Block(door, "Leaf_Placeholder", new Vector3(0f, 1.1f, 0f), new Vector3(d.Width, 2.2f, 0.12f), _hatch).transform;
-                    Object.DestroyImmediate(leaf.GetComponent<Collider>());
-                    leaf.localPosition = new Vector3(0f, 1.1f, 0f);
-                    GameObjectUtility.SetStaticEditorFlags(leaf.gameObject, 0); // moves at runtime: must not be static-batched
-                }
-                leaf.name = "Leaf";
-                var leafCollider = leaf.gameObject.AddComponent<BoxCollider>();
-                leafCollider.center = leaf.InverseTransformPoint(door.transform.TransformPoint(new Vector3(0f, 1.1f, 0f)));
-                leafCollider.size = new Vector3(d.Width, 2.2f, 0.14f);
-
-                GameObject lamp = null;
-                if (d.Access == GameOff.Station.DoorAccess.Locked)
-                {
-                    // Deeper than the 0.4 m wall so it shows on both wall faces.
-                    lamp = PlaceKit(door, KitLockLamp, Vector3.zero, 0f);
-                    if (lamp == null)
-                    {
-                        lamp = Block(door, "LockedLamp", Vector3.zero, new Vector3(0.12f, 0.08f, 2f * WallFace + 0.04f), lampMat);
-                        Object.DestroyImmediate(lamp.GetComponent<Collider>());
-                    }
-                    lamp.transform.localRotation = Quaternion.identity;
-                    lamp.transform.localPosition = new Vector3(d.Width * 0.5f + 0.15f, 1.6f, 0f);
-                }
-
-                // Travelers (NavMesh agents) must not route through staff or locked doors, nor through a closed scripted door
-                UnityEngine.AI.NavMeshObstacle obstacle = null;
-                if (d.Access != GameOff.Station.DoorAccess.Public)
-                {
-                    obstacle = door.AddComponent<UnityEngine.AI.NavMeshObstacle>();
-                    obstacle.shape = UnityEngine.AI.NavMeshObstacleShape.Box;
-                    obstacle.center = new Vector3(0f, 1.1f, 0f);
-                    obstacle.size = new Vector3(d.Width, 2.2f, 0.4f);
-                    obstacle.carving = true;
-                }
-
-                var audio = door.AddComponent<AudioSource>();
-                audio.playOnAwake = false;
-                audio.spatialBlend = 1f;
-                audio.maxDistance = 15f;
-
-                var sliding = door.AddComponent<GameOff.Station.SlidingDoor>();
-                var so = new SerializedObject(sliding);
-                so.FindProperty("access").enumValueIndex = (int)d.Access;
-                so.FindProperty("panel").objectReferenceValue = leaf;
-                so.FindProperty("slideDistance").floatValue = d.Width;
-                so.FindProperty("audioSource").objectReferenceValue = audio;
-                so.FindProperty("openClip").objectReferenceValue = DoorClip("Open");
-                so.FindProperty("closeClip").objectReferenceValue = DoorClip("Close");
-                so.FindProperty("lockedClip").objectReferenceValue = DoorClip("Locked");
-                so.FindProperty("lockedLamp").objectReferenceValue = lamp;
-                so.FindProperty("obstacle").objectReferenceValue = obstacle;
-                so.ApplyModifiedPropertiesWithoutUndo();
+                var model = (GameObject)PrefabUtility.InstantiatePrefab(Kit(kit));
+                model.transform.SetParent(door.transform, false);
+                leaf = model.transform;
             }
+            else
+            {
+                leaf = Block(door, "Leaf_Placeholder", new Vector3(0f, 1.1f, 0f), new Vector3(d.Width, 2.2f, 0.12f), _hatch).transform;
+                Object.DestroyImmediate(leaf.GetComponent<Collider>());
+                leaf.localPosition = new Vector3(0f, 1.1f, 0f);
+                GameObjectUtility.SetStaticEditorFlags(leaf.gameObject, 0); // moves at runtime: must not be static-batched
+            }
+            leaf.name = "Leaf";
+            var leafCollider = leaf.gameObject.AddComponent<BoxCollider>();
+            leafCollider.center = leaf.InverseTransformPoint(door.transform.TransformPoint(new Vector3(0f, 1.1f, 0f)));
+            leafCollider.size = new Vector3(d.Width, 2.2f, 0.14f);
+
+            GameObject lamp = null;
+            if (d.Access == GameOff.Station.DoorAccess.Locked)
+            {
+                // Deeper than the 0.4 m wall so it shows on both wall faces.
+                lamp = PlaceKit(door, KitLockLamp, Vector3.zero, 0f);
+                if (lamp == null)
+                {
+                    lamp = Block(door, "LockedLamp", Vector3.zero, new Vector3(0.12f, 0.08f, 2f * WallFace + 0.04f), lampMat);
+                    Object.DestroyImmediate(lamp.GetComponent<Collider>());
+                }
+                lamp.transform.localRotation = Quaternion.identity;
+                lamp.transform.localPosition = new Vector3(d.Width * 0.5f + 0.15f, 1.6f, 0f);
+            }
+
+            // Travelers (NavMesh agents) must not route through staff or locked doors, nor through a closed scripted door
+            UnityEngine.AI.NavMeshObstacle obstacle = null;
+            if (d.Access != GameOff.Station.DoorAccess.Public)
+            {
+                obstacle = door.AddComponent<UnityEngine.AI.NavMeshObstacle>();
+                obstacle.shape = UnityEngine.AI.NavMeshObstacleShape.Box;
+                obstacle.center = new Vector3(0f, 1.1f, 0f);
+                obstacle.size = new Vector3(d.Width, 2.2f, 0.4f);
+                obstacle.carving = true;
+            }
+
+            var audio = door.AddComponent<AudioSource>();
+            audio.playOnAwake = false;
+            audio.spatialBlend = 1f;
+            audio.maxDistance = 15f;
+
+            var sliding = door.AddComponent<GameOff.Station.SlidingDoor>();
+            var so = new SerializedObject(sliding);
+            so.FindProperty("access").enumValueIndex = (int)d.Access;
+            so.FindProperty("panel").objectReferenceValue = leaf;
+            so.FindProperty("slideDistance").floatValue = d.Width;
+            so.FindProperty("audioSource").objectReferenceValue = audio;
+            so.FindProperty("openClip").objectReferenceValue = DoorClip("Open");
+            so.FindProperty("closeClip").objectReferenceValue = DoorClip("Close");
+            so.FindProperty("lockedClip").objectReferenceValue = DoorClip("Locked");
+            so.FindProperty("lockedLamp").objectReferenceValue = lamp;
+            so.FindProperty("obstacle").objectReferenceValue = obstacle;
+            so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         // --- Outer hull (P39): plates over every face of the station that is seen from outside ---
@@ -1422,8 +1438,13 @@ namespace GameOff.EditorTools
             (true, -8, 4.5f, 1f),                                                                 // vending machine
             (true, 12, -5f, 1f), (true, 12, -3f, 1f),                                             // kiosk shelf
             (true, -20, 3.9f, 0.3f), (true, -20, 5.5f, 0.3f), (false, 6, -17f, 0.4f),             // room 103: bed, table
-            (false, 6, -18.42f, 1.3f), (false, 2, -16.5f, 1f),                                    // room 103: painting, locker
+            (false, 6, -18.42f, 1.5f), (false, 6, -17.645f, 1.5f), (false, 2, -16.5f, 1f),         // room 103: paintings, locker
             (false, 0, -9f, 0.6f),                                                                // motel reception
+            // Decor (BuildDecor), long pieces at both ends
+            (false, -6, -3f, 3.2f), (false, -6, 4.5f, 4.6f), (false, -12, -1f, 2.2f), (true, -6, -7.2f, 0.8f), (false, -6, -5.2f, 2.3f),
+            (true, -8, -10f, 2.3f), (true, -8, -8f, 2.3f), (true, -8, -7.5f, 1.1f), (true, -6, -11.7f, 2.5f), (true, -6, -9.7f, 2.5f), (true, -6, -7.4f, 2.8f),
+            (false, 0, -15.5f, 2.5f), (false, 0, -13.5f, 2.5f), (false, 0, -11.6f, 2.3f), (false, 0, -17f, 1.1f), (false, 0, -12.6f, 0.8f), (false, 0, -18.6f, 2.4f), (false, 2, -12f, 2.8f),
+            (true, 8, 3f, 2.55f), (true, -8, -3f, 2.55f), (true, 8, -2.1f, 1.7f), (true, 18, -25f, 3.2f), (true, 18, -23f, 3.2f), (false, -12, -0.4f, 1.1f), (false, -12, 0.5f, 0.8f),
         };
 
         private static bool HasWallProp(bool onXLine, float line, float cell, float cellEnd, float bottom, float top)
@@ -1544,6 +1565,13 @@ namespace GameOff.EditorTools
             if (room.Name == "Hangar") return 6f;
             if (room.Height > 5) return 3f;
             return room.Area == Area.Bar || room.Area == Area.Diner ? 1.8f : 1.5f;
+        }
+
+        /// <summary>A baked lamp in the motel's light, for the hab module.</summary>
+        public static void MotelLight(GameObject parent, string name, Vector3 pos, float range)
+        {
+            var room = System.Array.Find(Rooms, r => r.Name == "MotelRoom103");
+            BakedLight(parent, name, pos, RoomLightColor(room, 0), range, RoomLightIntensity(room));
         }
 
         private static void BakedLight(GameObject parent, string name, Vector3 pos, Color color, float range, float intensity)
@@ -1722,9 +1750,9 @@ namespace GameOff.EditorTools
             // Service corridor (x -8..-6): doors north and south at x -7, east at z -9
             WallDecor(p, KitPipe, "Pipes_Service", true, -8, 1, -9f, 2.3f);
             WallDecor(p, KitJunction, "Junction_Service", true, -8, 1, -7.5f, 1.1f);
-            WallDecor(p, KitCable, "Cables_Service", true, -6, -1, -10.9f, 2.5f);
+            WallDecor(p, KitCable, "Cables_Service", true, -6, -1, -10.7f, 2.5f);
             WallDecor(p, KitSpeaker, "Speaker_Service", true, -6, -1, -7.4f, 2.8f);
-            FloorDecor(p, KitBucket, "Bucket_Service", -7.7f, -10.6f, 0.5f, 0.4f, 1.2f, 0f, 90f);
+            FloorDecor(p, KitBucket, "Bucket_Service", -7.55f, -10.6f, 0.5f, 0.4f, 1.2f, 0f, 90f);
 
             // Motel corridor (z 0..2): doors north at x -10, -14, -18, the west end stays free for the hab door
             WallDecor(p, KitCable, "Cables_Motel", false, 0, 1, -14.5f, 2.5f);
@@ -1733,12 +1761,17 @@ namespace GameOff.EditorTools
             WallDecor(p, KitExtinguisher, "Extinguisher_Motel", false, 0, 1, -12.6f, 0.8f);
             WallDecor(p, KitVent, "Vent_Motel", false, 0, 1, -18.6f, 2.4f);
             WallDecor(p, KitSpeaker, "Speaker_Motel", false, 2, -1, -12f, 2.8f);
-            foreach (float x in new[] { -10f, -14f, -18f })
-                WallDecor(p, KitDoorSign, $"DoorSign_{x:0}", false, 2, -1, x, 2.42f);
+            for (int i = 0; i < 3; i++)
+            {
+                float x = -10f - 4f * i;
+                var sign = WallDecor(p, KitDoorSign, $"DoorSign_10{i + 1}", false, 2, -1, x, 2.42f);
+                var material = DoorSignMaterial(i);
+                if (sign != null && material != null) sign.GetComponentInChildren<Renderer>().sharedMaterial = material;
+            }
 
             // Room 103
             PlaceDecor(p, KitTv, "TV_Room103", new Vector3(-17f, 0.75f, 5.55f), 0f);
-            FloorDecor(p, KitPlant, "Plant_Room103", -16.4f, 3.4f, 0.5f, 0.5f, 1f);
+            FloorDecor(p, KitPlant, "Plant_Room103", -16.5f, 3.4f, 0.5f, 0.5f, 1f);
 
             // Bar and diner: fans between the ceiling strips
             PlaceDecor(p, KitFan, "Fan_Bar", new Vector3(10.5f, 4f, 4f), 0f);
@@ -1756,8 +1789,8 @@ namespace GameOff.EditorTools
             PlaceDecor(p, KitTrashPile, "Trash_Hangar_A", new Vector3(9f, 0f, -14.2f), 20f);
             PlaceDecor(p, KitTrashPile, "Trash_Hangar_B", new Vector3(-9f, 0f, -37.5f), -40f);
             WallDecor(p, KitPipe, "Pipes_Hangar", true, 18, -1, -24f, 3.2f);
-            WallDecor(p, KitJunction, "Junction_Hangar", false, -12, -1, -4f, 1.1f);
-            WallDecor(p, KitExtinguisher, "Extinguisher_Hangar", false, -12, -1, -5.2f, 0.8f);
+            WallDecor(p, KitJunction, "Junction_Hangar", false, -12, -1, -0.4f, 1.1f);
+            WallDecor(p, KitExtinguisher, "Extinguisher_Hangar", false, -12, -1, 0.5f, 0.8f);
 
             // Observation deck (floor y -0.36, half circle z 6..11)
             FloorDecor(p, KitDeckBench, "Bench_Deck_W", -2.2f, 7.6f, 2.4f, 0.6f, 0.5f, -DeckDrop, 180f);
@@ -1770,19 +1803,33 @@ namespace GameOff.EditorTools
             KitProp(parent, kitPath, name, x, z, w, d, h, y, yaw);
 
         /// <summary>A piece without collider at an exact pose; missing models are skipped, decor has no placeholder.</summary>
-        private static void PlaceDecor(GameObject parent, string kitPath, string name, Vector3 position, float yaw)
+        private static GameObject PlaceDecor(GameObject parent, string kitPath, string name, Vector3 position, float yaw)
         {
             var go = PlaceKit(parent, kitPath, position, yaw);
             if (go != null) go.name = name;
+            return go;
+        }
+
+        /// <summary>The door sign's atlas has one row per room, and the model shows the first: 101 keeps its material, the others shift it.</summary>
+        private static Material DoorSignMaterial(int row)
+        {
+            const string source = "Assets/_Project/Art/Materials/Motel/M_Motel_DoorSign.mat";
+            if (row == 0 || AssetDatabase.LoadAssetAtPath<Material>(source) == null) return null;
+            string path = $"Assets/_Project/Art/Materials/Motel/M_Motel_DoorSign_10{row + 1}.mat";
+            if (AssetDatabase.LoadAssetAtPath<Material>(path) == null) AssetDatabase.CopyAsset(source, path);
+            var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+            material.SetTextureOffset("_BaseMap", new Vector2(0f, -0.25f * row)); // 16 of 64 pixels; URP's Lit uses it for the emission too
+            EditorUtility.SetDirty(material);
+            return material;
         }
 
         /// <summary>A piece on a wall face without collider: its back touches the wall, y is the height of its pivot.</summary>
-        private static void WallDecor(GameObject parent, string kitPath, string name, bool onXLine, float line, int side, float along, float y)
+        private static GameObject WallDecor(GameObject parent, string kitPath, string name, bool onXLine, float line, int side, float along, float y)
         {
             var (zMin, zMax) = KitZRange(kitPath);
             float across = line + side * (WallFace + (zMax > zMin ? zMax : 0.05f) + 0.005f);
             float yaw = onXLine ? (side < 0 ? 90f : -90f) : (side < 0 ? 0f : 180f);
-            PlaceDecor(parent, kitPath, name, onXLine ? new Vector3(across, y, along) : new Vector3(along, y, across), yaw);
+            return PlaceDecor(parent, kitPath, name, onXLine ? new Vector3(across, y, along) : new Vector3(along, y, across), yaw);
         }
 
         private static void BuildMarkers(GameObject parent)
@@ -1804,7 +1851,7 @@ namespace GameOff.EditorTools
         /// Places the delivered model if it exists (with a box collider around it), otherwise the graybox block.
         /// w/d/h describe the graybox block in world axes; yaw only applies to the model (module front = local -Z).
         /// </summary>
-        private static void KitProp(GameObject parent, string kitPath, string name, float x, float z, float w, float d, float h,
+        public static void KitProp(GameObject parent, string kitPath, string name, float x, float z, float w, float d, float h,
             float y = 0, float yaw = 0)
         {
             var model = Kit(kitPath);

@@ -21,6 +21,7 @@ namespace GameOff.EditorTools
         private const string SkyTextureFolder = TextureRoot + "/Sky"; // configured by SkyExteriorBuilder
         private const string TemplateMaterialPath = MaterialRoot + "/Diner/M_Diner_Counter.mat";
         private const string GlassMaterialPath = MaterialRoot + "/Station/M_Station_Glass.mat";
+        public const string HabMaterialPath = MaterialRoot + "/Exterior/M_Ext_HabModule.mat";
         private static readonly Color EmissionColor = new Color(1.5f, 1.5f, 1.5f, 1.5f);
         private static readonly HashSet<string> LoopingTakes = new HashSet<string> { "Idle", "Walk", "Talk" };
 
@@ -86,6 +87,8 @@ namespace GameOff.EditorTools
             return index;
         }
 
+        private static bool SharesHabMaterial(string file) => file == "SM_Ext_HabModule_Entry" || file.StartsWith("SM_Ext_HabTube_");
+
         private static void IntegrateModel(string path, Dictionary<string, Texture2D> textures, List<string> report)
         {
             if (!(AssetImporter.GetAtPath(path) is ModelImporter importer)) return;
@@ -98,6 +101,13 @@ namespace GameOff.EditorTools
                 .Where(kv => kv.Key.type == typeof(Material) && kv.Value != null)
                 .Select(kv => kv.Key.name));
             var slots = SlotNames(path);
+            // These use the atlas of the module they belong to instead of their own textures.
+            Material shared = SharesHabMaterial(file) ? AssetDatabase.LoadAssetAtPath<Material>(HabMaterialPath) : null;
+            if (SharesHabMaterial(file) && shared == null)
+            {
+                report.Add($"WARNING  {file}: {HabMaterialPath} doesn't exist yet, it comes with SM_Ext_HabModule. Run this again.");
+                return;
+            }
             // Some textures leave out the size in the model's name: SM_Hall_WallEnd_1x6 uses T_Hall_WallEnd_Albedo.
             string unsized = System.Text.RegularExpressions.Regex.Replace(name, @"_\d+x\d+$", "");
             string textureName = textures.ContainsKey("T_" + name + "_Albedo") ? name : unsized; // albedo and emission always as a pair
@@ -122,7 +132,7 @@ namespace GameOff.EditorTools
                     }
                     continue;
                 }
-                if (slot != "Glass" && albedo == null)
+                if (slot != "Glass" && albedo == null && shared == null)
                 {
                     // Leave the slot unmapped so a later run picks it up once the texture has arrived.
                     report.Add($"WARNING  {file}.{slot}: no texture T_{textureName}_Albedo yet, slot left unmapped");
@@ -130,7 +140,7 @@ namespace GameOff.EditorTools
                 }
                 var mat = slot == "Glass"
                     ? AssetDatabase.LoadAssetAtPath<Material>(GlassMaterialPath)
-                    : GetOrCreateMaterial($"{MaterialRoot}/{area}/M_{name}{(slot == mainSlot ? "" : "_" + slot)}.mat", albedo, emission, report);
+                    : shared != null ? shared : GetOrCreateMaterial($"{MaterialRoot}/{area}/M_{name}{(slot == mainSlot ? "" : "_" + slot)}.mat", albedo, emission, report);
                 if (mat == null) { report.Add($"ERROR    {file}: no material for slot {slot}"); continue; }
                 importer.AddRemap(new AssetImporter.SourceAssetIdentifier(typeof(Material), slot), mat);
                 report.Add($"remap    {file}.{slot} -> {mat.name}");

@@ -195,7 +195,10 @@ namespace GameOff.EditorTools
                 () => BoxGo(hull, new Vector3(6f, 3f, 6f)));
             float habWestX = HabWestX, habEastX = HabEastX;
             // Habs lie north-south (axis along Z); the roll turns the KESTREL lettering toward the deck/bar windows.
-            ExtProp(root, "Exterior/SM_Ext_HabModule.fbx", "Hab_West", new Vector3(habWestX, y, NorthZ), HabRotation(HabRollWest),
+            // The west hab is walkable (P53): its south cap has the opening for the pressure tube from the motel corridor.
+            foreach (var piece in HabLayout.Outside)
+                ExtProp(root, piece.Kit, System.IO.Path.GetFileNameWithoutExtension(piece.Kit), new Vector3(piece.X, piece.Y, piece.Z), Quaternion.Euler(0f, piece.Yaw, 0f), () => null);
+            ExtProp(root, "Exterior/SM_Ext_HabModule_Entry.fbx", "Hab_West", new Vector3(habWestX, y, NorthZ), HabRotation(HabRollWest),
                 () => HabPlaceholder(hull, windows, HabRadius, 30f));
             ExtProp(root, "Exterior/SM_Ext_HabModule.fbx", "Hab_East", new Vector3(habEastX, y, NorthZ), HabRotation(HabRollEast),
                 () => HabPlaceholder(hull, windows, HabRadius, 30f));

@@ -160,6 +160,7 @@ namespace GameOff.EditorTools
                     positions.Add(new Vector3(x, y, z));
                 }
             }
+            if (GameObject.Find("Hab_Interior") != null) positions.AddRange(StationHabBuilder.ProbePositions());
             group.probePositions = positions.ToArray();
             Debug.Log($"[Lighting] {positions.Count} light probes placed.");
         }
@@ -168,8 +169,16 @@ namespace GameOff.EditorTools
         {
             // Inactive surfaces still own their NavMesh asset, so they count for the cleanup (but are not baked).
             DeleteOrphanedNavMeshAssets(Object.FindObjectsByType<Unity.AI.Navigation.NavMeshSurface>(FindObjectsInactive.Include, FindObjectsSortMode.None));
+            // Not the package's StartBakingSurfaces: it finishes after this returns, too late for saving the scene or for -batchmode.
+            string scenePath = EditorSceneManager.GetActiveScene().path;
+            string folder = scenePath.Substring(0, scenePath.Length - ".unity".Length);
             foreach (var surface in Object.FindObjectsByType<Unity.AI.Navigation.NavMeshSurface>(FindObjectsSortMode.None))
-                Unity.AI.Navigation.Editor.NavMeshAssetManager.instance.StartBakingSurfaces(new Object[] { surface });
+            {
+                surface.BuildNavMesh();
+                AssetDatabase.CreateAsset(surface.navMeshData, $"{folder}/NavMesh-{surface.name}.asset");
+                PrefabUtility.RecordPrefabInstancePropertyModifications(surface);
+                EditorUtility.SetDirty(surface);
+            }
         }
 
         /// <summary>

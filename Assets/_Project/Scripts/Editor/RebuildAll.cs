@@ -24,6 +24,7 @@ namespace GameOff.EditorTools
             Debug.Log(DeliveryIntegrator.Run());
             var scene = EditorSceneManager.OpenScene(MainScene, OpenSceneMode.Single);
             StationGrayboxBuilder.Build();
+            StationHabBuilder.Build();
             SkyExteriorBuilder.Build();
             EditorSceneManager.SaveScene(scene);
             Debug.Log(DocumentPrefabBuilder.Build());

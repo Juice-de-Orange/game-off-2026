@@ -62,7 +62,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): wartet auf das P08-Gespräch mit max | — | 06.11. |
-| max | P53 Wohnmodul | `Main.unity`, `Menu.unity`, `Boot.unity`, `PF_Station_Graybox`, `PF_Exterior`, `PF_CounterStation`, `PF_Traffic`, `PF_Doc_*`, `PF_DayFlow`, `PF_Economy`, `PF_PauseMenu`, `PF_AudioManager`, `PF_Ambience`, `StationGrayboxBuilder.cs`, `SkyExteriorBuilder.cs`, `DeliveryIntegrator.cs`, `RebuildAll.cs` | 06.11. |
 | max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
 
 ## Backlog
@@ -94,6 +93,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P53 Wohnmodul begehbar, NavMesh jetzt wirklich gebacken, P26 Deko und P51 Hundebild nachgebessert (max, 06.11.)
 - [x] P61 Ton am Schalter und in der Station gebaut, Abnahme nach Gehör steht aus (`Data/Audio/SoundSet.asset`) (max, 06.11.)
 - [x] P60 Letzte Platzhalter abgelöst: Wände, Leuchten, Türlampen, Rumpfhaut, Passfotos (max, 06.11.)
 - [x] P59 Schleusenklappe schließt nach dem Auslösen (max, 06.11.)
