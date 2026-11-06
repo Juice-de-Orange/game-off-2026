@@ -3814,6 +3814,35 @@ placeholder: none (direkt geliefert)
 feedback: []
 ```
 
+### SM_Motel_DogPainting.fbx
+```yaml
+path: Assets/_Project/Art/Models/Motel/SM_Motel_DogPainting.fbx
+package: P51
+scene: Motel
+status: final
+priority: P3
+needed_by: 2026-11-06
+size_m: [0.63, 0.045, 0.53]
+pivot: center
+tris_max: 100
+materials: [Painting]
+textures:
+  - Assets/_Project/Art/Textures/Motel/T_Motel_DogPainting_Albedo.png   # 128x128, Point
+texel_px_per_m: 160
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max bestellt 06.11.: gerahmtes Gemälde von Max' Hund Elo (schlafend, gestromt, vor
+  Teal-Grund), gleicher dunkler Fake-Holzrahmen mit Messinglippe wie das Katzenbild. Platzierung: Zimmer 103, neben dem
+  Katzenbild, gleiche Bildmitte, 20 cm Abstand.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
 ### SM_Ext_HullPanel_4x4.fbx
 ```yaml
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_HullPanel_4x4.fbx

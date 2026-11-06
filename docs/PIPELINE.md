@@ -353,4 +353,23 @@ in `docs/ASSET-REQUESTS.md`.
 - betrifft: `ASSET-REQUESTS.md`: `SM_Item_DocScanner` (P16), `SM_Item_UVLamp` (P62), `SM_Item_ClownShoes` und `SFX_ClownShoe_Squeak_01` bis `_03` (P63)
 - status: offen
 - meldung: Sechs neue Einträge. Zuerst der Scanner (P1), dann die Lampe (P2), die Schuhe zuletzt (P3). Die Türgeräusche aus `assets/P27-door-sfx` hat Max angehört und freigegeben: synthetisch erzeugte Sounds sind also in Ordnung, wenn sie gut klingen, auch für P60 und P61.
+
+### M020 — Hundebild für Zimmer 103 (SM_Motel_DogPainting, aus P51)
+- datum: 2026-11-06
+- von: pipeline
+- an: team
+- betrifft: SM_Motel_DogPainting (neu, Eintrag in `ASSET-REQUESTS.md`, Paket P51)
+- status: offen
+- meldung: Von Max am 06.11. bestellt: ein gerahmtes Gemälde seines Hundes Elo als Gegenstück zum Katzenbild (Branch
+  `assets/P51-dog-painting`). Aus P51 ist nur das Bild geliefert, Bullauge und Katzenbild-Höhe bleiben bei euch.
+  - **Modell:** `SM_Motel_DogPainting`, 0,63 x 0,045 x 0,53 m (Leinwand 0,50 x 0,40 m), 34 Tris, 1 Slot `Painting`.
+    Pivot `center` wie beim Katzenbild (an die Wand mit 0,0225 m Abstand setzen). Die Rückseite ist offen, also nur an
+    eine Wand hängen.
+  - **Textur:** `T_Motel_DogPainting_Albedo.png`, 128 x 128, nur Palettenfarben, keine Emission. Import Point, keine
+    Mipmaps. Die Leinwand hat 160 px/m wie die Katze.
+  - **Look:** derselbe Rahmen wie beim Katzenbild, aber quer: Elo schläft auf der Seite, im Querformat bleibt der Kopf
+    groß genug. Gestromtes Fell vor Teal-Grund, der kühle Gegenpol zum Orange der Katze.
+  - **Platzierung (Vorschlag):** neben dem Katzenbild, gleiche Bildmitte, 20 cm Abstand, auf der Seite, wo der Rahmen nicht
+    über die Wandfuge läuft (`docs/asset-previews/lineup_P51-motel-dog-painting.png`). Wenn das Katzenbild höher rückt
+    (P51), bitte das Hundebild mitziehen.
 - antwort:
