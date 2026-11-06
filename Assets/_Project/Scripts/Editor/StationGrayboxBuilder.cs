@@ -203,6 +203,7 @@ namespace GameOff.EditorTools
             BuildHull(root);
 
             BuildProps(props);
+            BuildDecor(Child(props, "Decor"));
             BuildMarkers(markers);
 
             // Walkable surface for travelers (P14) and reachability checks. Roofs and glass are not walkable.
@@ -1665,7 +1666,9 @@ namespace GameOff.EditorTools
             KitProp(p, "Motel/SM_Motel_Table.fbx", "SM_Motel_Table", -17, 5.5f, 0.8f, 0.6f, 0.75f);
             KitProp(p, "Motel/SM_Motel_Locker.fbx", "SM_Motel_Locker", -16.5f, 2.45f, 0.6f, 0.5f, 1.9f, 0, 180f);
             // Room 103: cat painting on the north wall (position chosen by Max), pivot center
-            WallProp(p, "Motel/SM_Motel_CatPainting.fbx", "SM_Motel_CatPainting", false, 6, -1, -18.42f, 1.3f, 0.53f, 0.63f);
+            WallProp(p, "Motel/SM_Motel_CatPainting.fbx", "SM_Motel_CatPainting", false, 6, -1, -18.42f, 1.5f, 0.53f, 0.63f);
+            // Elo, Max's dog, beside the cat with 20 cm between the frames, same center height
+            WallProp(p, "Motel/SM_Motel_DogPainting.fbx", "SM_Motel_DogPainting", false, 6, -1, -17.645f, 1.5f, 0.63f, 0.53f);
             // Hangar
             // Hangar (36 x 28 m): shuttle in the middle, queue lane from its ramp to the inspection lock door (x 1..3)
             KitProp(p, "Hangar/SM_Hangar_Shuttle.fbx", "SM_Hangar_Shuttle", 0, -28, 6, 9, 3.5f, 0, ShuttleYaw);
@@ -1691,6 +1694,95 @@ namespace GameOff.EditorTools
             KitProp(p, "Hangar/SM_Hangar_Scaffold.fbx", "SM_Hangar_Scaffold", 12, -30, 2f, 4f, 5f, 0, 90f); // model is 4 m along X
             // Crane rail under the ceiling tiles (y 15), between the rib arches at z -22 and -29
             KitProp(p, "Hangar/SM_Hangar_CraneRail.fbx", "SM_Hangar_CraneRail", 0, -25.5f, 36f, 2f, 1.5f, 15f);
+        }
+
+        // --- Decor (P26): small delivered pieces that make the rooms lived in. Nothing to do with them yet. ---
+        private const string KitClock = "Props/SM_Prop_WallClock.fbx", KitSpeaker = "Props/SM_Prop_PASpeaker.fbx", KitPlant = "Props/SM_Prop_PlantDead.fbx",
+            KitBin = "Props/SM_Prop_TrashBin.fbx", KitBot = "Props/SM_Prop_CleaningBot.fbx", KitExtinguisher = "Props/SM_Prop_FireExtinguisher.fbx",
+            KitVent = "Props/SM_Prop_VentGrate.fbx", KitCable = "Props/SM_Prop_CableBundle.fbx", KitPipe = "Props/SM_Prop_PipeBundle_2m.fbx",
+            KitPipeElbow = "Props/SM_Prop_PipeElbow.fbx", KitJunction = "Props/SM_Prop_JunctionBox.fbx", KitBucket = "Props/SM_Prop_MopBucket.fbx",
+            KitTrashPile = "Props/SM_Prop_TrashPile.fbx", KitFan = "Props/SM_Prop_CeilingFan.fbx", KitNeon = "Props/SM_Prop_NeonSign_Open.fbx",
+            KitCan = "Props/SM_Prop_SodaCan.fbx", KitDeckBench = "Props/SM_Prop_DeckBench.fbx", KitTelescope = "Props/SM_Prop_CoinTelescope.fbx",
+            KitTv = "Motel/SM_Motel_TV.fbx", KitDoorSign = "Motel/SM_Motel_DoorSign.fbx";
+
+        private static void BuildDecor(GameObject p)
+        {
+            // Hall: y 0..6, doors west z 1 and -3, east z 3 and -4 (hatch), south x -7 and 2
+            WallDecor(p, KitClock, "Clock_Hall", false, -6, 1, -3f, 3.2f);
+            WallDecor(p, KitSpeaker, "Speaker_Hall", false, -6, 1, 4.5f, 4.6f);
+            FloorDecor(p, KitPlant, "Plant_Hall", 5.6f, -5.4f, 0.5f, 0.5f, 1f);
+            FloorDecor(p, KitBin, "Bin_Hall", -7.55f, 2.7f, 0.5f, 0.5f, 0.9f);
+            FloorDecor(p, KitBot, "CleaningBot", 7.4f, 0.6f, 0.6f, 0.6f, 0.4f, 0f, -90f);
+
+            // Counter: west door z -9, south window x -6..-2, north board and speaker x -1.5, -2.5
+            WallDecor(p, KitClock, "Clock_Counter", false, -12, 1, -1f, 2.2f);
+            WallDecor(p, KitExtinguisher, "Extinguisher_Counter", true, -6, 1, -7.2f, 0.8f);
+            WallDecor(p, KitVent, "Vent_Counter", false, -6, -1, -5.2f, 2.3f);
+
+            // Service corridor (x -8..-6): doors north and south at x -7, east at z -9
+            WallDecor(p, KitPipe, "Pipes_Service", true, -8, 1, -9f, 2.3f);
+            WallDecor(p, KitJunction, "Junction_Service", true, -8, 1, -7.5f, 1.1f);
+            WallDecor(p, KitCable, "Cables_Service", true, -6, -1, -10.9f, 2.5f);
+            WallDecor(p, KitSpeaker, "Speaker_Service", true, -6, -1, -7.4f, 2.8f);
+            FloorDecor(p, KitBucket, "Bucket_Service", -7.7f, -10.6f, 0.5f, 0.4f, 1.2f, 0f, 90f);
+
+            // Motel corridor (z 0..2): doors north at x -10, -14, -18, the west end stays free for the hab door
+            WallDecor(p, KitCable, "Cables_Motel", false, 0, 1, -14.5f, 2.5f);
+            WallDecor(p, KitPipeElbow, "PipeElbow_Motel", false, 0, 1, -11.6f, 2.3f);
+            WallDecor(p, KitJunction, "Junction_Motel", false, 0, 1, -17f, 1.1f);
+            WallDecor(p, KitExtinguisher, "Extinguisher_Motel", false, 0, 1, -12.6f, 0.8f);
+            WallDecor(p, KitVent, "Vent_Motel", false, 0, 1, -18.6f, 2.4f);
+            WallDecor(p, KitSpeaker, "Speaker_Motel", false, 2, -1, -12f, 2.8f);
+            foreach (float x in new[] { -10f, -14f, -18f })
+                WallDecor(p, KitDoorSign, $"DoorSign_{x:0}", false, 2, -1, x, 2.42f);
+
+            // Room 103
+            PlaceDecor(p, KitTv, "TV_Room103", new Vector3(-17f, 0.75f, 5.55f), 0f);
+            FloorDecor(p, KitPlant, "Plant_Room103", -16.4f, 3.4f, 0.5f, 0.5f, 1f);
+
+            // Bar and diner: fans between the ceiling strips
+            PlaceDecor(p, KitFan, "Fan_Bar", new Vector3(10.5f, 4f, 4f), 0f);
+            PlaceDecor(p, KitFan, "Fan_Diner", new Vector3(-12f, 3f, -3f), 0f);
+            WallDecor(p, KitNeon, "Neon_Bar", true, 8, -1, 3f, 2.55f);
+            WallDecor(p, KitNeon, "Neon_Diner", true, -8, 1, -3f, 2.55f);
+            WallDecor(p, KitNeon, "Neon_Kiosk", true, 8, -1, -2.1f, 1.7f);
+            FloorDecor(p, KitBin, "Bin_Bar", 8.6f, 0.6f, 0.5f, 0.5f, 0.9f);
+            FloorDecor(p, KitBin, "Bin_Diner", -15.5f, -2.4f, 0.5f, 0.5f, 0.9f);
+            PlaceDecor(p, KitCan, "Can_BarTable", new Vector3(10.95f, 1.1f, 7f), 30f);
+            PlaceDecor(p, KitCan, "Can_BarCounter", new Vector3(14.5f, 1.1f, 2.1f), 0f);
+            PlaceDecor(p, KitCan, "Can_DinerCounter", new Vector3(-12.7f, 1.1f, -0.6f), 70f);
+
+            // Hangar
+            PlaceDecor(p, KitTrashPile, "Trash_Hangar_A", new Vector3(9f, 0f, -14.2f), 20f);
+            PlaceDecor(p, KitTrashPile, "Trash_Hangar_B", new Vector3(-9f, 0f, -37.5f), -40f);
+            WallDecor(p, KitPipe, "Pipes_Hangar", true, 18, -1, -24f, 3.2f);
+            WallDecor(p, KitJunction, "Junction_Hangar", false, -12, -1, -4f, 1.1f);
+            WallDecor(p, KitExtinguisher, "Extinguisher_Hangar", false, -12, -1, -5.2f, 0.8f);
+
+            // Observation deck (floor y -0.36, half circle z 6..11)
+            FloorDecor(p, KitDeckBench, "Bench_Deck_W", -2.2f, 7.6f, 2.4f, 0.6f, 0.5f, -DeckDrop, 180f);
+            FloorDecor(p, KitDeckBench, "Bench_Deck_E", 2.2f, 7.6f, 2.4f, 0.6f, 0.5f, -DeckDrop, 180f);
+            FloorDecor(p, KitTelescope, "Telescope_Deck", 0f, 9.6f, 0.5f, 0.6f, 1.5f, -DeckDrop, 180f);
+        }
+
+        /// <summary>Stands on the floor and blocks the player, or a block where the model is missing.</summary>
+        private static void FloorDecor(GameObject parent, string kitPath, string name, float x, float z, float w, float d, float h, float y = 0f, float yaw = 0f) =>
+            KitProp(parent, kitPath, name, x, z, w, d, h, y, yaw);
+
+        /// <summary>A piece without collider at an exact pose; missing models are skipped, decor has no placeholder.</summary>
+        private static void PlaceDecor(GameObject parent, string kitPath, string name, Vector3 position, float yaw)
+        {
+            var go = PlaceKit(parent, kitPath, position, yaw);
+            if (go != null) go.name = name;
+        }
+
+        /// <summary>A piece on a wall face without collider: its back touches the wall, y is the height of its pivot.</summary>
+        private static void WallDecor(GameObject parent, string kitPath, string name, bool onXLine, float line, int side, float along, float y)
+        {
+            var (zMin, zMax) = KitZRange(kitPath);
+            float across = line + side * (WallFace + (zMax > zMin ? zMax : 0.05f) + 0.005f);
+            float yaw = onXLine ? (side < 0 ? 90f : -90f) : (side < 0 ? 0f : 180f);
+            PlaceDecor(parent, kitPath, name, onXLine ? new Vector3(across, y, along) : new Vector3(along, y, across), yaw);
         }
 
         private static void BuildMarkers(GameObject parent)

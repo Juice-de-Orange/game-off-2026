@@ -428,12 +428,16 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Festgelegt im Asset-Durchgang (max, 02.11.): Shuttle mit **Rampe** (Rework bestellt): landen → Rampe klappt zischend herunter → Reisende steigen nacheinander aus und stellen sich an; abends Rampe hoch und Abflug.
 
 ### P26 — Details & Ausstattung
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 06.11.), erst Deko ohne Bewegung
+- Größe: M · Priorität: Soll · Status: offen, Deko eingebaut (max, 06.11.), Bewegung und Schilder fehlen
 - Braucht: P22 und Lieferungen
 - Ziel: Station wirkt bewohnt und heruntergekommen.
 - Enthalten: Rohre, Kabel, Lüftungen, Verteilerkästen, Feuerlöscher, Müll, Pflanzen, Schilder/Poster/Schmutz-Decals, Putzroboter (fährt per
   Skript), Leuchtschilder, Ventilatoren, Uhr, Lautsprecher, Münzfernrohr und Bänke auf der Plattform, Gerüst und Kran im Hangar
 - Abnahme: Jeder Raum hat sichtbare Details; Draw Calls/Build-Größe im WebGL-Rahmen (Build < 40 MB).
+- Stand (max, 06.11.): Alle gelieferten `SM_Prop_*`, `SM_Motel_TV` und `SM_Motel_DoorSign` stehen im Spiel, 43 Stücke, im Builder unter `BuildDecor`. Halle, Schalter, Gänge, Bar, Diner, Kiosk, Hangar, Plattform und Motel; im Editor je Raum angesehen.
+  - Offen: Putzroboter und Ventilatoren bewegen sich nicht, Münzfernrohr ohne Funktion (P29), Poster und Schmutz-Decals gibt es noch nicht.
+  - Download 17,7 statt 17,3 MB, Speicher 82 statt 80 MB (zusammen mit P51). Bildrate im Wechsel, CPU ×4, Median aus drei Paaren: Schalter 28,1 gegen 28,6 fps, Zimmer 48,3 gegen 44,3, Menü 23,5 gegen 20,2, Pinnwand 36,9 gegen 43,7, Stehen 32,0 gegen 38,9. Die letzten beiden liegen niedriger, die Einzelläufe überlappen aber (30–45 fps), ein echter Verlust ist nicht belegt und nicht ausgeschlossen.
+  - `OcclusionCheck` findet 132 statt 133 begehbare Punkte: Ein Bodenobjekt steht auf einem Rasterpunkt, alle anderen Punkte sind weiter erreichbar. Der Weg zu Fuß ist damit im Editor geprüft, nicht mit echten Tasten.
 
 > **P27–P36: Mechaniken aus dem Asset-Durchgang** (max, 02.11.). Max hat jedes gelieferte Asset durchgesehen und festgelegt,
 > was man damit tun kann. Alle Soll; Reihenfolge und Verteilung im Call.
@@ -745,7 +749,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Von jeder Tür aus erkennt man im Spiel ohne Karte das Ziel; nicht alle Hinweise sehen gleich aus; lesbar im WebGL-Build.
 
 ### P51 — Zimmer 103 wohnlicher
-- Größe: S · Priorität: Kann · Status: offen, Hundebild geliefert (`SM_Motel_DogPainting`), Rest noch nicht gebaut (max, 06.11.)
+- Größe: S · Priorität: Kann · Status: offen, Bilder hängen (max, 06.11.), größeres Bullauge fehlt
 - Braucht: — · Folgt auf: M014 (Katzenbild)
 - Ziel: Das Zimmer des Spielers fühlt sich persönlich an.
 - Enthalten: Bullauge größer (heute Ø 0,6 m, `SM_Station_Wall_Porthole_2x3`, Zimmer 103); Katzenbild etwas höher (`SM_Motel_CatPainting`, heute y 1,3 m, `StationGrayboxBuilder.BuildProps`); neues Gemälde vom Hund **Elo** (Bestellung erst, wenn das Paket dran ist; dann fragt Claude Max nach einem Foto als Vorlage, wie beim Katzenbild)
