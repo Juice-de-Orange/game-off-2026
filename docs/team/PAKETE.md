@@ -699,7 +699,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: `SM_NPC_Holly.fbx` (ältere Frau), `SM_NPC_Barkeeper.fbx` (vierarmiges Alien mit Atemmaske, Schlauch zum Rucksack), `SM_NPC_Dealer.fbx` (sitzt shady auf einem Barhocker, dunkle, abgewetzte Kleidung mit Kapuze), Beschreibungen von Martin (Handover 05.11.); Einträge in `ASSET-REQUESTS.md`; nach der Lieferung `GameOff/Build Economy into Main`
 - Nicht enthalten: Dialoge, Animationen über eine Idle-Haltung hinaus, weitere Bewohner (kommen mit P53)
 - Abnahme: Die drei Figuren stehen an ihren Plätzen statt der Boxen, Handel funktioniert unverändert.
-- Ergebnis: Lieferung von Max freigegeben und eingebaut, alle drei Figuren stehen an ihren Plätzen statt der Boxen (Einzelbilder aus dem Editor geprüft). Kauf und Schwarzmarkt-Fenster liefen im Build vor dem Einbau; der Handel selbst blieb unverändert, nach dem Einbau ist er nicht erneut durchgespielt. Download jetzt 15,0 MB (vorher 14,7).
+- Ergebnis: Lieferung von Max freigegeben und eingebaut, alle drei Figuren stehen an ihren Plätzen statt der Boxen (Einzelbilder aus dem Editor geprüft). Im WebGL-Build mit Figuren geprüft: Kauf bei Holly, Fenster von Dealer und Barkeeper öffnen sich. Die Händler wurden dabei per Befehl geöffnet, der Weg zu ihnen und [E] sind nicht geprüft. Download jetzt 15,0 MB (vorher 14,7).
 - Stand 05.11.: **Bei der Pipeline bestellt** (drei Einträge `SM_NPC_*` in `ASSET-REQUESTS.md`, `needed_by` 16.11.). Das Paket wartet auf die Lieferung, Einbau macht max.
 
 ### P53 — Wohnmodul begehbar: Zimmer für alle Figuren
