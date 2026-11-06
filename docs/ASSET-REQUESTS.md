@@ -4699,7 +4699,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Human.png
 package: P60
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4726,7 +4726,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Vellani.png
 package: P60
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4753,7 +4753,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Quobb.png
 package: P60
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4780,7 +4780,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Xirrik.png
 package: P60
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4807,7 +4807,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Sorvak.png
 package: P60
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
