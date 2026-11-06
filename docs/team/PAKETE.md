@@ -961,3 +961,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   trotzdem als Fehler. Zettel je Tag in den Tages- bzw. Reisenden-Daten.
 - Vorschlag an Max: siehe Frage `barkeeper-p65-p66`. Offen für Max: Verträgt sich das mit Verwarnung/Strafe aus P07/P08? Folgen, wenn man sich weigert oder XY verhaftet?
 - Abnahme: Zettel erscheint am vorgesehenen Tag; XY durchlassen → Geld nach der Schicht; abweisen → kein Geld.
+
+### P67 — Stations-Atmo vorab hörbar
+- Größe: XS · Priorität: Soll · Status: in Arbeit (martin, 06.11.)
+- Braucht: P18 · Folgt auf: — · Teil von **P61** vorgezogen (max baut dort weiter)
+- Ziel: Der gelieferte Loop `SFX_Amb_Station_Loop.ogg` ist im Spiel zu hören, bevor P61 die Raumklänge pro Bereich einbaut.
+- Enthalten: Builder **GameOff → Build Ambience into Main** setzt `Prefabs/Audio/PF_Ambience.prefab` (AudioSource 2D, Loop, SFX-Gruppe) in Main;
+  Aufnahme in **Rebuild All**.
+- Nicht enthalten: Raumklänge pro Bereich (Bar, Hangar), Überblenden zwischen Räumen – das bleibt in P61.
+- Abnahme: In Main läuft die Atmo nahtlos, SFX-Regler wirkt, im Pausenmenü pausiert sie, Konsole 0 Fehler.

@@ -61,6 +61,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
+| martin | P67 Stations-Atmo vorab hörbar | `Main.unity`, `Scripts/Editor/RebuildAll.cs` | 06.11. |
 | max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
 
 ## Backlog
