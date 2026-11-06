@@ -6,7 +6,7 @@ namespace GameOff.Counter
 {
     /// <summary>
     /// A clickable control on the counter desk (button or stamp). Needs a Collider.
-    /// With a cover assigned, the first click flips the cover open and only the second click triggers.
+    /// With a cover assigned, the first click flips the cover open and only the second click triggers; firing closes it again.
     /// </summary>
     public class CounterClickable : MonoBehaviour
     {
@@ -45,6 +45,7 @@ namespace GameOff.Counter
                 return false;
             }
             if (pressPart != null) StartCoroutine(PressAnimation());
+            else ResetCover();
             onPressed.Invoke();
             return true;
         }
@@ -75,6 +76,7 @@ namespace GameOff.Counter
             }
             pressPart.localPosition = up;
             _animating = false;
+            ResetCover();
         }
 
         private void OnDisable()

@@ -4420,7 +4420,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Holly.fbx
 package: P52
 scene: Kiosk
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.55, 0.45, 1.7]
@@ -4449,7 +4449,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Barkeeper.fbx
 package: P52
 scene: Bar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.8, 0.6, 1.9]
@@ -4478,7 +4478,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Dealer.fbx
 package: P52
 scene: Bar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.6, 0.6, 1.3]

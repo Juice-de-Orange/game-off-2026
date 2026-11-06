@@ -28,7 +28,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 3. **P08** Entscheidungen & Moral → **P10** Geld, Familie & Abrechnung
 4. **P15** Inhalte für 3 Tage inkl. **The Shifter** (auch echte Antworten der Reisenden) → **P12** Enden
 5. **P11** Kiosk, **P13** Heimschicken (Muss-Frage im Call), **P19** itch-Upload
-6. Danach Soll-Pakete nach Zeit: P50 Türschilder, P52 Händlerfiguren (bestellt), P14 Reisende laufen, P16, P25–P36; P53 Wohnmodul erst nach Entwurf und Absprache
+6. Danach Soll-Pakete nach Zeit: P50 Türschilder, P14 Reisende laufen, P16, P25–P36; P53 Wohnmodul erst nach Entwurf und Absprache
 
 ## Vorlage
 ```
@@ -693,12 +693,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Hinweis: Größeres Bullauge heißt neues Wandmodul über die Pipeline und neuer Lichtbake. Wird das Wohnmodul (P53) gebaut, zuerst dort klären, wo Zimmer 103 am Ende liegt.
 
 ### P52 — Mehr Figuren: Händler an Kiosk und Bar
-- Größe: M · Priorität: Soll · Status: bestellt, wartet auf Lieferung (max baut ein)
+- Größe: M · Priorität: Soll · Status: fertig (max, 06.11.)
 - Braucht: P46 · Folgt auf: P46
 - Ziel: Statt grauer Boxen stehen echte Figuren an Kiosk und Bar.
 - Enthalten: `SM_NPC_Holly.fbx` (ältere Frau), `SM_NPC_Barkeeper.fbx` (vierarmiges Alien mit Atemmaske, Schlauch zum Rucksack), `SM_NPC_Dealer.fbx` (sitzt shady auf einem Barhocker, dunkle, abgewetzte Kleidung mit Kapuze), Beschreibungen von Martin (Handover 05.11.); Einträge in `ASSET-REQUESTS.md`; nach der Lieferung `GameOff/Build Economy into Main`
 - Nicht enthalten: Dialoge, Animationen über eine Idle-Haltung hinaus, weitere Bewohner (kommen mit P53)
 - Abnahme: Die drei Figuren stehen an ihren Plätzen statt der Boxen, Handel funktioniert unverändert.
+- Ergebnis: Lieferung von Max freigegeben und eingebaut, alle drei Figuren stehen an ihren Plätzen statt der Boxen (Einzelbilder aus dem Editor geprüft). Kauf und Schwarzmarkt-Fenster liefen im Build vor dem Einbau; der Handel selbst blieb unverändert, nach dem Einbau ist er nicht erneut durchgespielt. Download jetzt 15,0 MB (vorher 14,7).
 - Stand 05.11.: **Bei der Pipeline bestellt** (drei Einträge `SM_NPC_*` in `ASSET-REQUESTS.md`, `needed_by` 16.11.). Das Paket wartet auf die Lieferung, Einbau macht max.
 
 ### P53 — Wohnmodul begehbar: Zimmer für alle Figuren
@@ -843,8 +844,9 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Der Befund war falsch: `DevEndDay` ist im Spiel nur über den Bett-Dialog erreichbar, dort sitzt man nie. Ausgelöst hatte es nur das Testskript per `SendMessage`.
 
 ### P59 — Schleusenklappe schließt nach dem Auslösen
-- Größe: XS · Priorität: Soll · Status: in Arbeit (max, 06.11.)
+- Größe: XS · Priorität: Soll · Status: fertig (max, 06.11.)
 - Braucht: — · Folgt auf: P58
 - Ziel: Die Schutzklappe schützt bei jedem Reisenden vor dem Fehlklick, nicht nur beim ersten.
 - Enthalten: Klappe geht nach dem Auslösen wieder zu. Beim Aufstehen schließt sie schon heute.
 - Abnahme: Im WebGL-Build braucht auch der zweite Reisende zwei Klicks.
+- Ergebnis: Im WebGL-Build bestätigt, die Klappe schließt nach dem Auslösen, auch der zweite Reisende braucht zwei Klicks. 72 Tests grün.
