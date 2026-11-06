@@ -428,7 +428,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Festgelegt im Asset-Durchgang (max, 02.11.): Shuttle mit **Rampe** (Rework bestellt): landen → Rampe klappt zischend herunter → Reisende steigen nacheinander aus und stellen sich an; abends Rampe hoch und Abflug.
 
 ### P26 — Details & Ausstattung
-- Größe: M · Priorität: Soll · Status: offen
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 06.11.), erst Deko ohne Bewegung
 - Braucht: P22 und Lieferungen
 - Ziel: Station wirkt bewohnt und heruntergekommen.
 - Enthalten: Rohre, Kabel, Lüftungen, Verteilerkästen, Feuerlöscher, Müll, Pflanzen, Schilder/Poster/Schmutz-Decals, Putzroboter (fährt per
