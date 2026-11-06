@@ -202,21 +202,42 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Klappt das, setzt max P09 auf `fertig`.
 
 ### P10 — Geld, Familie & Abrechnung
-- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 06.11.) – zusammen mit P11
+- Größe: M · Priorität: Muss · Status: fertig (martin, 06.11.)
 - Braucht: P09, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Abrechnungsbildschirm am Tagesende wie ein Haushaltsbuch.
 - Enthalten: Lohn, Miete, Familienbedarfe (Essen, Wärme, Medizin) zum Ankreuzen, Zustand der Familienmitglieder,
   Folgen bei Nichtbezahlen, Werte in einem ScriptableObject
 - Nicht enthalten: Pakete schicken (P13)
 - Abnahme: Geld fließt über 3 Tage korrekt, Familie reagiert auf Nichtbezahlen.
+- Ergebnis (martin, 06.11.): von Martin im Spiel abgenommen ("läuft perfekt").
+  - **Abrechnung** nach „SLEEP“, vor der Abblende (`SettlementWindow`, in `PF_Economy`, gebaut von `EconomyBuilder`): Lohn pro
+    abgefertigtem Reisenden, Abzug je Verwarnzettel über den freien (`CounterShift.FreeWarnings`), Miete (immer), Essen / Heizung /
+    Medizin zum Anklicken (nur, was bezahlbar ist; Medizin nur, wenn jemand krank ist), Familie vorher → nachher, Kontostand vorher → nachher.
+  - **Familie** (`Household`, reine Regeln): Mom, Lena, Pip (wie in den Platzhalter-Briefen). Stufen well → weak → sick → critical.
+    Ohne Essen alle +1, ohne Heizung die Kälteempfindlichen (Pip) +1, Medizin heilt Kranke um 1, Essen + Heizung lassen Geschwächte erholen.
+    Folgen stehen im **Morgenbrief** ab Tag 2 (eine Zeile pro Person).
+  - **Werte** (vorläufig) in `Data/Economy/Household.asset`: Lohn 15/Reisender, Abzug 10, Miete 30, Essen 20, Heizung 15, Medizin 25.
+  - **Testgeld:** Optionen → DEV → CREDITS −100 / +100 (nur im Spiel, im Kontobuch als „Dev“, Kontostand daneben). Fällt mit dem DEV-Reiter vor der Abgabe weg.
+  - Für andere Pakete: `DayManager.NightStep` und `DayManager.LetterAddendum` (Haken für die Nacht und den Brief),
+    `PlayerEconomy.Household`, `PlayerEconomy.FamilyReport()`, `Payroll`.
+  - **Für P15 (Inhalte):** Die Platzhalter-Briefe erzählen Pips Krankheit fest („Pip is sick now“), die Familie hat aber jetzt einen
+    echten Zustand. Briefe sollten auf den Zustand reagieren statt ihn vorzugeben.
+  - Geprüft: 82/82 EditMode-Tests (neu: `SettlementTests`), Play-Modus Main: Tag 1 mit 6 Reisenden → +90, −30 Miete; ohne Essen →
+    alle „weak“ im Brief von Tag 2, Kontostand 85; Tag 2 → 3 läuft. Kein WebGL-Build.
 
 ### P11 — Läden: Gadget-Shop & Bar-Schwarzmarkt
-- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 06.11.) – zusammen mit P10; jetzt nur Händlervorrat (B04), Rest wartet auf das P08-Gespräch
+- Größe: M · Priorität: Muss · Status: teilweise (martin, 06.11.): Händlervorrat (B04) fertig, Rest wartet auf das P08-Gespräch
 - Braucht: P03, P08, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Kaufen und Verkaufen über ein gemeinsames Shop-System.
 - Enthalten: Shop-UI, Bar (illegale Gegenstände kaufen, Beschlagnahmtes verkaufen), Dokumentenscanner kaufbar
 - Nicht enthalten: Gadget-Funktion (P16)
 - Abnahme: Scanner kaufen, beschlagnahmtes Item an der Bar verkaufen, Geld stimmt.
+- Stand 06.11. (martin): **Händlervorrat (B04) gebaut**, der Rest wartet auf das P08-Gespräch (Beschlagnahme, Schwarzmarkt).
+  - `VendorStock` hat jetzt Einträge mit Tagesmenge (`StockEntry`), die alten Listen hat `EconomyBuilder` umgestellt.
+  - `VendorSupply` (pro Händler in `PlayerEconomy.Supply`): Kauf −1, bei 0 „Sold out. More tomorrow morning.“, jeden Morgen auf die
+    Tagesmenge aufgefüllt; was man dem Händler verkauft, liegt danach bei ihm im Regal. Anzahl steht im Handelsfenster („×3“).
+  - Tagesmengen (vorläufig): Scanner 1, Ration 3, Schmerzmittel 2, Cola 5, Spice 3.
+  - Geprüft: Cola ausverkauft nach 5 Käufen, am nächsten Morgen wieder 5.
 - **Hinweis vor Beginn (martin, 05.11.):** Das Shop-UI ist mit **P46** schon fertig (Handelsfenster, Kaufen/Verkaufen, Faktoren, abgelehnte
   Labels). **Noch offen und zuerst zu lösen:** Die Ware beim Händler **wird beim Kauf nicht weniger** – das Sortiment ist in P46 bewusst
   unbegrenzt (Bug-Liste **B04**). Für P11 vorgesehen (Zuschnitt im Kern-Loop-Call, siehe Frage an max):

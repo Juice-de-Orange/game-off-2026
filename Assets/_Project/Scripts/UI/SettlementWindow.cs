@@ -1,0 +1,187 @@
+using System.Collections;
+using System.Text;
+using GameOff.Day;
+using GameOff.Economy;
+using GameOff.Travelers;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace GameOff.UI
+{
+    /// <summary>
+    /// Nightly settlement (P10), like a household book: wage for the travelers of the day, penalty for citations beyond the
+    /// free warnings, rent (always paid), then food, heating and medicine to tick off, the family's condition before → after,
+    /// and the balance before → after. CONFIRM books everything in the Wallet and applies the night to the Household.
+    /// Plugs into DayManager.NightStep (after "SLEEP", before the fade) and LetterAddendum (family lines in the morning letter).
+    /// </summary>
+    public class SettlementWindow : MonoBehaviour
+    {
+        private const int Food = 0, Heat = 1, Medicine = 2;
+        private static readonly string[] NeedNames = { "FOOD", "HEATING", "MEDICINE" };
+
+        [SerializeField] private DayManager dayManager;
+        [SerializeField] private CounterShift shift;
+        [SerializeField] private GameObject root;
+        [SerializeField] private TMP_Text title;
+        [SerializeField] private TMP_Text income;
+        [SerializeField] private Button[] needButtons = new Button[3];
+        [SerializeField] private TMP_Text[] needLabels = new TMP_Text[3];
+        [SerializeField] private TMP_Text family;
+        [SerializeField] private TMP_Text balance;
+        [SerializeField] private Button confirmButton;
+
+        private readonly bool[] _paid = new bool[3];
+        private int _travelersToday;
+        private bool _open;
+
+        private static PlayerEconomy Economy => PlayerEconomy.Instance;
+        private HouseholdTuning Tuning => Economy != null ? Economy.HouseholdTuning : null;
+
+        private void Awake()
+        {
+            for (int i = 0; i < needButtons.Length; i++)
+            {
+                int need = i;
+                needButtons[i].onClick.AddListener(() => Toggle(need));
+            }
+            confirmButton.onClick.AddListener(() => _open = false);
+            root.SetActive(false);
+        }
+
+        private void OnEnable()
+        {
+            if (dayManager != null)
+            {
+                dayManager.NightStep = Run;
+                dayManager.LetterAddendum = () => Economy != null ? Economy.FamilyReport() : "";
+            }
+            if (shift != null)
+            {
+                shift.DayBegun += OnDayBegun;
+                shift.DecisionMade += OnDecision;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (dayManager != null)
+            {
+                dayManager.NightStep = null;
+                dayManager.LetterAddendum = null;
+            }
+            if (shift != null)
+            {
+                shift.DayBegun -= OnDayBegun;
+                shift.DecisionMade -= OnDecision;
+            }
+        }
+
+        private void OnDayBegun() => _travelersToday = 0;
+        private void OnDecision(TravelerData traveler, Verdict chosen, Judgement judgement) => _travelersToday++;
+
+        // ---------- Numbers ----------
+
+        private int Wage => Payroll.Wage(_travelersToday, Tuning);
+        private int Citations => shift != null ? shift.Citations : 0;
+        private int FreeWarnings => shift != null ? shift.FreeWarnings : 0;
+        private int Penalty => Payroll.Penalty(Citations, FreeWarnings, Tuning);
+        private int Cost(int need) => need == Food ? Tuning.foodCost : need == Heat ? Tuning.heatCost : Tuning.medicineCost;
+        private int AfterFixed => Economy.Wallet.Balance + Wage - Penalty - Tuning.rent;
+
+        private int ChosenCosts()
+        {
+            int sum = 0;
+            for (int i = 0; i < 3; i++) if (_paid[i]) sum += Cost(i);
+            return sum;
+        }
+
+        private bool NeedAvailable(int need) => need != Medicine || Economy.Household.AnySick;
+
+        // ---------- Flow ----------
+
+        /// <summary>Shows the settlement for the day that ends and waits until CONFIRM.</summary>
+        public IEnumerator Run(int day)
+        {
+            if (Economy == null || Tuning == null) { Debug.LogWarning("[Settlement] No PlayerEconomy or HouseholdTuning – skipped."); yield break; }
+            title.text = $"DAY {day}  ·  SETTLEMENT";
+            // Food and heating first if the money is there; medicine only when someone is sick.
+            for (int i = 0; i < 3; i++) _paid[i] = false;
+            for (int i = 0; i < 3; i++)
+                if (NeedAvailable(i) && ChosenCosts() + Cost(i) <= AfterFixed) _paid[i] = true;
+            _open = true;
+            root.SetActive(true);
+            Refresh();
+            while (_open) yield return null;
+            Book(day);
+            root.SetActive(false);
+        }
+
+        private void Toggle(int need)
+        {
+            if (_paid[need]) _paid[need] = false;
+            else if (NeedAvailable(need) && ChosenCosts() + Cost(need) <= AfterFixed) _paid[need] = true;
+            Refresh();
+        }
+
+        private void Book(int day)
+        {
+            var wallet = Economy.Wallet;
+            if (Wage > 0) wallet.Add(Wage, $"Wage · {_travelersToday} travelers");
+            if (Penalty > 0) wallet.Charge(Penalty, $"Penalty · {Payroll.PenalizedCitations(Citations, FreeWarnings)} citations");
+            wallet.Charge(Tuning.rent, "Rent · room 103");
+            for (int i = 0; i < 3; i++)
+                if (_paid[i]) wallet.Charge(Cost(i), "Family · " + NeedNames[i].ToLowerInvariant());
+            Economy.Household.Settle(_paid[Food], _paid[Heat], _paid[Medicine]);
+            Debug.Log($"[Settlement] day {day}: wage {Wage}, penalty {Penalty}, rent {Tuning.rent}, " +
+                      $"food {_paid[Food]}, heat {_paid[Heat]}, medicine {_paid[Medicine]} → balance {wallet.Balance}");
+        }
+
+        private void Refresh()
+        {
+            var e = Economy;
+            var t = Tuning;
+            var sb = new StringBuilder();
+            sb.AppendLine(Line($"Wage  ·  {_travelersToday} travelers × {t.wagePerTraveler}", Wage));
+            int penalized = Payroll.PenalizedCitations(Citations, FreeWarnings);
+            if (penalized > 0) sb.AppendLine(Line($"Penalty  ·  {penalized} citations beyond {FreeWarnings} warnings", -Penalty));
+            sb.AppendLine(Line("Rent  ·  room 103", -t.rent));
+            income.text = sb.ToString();
+
+            int available = AfterFixed - ChosenCosts();
+            for (int i = 0; i < 3; i++)
+            {
+                bool can = NeedAvailable(i) && (_paid[i] || Cost(i) <= available);
+                needButtons[i].interactable = can || _paid[i];
+                string box = _paid[i] ? "[X]" : "[ ]";
+                string note = !NeedAvailable(i) ? "  (nobody sick)" : !can && !_paid[i] ? "  (not enough)" : "";
+                needLabels[i].text = $"{box}  {NeedNames[i]}  −{e.Format(Cost(i))}{note}";
+            }
+
+            var next = e.Household.Preview(_paid[Food], _paid[Heat], _paid[Medicine]);
+            var fb = new StringBuilder("FAMILY\n");
+            for (int i = 0; i < e.Household.Count && i < t.members.Count; i++)
+            {
+                var m = t.members[i];
+                string now = Name(e.Household.Condition(i)), then = Name(next[i]);
+                string arrow = next[i] > e.Household.Condition(i) ? "<color=#E2463F>" + then + "</color>"
+                    : next[i] < e.Household.Condition(i) ? "<color=#9BE05A>" + then + "</color>" : then;
+                fb.AppendLine($"{m.name} ({m.role})  ·  {now} → {arrow}");
+            }
+            family.text = fb.ToString();
+
+            int after = AfterFixed - ChosenCosts();
+            balance.text = $"BALANCE  {e.Format(e.Wallet.Balance)}  →  " +
+                           (after < 0 ? $"<color=#E2463F>{e.Format(after)}</color>" : e.Format(after));
+        }
+
+        private string Line(string label, int amount) =>
+            $"{label}<pos=78%>{(amount >= 0 ? "+" : "−")}{Economy.Format(Mathf.Abs(amount))}";
+
+        private string Name(int condition)
+        {
+            var names = Tuning.conditionNames;
+            return names.Length == 0 ? condition.ToString() : names[Mathf.Clamp(condition, 0, names.Length - 1)];
+        }
+    }
+}

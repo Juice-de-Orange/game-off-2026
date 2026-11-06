@@ -12,7 +12,9 @@ namespace GameOff.Day
     /// Day flow (P09): Morning (wake up in room 103, letter from home) → Shift (the counter, CounterShift) →
     /// Evening (shift over, go to bed) → Night (fade, DayEnded) → next morning; after the last day the placeholder end
     /// screen (real endings: P12). Uses CounterShift.BeginDay / ShiftEnded and SkyRig.SetDay without changing them.
-    /// Hooks for later packages: DayStarted (P31 board, P36 flicker), ShiftOver, DayEnded (P10 settlement), RunFinished (P12).
+    /// Hooks for later packages: DayStarted (P31 board, P36 flicker), ShiftOver, DayEnded, RunFinished (P12).
+    /// P10 plugs in through NightStep (the settlement runs after "SLEEP", before the fade) and LetterAddendum (family lines
+    /// under the morning letter from day 2 on).
     /// </summary>
     public class DayManager : MonoBehaviour
     {
@@ -46,6 +48,11 @@ namespace GameOff.Day
         public event Action<int> DayEnded;
         /// <summary>After the last day.</summary>
         public event Action RunFinished;
+
+        /// <summary>Runs after the player chose to sleep, before the fade (P10 settlement). Gets the day that ends.</summary>
+        public Func<int, IEnumerator> NightStep { get; set; }
+        /// <summary>Text added under the morning letter from day 2 on (P10: how the family is doing).</summary>
+        public Func<string> LetterAddendum { get; set; }
 
         public int Day => _day;
         /// <summary>Dev tools on (Dev_end_Day, visible hitboxes, vendors open during the shift via a dev button).</summary>
@@ -95,7 +102,10 @@ namespace GameOff.Day
             DayStarted?.Invoke(day);
 
             yield return ui.FadeTo(0f, fadeSeconds);
-            ui.ShowLetter(entry.letterTitle, entry.letter, entry.newToday, OnLetterClosed);
+            string letter = entry.letter;
+            string home = day > 1 && LetterAddendum != null ? LetterAddendum() : "";
+            if (!string.IsNullOrWhiteSpace(home)) letter += "\n\n" + home;
+            ui.ShowLetter(entry.letterTitle, letter, entry.newToday, OnLetterClosed);
         }
 
         private void OnLetterClosed()
@@ -141,6 +151,7 @@ namespace GameOff.Day
         {
             _phase = Phase.Night;
             player.SetControlEnabled(false);
+            if (NightStep != null) yield return NightStep(_day);
             yield return ui.FadeTo(1f, fadeSeconds);
             DayEnded?.Invoke(_day);
             yield return new WaitForSecondsRealtime(nightSeconds);

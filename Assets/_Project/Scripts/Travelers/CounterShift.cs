@@ -45,6 +45,8 @@ namespace GameOff.Travelers
         public string NewToday { get; private set; } = "";
         public TravelerData Current => _current;
         public int Citations => _citations;
+        /// <summary>Citations per day that are only warnings (P10 deducts a penalty for every one beyond).</summary>
+        public int FreeWarnings => freeWarnings;
 
         private void OnEnable()
         {

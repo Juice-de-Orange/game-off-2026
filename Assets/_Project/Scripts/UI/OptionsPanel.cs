@@ -1,5 +1,6 @@
 using GameOff.Audio;
 using GameOff.Core;
+using GameOff.Economy;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,6 +37,10 @@ namespace GameOff.UI
         [SerializeField] private TMP_Text devToolsValue;
         [SerializeField] private Button trafficLines;
         [SerializeField] private TMP_Text trafficLinesValue;
+        [Tooltip("Dev: ±100 credits for testing money (P10/P11). Only does something in game, where PlayerEconomy exists.")]
+        [SerializeField] private Button creditsMinus;
+        [SerializeField] private Button creditsPlus;
+        [SerializeField] private TMP_Text creditsValue;
 
         [Header("Look")]
         [SerializeField] private Color tabIdle = new Color(0.17f, 0.2f, 0.24f);
@@ -71,6 +76,8 @@ namespace GameOff.UI
             // The DEV tab goes away for the jam submission (BOARD backlog), so it may be missing
             if (devTools != null) devTools.onClick.AddListener(() => { GameSettings.DevTools = !GameSettings.DevTools; Refresh(); });
             if (trafficLines != null) trafficLines.onClick.AddListener(() => { GameSettings.TrafficLineDev = !GameSettings.TrafficLineDev; Refresh(); });
+            if (creditsPlus != null) creditsPlus.onClick.AddListener(() => ChangeCredits(100));
+            if (creditsMinus != null) creditsMinus.onClick.AddListener(() => ChangeCredits(-100));
 
             resetAudio.onClick.AddListener(() => { GameSettings.ResetAudio(); Refresh(); });
             resetControls.onClick.AddListener(() => { GameSettings.ResetControls(); Refresh(); });
@@ -132,6 +139,22 @@ namespace GameOff.UI
             invertYValue.text = GameSettings.InvertY ? "ON" : "OFF";
             if (devToolsValue != null) devToolsValue.text = GameSettings.DevTools ? "ON" : "OFF";
             if (trafficLinesValue != null) trafficLinesValue.text = GameSettings.TrafficLineDev ? "ON" : "OFF";
+            if (creditsValue != null)
+            {
+                var economy = PlayerEconomy.Instance;
+                creditsValue.text = economy != null ? economy.Format(economy.Wallet.Balance) : "in game only";
+                if (creditsPlus != null) creditsPlus.interactable = economy != null;
+                if (creditsMinus != null) creditsMinus.interactable = economy != null;
+            }
+        }
+
+        private void ChangeCredits(int amount)
+        {
+            var economy = PlayerEconomy.Instance;
+            if (economy == null) return;
+            if (amount > 0) economy.Wallet.Add(amount, "Dev · +" + amount);
+            else economy.Wallet.Charge(-amount, "Dev · " + amount);
+            Refresh();
         }
     }
 }

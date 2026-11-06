@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f87f02e47425c44bb769e65c9a188c, type: 3}
+  m_Name: Household
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.HouseholdTuning
+  wagePerTraveler: 15
+  penaltyPerCitation: 10
+  rent: 30
+  foodCost: 20
+  heatCost: 15
+  medicineCost: 25
+  members:
+  - name: Mom
+    role: your wife
+    feelsCold: 0
+  - name: Lena
+    role: daughter
+    feelsCold: 0
+  - name: Pip
+    role: son, has a cough
+    feelsCold: 1
+  conditionNames:
+  - well
+  - weak
+  - sick
+  - critical
+  letterLines:
+  - '{0} is doing fine.'
+  - '{0} is weak and tired.'
+  - '{0} is sick and needs medicine.'
+  - '{0} is in a very bad way.'

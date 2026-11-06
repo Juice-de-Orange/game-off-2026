@@ -13,6 +13,8 @@ namespace GameOff.UI
     /// Trade window (P46, design A): vendor stock left, your items right, details + one action below, credits top right.
     /// Two modes: OpenTrade(stock) for vendors (buy/sell with the stock's factors) and OpenSendHome(onSend) for the cargo drone
     /// (P13 decides what sending does; P46 only removes the item). Esc or BACK closes; the player stands still meanwhile.
+    /// Vendors have a limited shelf (P11, PlayerEconomy.Supply): the count shows next to the name, sold-out items can't be bought,
+    /// and what you sell to a vendor lands on their shelf.
     /// </summary>
     public class TradeWindow : MonoBehaviour
     {
@@ -127,13 +129,14 @@ namespace GameOff.UI
 
             var left = new List<ItemListView.Row>();
             if (_mode == Mode.Trade)
-                foreach (var item in _stock.Items)
+                foreach (var item in Economy.Supply(_stock).Items)
                 {
                     if (item == null) continue;
                     var it = item;
+                    int onShelf = Economy.Supply(_stock).Count(item);
                     left.Add(new ItemListView.Row
                     {
-                        Label = item.DisplayName, Value = _stock.PriceFor(item).ToString(),
+                        Label = $"{item.DisplayName}  ×{onShelf}", Value = _stock.PriceFor(item).ToString(),
                         Selected = _side == Side.Vendor && _selected == item, OnClick = () => Select(it, Side.Vendor),
                     });
                 }
@@ -172,6 +175,11 @@ namespace GameOff.UI
                 actionButton.gameObject.SetActive(false);
                 detailDescription.text += "\n<color=#8B9096>You already have one.</color>";
             }
+            else if (_side == Side.Vendor && Economy.Supply(_stock).Count(_selected) == 0)
+            {
+                actionButton.gameObject.SetActive(false);
+                detailDescription.text += "\n<color=#8B9096>Sold out. More tomorrow morning.</color>";
+            }
             else if (_side == Side.Vendor) actionLabel.text = "BUY · " + Economy.Format(_stock.PriceFor(_selected));
             else if (_stock.Buys(_selected)) actionLabel.text = "SELL · " + Economy.Format(_stock.OfferFor(_selected));
             else
@@ -195,14 +203,17 @@ namespace GameOff.UI
             else if (_side == Side.Vendor)
             {
                 if (!economy.Inventory.CanAdd(item)) { message.text = "You already have one."; return; }
+                if (economy.Supply(_stock).Count(item) == 0) { message.text = "Sold out."; return; }
                 int price = _stock.PriceFor(item);
                 if (!economy.Wallet.TrySpend(price, $"{_stock.Title} · {item.DisplayName}")) { message.text = "Not enough credits."; return; }
+                economy.Supply(_stock).Take(item);
                 economy.Inventory.Add(item);
                 message.text = $"Bought {item.DisplayName}.";
             }
             else if (_stock.Buys(item) && economy.Inventory.Remove(item))
             {
                 economy.Wallet.Add(_stock.OfferFor(item), $"Sold · {item.DisplayName}");
+                economy.Supply(_stock).Put(item);
                 message.text = $"Sold {item.DisplayName}.";
             }
             Refresh();

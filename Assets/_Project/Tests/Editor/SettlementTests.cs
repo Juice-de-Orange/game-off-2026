@@ -1,0 +1,164 @@
+using System.Collections.Generic;
+using System.Linq;
+using GameOff.Economy;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+
+namespace GameOff.Tests
+{
+    /// <summary>
+    /// P10 and P11 as tests: the family's night rules (food, heating, medicine, recovery), the wage with penalties,
+    /// the vendor shelf (buy, sold out, morning top-up, selling to the vendor) and the household asset in the project.
+    /// </summary>
+    public class SettlementTests
+    {
+        private readonly List<Object> _created = new List<Object>();
+
+        [TearDown]
+        public void CleanUp()
+        {
+            foreach (var o in _created) Object.DestroyImmediate(o);
+            _created.Clear();
+        }
+
+        private T Make<T>() where T : ScriptableObject
+        {
+            var o = ScriptableObject.CreateInstance<T>();
+            _created.Add(o);
+            return o;
+        }
+
+        // ---------- Household ----------
+
+        private static Household Family() => new Household(new[] { false, true, false }); // the second one feels the cold
+
+        [Test]
+        public void NoFood_EveryoneGetsWorse()
+        {
+            var h = Family();
+            h.Settle(food: false, heat: true, medicine: false);
+            for (int i = 0; i < h.Count; i++) Assert.AreEqual(Household.Weak, h.Condition(i));
+        }
+
+        [Test]
+        public void NoHeating_OnlyTheColdSensitiveGetWorse()
+        {
+            var h = Family();
+            h.Settle(food: true, heat: false, medicine: false);
+            Assert.AreEqual(Household.Well, h.Condition(0));
+            Assert.AreEqual(Household.Weak, h.Condition(1));
+        }
+
+        [Test]
+        public void NothingPaid_ColdSensitiveGetsSick_AndItIsCappedAtCritical()
+        {
+            var h = Family();
+            h.Settle(false, false, false);
+            Assert.AreEqual(Household.Sick, h.Condition(1));
+            Assert.IsTrue(h.AnySick);
+            h.Settle(false, false, false);
+            h.Settle(false, false, false);
+            Assert.AreEqual(Household.Critical, h.Condition(1));
+        }
+
+        [Test]
+        public void Medicine_HealsTheSick_FoodAndHeat_LetTheWeakRecover()
+        {
+            var h = Family();
+            h.Settle(false, false, false); // 1, 2, 1
+            h.Settle(true, true, true);    // weak recover, sick heals one step
+            Assert.AreEqual(Household.Well, h.Condition(0));
+            Assert.AreEqual(Household.Weak, h.Condition(1));
+            h.Settle(true, true, false);
+            Assert.AreEqual(Household.Well, h.Condition(1));
+        }
+
+        [Test]
+        public void Preview_ChangesNothing()
+        {
+            var h = Family();
+            var next = h.Preview(false, false, false);
+            Assert.AreEqual(Household.Sick, next[1]);
+            Assert.AreEqual(Household.Well, h.Condition(1));
+        }
+
+        // ---------- Payroll ----------
+
+        [Test]
+        public void Wage_PerTraveler_PenaltyOnlyBeyondFreeWarnings()
+        {
+            var t = Make<HouseholdTuning>();
+            t.wagePerTraveler = 15;
+            t.penaltyPerCitation = 10;
+            Assert.AreEqual(90, Payroll.Wage(6, t));
+            Assert.AreEqual(0, Payroll.Penalty(2, 2, t));
+            Assert.AreEqual(20, Payroll.Penalty(4, 2, t));
+            Assert.AreEqual(0, Payroll.Wage(-1, t));
+        }
+
+        // ---------- Vendor supply ----------
+
+        private VendorStock StockWith(ItemData item, int amount)
+        {
+            var stock = Make<VendorStock>();
+            var so = new SerializedObject(stock);
+            var entries = so.FindProperty("entries");
+            entries.arraySize = 1;
+            entries.GetArrayElementAtIndex(0).FindPropertyRelative("item").objectReferenceValue = item;
+            entries.GetArrayElementAtIndex(0).FindPropertyRelative("dailyAmount").intValue = amount;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            return stock;
+        }
+
+        [Test]
+        public void Supply_SellsOut_AndIsToppedUpNextMorning()
+        {
+            var ration = Make<ItemData>();
+            var supply = new VendorSupply(StockWith(ration, 2));
+            Assert.AreEqual(2, supply.Count(ration));
+            Assert.IsTrue(supply.Take(ration));
+            Assert.IsTrue(supply.Take(ration));
+            Assert.IsFalse(supply.Take(ration));
+            Assert.AreEqual(1, supply.Items.Count(), "sold-out stock items stay listed");
+            supply.Refill();
+            Assert.AreEqual(2, supply.Count(ration));
+        }
+
+        [Test]
+        public void Supply_SoldToTheVendor_IsOnTheShelf_AndGoneWhenBoughtBack()
+        {
+            var ration = Make<ItemData>();
+            var watch = Make<ItemData>();
+            var supply = new VendorSupply(StockWith(ration, 1));
+            supply.Put(watch);
+            supply.Put(ration);
+            Assert.AreEqual(1, supply.Count(watch));
+            Assert.AreEqual(2, supply.Count(ration), "selling may go above the daily amount");
+            CollectionAssert.Contains(supply.Items.ToList(), watch);
+            Assert.IsTrue(supply.Take(watch));
+            CollectionAssert.DoesNotContain(supply.Items.ToList(), watch);
+            supply.Refill();
+            Assert.AreEqual(2, supply.Count(ration), "refill never takes away");
+        }
+
+        // ---------- Content ----------
+
+        [Test]
+        public void HouseholdAndStocksInProject_AreValid()
+        {
+            foreach (var guid in AssetDatabase.FindAssets("t:HouseholdTuning"))
+            {
+                var t = AssetDatabase.LoadAssetAtPath<HouseholdTuning>(AssetDatabase.GUIDToAssetPath(guid));
+                Assert.Greater(t.members.Count, 0, $"{t.name}: no family");
+                Assert.AreEqual(4, t.letterLines.Length, $"{t.name}: one letter line per condition");
+                foreach (var m in t.members) Assert.IsFalse(string.IsNullOrWhiteSpace(m.name), $"{t.name}: nameless family member");
+            }
+            foreach (var guid in AssetDatabase.FindAssets("t:VendorStock"))
+            {
+                var stock = AssetDatabase.LoadAssetAtPath<VendorStock>(AssetDatabase.GUIDToAssetPath(guid));
+                foreach (var e in stock.Entries) Assert.GreaterOrEqual(e.dailyAmount, 1, $"{stock.name}: daily amount below 1");
+            }
+        }
+    }
+}

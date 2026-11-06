@@ -5,6 +5,7 @@ using GameOff.Day;
 using GameOff.Economy;
 using GameOff.Player;
 using GameOff.Shops;
+using GameOff.Travelers;
 using GameOff.UI;
 using TMPro;
 using UnityEditor;
@@ -98,6 +99,7 @@ namespace GameOff.EditorTools
         private class Data
         {
             public EconomyTuning Tuning;
+            public HouseholdTuning Household;
             public readonly Dictionary<string, ItemData> Items = new Dictionary<string, ItemData>();
             public readonly Dictionary<string, VendorStock> Stocks = new Dictionary<string, VendorStock>();
         }
@@ -137,6 +139,16 @@ namespace GameOff.EditorTools
             Tag("ALIEN", "C27BD6", ref created);
             Tag("PERISHABLE", "9BE05A", ref created);
             ApplyTradeRules(data, new[] { contraband, confiscated }, drug, valuable, log);
+            foreach (var stock in data.Stocks.Values) MigrateToEntries(stock, log);
+
+            // P10: wage, rent, needs and the family (placeholder names until P15).
+            data.Household = LoadOrCreate<HouseholdTuning>(EconomyFolder + "Household.asset", h =>
+            {
+                // Same people as the placeholder letters: Lena writes to "Dad" about Mom and little Pip.
+                h.members.Add(new FamilyMember { name = "Mom", role = "your wife" });
+                h.members.Add(new FamilyMember { name = "Lena", role = "daughter" });
+                h.members.Add(new FamilyMember { name = "Pip", role = "son, has a cough", feelsCold = true });
+            }, ref created);
 
             AssetDatabase.SaveAssets();
             if (created > 0) log.Add($"{created} test assets created");
@@ -156,6 +168,34 @@ namespace GameOff.EditorTools
             changed += AddToList(data.Items["spice"], "tags", new[] { drug });
             changed += AddToList(data.Items["watch"], "tags", new[] { valuable });
             if (changed > 0) log.Add($"trade rules: {changed} labels added");
+        }
+
+        // Daily amounts of the test stocks (P11); anything else gets 3.
+        private static readonly Dictionary<string, int> DailyAmounts = new Dictionary<string, int>
+        {
+            { "Item_DocumentScanner", 1 }, { "Item_RationPack", 3 }, { "Item_Painkillers", 2 }, { "Item_NovaCola", 5 }, { "Item_ContrabandSpice", 3 },
+        };
+
+        /// <summary>P11: moves the old item list (without amounts) into entries with a daily amount. Leaves tuned entries alone.</summary>
+        private static void MigrateToEntries(VendorStock stock, List<string> log)
+        {
+            var so = new SerializedObject(stock);
+            var items = so.FindProperty("items");
+            var entries = so.FindProperty("entries");
+            if (items.arraySize == 0) return;
+            for (int i = 0; i < items.arraySize; i++)
+            {
+                var item = items.GetArrayElementAtIndex(i).objectReferenceValue;
+                if (item == null) continue;
+                entries.arraySize++;
+                var e = entries.GetArrayElementAtIndex(entries.arraySize - 1);
+                e.FindPropertyRelative("item").objectReferenceValue = item;
+                e.FindPropertyRelative("dailyAmount").intValue = DailyAmounts.TryGetValue(item.name, out int n) ? n : 3;
+            }
+            items.arraySize = 0;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(stock);
+            log.Add($"{stock.name}: {entries.arraySize} entries with daily amounts");
         }
 
         private static int AddToList(Object target, string field, Object[] values)
@@ -243,12 +283,14 @@ namespace GameOff.EditorTools
             var root = new GameObject("PF_Economy");
             var economy = root.AddComponent<PlayerEconomy>();
             Set(economy, "tuning", data.Tuning);
+            Set(economy, "household", data.Household);
             SetList(economy, "devStartItems", new Object[] { data.Items["spice"], data.Items["watch"] });
 
             var canvas = CreateCanvas("EconomyCanvas", 60); // above the day UI (50), below the pause menu (100)
             canvas.SetParent(root.transform, false);
             var trade = BuildTradeWindow(canvas);
             var inventory = BuildInventoryWindow(canvas);
+            BuildSettlementWindow(canvas);
 
             var vendors = new GameObject("Vendors").transform;
             vendors.SetParent(root.transform, false);
@@ -466,6 +508,49 @@ namespace GameOff.EditorTools
             return window;
         }
 
+        /// <summary>P10: nightly settlement – income and rent, three needs to tick off, family before → after, balance, CONFIRM.</summary>
+        private static SettlementWindow BuildSettlementWindow(Transform canvas)
+        {
+            var holder = new GameObject("SettlementWindowLogic", typeof(RectTransform));
+            holder.transform.SetParent(canvas, false);
+            var w = WindowRoot(canvas, "SettlementWindow", out var root);
+            var title = Text(w, "Title", "DAY 1  ·  SETTLEMENT", 26, Amber, new Vector2(-120f, 215f), new Vector2(600f, 36f), TextAlignmentOptions.MidlineLeft);
+
+            var incomeBox = Box(w, "Income", new Vector2(-217f, 95f), new Vector2(420f, 170f), Panel);
+            Text(incomeBox, "Header", "TODAY", 13, TextDim, new Vector2(0f, 71f), new Vector2(400f, 20f), TextAlignmentOptions.MidlineLeft);
+            var income = Text(incomeBox, "Lines", "", 15, TextLight, new Vector2(0f, -10f), new Vector2(400f, 130f), TextAlignmentOptions.TopLeft);
+
+            var needsBox = Box(w, "Needs", new Vector2(217f, 95f), new Vector2(420f, 170f), Panel);
+            Text(needsBox, "Header", "FOR THE FAMILY (click to change)", 13, TextDim, new Vector2(0f, 71f), new Vector2(400f, 20f), TextAlignmentOptions.MidlineLeft);
+            var buttons = new Object[3];
+            var labels = new Object[3];
+            for (int i = 0; i < 3; i++)
+            {
+                var b = MenuButton(needsBox, "Need" + i, "", new Vector2(0f, 30f - i * 44f), new Vector2(396f, 38f), 16);
+                var label = b.GetComponentInChildren<TMP_Text>();
+                label.alignment = TextAlignmentOptions.MidlineLeft;
+                label.rectTransform.offsetMin = new Vector2(12f, 0f);
+                buttons[i] = b;
+                labels[i] = label;
+            }
+
+            var familyBox = Box(w, "Family", new Vector2(0f, -88f), new Vector2(854f, 150f), Panel);
+            var family = Text(familyBox, "Lines", "", 15, TextLight, new Vector2(0f, 0f), new Vector2(830f, 136f), TextAlignmentOptions.TopLeft);
+            var balance = Text(w, "Balance", "", 20, Amber, new Vector2(-150f, -205f), new Vector2(540f, 30f), TextAlignmentOptions.MidlineLeft);
+            var confirm = MenuButton(w, "ConfirmButton", "CONFIRM", new Vector2(317f, -205f), new Vector2(220f, 40f), 17);
+
+            var window = holder.AddComponent<SettlementWindow>();
+            Set(window, "root", root);
+            Set(window, "title", title);
+            Set(window, "income", income);
+            SetList(window, "needButtons", buttons);
+            SetList(window, "needLabels", labels);
+            Set(window, "family", family);
+            Set(window, "balance", balance);
+            Set(window, "confirmButton", confirm);
+            return window;
+        }
+
         // ---------- Placement ----------
 
         private static void Place(Scene scene, GameObject prefab, List<string> log)
@@ -488,6 +573,14 @@ namespace GameOff.EditorTools
                 Set(v, "dialogs", dialogs);
                 Record(v);
             }
+            var shift = Object.FindFirstObjectByType<CounterShift>();
+            foreach (var w in instance.GetComponentsInChildren<SettlementWindow>(true))
+            {
+                Set(w, "dayManager", day);
+                Set(w, "shift", shift);
+                Record(w);
+            }
+            if (shift == null) log.Add("WARNING: no CounterShift in the scene - no wage");
             var drone = instance.GetComponentInChildren<DroneTerminal>(true);
             Set(drone, "day", day);
             Record(drone);
