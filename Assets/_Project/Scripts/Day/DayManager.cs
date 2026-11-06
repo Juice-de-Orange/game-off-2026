@@ -39,6 +39,8 @@ namespace GameOff.Day
 
         private int _day;
         private Phase _phase;
+        private bool _nightCancelled;
+        private (string title, string body)? _gameOver;
 
         /// <summary>Morning of day n (1-based), before the letter.</summary>
         public event Action<int> DayStarted;
@@ -147,12 +149,42 @@ namespace GameOff.Day
             StartCoroutine(EndDay());
         }
 
+        /// <summary>Called by a NightStep (P10 settlement, RETURN): the player doesn't go to sleep after all; the day goes on.</summary>
+        public void CancelNight() => _nightCancelled = true;
+
+        /// <summary>
+        /// Called by a NightStep when the run is lost (P10: the rent for room 103 can't be paid). Fades out and shows the end
+        /// screen with these texts; its only button goes back to the main menu. Placeholder until the real endings (P12).
+        /// </summary>
+        public void GameOver(string title, string body)
+        {
+            _gameOver = (title, body);
+            _nightCancelled = false;
+        }
+
         private IEnumerator EndDay()
         {
+            var before = _phase;
             _phase = Phase.Night;
+            _nightCancelled = false;
+            _gameOver = null;
             player.SetControlEnabled(false);
             if (NightStep != null) yield return NightStep(_day);
+            if (_nightCancelled)
+            {
+                _phase = before;
+                player.SetControlEnabled(true);
+                yield break;
+            }
             yield return ui.FadeTo(1f, fadeSeconds);
+            if (_gameOver.HasValue)
+            {
+                _phase = Phase.Finished;
+                Debug.Log($"[Day] Game over on day {_day}: {_gameOver.Value.title}");
+                RunFinished?.Invoke();
+                ui.ShowEnd(_gameOver.Value.title, _gameOver.Value.body, "RETURN TO MENU");
+                yield break;
+            }
             DayEnded?.Invoke(_day);
             yield return new WaitForSecondsRealtime(nightSeconds);
 

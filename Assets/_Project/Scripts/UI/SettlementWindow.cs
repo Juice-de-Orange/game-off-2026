@@ -5,6 +5,7 @@ using GameOff.Economy;
 using GameOff.Travelers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace GameOff.UI
@@ -13,6 +14,8 @@ namespace GameOff.UI
     /// Nightly settlement (P10), like a household book: wage for the travelers of the day, penalty for citations beyond the
     /// free warnings, rent (always paid), then food, heating and medicine to tick off, the family's condition before → after,
     /// and the balance before → after. CONFIRM books everything in the Wallet and applies the night to the Household.
+    /// P13: a need covered by a drone delivery (PlayerEconomy.Delivery, by tag) is already ticked and free; otherwise money goes
+    /// home at reference price × moneyFactor (HouseholdTuning). The deliveries are cleared after CONFIRM.
     /// Plugs into DayManager.NightStep (after "SLEEP", before the fade) and LetterAddendum (family lines in the morning letter).
     /// </summary>
     public class SettlementWindow : MonoBehaviour
@@ -30,10 +33,13 @@ namespace GameOff.UI
         [SerializeField] private TMP_Text family;
         [SerializeField] private TMP_Text balance;
         [SerializeField] private Button confirmButton;
+        [Tooltip("Back to the evening without booking anything (Esc does the same).")]
+        [SerializeField] private Button returnButton;
 
         private readonly bool[] _paid = new bool[3];
         private int _travelersToday;
         private bool _open;
+        private bool _returned;
 
         private static PlayerEconomy Economy => PlayerEconomy.Instance;
         private HouseholdTuning Tuning => Economy != null ? Economy.HouseholdTuning : null;
@@ -46,7 +52,20 @@ namespace GameOff.UI
                 needButtons[i].onClick.AddListener(() => Toggle(need));
             }
             confirmButton.onClick.AddListener(() => _open = false);
+            if (returnButton != null) returnButton.onClick.AddListener(Return);
             root.SetActive(false);
+        }
+
+        // The pause menu ignores Esc while the player has no control, so here it means RETURN.
+        private void Update()
+        {
+            if (_open && Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) Return();
+        }
+
+        private void Return()
+        {
+            _returned = true;
+            _open = false;
         }
 
         private void OnEnable()
@@ -86,8 +105,14 @@ namespace GameOff.UI
         private int Citations => shift != null ? shift.Citations : 0;
         private int FreeWarnings => shift != null ? shift.FreeWarnings : 0;
         private int Penalty => Payroll.Penalty(Citations, FreeWarnings, Tuning);
-        private int Cost(int need) => need == Food ? Tuning.foodCost : need == Heat ? Tuning.heatCost : Tuning.medicineCost;
+        private int Cost(int need) => Tuning.MoneyCost((FamilyNeed)need);
+        /// <summary>P13: the item that came home by drone for this need tonight, or null.</summary>
+        private ItemData Delivered(int need) => Economy.Delivery.CoveringItem(Tuning.TagOf((FamilyNeed)need));
+        private bool Covered(int need) => Delivered(need) != null;
+        private bool Met(int need) => _paid[need] || Covered(need);
         private int AfterFixed => Economy.Wallet.Balance + Wage - Penalty - Tuning.rent;
+        /// <summary>The rent is the one thing that must be paid; without it CONFIRM ends the run.</summary>
+        private bool CanPayRent => AfterFixed >= 0;
 
         private int ChosenCosts()
         {
@@ -105,20 +130,32 @@ namespace GameOff.UI
         {
             if (Economy == null || Tuning == null) { Debug.LogWarning("[Settlement] No PlayerEconomy or HouseholdTuning – skipped."); yield break; }
             title.text = $"DAY {day}  ·  SETTLEMENT";
-            // Food and heating first if the money is there; medicine only when someone is sick.
+            // Nothing is preselected: the player decides what the family gets (Martin, 06.11.). Drone deliveries are already ticked.
             for (int i = 0; i < 3; i++) _paid[i] = false;
-            for (int i = 0; i < 3; i++)
-                if (NeedAvailable(i) && ChosenCosts() + Cost(i) <= AfterFixed) _paid[i] = true;
             _open = true;
+            _returned = false;
             root.SetActive(true);
             Refresh();
             while (_open) yield return null;
-            Book(day);
             root.SetActive(false);
+            if (_returned)
+            {
+                dayManager.CancelNight(); // nothing booked, the evening goes on
+                yield break;
+            }
+            if (!CanPayRent)
+            {
+                // Placeholder game over (Martin, 06.11.): without the rent there is no room 103 and no way home.
+                Debug.Log($"[Settlement] day {day}: rent {Tuning.rent} can't be paid ({AfterFixed + Tuning.rent} CR available) – game over");
+                dayManager.GameOver("STRANDED", "You lost everything and are stranded in space.");
+                yield break;
+            }
+            Book(day);
         }
 
         private void Toggle(int need)
         {
+            if (Covered(need)) return;
             if (_paid[need]) _paid[need] = false;
             else if (NeedAvailable(need) && ChosenCosts() + Cost(need) <= AfterFixed) _paid[need] = true;
             Refresh();
@@ -132,9 +169,10 @@ namespace GameOff.UI
             wallet.Charge(Tuning.rent, "Rent · room 103");
             for (int i = 0; i < 3; i++)
                 if (_paid[i]) wallet.Charge(Cost(i), "Family · " + NeedNames[i].ToLowerInvariant());
-            Economy.Household.Settle(_paid[Food], _paid[Heat], _paid[Medicine]);
+            Economy.Household.Settle(Met(Food), Met(Heat), Met(Medicine));
             Debug.Log($"[Settlement] day {day}: wage {Wage}, penalty {Penalty}, rent {Tuning.rent}, " +
-                      $"food {_paid[Food]}, heat {_paid[Heat]}, medicine {_paid[Medicine]} → balance {wallet.Balance}");
+                      $"food {Met(Food)}, heat {Met(Heat)}, medicine {Met(Medicine)} (drone: {Economy.Delivery.Items.Count} items) → balance {wallet.Balance}");
+            Economy.Delivery.Clear();
         }
 
         private void Refresh()
@@ -146,11 +184,21 @@ namespace GameOff.UI
             int penalized = Payroll.PenalizedCitations(Citations, FreeWarnings);
             if (penalized > 0) sb.AppendLine(Line($"Penalty  ·  {penalized} citations beyond {FreeWarnings} warnings", -Penalty));
             sb.AppendLine(Line("Rent  ·  room 103", -t.rent));
+            if (!CanPayRent)
+                sb.AppendLine("\n<color=#E2463F>You can't pay the rent.</color>\n<color=#8B9096>RETURN and sell something – or CONFIRM and lose your room.</color>");
             income.text = sb.ToString();
 
             int available = AfterFixed - ChosenCosts();
             for (int i = 0; i < 3; i++)
             {
+                var delivered = Delivered(i);
+                if (delivered != null)
+                {
+                    needButtons[i].interactable = false;
+                    needLabels[i].text = $"<color=#9BE05A>[X]  {NeedNames[i]}  ·  by drone ({delivered.DisplayName})</color>" +
+                                         (NeedAvailable(i) ? "" : "  (nobody sick)");
+                    continue;
+                }
                 bool can = NeedAvailable(i) && (_paid[i] || Cost(i) <= available);
                 needButtons[i].interactable = can || _paid[i];
                 string box = _paid[i] ? "[X]" : "[ ]";
@@ -158,7 +206,7 @@ namespace GameOff.UI
                 needLabels[i].text = $"{box}  {NeedNames[i]}  −{e.Format(Cost(i))}{note}";
             }
 
-            var next = e.Household.Preview(_paid[Food], _paid[Heat], _paid[Medicine]);
+            var next = e.Household.Preview(Met(Food), Met(Heat), Met(Medicine));
             var fb = new StringBuilder("FAMILY\n");
             for (int i = 0; i < e.Household.Count && i < t.members.Count; i++)
             {

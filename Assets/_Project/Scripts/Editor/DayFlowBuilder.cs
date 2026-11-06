@@ -194,8 +194,8 @@ namespace GameOff.EditorTools
             var end = new GameObject("EndScreen", typeof(RectTransform));
             end.transform.SetParent(canvas, false);
             Stretch(end.GetComponent<RectTransform>());
-            Label(end.transform, "Title", "END OF THE DEMO", 48, Amber, new Vector2(0f, 60f), new Vector2(800f, 60f));
-            Label(end.transform, "Body", "Three shifts done. The real endings come later in the jam.\nThanks for playing this build.", 18, TextLight, new Vector2(0f, -10f), new Vector2(800f, 60f));
+            var endTitle = Label(end.transform, "Title", "END OF THE DEMO", 48, Amber, new Vector2(0f, 60f), new Vector2(800f, 60f));
+            var endBody = Label(end.transform, "Body", "Three shifts done. The real endings come later in the jam.\nThanks for playing this build.", 18, TextLight, new Vector2(0f, -10f), new Vector2(800f, 60f));
             var menu = MenuButton(end.transform, "MenuButton", "MAIN MENU", new Vector2(0f, -100f));
 
             var ui = canvas.gameObject.AddComponent<DayFlowUI>();
@@ -210,6 +210,9 @@ namespace GameOff.EditorTools
             Set(ui, "dayLabel", dayLabel);
             Set(ui, "endPanel", end);
             Set(ui, "endMenuButton", menu);
+            Set(ui, "endTitle", endTitle);
+            Set(ui, "endBody", endBody);
+            Set(ui, "endMenuLabel", menu.GetComponentInChildren<TMP_Text>());
             Set(ui, "dialogPanel", dialog);
             Set(ui, "dialogTitle", dTitle);
             Set(ui, "dialogBody", dBody);

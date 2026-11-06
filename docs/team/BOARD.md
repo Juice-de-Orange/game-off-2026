@@ -61,7 +61,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| martin | P13 Pakete an die Familie (Drohne deckt Bedarfe) | `Main.unity`, `PF_Economy.prefab`, `PF_DayFlow.prefab`, `Data/Economy/*`, `Data/Items/*` | 06.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): wartet auf das P08-Gespräch mit max | — | 06.11. |
 | max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
 
@@ -93,6 +92,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P13 Drohne deckt Bedarfe der Familie, Geld am Bett = Händlerwert × 1,35, Fusion Cell/POWER, Handel nur nach der Schicht; Abrechnung mit RETURN, nichts vorausgewählt; Game Over bei unbezahlter Miete; `docs/MECHANICS.md`; P69 Entwurf (martin, 06.11.)
 - [x] P10 Abrechnung am Abend: Lohn pro Reisendem, Miete, Essen/Heizung/Medizin, Familie Mom/Lena/Pip mit Zustand im Morgenbrief; P11 Händlervorrat (B04); Dev-Knöpfe ±100 CR (martin, 06.11.)
 - [x] P67 Stations-Atmo in Main hörbar (`SFX_Amb_Station_Loop`, Freesound/Jovica CC BY), `GameOff → Build Ambience into Main`; weiter in P61 (martin, 06.11.)
 - [x] P64 Schwarzmarkt kauft nur Ware mit `CONTRABAND`/`CONFISCATED`, Kiosk und Bar lehnen sie ab; gemeinsame Label-Liste (11 Labels), Menü `GameOff → Update Economy Data`, 73 Tests (martin, 06.11.)

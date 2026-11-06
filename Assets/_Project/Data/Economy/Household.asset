@@ -15,9 +15,13 @@ MonoBehaviour:
   wagePerTraveler: 15
   penaltyPerCitation: 10
   rent: 30
-  foodCost: 20
-  heatCost: 15
-  medicineCost: 25
+  moneyFactor: 1.35
+  foodTag: {fileID: 11400000, guid: 74c26e4bb62f1884ab816ec412ab79fc, type: 2}
+  foodPriceItem: {fileID: 11400000, guid: 247f021f035f8f04593273eb8afa1517, type: 2}
+  heatTag: {fileID: 11400000, guid: b383f9fa0014ed44c9c87250378ff26d, type: 2}
+  heatPriceItem: {fileID: 11400000, guid: b19c192b0b7cbd143b467867b30d0f47, type: 2}
+  medicineTag: {fileID: 11400000, guid: 64529f16bdb07784f8a6dcc11678a666, type: 2}
+  medicinePriceItem: {fileID: 11400000, guid: 04bda7305b9639e499630ecc7e65086b, type: 2}
   members:
   - name: Mom
     role: your wife

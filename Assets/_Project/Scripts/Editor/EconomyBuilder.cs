@@ -150,6 +150,12 @@ namespace GameOff.EditorTools
                 h.members.Add(new FamilyMember { name = "Pip", role = "son, has a cough", feelsCold = true });
             }, ref created);
 
+            // P13: heating needs power – the fusion cell (Martin, 06.11.); needs are covered by tag, money at the bed = value × 1.35.
+            var power = Tag("POWER", "FF9A3C", ref created);
+            data.Items["fusion"] = Item("FusionCell", "Fusion cell", "Keeps a small heater running for a night. Hard to come by back home.", 11, ref created, power);
+            AddEntry(data.Stocks["Stock_Kiosk_Test"], data.Items["fusion"], 2, log);
+            SetNeeds(data.Household, (food, data.Items["ration"]), (power, data.Items["fusion"]), (medicine, data.Items["painkillers"]), log);
+
             AssetDatabase.SaveAssets();
             if (created > 0) log.Add($"{created} test assets created");
             return data;
@@ -196,6 +202,37 @@ namespace GameOff.EditorTools
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(stock);
             log.Add($"{stock.name}: {entries.arraySize} entries with daily amounts");
+        }
+
+        /// <summary>Adds an item to a stock if it isn't sold there yet (existing assets too).</summary>
+        private static void AddEntry(VendorStock stock, ItemData item, int dailyAmount, List<string> log)
+        {
+            if (stock.Sells(item)) return;
+            var so = new SerializedObject(stock);
+            var entries = so.FindProperty("entries");
+            entries.arraySize++;
+            var e = entries.GetArrayElementAtIndex(entries.arraySize - 1);
+            e.FindPropertyRelative("item").objectReferenceValue = item;
+            e.FindPropertyRelative("dailyAmount").intValue = dailyAmount;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(stock);
+            log.Add($"{item.name} added to {stock.name}");
+        }
+
+        /// <summary>P13: tag and price item per family need, only where still empty (tuned values stay).</summary>
+        private static void SetNeeds(HouseholdTuning h, (ItemTag tag, ItemData price) food, (ItemTag tag, ItemData price) heat,
+            (ItemTag tag, ItemData price) medicine, List<string> log)
+        {
+            bool changed = false;
+            if (h.foodTag == null) { h.foodTag = food.tag; changed = true; }
+            if (h.foodPriceItem == null) { h.foodPriceItem = food.price; changed = true; }
+            if (h.heatTag == null) { h.heatTag = heat.tag; changed = true; }
+            if (h.heatPriceItem == null) { h.heatPriceItem = heat.price; changed = true; }
+            if (h.medicineTag == null) { h.medicineTag = medicine.tag; changed = true; }
+            if (h.medicinePriceItem == null) { h.medicinePriceItem = medicine.price; changed = true; }
+            if (!changed) return;
+            EditorUtility.SetDirty(h);
+            log.Add($"needs: food {h.MoneyCost(FamilyNeed.Food)}, heat {h.MoneyCost(FamilyNeed.Heat)}, medicine {h.MoneyCost(FamilyNeed.Medicine)} at the bed");
         }
 
         private static int AddToList(Object target, string field, Object[] values)
@@ -527,6 +564,9 @@ namespace GameOff.EditorTools
             for (int i = 0; i < 3; i++)
             {
                 var b = MenuButton(needsBox, "Need" + i, "", new Vector2(0f, 30f - i * 44f), new Vector2(396f, 38f), 16);
+                var colors = b.colors;
+                colors.disabledColor = Backdrop; // locked rows (by drone, nobody sick, not enough) sit darker than clickable ones
+                b.colors = colors;
                 var label = b.GetComponentInChildren<TMP_Text>();
                 label.alignment = TextAlignmentOptions.MidlineLeft;
                 label.rectTransform.offsetMin = new Vector2(12f, 0f);
@@ -536,7 +576,8 @@ namespace GameOff.EditorTools
 
             var familyBox = Box(w, "Family", new Vector2(0f, -88f), new Vector2(854f, 150f), Panel);
             var family = Text(familyBox, "Lines", "", 15, TextLight, new Vector2(0f, 0f), new Vector2(830f, 136f), TextAlignmentOptions.TopLeft);
-            var balance = Text(w, "Balance", "", 20, Amber, new Vector2(-150f, -205f), new Vector2(540f, 30f), TextAlignmentOptions.MidlineLeft);
+            var balance = Text(w, "Balance", "", 20, Amber, new Vector2(-222f, -205f), new Vector2(400f, 30f), TextAlignmentOptions.MidlineLeft);
+            var back = MenuButton(w, "ReturnButton", "RETURN", new Vector2(87f, -205f), new Vector2(220f, 40f), 17);
             var confirm = MenuButton(w, "ConfirmButton", "CONFIRM", new Vector2(317f, -205f), new Vector2(220f, 40f), 17);
 
             var window = holder.AddComponent<SettlementWindow>();
@@ -548,6 +589,7 @@ namespace GameOff.EditorTools
             Set(window, "family", family);
             Set(window, "balance", balance);
             Set(window, "confirmButton", confirm);
+            Set(window, "returnButton", back);
             return window;
         }
 
@@ -583,6 +625,8 @@ namespace GameOff.EditorTools
             if (shift == null) log.Add("WARNING: no CounterShift in the scene - no wage");
             var drone = instance.GetComponentInChildren<DroneTerminal>(true);
             Set(drone, "day", day);
+            Set(drone, "player", player);
+            Set(drone, "dialogs", dialogs);
             Record(drone);
             string fit = FitDroneTrigger(scene, instance, drone);
 

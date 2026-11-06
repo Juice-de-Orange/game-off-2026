@@ -40,6 +40,8 @@ All work is split into clearly scoped packages. This is the team's central devel
 - One package per person at a time. Build only what is in scope; anything else becomes a new package.
 - Rework of a finished package = a new follow-up package (`Folgt auf: Pxx`), never reopen.
 - Done = acceptance criteria met, no console errors, pushed, status `fertig`, short "Ergebnis" note.
+- Mechanics overview: `docs/MECHANICS.md`. When planning a package, check it for conflicts with existing mechanics; when a finished
+  package adds or changes a mechanic, update it in the same push (incl. "Lücken / passt noch nicht").
 - Need an asset? Order it yourself: add an entry to `docs/ASSET-REQUESTS.md`, run `python tools/check_asset_requests.py`, push to `main` (that is the order, see "Asset bestellen" in `docs/ASSETS.md`), create a placeholder at the final path, keep building. Only large orders or style changes need Max first.
 - Max's asset pipeline delivers on `assets/<package>` branches (never pushes to `main`). It can't open pull requests itself (M002); its lead sends Max the link, and the session briefing and `/sync` list branches not yet on `main`. **Only Max approves and merges** deliveries, then integrates them in Unity (steps in `docs/ASSETS.md`).
 - Want an asset changed? Both people may request it: add a dated line to the entry's `feedback` and set `status: rework` in `docs/ASSET-REQUESTS.md`, push to `main`. Never edit pipeline-delivered files by hand.
@@ -79,6 +81,7 @@ If your person seems to be wrapping up ("ich hör auf", "bis morgen", "gute Nach
 | `../DESIGN.md` | Game design: theme, core loop, scope (must/should/could) | both, after agreement |
 | `../DECISIONS.md` | Append-only log of decisions with reason | both, append only |
 | `../DEPLOY.md` | Live version on kestrel9.maxlworks.com: build, nightly update, rollback, secrets | both |
+| `../MECHANICS.md` | Overview of all game mechanics: how they connect, built vs. planned, gaps | both, with every package that changes a mechanic |
 
 One file per handover/question means the two people never edit the same file at the same time → no merge conflicts.
 

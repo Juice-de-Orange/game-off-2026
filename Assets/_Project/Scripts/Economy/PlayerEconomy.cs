@@ -29,6 +29,8 @@ namespace GameOff.Economy
         public EconomyTuning Tuning => tuning;
         public HouseholdTuning HouseholdTuning => household;
         public Household Household { get; private set; }
+        /// <summary>Items sent home by drone since the last settlement (P13).</summary>
+        public HomeDelivery Delivery { get; } = new HomeDelivery();
 
         private readonly Dictionary<VendorStock, VendorSupply> _supplies = new Dictionary<VendorStock, VendorSupply>();
 

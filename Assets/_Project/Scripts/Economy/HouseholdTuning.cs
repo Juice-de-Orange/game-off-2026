@@ -18,10 +18,28 @@ namespace GameOff.Economy
         [Header("Costs per night")]
         [Tooltip("Room 103 – always paid, may push the balance below zero.")]
         public int rent = 30;
-        public int foodCost = 20;
-        public int heatCost = 15;
+
+        [Header("Needs (P13): a delivered item with the tag covers the need; otherwise money at the bed")]
+        [Tooltip("Sending money at the bed costs the reference item's value × this (vendors are cheaper).")]
+        public float moneyFactor = 1.35f;
+        public ItemTag foodTag;
+        public ItemData foodPriceItem;
+        [Tooltip("Heating: the family needs power for the heater.")]
+        public ItemTag heatTag;
+        public ItemData heatPriceItem;
         [Tooltip("Only needed while someone is sick; heals every sick person by one step.")]
-        public int medicineCost = 25;
+        public ItemTag medicineTag;
+        public ItemData medicinePriceItem;
+
+        public ItemTag TagOf(FamilyNeed need) => need == FamilyNeed.Food ? foodTag : need == FamilyNeed.Heat ? heatTag : medicineTag;
+        public ItemData PriceItemOf(FamilyNeed need) =>
+            need == FamilyNeed.Food ? foodPriceItem : need == FamilyNeed.Heat ? heatPriceItem : medicinePriceItem;
+
+        /// <summary>Money sent home for a need at the bed: reference item value × moneyFactor, rounded.</summary>
+        public int MoneyCost(FamilyNeed need) => MoneyCost(PriceItemOf(need), moneyFactor);
+
+        public static int MoneyCost(ItemData priceItem, float factor) =>
+            priceItem == null ? 0 : Mathf.RoundToInt(priceItem.BaseValue * factor);
 
         [Header("Family")]
         public List<FamilyMember> members = new List<FamilyMember>();

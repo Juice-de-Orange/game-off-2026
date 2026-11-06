@@ -216,7 +216,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - **Familie** (`Household`, reine Regeln): Mom, Lena, Pip (wie in den Platzhalter-Briefen). Stufen well → weak → sick → critical.
     Ohne Essen alle +1, ohne Heizung die Kälteempfindlichen (Pip) +1, Medizin heilt Kranke um 1, Essen + Heizung lassen Geschwächte erholen.
     Folgen stehen im **Morgenbrief** ab Tag 2 (eine Zeile pro Person).
-  - **Werte** (vorläufig) in `Data/Economy/Household.asset`: Lohn 15/Reisender, Abzug 10, Miete 30, Essen 20, Heizung 15, Medizin 25.
+  - **Werte** (vorläufig) in `Data/Economy/Household.asset`: Lohn 15/Reisender, Abzug 10, Miete 30. Bedarfe seit P13: Geld am Bett = Händlerwert × 1,35 → Essen 11, Heizung 15, Medizin 20.
   - **Testgeld:** Optionen → DEV → CREDITS −100 / +100 (nur im Spiel, im Kontobuch als „Dev“, Kontostand daneben). Fällt mit dem DEV-Reiter vor der Abgabe weg.
   - Für andere Pakete: `DayManager.NightStep` und `DayManager.LetterAddendum` (Haken für die Nacht und den Brief),
     `PlayerEconomy.Household`, `PlayerEconomy.FamilyReport()`, `Payroll`.
@@ -253,9 +253,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Nach Tag 3 oder bei Niederlage ein Endbildschirm.
 - Enthalten: Niederlage (Familie zerbrochen / gefeuert), mindestens 2 Enden je nach Moral & Familie
 - Abnahme: Jedes Ende lässt sich gezielt erspielen.
+- Ergänzung (martin, 06.11.): Die Enden lesen den echten Familienzustand aus P10 (`PlayerEconomy.Household`, Stufen well/weak/sick/critical
+  für Mom, Lena, Pip), z. B. alle gesund / jemand krank / jemand kritisch am Ende von Tag 3. „Familie zerbrochen“ als Niederlage
+  kommt aus den Regeln von **P69**. Dazu Disziplinarstrafen (3 = Game Over, Vorschlag an Max) und Moral (P08).
+  Schon da (Platzhalter, P13): **Miete nicht bezahlbar → „STRANDED“**; P12 ersetzt den Text durch ein echtes Ende. Haken: `DayManager.GameOver(title, body)`.
 
 ### P13 — Hangar: Pakete an die Familie
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 06.11.)
+- Größe: S · Priorität: Soll · Status: fertig (martin, 06.11.)
 - Braucht: P10, P11, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Gegenstände aus dem Inventar per Frachtdrohne nach Hause schicken.
 - Offen (Max, 06.11., P58): Die Drohne hat keine Öffnungszeit, die Händler öffnen nur nach der Schicht. Beim Bau entscheiden.
@@ -269,6 +273,20 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Marktverfügbarkeit (was es wann zu welchem Preis gibt) plant **P68**.
 - Enthalten: Versand-UI im Hangar, Wirkung auf Familienbedarf, Risiko bei Schmuggelware
 - Abnahme: Ein Medikament schicken senkt den Medizinbedarf am Abend.
+- Stand 06.11. (martin):
+  - **Drohne** (`DroneTerminal`): nur nach der Schicht offen, sonst „The next drone leaves after your shift.“ (Dev-Knopf `Dev_force_Send`).
+    Was man schickt, landet in `PlayerEconomy.Delivery` (`HomeDelivery`).
+  - **Abrechnung**: Ein geschickter Gegenstand mit dem Label des Bedarfs deckt ihn ab (grün „by drone (Ration pack)“, kostet nichts).
+    Sonst Geld am Bett = Wert des Referenz-Gegenstands × 1,35 (`HouseholdTuning.moneyFactor`): Essen 11 (Ration 8), Wärme 15
+    (Fusion Cell 11), Medizin 20 (Schmerzmittel 15). Lieferungen werden nach CONFIRM geleert. Gesperrte Zeilen sind jetzt dunkel.
+    **Nichts ist vorausgewählt** (Martin, 06.11.): Der Spieler klickt selbst an, was die Familie bekommt; nur Drohnen-Lieferungen sind schon abgehakt.
+    **RETURN** (oder Esc) links neben CONFIRM verlässt die Abrechnung ohne Buchung, der Abend geht weiter (`DayManager.CancelNight`).
+  - **Miete nicht bezahlbar = Game Over (Platzhalter):** Reicht Kontostand + Lohn − Abzug nicht für die Miete, zeigt die Abrechnung das rot
+    („You can't pay the rent“). RETURN → noch etwas verkaufen; CONFIRM → Abblende, „STRANDED – You lost everything and are stranded in
+    space.“, einziger Knopf RETURN TO MENU (`DayManager.GameOver`, `DayFlowUI.ShowEnd(title, body, button)`). Echte Enden: P12.
+  - **Neu:** Label `POWER`, Item `Fusion Cell` (11 CR, im Kiosk, 2 pro Tag). Bedarf → Label: Essen FOOD, Wärme POWER, Medizin MEDICINE.
+  - Schmuggelware und Wertsachen gehen ohne Wirkung nach Hause (Risiko kommt mit P08).
+  - Geprüft: 84/84 EditMode-Tests; Play-Modus: Drohne in der Schicht zu, abends Ration abgeliefert → FOOD in der Abrechnung abgehakt.
 
 ### P14 — Reisende laufen
 - Größe: M · Priorität: Soll · Status: offen
@@ -282,6 +300,9 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Alle Reisenden, Regeln, Briefe und Texte für 3 Tage (~15 Fälle, Englisch).
 - Regel (Max, 06.11., P58): Reisende mit gefälschtem Siegel erst an Tagen, an denen die UV-Lampe verfügbar ist; der Validator soll das prüfen.
 - Abnahme: Kompletter Durchlauf 10–15 Minuten ohne Platzhaltertexte.
+- Ergänzung (martin, 06.11.): **Briefe reagieren auf den Familienzustand**, statt ihn vorzugeben (der Platzhalter von Tag 3 sagt fest
+  „Pip is sick now“, auch wenn Pip gesund ist). Je Tag Brieftext pro Zustand oder Bausteine je Person; Haken ist
+  `DayManager.LetterAddendum` bzw. `PlayerEconomy.FamilyReport()` (heute eine Zeile pro Person unter dem Brief).
 
 ### P16 — Gadget: Dokumentenscanner
 - Größe: S · Priorität: Muss · Status: offen
@@ -446,6 +467,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Lichter flackern/erlöschen je nach Familienzustand (auch von Plattform und Bullauge sichtbar); Familienfoto im Motelspind verblasst/reißt;
   Morgenbrief liegt physisch auf dem Tisch in 103, Handschrift wird zittriger
 - Abnahme: Familienzustand ändert sichtbar Stadtlichter, Foto und Brief.
+- Hinweis (martin, 06.11.): Der Familienzustand existiert seit P10: `PlayerEconomy.Household` (Stufe je Person), Event `Household.Changed`.
 
 ### P30 — Getränkeautomat
 - Größe: S · Priorität: Soll · Status: offen
@@ -454,6 +476,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: [E] "NOVA COLA – 2 Credits": Geld weg, Dose fällt rumpelnd heraus, ins Inventar; nach Hause schicken (P13) oder am Schalter
   trinken (kleiner Bonus, z. B. Schichtzeit kurz langsamer)
 - Abnahme: Kaufen, Inventar, Wirkung und Versand funktionieren.
+- Hinweis (martin, 06.11.): Grundregel – jeder Handel (Händler, Drohne, Automat) ist nur nach der Schicht möglich.
 
 ### P31 — Anzeigesäule mit Live-Ankunftsplan
 - Größe: S · Priorität: Soll · Status: offen
@@ -960,6 +983,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   | VALUABLE | Schmuck, Uhren, Wertsachen; Tauschware für die Wunschliste des Barkeepers (P65) |
   | ALIEN | fremde, nicht-menschliche Waren |
   | PERISHABLE | verdirbt nach einigen Tagen (Regel erst mit P10/P11) |
+  | POWER | Energie für die Heizung zu Hause, z. B. Fusion Cell; deckt den Bedarf Wärme (P13, martin 06.11.) |
 
   Kategorie-Labels (DRUG, TECH, WEAPON, VALUABLE, ALIEN) sind das, worauf sich Gerüchte und Wunschlisten beziehen.
   Labels hängen am Gegenstandstyp, nicht am einzelnen Stück: Beschlagnahmte Ware sind eigene Gegenstände mit `CONFISCATED`
@@ -1019,3 +1043,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Bis dahin: Platzhalterpreise nach der 35-%-Regel aus P13.
 - Nicht enthalten: Gerüchte selbst (P65), Texte der Ereignisse (P15).
 - Abnahme: An einem Tag mit Ereignis sind Menge oder Preis der betroffenen Ware sichtbar anders; die Kosten am Bett ziehen mit.
+
+### P69 — Familienschicksal: was „kritisch“ bedeutet
+- Größe: S · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 06.11.) – mit Max abstimmen
+- Braucht: P10 · Folgt auf: P10 · Gehört zu den Bedingungen von P12, Texte in P15, sichtbar in P29
+- Ziel: Der Zustand der Familie hat eine Grenze: Wer zu lange kritisch ist, bleibt nicht folgenlos.
+- Enthalten (Vorschlag): Regel, was nach einer oder mehreren Nächten auf „critical“ passiert (z. B. Person geht ins Krankenhaus und
+  fällt als Bedarf weg, verlässt die Familie oder stirbt); „Familie zerbrochen“ als Niederlage für P12; Ankündigung im Morgenbrief
+  vorher („Pip is getting worse every night“); Werte (Anzahl Nächte) im `HouseholdTuning`; EditMode-Tests für die Regel.
+- Offen für Max: Wie hart darf es sein (Tod ja/nein)? Ab wann ist die Familie „zerbrochen“?
+- Nicht enthalten: Endbildschirme (P12), Brieftexte (P15), Stadtlichter/Foto (P29).
+- Abnahme: Drei Nächte ohne Versorgung führen sichtbar zur angekündigten Folge; mit Versorgung erholt sich die Familie.

@@ -25,6 +25,10 @@ namespace GameOff.Day
         [SerializeField] private TMP_Text dayLabel;
         [SerializeField] private GameObject endPanel;
         [SerializeField] private Button endMenuButton;
+        [Tooltip("Texts of the end screen; ShowEnd(title, body, button) replaces them (e.g. game over when the rent can't be paid).")]
+        [SerializeField] private TMP_Text endTitle;
+        [SerializeField] private TMP_Text endBody;
+        [SerializeField] private TMP_Text endMenuLabel;
 
         [Header("Bed dialog")]
         [SerializeField] private GameObject dialogPanel;
@@ -139,6 +143,15 @@ namespace GameOff.Day
         {
             hintBar.SetActive(false);
             endPanel.SetActive(true);
+        }
+
+        /// <summary>End screen with other texts, e.g. the placeholder game over (P10: rent not paid). The only button goes to the menu.</summary>
+        public void ShowEnd(string title, string body, string buttonLabel)
+        {
+            if (endTitle != null) endTitle.text = title;
+            if (endBody != null) endBody.text = body;
+            if (endMenuLabel != null) endMenuLabel.text = buttonLabel;
+            ShowEnd();
         }
 
         private void CloseLetter()

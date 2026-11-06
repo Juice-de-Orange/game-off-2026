@@ -142,6 +142,48 @@ namespace GameOff.Tests
             Assert.AreEqual(2, supply.Count(ration), "refill never takes away");
         }
 
+        // ---------- Drone delivery (P13) ----------
+
+        private ItemData ItemWith(ItemTag tag, int value)
+        {
+            var item = Make<ItemData>();
+            var so = new SerializedObject(item);
+            so.FindProperty("baseValue").intValue = value;
+            if (tag != null)
+            {
+                var tags = so.FindProperty("tags");
+                tags.arraySize = 1;
+                tags.GetArrayElementAtIndex(0).objectReferenceValue = tag;
+            }
+            so.ApplyModifiedPropertiesWithoutUndo();
+            return item;
+        }
+
+        [Test]
+        public void Delivery_CoversTheNeedWithTheTag_AndClears()
+        {
+            var food = Make<ItemTag>();
+            var power = Make<ItemTag>();
+            var ration = ItemWith(food, 8);
+            var d = new HomeDelivery();
+            d.Add(ItemWith(null, 20));
+            d.Add(ration);
+            Assert.AreSame(ration, d.CoveringItem(food));
+            Assert.IsFalse(d.Covers(power));
+            Assert.IsFalse(d.Covers(null));
+            d.Clear();
+            Assert.IsFalse(d.Covers(food));
+        }
+
+        [Test]
+        public void MoneyAtTheBed_Is35PercentAboveTheVendorValue()
+        {
+            Assert.AreEqual(11, HouseholdTuning.MoneyCost(ItemWith(null, 8), 1.35f));
+            Assert.AreEqual(15, HouseholdTuning.MoneyCost(ItemWith(null, 11), 1.35f));
+            Assert.AreEqual(20, HouseholdTuning.MoneyCost(ItemWith(null, 15), 1.35f));
+            Assert.AreEqual(0, HouseholdTuning.MoneyCost(null, 1.35f));
+        }
+
         // ---------- Content ----------
 
         [Test]
@@ -153,6 +195,12 @@ namespace GameOff.Tests
                 Assert.Greater(t.members.Count, 0, $"{t.name}: no family");
                 Assert.AreEqual(4, t.letterLines.Length, $"{t.name}: one letter line per condition");
                 foreach (var m in t.members) Assert.IsFalse(string.IsNullOrWhiteSpace(m.name), $"{t.name}: nameless family member");
+                foreach (FamilyNeed need in System.Enum.GetValues(typeof(FamilyNeed)))
+                {
+                    Assert.IsNotNull(t.TagOf(need), $"{t.name}: {need} has no tag");
+                    Assert.IsNotNull(t.PriceItemOf(need), $"{t.name}: {need} has no price item");
+                    Assert.IsTrue(t.PriceItemOf(need).HasTag(t.TagOf(need)), $"{t.name}: the {need} price item doesn't carry the {need} tag");
+                }
             }
             foreach (var guid in AssetDatabase.FindAssets("t:VendorStock"))
             {
