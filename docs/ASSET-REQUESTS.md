@@ -5373,7 +5373,7 @@ variants: []
 animations: []
 collision: prefab
 refs: []
-placeholder: Noch kein Modell: Der Scanner existiert nur als Gegenstand Item_DocumentScanner im Kiosk.
+placeholder: Noch kein Modell, der Scanner existiert nur als Gegenstand Item_DocumentScanner im Kiosk.
 feedback: []
 ```
 
@@ -5401,7 +5401,7 @@ variants: []
 animations: []
 collision: prefab
 refs: []
-placeholder: Noch kein Modell und kein Gegenstand: kommt mit P62.
+placeholder: Noch kein Modell und kein Gegenstand, kommt mit P62.
 feedback: []
 ```
 
@@ -5428,7 +5428,7 @@ variants: []
 animations: []
 collision: prefab
 refs: []
-placeholder: Noch kein Modell und kein Gegenstand: kommt mit P63.
+placeholder: Noch kein Modell und kein Gegenstand, kommt mit P63.
 feedback: []
 ```
 
