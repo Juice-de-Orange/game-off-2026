@@ -202,7 +202,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Klappt das, setzt max P09 auf `fertig`.
 
 ### P10 — Geld, Familie & Abrechnung
-- Größe: M · Priorität: Muss · Status: offen
+- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 06.11.) – zusammen mit P11
 - Braucht: P09, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Abrechnungsbildschirm am Tagesende wie ein Haushaltsbuch.
 - Enthalten: Lohn, Miete, Familienbedarfe (Essen, Wärme, Medizin) zum Ankreuzen, Zustand der Familienmitglieder,
@@ -211,7 +211,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Geld fließt über 3 Tage korrekt, Familie reagiert auf Nichtbezahlen.
 
 ### P11 — Läden: Gadget-Shop & Bar-Schwarzmarkt
-- Größe: M · Priorität: Muss · Status: offen
+- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 06.11.) – zusammen mit P10; jetzt nur Händlervorrat (B04), Rest wartet auf das P08-Gespräch
 - Braucht: P03, P08, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Kaufen und Verkaufen über ein gemeinsames Shop-System.
 - Enthalten: Shop-UI, Bar (illegale Gegenstände kaufen, Beschlagnahmtes verkaufen), Dokumentenscanner kaufbar
