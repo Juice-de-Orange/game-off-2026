@@ -913,7 +913,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis: Im WebGL-Build bestätigt, die Klappe schließt nach dem Auslösen, auch der zweite Reisende braucht zwei Klicks. 72 Tests grün.
 
 ### P60 — Letzte Platzhalter ablösen
-- Größe: M · Priorität: Soll · Status: bestellt, wartet auf Lieferung (max baut ein)
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 06.11.)
 - Braucht: — · Folgt auf: P42, P52
 - Ziel: Im Spiel ist nichts mehr grau oder einfarbig gebaut, und die Dokumente zeigen echte Passfotos.
 - Bestand (`GameOff/List Placeholders`, 06.11.): 254 Renderer in Main und Menu, dazu das Silhouetten-Foto auf den Dokumenten und zwei Testtöne.
