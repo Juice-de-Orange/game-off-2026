@@ -353,6 +353,7 @@ in `docs/ASSET-REQUESTS.md`.
 - betrifft: `ASSET-REQUESTS.md`: `SM_Item_DocScanner` (P16), `SM_Item_UVLamp` (P62), `SM_Item_ClownShoes` und `SFX_ClownShoe_Squeak_01` bis `_03` (P63)
 - status: offen
 - meldung: Sechs neue Einträge. Zuerst der Scanner (P1), dann die Lampe (P2), die Schuhe zuletzt (P3). Die Türgeräusche aus `assets/P27-door-sfx` hat Max angehört und freigegeben: synthetisch erzeugte Sounds sind also in Ordnung, wenn sie gut klingen, auch für P60 und P61.
+
 ### M020 — Hundebild für Zimmer 103 (SM_Motel_DogPainting, aus P51)
 - datum: 2026-11-06
 - von: pipeline
