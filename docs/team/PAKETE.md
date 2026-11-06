@@ -251,6 +251,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Größe: S · Priorität: Muss · Status: offen
 - Braucht: P06, P11
 - Ziel: Gekaufter Scanner markiert gefälschte Felder auf Dokumenten.
+- Assets: `SM_Item_DocScanner` (bestellt am 06.11.)
 - Abnahme: Mit Scanner wird ein gefälschtes Feld sichtbar markiert.
 
 ### P17 — Retro-Look
@@ -879,3 +880,21 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Einbau nach der Lieferung: Felder und Aufrufe in `DocumentDesk`, `CounterClickable`, `CounterStation`, `FirstPersonController`, UI und Handelsfenster; Raumklänge je Bereich. Alles über `AudioManager` und die Mixer-Gruppen aus P18.
 - Nicht enthalten: Musik (noch offen, Max), Stimmen.
 - Abnahme: Jede Aktion am Schalter ist zu hören, Lautstärkeregler wirken, keine Konsolenfehler, Download nach dem Einbau gemessen.
+
+### P62 — Gadget: UV-Lampe
+- Größe: M · Priorität: Soll · Status: offen, Modell bestellt (max, 06.11.)
+- Braucht: P06, P11 · Folgt auf: P58
+- Assets: `SM_Item_UVLamp` (bestellt am 06.11.)
+- Ziel: Mit der Lampe sieht der Spieler gefälschte Siegel, ohne sie bleiben sie unsichtbar.
+- Enthalten: Gegenstand, Lampe auf dem Schaltertisch, UV-Ansicht auf den Dokumenten für `ForgedSeal`.
+- Nicht enthalten: weitere Gadgets. Reisende mit gefälschtem Siegel kommen über P15, erst ab Verfügbarkeit der Lampe (P58 Punkt 4).
+- Offen: freigeschaltet oder gekauft, und an welchem Tag (`DESIGN.md`, Gadgets).
+- Abnahme: Ohne Lampe kein Hinweis aufs Siegel, mit Lampe klar sichtbar; Validator prüft die Regel aus P58.
+
+### P63 — Clownsschuhe
+- Größe: S · Priorität: Kann · Status: offen, Assets bestellt (max, 06.11.)
+- Braucht: P08, P46, P61 · Folgt auf: —
+- Assets: `SM_Item_ClownShoes`, `SFX_ClownShoe_Squeak_01` bis `_03` (bestellt am 06.11.)
+- Ziel: Beschlagnahmte Clownsschuhe lassen sich anziehen, dann quietscht jeder Schritt, bis man sie auszieht.
+- Enthalten: Gegenstand, Anziehen und Ausziehen im Inventar, Schrittgeräusch wechselt.
+- Abnahme: Mit Schuhen quietscht jeder Schritt, ohne Schuhe normal.

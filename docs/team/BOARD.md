@@ -74,7 +74,7 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 - [ ] 
 
 ### Kann (wenn Zeit bleibt)
-- [ ] Idee max: **Clownsschuhe** als Beschlagnahme-Gegenstand (Inventar, P08/P46). Zieht man sie an, quietscht jeder Schritt beim Gehen, bis man sie auszieht. Braucht: Anziehen/Ausziehen, Schrittgeräusch `SFX_`
+- [ ] Idee max, jetzt **P63**: **Clownsschuhe** als Beschlagnahme-Gegenstand (Inventar, P08/P46). Zieht man sie an, quietscht jeder Schritt beim Gehen, bis man sie auszieht. Braucht: Anziehen/Ausziehen, Schrittgeräusch `SFX_`
 - [ ] 
 
 ## Bugs

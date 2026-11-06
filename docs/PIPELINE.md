@@ -345,3 +345,12 @@ in `docs/ASSET-REQUESTS.md`.
 - meldung: Im Spiel gibt es noch keine einzige Sounddatei. Bitte freie Sounds heraussuchen (CC0 bevorzugt, sonst CC-BY mit Eintrag in `CREDITS.md`), nach OGG wandeln, mono. Zuerst die P1-Einträge am Schalter.
   Raumklänge höchstens 30 s und nahtlos loopend, die Downloadgröße zählt. Die Auswahl nach Gehör macht das Team, also gern je Effekt ein bis zwei Alternativen unter `ArtSource/Audio/` mitliefern. Keine Musik, keine Stimmen.
 - antwort:
+
+### M019 — Neue Aufträge: Gadgets und Clownsschuhe
+- datum: 2026-11-06
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`: `SM_Item_DocScanner` (P16), `SM_Item_UVLamp` (P62), `SM_Item_ClownShoes` und `SFX_ClownShoe_Squeak_01` bis `_03` (P63)
+- status: offen
+- meldung: Sechs neue Einträge. Zuerst der Scanner (P1), dann die Lampe (P2), die Schuhe zuletzt (P3). Die Türgeräusche aus `assets/P27-door-sfx` hat Max angehört und freigegeben: synthetisch erzeugte Sounds sind also in Ordnung, wenn sie gut klingen, auch für P60 und P61.
+- antwort:

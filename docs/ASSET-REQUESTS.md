@@ -5348,3 +5348,164 @@ refs: []
 placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
 feedback: []
 ```
+
+### SM_Item_DocScanner.fbx
+```yaml
+path: Assets/_Project/Art/Models/Items/SM_Item_DocScanner.fbx
+package: P16
+scene: Kiosk, Schalter (auf dem Tisch)
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0.12, 0.18, 0.05]
+pivot: bottom_center
+tris_max: 400
+materials: [Item]
+textures:
+  - Assets/_Project/Art/Textures/Items/T_Item_DocScanner_Albedo.png   # 64x64, Point
+  - Assets/_Project/Art/Textures/Items/T_Item_DocScanner_Emission.png   # 64x64, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  Dokumentenscanner: klobiges Handgerät mit Griff, kleinem grünen Röhrenschirm und Abtastleiste, abgenutztes beiges Plastik, passend zu SM_Counter_Printer und dem CRT am Schalter. Liegt nach dem Kauf auf dem Schaltertisch. Der Schirm leuchtet über die Emission.
+interaction: "kaufen, am Schalter benutzen"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Noch kein Modell: Der Scanner existiert nur als Gegenstand Item_DocumentScanner im Kiosk.
+feedback: []
+```
+
+### SM_Item_UVLamp.fbx
+```yaml
+path: Assets/_Project/Art/Models/Items/SM_Item_UVLamp.fbx
+package: P62
+scene: Schalter (auf dem Tisch)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.06, 0.18, 0.06]
+pivot: bottom_center
+tris_max: 300
+materials: [Item]
+textures:
+  - Assets/_Project/Art/Textures/Items/T_Item_UVLamp_Albedo.png   # 64x64, Point
+  - Assets/_Project/Art/Textures/Items/T_Item_UVLamp_Emission.png   # 64x64, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  UV-Handlampe: kurzer Metallzylinder mit Griffrillen und violetter Leuchtröhre vorn, Behördenausstattung, verkratzt. Steht auf dem Schaltertisch. Die Röhre leuchtet violett über die Emission.
+interaction: "am Schalter benutzen"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Noch kein Modell und kein Gegenstand: kommt mit P62.
+feedback: []
+```
+
+### SM_Item_ClownShoes.fbx
+```yaml
+path: Assets/_Project/Art/Models/Items/SM_Item_ClownShoes.fbx
+package: P63
+scene: Asservaten, Inventar
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0.3, 0.42, 0.14]
+pivot: bottom_center
+tris_max: 500
+materials: [Item]
+textures:
+  - Assets/_Project/Art/Textures/Items/T_Item_ClownShoes_Albedo.png   # 64x64, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  Paar riesiger Clownsschuhe mit runden Kappen, rot und gelb, abgewetzt und völlig fehl am Platz in der Station. Der einzige fröhliche Gegenstand im Spiel. Beide Schuhe in einem Modell, nebeneinander stehend.
+interaction: "beschlagnahmen, anziehen, ausziehen"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Noch kein Modell und kein Gegenstand: kommt mit P63.
+feedback: []
+```
+
+### SFX_ClownShoe_Squeak_01.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_ClownShoe_Squeak_01.ogg
+package: P63
+scene: alle Räume
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Quietschender Schritt eines Clownsschuhs, wie ein Gummitier, ca. 0,25 s. Mono, OGG.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton. Der Einbau folgt in P63.
+feedback: []
+```
+
+### SFX_ClownShoe_Squeak_02.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_ClownShoe_Squeak_02.ogg
+package: P63
+scene: alle Räume
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Zweite Variante von SFX_ClownShoe_Squeak_01, etwas höher, ca. 0,25 s. Mono, OGG.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton. Der Einbau folgt in P63.
+feedback: []
+```
+
+### SFX_ClownShoe_Squeak_03.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_ClownShoe_Squeak_03.ogg
+package: P63
+scene: alle Räume
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Dritte Variante von SFX_ClownShoe_Squeak_01, etwas tiefer, ca. 0,25 s. Mono, OGG.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton. Der Einbau folgt in P63.
+feedback: []
+```
