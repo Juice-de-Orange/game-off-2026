@@ -30,6 +30,7 @@ namespace GameOff.EditorTools
             DayFlowBuilder.BuildIntoMainFromMenu();
             EconomyBuilder.BuildIntoMainFromMenu();
             TrafficBuilder.BuildIntoMainFromMenu();
+            AmbienceBuilder.BuildIntoMainFromMenu();
             MenuSceneBuilder.BuildFromMenu();
             Debug.Log("[RebuildAll] Done. Bake the light next (GameOff/Setup Main Lighting + Bake).");
         }

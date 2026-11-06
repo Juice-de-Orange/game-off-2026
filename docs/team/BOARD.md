@@ -61,7 +61,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| martin | P67 Stations-Atmo vorab hörbar | `Main.unity`, `Scripts/Editor/RebuildAll.cs` | 06.11. |
 | max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
 
 ## Backlog
@@ -92,6 +91,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P67 Stations-Atmo in Main hörbar (`SFX_Amb_Station_Loop`, Freesound/Jovica CC BY), `GameOff → Build Ambience into Main`; weiter in P61 (martin, 06.11.)
 - [x] P64 Schwarzmarkt kauft nur Ware mit `CONTRABAND`/`CONFISCATED`, Kiosk und Bar lehnen sie ab; gemeinsame Label-Liste (11 Labels), Menü `GameOff → Update Economy Data`, 73 Tests (martin, 06.11.)
 - [x] Alle Texte in Orbitron (Menü, HUD, Fenster, Brief; TMP-Standard), [E]-Hinweis im Menüknopf-Stil (`GameOff → Apply HUD Style`); Schalter-HUD und Dokumente → Notiz an max (martin, 05.11.)
 - [x] Orbitron für Spieltitel und Menü-Überschriften (Credits + Lizenz), Unity-Splash abgeschaltet – Antwort von max umgesetzt (martin, 05.11.)

@@ -5294,7 +5294,8 @@ animations: []
 collision: prefab
 refs: []
 placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
-feedback: []
+feedback:
+  - "2026-11-06 martin: Liefert Martin selbst, Pipeline nicht mehr nötig. Freesound 77838 (Jovica, CC BY 4.0), ruhiger Teil 51 s als nahtloser Loop, stereo, 486 KB. Liegt schon unter dem Zielpfad, Quelle in ArtSource/Audio/. Länge und Stereo sind Martins Entscheidung (statt höchstens 30 s mono). Max: bitte Status setzen und beim Einbau in P61 nach Gehör prüfen."
 ```
 
 ### SFX_Amb_Bar_Loop.ogg

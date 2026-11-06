@@ -885,6 +885,10 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Allgemein (P2): `SFX_Paper_Pickup`, `SFX_Footstep_Metal_01` bis `_03`, `SFX_UI_Click`, `SFX_Amb_Station_Loop`
   - Räume und Handel (P3): `SFX_Amb_Bar_Loop`, `SFX_Amb_Hangar_Loop`, `SFX_Trade_Buy`
 - Einbau nach der Lieferung: Felder und Aufrufe in `DocumentDesk`, `CounterClickable`, `CounterStation`, `FirstPersonController`, UI und Handelsfenster; Raumklänge je Bereich. Alles über `AudioManager` und die Mixer-Gruppen aus P18.
+- **Hinweis für max (martin, 06.11.):** `SFX_Amb_Station_Loop.ogg` hat Martin selbst geliefert (Freesound 77838, Jovica, CC BY 4.0;
+  51 s stereo, 486 KB; Feedback-Zeile in `ASSET-REQUESTS.md`, Status bitte setzen). Vorab läuft er schon in Main über **P67**
+  (`AmbienceBuilder`, `PF_Ambience`, eine 2D-Quelle für die ganze Station, Lautstärke 0,35). Für die Raumklänge pro Bereich bitte darauf
+  aufbauen oder ersetzen; `AmbienceBuilder` gehört dann dir. Die Credits im Hauptmenü brauchen noch **Build Menu Scenes**.
 - Nicht enthalten: Musik (noch offen, Max), Stimmen.
 - Abnahme: Jede Aktion am Schalter ist zu hören, Lautstärkeregler wirken, keine Konsolenfehler, Download nach dem Einbau gemessen.
 
@@ -963,10 +967,15 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Zettel erscheint am vorgesehenen Tag; XY durchlassen → Geld nach der Schicht; abweisen → kein Geld.
 
 ### P67 — Stations-Atmo vorab hörbar
-- Größe: XS · Priorität: Soll · Status: in Arbeit (martin, 06.11.)
+- Größe: XS · Priorität: Soll · Status: fertig (martin, 06.11.)
 - Braucht: P18 · Folgt auf: — · Teil von **P61** vorgezogen (max baut dort weiter)
 - Ziel: Der gelieferte Loop `SFX_Amb_Station_Loop.ogg` ist im Spiel zu hören, bevor P61 die Raumklänge pro Bereich einbaut.
 - Enthalten: Builder **GameOff → Build Ambience into Main** setzt `Prefabs/Audio/PF_Ambience.prefab` (AudioSource 2D, Loop, SFX-Gruppe) in Main;
   Aufnahme in **Rebuild All**.
 - Nicht enthalten: Raumklänge pro Bereich (Bar, Hangar), Überblenden zwischen Räumen – das bleibt in P61.
 - Abnahme: In Main läuft die Atmo nahtlos, SFX-Regler wirkt, im Pausenmenü pausiert sie, Konsole 0 Fehler.
+- Ergebnis (martin, 06.11.): `Scripts/Editor/AmbienceBuilder.cs`, Menü **GameOff → Build Ambience into Main**, auch in `Rebuild All`.
+  `PF_Ambience` = AudioSource 2D, Loop, Gruppe SFX, Lautstärke 0,35 (Konstante im Builder, P61 stimmt nach Gehör ab).
+  Geprüft im Play-Modus: läuft ab Start, springt nach 51 s nahtlos auf den Anfang, pausiert mit `AudioListener.pause` (Pausenmenü),
+  Konsole 0 Fehler. Der Loop selbst: Freesound 77838 (Jovica, CC BY 4.0), Sekunde 6–60 mit 3 s Überblendung, Quelle in `ArtSource/Audio/`.
+  **Weiter in P61 (max).**
