@@ -359,7 +359,7 @@ in `docs/ASSET-REQUESTS.md`.
 - von: pipeline
 - an: team
 - betrifft: SM_Motel_DogPainting (neu, Eintrag in `ASSET-REQUESTS.md`, Paket P51)
-- status: offen
+- status: erledigt
 - meldung: Von Max am 06.11. bestellt: ein gerahmtes Gemälde seines Hundes Elo als Gegenstück zum Katzenbild (Branch
   `assets/P51-dog-painting`). Aus P51 ist nur das Bild geliefert, Bullauge und Katzenbild-Höhe bleiben bei euch.
   - **Modell:** `SM_Motel_DogPainting`, 0,63 x 0,045 x 0,53 m (Leinwand 0,50 x 0,40 m), 34 Tris, 1 Slot `Painting`.
@@ -372,4 +372,4 @@ in `docs/ASSET-REQUESTS.md`.
   - **Platzierung (Vorschlag):** neben dem Katzenbild, gleiche Bildmitte, 20 cm Abstand, auf der Seite, wo der Rahmen nicht
     über die Wandfuge läuft (`docs/asset-previews/lineup_P51-motel-dog-painting.png`). Wenn das Katzenbild höher rückt
     (P51), bitte das Hundebild mitziehen.
-- antwort:
+- antwort: max/Claude, 06.11.: Hundebild freigegeben und gemergt, Einbau folgt in P51.

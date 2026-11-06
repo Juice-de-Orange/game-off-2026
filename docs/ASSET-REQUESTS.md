@@ -4537,7 +4537,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_WindowWall_6x3.fbx
 package: P60
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [6.0, 0.2, 3.0]
@@ -4564,7 +4564,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Lock_WindowWall_6x3.fbx
 package: P60
 scene: InspectionLock
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [6.0, 0.2, 3.0]
@@ -4591,7 +4591,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hall/SM_Hall_WallEnd_1x6.fbx
 package: P60
 scene: Hall
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [1.0, 0.2, 6.0]
@@ -4618,7 +4618,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_LightStrip.fbx
 package: P60
 scene: alle Räume
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [1.4, 0.2, 0.06]
@@ -4646,7 +4646,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_LockLamp.fbx
 package: P60
 scene: Motel
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.12, 0.44, 0.08]
@@ -4674,7 +4674,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Exterior/T_Ext_HullFiller_A_Albedo.png
 package: P60
 scene: Exterior
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4701,7 +4701,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Exterior/T_Ext_HullFiller_B_Albedo.png
 package: P60
 scene: Exterior
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4728,7 +4728,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Human.png
 package: P60
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4755,7 +4755,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Vellani.png
 package: P60
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4782,7 +4782,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Quobb.png
 package: P60
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4809,7 +4809,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Xirrik.png
 package: P60
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4836,7 +4836,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Sorvak.png
 package: P60
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4863,7 +4863,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Chime.ogg
 package: P60
 scene: Station
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4889,7 +4889,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Vendor_Greet.ogg
 package: P60
 scene: Kiosk, Bar
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4915,7 +4915,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Stamp_Approve.ogg
 package: P61
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4941,7 +4941,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Stamp_Deny.ogg
 package: P61
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4967,7 +4967,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Slide.ogg
 package: P61
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4993,7 +4993,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup.ogg
 package: P61
 scene: Counter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5019,7 +5019,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Drawer_Open.ogg
 package: P61
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5045,7 +5045,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Drawer_Close.ogg
 package: P61
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5071,7 +5071,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Printer_Citation.ogg
 package: P61
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5097,7 +5097,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Button_Arrest.ogg
 package: P61
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5123,7 +5123,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Cover_Flip.ogg
 package: P61
 scene: Counter
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5149,7 +5149,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Airlock_Fire.ogg
 package: P61
 scene: InspectionLock
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5175,7 +5175,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Footstep_Metal_01.ogg
 package: P61
 scene: alle Räume
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5201,7 +5201,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Footstep_Metal_02.ogg
 package: P61
 scene: alle Räume
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5227,7 +5227,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Footstep_Metal_03.ogg
 package: P61
 scene: alle Räume
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5253,7 +5253,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_UI_Click.ogg
 package: P61
 scene: UI
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5279,7 +5279,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Trade_Buy.ogg
 package: P61
 scene: Kiosk, Bar
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5305,7 +5305,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Amb_Station_Loop.ogg
 package: P61
 scene: Halle, Schalter, Motel
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5333,7 +5333,7 @@ feedback:
 path: Assets/_Project/Audio/SFX/SFX_Amb_Bar_Loop.ogg
 package: P61
 scene: Bar
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5359,7 +5359,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Amb_Hangar_Loop.ogg
 package: P61
 scene: Hangar
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5385,7 +5385,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_DocScanner.fbx
 package: P16
 scene: Kiosk, Schalter (auf dem Tisch)
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.12, 0.18, 0.05]
@@ -5413,7 +5413,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_UVLamp.fbx
 package: P62
 scene: Schalter (auf dem Tisch)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.06, 0.18, 0.06]
@@ -5441,7 +5441,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_ClownShoes.fbx
 package: P63
 scene: Asservaten, Inventar
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.3, 0.42, 0.14]
@@ -5468,7 +5468,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_ClownShoe_Squeak_01.ogg
 package: P63
 scene: alle Räume
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5494,7 +5494,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_ClownShoe_Squeak_02.ogg
 package: P63
 scene: alle Räume
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5520,7 +5520,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_ClownShoe_Squeak_03.ogg
 package: P63
 scene: alle Räume
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
