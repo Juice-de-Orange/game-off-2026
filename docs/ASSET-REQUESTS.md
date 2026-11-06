@@ -5354,7 +5354,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_DocScanner.fbx
 package: P16
 scene: Kiosk, Schalter (auf dem Tisch)
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.12, 0.18, 0.05]
