@@ -4502,3 +4502,381 @@ refs: []
 placeholder: Graue Box aus GameOff/Build Economy into Main (EconomyBuilder), kein FBX am Pfad. Sobald das FBX da ist, setzt der Builder es ein.
 feedback: []
 ```
+
+### SM_Counter_WindowWall_6x3.fbx
+```yaml
+path: Assets/_Project/Art/Models/Counter/SM_Counter_WindowWall_6x3.fbx
+package: P60
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [6.0, 0.2, 3.0]
+pivot: bottom_center
+tris_max: 500
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Counter/T_Counter_WindowWall_Albedo.png   # 256x128, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Vorderwand des Schalterraums, Seite des Beamten, die wichtigste Wand im Spiel: Der Spieler sitzt die ganze Schicht davor. 6 m breit, 3 m hoch, 0,2 m dick. Öffnung für das vorhandene Schalterfenster: mittig 4 m breit, vom Boden bis 2,2 m hoch, also 1 m Wand links und rechts und 0,8 m Sturz. Gepolsterte Behördenwand wie SM_Station_Wall_2x3_Padded, kühles Blaugrau, abgenutzt, Nietenreihe um die Öffnung, kleines Warnschild oben seitlich. Der Sturz soll nicht leer wirken. Ausrichtung wie SM_Station_Wall_2x3, die Sichtseite ist die Vorderseite; der Builder dreht das Stück.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Fünf flache blaue Blöcke `Wall_X-0,1_*` (M_Graybox_Counter) aus dem StationGrayboxBuilder um das Schalterfenster. Maße wie oben; Kollision bleibt bei den Blöcken.
+feedback: []
+```
+
+### SM_Lock_WindowWall_6x3.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Lock_WindowWall_6x3.fbx
+package: P60
+scene: InspectionLock
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [6.0, 0.2, 3.0]
+pivot: bottom_center
+tris_max: 500
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Lock_WindowWall_Albedo.png   # 256x128, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Dieselbe Wand von der Seite der Prüfkammer: gleiche Maße und gleiche Öffnung wie SM_Counter_WindowWall_6x3 (6 x 3 m, Öffnung 4 m breit, 2,2 m hoch). Sicherheitsbereich: dunkles, verkratztes Metall, rot-gelbe Warnstreifen um die Öffnung, im Stil von SM_Station_Hatch_Airlock. Der Spieler sieht sie vom Schalter nur durch das Fenster, die Reisenden stehen davor. Passt zum roten Licht der Kammer.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Fünf flache rote Blöcke `Wall_X0,1_*` (M_Graybox_Danger) aus dem StationGrayboxBuilder. Maße wie oben; Kollision bleibt bei den Blöcken.
+feedback: []
+```
+
+### SM_Hall_WallEnd_1x6.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hall/SM_Hall_WallEnd_1x6.fbx
+package: P60
+scene: Hall
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [1.0, 0.2, 6.0]
+pivot: bottom_center
+tris_max: 200
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Hall/T_Hall_WallEnd_Albedo.png   # 64x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Schmales, hohes Wandstück der Halle, 1 m breit und 6 m hoch: schließt die Nordwand links und rechts neben dem breiten Durchgang ab. Wird zweimal gesetzt, einmal gespiegelt. Muss zu den Wandmodulen der Halle passen: gleiche Plattenteilung auf 3 m Höhe, oben eine vertikale Rippe oder ein Rohr, damit das Stück nicht leer wirkt.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vier neutrale graue Blöcke `Wall_Z5,9_*` (M_Graybox_Neutral) bei x = ±5,5. Kollision bleibt bei den Blöcken.
+feedback: []
+```
+
+### SM_Station_LightStrip.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_LightStrip.fbx
+package: P60
+scene: alle Räume
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [1.4, 0.2, 0.06]
+pivot: bottom_center
+tris_max: 60
+materials: [Frame, Glow]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_LightStrip_Albedo.png   # 64x16, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_LightStrip_Emission.png   # 64x16, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Einfache Deckenleuchte: schmaler Metallrahmen mit Leuchtstreifen, 1,4 m lang. Wird 49-mal gesetzt, also sehr sparsam. Der Slot Glow muss weiß bis hellgrau sein: Der Builder färbt ihn je Raum ein (blau, orange, grün, violett ...). Die Oberseite sieht niemand und braucht keine Dreiecke.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Leuchtende Quader `<Raum>_Strip_*` (M_Graybox_Emit_*) in der Gruppe LightFixtures. Pivot unten mittig direkt an der Decke.
+feedback: []
+```
+
+### SM_Station_LockLamp.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_LockLamp.fbx
+package: P60
+scene: Motel
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0.12, 0.44, 0.08]
+pivot: center
+tris_max: 40
+materials: [Lamp]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_LockLamp_Albedo.png   # 16x16, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_LockLamp_Emission.png   # 16x16, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  Kleine rote Statuslampe über einer verriegelten Tür. Geht durch die Wand und ist von beiden Seiten sichtbar: 12 cm breit, 8 cm hoch, 44 cm tief. Kleiner Metallrahmen, rotes Glas mit Emission.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Roter leuchtender Quader `LockedLamp` an den Türen von Zimmer 101 und 102.
+feedback: []
+```
+
+### T_Ext_HullFiller_A_Albedo.png
+```yaml
+path: Assets/_Project/Art/Textures/Exterior/T_Ext_HullFiller_A_Albedo.png
+package: P60
+scene: Exterior
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HullFiller_A_Albedo.png   # 128x128, nahtlos kachelnd, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Kachelnde Außenhaut für alle Hüllflächen, die keine ganze 4-m-Platte sind: die 137 Platten der Unterseite und die Reststücke rund um Öffnungen und Kanten. Eine Kachel entspricht 4 m. Gleicher Stil, Farbton und gleiche Texeldichte wie T_Ext_HullPanel_4x4_Albedo, aber ruhiger und ohne Luken, damit bei Wiederholung und schmalen Streifen kein Muster auffällt. Muss nahtlos kacheln.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Einfarbige Blöcke mit M_Graybox_Hull_A in der Gruppe Hull, rund 130 Stück.
+feedback: []
+```
+
+### T_Ext_HullFiller_B_Albedo.png
+```yaml
+path: Assets/_Project/Art/Textures/Exterior/T_Ext_HullFiller_B_Albedo.png
+package: P60
+scene: Exterior
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HullFiller_B_Albedo.png   # 128x128, nahtlos kachelnd, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Zweite Variante von T_Ext_HullFiller_A_Albedo, etwas heller und mit mehr Brandspuren. Beide werden gemischt, damit die Flächen nicht einheitlich wirken. Gleiche Dichte, muss nahtlos kacheln.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Einfarbige Blöcke mit M_Graybox_Hull_B in der Gruppe Hull, rund 60 Stück.
+feedback: []
+```
+
+### T_Doc_Photo_Human.png
+```yaml
+path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Human.png
+package: P60
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Human.png   # 128x160, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Passfoto für Dokumente: Mensch frontal von vorn, Kopf und Schultern, neutraler heller Behördenhintergrund, leicht vergilbt und grobkörnig. Gerendert aus SK_NPC_Human (Gesicht und Kleidung müssen dazu passen), damit der Spieler Foto und Figur in der Kammer vergleichen kann. Gleicher Bildausschnitt bei allen fünf Arten, keine Schrift im Bild.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Graue Silhouette T_Doc_Photo_Placeholder.png (128x160) auf allen Dokumenten aller Reisenden. Liefern unter neuem Namen, die alte Datei bleibt.
+feedback: []
+```
+
+### T_Doc_Photo_Vellani.png
+```yaml
+path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Vellani.png
+package: P60
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Vellani.png   # 128x160, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Passfoto für Dokumente: Vellani frontal von vorn, Kopf und Schultern, neutraler heller Behördenhintergrund, leicht vergilbt und grobkörnig. Gerendert aus SK_NPC_Vellani (Gesicht und Kleidung müssen dazu passen), damit der Spieler Foto und Figur in der Kammer vergleichen kann. Gleicher Bildausschnitt bei allen fünf Arten, keine Schrift im Bild.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Graue Silhouette T_Doc_Photo_Placeholder.png (128x160) auf allen Dokumenten aller Reisenden. Liefern unter neuem Namen, die alte Datei bleibt.
+feedback: []
+```
+
+### T_Doc_Photo_Quobb.png
+```yaml
+path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Quobb.png
+package: P60
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Quobb.png   # 128x160, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Passfoto für Dokumente: Quobb frontal von vorn, Kopf und Schultern, neutraler heller Behördenhintergrund, leicht vergilbt und grobkörnig. Gerendert aus SK_NPC_Quobb (Gesicht und Kleidung müssen dazu passen), damit der Spieler Foto und Figur in der Kammer vergleichen kann. Gleicher Bildausschnitt bei allen fünf Arten, keine Schrift im Bild.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Graue Silhouette T_Doc_Photo_Placeholder.png (128x160) auf allen Dokumenten aller Reisenden. Liefern unter neuem Namen, die alte Datei bleibt.
+feedback: []
+```
+
+### T_Doc_Photo_Xirrik.png
+```yaml
+path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Xirrik.png
+package: P60
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Xirrik.png   # 128x160, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Passfoto für Dokumente: Xirrik frontal von vorn, Kopf und Schultern, neutraler heller Behördenhintergrund, leicht vergilbt und grobkörnig. Gerendert aus SK_NPC_Xirrik (Gesicht und Kleidung müssen dazu passen), damit der Spieler Foto und Figur in der Kammer vergleichen kann. Gleicher Bildausschnitt bei allen fünf Arten, keine Schrift im Bild.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Graue Silhouette T_Doc_Photo_Placeholder.png (128x160) auf allen Dokumenten aller Reisenden. Liefern unter neuem Namen, die alte Datei bleibt.
+feedback: []
+```
+
+### T_Doc_Photo_Sorvak.png
+```yaml
+path: Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Sorvak.png
+package: P60
+scene: Counter
+status: offen
+priority: P1
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Sorvak.png   # 128x160, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Passfoto für Dokumente: Sorvak frontal von vorn, Kopf und Schultern, neutraler heller Behördenhintergrund, leicht vergilbt und grobkörnig. Gerendert aus SK_NPC_Sorvak (Gesicht und Kleidung müssen dazu passen), damit der Spieler Foto und Figur in der Kammer vergleichen kann. Gleicher Bildausschnitt bei allen fünf Arten, keine Schrift im Bild.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Graue Silhouette T_Doc_Photo_Placeholder.png (128x160) auf allen Dokumenten aller Reisenden. Liefern unter neuem Namen, die alte Datei bleibt.
+feedback: []
+```
+
+### SFX_PA_Chime.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_PA_Chime.ogg
+package: P60
+scene: Station
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Durchsage-Gong der Station vor Ansagen: zwei kurze, leicht verrauschte Töne aus einem alten Lautsprecher, ca. 1 s. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono. Keine Stimme.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Synthetischer Testton AudioManager.PlayPreview(Voice) bei jeder Durchsage. Die gesprochenen Durchsagen selbst kommen nicht von der Pipeline.
+feedback: []
+```
+
+### SFX_Vendor_Greet.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Vendor_Greet.ogg
+package: P60
+scene: Kiosk, Bar
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Kurzes, sprachähnliches Murmeln beim Ansprechen eines Händlers, ca. 0,5 s, keine verständlichen Wörter, leicht verfremdet, damit es zu Mensch und Alien passt. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Synthetischer Testton AudioManager.PlayPreview(Voice) in Vendor.OnInteract.
+feedback: []
+```

@@ -324,3 +324,14 @@ in `docs/ASSET-REQUESTS.md`.
   Branch pushen, der Lead schickt Max den PR-Link in den Chat. Bitte weiter jede fertige Lieferung melden. Das Session-Briefing des Teams zeigt solche Branches jetzt zusätzlich an.
   Neu: Martin darf ab jetzt ebenfalls direkt bestellen (`ASSETS.md`). Drei neue Figuren stehen in `ASSET-REQUESTS.md` (P52, statisch ohne Rig, Blick +Z, bis 16.11.).
 - antwort:
+
+### M017 — Neue Aufträge P60: die letzten Platzhalter im Spiel
+- datum: 2026-11-06
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`, alle 14 Einträge mit `package: P60`, außerdem `SFX_Door_*` (P27)
+- status: offen
+- meldung: Max bestellt alles, was im Spiel noch Platzhalter ist. Reihenfolge: zuerst die P1-Einträge (`SM_Counter_WindowWall_6x3`, `SM_Lock_WindowWall_6x3`, die fünf `T_Doc_Photo_*`), dann P2, dann P3.
+  Die Passfotos sollen aus den vorhandenen `SK_NPC_*` gerendert werden, damit Foto und Figur zusammenpassen. Die drei `SFX_Door_*` sind seit dem 02.11. offen; bitte mitliefern oder hier melden, was fehlt. Die Auswahl nach Gehör macht das Team.
+  Bitte jede fertige Lieferung wie in M016 melden.
+- antwort:

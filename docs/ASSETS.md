@@ -136,6 +136,7 @@ Die Pipeline arbeitet den Eintrag erneut ab und liefert wieder per Pull Request.
 - Nicht: Voicelines (`VO_`), Musik komponieren. Freie Musik/SFX sucht sie heraus (CC0/CC-BY, Eintrag in `CREDITS.md`, Umwandlung nach OGG), die Auswahl nach Gehör trifft das Team.
 
 ## Platzhalter erkennen
+- `GameOff/List Placeholders` listet alles, was in Main, Menu und Boot noch Graybox- oder Platzhalter-Material nutzt, auch in `Logs/Placeholders.txt`.
 - Platzhalter-Materialien in Magenta/Grau-Raster (`M_Placeholder.mat`), damit sofort sichtbar ist, was noch fehlt.
 - Platzhalter-Modelle: Unity-Primitive oder ProBuilder-Blöcke in ungefährer Endgröße.
 

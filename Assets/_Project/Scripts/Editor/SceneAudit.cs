@@ -19,6 +19,36 @@ namespace GameOff.EditorTools
             if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) Run();
         }
 
+        /// <summary>What is still not final art in every scene that ships: graybox or placeholder materials and names (P60).</summary>
+        [MenuItem("GameOff/List Placeholders")]
+        public static void ListPlaceholders()
+        {
+            if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            var report = new StringBuilder();
+            report.AppendLine("[Placeholders]");
+            foreach (string path in new[] { "Assets/_Project/Scenes/Main.unity", "Assets/_Project/Scenes/Menu.unity", "Assets/_Project/Scenes/Boot.unity" })
+            {
+                var scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
+                report.AppendLine(path);
+                var rows = new SortedDictionary<string, int>();
+                foreach (var r in scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Renderer>(true)))
+                {
+                    if (!r.enabled) continue;
+                    var flagged = r.sharedMaterials.Where(m => m != null && (m.name.Contains("Graybox") || m.name.Contains("Placeholder"))).Select(m => m.name).Distinct().ToList();
+                    bool named = r.name.Contains("Placeholder");
+                    if (flagged.Count == 0 && !named) continue;
+                    string group = r.transform.parent != null ? r.transform.parent.name : "-";
+                    Bounds b = r.bounds;
+                    string key = $"{r.transform.root.name}/{group}/{r.name} [{string.Join(",", flagged)}] size {b.size:F2} at {b.center:F1}";
+                    rows.TryGetValue(key, out int n);
+                    rows[key] = n + 1;
+                }
+                foreach (var row in rows) report.AppendLine($"  {row.Value} x {row.Key}");
+            }
+            System.IO.File.WriteAllText("Logs/Placeholders.txt", report.ToString());
+            Debug.Log(report.ToString());
+        }
+
         public static void Run()
         {
             var scene = EditorSceneManager.OpenScene("Assets/_Project/Scenes/Main.unity", OpenSceneMode.Single);
