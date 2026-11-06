@@ -255,10 +255,18 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Jedes Ende lässt sich gezielt erspielen.
 
 ### P13 — Hangar: Pakete an die Familie
-- Größe: S · Priorität: Soll · Status: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 06.11.)
 - Braucht: P10, P11, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Gegenstände aus dem Inventar per Frachtdrohne nach Hause schicken.
 - Offen (Max, 06.11., P58): Die Drohne hat keine Öffnungszeit, die Händler öffnen nur nach der Schicht. Beim Bau entscheiden.
+- **Festgelegt (martin, 06.11., DECISIONS.md):** Die Familie fordert Gegenstände (Essen, Wärme, Medizin).
+  - Was vor dem Schlafengehen an der Drohne abgeliefert wurde, ist in der Abrechnung (P10) schon **abgehakt** („covered by drone“, kostet nichts).
+  - Die Waren gibt es **billiger beim Händler** (oder beschlagnahmt am Schalter, P08).
+  - Sonst schickt man beim Schlafengehen **Geld**: Preis ≈ **Händlerpreis × 1,35** (35 % teurer).
+  - **Platzhalterpreise** folgen dieser Regel, z. B. Ration 8 CR beim Händler → Essen 11 CR am Bett; Schmerzmittel 15 → Medizin 20.
+    Für Wärme braucht es eine Ware (z. B. Heizpatrone mit Label `HEAT` oder `TECH`, ca. 11 CR → 15 CR am Bett).
+  - Die Kosten am Bett sollen sich aus dem Händlerpreis ableiten (Faktor 1,35 im `HouseholdTuning`), nicht von Hand gepflegt werden.
+  - Marktverfügbarkeit (was es wann zu welchem Preis gibt) plant **P68**.
 - Enthalten: Versand-UI im Hangar, Wirkung auf Familienbedarf, Risiko bei Schmuggelware
 - Abnahme: Ein Medikament schicken senkt den Medizinbedarf am Abend.
 
@@ -1000,3 +1008,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Geprüft im Play-Modus: läuft ab Start, springt nach 51 s nahtlos auf den Anfang, pausiert mit `AudioListener.pause` (Pausenmenü),
   Konsole 0 Fehler. Der Loop selbst: Freesound 77838 (Jovica, CC BY 4.0), Sekunde 6–60 mit 3 s Überblendung, Quelle in `ArtSource/Audio/`.
   **Weiter in P61 (max).**
+
+### P68 — Marktverfügbarkeit: Politik und Tagesereignisse
+- Größe: M · Priorität: Soll · Status: offen, Entwurf (martin, 06.11.) – erst planen
+- Braucht: P11 (Händlervorrat), P10, P13 · Folgt auf: — · Hängt zusammen mit P65 (Gerüchte) und P15 (Inhalte)
+- Ziel: Was die Händler anbieten und zu welchem Preis, hängt von der politischen Lage und den Ereignissen des Tages ab.
+- Idee (martin, 06.11.): Pro Tag Faktoren für Menge und Preis je Label (z. B. Grenze dicht → FOOD knapp und teurer; Schmuggler
+  verhaftet → DRUG teurer). Daraus folgen auch die Kosten am Bett (Händlerpreis × 1,35, P13). Ereignisse kündigen sich in Bulletin,
+  Durchsagen oder Gerüchten an.
+- Bis dahin: Platzhalterpreise nach der 35-%-Regel aus P13.
+- Nicht enthalten: Gerüchte selbst (P65), Texte der Ereignisse (P15).
+- Abnahme: An einem Tag mit Ereignis sind Menge oder Preis der betroffenen Ware sichtbar anders; die Kosten am Bett ziehen mit.
