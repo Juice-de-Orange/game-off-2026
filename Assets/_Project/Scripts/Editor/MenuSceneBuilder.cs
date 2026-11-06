@@ -226,7 +226,18 @@ namespace GameOff.EditorTools
             var dev = pages[2].transform;
             var devTools = ToggleRow(dev, "DevTools", "DEV TOOLS", new Vector2(0f, RowTop), out var devToolsValue);
             var trafficLines = ToggleRow(dev, "TrafficLineDev", "TRAFFIC_LINE_DEV", new Vector2(0f, RowTop - RowStep), out var trafficLinesValue);
-            var devHelp = Label(dev, "Help", DevToolsHelp, 15, TextDim, new Vector2(0f, RowTop - 2.9f * RowStep), new Vector2(KeyBoxWidth, 100f));
+            // Money for testing P10/P11: caption, −100, balance, +100 (only works in Main, where PlayerEconomy lives).
+            var creditsRow = new GameObject("DevCredits", typeof(RectTransform));
+            creditsRow.transform.SetParent(dev, false);
+            creditsRow.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, RowTop - 2f * RowStep);
+            creditsRow.GetComponent<RectTransform>().sizeDelta = new Vector2(640f, 50f);
+            var creditsCaption = Label(creditsRow.transform, "Caption", "CREDITS", 20, TextLight, new Vector2(-200f, 0f), new Vector2(240f, 40f));
+            creditsCaption.alignment = TextAlignmentOptions.MidlineLeft;
+            var creditsMinus = MenuButton(creditsRow.transform, "Minus100", "-100", new Vector2(-10f, 0f), new Vector2(90f, 36f), 18);
+            var creditsValue = Label(creditsRow.transform, "Balance", "-", 18, Amber, new Vector2(110f, 0f), new Vector2(150f, 36f));
+            var creditsPlus = MenuButton(creditsRow.transform, "Plus100", "+100", new Vector2(230f, 0f), new Vector2(90f, 36f), 18);
+
+            var devHelp = Label(dev, "Help", DevToolsHelp, 15, TextDim, new Vector2(0f, RowTop - 3.9f * RowStep), new Vector2(KeyBoxWidth, 100f));
             devHelp.alignment = TextAlignmentOptions.TopLeft;
 
             back = MenuButton(panel, "BackButton", "BACK", new Vector2(0f, -215f));
@@ -246,6 +257,9 @@ namespace GameOff.EditorTools
             Set(options, "devToolsValue", devToolsValue);
             Set(options, "trafficLines", trafficLines);
             Set(options, "trafficLinesValue", trafficLinesValue);
+            Set(options, "creditsMinus", creditsMinus);
+            Set(options, "creditsPlus", creditsPlus);
+            Set(options, "creditsValue", creditsValue);
             for (int i = 1; i < pages.Length; i++) pages[i].SetActive(false);
             return panel;
         }
@@ -260,7 +274,8 @@ namespace GameOff.EditorTools
         private const string DevToolsHelp =
             "Red test buttons (end the day, open closed shops) and visible hitboxes.\n" +
             "Test items are added the next time a new game starts.\n" +
-            "TRAFFIC_LINE_DEV (own switch): ship lanes + edit panel, mouse free (Tab: look around).";
+            "TRAFFIC_LINE_DEV (own switch): ship lanes + edit panel, mouse free (Tab: look around).\n" +
+            "CREDITS: add or take 100 CR (in game only, booked as \"Dev\").";
 
         // Read-only key list (rebinding is out of scope, DECISIONS.md 05.11.). Key column left, action from <pos>.
         private const string KeyOverview =

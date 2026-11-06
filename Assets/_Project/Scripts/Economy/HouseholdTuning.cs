@@ -1,0 +1,39 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace GameOff.Economy
+{
+    /// <summary>
+    /// Numbers of the nightly settlement (P10): wage, penalty, rent, the family's needs and the family itself.
+    /// All values are provisional – balancing happens here, not in code.
+    /// </summary>
+    [CreateAssetMenu(menuName = "GameOff/Economy/Household Tuning", fileName = "Household")]
+    public class HouseholdTuning : ScriptableObject
+    {
+        [Header("Income")]
+        public int wagePerTraveler = 15;
+        [Tooltip("Deducted for every citation beyond the free warnings of the day (CounterShift.FreeWarnings).")]
+        public int penaltyPerCitation = 10;
+
+        [Header("Costs per night")]
+        [Tooltip("Room 103 – always paid, may push the balance below zero.")]
+        public int rent = 30;
+        public int foodCost = 20;
+        public int heatCost = 15;
+        [Tooltip("Only needed while someone is sick; heals every sick person by one step.")]
+        public int medicineCost = 25;
+
+        [Header("Family")]
+        public List<FamilyMember> members = new List<FamilyMember>();
+        [Tooltip("Condition names, from healthy to critical (index = Household condition).")]
+        public string[] conditionNames = { "well", "weak", "sick", "critical" };
+        [Tooltip("Lines for the morning letter per condition; {0} = name.")]
+        public string[] letterLines =
+        {
+            "{0} is doing fine.",
+            "{0} is weak and tired.",
+            "{0} is sick and needs medicine.",
+            "{0} is in a very bad way.",
+        };
+    }
+}

@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: Stock_BlackMarket_Test
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.VendorStock
   title: UNDER THE COUNTER
-  items:
-  - {fileID: 11400000, guid: 95ed42a555ca29c44adb1a7a87f3c5aa, type: 2}
+  entries:
+  - item: {fileID: 11400000, guid: 95ed42a555ca29c44adb1a7a87f3c5aa, type: 2}
+    dailyAmount: 3
+  items: []
   sellFactor: 1.5
   buyFactor: 1.2
   refusedTags: []
+  onlyTags:
+  - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
+  - {fileID: 11400000, guid: 987504bd07ab3c14985cc1e8f37c39db, type: 2}
   openAfterShiftOnly: 1
   emptyText: Nothing today.

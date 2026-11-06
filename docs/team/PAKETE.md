@@ -23,11 +23,11 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 
 ## Reihenfolge (Stand 05.11. abends, max)
 Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächste offene Muss-Paket.
-1. **Kern-Loop-Call** (Frage `kern-loop`, vor dem Checkpoint 09.11.): legt Umfang, Geldwerte, Enden und die neuen Pakete P44/P45 fest; dabei auch die Entscheidungen aus **P58**
-2. **P09** Tagesablauf abnehmen (martin): Reisende lassen sich jetzt abfertigen
+1. ~~Kern-Loop-Call~~ hat stattgefunden (martin, 06.11.); P58 ist entschieden
+2. **P09** Tagesablauf abnehmen (max, mit Kontroll-Gameplay; martin hat im Dev-Modus getestet)
 3. **P08** Entscheidungen & Moral → **P10** Geld, Familie & Abrechnung
 4. **P15** Inhalte für 3 Tage inkl. **The Shifter** (auch echte Antworten der Reisenden) → **P12** Enden
-5. **P11** Kiosk, **P13** Heimschicken (Muss-Frage im Call), **P19** itch-Upload
+5. **P11** Kiosk, **P13** Heimschicken, **P64** Schwarzmarkt kauft nur Schmuggelware; **P19** itch-Upload ist auf später verschoben (martin, 06.11.)
 6. Danach Soll-Pakete nach Zeit: P50 Türschilder, P14 Reisende laufen, P16, P25–P36; P53 Wohnmodul erst nach Entwurf und Absprache
 
 ## Vorlage
@@ -175,10 +175,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   versteckter Moral-Wert (sinkt bei Luftschleuse, stark bei Unschuldigen), einfache Effekte (Wache, Schleuse)
 - Nicht enthalten: Enden (P12)
 - Abnahme: Alle vier Aktionen verändern Geld/Moral/Inventar korrekt.
+- **Zum Besprechen (Max + Martin, vor P08):** Labels hängen an der Sorte Gegenstand (`ItemData`), nicht am einzelnen Stück. Eine normale und eine beschlagnahmte Taschenuhr sind darum zwei Gegenstände („Pocket watch“ und „Confiscated pocket watch“ mit `CONFISCATED`); ein Stück im Inventar bekommt kein Label nachträglich. Beschlagnahme legt direkt die beschlagnahmte Variante ins Inventar. Folge: Jeder beschlagnahmbare Gegenstand braucht zwei Assets. Alternative wäre ein Merkmal pro Inventar-Stapel („beschlagnahmt“), das kostet Umbau an `Inventory`. Erst gemeinsam entscheiden, sonst kollidiert es mit P08. (aus P64, martin 06.11.)
+- Vorschlag Martin (06.11.): Schicht-Inventar nur am Tisch, Wahl am Schichtende (Nothing to report / Oh, seems I missed that / As ordered), Verwarnungen (P07) und Disziplinarstrafen getrennt, 3 Disziplinarstrafen = Game Over, alle Zahlen vorläufig → `questions/2026-11-06_martin-an-max_schichtinventar-beschlagnahme.md`, gemeinsam festlegen.
 - Festgelegt im Asset-Durchgang (max, 02.11.): Luftschleuse: Außenschott **klappt nach außen ins All** (Rework mit Angel bestellt), Sog, Warnlampe dreht rot, Reisender wird hinausgerissen. Verhaftung: Warnlampe rot. Beschlagnahmtes landet physisch im Asservatenschrank (P32).
 
 ### P09 — Tagesablauf
-- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 05.11.)
+- Größe: M · Priorität: Muss · Status: Abnahme bei max (martin, 06.11.)
 - Braucht: P03
 - Ziel: Morgen → Schicht → Feierabend → Schlafen → nächster Tag, 3 Tage.
 - Enthalten: `DayManager`, Morgen-Brief + Bulletin, Schichtende nach Anzahl Reisender, Bett in der Unterkunft beendet den Tag
@@ -194,23 +196,48 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Nutzt `CounterShift.BeginDay`/`ShiftEnded` und `SkyRig.SetDay` unverändert. Ereignisse: `DayStarted`, `ShiftOver`, `DayEnded`, `RunFinished`.
   - **Dev-Werkzeuge** (`DayManager.showDevTools`, an): roter **Dev_end_Day**-Knopf im Bett-Fenster + sichtbare Bett-Hitbox.
     **Vor der Abgabe ausschalten.** Bekannt: Dev_end_Day mitten im Reisenden lässt dessen Papiere bis zum nächsten Tag auf dem Tisch.
+- Übergabe 06.11. (martin → max): Martin hat die drei Tage im Dev-Modus durchgespielt. **Offen ist nur noch die Abnahme mit dem
+  Kontroll-Gameplay (max):** drei Tage hintereinander, jede Schicht endet, weil alle Reisenden abgefertigt sind (nicht über Dev_end_Day),
+  dann Feierabend → Bett → nächster Tag, nach Tag 3 das Platzhalter-Ende. Dabei prüfen, dass der Tisch morgens leer ist (B05).
+  Klappt das, setzt max P09 auf `fertig`.
 
 ### P10 — Geld, Familie & Abrechnung
-- Größe: M · Priorität: Muss · Status: offen
+- Größe: M · Priorität: Muss · Status: fertig (martin, 06.11.)
 - Braucht: P09, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Abrechnungsbildschirm am Tagesende wie ein Haushaltsbuch.
 - Enthalten: Lohn, Miete, Familienbedarfe (Essen, Wärme, Medizin) zum Ankreuzen, Zustand der Familienmitglieder,
   Folgen bei Nichtbezahlen, Werte in einem ScriptableObject
 - Nicht enthalten: Pakete schicken (P13)
 - Abnahme: Geld fließt über 3 Tage korrekt, Familie reagiert auf Nichtbezahlen.
+- Ergebnis (martin, 06.11.): von Martin im Spiel abgenommen ("läuft perfekt").
+  - **Abrechnung** nach „SLEEP“, vor der Abblende (`SettlementWindow`, in `PF_Economy`, gebaut von `EconomyBuilder`): Lohn pro
+    abgefertigtem Reisenden, Abzug je Verwarnzettel über den freien (`CounterShift.FreeWarnings`), Miete (immer), Essen / Heizung /
+    Medizin zum Anklicken (nur, was bezahlbar ist; Medizin nur, wenn jemand krank ist), Familie vorher → nachher, Kontostand vorher → nachher.
+  - **Familie** (`Household`, reine Regeln): Mom, Lena, Pip (wie in den Platzhalter-Briefen). Stufen well → weak → sick → critical.
+    Ohne Essen alle +1, ohne Heizung die Kälteempfindlichen (Pip) +1, Medizin heilt Kranke um 1, Essen + Heizung lassen Geschwächte erholen.
+    Folgen stehen im **Morgenbrief** ab Tag 2 (eine Zeile pro Person).
+  - **Werte** (vorläufig) in `Data/Economy/Household.asset`: Lohn 15/Reisender, Abzug 10, Miete 30, Essen 20, Heizung 15, Medizin 25.
+  - **Testgeld:** Optionen → DEV → CREDITS −100 / +100 (nur im Spiel, im Kontobuch als „Dev“, Kontostand daneben). Fällt mit dem DEV-Reiter vor der Abgabe weg.
+  - Für andere Pakete: `DayManager.NightStep` und `DayManager.LetterAddendum` (Haken für die Nacht und den Brief),
+    `PlayerEconomy.Household`, `PlayerEconomy.FamilyReport()`, `Payroll`.
+  - **Für P15 (Inhalte):** Die Platzhalter-Briefe erzählen Pips Krankheit fest („Pip is sick now“), die Familie hat aber jetzt einen
+    echten Zustand. Briefe sollten auf den Zustand reagieren statt ihn vorzugeben.
+  - Geprüft: 82/82 EditMode-Tests (neu: `SettlementTests`), Play-Modus Main: Tag 1 mit 6 Reisenden → +90, −30 Miete; ohne Essen →
+    alle „weak“ im Brief von Tag 2, Kontostand 85; Tag 2 → 3 läuft. Kein WebGL-Build.
 
 ### P11 — Läden: Gadget-Shop & Bar-Schwarzmarkt
-- Größe: M · Priorität: Muss · Status: offen
+- Größe: M · Priorität: Muss · Status: teilweise (martin, 06.11.): Händlervorrat (B04) fertig, Rest wartet auf das P08-Gespräch
 - Braucht: P03, P08, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Kaufen und Verkaufen über ein gemeinsames Shop-System.
 - Enthalten: Shop-UI, Bar (illegale Gegenstände kaufen, Beschlagnahmtes verkaufen), Dokumentenscanner kaufbar
 - Nicht enthalten: Gadget-Funktion (P16)
 - Abnahme: Scanner kaufen, beschlagnahmtes Item an der Bar verkaufen, Geld stimmt.
+- Stand 06.11. (martin): **Händlervorrat (B04) gebaut**, der Rest wartet auf das P08-Gespräch (Beschlagnahme, Schwarzmarkt).
+  - `VendorStock` hat jetzt Einträge mit Tagesmenge (`StockEntry`), die alten Listen hat `EconomyBuilder` umgestellt.
+  - `VendorSupply` (pro Händler in `PlayerEconomy.Supply`): Kauf −1, bei 0 „Sold out. More tomorrow morning.“, jeden Morgen auf die
+    Tagesmenge aufgefüllt; was man dem Händler verkauft, liegt danach bei ihm im Regal. Anzahl steht im Handelsfenster („×3“).
+  - Tagesmengen (vorläufig): Scanner 1, Ration 3, Schmerzmittel 2, Cola 5, Spice 3.
+  - Geprüft: Cola ausverkauft nach 5 Käufen, am nächsten Morgen wieder 5.
 - **Hinweis vor Beginn (martin, 05.11.):** Das Shop-UI ist mit **P46** schon fertig (Handelsfenster, Kaufen/Verkaufen, Faktoren, abgelehnte
   Labels). **Noch offen und zuerst zu lösen:** Die Ware beim Händler **wird beim Kauf nicht weniger** – das Sortiment ist in P46 bewusst
   unbegrenzt (Bug-Liste **B04**). Für P11 vorgesehen (Zuschnitt im Kern-Loop-Call, siehe Frage an max):
@@ -218,6 +245,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - **Preisliste:** echte Gegenstände und Preise für Holly, Barkeeper und Dealer statt der Test-Inhalte (evtl. Preisfaktor pro Tag)
   - **Angebote:** Tagesangebote/Rabatte, Ware nur an bestimmten Tagen, Sortiment pro Tag (z. B. Dealer an Tag 3 anders)
   - evtl. Teilung: **P11 Kiosk** (Muss) + **Schwarzmarkt** als eigenes Soll-Paket
+  - **Nachtrag (martin, 06.11.):** Schmuggelware kauft nur der Schwarzmarkt (P64). Der Barkeeper soll nichts kaufen, sondern Wünsche gegen Gerüchte tauschen (P65, Entwurf) und manchmal Bestechungszettel schicken (P66, Entwurf).
 
 ### P12 — Enden
 - Größe: S · Priorität: Muss · Status: offen
@@ -227,10 +255,18 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Jedes Ende lässt sich gezielt erspielen.
 
 ### P13 — Hangar: Pakete an die Familie
-- Größe: S · Priorität: Soll · Status: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 06.11.)
 - Braucht: P10, P11, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Gegenstände aus dem Inventar per Frachtdrohne nach Hause schicken.
 - Offen (Max, 06.11., P58): Die Drohne hat keine Öffnungszeit, die Händler öffnen nur nach der Schicht. Beim Bau entscheiden.
+- **Festgelegt (martin, 06.11., DECISIONS.md):** Die Familie fordert Gegenstände (Essen, Wärme, Medizin).
+  - Was vor dem Schlafengehen an der Drohne abgeliefert wurde, ist in der Abrechnung (P10) schon **abgehakt** („covered by drone“, kostet nichts).
+  - Die Waren gibt es **billiger beim Händler** (oder beschlagnahmt am Schalter, P08).
+  - Sonst schickt man beim Schlafengehen **Geld**: Preis ≈ **Händlerpreis × 1,35** (35 % teurer).
+  - **Platzhalterpreise** folgen dieser Regel, z. B. Ration 8 CR beim Händler → Essen 11 CR am Bett; Schmerzmittel 15 → Medizin 20.
+    Für Wärme braucht es eine Ware (z. B. Heizpatrone mit Label `HEAT` oder `TECH`, ca. 11 CR → 15 CR am Bett).
+  - Die Kosten am Bett sollen sich aus dem Händlerpreis ableiten (Faktor 1,35 im `HouseholdTuning`), nicht von Hand gepflegt werden.
+  - Marktverfügbarkeit (was es wann zu welchem Preis gibt) plant **P68**.
 - Enthalten: Versand-UI im Hangar, Wirkung auf Familienbedarf, Risiko bei Schmuggelware
 - Abnahme: Ein Medikament schicken senkt den Medizinbedarf am Abend.
 
@@ -286,7 +322,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Getestet im Editor (Mixer-Werte, Routing aller 10 Türen) und im WebGL-Build mit Ton in Chrome. Echte Sounds fehlen noch (Max/Pipeline).
 
 ### P19 — WebGL-Build & itch-Upload
-- Größe: S · Priorität: Muss · Status: offen
+- Größe: S · Priorität: Muss · Status: offen, auf später verschoben (martin, 06.11.)
 - Braucht: P01
 - Ziel: Erster Build auf itch.io (Entwurf) bis 05.11., danach wiederholbarer Ablauf.
 - Hinweis (max, 05.11.): `GameOff.EditorTools.WebBuild.Build` ist der Build-Einstieg. Die Vorlage für itch muss abgelehnte Maussperren abfangen und 16:9 halten wie `Assets/WebGLTemplates/Kestrel9/index.html` (Ausnahme: Impressum-Fußzeile nur für die Live-Version), siehe P49.
@@ -792,12 +828,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - **Nicht geprüft:** echte Tasten und der Weg zum Stuhl, Geräte außer diesem PC, andere Browser als Chrome. Der Papierschutz an der Schublade lief nur als Code, der Fall wurde im Build nicht ausgelöst. Vereinzelte einzelne lange Frames (148–180 ms in 3 von etwa 10 Läufen ohne Bremse) bleiben ungeklärt: nie mit CPU ×4, an wechselnden Stellen.
 
 ### P58 — Entscheidungen aus dem Nachtlauf
-- Größe: S · Priorität: Soll · Status: fertig bis auf Punkt 2, der liegt bei Martin (max, 06.11.)
+- Größe: S · Priorität: Soll · Status: fertig (max, 06.11.; Punkt 2 martin, 06.11.)
 - Braucht: — · Folgt auf: P57
 - Ziel: Die im Nachtlauf gefundenen Fragen zu Spielregeln und Spielwerten sind entschieden. Was daraus zu bauen ist, wird ein eigenes Paket oder geht in das genannte.
 - Nicht enthalten: Änderungen an Spielregeln ohne Entscheidung. P57 hat hier bewusst nichts geändert.
 
-- Ergebnis (Max, 06.11.): 1 Vorrat, morgens aufgefüllt → P11. 2 Frage an Martin (`questions/2026-11-06_max-an-martin_schwarzmarkt-ankauf.md`). 3 Klappe schließt wieder → P59. 4 gefälschte Siegel erst ab der Lampe → P15. 5 mit P13 entscheiden. 6 so lassen, später auf echten schwachen Geräten prüfen. 7 akzeptiert. 8 gestrichen: kein Bug.
+- Ergebnis (Max, 06.11.): 1 Vorrat, morgens aufgefüllt → P11. 2 Martin: Schmuggelware (`CONTRABAND`, `CONFISCATED`) kauft nur der Schwarzmarkt → P64. 3 Klappe schließt wieder → P59. 4 gefälschte Siegel erst ab der Lampe → P15. 5 mit P13 entscheiden. 6 so lassen, später auf echten schwachen Geräten prüfen. 7 akzeptiert. 8 gestrichen: kein Bug.
 
 **1. Händlervorrat (B04)**
 - Befund: Ware beim Händler sinkt beim Kauf nicht.
@@ -878,6 +914,10 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Allgemein (P2): `SFX_Paper_Pickup`, `SFX_Footstep_Metal_01` bis `_03`, `SFX_UI_Click`, `SFX_Amb_Station_Loop`
   - Räume und Handel (P3): `SFX_Amb_Bar_Loop`, `SFX_Amb_Hangar_Loop`, `SFX_Trade_Buy`
 - Einbau nach der Lieferung: Felder und Aufrufe in `DocumentDesk`, `CounterClickable`, `CounterStation`, `FirstPersonController`, UI und Handelsfenster; Raumklänge je Bereich. Alles über `AudioManager` und die Mixer-Gruppen aus P18.
+- **Hinweis für max (martin, 06.11.):** `SFX_Amb_Station_Loop.ogg` hat Martin selbst geliefert (Freesound 77838, Jovica, CC BY 4.0;
+  51 s stereo, 486 KB; Feedback-Zeile in `ASSET-REQUESTS.md`, Status bitte setzen). Vorab läuft er schon in Main über **P67**
+  (`AmbienceBuilder`, `PF_Ambience`, eine 2D-Quelle für die ganze Station, Lautstärke 0,35). Für die Raumklänge pro Bereich bitte darauf
+  aufbauen oder ersetzen; `AmbienceBuilder` gehört dann dir. Die Credits im Hauptmenü brauchen noch **Build Menu Scenes**.
 - Nicht enthalten: Musik (noch offen, Max), Stimmen.
 - Abnahme: Jede Aktion am Schalter ist zu hören, Lautstärkeregler wirken, keine Konsolenfehler, Download nach dem Einbau gemessen.
 
@@ -898,3 +938,84 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Beschlagnahmte Clownsschuhe lassen sich anziehen, dann quietscht jeder Schritt, bis man sie auszieht.
 - Enthalten: Gegenstand, Anziehen und Ausziehen im Inventar, Schrittgeräusch wechselt.
 - Abnahme: Mit Schuhen quietscht jeder Schritt, ohne Schuhe normal.
+
+### P64 — Schwarzmarkt kauft nur Schmuggelware
+- Größe: XS · Priorität: Soll · Status: fertig (martin, 06.11.)
+- Braucht: P46 · Folgt auf: P58 (Punkt 2)
+- Ziel: Kein risikoloses Geld mehr durch Pendeln zwischen Kiosk und Schwarzmarkt.
+- Enthalten: neues Label `Tag_CONFISCATED`; `VendorStock` bekommt eine Liste „kauft nur mit diesen Labels“ (`onlyTags`); Kiosk und Bar
+  lehnen `CONTRABAND` und `CONFISCATED` ab, der Schwarzmarkt kauft nur Ware mit einem der beiden; `EconomyBuilder` legt das so an
+  (auch auf bestehenden Assets), Menü **GameOff → Update Economy Data** (nur Daten, keine Szene); EditMode-Test; gemeinsame Label-Liste.
+- **Label-Liste (martin, 06.11.)** – `Data/Items/Tags/Tag_<NAME>.asset`, Farben aus `docs/STYLE.md`:
+  | Label | Bedeutung, wer nutzt es |
+  |---|---|
+  | CONTRABAND | verboten; nur der Schwarzmarkt kauft; Risiko bei der Drohne (P13) |
+  | CONFISCATED | am Schalter beschlagnahmt (P08); nur der Schwarzmarkt kauft |
+  | FOOD | Essen und Trinken; Familienbedarf (P10/P13) |
+  | MEDICINE | Medizin; Familienbedarf |
+  | GADGET | Werkzeug für den Schalter (Scanner, UV-Lampe P62) |
+  | DRUG | Drogen, z. B. Spice; Ware für Gerüchte-Preise (P65) |
+  | TECH | Elektronik, Ersatzteile |
+  | WEAPON | Waffen, Munition; immer auch CONTRABAND |
+  | VALUABLE | Schmuck, Uhren, Wertsachen; Tauschware für die Wunschliste des Barkeepers (P65) |
+  | ALIEN | fremde, nicht-menschliche Waren |
+  | PERISHABLE | verdirbt nach einigen Tagen (Regel erst mit P10/P11) |
+
+  Kategorie-Labels (DRUG, TECH, WEAPON, VALUABLE, ALIEN) sind das, worauf sich Gerüchte und Wunschlisten beziehen.
+  Labels hängen am Gegenstandstyp, nicht am einzelnen Stück: Beschlagnahmte Ware sind eigene Gegenstände mit `CONFISCATED`
+  (z. B. „Confiscated pocket watch“), die legt P08 an.
+- **Zum Besprechen (Max + Martin, vor P08):** Labels hängen an der Sorte Gegenstand (`ItemData`), nicht am einzelnen Stück. Eine normale und eine beschlagnahmte Taschenuhr sind darum zwei Gegenstände („Pocket watch“ und „Confiscated pocket watch“ mit `CONFISCATED`); ein Stück im Inventar bekommt kein Label nachträglich. Beschlagnahme legt direkt die beschlagnahmte Variante ins Inventar. Folge: Jeder beschlagnahmbare Gegenstand braucht zwei Assets. Alternative wäre ein Merkmal pro Inventar-Stapel („beschlagnahmt“), das kostet Umbau an `Inventory`. Erst gemeinsam entscheiden, sonst kollidiert es mit P08.
+- Nicht enthalten: Preise und Balancing, Händlervorrat (P11), woher beschlagnahmte Ware ins Inventar kommt (P08).
+- Abnahme: Uhr oder Ration lässt sich am Schwarzmarkt nicht verkaufen, Schmuggelware am Kiosk nicht; Tests grün.
+- Ergebnis (martin, 06.11.): `VendorStock.onlyTags` + `Buys()`; `EconomyBuilder.ApplyTradeRules` trägt die Regeln auch in bestehende
+  Sortimente ein (fügt nur hinzu); 7 neue Labels angelegt, Spice hat zusätzlich `DRUG`, die Taschenuhr `VALUABLE`.
+  Neue Labels oder Regeln: **GameOff → Update Economy Data** (nur Daten, keine Szene). Geprüft: 73/73 EditMode-Tests (neu:
+  `VendorStock_OnlyTags_BuysOnlyTaggedItems`), Play-Modus Main: Schwarzmarkt kauft Spice (14 CR), nicht die Uhr; Kiosk kauft die Uhr
+  (10 CR), nicht Spice; Bar kauft nichts. Konsole 0 Fehler. Kein WebGL-Build.
+
+### P65 — Barkeeper: Wunschliste & Gerüchte
+- Größe: M · Priorität: Soll · Status: offen, Entwurf (martin, 06.11.) – mit Max abstimmen
+- Braucht: P11 (Preisfaktor pro Tag), P64 · Folgt auf: —
+- Ziel: Der Barkeeper kauft nichts für Geld, sondern tauscht Gegenstände gegen Wissen für den nächsten Tag.
+- Enthalten: Täglich hängt vor der Bar ein Schild mit Gegenständen oder Labels, die der Barkeeper haben will. Wer liefert, bekommt ein
+  Gerücht oder eine Geheiminfo für morgen, z. B. „Ein Schmuggler wurde festgenommen, morgen ist alles mit DRUG teurer, z. B. Spice“. Der Spieler
+  kann abends beim Schwarzmarkt vorsorgen und am nächsten Tag teurer verkaufen. Daten je Tag (Wunsch, Gerücht, Preiswirkung pro Label)
+  als ScriptableObject in `Data/Days/`.
+- Nicht enthalten: Bestechungszettel (P66), Gespräch am Barhocker (P28).
+- Vorschlag an Max: `questions/2026-11-06_martin-an-max_barkeeper-p65-p66.md` (bei Zustimmung legt sein Claude es fest). Offen für Max: Ersetzt das den Bar-Ankauf im Design (`DESIGN.md`, Bar-Zeile)? Wie viele Gerüchte pro Tag, sind manche falsch?
+- Abnahme: An Tag 1 Wunsch erfüllen → Gerücht; an Tag 2 ist der Preis für das genannte Label beim Schwarzmarkt wie angekündigt.
+
+### P66 — Barkeeper: Bestechungszettel
+- Größe: S–M · Priorität: Soll · Status: offen, Entwurf (martin, 06.11.) – mit Max abstimmen
+- Braucht: P08, P10 · Folgt auf: —
+- Ziel: Moralische Versuchung am Schalter: Geld dafür, eine bestimmte Person durchzulassen.
+- Enthalten: Zu Schichtbeginn liegt manchmal ein Zettel vom Barkeeper auf dem Tisch („Lass Person XY durch, nach der Schicht
+  bekommst du 200 CR“). Wer XY durchlässt, bekommt das Geld in der Abrechnung (P10). Die Regelprüfung wertet ein falsches Durchlassen
+  trotzdem als Fehler. Zettel je Tag in den Tages- bzw. Reisenden-Daten.
+- Vorschlag an Max: siehe Frage `barkeeper-p65-p66`. Offen für Max: Verträgt sich das mit Verwarnung/Strafe aus P07/P08? Folgen, wenn man sich weigert oder XY verhaftet?
+- Abnahme: Zettel erscheint am vorgesehenen Tag; XY durchlassen → Geld nach der Schicht; abweisen → kein Geld.
+
+### P67 — Stations-Atmo vorab hörbar
+- Größe: XS · Priorität: Soll · Status: fertig (martin, 06.11.)
+- Braucht: P18 · Folgt auf: — · Teil von **P61** vorgezogen (max baut dort weiter)
+- Ziel: Der gelieferte Loop `SFX_Amb_Station_Loop.ogg` ist im Spiel zu hören, bevor P61 die Raumklänge pro Bereich einbaut.
+- Enthalten: Builder **GameOff → Build Ambience into Main** setzt `Prefabs/Audio/PF_Ambience.prefab` (AudioSource 2D, Loop, SFX-Gruppe) in Main;
+  Aufnahme in **Rebuild All**.
+- Nicht enthalten: Raumklänge pro Bereich (Bar, Hangar), Überblenden zwischen Räumen – das bleibt in P61.
+- Abnahme: In Main läuft die Atmo nahtlos, SFX-Regler wirkt, im Pausenmenü pausiert sie, Konsole 0 Fehler.
+- Ergebnis (martin, 06.11.): `Scripts/Editor/AmbienceBuilder.cs`, Menü **GameOff → Build Ambience into Main**, auch in `Rebuild All`.
+  `PF_Ambience` = AudioSource 2D, Loop, Gruppe SFX, Lautstärke 0,35 (Konstante im Builder, P61 stimmt nach Gehör ab).
+  Geprüft im Play-Modus: läuft ab Start, springt nach 51 s nahtlos auf den Anfang, pausiert mit `AudioListener.pause` (Pausenmenü),
+  Konsole 0 Fehler. Der Loop selbst: Freesound 77838 (Jovica, CC BY 4.0), Sekunde 6–60 mit 3 s Überblendung, Quelle in `ArtSource/Audio/`.
+  **Weiter in P61 (max).**
+
+### P68 — Marktverfügbarkeit: Politik und Tagesereignisse
+- Größe: M · Priorität: Soll · Status: offen, Entwurf (martin, 06.11.) – erst planen
+- Braucht: P11 (Händlervorrat), P10, P13 · Folgt auf: — · Hängt zusammen mit P65 (Gerüchte) und P15 (Inhalte)
+- Ziel: Was die Händler anbieten und zu welchem Preis, hängt von der politischen Lage und den Ereignissen des Tages ab.
+- Idee (martin, 06.11.): Pro Tag Faktoren für Menge und Preis je Label (z. B. Grenze dicht → FOOD knapp und teurer; Schmuggler
+  verhaftet → DRUG teurer). Daraus folgen auch die Kosten am Bett (Händlerpreis × 1,35, P13). Ereignisse kündigen sich in Bulletin,
+  Durchsagen oder Gerüchten an.
+- Bis dahin: Platzhalterpreise nach der 35-%-Regel aus P13.
+- Nicht enthalten: Gerüchte selbst (P65), Texte der Ereignisse (P15).
+- Abnahme: An einem Tag mit Ereignis sind Menge oder Preis der betroffenen Ware sichtbar anders; die Kosten am Bett ziehen mit.

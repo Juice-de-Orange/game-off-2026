@@ -185,6 +185,32 @@ namespace GameOff.Tests
             Assert.IsFalse(bar.Buys(Make<ItemData>()));
         }
 
+        [Test]
+        public void VendorStock_OnlyTags_BuysOnlyTaggedItems()
+        {
+            var contraband = Make<ItemTag>(("displayName", "CONTRABAND"));
+            var confiscated = Make<ItemTag>(("displayName", "CONFISCATED"));
+            var spice = Make<ItemData>();
+            AddToList(spice, "tags", contraband);
+            var takenWatch = Make<ItemData>();
+            AddToList(takenWatch, "tags", confiscated);
+            var ration = Make<ItemData>();
+
+            var blackMarket = Make<VendorStock>(("buyFactor", 1.2f));
+            AddToList(blackMarket, "onlyTags", contraband);
+            AddToList(blackMarket, "onlyTags", confiscated);
+            var kiosk = Make<VendorStock>(("buyFactor", 0.5f));
+            AddToList(kiosk, "refusedTags", contraband);
+            AddToList(kiosk, "refusedTags", confiscated);
+
+            Assert.IsTrue(blackMarket.Buys(spice));
+            Assert.IsTrue(blackMarket.Buys(takenWatch));
+            Assert.IsFalse(blackMarket.Buys(ration));
+            Assert.IsFalse(kiosk.Buys(spice));
+            Assert.IsFalse(kiosk.Buys(takenWatch));
+            Assert.IsTrue(kiosk.Buys(ration));
+        }
+
         // ---------- Content in the project ----------
 
         [Test]
@@ -201,6 +227,13 @@ namespace GameOff.Tests
             {
                 var stock = AssetDatabase.LoadAssetAtPath<VendorStock>(AssetDatabase.GUIDToAssetPath(guid));
                 foreach (var item in stock.Items) Assert.IsNotNull(item, $"{stock.name}: empty item slot");
+                var so = new SerializedObject(stock);
+                foreach (var list in new[] { "refusedTags", "onlyTags" })
+                {
+                    var p = so.FindProperty(list);
+                    for (int i = 0; i < p.arraySize; i++)
+                        Assert.IsNotNull(p.GetArrayElementAtIndex(i).objectReferenceValue, $"{stock.name}: empty slot in {list}");
+                }
             }
         }
     }

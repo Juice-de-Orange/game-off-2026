@@ -15,5 +15,7 @@ MonoBehaviour:
   displayName: Pocket watch
   description: Old, heavy, still ticking. Someone will want it.
   baseValue: 20
-  tags: []
+  tags:
+  - {fileID: 11400000, guid: a6959e60727c37747b2376cfc4f50971, type: 2}
+  unique: 0
   icon: {fileID: 0}

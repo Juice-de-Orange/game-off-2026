@@ -13,14 +13,21 @@ MonoBehaviour:
   m_Name: Stock_Kiosk_Test
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.VendorStock
   title: "KIOSK \xB7 HOLLY"
-  items:
-  - {fileID: 11400000, guid: 5d248fac0f017814fa23f240e7f025aa, type: 2}
-  - {fileID: 11400000, guid: 247f021f035f8f04593273eb8afa1517, type: 2}
-  - {fileID: 11400000, guid: 04bda7305b9639e499630ecc7e65086b, type: 2}
-  - {fileID: 11400000, guid: a2d217b5d6ca9d445b1d1c210919a72a, type: 2}
+  entries:
+  - item: {fileID: 11400000, guid: 5d248fac0f017814fa23f240e7f025aa, type: 2}
+    dailyAmount: 1
+  - item: {fileID: 11400000, guid: 247f021f035f8f04593273eb8afa1517, type: 2}
+    dailyAmount: 3
+  - item: {fileID: 11400000, guid: 04bda7305b9639e499630ecc7e65086b, type: 2}
+    dailyAmount: 2
+  - item: {fileID: 11400000, guid: a2d217b5d6ca9d445b1d1c210919a72a, type: 2}
+    dailyAmount: 5
+  items: []
   sellFactor: 1
   buyFactor: 0.5
   refusedTags:
   - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
+  - {fileID: 11400000, guid: 987504bd07ab3c14985cc1e8f37c39db, type: 2}
+  onlyTags: []
   openAfterShiftOnly: 1
   emptyText: Sold out.
