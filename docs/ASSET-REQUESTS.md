@@ -3162,7 +3162,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Door_Open.ogg
 package: P27
 scene: alle Türen
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -3188,7 +3188,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Door_Close.ogg
 package: P27
 scene: alle Türen
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -3214,7 +3214,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Door_Locked.ogg
 package: P27
 scene: alle Türen
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
