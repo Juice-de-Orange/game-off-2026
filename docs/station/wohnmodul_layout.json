@@ -1,0 +1,2934 @@
+{
+ "package": "P53",
+ "source": "HofSimulator W1063 (tools/blender/scripts/gameoff/hab_layout.py)",
+ "frame": "Unity Welt, Meter, Y oben; yaw = Drehung um +Y in Grad (Unity)",
+ "hab": {
+  "name": "Hab_West",
+  "position": [
+   -36.5,
+   8.42,
+   26.0
+  ],
+  "deck_y": 7.42
+ },
+ "rooms": [
+  {
+   "room": 201,
+   "name": "Holly",
+   "x": [
+    -35.4,
+    -31.3
+   ],
+   "z": [
+    14.0,
+    18.0
+   ],
+   "height": 3.0,
+   "light": "Grün (Motel, GREEN)",
+   "prio": "P1",
+   "door": [
+    -35.4,
+    15.0
+   ],
+   "access": "Locked"
+  },
+  {
+   "room": 202,
+   "name": "Barkeeper",
+   "x": [
+    -41.7,
+    -37.6
+   ],
+   "z": [
+    14.0,
+    18.0
+   ],
+   "height": 3.0,
+   "light": "Grün (Motel, GREEN)",
+   "prio": "P1",
+   "door": [
+    -37.6,
+    15.0
+   ],
+   "access": "Locked"
+  },
+  {
+   "room": 203,
+   "name": "Dealer",
+   "x": [
+    -35.4,
+    -31.3
+   ],
+   "z": [
+    18.0,
+    22.0
+   ],
+   "height": 3.0,
+   "light": "Grün (Motel, GREEN)",
+   "prio": "P1",
+   "door": [
+    -35.4,
+    19.0
+   ],
+   "access": "Locked"
+  },
+  {
+   "room": 204,
+   "name": "Wache A",
+   "x": [
+    -41.7,
+    -37.6
+   ],
+   "z": [
+    18.0,
+    22.0
+   ],
+   "height": 3.0,
+   "light": "Grün (Motel, GREEN)",
+   "prio": "P2",
+   "door": [
+    -37.6,
+    19.0
+   ],
+   "access": "Locked"
+  },
+  {
+   "room": 205,
+   "name": "Wache B",
+   "x": [
+    -35.4,
+    -31.3
+   ],
+   "z": [
+    22.0,
+    26.0
+   ],
+   "height": 3.0,
+   "light": "Grün (Motel, GREEN)",
+   "prio": "P2",
+   "door": [
+    -35.4,
+    23.0
+   ],
+   "access": "Locked"
+  },
+  {
+   "room": 206,
+   "name": "Bewohner (frei)",
+   "x": [
+    -41.7,
+    -37.6
+   ],
+   "z": [
+    22.0,
+    26.0
+   ],
+   "height": 3.0,
+   "light": "Grün (Motel, GREEN)",
+   "prio": "P2",
+   "door": [
+    -37.6,
+    23.0
+   ],
+   "access": "Locked"
+  },
+  {
+   "room": 207,
+   "name": "Bewohner (frei)",
+   "x": [
+    -35.4,
+    -31.3
+   ],
+   "z": [
+    26.0,
+    30.0
+   ],
+   "height": 3.0,
+   "light": "Grün (Motel, GREEN)",
+   "prio": "P3",
+   "door": [
+    -35.4,
+    27.0
+   ],
+   "access": "Locked"
+  },
+  {
+   "room": 208,
+   "name": "Bewohner (frei)",
+   "x": [
+    -41.7,
+    -37.6
+   ],
+   "z": [
+    26.0,
+    30.0
+   ],
+   "height": 3.0,
+   "light": "Grün (Motel, GREEN)",
+   "prio": "P3",
+   "door": [
+    -37.6,
+    27.0
+   ],
+   "access": "Locked"
+  },
+  {
+   "room": 209,
+   "name": "Reserve / Gäste",
+   "x": [
+    -35.4,
+    -31.3
+   ],
+   "z": [
+    30.0,
+    34.0
+   ],
+   "height": 3.0,
+   "light": "Grün (Motel, GREEN)",
+   "prio": "P3",
+   "door": [
+    -35.4,
+    31.0
+   ],
+   "access": "Public"
+  },
+  {
+   "room": 210,
+   "name": "Reserve / Gäste",
+   "x": [
+    -41.7,
+    -37.6
+   ],
+   "z": [
+    30.0,
+    34.0
+   ],
+   "height": 3.0,
+   "light": "Grün (Motel, GREEN)",
+   "prio": "P3",
+   "door": [
+    -37.6,
+    31.0
+   ],
+   "access": "Public"
+  },
+  {
+   "room": 211,
+   "name": "Lager",
+   "x": [
+    -35.4,
+    -31.3
+   ],
+   "z": [
+    34.0,
+    38.0
+   ],
+   "height": 3.0,
+   "light": "Grün (Motel, GREEN)",
+   "prio": "P3",
+   "door": [
+    -35.4,
+    35.0
+   ],
+   "access": "Public"
+  },
+  {
+   "room": 212,
+   "name": "Technik",
+   "x": [
+    -41.7,
+    -37.6
+   ],
+   "z": [
+    34.0,
+    38.0
+   ],
+   "height": 3.0,
+   "light": "Grün (Motel, GREEN)",
+   "prio": "P3",
+   "door": [
+    -37.6,
+    35.0
+   ],
+   "access": "Locked"
+  }
+ ],
+ "doors": [
+  {
+   "name": "Door_HabTube",
+   "onXLine": true,
+   "line": -20.0,
+   "center": 1.0,
+   "width": 1.2,
+   "access": "Public",
+   "floor_y": 0.0
+  },
+  {
+   "name": "Door_HabSouth",
+   "onXLine": false,
+   "line": 14.0,
+   "center": -36.5,
+   "width": 1.2,
+   "access": "Public",
+   "floor_y": 7.42
+  },
+  {
+   "name": "Door_Hab201",
+   "onXLine": true,
+   "line": -35.4,
+   "center": 15.0,
+   "width": 1.2,
+   "access": "Locked",
+   "floor_y": 7.42
+  },
+  {
+   "name": "Door_Hab202",
+   "onXLine": true,
+   "line": -37.6,
+   "center": 15.0,
+   "width": 1.2,
+   "access": "Locked",
+   "floor_y": 7.42
+  },
+  {
+   "name": "Door_Hab203",
+   "onXLine": true,
+   "line": -35.4,
+   "center": 19.0,
+   "width": 1.2,
+   "access": "Locked",
+   "floor_y": 7.42
+  },
+  {
+   "name": "Door_Hab204",
+   "onXLine": true,
+   "line": -37.6,
+   "center": 19.0,
+   "width": 1.2,
+   "access": "Locked",
+   "floor_y": 7.42
+  },
+  {
+   "name": "Door_Hab205",
+   "onXLine": true,
+   "line": -35.4,
+   "center": 23.0,
+   "width": 1.2,
+   "access": "Locked",
+   "floor_y": 7.42
+  },
+  {
+   "name": "Door_Hab206",
+   "onXLine": true,
+   "line": -37.6,
+   "center": 23.0,
+   "width": 1.2,
+   "access": "Locked",
+   "floor_y": 7.42
+  },
+  {
+   "name": "Door_Hab207",
+   "onXLine": true,
+   "line": -35.4,
+   "center": 27.0,
+   "width": 1.2,
+   "access": "Locked",
+   "floor_y": 7.42
+  },
+  {
+   "name": "Door_Hab208",
+   "onXLine": true,
+   "line": -37.6,
+   "center": 27.0,
+   "width": 1.2,
+   "access": "Locked",
+   "floor_y": 7.42
+  },
+  {
+   "name": "Door_Hab209",
+   "onXLine": true,
+   "line": -35.4,
+   "center": 31.0,
+   "width": 1.2,
+   "access": "Public",
+   "floor_y": 7.42
+  },
+  {
+   "name": "Door_Hab210",
+   "onXLine": true,
+   "line": -37.6,
+   "center": 31.0,
+   "width": 1.2,
+   "access": "Public",
+   "floor_y": 7.42
+  },
+  {
+   "name": "Door_Hab211",
+   "onXLine": true,
+   "line": -35.4,
+   "center": 35.0,
+   "width": 1.2,
+   "access": "Public",
+   "floor_y": 7.42
+  },
+  {
+   "name": "Door_Hab212",
+   "onXLine": true,
+   "line": -37.6,
+   "center": 35.0,
+   "width": 1.2,
+   "access": "Locked",
+   "floor_y": 7.42
+  }
+ ],
+ "pieces": [
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -19.9,
+    0.0,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Motelgang",
+   "note": "Westwand des Motelgangs (BuildWallVisual, X0 + 0,1)",
+   "doorspec": "Door_HabTube"
+  },
+  {
+   "asset": "SM_Station_HabTube_Frame",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Frame.fbx",
+   "position": [
+    -20.0,
+    0.0,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre",
+   "note": "Druckrahmen + Podest 2,05 m (mit Rahmen 2,5 m)",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabTube_Flange",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Flange.fbx",
+   "position": [
+    -20.0,
+    0.0,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre außen",
+   "note": "Flansch an der Motel-Hülle",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_HabTube_Stair_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Stair_2m.fbx",
+   "position": [
+    -22.5,
+    0.0,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre",
+   "note": "Treppe 1/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabTube_Stair_2m",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Stair_2m.fbx",
+   "position": [
+    -22.5,
+    0.0,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre außen",
+   "note": "Treppe 1/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_HabTube_Stair_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Stair_2m.fbx",
+   "position": [
+    -24.5,
+    1.2367,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre",
+   "note": "Treppe 2/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabTube_Stair_2m",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Stair_2m.fbx",
+   "position": [
+    -24.5,
+    1.2367,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre außen",
+   "note": "Treppe 2/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_HabTube_Stair_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Stair_2m.fbx",
+   "position": [
+    -26.5,
+    2.4733,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre",
+   "note": "Treppe 3/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabTube_Stair_2m",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Stair_2m.fbx",
+   "position": [
+    -26.5,
+    2.4733,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre außen",
+   "note": "Treppe 3/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_HabTube_Stair_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Stair_2m.fbx",
+   "position": [
+    -28.5,
+    3.71,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre",
+   "note": "Treppe 4/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabTube_Stair_2m",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Stair_2m.fbx",
+   "position": [
+    -28.5,
+    3.71,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre außen",
+   "note": "Treppe 4/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_HabTube_Stair_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Stair_2m.fbx",
+   "position": [
+    -30.5,
+    4.9467,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre",
+   "note": "Treppe 5/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabTube_Stair_2m",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Stair_2m.fbx",
+   "position": [
+    -30.5,
+    4.9467,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre außen",
+   "note": "Treppe 5/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_HabTube_Stair_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Stair_2m.fbx",
+   "position": [
+    -32.5,
+    6.1833,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre",
+   "note": "Treppe 6/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabTube_Stair_2m",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Stair_2m.fbx",
+   "position": [
+    -32.5,
+    6.1833,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre außen",
+   "note": "Treppe 6/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_HabTube_Corner",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Corner.fbx",
+   "position": [
+    -34.5,
+    7.42,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre",
+   "note": "Bogen R 2 m nach Norden",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabTube_Corner",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Corner.fbx",
+   "position": [
+    -34.5,
+    7.42,
+    1.0
+   ],
+   "yaw": -90.0,
+   "group": "Röhre außen",
+   "note": "Bogen",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_HabTube_Straight_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Straight_2m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    3.0
+   ],
+   "yaw": 0.0,
+   "group": "Röhre",
+   "note": "gerade 1/4",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabTube_Straight_2m",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Straight_2m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    3.0
+   ],
+   "yaw": 0.0,
+   "group": "Röhre außen",
+   "note": "gerade 1/4",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_HabTube_Straight_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Straight_2m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    5.0
+   ],
+   "yaw": 0.0,
+   "group": "Röhre",
+   "note": "gerade 2/4",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabTube_Straight_2m",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Straight_2m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    5.0
+   ],
+   "yaw": 0.0,
+   "group": "Röhre außen",
+   "note": "gerade 2/4",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_HabTube_Straight_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Straight_2m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    7.0
+   ],
+   "yaw": 0.0,
+   "group": "Röhre",
+   "note": "gerade 3/4",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabTube_Straight_2m",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Straight_2m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    7.0
+   ],
+   "yaw": 0.0,
+   "group": "Röhre außen",
+   "note": "gerade 3/4",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_HabTube_Straight_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Straight_2m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    9.0
+   ],
+   "yaw": 0.0,
+   "group": "Röhre",
+   "note": "gerade 4/4",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabTube_Straight_2m",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Straight_2m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    9.0
+   ],
+   "yaw": 0.0,
+   "group": "Röhre außen",
+   "note": "gerade 4/4",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_HabTube_Collar",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_HabTube_Collar.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    11.0
+   ],
+   "yaw": 0.0,
+   "group": "Röhre",
+   "note": "Einstieg durch die Südkappe Z 11..14",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Ext_HabModule_Entry",
+   "fbx": "Assets/_Project/Art/Models/Exterior/SM_Ext_HabModule_Entry.fbx",
+   "position": [
+    -36.5,
+    8.42,
+    26.0
+   ],
+   "yaw": 0.0,
+   "group": "Hab außen",
+   "note": "ersetzt SM_Ext_HabModule an Hab_West, gleiche Transformation (Südkappe mit Öffnung)",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_Bulkhead",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_Bulkhead.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    14.0
+   ],
+   "yaw": 0.0,
+   "group": "Schott",
+   "note": "Süd",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    14.0
+   ],
+   "yaw": 180.0,
+   "group": "Schott",
+   "note": "Door_HabSouth",
+   "doorspec": "Door_HabSouth"
+  },
+  {
+   "asset": "SM_Station_Hab_Bulkhead",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_Bulkhead.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    38.0
+   ],
+   "yaw": 0.0,
+   "group": "Schott",
+   "note": "Nord",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3_Screen",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Screen.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    38.0
+   ],
+   "yaw": 0.0,
+   "group": "Schott",
+   "note": "Flurende Nord, Bildschirm zum Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -40.5,
+    7.32,
+    15.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -38.5,
+    7.32,
+    15.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -36.5,
+    7.32,
+    15.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -34.5,
+    7.32,
+    15.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -32.5,
+    7.32,
+    15.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -40.5,
+    7.32,
+    17.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -38.5,
+    7.32,
+    17.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -36.5,
+    7.32,
+    17.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -34.5,
+    7.32,
+    17.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -32.5,
+    7.32,
+    17.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -40.5,
+    7.32,
+    19.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -38.5,
+    7.32,
+    19.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -36.5,
+    7.32,
+    19.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -34.5,
+    7.32,
+    19.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -32.5,
+    7.32,
+    19.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -40.5,
+    7.32,
+    21.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -38.5,
+    7.32,
+    21.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -36.5,
+    7.32,
+    21.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -34.5,
+    7.32,
+    21.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -32.5,
+    7.32,
+    21.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -40.5,
+    7.32,
+    23.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -38.5,
+    7.32,
+    23.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -36.5,
+    7.32,
+    23.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -34.5,
+    7.32,
+    23.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -32.5,
+    7.32,
+    23.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -40.5,
+    7.32,
+    25.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -38.5,
+    7.32,
+    25.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -36.5,
+    7.32,
+    25.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -34.5,
+    7.32,
+    25.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -32.5,
+    7.32,
+    25.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -40.5,
+    7.32,
+    27.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -38.5,
+    7.32,
+    27.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -36.5,
+    7.32,
+    27.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -34.5,
+    7.32,
+    27.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -32.5,
+    7.32,
+    27.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -40.5,
+    7.32,
+    29.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -38.5,
+    7.32,
+    29.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -36.5,
+    7.32,
+    29.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -34.5,
+    7.32,
+    29.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -32.5,
+    7.32,
+    29.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -40.5,
+    7.32,
+    31.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -38.5,
+    7.32,
+    31.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -36.5,
+    7.32,
+    31.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -34.5,
+    7.32,
+    31.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -32.5,
+    7.32,
+    31.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -40.5,
+    7.32,
+    33.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -38.5,
+    7.32,
+    33.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -36.5,
+    7.32,
+    33.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -34.5,
+    7.32,
+    33.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -32.5,
+    7.32,
+    33.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -40.5,
+    7.32,
+    35.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -38.5,
+    7.32,
+    35.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -36.5,
+    7.32,
+    35.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -34.5,
+    7.32,
+    35.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -32.5,
+    7.32,
+    35.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -40.5,
+    7.32,
+    37.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -38.5,
+    7.32,
+    37.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -36.5,
+    7.32,
+    37.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -34.5,
+    7.32,
+    37.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Floor_2x2",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Floor_2x2.fbx",
+   "position": [
+    -32.5,
+    7.32,
+    37.0
+   ],
+   "yaw": 0.0,
+   "group": "Deck",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_Shell_4m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_Shell_4m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    16.0
+   ],
+   "yaw": 0.0,
+   "group": "Hülle innen",
+   "note": "Scheibe 1/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -35.4,
+    7.42,
+    15.0
+   ],
+   "yaw": 90.0,
+   "group": "Flur",
+   "note": "Tür 201",
+   "doorspec": "Door_Hab201"
+  },
+  {
+   "asset": "SM_Station_Wall_2x3_Panel",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Panel.fbx",
+   "position": [
+    -35.4,
+    7.42,
+    17.0
+   ],
+   "yaw": 90.0,
+   "group": "Flur",
+   "note": "Wand 201",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -37.6,
+    7.42,
+    15.0
+   ],
+   "yaw": -90.0,
+   "group": "Flur",
+   "note": "Tür 202",
+   "doorspec": "Door_Hab202"
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -37.6,
+    7.42,
+    17.0
+   ],
+   "yaw": -90.0,
+   "group": "Flur",
+   "note": "Wand 202",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -36.5,
+    11.01,
+    15.0
+   ],
+   "yaw": 90.0,
+   "group": "Licht",
+   "note": "Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -36.5,
+    11.01,
+    17.0
+   ],
+   "yaw": 90.0,
+   "group": "Licht",
+   "note": "Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -33.5,
+    10.42,
+    16.0
+   ],
+   "yaw": 0.0,
+   "group": "Licht",
+   "note": "201",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Bed",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Bed.fbx",
+   "position": [
+    -32.05,
+    7.42,
+    16.9
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "201",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -34.9,
+    7.42,
+    17.65
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "201",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Table",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Table.fbx",
+   "position": [
+    -31.9,
+    7.42,
+    14.4
+   ],
+   "yaw": 180.0,
+   "group": "Möbel",
+   "note": "201",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -39.5,
+    10.42,
+    16.0
+   ],
+   "yaw": 0.0,
+   "group": "Licht",
+   "note": "202",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Bed",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Bed.fbx",
+   "position": [
+    -40.95,
+    7.42,
+    16.9
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "202",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -38.1,
+    7.42,
+    17.65
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "202",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Table",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Table.fbx",
+   "position": [
+    -41.1,
+    7.42,
+    14.4
+   ],
+   "yaw": 180.0,
+   "group": "Möbel",
+   "note": "202",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_Shell_4m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_Shell_4m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    20.0
+   ],
+   "yaw": 0.0,
+   "group": "Hülle innen",
+   "note": "Scheibe 2/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -35.4,
+    7.42,
+    19.0
+   ],
+   "yaw": 90.0,
+   "group": "Flur",
+   "note": "Tür 203",
+   "doorspec": "Door_Hab203"
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -35.4,
+    7.42,
+    21.0
+   ],
+   "yaw": 90.0,
+   "group": "Flur",
+   "note": "Wand 203",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -37.6,
+    7.42,
+    19.0
+   ],
+   "yaw": -90.0,
+   "group": "Flur",
+   "note": "Tür 204",
+   "doorspec": "Door_Hab204"
+  },
+  {
+   "asset": "SM_Station_Wall_2x3_Padded",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Padded.fbx",
+   "position": [
+    -37.6,
+    7.42,
+    21.0
+   ],
+   "yaw": -90.0,
+   "group": "Flur",
+   "note": "Wand 204",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -36.5,
+    11.01,
+    19.0
+   ],
+   "yaw": 90.0,
+   "group": "Licht",
+   "note": "Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -36.5,
+    11.01,
+    21.0
+   ],
+   "yaw": 90.0,
+   "group": "Licht",
+   "note": "Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -38.7,
+    7.42,
+    18.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -40.7,
+    7.42,
+    18.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -34.3,
+    7.42,
+    18.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -32.3,
+    7.42,
+    18.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -33.5,
+    10.42,
+    20.0
+   ],
+   "yaw": 0.0,
+   "group": "Licht",
+   "note": "203",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Bed",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Bed.fbx",
+   "position": [
+    -32.05,
+    7.42,
+    20.9
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "203",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -34.9,
+    7.42,
+    21.65
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "203",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Table",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Table.fbx",
+   "position": [
+    -31.9,
+    7.42,
+    18.4
+   ],
+   "yaw": 180.0,
+   "group": "Möbel",
+   "note": "203",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -39.5,
+    10.42,
+    20.0
+   ],
+   "yaw": 0.0,
+   "group": "Licht",
+   "note": "204",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Bed",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Bed.fbx",
+   "position": [
+    -40.95,
+    7.42,
+    20.9
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "204",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -38.1,
+    7.42,
+    21.65
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "204",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Table",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Table.fbx",
+   "position": [
+    -41.1,
+    7.42,
+    18.4
+   ],
+   "yaw": 180.0,
+   "group": "Möbel",
+   "note": "204",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_Shell_4m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_Shell_4m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    24.0
+   ],
+   "yaw": 0.0,
+   "group": "Hülle innen",
+   "note": "Scheibe 3/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -35.4,
+    7.42,
+    23.0
+   ],
+   "yaw": 90.0,
+   "group": "Flur",
+   "note": "Tür 205",
+   "doorspec": "Door_Hab205"
+  },
+  {
+   "asset": "SM_Station_Wall_2x3_Padded",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Padded.fbx",
+   "position": [
+    -35.4,
+    7.42,
+    25.0
+   ],
+   "yaw": 90.0,
+   "group": "Flur",
+   "note": "Wand 205",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -37.6,
+    7.42,
+    23.0
+   ],
+   "yaw": -90.0,
+   "group": "Flur",
+   "note": "Tür 206",
+   "doorspec": "Door_Hab206"
+  },
+  {
+   "asset": "SM_Station_Wall_2x3_Panel",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Panel.fbx",
+   "position": [
+    -37.6,
+    7.42,
+    25.0
+   ],
+   "yaw": -90.0,
+   "group": "Flur",
+   "note": "Wand 206",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -36.5,
+    11.01,
+    23.0
+   ],
+   "yaw": 90.0,
+   "group": "Licht",
+   "note": "Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -36.5,
+    11.01,
+    25.0
+   ],
+   "yaw": 90.0,
+   "group": "Licht",
+   "note": "Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -38.7,
+    7.42,
+    22.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -40.7,
+    7.42,
+    22.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -34.3,
+    7.42,
+    22.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -32.3,
+    7.42,
+    22.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -33.5,
+    10.42,
+    24.0
+   ],
+   "yaw": 0.0,
+   "group": "Licht",
+   "note": "205",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Bed",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Bed.fbx",
+   "position": [
+    -32.05,
+    7.42,
+    24.9
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "205",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -34.9,
+    7.42,
+    25.65
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "205",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Table",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Table.fbx",
+   "position": [
+    -31.9,
+    7.42,
+    22.4
+   ],
+   "yaw": 180.0,
+   "group": "Möbel",
+   "note": "205",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -39.5,
+    10.42,
+    24.0
+   ],
+   "yaw": 0.0,
+   "group": "Licht",
+   "note": "206",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Bed",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Bed.fbx",
+   "position": [
+    -40.95,
+    7.42,
+    24.9
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "206",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -38.1,
+    7.42,
+    25.65
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "206",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Table",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Table.fbx",
+   "position": [
+    -41.1,
+    7.42,
+    22.4
+   ],
+   "yaw": 180.0,
+   "group": "Möbel",
+   "note": "206",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_Shell_4m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_Shell_4m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    28.0
+   ],
+   "yaw": 0.0,
+   "group": "Hülle innen",
+   "note": "Scheibe 4/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -35.4,
+    7.42,
+    27.0
+   ],
+   "yaw": 90.0,
+   "group": "Flur",
+   "note": "Tür 207",
+   "doorspec": "Door_Hab207"
+  },
+  {
+   "asset": "SM_Station_Wall_2x3_Panel",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Panel.fbx",
+   "position": [
+    -35.4,
+    7.42,
+    29.0
+   ],
+   "yaw": 90.0,
+   "group": "Flur",
+   "note": "Wand 207",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -37.6,
+    7.42,
+    27.0
+   ],
+   "yaw": -90.0,
+   "group": "Flur",
+   "note": "Tür 208",
+   "doorspec": "Door_Hab208"
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -37.6,
+    7.42,
+    29.0
+   ],
+   "yaw": -90.0,
+   "group": "Flur",
+   "note": "Wand 208",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -36.5,
+    11.01,
+    27.0
+   ],
+   "yaw": 90.0,
+   "group": "Licht",
+   "note": "Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -36.5,
+    11.01,
+    29.0
+   ],
+   "yaw": 90.0,
+   "group": "Licht",
+   "note": "Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -38.7,
+    7.42,
+    26.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -40.7,
+    7.42,
+    26.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -34.3,
+    7.42,
+    26.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -32.3,
+    7.42,
+    26.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -33.5,
+    10.42,
+    28.0
+   ],
+   "yaw": 0.0,
+   "group": "Licht",
+   "note": "207",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Bed",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Bed.fbx",
+   "position": [
+    -32.05,
+    7.42,
+    28.9
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "207",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -34.9,
+    7.42,
+    29.65
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "207",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Table",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Table.fbx",
+   "position": [
+    -31.9,
+    7.42,
+    26.4
+   ],
+   "yaw": 180.0,
+   "group": "Möbel",
+   "note": "207",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -39.5,
+    10.42,
+    28.0
+   ],
+   "yaw": 0.0,
+   "group": "Licht",
+   "note": "208",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Bed",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Bed.fbx",
+   "position": [
+    -40.95,
+    7.42,
+    28.9
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "208",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -38.1,
+    7.42,
+    29.65
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "208",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Table",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Table.fbx",
+   "position": [
+    -41.1,
+    7.42,
+    26.4
+   ],
+   "yaw": 180.0,
+   "group": "Möbel",
+   "note": "208",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_Shell_4m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_Shell_4m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    32.0
+   ],
+   "yaw": 0.0,
+   "group": "Hülle innen",
+   "note": "Scheibe 5/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -35.4,
+    7.42,
+    31.0
+   ],
+   "yaw": 90.0,
+   "group": "Flur",
+   "note": "Tür 209",
+   "doorspec": "Door_Hab209"
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -35.4,
+    7.42,
+    33.0
+   ],
+   "yaw": 90.0,
+   "group": "Flur",
+   "note": "Wand 209",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -37.6,
+    7.42,
+    31.0
+   ],
+   "yaw": -90.0,
+   "group": "Flur",
+   "note": "Tür 210",
+   "doorspec": "Door_Hab210"
+  },
+  {
+   "asset": "SM_Station_Wall_2x3_Padded",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Padded.fbx",
+   "position": [
+    -37.6,
+    7.42,
+    33.0
+   ],
+   "yaw": -90.0,
+   "group": "Flur",
+   "note": "Wand 210",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -36.5,
+    11.01,
+    31.0
+   ],
+   "yaw": 90.0,
+   "group": "Licht",
+   "note": "Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -36.5,
+    11.01,
+    33.0
+   ],
+   "yaw": 90.0,
+   "group": "Licht",
+   "note": "Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -38.7,
+    7.42,
+    30.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -40.7,
+    7.42,
+    30.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -34.3,
+    7.42,
+    30.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -32.3,
+    7.42,
+    30.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -33.5,
+    10.42,
+    32.0
+   ],
+   "yaw": 0.0,
+   "group": "Licht",
+   "note": "209",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Bed",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Bed.fbx",
+   "position": [
+    -32.05,
+    7.42,
+    32.9
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "209",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -34.9,
+    7.42,
+    33.65
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "209",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -39.5,
+    10.42,
+    32.0
+   ],
+   "yaw": 0.0,
+   "group": "Licht",
+   "note": "210",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Bed",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Bed.fbx",
+   "position": [
+    -40.95,
+    7.42,
+    32.9
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "210",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -38.1,
+    7.42,
+    33.65
+   ],
+   "yaw": 0.0,
+   "group": "Möbel",
+   "note": "210",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_Shell_4m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_Shell_4m.fbx",
+   "position": [
+    -36.5,
+    7.42,
+    36.0
+   ],
+   "yaw": 0.0,
+   "group": "Hülle innen",
+   "note": "Scheibe 6/6",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -35.4,
+    7.42,
+    35.0
+   ],
+   "yaw": 90.0,
+   "group": "Flur",
+   "note": "Tür 211",
+   "doorspec": "Door_Hab211"
+  },
+  {
+   "asset": "SM_Station_Wall_2x3_Padded",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Padded.fbx",
+   "position": [
+    -35.4,
+    7.42,
+    37.0
+   ],
+   "yaw": 90.0,
+   "group": "Flur",
+   "note": "Wand 211",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_Door_2x3_Narrow",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_Door_2x3_Narrow.fbx",
+   "position": [
+    -37.6,
+    7.42,
+    35.0
+   ],
+   "yaw": -90.0,
+   "group": "Flur",
+   "note": "Tür 212",
+   "doorspec": "Door_Hab212"
+  },
+  {
+   "asset": "SM_Station_Wall_2x3_Panel",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3_Panel.fbx",
+   "position": [
+    -37.6,
+    7.42,
+    37.0
+   ],
+   "yaw": -90.0,
+   "group": "Flur",
+   "note": "Wand 212",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -36.5,
+    11.01,
+    35.0
+   ],
+   "yaw": 90.0,
+   "group": "Licht",
+   "note": "Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -36.5,
+    11.01,
+    37.0
+   ],
+   "yaw": 90.0,
+   "group": "Licht",
+   "note": "Flur",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -38.7,
+    7.42,
+    34.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -40.7,
+    7.42,
+    34.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -34.3,
+    7.42,
+    34.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Wall_2x3",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Wall_2x3.fbx",
+   "position": [
+    -32.3,
+    7.42,
+    34.0
+   ],
+   "yaw": 0.0,
+   "group": "Raumtrenner",
+   "note": "",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -33.5,
+    10.42,
+    36.0
+   ],
+   "yaw": 0.0,
+   "group": "Licht",
+   "note": "211",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -31.85,
+    7.42,
+    34.65
+   ],
+   "yaw": 90.0,
+   "group": "Möbel",
+   "note": "211 Lager",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -31.85,
+    7.42,
+    35.35
+   ],
+   "yaw": 90.0,
+   "group": "Möbel",
+   "note": "211 Lager",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Motel_Locker",
+   "fbx": "Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx",
+   "position": [
+    -31.85,
+    7.42,
+    36.05
+   ],
+   "yaw": 90.0,
+   "group": "Möbel",
+   "note": "211 Lager",
+   "doorspec": null
+  },
+  {
+   "asset": "SM_Station_Hab_LightStrip_2m",
+   "fbx": "Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx",
+   "position": [
+    -39.5,
+    10.42,
+    36.0
+   ],
+   "yaw": 0.0,
+   "group": "Licht",
+   "note": "212",
+   "doorspec": null
+  }
+ ]
+}
