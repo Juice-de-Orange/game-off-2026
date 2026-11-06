@@ -935,7 +935,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Nicht geprüft: echte Tasten und Laufwege, andere Geräte und Browser. Halle, Hangar, Gang und Rumpf nur als Editor-Ansichten, nicht im Build abgelaufen.
 
 ### P61 — Ton am Schalter und in der Station
-- Größe: M · Priorität: Soll · Status: bestellt, wartet auf Lieferung (max baut ein, Auswahl nach Gehör: Max und Martin)
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 06.11.)
 - Braucht: P18 · Folgt auf: P18
 - Ziel: Was der Spieler tut, ist zu hören, und die Station klingt nach einem Ort. Bisher liegt keine einzige Sounddatei im Projekt.
 - Bestellt (18 Einträge `package: P61` in `ASSET-REQUESTS.md`, bis 16.11.):
