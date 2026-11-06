@@ -4834,7 +4834,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Chime.ogg
 package: P60
 scene: Station
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4886,7 +4886,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Stamp_Approve.ogg
 package: P61
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4912,7 +4912,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Stamp_Deny.ogg
 package: P61
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4938,7 +4938,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Slide.ogg
 package: P61
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4964,7 +4964,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup.ogg
 package: P61
 scene: Counter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -4990,7 +4990,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Drawer_Open.ogg
 package: P61
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5016,7 +5016,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Drawer_Close.ogg
 package: P61
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5042,7 +5042,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Printer_Citation.ogg
 package: P61
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5068,7 +5068,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Button_Arrest.ogg
 package: P61
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5094,7 +5094,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Cover_Flip.ogg
 package: P61
 scene: Counter
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5120,7 +5120,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Airlock_Fire.ogg
 package: P61
 scene: InspectionLock
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5224,7 +5224,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_UI_Click.ogg
 package: P61
 scene: UI
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5250,7 +5250,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Trade_Buy.ogg
 package: P61
 scene: Kiosk, Bar
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
