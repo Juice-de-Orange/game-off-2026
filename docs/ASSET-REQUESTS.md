@@ -5412,7 +5412,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_ClownShoes.fbx
 package: P63
 scene: Asservaten, Inventar
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0.3, 0.42, 0.14]
