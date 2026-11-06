@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GameOff.Audio;
 using GameOff.Economy;
 using GameOff.Player;
 using TMPro;
@@ -209,12 +210,14 @@ namespace GameOff.UI
                 economy.Supply(_stock).Take(item);
                 economy.Inventory.Add(item);
                 message.text = $"Bought {item.DisplayName}.";
+                AudioManager.Play(s => s.tradeBuy);
             }
             else if (_stock.Buys(item) && economy.Inventory.Remove(item))
             {
                 economy.Wallet.Add(_stock.OfferFor(item), $"Sold · {item.DisplayName}");
                 economy.Supply(_stock).Put(item);
                 message.text = $"Sold {item.DisplayName}.";
+                AudioManager.Play(s => s.tradeBuy);
             }
             Refresh();
         }

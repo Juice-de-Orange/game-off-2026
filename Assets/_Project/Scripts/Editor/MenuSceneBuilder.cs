@@ -584,6 +584,7 @@ namespace GameOff.EditorTools
             var musicA = Source("MusicA", music, true, true);
             var musicB = Source("MusicB", music, true, true);
             var sfx2D = Source("Sfx2D", sfx, false, true); // UI clicks must work in the pause menu
+            var sfxGame = Source("SfxGame", sfx, false, false); // stops with the pause menu
             var voiceSource = Source("Voice", voice, false, false);
 
             var manager = root.AddComponent<AudioManager>();
@@ -594,7 +595,9 @@ namespace GameOff.EditorTools
             Set(manager, "musicA", musicA);
             Set(manager, "musicB", musicB);
             Set(manager, "sfx2D", sfx2D);
+            Set(manager, "sfxGame", sfxGame);
             Set(manager, "voice", voiceSource);
+            Set(manager, "sounds", SoundSetBuilder.Build());
 
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, AudioManagerPrefab);
             Object.DestroyImmediate(root);

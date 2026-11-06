@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameOff.Audio;
 using GameOff.Core;
 using GameOff.Counter;
 using UnityEngine;
@@ -42,6 +43,8 @@ namespace GameOff.Documents
         private Vector3 _drawerRest;
         private bool _busy;
         private DocumentView _pressed, _inspected;
+        private const float DrawerHearingMeters = 12f;
+
         private bool _dragging, _drawerPress;
         private Vector2 _pressScreen;
         private Vector3 _dragOffset;
@@ -204,6 +207,7 @@ namespace GameOff.Documents
                     UpdateLayers();
                     _pressed = top;
                     _dragging = true;
+                    AudioManager.Play(s => s.paperPickup);
                     _dragOffset = Vector3.zero;
                     SetColliders(top, false);
                     BringToFront(top);
@@ -218,6 +222,7 @@ namespace GameOff.Documents
                 if (!_dragging && (screenPos - _pressScreen).sqrMagnitude > tuning.dragThresholdPixels * tuning.dragThresholdPixels)
                 {
                     _dragging = true;
+                    AudioManager.Play(s => s.paperPickup);
                     SetColliders(_pressed, false); // the mouse ray must see what is under the paper (desk, drawer)
                 }
                 if (_dragging) _pressed.transform.position = DragTarget(screenPos) + Vector3.up * tuning.dragLift;
@@ -350,6 +355,7 @@ namespace GameOff.Documents
                 Debug.LogError("[Documents] No printer wired on the counter: run GameOff/Build Documents.", this);
                 return;
             }
+            AudioManager.Play(s => s.printerCitation);
             var view = Spawn(data);
             if (view == null) return;
             view.transform.SetPositionAndRotation(printerOut.position, printerOut.rotation);
@@ -407,6 +413,7 @@ namespace GameOff.Documents
 
         private void FinishDrag(Vector2 screenPos)
         {
+            AudioManager.Play(s => s.paperSlide);
             Drop(_pressed, !_busy && PointerOnDrawer(screenPos)); // a moving drawer takes nothing: its tray has no fixed place yet
             SetColliders(_pressed, true);
             _pressed = null;
@@ -493,6 +500,7 @@ namespace GameOff.Documents
         private void Inspect(DocumentView doc)
         {
             var cam = station.ViewCamera;
+            AudioManager.Play(s => s.paperPickup);
             _inspected = doc;
             _inspectReturn = new Pose(doc.transform.position, doc.transform.rotation);
             float height = Mathf.Max(doc.PageSize.y, doc.PageSize.x * 9f / 16f);
@@ -510,11 +518,18 @@ namespace GameOff.Documents
             doc.HighlightField(null);
             StopGlide(doc.transform);
             if (instant) doc.transform.SetPositionAndRotation(_inspectReturn.position, _inspectReturn.rotation);
-            else StartGlide(doc.transform, _inspectReturn.position, _inspectReturn.rotation, tuning.inspectDuration);
+            else
+            {
+                AudioManager.Play(s => s.paperSlide);
+                StartGlide(doc.transform, _inspectReturn.position, _inspectReturn.rotation, tuning.inspectDuration);
+            }
         }
 
         private IEnumerator MoveDrawer(bool out_)
         {
+            // At the counter, not in the player's ear: the next delivery can come while they are in the bar.
+            if (out_) AudioManager.PlayAt(s => s.drawerOpen, drawer.position, DrawerHearingMeters);
+            else AudioManager.PlayAt(s => s.drawerClose, drawer.position, DrawerHearingMeters);
             Vector3 from = drawer.localPosition;
             // Along the drawer's own forward (local +Z), expressed in its parent's space like localPosition
             Vector3 to = out_ ? _drawerRest + drawer.localRotation * Vector3.forward * tuning.drawerTravel : _drawerRest;

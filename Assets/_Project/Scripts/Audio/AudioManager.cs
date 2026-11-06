@@ -1,8 +1,14 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using GameOff.Core;
+using GameOff.Player;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace GameOff.Audio
 {
@@ -13,6 +19,7 @@ namespace GameOff.Audio
     ///   AudioManager.PlayMusic(clip)        – loops on the Music group, crossfades from the current track
     ///   AudioManager.PlaySfx(clip)          – 2D one-shot on the SFX group (UI, stamps, desk)
     ///   AudioManager.PlaySfxAt(clip, pos)   – 3D one-shot on the SFX group at a world position
+    ///   AudioManager.Play(s => s.drawerOpen) – 2D one-shot from Data/Audio/SoundSet with its volume
     ///   AudioManager.PlayVoice(clip)        – 2D on the Voice group, replaces the current line
     /// AudioSources placed in scenes without a mixer group (e.g. the doors from the station builder) are routed to SFX
     /// on every scene load. Music and previews keep playing in the pause menu (ignoreListenerPause).
@@ -29,12 +36,16 @@ namespace GameOff.Audio
         [SerializeField] private AudioSource musicA;
         [SerializeField] private AudioSource musicB;
         [SerializeField] private AudioSource sfx2D;
+        [Tooltip("Sounds of the game itself: stop with the pause menu, unlike the UI on sfx2D.")]
+        [SerializeField] private AudioSource sfxGame;
         [SerializeField] private AudioSource voice;
         [SerializeField] private float defaultMusicFade = 1.5f;
+        [SerializeField] private SoundSet sounds;
 
         private AudioSource _activeMusic;
         private Coroutine _fade;
         private AudioClip[] _previews;
+        private readonly List<RaycastResult> _uiHits = new List<RaycastResult>();
 
         public static AudioManager Instance { get; private set; }
 
@@ -73,6 +84,19 @@ namespace GameOff.Audio
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => RouteUnassignedSources();
 
+        // One place for the click of every button, instead of a listener on each of them.
+        private void Update()
+        {
+            if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame || EventSystem.current == null) return;
+            var pointer = new PointerEventData(EventSystem.current) { position = Mouse.current.position.ReadValue() };
+            _uiHits.Clear();
+            EventSystem.current.RaycastAll(pointer, _uiHits);
+            if (_uiHits.Count == 0) return;
+            var control = _uiHits[0].gameObject.GetComponentInParent<Selectable>();
+            if (control == null || !control.IsInteractable() || control is Slider || sounds == null) return; // a slider has its own preview tone
+            PlaySfx(sounds.uiClick.clip, sounds.uiClick.volume);
+        }
+
         // ---------- Public helpers ----------
 
         public static void PlayMusic(AudioClip clip, float fadeSeconds = -1f)
@@ -91,6 +115,43 @@ namespace GameOff.Audio
         {
             if (Instance == null || clip == null) return;
             Instance.sfx2D.PlayOneShot(clip, volume);
+        }
+
+        /// <summary>A sound of the SoundSet on the SFX group.</summary>
+        public static void Play(Func<SoundSet, Sound> pick)
+        {
+            if (Instance == null || Instance.sounds == null) return;
+            var sound = pick(Instance.sounds);
+            if (sound != null) Instance.PlayGame(sound);
+        }
+
+        /// <summary>A sound of the SoundSet at a place in the world, for what can happen while the player is elsewhere.</summary>
+        public static void PlayAt(Func<SoundSet, Sound> pick, Vector3 position, float maxDistance)
+        {
+            if (Instance == null || Instance.sounds == null) return;
+            var sound = pick(Instance.sounds);
+            if (sound != null) PlaySfxAt(sound.clip, position, sound.volume, maxDistance);
+        }
+
+        private void PlayGame(Sound sound)
+        {
+            if (sound.clip != null) sfxGame.PlayOneShot(sound.clip, sound.volume);
+        }
+
+        /// <summary>A sound of the SoundSet on the Voice group, for what stands in for a voice. Doesn't cut off a line that is playing.</summary>
+        public static void PlayOnVoice(Func<SoundSet, Sound> pick)
+        {
+            if (Instance == null || Instance.sounds == null) return;
+            var sound = pick(Instance.sounds);
+            if (sound != null && sound.clip != null) Instance.voice.PlayOneShot(sound.clip, sound.volume);
+        }
+
+        /// <summary>The next footstep; steps remembers the last clip.</summary>
+        public static void PlayFootstep(Footsteps steps)
+        {
+            if (Instance == null || Instance.sounds == null || Instance.sounds.footsteps == null || Instance.sounds.footsteps.Length == 0) return;
+            var list = Instance.sounds.footsteps;
+            Instance.PlayGame(list[steps.NextIndex(list.Length, UnityEngine.Random.value)]);
         }
 
         public static void PlaySfxAt(AudioClip clip, Vector3 position, float volume = 1f, float maxDistance = 20f)

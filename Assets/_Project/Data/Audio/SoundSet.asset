@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f31af07cf9b24a4294fbb941910a611, type: 3}
+  m_Name: SoundSet
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Audio.SoundSet
+  stampApprove:
+    clip: {fileID: 8300000, guid: 0d361d7b5ef699941b4f4def174d7f53, type: 3}
+    volume: 1
+  stampDeny:
+    clip: {fileID: 8300000, guid: 577c4a9ad381cb841a1117d4d9022823, type: 3}
+    volume: 1
+  paperSlide:
+    clip: {fileID: 8300000, guid: 88ae0c1b51d7c914d84435172dc27b82, type: 3}
+    volume: 1
+  paperPickup:
+    clip: {fileID: 8300000, guid: adcdafd3275107f4f9fd11a5ad460c5c, type: 3}
+    volume: 1
+  drawerOpen:
+    clip: {fileID: 8300000, guid: 49884fccff38f064c8154d2f4f4077a7, type: 3}
+    volume: 1
+  drawerClose:
+    clip: {fileID: 8300000, guid: cb659ffe2e6441445b51f7e90d9f4255, type: 3}
+    volume: 1
+  printerCitation:
+    clip: {fileID: 8300000, guid: 4fa1102ceeeea9648b4dbd295deeb944, type: 3}
+    volume: 1
+  buttonArrest:
+    clip: {fileID: 8300000, guid: 7c88cce92c2c4b7469e1c67376cb4c6d, type: 3}
+    volume: 1
+  coverFlip:
+    clip: {fileID: 8300000, guid: 4e2f8c6c79fb3c34f984a105ce92297d, type: 3}
+    volume: 1
+  airlockFire:
+    clip: {fileID: 8300000, guid: 17ee282a3ac452c44b57ccb863d45c15, type: 3}
+    volume: 1
+  paChime:
+    clip: {fileID: 8300000, guid: 361f0241b2a35de4ea129aaba4f41d33, type: 3}
+    volume: 1
+  vendorGreet:
+    clip: {fileID: 8300000, guid: f34b8a29f09757744a05940ed44ab031, type: 3}
+    volume: 1
+  tradeBuy:
+    clip: {fileID: 8300000, guid: 8b6b70a878a30ca488468b64a59db9df, type: 3}
+    volume: 1
+  footsteps:
+  - clip: {fileID: 8300000, guid: 2a103e33802aebc44823a323169d815d, type: 3}
+    volume: 0.5
+  - clip: {fileID: 8300000, guid: 62cec75baceaeae4182348069a434f7c, type: 3}
+    volume: 0.5
+  - clip: {fileID: 8300000, guid: 0b1a198ce7b987542b8b9303ea41c3fc, type: 3}
+    volume: 0.5
+  ambienceVolume: 0.35
+  humInRoomVolume: 0.12
+  ambienceFadeSeconds: 1.5
+  uiClick:
+    clip: {fileID: 8300000, guid: a10a116ac069cf24d96fe6ab1663cb33, type: 3}
+    volume: 0.7

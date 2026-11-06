@@ -251,6 +251,19 @@ namespace GameOff.EditorTools
             WallPiece(parent, onXLine, offsetLine, cursor, to, bottom, top, mat, visible, collider);
         }
 
+        /// <summary>The floor plan's area of a room, with some room above and below for whoever stands in it.</summary>
+        public static Bounds RoomBounds(string name)
+        {
+            foreach (var room in Rooms)
+                if (room.Name == name)
+                {
+                    var bounds = new Bounds();
+                    bounds.SetMinMax(new Vector3(room.X0, -1f, room.Z0), new Vector3(room.X1, room.Height + 1f, room.Z1));
+                    return bounds;
+                }
+            throw new System.ArgumentException($"No room {name}");
+        }
+
         private static bool IsHallWallEnd(bool onXLine, float line, float mid, float len) =>
             !onXLine && Mathf.Approximately(line, 5.9f) && Mathf.Approximately(len, 1f) && Mathf.Approximately(Mathf.Abs(mid), 5.5f);
 

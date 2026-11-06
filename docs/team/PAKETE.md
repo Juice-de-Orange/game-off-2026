@@ -935,7 +935,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Nicht geprüft: echte Tasten und Laufwege, andere Geräte und Browser. Halle, Hangar, Gang und Rumpf nur als Editor-Ansichten, nicht im Build abgelaufen.
 
 ### P61 — Ton am Schalter und in der Station
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 06.11.)
+- Größe: M · Priorität: Soll · Status: gebaut, wartet auf Abnahme nach Gehör (max, 06.11.)
 - Braucht: P18 · Folgt auf: P18
 - Ziel: Was der Spieler tut, ist zu hören, und die Station klingt nach einem Ort. Bisher liegt keine einzige Sounddatei im Projekt.
 - Bestellt (18 Einträge `package: P61` in `ASSET-REQUESTS.md`, bis 16.11.):
@@ -949,6 +949,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   aufbauen oder ersetzen; `AmbienceBuilder` gehört dann dir. Die Credits im Hauptmenü brauchen noch **Build Menu Scenes**.
 - Nicht enthalten: Musik (Max und Martin organisieren sie selbst, Einbau erst danach), Stimmen.
 - Abnahme: Jede Aktion am Schalter ist zu hören, Lautstärkeregler wirken, keine Konsolenfehler, Download nach dem Einbau gemessen.
+- Ergebnis: Stempel, Papier, Schublade, Drucker, Verhaften, Schleuse, Klappe, Durchsagen-Gong, Händlergruß, Kauf, Schritte, Klick in Menüs und Raumklang für Station, Bar und Hangar sind eingebaut. Alles liegt in `Data/Audio/SoundSet.asset`, auch die Lautstärken: **dort nach Gehör abgleichen, ohne Code und ohne Builder** (`GameOff/Build Sound Set` lässt sie stehen).
+  - Geprüft im WebGL-Build: Jeder Sound wird wirklich gestartet (im Browser mitgezählt, Dauer passt zum Clip). Die Schleuse ohne Reisenden spielt nur die Klappe, in der Pause startet nichts. 90 Tests grün, keine neuen Konsolenfehler.
+  - Nicht geprüft: **der Klang selbst, die Lautstärken und die Regler**, der Testbrowser ist stumm. Die Überblendung zwischen den Räumen und die Raumklänge von Bar und Hangar sind nur als Logik getestet, nicht abgelaufen. Das nimmt Max auf der Live-Seite ab.
+  - Download 17,3 statt 15,9 MB (Sounds 2,2 MB, davon je rund 0,65 MB die drei Raumklänge). Falls zu viel: Vorbis-Qualität der Raumklänge senken.
+  - Bildrate: kein messbarer Unterschied, Median aus drei Paaren im Wechsel, CPU ×4: Schalter 25,2 gegen 26,6 fps, Pinnwand 34,6 gegen 32,8, Menü 21,8 gegen 20,2. Speicher 80 MB, stabil über Tage und Szenenwechsel.
+  - Nebenbei: `DocumentDesk`, `CounterShift` und `CounterClickable` haben nur Sound-Aufrufe bekommen. Die Clownsschuh-Sounds liegen bereit und sind nicht verdrahtet (P63).
 
 ### P62 — Gadget: UV-Lampe
 - Größe: M · Priorität: Soll · Status: offen, Modell bestellt (max, 06.11.)

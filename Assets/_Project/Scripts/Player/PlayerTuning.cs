@@ -11,6 +11,8 @@ namespace GameOff.Player
         public float walkSpeed = 4f;
         [Tooltip("Downward acceleration in m/s².")]
         public float gravity = 20f;
+        [Tooltip("Meters between two footstep sounds.")]
+        public float stepLength = 1.6f;
 
         [Header("Look")]
         [Tooltip("Degrees per pixel of mouse movement.")]

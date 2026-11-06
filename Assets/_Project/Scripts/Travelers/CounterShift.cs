@@ -1,3 +1,4 @@
+using GameOff.Audio;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -135,6 +136,8 @@ namespace GameOff.Travelers
             if (action != CounterAction.Arrest && action != CounterAction.Airlock) return;
             if (desk.IsBusy) return; // papers still on their way in
             desk.Confiscate();
+            if (action == CounterAction.Airlock) AudioManager.Play(s => s.airlockFire); // only when it really happens
+            else AudioManager.Play(s => s.buttonArrest);
             Decide(action == CounterAction.Arrest ? Verdict.Arrest : Verdict.Airlock);
         }
 

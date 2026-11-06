@@ -74,16 +74,16 @@ namespace GameOff.Counter
         {
             while (_queue.Count > 0)
             {
-                while (!station.IsSeated) yield return null;
+                while (!station.IsSeated || Time.timeScale == 0f) yield return null;
                 var (text, clip) = _queue.Dequeue();
                 subtitle.text = text;
                 subtitleRoot.SetActive(true);
                 if (clip != null) AudioManager.PlayVoice(clip);
-                else AudioManager.PlayPreview(AudioChannel.Voice);
+                else AudioManager.PlayOnVoice(s => s.paChime); // until the lines are recorded
                 float left = Mathf.Max(lines.secondsPerLine, clip != null ? clip.length : 0f);
                 while (left > 0f)
                 {
-                    if (station.IsSeated) left -= Time.unscaledDeltaTime;
+                    if (station.IsSeated && Time.timeScale > 0f) left -= Time.unscaledDeltaTime;
                     yield return null;
                 }
             }

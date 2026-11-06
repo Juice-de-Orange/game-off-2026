@@ -1,3 +1,4 @@
+using GameOff.Audio;
 using GameOff.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,6 +23,7 @@ namespace GameOff.Player
         private const float SpawnClearance = 0.05f; // above the floor when placed: touching it exactly can miss it
         private const float RescueAfterFalling = 3f; // meters below the last solid ground; no drop in the station is that deep
 
+        private readonly Footsteps _footsteps = new Footsteps();
         private CharacterController _controller;
         private Vector3 _lastGround;
         private float _sensitivitySetting = 1f;
@@ -123,6 +125,14 @@ namespace GameOff.Player
             _verticalVelocity = Mathf.Max(_verticalVelocity - tuning.gravity * fallStep, -MaxFallSpeed);
 
             _controller.Move(horizontal * Time.deltaTime + Vector3.up * (_verticalVelocity * fallStep));
+
+            if (_controller.isGrounded)
+            {
+                // What was really walked: pressing against a wall makes no steps.
+                Vector3 walked = _controller.velocity;
+                walked.y = 0f;
+                if (_footsteps.Advance(walked.magnitude * Time.deltaTime, tuning.stepLength)) AudioManager.PlayFootstep(_footsteps);
+            }
 
             // Safety net: fell through something after all (B01). Back to where we last stood instead of falling forever.
             if (transform.position.y < _lastGround.y - RescueAfterFalling) Rescue();

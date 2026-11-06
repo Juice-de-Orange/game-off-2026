@@ -1,4 +1,5 @@
 using System.Collections;
+using GameOff.Audio;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -41,6 +42,7 @@ namespace GameOff.Counter
             if (cover != null && !_coverOpen)
             {
                 _coverOpen = true;
+                AudioManager.Play(s => s.coverFlip);
                 cover.localRotation = _coverClosedRotation * Quaternion.Euler(coverOpenAngle, 0f, 0f);
                 return false;
             }
@@ -54,6 +56,7 @@ namespace GameOff.Counter
         public void ResetCover()
         {
             if (cover == null) return;
+            if (_coverOpen) AudioManager.Play(s => s.coverFlip);
             _coverOpen = false;
             cover.localRotation = _coverClosedRotation;
         }

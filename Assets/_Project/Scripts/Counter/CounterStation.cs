@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using GameOff.Audio;
 using GameOff.Documents;
 using GameOff.Player;
 using TMPro;
@@ -187,6 +188,8 @@ namespace GameOff.Counter
         private void OnStamped(CounterAction action)
         {
             Debug.Log($"[Counter] Stamp {action}");
+            if (action == CounterAction.Approve) AudioManager.Play(s => s.stampApprove);
+            else AudioManager.Play(s => s.stampDeny);
             ActionTriggered?.Invoke(action);
         }
 
