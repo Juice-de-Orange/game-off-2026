@@ -4860,7 +4860,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Vendor_Greet.ogg
 package: P60
 scene: Kiosk, Bar
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5146,7 +5146,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Footstep_Metal_01.ogg
 package: P61
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5172,7 +5172,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Footstep_Metal_02.ogg
 package: P61
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5198,7 +5198,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Footstep_Metal_03.ogg
 package: P61
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5276,7 +5276,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Amb_Station_Loop.ogg
 package: P61
 scene: Halle, Schalter, Motel
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5296,6 +5296,7 @@ refs: []
 placeholder: Kein Ton, die Stelle ist bisher stumm. Der Einbau folgt in P61.
 feedback:
   - "2026-11-06 martin: Liefert Martin selbst, Pipeline nicht mehr nötig. Freesound 77838 (Jovica, CC BY 4.0), ruhiger Teil 51 s als nahtloser Loop, stereo, 486 KB. Liegt schon unter dem Zielpfad, Quelle in ArtSource/Audio/. Länge und Stereo sind Martins Entscheidung (statt höchstens 30 s mono). Max: bitte Status setzen und beim Einbau in P61 nach Gehör prüfen."
+  - "2026-11-06 max: Max hat entschieden, die synthetische Station-Atmo aus P61 (W1067, Stil der Türsounds, 29 s mono, Loop rund) ersetzt die Freesound-Datei. Damit entfallen Quelle (Jovica FLAC/WAV) und die CREDITS-Zeile; die .meta (GUID) bleibt, PF_Ambience zeigt also ohne Änderung auf die neue Datei."
 ```
 
 ### SFX_Amb_Bar_Loop.ogg
@@ -5303,7 +5304,7 @@ feedback:
 path: Assets/_Project/Audio/SFX/SFX_Amb_Bar_Loop.ogg
 package: P61
 scene: Bar
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5329,7 +5330,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Amb_Hangar_Loop.ogg
 package: P61
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5438,7 +5439,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_ClownShoe_Squeak_01.ogg
 package: P63
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5464,7 +5465,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_ClownShoe_Squeak_02.ogg
 package: P63
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5490,7 +5491,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_ClownShoe_Squeak_03.ogg
 package: P63
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]

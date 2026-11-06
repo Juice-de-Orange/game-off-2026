@@ -12,7 +12,6 @@ Only use assets whose license allows use in a public, open-source game jam entry
 | Liberation Sans (TextMeshPro default font, placeholder) | Font | Red Hat / Liberation Fonts project, shipped with Unity TextMeshPro | https://github.com/liberationfonts/liberation-fonts | SIL OFL 1.1 |
 | Share Tech Mono (fallback for missing characters) | Font | Carrois Type Design, Ralph du Carrois | https://fonts.google.com/specimen/Share+Tech+Mono | SIL OFL 1.1 (license file next to the font: `Assets/_Project/Fonts/ShareTechMono-OFL.txt`) |
 | Orbitron (all game text) | Font | Matt McInerney / The Orbitron Project Authors | https://fonts.google.com/specimen/Orbitron | SIL OFL 1.1 (license file next to the font: `Assets/_Project/Fonts/Orbitron-OFL.txt`) |
-| LAYERS 005 - Heavy Water Space Ambience - D#2 (cut to a 51 s seamless loop: `SFX_Amb_Station_Loop.ogg`) | Sound | Jovica | https://freesound.org/s/77838/ | CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/), modified: trimmed, crossfaded, normalised |
 
 ## Useful sources
 
