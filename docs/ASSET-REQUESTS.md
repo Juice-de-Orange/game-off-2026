@@ -5384,7 +5384,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_UVLamp.fbx
 package: P62
 scene: Schalter (auf dem Tisch)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.06, 0.18, 0.06]
