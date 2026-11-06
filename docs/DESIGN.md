@@ -70,7 +70,7 @@ geholfen, steckt er dir etwas für die Familie zu. Gehorchen (Schleuse), verhaft
 | **Hangar** (36 × 28 × 16 m) | Shuttle fliegt morgens durch die Energiebarriere ein, Reisende steigen über die Rampe aus und stellen sich an; Frachtdrohne für Pakete nach Hause; durchsuchbare Kisten |
 | **Transithalle** | Knotenpunkt mit Anzeigesäule (Live-Ankunftsplan), Bänken, Getränkeautomat |
 | **Aussichtsplattform** | Halbrunde Glasfront: Blick auf den Heimatplaneten (Stadtlichter = Zustand der Familie), Sonne, Gasriese; Münzfernrohr |
-| **Bar "The Last Orbit"** | Barkeeper (Hocker = Gespräch), Schwarzmarkt unter der Theke, Fensterband |
+| **Bar "The Last Orbit"** | Barkeeper (Hocker = Gespräch; kauft nichts, tauscht Wünsche gegen Gerüchte, P65; Bestechungszettel, P66), Schwarzmarkt unter der Theke, Fensterband |
 | **Diner** | Essen, Gerüchte (Soll) |
 | **Kiosk** | Gadgets kaufen (Dokumentenscanner) |
 | **Motel** | Dein Zimmer 103 (Bett, Brief, Spind mit Familienfoto, Bullauge = Abendblick nach Hause); 101/102 verriegelt |

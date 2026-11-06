@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: beantwortet
 erstellt: 2026-11-06 17:30
 blockiert: nein
 ---
@@ -24,3 +24,4 @@ stehen**. Bulletin (`Travelers/DayBulletin`, `Counter/PinBoard`) und Durchsagen 
 Noch nichts wird gebaut, P68 steht erst als Plan. Wenn P68 drankommt und noch keine Antwort da ist, nimmt Martin A an.
 
 ## Antwort
+**A** (Max, 06.11.): Martin baut den Haken mit Claim.

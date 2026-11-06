@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: erledigt
 erstellt: 2026-11-06 14:20
 blockiert: nein
 ---
@@ -37,3 +37,4 @@ Diesen Punkt legt dein Claude **nicht** allein fest, auch bei A nicht. Bitte im 
 Nichts wird gebaut. P64 (nur Schwarzmarkt kauft Schmuggelware) gilt schon, unabhängig von dieser Frage.
 
 ## Antwort
+**A** (Max, 06.11.): Übernommen. Gerüchte: eins pro Tag, immer wahr. Bestechungszettel: Weigern kostet nichts, Abweisen oder Verhaften bringt nur kein Geld, XY wird normal bewertet. Der Besprechungspunkt zu den Labels bleibt für das Gespräch mit Martin offen.

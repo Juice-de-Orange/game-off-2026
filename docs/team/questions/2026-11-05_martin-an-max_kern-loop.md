@@ -196,6 +196,7 @@ werden erst begonnen, wenn P46 fertig ist** (steht so in `PAKETE.md`). Wer P08/P
 
 **Nachtrag 06.11. (max) – zwei Punkte zusätzlich für den Call:**
 - **Termin fürs öffentliche Repo:** Die Referenzbilder (`docs/style/refs/ai_*`, `mw_*`) müssen vorher aus der Historie (einmaliger Force-Push, Martin klont danach neu). Beide müssen zu dem Termin alles gepusht haben.
+- **Noch im Call zu klären (Max, 06.11.):** UV-Lampe gekauft oder freigeschaltet und ab welchem Tag (P62); Schichtinventar und Beschlagnahme (`2026-11-06_martin-an-max_schichtinventar-beschlagnahme.md`); Labels an der Sorte oder am Stapel (P64); Bugreports (`..._bugreport-server.md`), wenn bis dahin entschieden werden soll.
 - **Aus P58 schon entschieden:** Händlervorrat begrenzt und morgens aufgefüllt (P11), gefälschte Siegel erst ab der UV-Lampe (P15). Die Geldlücke Kiosk und Schwarzmarkt entscheidet Martin (eigene Frage).
 
 **Beschluss:**

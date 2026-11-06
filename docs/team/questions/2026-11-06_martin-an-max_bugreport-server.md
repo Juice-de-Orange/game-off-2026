@@ -41,3 +41,4 @@ Martins Idee: Testspieler sollen Bugs direkt im Spiel melden, damit wir für die
 Nichts wird gebaut.
 
 ## Antwort
+Zwischenstand (Max, 06.11.): Entscheiden wir später. Die Frage bleibt offen, es wird nichts gebaut.

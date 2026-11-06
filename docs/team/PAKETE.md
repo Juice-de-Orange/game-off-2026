@@ -745,7 +745,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Von jeder Tür aus erkennt man im Spiel ohne Karte das Ziel; nicht alle Hinweise sehen gleich aus; lesbar im WebGL-Build.
 
 ### P51 — Zimmer 103 wohnlicher
-- Größe: S · Priorität: Kann · Status: offen, **vorgemerkt, noch nicht bauen und nichts bestellen** (Idee max, 05.11.)
+- Größe: S · Priorität: Kann · Status: offen, Hundebild geliefert (`SM_Motel_DogPainting`), Rest noch nicht gebaut (max, 06.11.)
 - Braucht: — · Folgt auf: M014 (Katzenbild)
 - Ziel: Das Zimmer des Spielers fühlt sich persönlich an.
 - Enthalten: Bullauge größer (heute Ø 0,6 m, `SM_Station_Wall_Porthole_2x3`, Zimmer 103); Katzenbild etwas höher (`SM_Motel_CatPainting`, heute y 1,3 m, `StationGrayboxBuilder.BuildProps`); neues Gemälde vom Hund **Elo** (Bestellung erst, wenn das Paket dran ist; dann fragt Claude Max nach einem Foto als Vorlage, wie beim Katzenbild)
@@ -764,7 +764,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Stand 05.11.: **Bei der Pipeline bestellt** (drei Einträge `SM_NPC_*` in `ASSET-REQUESTS.md`, `needed_by` 16.11.). Das Paket wartet auf die Lieferung, Einbau macht max.
 
 ### P53 — Wohnmodul begehbar: Zimmer für alle Figuren
-- Größe: L · Priorität: Soll · Status: offen, **erst Entwurf, dann Entscheidung** (Idee max, 05.11.)
+- Größe: L · Priorität: Soll · Status: offen, Einbau nach P60 und P61 (Max, 06.11.); Entwurf und Teile sind geliefert (`docs/station/wohnmodul.md`)
 - Braucht: Entwurf + Absprache max/martin (Umfang gegen Feature-Freeze 22.11.) · Folgt auf: P04, P27
 - Ziel: Das Motel hat genug Platz, und jede Figur kann ein eigenes Zimmer haben, was die Immersion trägt.
 - Enthalten: großer Blender-Auftrag an die Pipeline: Innenraum des Wohnmoduls (Gänge, Zimmer) und eine begehbare Verbindung von der Station dorthin; Einbau über die Builder inkl. NavMesh und Lichtbake
@@ -942,7 +942,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   51 s stereo, 486 KB; Feedback-Zeile in `ASSET-REQUESTS.md`, Status bitte setzen). Vorab läuft er schon in Main über **P67**
   (`AmbienceBuilder`, `PF_Ambience`, eine 2D-Quelle für die ganze Station, Lautstärke 0,35). Für die Raumklänge pro Bereich bitte darauf
   aufbauen oder ersetzen; `AmbienceBuilder` gehört dann dir. Die Credits im Hauptmenü brauchen noch **Build Menu Scenes**.
-- Nicht enthalten: Musik (noch offen, Max), Stimmen.
+- Nicht enthalten: Musik (Max und Martin organisieren sie selbst, Einbau erst danach), Stimmen.
 - Abnahme: Jede Aktion am Schalter ist zu hören, Lautstärkeregler wirken, keine Konsolenfehler, Download nach dem Einbau gemessen.
 
 ### P62 — Gadget: UV-Lampe
@@ -952,7 +952,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Mit der Lampe sieht der Spieler gefälschte Siegel, ohne sie bleiben sie unsichtbar.
 - Enthalten: Gegenstand, Lampe auf dem Schaltertisch, UV-Ansicht auf den Dokumenten für `ForgedSeal`.
 - Nicht enthalten: weitere Gadgets. Reisende mit gefälschtem Siegel kommen über P15, erst ab Verfügbarkeit der Lampe (P58 Punkt 4).
-- Offen: freigeschaltet oder gekauft, und an welchem Tag (`DESIGN.md`, Gadgets).
+- Offen: freigeschaltet oder gekauft, und an welchem Tag (`DESIGN.md`, Gadgets). Klären Max und Martin im Call.
 - Abnahme: Ohne Lampe kein Hinweis aufs Siegel, mit Lampe klar sichtbar; Validator prüft die Regel aus P58.
 
 ### P63 — Clownsschuhe
@@ -1000,7 +1000,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   (10 CR), nicht Spice; Bar kauft nichts. Konsole 0 Fehler. Kein WebGL-Build.
 
 ### P65 — Barkeeper: Wunschliste & Gerüchte
-- Größe: M · Priorität: Soll · Status: offen, Entwurf (martin, 06.11.) – mit Max abstimmen
+- Größe: M · Priorität: Soll · Status: offen
 - Braucht: P68 (Markt, Ereignisse pro Tag), P64 · Folgt auf: —
 - Ziel: Der Barkeeper kauft nichts für Geld, sondern tauscht Gegenstände gegen Wissen für den nächsten Tag.
 - Enthalten: Täglich hängt vor der Bar ein Schild mit Gegenständen oder Labels, die der Barkeeper haben will. Wer liefert, bekommt ein
@@ -1008,17 +1008,17 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   kann abends beim Schwarzmarkt vorsorgen und am nächsten Tag teurer verkaufen. Daten je Tag (Wunsch, Gerücht, Preiswirkung pro Label)
   als ScriptableObject in `Data/Days/`.
 - Nicht enthalten: Bestechungszettel (P66), Gespräch am Barhocker (P28).
-- Vorschlag an Max: `questions/2026-11-06_martin-an-max_barkeeper-p65-p66.md` (bei Zustimmung legt sein Claude es fest). Offen für Max: Ersetzt das den Bar-Ankauf im Design (`DESIGN.md`, Bar-Zeile)? Wie viele Gerüchte pro Tag, sind manche falsch?
+- Vorschlag an Max: `questions/2026-11-06_martin-an-max_barkeeper-p65-p66.md` (bei Zustimmung legt sein Claude es fest). Entschieden (Max, 06.11.): Ersetzt den Bar-Ankauf. Ein Gerücht pro Tag, immer wahr.
 - Abnahme: An Tag 1 Wunsch erfüllen → Gerücht; an Tag 2 ist der Preis für das genannte Label beim Schwarzmarkt wie angekündigt.
 
 ### P66 — Barkeeper: Bestechungszettel
-- Größe: S–M · Priorität: Soll · Status: offen, Entwurf (martin, 06.11.) – mit Max abstimmen
+- Größe: S–M · Priorität: Soll · Status: offen
 - Braucht: P08, P10 · Folgt auf: —
 - Ziel: Moralische Versuchung am Schalter: Geld dafür, eine bestimmte Person durchzulassen.
 - Enthalten: Zu Schichtbeginn liegt manchmal ein Zettel vom Barkeeper auf dem Tisch („Lass Person XY durch, nach der Schicht
   bekommst du 200 CR“). Wer XY durchlässt, bekommt das Geld in der Abrechnung (P10). Die Regelprüfung wertet ein falsches Durchlassen
   trotzdem als Fehler. Zettel je Tag in den Tages- bzw. Reisenden-Daten.
-- Vorschlag an Max: siehe Frage `barkeeper-p65-p66`. Offen für Max: Verträgt sich das mit Verwarnung/Strafe aus P07/P08? Folgen, wenn man sich weigert oder XY verhaftet?
+- Vorschlag an Max: siehe Frage `barkeeper-p65-p66`. Entschieden (Max, 06.11.): Weigern kostet nichts. Abweisen oder Verhaften bringt nur kein Geld, XY wird normal bewertet. Das Durchlassen bleibt ein normaler Fehler aus P07.
 - Abnahme: Zettel erscheint am vorgesehenen Tag; XY durchlassen → Geld nach der Schicht; abweisen → kein Geld.
 
 ### P67 — Stations-Atmo vorab hörbar
