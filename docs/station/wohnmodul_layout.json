@@ -392,7 +392,8 @@
    ],
    "yaw": -90.0,
    "group": "Motelgang",
-   "note": "setzt der Builder selbst über DoorSpec Door_HabTube (BuildWallVisual, X0 + 0,1); hier nur zur Kontrolle"
+   "note": "Westwand des Motelgangs (BuildWallVisual, X0 + 0,1)",
+   "doorspec": "Door_HabTube"
   },
   {
    "asset": "SM_Station_HabTube_Frame",
@@ -404,7 +405,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre",
-   "note": "Druckrahmen + Podest 2,5 m"
+   "note": "Druckrahmen + Podest 2,05 m (mit Rahmen 2,5 m)",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabTube_Flange",
@@ -416,7 +418,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre außen",
-   "note": "Flansch an der Motel-Hülle"
+   "note": "Flansch an der Motel-Hülle",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_HabTube_Stair_2m",
@@ -428,7 +431,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre",
-   "note": "Treppe 1/6"
+   "note": "Treppe 1/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabTube_Stair_2m",
@@ -440,7 +444,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre außen",
-   "note": "Treppe 1/6"
+   "note": "Treppe 1/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_HabTube_Stair_2m",
@@ -452,7 +457,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre",
-   "note": "Treppe 2/6"
+   "note": "Treppe 2/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabTube_Stair_2m",
@@ -464,7 +470,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre außen",
-   "note": "Treppe 2/6"
+   "note": "Treppe 2/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_HabTube_Stair_2m",
@@ -476,7 +483,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre",
-   "note": "Treppe 3/6"
+   "note": "Treppe 3/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabTube_Stair_2m",
@@ -488,7 +496,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre außen",
-   "note": "Treppe 3/6"
+   "note": "Treppe 3/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_HabTube_Stair_2m",
@@ -500,7 +509,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre",
-   "note": "Treppe 4/6"
+   "note": "Treppe 4/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabTube_Stair_2m",
@@ -512,7 +522,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre außen",
-   "note": "Treppe 4/6"
+   "note": "Treppe 4/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_HabTube_Stair_2m",
@@ -524,7 +535,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre",
-   "note": "Treppe 5/6"
+   "note": "Treppe 5/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabTube_Stair_2m",
@@ -536,7 +548,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre außen",
-   "note": "Treppe 5/6"
+   "note": "Treppe 5/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_HabTube_Stair_2m",
@@ -548,7 +561,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre",
-   "note": "Treppe 6/6"
+   "note": "Treppe 6/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabTube_Stair_2m",
@@ -560,7 +574,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre außen",
-   "note": "Treppe 6/6"
+   "note": "Treppe 6/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_HabTube_Corner",
@@ -572,7 +587,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre",
-   "note": "Bogen R 2 m nach Norden"
+   "note": "Bogen R 2 m nach Norden",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabTube_Corner",
@@ -584,7 +600,8 @@
    ],
    "yaw": -90.0,
    "group": "Röhre außen",
-   "note": "Bogen"
+   "note": "Bogen",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_HabTube_Straight_2m",
@@ -596,7 +613,8 @@
    ],
    "yaw": 0.0,
    "group": "Röhre",
-   "note": "gerade 1/4"
+   "note": "gerade 1/4",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabTube_Straight_2m",
@@ -608,7 +626,8 @@
    ],
    "yaw": 0.0,
    "group": "Röhre außen",
-   "note": "gerade 1/4"
+   "note": "gerade 1/4",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_HabTube_Straight_2m",
@@ -620,7 +639,8 @@
    ],
    "yaw": 0.0,
    "group": "Röhre",
-   "note": "gerade 2/4"
+   "note": "gerade 2/4",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabTube_Straight_2m",
@@ -632,7 +652,8 @@
    ],
    "yaw": 0.0,
    "group": "Röhre außen",
-   "note": "gerade 2/4"
+   "note": "gerade 2/4",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_HabTube_Straight_2m",
@@ -644,7 +665,8 @@
    ],
    "yaw": 0.0,
    "group": "Röhre",
-   "note": "gerade 3/4"
+   "note": "gerade 3/4",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabTube_Straight_2m",
@@ -656,7 +678,8 @@
    ],
    "yaw": 0.0,
    "group": "Röhre außen",
-   "note": "gerade 3/4"
+   "note": "gerade 3/4",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_HabTube_Straight_2m",
@@ -668,7 +691,8 @@
    ],
    "yaw": 0.0,
    "group": "Röhre",
-   "note": "gerade 4/4"
+   "note": "gerade 4/4",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabTube_Straight_2m",
@@ -680,7 +704,8 @@
    ],
    "yaw": 0.0,
    "group": "Röhre außen",
-   "note": "gerade 4/4"
+   "note": "gerade 4/4",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_HabTube_Collar",
@@ -692,7 +717,8 @@
    ],
    "yaw": 0.0,
    "group": "Röhre",
-   "note": "Einstieg durch die Südkappe Z 11..14"
+   "note": "Einstieg durch die Südkappe Z 11..14",
+   "doorspec": null
   },
   {
    "asset": "SM_Ext_HabModule_Entry",
@@ -704,7 +730,8 @@
    ],
    "yaw": 0.0,
    "group": "Hab außen",
-   "note": "ersetzt SM_Ext_HabModule an Hab_West, gleiche Transformation (Südkappe mit Öffnung)"
+   "note": "ersetzt SM_Ext_HabModule an Hab_West, gleiche Transformation (Südkappe mit Öffnung)",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_Bulkhead",
@@ -716,7 +743,8 @@
    ],
    "yaw": 0.0,
    "group": "Schott",
-   "note": "Süd"
+   "note": "Süd",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -728,7 +756,8 @@
    ],
    "yaw": 180.0,
    "group": "Schott",
-   "note": "Door_HabSouth"
+   "note": "Door_HabSouth",
+   "doorspec": "Door_HabSouth"
   },
   {
    "asset": "SM_Station_Hab_Bulkhead",
@@ -740,7 +769,8 @@
    ],
    "yaw": 0.0,
    "group": "Schott",
-   "note": "Nord"
+   "note": "Nord",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3_Screen",
@@ -752,7 +782,8 @@
    ],
    "yaw": 0.0,
    "group": "Schott",
-   "note": "Flurende Nord, Bildschirm zum Flur"
+   "note": "Flurende Nord, Bildschirm zum Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -764,7 +795,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -776,7 +808,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -788,7 +821,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -800,7 +834,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -812,7 +847,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -824,7 +860,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -836,7 +873,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -848,7 +886,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -860,7 +899,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -872,7 +912,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -884,7 +925,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -896,7 +938,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -908,7 +951,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -920,7 +964,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -932,7 +977,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -944,7 +990,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -956,7 +1003,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -968,7 +1016,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -980,7 +1029,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -992,7 +1042,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1004,7 +1055,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1016,7 +1068,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1028,7 +1081,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1040,7 +1094,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1052,7 +1107,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1064,7 +1120,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1076,7 +1133,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1088,7 +1146,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1100,7 +1159,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1112,7 +1172,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1124,7 +1185,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1136,7 +1198,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1148,7 +1211,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1160,7 +1224,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1172,7 +1237,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1184,7 +1250,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1196,7 +1263,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1208,7 +1276,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1220,7 +1289,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1232,7 +1302,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1244,7 +1315,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1256,7 +1328,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1268,7 +1341,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1280,7 +1354,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1292,7 +1367,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1304,7 +1380,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1316,7 +1393,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1328,7 +1406,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1340,7 +1419,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1352,7 +1432,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1364,7 +1445,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1376,7 +1458,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1388,7 +1471,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1400,7 +1484,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1412,7 +1497,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1424,7 +1510,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1436,7 +1523,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1448,7 +1536,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1460,7 +1549,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Floor_2x2",
@@ -1472,7 +1562,8 @@
    ],
    "yaw": 0.0,
    "group": "Deck",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_Shell_4m",
@@ -1484,7 +1575,8 @@
    ],
    "yaw": 0.0,
    "group": "Hülle innen",
-   "note": "Scheibe 1/6"
+   "note": "Scheibe 1/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -1496,7 +1588,8 @@
    ],
    "yaw": 90.0,
    "group": "Flur",
-   "note": "Tür 201"
+   "note": "Tür 201",
+   "doorspec": "Door_Hab201"
   },
   {
    "asset": "SM_Station_Wall_2x3_Panel",
@@ -1508,7 +1601,8 @@
    ],
    "yaw": 90.0,
    "group": "Flur",
-   "note": "Wand 201"
+   "note": "Wand 201",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -1520,7 +1614,8 @@
    ],
    "yaw": -90.0,
    "group": "Flur",
-   "note": "Tür 202"
+   "note": "Tür 202",
+   "doorspec": "Door_Hab202"
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -1532,7 +1627,8 @@
    ],
    "yaw": -90.0,
    "group": "Flur",
-   "note": "Wand 202"
+   "note": "Wand 202",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -1544,7 +1640,8 @@
    ],
    "yaw": 90.0,
    "group": "Licht",
-   "note": "Flur"
+   "note": "Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -1556,7 +1653,8 @@
    ],
    "yaw": 90.0,
    "group": "Licht",
-   "note": "Flur"
+   "note": "Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -1568,7 +1666,8 @@
    ],
    "yaw": 0.0,
    "group": "Licht",
-   "note": "201"
+   "note": "201",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Bed",
@@ -1580,7 +1679,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "201"
+   "note": "201",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -1592,7 +1692,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "201"
+   "note": "201",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Table",
@@ -1604,7 +1705,8 @@
    ],
    "yaw": 180.0,
    "group": "Möbel",
-   "note": "201"
+   "note": "201",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -1616,7 +1718,8 @@
    ],
    "yaw": 0.0,
    "group": "Licht",
-   "note": "202"
+   "note": "202",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Bed",
@@ -1628,7 +1731,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "202"
+   "note": "202",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -1640,7 +1744,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "202"
+   "note": "202",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Table",
@@ -1652,7 +1757,8 @@
    ],
    "yaw": 180.0,
    "group": "Möbel",
-   "note": "202"
+   "note": "202",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_Shell_4m",
@@ -1664,7 +1770,8 @@
    ],
    "yaw": 0.0,
    "group": "Hülle innen",
-   "note": "Scheibe 2/6"
+   "note": "Scheibe 2/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -1676,7 +1783,8 @@
    ],
    "yaw": 90.0,
    "group": "Flur",
-   "note": "Tür 203"
+   "note": "Tür 203",
+   "doorspec": "Door_Hab203"
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -1688,7 +1796,8 @@
    ],
    "yaw": 90.0,
    "group": "Flur",
-   "note": "Wand 203"
+   "note": "Wand 203",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -1700,7 +1809,8 @@
    ],
    "yaw": -90.0,
    "group": "Flur",
-   "note": "Tür 204"
+   "note": "Tür 204",
+   "doorspec": "Door_Hab204"
   },
   {
    "asset": "SM_Station_Wall_2x3_Padded",
@@ -1712,7 +1822,8 @@
    ],
    "yaw": -90.0,
    "group": "Flur",
-   "note": "Wand 204"
+   "note": "Wand 204",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -1724,7 +1835,8 @@
    ],
    "yaw": 90.0,
    "group": "Licht",
-   "note": "Flur"
+   "note": "Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -1736,7 +1848,8 @@
    ],
    "yaw": 90.0,
    "group": "Licht",
-   "note": "Flur"
+   "note": "Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -1748,7 +1861,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -1760,7 +1874,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -1772,7 +1887,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -1784,7 +1900,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -1796,7 +1913,8 @@
    ],
    "yaw": 0.0,
    "group": "Licht",
-   "note": "203"
+   "note": "203",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Bed",
@@ -1808,7 +1926,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "203"
+   "note": "203",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -1820,7 +1939,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "203"
+   "note": "203",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Table",
@@ -1832,7 +1952,8 @@
    ],
    "yaw": 180.0,
    "group": "Möbel",
-   "note": "203"
+   "note": "203",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -1844,7 +1965,8 @@
    ],
    "yaw": 0.0,
    "group": "Licht",
-   "note": "204"
+   "note": "204",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Bed",
@@ -1856,7 +1978,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "204"
+   "note": "204",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -1868,7 +1991,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "204"
+   "note": "204",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Table",
@@ -1880,7 +2004,8 @@
    ],
    "yaw": 180.0,
    "group": "Möbel",
-   "note": "204"
+   "note": "204",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_Shell_4m",
@@ -1892,7 +2017,8 @@
    ],
    "yaw": 0.0,
    "group": "Hülle innen",
-   "note": "Scheibe 3/6"
+   "note": "Scheibe 3/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -1904,7 +2030,8 @@
    ],
    "yaw": 90.0,
    "group": "Flur",
-   "note": "Tür 205"
+   "note": "Tür 205",
+   "doorspec": "Door_Hab205"
   },
   {
    "asset": "SM_Station_Wall_2x3_Padded",
@@ -1916,7 +2043,8 @@
    ],
    "yaw": 90.0,
    "group": "Flur",
-   "note": "Wand 205"
+   "note": "Wand 205",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -1928,7 +2056,8 @@
    ],
    "yaw": -90.0,
    "group": "Flur",
-   "note": "Tür 206"
+   "note": "Tür 206",
+   "doorspec": "Door_Hab206"
   },
   {
    "asset": "SM_Station_Wall_2x3_Panel",
@@ -1940,7 +2069,8 @@
    ],
    "yaw": -90.0,
    "group": "Flur",
-   "note": "Wand 206"
+   "note": "Wand 206",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -1952,7 +2082,8 @@
    ],
    "yaw": 90.0,
    "group": "Licht",
-   "note": "Flur"
+   "note": "Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -1964,7 +2095,8 @@
    ],
    "yaw": 90.0,
    "group": "Licht",
-   "note": "Flur"
+   "note": "Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -1976,7 +2108,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -1988,7 +2121,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2000,7 +2134,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2012,7 +2147,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2024,7 +2160,8 @@
    ],
    "yaw": 0.0,
    "group": "Licht",
-   "note": "205"
+   "note": "205",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Bed",
@@ -2036,7 +2173,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "205"
+   "note": "205",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -2048,7 +2186,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "205"
+   "note": "205",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Table",
@@ -2060,7 +2199,8 @@
    ],
    "yaw": 180.0,
    "group": "Möbel",
-   "note": "205"
+   "note": "205",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2072,7 +2212,8 @@
    ],
    "yaw": 0.0,
    "group": "Licht",
-   "note": "206"
+   "note": "206",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Bed",
@@ -2084,7 +2225,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "206"
+   "note": "206",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -2096,7 +2238,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "206"
+   "note": "206",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Table",
@@ -2108,7 +2251,8 @@
    ],
    "yaw": 180.0,
    "group": "Möbel",
-   "note": "206"
+   "note": "206",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_Shell_4m",
@@ -2120,7 +2264,8 @@
    ],
    "yaw": 0.0,
    "group": "Hülle innen",
-   "note": "Scheibe 4/6"
+   "note": "Scheibe 4/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -2132,7 +2277,8 @@
    ],
    "yaw": 90.0,
    "group": "Flur",
-   "note": "Tür 207"
+   "note": "Tür 207",
+   "doorspec": "Door_Hab207"
   },
   {
    "asset": "SM_Station_Wall_2x3_Panel",
@@ -2144,7 +2290,8 @@
    ],
    "yaw": 90.0,
    "group": "Flur",
-   "note": "Wand 207"
+   "note": "Wand 207",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -2156,7 +2303,8 @@
    ],
    "yaw": -90.0,
    "group": "Flur",
-   "note": "Tür 208"
+   "note": "Tür 208",
+   "doorspec": "Door_Hab208"
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2168,7 +2316,8 @@
    ],
    "yaw": -90.0,
    "group": "Flur",
-   "note": "Wand 208"
+   "note": "Wand 208",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2180,7 +2329,8 @@
    ],
    "yaw": 90.0,
    "group": "Licht",
-   "note": "Flur"
+   "note": "Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2192,7 +2342,8 @@
    ],
    "yaw": 90.0,
    "group": "Licht",
-   "note": "Flur"
+   "note": "Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2204,7 +2355,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2216,7 +2368,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2228,7 +2381,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2240,7 +2394,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2252,7 +2407,8 @@
    ],
    "yaw": 0.0,
    "group": "Licht",
-   "note": "207"
+   "note": "207",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Bed",
@@ -2264,7 +2420,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "207"
+   "note": "207",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -2276,7 +2433,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "207"
+   "note": "207",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Table",
@@ -2288,7 +2446,8 @@
    ],
    "yaw": 180.0,
    "group": "Möbel",
-   "note": "207"
+   "note": "207",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2300,7 +2459,8 @@
    ],
    "yaw": 0.0,
    "group": "Licht",
-   "note": "208"
+   "note": "208",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Bed",
@@ -2312,7 +2472,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "208"
+   "note": "208",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -2324,7 +2485,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "208"
+   "note": "208",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Table",
@@ -2336,7 +2498,8 @@
    ],
    "yaw": 180.0,
    "group": "Möbel",
-   "note": "208"
+   "note": "208",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_Shell_4m",
@@ -2348,7 +2511,8 @@
    ],
    "yaw": 0.0,
    "group": "Hülle innen",
-   "note": "Scheibe 5/6"
+   "note": "Scheibe 5/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -2360,7 +2524,8 @@
    ],
    "yaw": 90.0,
    "group": "Flur",
-   "note": "Tür 209"
+   "note": "Tür 209",
+   "doorspec": "Door_Hab209"
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2372,7 +2537,8 @@
    ],
    "yaw": 90.0,
    "group": "Flur",
-   "note": "Wand 209"
+   "note": "Wand 209",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -2384,7 +2550,8 @@
    ],
    "yaw": -90.0,
    "group": "Flur",
-   "note": "Tür 210"
+   "note": "Tür 210",
+   "doorspec": "Door_Hab210"
   },
   {
    "asset": "SM_Station_Wall_2x3_Padded",
@@ -2396,7 +2563,8 @@
    ],
    "yaw": -90.0,
    "group": "Flur",
-   "note": "Wand 210"
+   "note": "Wand 210",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2408,7 +2576,8 @@
    ],
    "yaw": 90.0,
    "group": "Licht",
-   "note": "Flur"
+   "note": "Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2420,7 +2589,8 @@
    ],
    "yaw": 90.0,
    "group": "Licht",
-   "note": "Flur"
+   "note": "Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2432,7 +2602,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2444,7 +2615,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2456,7 +2628,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2468,7 +2641,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2480,7 +2654,8 @@
    ],
    "yaw": 0.0,
    "group": "Licht",
-   "note": "209"
+   "note": "209",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Bed",
@@ -2492,7 +2667,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "209"
+   "note": "209",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -2504,7 +2680,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "209"
+   "note": "209",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2516,7 +2693,8 @@
    ],
    "yaw": 0.0,
    "group": "Licht",
-   "note": "210"
+   "note": "210",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Bed",
@@ -2528,7 +2706,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "210"
+   "note": "210",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -2540,7 +2719,8 @@
    ],
    "yaw": 0.0,
    "group": "Möbel",
-   "note": "210"
+   "note": "210",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_Shell_4m",
@@ -2552,7 +2732,8 @@
    ],
    "yaw": 0.0,
    "group": "Hülle innen",
-   "note": "Scheibe 6/6"
+   "note": "Scheibe 6/6",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -2564,7 +2745,8 @@
    ],
    "yaw": 90.0,
    "group": "Flur",
-   "note": "Tür 211"
+   "note": "Tür 211",
+   "doorspec": "Door_Hab211"
   },
   {
    "asset": "SM_Station_Wall_2x3_Padded",
@@ -2576,7 +2758,8 @@
    ],
    "yaw": 90.0,
    "group": "Flur",
-   "note": "Wand 211"
+   "note": "Wand 211",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_Door_2x3_Narrow",
@@ -2588,7 +2771,8 @@
    ],
    "yaw": -90.0,
    "group": "Flur",
-   "note": "Tür 212"
+   "note": "Tür 212",
+   "doorspec": "Door_Hab212"
   },
   {
    "asset": "SM_Station_Wall_2x3_Panel",
@@ -2600,7 +2784,8 @@
    ],
    "yaw": -90.0,
    "group": "Flur",
-   "note": "Wand 212"
+   "note": "Wand 212",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2612,7 +2797,8 @@
    ],
    "yaw": 90.0,
    "group": "Licht",
-   "note": "Flur"
+   "note": "Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2624,7 +2810,8 @@
    ],
    "yaw": 90.0,
    "group": "Licht",
-   "note": "Flur"
+   "note": "Flur",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2636,7 +2823,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2648,7 +2836,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2660,7 +2849,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Wall_2x3",
@@ -2672,7 +2862,8 @@
    ],
    "yaw": 0.0,
    "group": "Raumtrenner",
-   "note": ""
+   "note": "",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2684,7 +2875,8 @@
    ],
    "yaw": 0.0,
    "group": "Licht",
-   "note": "211"
+   "note": "211",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -2696,7 +2888,8 @@
    ],
    "yaw": 90.0,
    "group": "Möbel",
-   "note": "211 Lager"
+   "note": "211 Lager",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -2708,7 +2901,8 @@
    ],
    "yaw": 90.0,
    "group": "Möbel",
-   "note": "211 Lager"
+   "note": "211 Lager",
+   "doorspec": null
   },
   {
    "asset": "SM_Motel_Locker",
@@ -2720,7 +2914,8 @@
    ],
    "yaw": 90.0,
    "group": "Möbel",
-   "note": "211 Lager"
+   "note": "211 Lager",
+   "doorspec": null
   },
   {
    "asset": "SM_Station_Hab_LightStrip_2m",
@@ -2732,7 +2927,8 @@
    ],
    "yaw": 0.0,
    "group": "Licht",
-   "note": "212"
+   "note": "212",
+   "doorspec": null
   }
  ]
 }

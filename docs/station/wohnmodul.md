@@ -82,8 +82,8 @@ Position = Pivot des FBX (Kit-Wände: Mitte der Wandlinie auf dem Boden, Front l
 
 | # | Teil | Position (X; Y; Z) | yaw | Gruppe | Hinweis |
 |---|---|---|---|---|---|
-| 1 | SM_Station_Wall_Door_2x3_Narrow | (−19,9; 0; 1) | −90 | Motelgang | setzt der Builder selbst über DoorSpec Door_HabTube (BuildWallVisual, X0 + 0,1); hier nur zur Kontrolle |
-| 2 | SM_Station_HabTube_Frame | (−20; 0; 1) | −90 | Röhre | Druckrahmen + Podest 2,5 m |
+| 1 | SM_Station_Wall_Door_2x3_Narrow | (−19,9; 0; 1) | −90 | Motelgang | Westwand des Motelgangs (BuildWallVisual, X0 + 0,1); DoorSpec Door_HabTube (setzt der Builder selbst) |
+| 2 | SM_Station_HabTube_Frame | (−20; 0; 1) | −90 | Röhre | Druckrahmen + Podest 2,05 m (mit Rahmen 2,5 m) |
 | 3 | SM_Ext_HabTube_Flange | (−20; 0; 1) | −90 | Röhre außen | Flansch an der Motel-Hülle |
 | 4 | SM_Station_HabTube_Stair_2m | (−22,5; 0; 1) | −90 | Röhre | Treppe 1/6 |
 | 5 | SM_Ext_HabTube_Stair_2m | (−22,5; 0; 1) | −90 | Röhre außen | Treppe 1/6 |
@@ -110,13 +110,13 @@ Position = Pivot des FBX (Kit-Wände: Mitte der Wandlinie auf dem Boden, Front l
 | 26 | SM_Station_HabTube_Collar | (−36,5; 7,42; 11) | 0 | Röhre | Einstieg durch die Südkappe Z 11..14 |
 | 27 | SM_Ext_HabModule_Entry | (−36,5; 8,42; 26) | 0 | Hab außen | ersetzt SM_Ext_HabModule an Hab_West, gleiche Transformation (Südkappe mit Öffnung) |
 | 28 | SM_Station_Hab_Bulkhead | (−36,5; 7,42; 14) | 0 | Schott | Süd |
-| 29 | SM_Station_Wall_Door_2x3_Narrow | (−36,5; 7,42; 14) | 180 | Schott | Door_HabSouth |
+| 29 | SM_Station_Wall_Door_2x3_Narrow | (−36,5; 7,42; 14) | 180 | Schott | Door_HabSouth; DoorSpec Door_HabSouth (setzt der Builder selbst) |
 | 30 | SM_Station_Hab_Bulkhead | (−36,5; 7,42; 38) | 0 | Schott | Nord |
 | 31 | SM_Station_Wall_2x3_Screen | (−36,5; 7,42; 38) | 0 | Schott | Flurende Nord, Bildschirm zum Flur |
 | 92 | SM_Station_Hab_Shell_4m | (−36,5; 7,42; 16) | 0 | Hülle innen | Scheibe 1/6 |
-| 93 | SM_Station_Wall_Door_2x3_Narrow | (−35,4; 7,42; 15) | 90 | Flur | Tür 201 |
+| 93 | SM_Station_Wall_Door_2x3_Narrow | (−35,4; 7,42; 15) | 90 | Flur | Tür 201; DoorSpec Door_Hab201 (setzt der Builder selbst) |
 | 94 | SM_Station_Wall_2x3_Panel | (−35,4; 7,42; 17) | 90 | Flur | Wand 201 |
-| 95 | SM_Station_Wall_Door_2x3_Narrow | (−37,6; 7,42; 15) | −90 | Flur | Tür 202 |
+| 95 | SM_Station_Wall_Door_2x3_Narrow | (−37,6; 7,42; 15) | −90 | Flur | Tür 202; DoorSpec Door_Hab202 (setzt der Builder selbst) |
 | 96 | SM_Station_Wall_2x3 | (−37,6; 7,42; 17) | −90 | Flur | Wand 202 |
 | 97 | SM_Station_Hab_LightStrip_2m | (−36,5; 11,01; 15) | 90 | Licht | Flur |
 | 98 | SM_Station_Hab_LightStrip_2m | (−36,5; 11,01; 17) | 90 | Licht | Flur |
@@ -129,9 +129,9 @@ Position = Pivot des FBX (Kit-Wände: Mitte der Wandlinie auf dem Boden, Front l
 | 105 | SM_Motel_Locker | (−38,1; 7,42; 17,65) | 0 | Möbel | 202 |
 | 106 | SM_Motel_Table | (−41,1; 7,42; 14,4) | 180 | Möbel | 202 |
 | 107 | SM_Station_Hab_Shell_4m | (−36,5; 7,42; 20) | 0 | Hülle innen | Scheibe 2/6 |
-| 108 | SM_Station_Wall_Door_2x3_Narrow | (−35,4; 7,42; 19) | 90 | Flur | Tür 203 |
+| 108 | SM_Station_Wall_Door_2x3_Narrow | (−35,4; 7,42; 19) | 90 | Flur | Tür 203; DoorSpec Door_Hab203 (setzt der Builder selbst) |
 | 109 | SM_Station_Wall_2x3 | (−35,4; 7,42; 21) | 90 | Flur | Wand 203 |
-| 110 | SM_Station_Wall_Door_2x3_Narrow | (−37,6; 7,42; 19) | −90 | Flur | Tür 204 |
+| 110 | SM_Station_Wall_Door_2x3_Narrow | (−37,6; 7,42; 19) | −90 | Flur | Tür 204; DoorSpec Door_Hab204 (setzt der Builder selbst) |
 | 111 | SM_Station_Wall_2x3_Padded | (−37,6; 7,42; 21) | −90 | Flur | Wand 204 |
 | 112 | SM_Station_Hab_LightStrip_2m | (−36,5; 11,01; 19) | 90 | Licht | Flur |
 | 113 | SM_Station_Hab_LightStrip_2m | (−36,5; 11,01; 21) | 90 | Licht | Flur |
@@ -148,9 +148,9 @@ Position = Pivot des FBX (Kit-Wände: Mitte der Wandlinie auf dem Boden, Front l
 | 124 | SM_Motel_Locker | (−38,1; 7,42; 21,65) | 0 | Möbel | 204 |
 | 125 | SM_Motel_Table | (−41,1; 7,42; 18,4) | 180 | Möbel | 204 |
 | 126 | SM_Station_Hab_Shell_4m | (−36,5; 7,42; 24) | 0 | Hülle innen | Scheibe 3/6 |
-| 127 | SM_Station_Wall_Door_2x3_Narrow | (−35,4; 7,42; 23) | 90 | Flur | Tür 205 |
+| 127 | SM_Station_Wall_Door_2x3_Narrow | (−35,4; 7,42; 23) | 90 | Flur | Tür 205; DoorSpec Door_Hab205 (setzt der Builder selbst) |
 | 128 | SM_Station_Wall_2x3_Padded | (−35,4; 7,42; 25) | 90 | Flur | Wand 205 |
-| 129 | SM_Station_Wall_Door_2x3_Narrow | (−37,6; 7,42; 23) | −90 | Flur | Tür 206 |
+| 129 | SM_Station_Wall_Door_2x3_Narrow | (−37,6; 7,42; 23) | −90 | Flur | Tür 206; DoorSpec Door_Hab206 (setzt der Builder selbst) |
 | 130 | SM_Station_Wall_2x3_Panel | (−37,6; 7,42; 25) | −90 | Flur | Wand 206 |
 | 131 | SM_Station_Hab_LightStrip_2m | (−36,5; 11,01; 23) | 90 | Licht | Flur |
 | 132 | SM_Station_Hab_LightStrip_2m | (−36,5; 11,01; 25) | 90 | Licht | Flur |
@@ -167,9 +167,9 @@ Position = Pivot des FBX (Kit-Wände: Mitte der Wandlinie auf dem Boden, Front l
 | 143 | SM_Motel_Locker | (−38,1; 7,42; 25,65) | 0 | Möbel | 206 |
 | 144 | SM_Motel_Table | (−41,1; 7,42; 22,4) | 180 | Möbel | 206 |
 | 145 | SM_Station_Hab_Shell_4m | (−36,5; 7,42; 28) | 0 | Hülle innen | Scheibe 4/6 |
-| 146 | SM_Station_Wall_Door_2x3_Narrow | (−35,4; 7,42; 27) | 90 | Flur | Tür 207 |
+| 146 | SM_Station_Wall_Door_2x3_Narrow | (−35,4; 7,42; 27) | 90 | Flur | Tür 207; DoorSpec Door_Hab207 (setzt der Builder selbst) |
 | 147 | SM_Station_Wall_2x3_Panel | (−35,4; 7,42; 29) | 90 | Flur | Wand 207 |
-| 148 | SM_Station_Wall_Door_2x3_Narrow | (−37,6; 7,42; 27) | −90 | Flur | Tür 208 |
+| 148 | SM_Station_Wall_Door_2x3_Narrow | (−37,6; 7,42; 27) | −90 | Flur | Tür 208; DoorSpec Door_Hab208 (setzt der Builder selbst) |
 | 149 | SM_Station_Wall_2x3 | (−37,6; 7,42; 29) | −90 | Flur | Wand 208 |
 | 150 | SM_Station_Hab_LightStrip_2m | (−36,5; 11,01; 27) | 90 | Licht | Flur |
 | 151 | SM_Station_Hab_LightStrip_2m | (−36,5; 11,01; 29) | 90 | Licht | Flur |
@@ -186,9 +186,9 @@ Position = Pivot des FBX (Kit-Wände: Mitte der Wandlinie auf dem Boden, Front l
 | 162 | SM_Motel_Locker | (−38,1; 7,42; 29,65) | 0 | Möbel | 208 |
 | 163 | SM_Motel_Table | (−41,1; 7,42; 26,4) | 180 | Möbel | 208 |
 | 164 | SM_Station_Hab_Shell_4m | (−36,5; 7,42; 32) | 0 | Hülle innen | Scheibe 5/6 |
-| 165 | SM_Station_Wall_Door_2x3_Narrow | (−35,4; 7,42; 31) | 90 | Flur | Tür 209 |
+| 165 | SM_Station_Wall_Door_2x3_Narrow | (−35,4; 7,42; 31) | 90 | Flur | Tür 209; DoorSpec Door_Hab209 (setzt der Builder selbst) |
 | 166 | SM_Station_Wall_2x3 | (−35,4; 7,42; 33) | 90 | Flur | Wand 209 |
-| 167 | SM_Station_Wall_Door_2x3_Narrow | (−37,6; 7,42; 31) | −90 | Flur | Tür 210 |
+| 167 | SM_Station_Wall_Door_2x3_Narrow | (−37,6; 7,42; 31) | −90 | Flur | Tür 210; DoorSpec Door_Hab210 (setzt der Builder selbst) |
 | 168 | SM_Station_Wall_2x3_Padded | (−37,6; 7,42; 33) | −90 | Flur | Wand 210 |
 | 169 | SM_Station_Hab_LightStrip_2m | (−36,5; 11,01; 31) | 90 | Licht | Flur |
 | 170 | SM_Station_Hab_LightStrip_2m | (−36,5; 11,01; 33) | 90 | Licht | Flur |
@@ -203,9 +203,9 @@ Position = Pivot des FBX (Kit-Wände: Mitte der Wandlinie auf dem Boden, Front l
 | 179 | SM_Motel_Bed | (−40,95; 7,42; 32,9) | 0 | Möbel | 210 |
 | 180 | SM_Motel_Locker | (−38,1; 7,42; 33,65) | 0 | Möbel | 210 |
 | 181 | SM_Station_Hab_Shell_4m | (−36,5; 7,42; 36) | 0 | Hülle innen | Scheibe 6/6 |
-| 182 | SM_Station_Wall_Door_2x3_Narrow | (−35,4; 7,42; 35) | 90 | Flur | Tür 211 |
+| 182 | SM_Station_Wall_Door_2x3_Narrow | (−35,4; 7,42; 35) | 90 | Flur | Tür 211; DoorSpec Door_Hab211 (setzt der Builder selbst) |
 | 183 | SM_Station_Wall_2x3_Padded | (−35,4; 7,42; 37) | 90 | Flur | Wand 211 |
-| 184 | SM_Station_Wall_Door_2x3_Narrow | (−37,6; 7,42; 35) | −90 | Flur | Tür 212 |
+| 184 | SM_Station_Wall_Door_2x3_Narrow | (−37,6; 7,42; 35) | −90 | Flur | Tür 212; DoorSpec Door_Hab212 (setzt der Builder selbst) |
 | 185 | SM_Station_Wall_2x3_Panel | (−37,6; 7,42; 37) | −90 | Flur | Wand 212 |
 | 186 | SM_Station_Hab_LightStrip_2m | (−36,5; 11,01; 35) | 90 | Licht | Flur |
 | 187 | SM_Station_Hab_LightStrip_2m | (−36,5; 11,01; 37) | 90 | Licht | Flur |
@@ -254,7 +254,7 @@ Innenausbau + Röhre: 19950 Dreiecke (neue Teile 3614, Kit-Module 16336); das En
 - DoorSpec um eine Boden-Höhe erweitern (Y 0 ist fest verdrahtet): alle Hab-Türen stehen auf Y 7,42.
 - DoorSpec Door_HabTube (onXLine, Linie −20, Mitte Z 1, Breite 1,2) ergänzen: der Builder setzt dann selbst SM_Station_Wall_Door_2x3_Narrow (X −19,9, yaw −90) statt des Wandmoduls; in der Motel-Außenhüllplatte die Röhrenöffnung (X −20,15 … −20,35, Apothem 1,6 um Y 1, Z 1) freilassen.
 - SM_Ext_HabModule an Hab_West durch SM_Ext_HabModule_Entry ersetzen (gleiche Transformation); bei ihm und den vier SM_Ext_HabTube_* (Flange, Straight_2m, Stair_2m, Corner) den Slot Hull auf M_Ext_HabModule umhängen: sie nutzen die Texturen des Moduls (T_Ext_HabModule_*), der DeliveryIntegrator meldet den Slot als nicht zugeordnet.
-- Alle Teile aus wohnmodul_layout.json platzieren (Position, yaw), Collider: Röhre, Treppen und Deck begehbar (MeshCollider oder Boxen je Stufe), Wände/Hülle als Grenzen; NavMesh neu backen.
+- Alle Teile aus wohnmodul_layout.json platzieren (Position, yaw) außer den Türwänden mit Feld `doorspec` (in der Tabelle „DoorSpec …“): die setzt der Builder über die DoorSpecs selbst, sonst stehen sie doppelt (Z-Fighting, doppelte Collider); nur Türen ohne DoorSpec aus der Tabelle setzen. Collider: Röhre, Treppen und Deck begehbar (MeshCollider oder Boxen je Stufe), Wände/Hülle als Grenzen; NavMesh neu backen.
 - Licht: Leuchtstreifen sind Emission (grün); Lightmaps bzw. Light Probes im Wohnmodul neu backen.
 - Außen: prüfen, dass die Röhre (X −20 … −36,5, Z 1 … 11) keine anderen Außenteile (Truss, Tanks) schneidet.
 - STATION.md um den Abschnitt Wohnmodul ergänzen (Textvorschlag im PR).
