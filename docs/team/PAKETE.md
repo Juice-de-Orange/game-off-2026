@@ -913,7 +913,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis: Im WebGL-Build bestätigt, die Klappe schließt nach dem Auslösen, auch der zweite Reisende braucht zwei Klicks. 72 Tests grün.
 
 ### P60 — Letzte Platzhalter ablösen
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 06.11.)
+- Größe: M · Priorität: Soll · Status: fertig (max, 06.11.)
 - Braucht: — · Folgt auf: P42, P52
 - Ziel: Im Spiel ist nichts mehr grau oder einfarbig gebaut, und die Dokumente zeigen echte Passfotos.
 - Bestand (`GameOff/List Placeholders`, 06.11.): 254 Renderer in Main und Menu, dazu das Silhouetten-Foto auf den Dokumenten und zwei Testtöne.
@@ -928,6 +928,11 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Einbau nach der Lieferung, jeweils Builder ändern: `StationGrayboxBuilder` (Wandmodule, Leuchten, Lampe; die Blöcke bleiben unsichtbar als Kollision; Rumpf-Material mit Kachel statt Farbe), `TravelerContentBuilder` (Foto je Art statt Silhouette), `Announcer` und `Vendor` (Ton statt Testton). Danach `Rebuild All`, Bake, `Check Occlusion Bake`, `GameOff/List Placeholders` muss leer sein.
 - Nicht enthalten, weil nicht bei der Pipeline bestellbar oder keine Grafik: gesprochene Durchsagen (Voicelines, ElevenLabs offen), Platzhalter-Briefe und -Texte (P15), Platzhalter-Ende (P12), Test-Sortimente der Händler (P11).
 - Abnahme: `GameOff/List Placeholders` meldet nichts mehr; Foto passt zur Figur in der Kammer; Tests grün.
+- Ergebnis: Schalter- und Kammerwand, Hallenenden, 49 Deckenleuchten, Türlampen, Rumpfhaut und Passfotos je Art sind eingebaut. `List Placeholders` meldet in Main, Menu und Boot nichts mehr. 85 Tests grün, Bildvergleich ohne Sonne ohne Abweichung. Im Build durchgespielt: Dokumente mit Fotos, Stempeln, Schublade, Schleuse, Abend, Kiosk, Abrechnung, nächster Tag, Menü und zurück.
+  - `SFX_PA_Chime` und `SFX_Vendor_Greet` kommen mit P61, sie brauchen die Tonanbindung.
+  - Download 15,9 MB statt 15,1 MB, belegter Speicher 81 statt 79 MB.
+  - Bildrate: kein Einbruch belegt, aber nicht sauber bewiesen. Im direkten Wechsel war derselbe Aufbau ohne Wandtexturen schneller als der Stand davor (CPU ×4, Schalter 31 und 34 gegen 29 und 25 fps). Die Schlussmessung lief während der PC benutzt wurde und streut zu stark (Schalter 17 und 24 gegen 30 und 24 fps). Einzelläufe auf diesem PC schwanken um mehr als 20 %, Vergleiche nur im Wechsel messen.
+  - Nicht geprüft: echte Tasten und Laufwege, andere Geräte und Browser. Halle, Hangar, Gang und Rumpf nur als Editor-Ansichten, nicht im Build abgelaufen.
 
 ### P61 — Ton am Schalter und in der Station
 - Größe: M · Priorität: Soll · Status: bestellt, wartet auf Lieferung (max baut ein, Auswahl nach Gehör: Max und Martin)

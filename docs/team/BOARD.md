@@ -62,7 +62,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): wartet auf das P08-Gespräch mit max | — | 06.11. |
-| max | P60 Platzhalter ablösen, danach P61 Ton | `Main.unity`, `Menu.unity`, `Boot.unity`, `PF_Station_Graybox`, `PF_Exterior`, `PF_CounterStation`, `PF_Traffic`, `PF_Doc_*`, `PF_DayFlow`, `PF_Economy`, `PF_PauseMenu`, `PF_AudioManager`, `PF_Ambience`, `Data/Travelers`, `Data/Documents`, `StationGrayboxBuilder.cs`, `TravelerContentBuilder.cs`, `SceneAudit.cs` | 06.11. |
 | max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
 
 ## Backlog
@@ -87,6 +86,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | Nr | Was passiert | Wie nachstellen | Gefunden | Wer | Status |
 |---|---|---|---|---|---|
 | B01 | Spieler fällt beim Laden von Main **sofort durch den Boden** der Station | Unity: Play neu gestartet, über das Menü ins Spiel (Start Shift). Tritt nicht jedes Mal auf: Claude konnte es am 05.11. nicht nachstellen (Menü → Main dreimal, Play aus dem Menü mit Messung pro Frame: Spieler steht stabil bei y = 0,03). Unklar, ob es beim Tageswechsel (Teleport ins Bett-Zimmer, P09) auch passieren kann. Ideen: Spawn genau auf Bodenhöhe (`PlayerSpawn` y = 0, Kapsel-Unterkante = Boden), erster Frame nach dem Laden mit großem `deltaTime`. Möglicher Schutz: etwas über dem Boden spawnen + Auffangen unter dem Boden (zurück zur letzten sicheren Position) | martin, 05.11. | max | abgesichert, **nicht bestätigt** (max, 06.11., P57): nie nachgestellt. Fallschritt gedeckelt, Spawn 5 cm über dem Boden, Rettung auf den letzten sicheren Boden. Tritt es nochmal auf, bitte melden |
+| B06 | In der **Abrechnung** überlappt die Zeile „Penalty · 1 citations beyond 2 warnings“ den Betrag -10 CR; außerdem „1 citations“ | Tag mit mehr als 2 Fehlern beenden, dann ins Bett | max, 06.11. (Durchlauf P60) | martin | offen |
 | B05 | **Verwarnzettel bleiben am nächsten Tag auf dem Tisch liegen** (nach einem Dev-Sprung auch die Papiere des letzten Reisenden) | Falsch entscheiden, dann neuer Tag | max, 05.11. (P41) | max | behoben (max, 06.11., P57): Tisch wird jeden Morgen geleert, im WebGL-Build bestätigt |
 | B04 | Ware beim Händler **sinkt beim Kauf nicht** (man kann z. B. beliebig viele Painkillers kaufen) | Händler öffnen, denselben Gegenstand mehrfach kaufen | martin, 05.11. | — | offen – entschieden (Max, 06.11.): Vorrat, morgens aufgefüllt; Umsetzung in **P11** |
 | B03 | Nach dem Schließen von Fenstern (Brief, Handel, BACK) musste man erst klicken, bevor die Kamera sich dreht | WebGL, Fenster mit Klick schließen | martin, 05.11. | martin | behoben (martin, 05.11.): Maus wird beim Zurückgeben der Steuerung sofort gefangen |

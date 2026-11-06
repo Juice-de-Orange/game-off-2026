@@ -251,12 +251,22 @@ namespace GameOff.EditorTools
             WallPiece(parent, onXLine, offsetLine, cursor, to, bottom, top, mat, visible, collider);
         }
 
+        private static bool IsHallWallEnd(bool onXLine, float line, float mid, float len) =>
+            !onXLine && Mathf.Approximately(line, 5.9f) && Mathf.Approximately(len, 1f) && Mathf.Approximately(Mathf.Abs(mid), 5.5f);
+
         private static void WallPiece(GameObject parent, bool onXLine, float line, float from, float to, float bottom, float top,
             Material mat, bool visible, bool collider)
         {
             float len = to - from, h = top - bottom;
             if (len < 0.01f || h < 0.01f) return;
             float mid = (from + to) * 0.5f;
+            if (visible && IsHallWallEnd(onXLine, line, mid, len) && Kit(KitHallWallEnd) != null)
+            {
+                if (bottom > 0f) return; // the 6 m piece also replaces the upper fill
+                var end = PlaceKit(parent, KitHallWallEnd, new Vector3(mid, 0f, line), 0f);
+                if (mid > 0f) end.transform.localScale = new Vector3(-1f, 1f, 1f); // mirrored, so the rib stays on the passage side
+                return;
+            }
             var pos = onXLine ? new Vector3(line, bottom + h * 0.5f, mid) : new Vector3(mid, bottom + h * 0.5f, line);
             var size = onXLine ? new Vector3(WallThickness, h, len) : new Vector3(len, h, WallThickness);
             var go = Block(parent, onXLine ? $"Wall_X{line:0.#}_{mid:0.#}_{bottom:0.#}" : $"Wall_Z{line:0.#}_{mid:0.#}_{bottom:0.#}", pos, size, mat);
@@ -272,6 +282,14 @@ namespace GameOff.EditorTools
         private const string KitDoorWall = "Station/SM_Station_Wall_Door_2x3.fbx";
         private const string KitDoorWallNarrow = "Station/SM_Station_Wall_Door_2x3_Narrow.fbx";
         private const string KitLintel = "Station/SM_Station_Lintel_4x08.fbx";
+        private const string KitCounterWindowWall = "Counter/SM_Counter_WindowWall_6x3.fbx";
+        private const string KitLockWindowWall = "Station/SM_Lock_WindowWall_6x3.fbx";
+        private const string KitHallWallEnd = "Hall/SM_Hall_WallEnd_1x6.fbx";
+        private const string KitLightStrip = "Station/SM_Station_LightStrip.fbx";
+        private const string KitLockLamp = "Station/SM_Station_LockLamp.fbx";
+        private const string HullFillerA = "Assets/_Project/Art/Textures/Exterior/T_Ext_HullFiller_A_Albedo.png";
+        private const string HullFillerB = "Assets/_Project/Art/Textures/Exterior/T_Ext_HullFiller_B_Albedo.png";
+        private const float HullFillerTileMeters = 4f;
         private const string KitWallPorthole = "Station/SM_Station_Wall_Porthole_2x3.fbx";
         private const string KitWindowWall = "Station/SM_Station_Wall_Window_2x3.fbx";
         private const string KitHangarWall = "Hangar/SM_Hangar_Wall_4x4.fbx";
@@ -628,8 +646,13 @@ namespace GameOff.EditorTools
                 if (d.Access == GameOff.Station.DoorAccess.Locked)
                 {
                     // Deeper than the 0.4 m wall so it shows on both wall faces.
-                    lamp = Block(door, "LockedLamp", Vector3.zero, new Vector3(0.12f, 0.08f, 2f * WallFace + 0.04f), lampMat);
-                    Object.DestroyImmediate(lamp.GetComponent<Collider>());
+                    lamp = PlaceKit(door, KitLockLamp, Vector3.zero, 0f);
+                    if (lamp == null)
+                    {
+                        lamp = Block(door, "LockedLamp", Vector3.zero, new Vector3(0.12f, 0.08f, 2f * WallFace + 0.04f), lampMat);
+                        Object.DestroyImmediate(lamp.GetComponent<Collider>());
+                    }
+                    lamp.transform.localRotation = Quaternion.identity;
                     lamp.transform.localPosition = new Vector3(d.Width * 0.5f + 0.15f, 1.6f, 0f);
                 }
 
@@ -688,6 +711,8 @@ namespace GameOff.EditorTools
             _hullA = GetOrCreateMaterial("M_Graybox_Hull_A", new Color(0.40f, 0.42f, 0.44f), false);
             _hullB = GetOrCreateMaterial("M_Graybox_Hull_B", new Color(0.33f, 0.34f, 0.36f), false);
             _hullTrim = GetOrCreateMaterial("M_Graybox_Hull_Trim", new Color(0.22f, 0.22f, 0.24f), false);
+            ApplyHullFiller(_hullA, HullFillerA);
+            ApplyHullFiller(_hullB, HullFillerB);
 
             foreach (var room in Rooms)
             {
@@ -1187,6 +1212,15 @@ namespace GameOff.EditorTools
         private static void BuildWallVisual(GameObject parent, Room room, ModuleSet set, bool onXLine, float line, float offsetLine,
             float from, float to, float yaw, Material mat)
         {
+            // The wall with the counter window is one delivered piece per side. Its opening goes down to the floor: the window
+            // module fills it, so without that module the graybox has to stay.
+            if (onXLine && Mathf.Approximately(line, 0f) && (room.Name == "Counter" || room.Name == "InspectionLock") && Kit(KitWindowSlot) != null)
+            {
+                var whole = PlaceKit(parent, room.Name == "Counter" ? KitCounterWindowWall : KitLockWindowWall,
+                    new Vector3(offsetLine, 0f, (from + to) * 0.5f), yaw);
+                if (whole != null) return;
+            }
+
             var w = new WallRun
             {
                 Parent = parent, Room = room, OnXLine = onXLine, Line = line, OffsetLine = offsetLine, From = from, To = to, Yaw = yaw, Mat = mat,
@@ -1456,9 +1490,7 @@ namespace GameOff.EditorTools
                 float range = spacing * 1.6f + room.Height * (room.Height > 10 ? 0.9f : 0.5f);
                 BakedLight(lights, $"{room.Name}_Light_{ix}_{iz}", pos, color, range, RoomLightIntensity(room));
 
-                var stripSize = alongX ? new Vector3(1.4f, 0.06f, 0.2f) : new Vector3(0.2f, 0.06f, 1.4f);
-                var strip = Block(fixtures, $"{room.Name}_Strip_{ix}_{iz}", pos + Vector3.up * 0.2f, stripSize, EmissiveMaterial(StripColor(room, ix + iz)));
-                Object.DestroyImmediate(strip.GetComponent<Collider>());
+                AddLightStrip(fixtures, $"{room.Name}_Strip_{ix}_{iz}", pos + Vector3.up * 0.2f, alongX, EmissiveMaterial(StripColor(room, ix + iz)));
             }
 
             // Accents
@@ -1530,6 +1562,33 @@ namespace GameOff.EditorTools
         }
 
         private static readonly Dictionary<Color, Material> EmissiveCache = new Dictionary<Color, Material>();
+
+        /// <summary>Ceiling light: the delivered strip with its glow slot in the room's color, or a plain glowing bar. Center is the bar's center.</summary>
+        private static void AddLightStrip(GameObject parent, string name, Vector3 center, bool alongX, Material glow)
+        {
+            const float height = 0.06f;
+            var strip = PlaceKit(parent, KitLightStrip, center + Vector3.down * (height * 0.5f), alongX ? 0f : 90f);
+            if (strip == null)
+            {
+                var size = alongX ? new Vector3(1.4f, height, 0.2f) : new Vector3(0.2f, height, 1.4f);
+                Object.DestroyImmediate(Block(parent, name, center, size, glow).GetComponent<Collider>());
+                return;
+            }
+            strip.name = name;
+            bool colored = false;
+            foreach (var r in strip.GetComponentsInChildren<Renderer>())
+            {
+                var materials = r.sharedMaterials;
+                for (int i = 0; i < materials.Length; i++)
+                    if (materials[i] != null && materials[i].name.Contains("Glow"))
+                    {
+                        materials[i] = glow;
+                        colored = true;
+                    }
+                r.sharedMaterials = materials;
+            }
+            if (!colored) Debug.LogWarning($"[Station] {KitLightStrip} has no Glow slot: {name} keeps the delivered color instead of the room's.");
+        }
 
         private static Material EmissiveMaterial(Color color)
         {
@@ -1708,6 +1767,17 @@ namespace GameOff.EditorTools
             _hatch = GetOrCreateMaterial("M_Graybox_Hatch", new Color(0.89f, 0.27f, 0.25f), false);
             _prop = GetOrCreateMaterial("M_Graybox_Prop", new Color(0.35f, 0.37f, 0.40f), false);
             AssetDatabase.SaveAssets();
+        }
+
+        /// <summary>Hull pieces that are no whole plate get a tiling skin; blocks have 1 UV per meter.</summary>
+        private static void ApplyHullFiller(Material mat, string texturePath)
+        {
+            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
+            if (texture == null) return;
+            mat.SetColor("_BaseColor", Color.white);
+            mat.SetTexture("_BaseMap", texture);
+            mat.SetTextureScale("_BaseMap", Vector2.one / HullFillerTileMeters);
+            EditorUtility.SetDirty(mat);
         }
 
         private static Material GetOrCreateMaterial(string name, Color color, bool transparent)

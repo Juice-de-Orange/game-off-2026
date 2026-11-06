@@ -128,7 +128,7 @@ Asset naming, specs and the placeholder → final swap are defined in `docs/ASSE
 - **Unity changes files by itself** when opening, playing or building: `ShareTechMono SDF.asset`, `Orbitron SDF.asset`, `ProjectSettings.asset`, `QualitySettings.asset`, `UniversalRenderPipelineGlobalSettings.asset`, `M_Ext_NavGreen.mat`, `M_Ext_NavRed.mat`, `Assets/Resources/`. Restore them before committing unless you changed them on purpose.
 - **Counter rules are tested:** after changing travelers, days or rules run `GameOff/Validate Travelers` and the EditMode tests
   (Test Runner, or `unity command test run --mode EditMode`). Every traveler's computed verdict must match its intended one.
-- **Performance is measured, not guessed:** `node tools/measure-webgl.mjs <build> <out> [full|quick]` (`K9_CPU=4` for a weak device), `tools/drive-webgl.mjs` plays a build from a script, `GameOff/Audit Main Scene` counts what the scene costs. Numbers from P57 are the baseline.
+- **Performance is measured, not guessed:** `node tools/measure-webgl.mjs <build> <out> [full|quick]` (`K9_CPU=4` for a weak device), `tools/drive-webgl.mjs` plays a build from a script, `GameOff/Audit Main Scene` counts what the scene costs, `GameOff/List Placeholders` lists what is not final art. Numbers from P57 are the baseline.
 - Tuning values (speed, damage, timings) go into ScriptableObjects in `Data/`, not hard-coded —
   both people can tweak them without touching scripts or scenes.
 

@@ -34,7 +34,7 @@ namespace GameOff.EditorTools
                 foreach (var r in scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Renderer>(true)))
                 {
                     if (!r.enabled) continue;
-                    var flagged = r.sharedMaterials.Where(m => m != null && (m.name.Contains("Graybox") || m.name.Contains("Placeholder"))).Select(m => m.name).Distinct().ToList();
+                    var flagged = r.sharedMaterials.Where(m => m != null && ((m.name.Contains("Graybox") && !IsDeliveredArt(r, m)) || m.name.Contains("Placeholder"))).Select(m => m.name).Distinct().ToList();
                     bool named = r.name.Contains("Placeholder");
                     if (flagged.Count == 0 && !named) continue;
                     string group = r.transform.parent != null ? r.transform.parent.name : "-";
@@ -48,6 +48,11 @@ namespace GameOff.EditorTools
             System.IO.File.WriteAllText("Logs/Placeholders.txt", report.ToString());
             Debug.Log(report.ToString());
         }
+
+        // Some builder materials keep their graybox name but carry delivered art (hull skin), or are the glow slot of a delivered
+        // two-slot model. A glowing block with this material alone is still a placeholder.
+        private static bool IsDeliveredArt(Renderer r, Material m) =>
+            (m.name.Contains("_Emit_") && r.sharedMaterials.Length > 1) || (m.HasProperty("_BaseMap") && m.GetTexture("_BaseMap") != null);
 
         public static void Run()
         {

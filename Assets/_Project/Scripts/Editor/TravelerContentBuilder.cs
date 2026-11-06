@@ -15,47 +15,46 @@ namespace GameOff.EditorTools
         private const string DayPath = "Assets/_Project/Data/Days/Day1_Test.asset";
         private const string TravelerFolder = "Assets/_Project/Data/Travelers/Test/";
         private const string DocFolder = "Assets/_Project/Data/Documents/Test/";
-        private const string PhotoPath = "Assets/_Project/Art/Textures/Documents/T_Doc_Photo_Placeholder.png";
+        private const string PhotoFolder = "Assets/_Project/Art/Textures/Documents/";
 
         [MenuItem("GameOff/Build Test Day")]
         public static void BuildFromMenu() => Debug.Log(Build());
 
         public static string Build()
         {
-            var photo = AssetDatabase.LoadAssetAtPath<Texture2D>(PhotoPath);
             var travelers = new List<TravelerData>
             {
                 Traveler("01_Vesna", "VESNA OKARU", "Human", Verdict.Admit, "Everything in order",
                     "Morning, officer. Long queue today, huh?",
-                    Id(photo, "VESNA OKARU", "HUMAN", "TORVIK COLONY", "KX-4471-09", "2292-03-14"),
-                    Permit(photo, "VESNA OKARU", "KX-4471-09", "CARGO DELIVERY", "2 CYCLES", "2290-11-30", "ASKA-3 CONSULATE",
+                    Id(Photo("Human"), "VESNA OKARU", "HUMAN", "TORVIK COLONY", "KX-4471-09", "2292-03-14"),
+                    Permit(Photo("Human"), "VESNA OKARU", "KX-4471-09", "CARGO DELIVERY", "2 CYCLES", "2290-11-30", "ASKA-3 CONSULATE",
                         "TORVIK > ASKA-3 > KESTREL-9"),
                     Manifest("VESNA OKARU", "MV HALDE", "TORVIK", "12x HYDROPONIC NUTRIENT PACK\n 4x WATER FILTER CARTRIDGE")),
                 Traveler("02_Darro", "DARRO VENN", "Vellani", Verdict.Deny, "Permit issued to DARIO VENN, ID says DARRO VENN",
                     "Greetings. My papers are, how you say, impeccable.",
-                    Id(photo, "DARRO VENN", "VELLANI", "VELL PRIME", "VL-2210-33", "2291-08-01"),
-                    Permit(photo, "DARIO VENN", "VL-2210-33", "TRADE", "5 CYCLES", "2290-12-24", "VELL PRIME CONSULATE",
+                    Id(Photo("Vellani"), "DARRO VENN", "VELLANI", "VELL PRIME", "VL-2210-33", "2291-08-01"),
+                    Permit(Photo("Vellani"), "DARIO VENN", "VL-2210-33", "TRADE", "5 CYCLES", "2290-12-24", "VELL PRIME CONSULATE",
                         "VELL PRIME > KESTREL-9")),
                 Traveler("03_Mira", "MIRA TALSK", "Sorvak", Verdict.Deny, "Entry permit expired on 2290-10-28",
                     "Please hurry. I have been travelling for nine days.",
-                    Id(photo, "MIRA TALSK", "SORVAK", "SORV DEEP", "SV-0091-12", "2293-01-20"),
-                    Permit(photo, "MIRA TALSK", "SV-0091-12", "FAMILY VISIT", "10 CYCLES", "2290-10-28", "ASKA-3 CONSULATE",
+                    Id(Photo("Sorvak"), "MIRA TALSK", "SORVAK", "SORV DEEP", "SV-0091-12", "2293-01-20"),
+                    Permit(Photo("Sorvak"), "MIRA TALSK", "SV-0091-12", "FAMILY VISIT", "10 CYCLES", "2290-10-28", "ASKA-3 CONSULATE",
                         "SORV DEEP > ASKA-3 > KESTREL-9")),
                 Traveler("04_Quill", "QUILL BARRAGH", "Quobb", Verdict.Arrest, "Declares chem stimulants, forbidden today",
                     "Just a few personal supplies. Nothing to worry about.",
-                    Id(photo, "QUILL BARRAGH", "QUOBB", "QUOB ATOLL", "QB-7720-05", "2291-11-11"),
-                    Permit(photo, "QUILL BARRAGH", "QB-7720-05", "BUSINESS", "3 CYCLES", "2290-11-20", "ASKA-3 CONSULATE",
+                    Id(Photo("Quobb"), "QUILL BARRAGH", "QUOBB", "QUOB ATOLL", "QB-7720-05", "2291-11-11"),
+                    Permit(Photo("Quobb"), "QUILL BARRAGH", "QB-7720-05", "BUSINESS", "3 CYCLES", "2290-11-20", "ASKA-3 CONSULATE",
                         "QUOB ATOLL > KESTREL-9"),
                     Manifest("QUILL BARRAGH", "SKIFF PELL", "QUOB ATOLL", "2x SPARE PARTS CRATE\n 6x CHEM STIMULANT VIALS")),
                 Traveler("05_Ixa", "IXA REN", "Xirrik", Verdict.Airlock, "Route passes Ketra Station (quarantine)",
                     "Kss. I am tired. Let me through.",
-                    Id(photo, "IXA REN", "XIRRIK", "LUMEN REACH", "XR-3302-77", "2292-06-06"),
-                    Permit(photo, "IXA REN", "XR-3302-77", "TRANSIT", "1 CYCLE", "2290-11-09", "LUMEN REACH CONSULATE",
+                    Id(Photo("Xirrik"), "IXA REN", "XIRRIK", "LUMEN REACH", "XR-3302-77", "2292-06-06"),
+                    Permit(Photo("Xirrik"), "IXA REN", "XR-3302-77", "TRANSIT", "1 CYCLE", "2290-11-09", "LUMEN REACH CONSULATE",
                         "LUMEN REACH > KETRA STATION > KESTREL-9")),
                 Traveler("06_Shifter", "LONN ABERNATHY", "Human", Verdict.Admit, "The Shifter, day 1: harmless, papers clean",
                     "Officer! What a fine day to cross a border, wouldn't you say?",
-                    Id(photo, "LONN ABERNATHY", "HUMAN", "ASKA-3", "AB-0777-77", "2291-05-05"),
-                    Permit(photo, "LONN ABERNATHY", "AB-0777-77", "TOURISM", "1 CYCLE", "2290-11-06", "ASKA-3 CONSULATE",
+                    Id(Photo("Human"), "LONN ABERNATHY", "HUMAN", "ASKA-3", "AB-0777-77", "2291-05-05"),
+                    Permit(Photo("Human"), "LONN ABERNATHY", "AB-0777-77", "TOURISM", "1 CYCLE", "2290-11-06", "ASKA-3 CONSULATE",
                         "ASKA-3 > KESTREL-9"),
                     tag: "shifter"),
             };
@@ -112,6 +111,13 @@ namespace GameOff.EditorTools
             var d = ScriptableObject.CreateInstance<DocumentData>();
             d.EditorSet(type, photo, list);
             return d;
+        }
+
+        private static Texture2D Photo(string species)
+        {
+            var photo = AssetDatabase.LoadAssetAtPath<Texture2D>($"{PhotoFolder}T_Doc_Photo_{species}.png");
+            if (photo == null) Debug.LogError($"[TestDay] No passport photo for {species}.");
+            return photo;
         }
 
         private static DocumentData Id(Texture2D photo, string name, string species, string origin, string id, string expires) =>

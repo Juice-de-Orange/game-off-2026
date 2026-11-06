@@ -98,8 +98,11 @@ namespace GameOff.EditorTools
                 .Where(kv => kv.Key.type == typeof(Material) && kv.Value != null)
                 .Select(kv => kv.Key.name));
             var slots = SlotNames(path);
-            textures.TryGetValue("T_" + name + "_Albedo", out var albedo);
-            textures.TryGetValue("T_" + name + "_Emission", out var emission);
+            // Some textures leave out the size in the model's name: SM_Hall_WallEnd_1x6 uses T_Hall_WallEnd_Albedo.
+            string unsized = System.Text.RegularExpressions.Regex.Replace(name, @"_\d+x\d+$", "");
+            string textureName = textures.ContainsKey("T_" + name + "_Albedo") ? name : unsized; // albedo and emission always as a pair
+            textures.TryGetValue("T_" + textureName + "_Albedo", out var albedo);
+            textures.TryGetValue("T_" + textureName + "_Emission", out var emission);
 
             // Main slot = first non-glass slot; it gets M_<Name>, every other slot M_<Name>_<Slot>.
             string mainSlot = slots.FirstOrDefault(s => s != "Glass");
@@ -122,7 +125,7 @@ namespace GameOff.EditorTools
                 if (slot != "Glass" && albedo == null)
                 {
                     // Leave the slot unmapped so a later run picks it up once the texture has arrived.
-                    report.Add($"WARNING  {file}.{slot}: no texture T_{name}_Albedo yet, slot left unmapped");
+                    report.Add($"WARNING  {file}.{slot}: no texture T_{textureName}_Albedo yet, slot left unmapped");
                     continue;
                 }
                 var mat = slot == "Glass"
