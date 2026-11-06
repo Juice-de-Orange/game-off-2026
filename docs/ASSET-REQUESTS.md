@@ -4860,7 +4860,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Vendor_Greet.ogg
 package: P60
 scene: Kiosk, Bar
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5146,7 +5146,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Footstep_Metal_01.ogg
 package: P61
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5172,7 +5172,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Footstep_Metal_02.ogg
 package: P61
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5198,7 +5198,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Footstep_Metal_03.ogg
 package: P61
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5276,7 +5276,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Amb_Station_Loop.ogg
 package: P61
 scene: Halle, Schalter, Motel
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5302,7 +5302,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Amb_Bar_Loop.ogg
 package: P61
 scene: Bar
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5328,7 +5328,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Amb_Hangar_Loop.ogg
 package: P61
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5437,7 +5437,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_ClownShoe_Squeak_01.ogg
 package: P63
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5463,7 +5463,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_ClownShoe_Squeak_02.ogg
 package: P63
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5489,7 +5489,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_ClownShoe_Squeak_03.ogg
 package: P63
 scene: alle Räume
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
