@@ -243,6 +243,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   unbegrenzt (Bug-Liste **B04**). Für P11 vorgesehen (Zuschnitt im Kern-Loop-Call, siehe Frage an max):
   - **Händler-Inventar:** begrenzter Vorrat pro Gegenstand, sinkt beim Kauf, füllt sich morgens auf; Verkauftes landet beim Händler
   - **Preisliste:** echte Gegenstände und Preise für Holly, Barkeeper und Dealer statt der Test-Inhalte (evtl. Preisfaktor pro Tag)
+    → jetzt **P70** (Preisliste & Sortiment) und **P68** (Markt: Preise und Ereignisse pro Tag), Durchrechnen in **P71**
   - **Angebote:** Tagesangebote/Rabatte, Ware nur an bestimmten Tagen, Sortiment pro Tag (z. B. Dealer an Tag 3 anders)
   - evtl. Teilung: **P11 Kiosk** (Muss) + **Schwarzmarkt** als eigenes Soll-Paket
   - **Nachtrag (martin, 06.11.):** Schmuggelware kauft nur der Schwarzmarkt (P64). Der Barkeeper soll nichts kaufen, sondern Wünsche gegen Gerüchte tauschen (P65, Entwurf) und manchmal Bestechungszettel schicken (P66, Entwurf).
@@ -999,7 +1000,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 ### P65 — Barkeeper: Wunschliste & Gerüchte
 - Größe: M · Priorität: Soll · Status: offen, Entwurf (martin, 06.11.) – mit Max abstimmen
-- Braucht: P11 (Preisfaktor pro Tag), P64 · Folgt auf: —
+- Braucht: P68 (Markt, Ereignisse pro Tag), P64 · Folgt auf: —
 - Ziel: Der Barkeeper kauft nichts für Geld, sondern tauscht Gegenstände gegen Wissen für den nächsten Tag.
 - Enthalten: Täglich hängt vor der Bar ein Schild mit Gegenständen oder Labels, die der Barkeeper haben will. Wer liefert, bekommt ein
   Gerücht oder eine Geheiminfo für morgen, z. B. „Ein Schmuggler wurde festgenommen, morgen ist alles mit DRUG teurer, z. B. Spice“. Der Spieler
@@ -1033,16 +1034,29 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Konsole 0 Fehler. Der Loop selbst: Freesound 77838 (Jovica, CC BY 4.0), Sekunde 6–60 mit 3 s Überblendung, Quelle in `ArtSource/Audio/`.
   **Weiter in P61 (max).**
 
-### P68 — Marktverfügbarkeit: Politik und Tagesereignisse
-- Größe: M · Priorität: Soll · Status: offen, Entwurf (martin, 06.11.) – erst planen
-- Braucht: P11 (Händlervorrat), P10, P13 · Folgt auf: — · Hängt zusammen mit P65 (Gerüchte) und P15 (Inhalte)
-- Ziel: Was die Händler anbieten und zu welchem Preis, hängt von der politischen Lage und den Ereignissen des Tages ab.
-- Idee (martin, 06.11.): Pro Tag Faktoren für Menge und Preis je Label (z. B. Grenze dicht → FOOD knapp und teurer; Schmuggler
-  verhaftet → DRUG teurer). Daraus folgen auch die Kosten am Bett (Händlerpreis × 1,35, P13). Ereignisse kündigen sich in Bulletin,
-  Durchsagen oder Gerüchten an.
-- Bis dahin: Platzhalterpreise nach der 35-%-Regel aus P13.
-- Nicht enthalten: Gerüchte selbst (P65), Texte der Ereignisse (P15).
-- Abnahme: An einem Tag mit Ereignis sind Menge oder Preis der betroffenen Ware sichtbar anders; die Kosten am Bett ziehen mit.
+### P68 — Markt: Preise und Ereignisse pro Tag
+- Größe: M · Priorität: Muss (Vorschlag, Preise und Bett hängen daran) · Status: offen, geplant (martin, 06.11.)
+- Braucht: P11 (Händlervorrat), P10, P13, P70 (Waren) · Folgt auf: — · Hängt zusammen mit P65 (Gerüchte), P15 (Inhalte), P71 (Balancing)
+- Ziel: Ein Markt bestimmt, was es wann zu welchem Preis gibt – mit festen Ereignissen pro Tag (politische Lage, Tagesereignisse).
+- **Preisformel (martin, 06.11., DECISIONS.md):**
+  - Jede Ware hat einen **Basismarktpreis** (`ItemData.baseValue`).
+  - **Marktpreis** = Basis × Grundfaktor **jedes** Labels der Ware (alle multipliziert) × Faktoren der **Ereignisse** des Tages je Label.
+    Grundfaktor als neues Feld am `ItemTag` (Standard 1; z. B. CONTRABAND ×1,5, PERISHABLE ×0,8).
+  - **Händlerpreis** = Marktpreis × Verkaufsfaktor des Händlers; **Ankauf** = Marktpreis × Ankaufsfaktor (`sellFactor`/`buyFactor`);
+    Ereignisse können den Ankauf je Label zusätzlich ändern.
+  - **Bett** = Marktpreis (ohne Händler) × 1,35 – Ereignisse wirken also auch am Bett.
+  - Alles multiplikativ, gerundet erst am Ende.
+- **Ereignisse:** fest pro Tag (keine Zufälle), `MarketEvent` (ScriptableObject, `Data/Market/`): Name, Bulletin-Zeile, Durchsage-Text,
+  Wirkungen je Label (Preisfaktor, Mengenfaktor – 0 = nicht erhältlich –, Ankaufsfaktor) und Sortiment-Änderungen je Händler (Ware dazu/weg).
+  `DayEntry` bekommt eine Liste `marketEvents`.
+- **Ankündigung:** vorher **nur über den Barkeeper** (P65 liest die Ereignisse von morgen); am Ereignistag über **Bulletin an der Pinnwand**
+  und **Durchsagen** (P41, max – Haken nötig, Frage `markt-bulletin-durchsagen`). Das Handelsfenster nennt keinen Grund.
+- Enthalten: `Market` (reine Klasse in `PlayerEconomy`, bei `DayStarted` mit den Ereignissen gesetzt); `VendorStock.PriceFor/OfferFor`,
+  `VendorSupply.Refill` (Menge) und `HouseholdTuning.MoneyCost` (Bett) fragen ihn; EditMode-Tests (Formel, Menge 0, Ankauf, Bett,
+  Tag ohne Ereignis = Grundwerte); Validator: jedes Ereignis hat Bulletin- und Durchsage-Text.
+- Nicht enthalten: Gerüchte (P65), Texte der Ereignisse (P15), Warenliste (P70), Durchrechnen (P71).
+- Abnahme: An einem Tag mit Ereignis ist die betroffene Ware sichtbar teurer, knapper oder fehlt; das Bett zieht mit; Bulletin und
+  Durchsage nennen das Ereignis.
 
 ### P69 — Familienschicksal: was „kritisch“ bedeutet
 - Größe: S · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 06.11.) – mit Max abstimmen
@@ -1054,3 +1068,24 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Offen für Max: Wie hart darf es sein (Tod ja/nein)? Ab wann ist die Familie „zerbrochen“?
 - Nicht enthalten: Endbildschirme (P12), Brieftexte (P15), Stadtlichter/Foto (P29).
 - Abnahme: Drei Nächte ohne Versorgung führen sichtbar zur angekündigten Folge; mit Versorgung erholt sich die Familie.
+
+### P70 — Preisliste & Sortiment
+- Größe: S–M · Priorität: Muss · Status: in Arbeit (martin, 06.11.)
+- Braucht: P46, P64, P13 · Folgt auf: P11 (Rest „Preisliste“) · Vor P68 und P71
+- Ziel: Echte Waren statt Test-Inhalten – die Dinge, auf die sich Bedarfe, Ereignisse und Gerüchte beziehen.
+- Enthalten: Waren mit Basismarktpreis, Labels und Tagesmenge (Texte Englisch): je Bedarf 2–3 Waren (FOOD, POWER, MEDICINE),
+  einige Wertsachen (VALUABLE), Schmuggelware (CONTRABAND/DRUG/WEAPON), Gadgets (Scanner, UV-Lampe P62); Grundfaktoren der Labels;
+  Sortiment für **Holly (Kiosk)** und den **Dealer (Schwarzmarkt)**; die **Bar** verkauft und kauft nichts (P65). Test-Inhalte ersetzen.
+- Nicht enthalten: Modelle/Icons (Liste im Fenster reicht), Ereignisse (P68), Durchrechnen (P71).
+- Abnahme: Kiosk und Dealer zeigen das neue Sortiment; jeder Bedarf lässt sich mit mindestens zwei Waren decken; Tests grün.
+
+### P71 — Balancing über 3 Tage
+- Größe: S · Priorität: Muss · Status: offen, geplant (martin, 06.11.)
+- Braucht: P68, P70, P10, P13 · Folgt auf: —
+- Ziel: Lohn, Abzüge, Miete, Bedarfe und Marktereignisse ergeben über 3 Tage ein knappes, aber schaffbares Spiel.
+- Enthalten: Menü **GameOff → Economy Report**: rechnet typische Spielweisen durch (alles beim Händler + Drohne / alles Geld am Bett /
+  sparen / viele Fehler am Schalter) mit den Ereignissen der Tage → Kontostand und Familienzustand je Abend. Ziel festlegen
+  (z. B. „knapp, aber schaffbar; wer nicht versorgt, verliert“), Werte in den Assets anpassen. EditMode-Test: die Standard-Spielweise
+  übersteht 3 Tage, „nichts versorgen“ führt zu P69-Folgen.
+- Nicht enthalten: neue Mechaniken.
+- Abnahme: Report zeigt für jede Spielweise 3 Abende; Standard-Spielweise endet mit Geld ≥ 0 und ohne kritische Familie.

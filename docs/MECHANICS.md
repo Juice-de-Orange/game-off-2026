@@ -48,7 +48,9 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Familienschicksal: Folgen von „kritisch“ | P69 (Entwurf) | Familie → P12 | mit max abstimmen |
 | Enden (Familie, Moral, gefeuert) | P12 | Familie, P08, P69 | offen |
 | Briefe reagieren auf den Zustand | P15 | Familie | offen |
-| Marktverfügbarkeit (Politik, Tagesereignisse → Menge/Preis) | P68 (Entwurf) | Händler, Abrechnung (× 1,35) | erst planen |
+| Markt: Basismarktpreis × Label-Faktoren × Ereignisse des Tages; Händler × Verkaufs-/Ankaufsfaktor; Bett × 1,35 | P68 (geplant) | Händler, Vorrat, Abrechnung, Bulletin, Durchsagen, P65 | Formel festgelegt |
+| Echte Warenliste und Sortiment (Holly, Dealer; Bar handelt nicht) | P70 (geplant) | Labels, Bedarfe | vor P68 |
+| Balancing über 3 Tage (Economy Report) | P71 (geplant) | alles Geld | nach P68 |
 | Barkeeper: Wunschliste → Gerüchte | P65 (Entwurf) | Labels, P68 | Frage an max |
 | Barkeeper: Bestechungszettel | P66 (Entwurf) | P08, Abrechnung | Frage an max |
 | Gadgets: Scanner, UV-Lampe | P16, P62 | Schalter, Kiosk | Scanner-Funktion unklar (siehe Lücken) |
@@ -63,4 +65,5 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 - **Scanner (P16):** In den Daten gibt es nur „gefälschtes Siegel“, und das deckt laut P58 die UV-Lampe auf. Was der Scanner zeigt, ist offen.
 - **Schmuggel nach Hause:** geht ohne Wirkung und ohne Risiko → später mit P08.
 - **Niederlage:** Bisher nur „Miete nicht bezahlbar“ (Platzhalter). Familie kann dauerhaft „critical“ sein, ohne Folge → P69, P12.
-- **Preise sind Platzhalter** (35-%-Regel) bis P68.
+- **Preise sind Platzhalter** (35-%-Regel) bis P68/P70; ob 3 Tage aufgehen, rechnet erst P71 durch.
+- **Ankündigung der Marktereignisse** braucht einen Haken in Pinnwand/Bulletin und Durchsagen (P41, max) → Frage `markt-bulletin-durchsagen`.
