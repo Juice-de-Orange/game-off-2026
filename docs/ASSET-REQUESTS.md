@@ -5509,3 +5509,365 @@ refs: []
 placeholder: Kein Ton. Der Einbau folgt in P63.
 feedback: []
 ```
+
+### SM_Station_Hab_Shell_4m.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Hab_Shell_4m.fbx
+package: P53
+scene: Wohnmodul Hab_West (innen) und Druckröhre vom Motelgang
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [10.4, 4.0, 3.59]
+pivot: bottom_center
+tris_max: 140
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Hab_Shell_4m_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: 4-m-Scheibe der Innenhülle des Wohnmoduls: zu beiden Seiten Sockel, schräge Hüllverkleidung (Rückwand der Räume), obere Facette und Raumdecke auf 3,0 m, dazwischen das Flurgewölbe bis 3,59 m. Stationsgrau mit Rippen und Fugen wie das Kit. Sechs Stück hintereinander (Z 14 … 38) füllen das Deck zwischen den Schotten; Pivot Flurmitte auf dem Deck (Y 7,42), die Scheibe läuft entlang lokal Z. Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
+### SM_Station_Hab_Bulkhead.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Hab_Bulkhead.fbx
+package: P53
+scene: Wohnmodul Hab_West (innen) und Druckröhre vom Motelgang
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [10.7, 0.2, 3.7]
+pivot: bottom_center
+tris_max: 80
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Hab_Bulkhead_Albedo.png   # 128x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: Schott am Nord- und Südende des Decks: 12-Eck-Platte (Apothem 5,35) mit Randrippen, beidseitig, und dem 2 m breiten Türschlitz des Flurs, den eine Kit-Türwand (Süd) bzw. die Screen-Wand (Nord) füllt. Pivot Unterkante Mitte. Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
+### SM_Station_Hab_LightStrip_2m.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Hab_LightStrip_2m.fbx
+package: P53
+scene: Wohnmodul Hab_West (innen) und Druckröhre vom Motelgang
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [2.0, 0.2, 0.06]
+pivot: top_center
+tris_max: 12
+materials: [Light]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Hab_LightStrip_2m_Albedo.png   # 32x32, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_Hab_LightStrip_2m_Emission.png   # 32x32, Point
+texel_px_per_m: 16
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: Deckenleuchtstreifen 2 m: flache Leiste mit Linse nach unten, grünes Leuchten wie im Motelgang (Emission). Pivot oben Mitte (an der Decke); 24 Stück im Flur und in den Räumen. Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
+### SM_Station_HabTube_Frame.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_HabTube_Frame.fbx
+package: P53
+scene: Wohnmodul Hab_West (innen) und Druckröhre vom Motelgang
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [2.9, 2.5, 2.45]
+pivot: bottom_center
+tris_max: 140
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_HabTube_Frame_Albedo.png   # 128x128, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_HabTube_Frame_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: Druckrahmen hinter der Türwand am Westende des Motelgangs: Laibung und Sturz der 1,2 × 2,2-m-Öffnung, Rahmenplatte mit Warnstreifen und das 2,05-m-Podest bis zur ersten Treppe. Pivot Bodenmitte an der Wandrückseite, die Röhre läuft entlang lokal +Z. Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
+### SM_Station_HabTube_Stair_2m.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_HabTube_Stair_2m.fbx
+package: P53
+scene: Wohnmodul Hab_West (innen) und Druckröhre vom Motelgang
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [2.9, 2.0, 3.687]
+pivot: bottom_center
+tris_max: 160
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_HabTube_Stair_2m_Albedo.png   # 128x64, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_HabTube_Stair_2m_Emission.png   # 64x32, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: Treppensegment der Druckröhre (12-Eck, lichte Weite 2,9 m): 2 m lang, 7 Stufen à 0,177 m (1,24 m Steigung), Kopfhöhe 2,27 m, Stufen mit gelber Trittkante und Rillen, Rippen. Sechs Stück hintereinander überwinden 7,42 m. Pivot Bodenmitte am Segmentanfang. Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
+### SM_Station_HabTube_Corner.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_HabTube_Corner.fbx
+package: P53
+scene: Wohnmodul Hab_West (innen) und Druckröhre vom Motelgang
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [3.45, 3.45, 2.45]
+pivot: bottom_center
+tris_max: 160
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_HabTube_Corner_Albedo.png   # 128x64, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_HabTube_Corner_Emission.png   # 64x32, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: 90°-Bogen der Druckröhre (R 2 m, nach rechts = Norden) am oberen Treppenende, gleicher Querschnitt wie Straight_2m. Pivot Bodenmitte am Bogenanfang. Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
+### SM_Station_HabTube_Straight_2m.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_HabTube_Straight_2m.fbx
+package: P53
+scene: Wohnmodul Hab_West (innen) und Druckröhre vom Motelgang
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [2.9, 2.0, 2.45]
+pivot: bottom_center
+tris_max: 120
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_HabTube_Straight_2m_Albedo.png   # 128x64, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_HabTube_Straight_2m_Emission.png   # 64x32, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: Gerades Segment der Druckröhre, 2 m: 12-Eck-Querschnitt (lichte Weite 2,9 m, Höhe 2,45 m), flacher Boden 2,2 m breit, Rippen, grüner Leuchtstreifen im Scheitel (Emission). Pivot Bodenmitte am Segmentanfang. Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
+### SM_Station_HabTube_Collar.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_HabTube_Collar.fbx
+package: P53
+scene: Wohnmodul Hab_West (innen) und Druckröhre vom Motelgang
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [2.9, 3.0, 2.45]
+pivot: bottom_center
+tris_max: 160
+materials: [Wall]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_HabTube_Collar_Albedo.png   # 128x128, Point
+  - Assets/_Project/Art/Textures/Station/T_Station_HabTube_Collar_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: Einstieg der Röhre durch die Südkappe des Moduls bis zum Schott: Röhre mit Warnringen an beiden Enden, Schottplatte und Türschwelle (Z 11 … 14). Pivot Bodenmitte an der Südkappe (Z 11). Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
+### SM_Ext_HabTube_Flange.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Flange.fbx
+package: P53
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [3.8, 2.15, 3.8]
+pivot: bottom_center
+tris_max: 90
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HabModule_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HabModule_Emission.png   # 128x128, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: Flansch der Druckröhre an der Außenhülle des Motels (Warnring, Apothem 1,9) und die Röhre bis über das Podest; nutzt die Texturen von SM_Ext_HabModule (gleiche Pixel, keine neue Textur): Slot Hull auf M_Ext_HabModule legen. Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
+### SM_Ext_HabTube_Stair_2m.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Stair_2m.fbx
+package: P53
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [3.2, 2.0, 4.437]
+pivot: bottom_center
+tris_max: 40
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HabModule_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HabModule_Emission.png   # 128x128, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: Außenhaut eines Treppensegments der Röhre (12-Eck, Apothem 1,6, geschert); nutzt die Texturen von SM_Ext_HabModule (gleiche Pixel, keine neue Textur): Slot Hull auf M_Ext_HabModule legen. Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
+### SM_Ext_HabTube_Corner.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Corner.fbx
+package: P53
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [3.6, 3.6, 3.2]
+pivot: bottom_center
+tris_max: 170
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HabModule_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HabModule_Emission.png   # 128x128, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: Außenhaut des 90°-Bogens der Röhre (sechs 15°-Segmente); nutzt die Texturen von SM_Ext_HabModule (gleiche Pixel, keine neue Textur): Slot Hull auf M_Ext_HabModule legen. Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
+### SM_Ext_HabTube_Straight_2m.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_HabTube_Straight_2m.fbx
+package: P53
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [3.2, 2.0, 3.2]
+pivot: bottom_center
+tris_max: 40
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HabModule_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HabModule_Emission.png   # 128x128, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: Außenhaut eines geraden 2-m-Segments der Röhre (12-Eck, Apothem 1,6); nutzt die Texturen von SM_Ext_HabModule (gleiche Pixel, keine neue Textur): Slot Hull auf M_Ext_HabModule legen. Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
+
+### SM_Ext_HabModule_Entry.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_HabModule_Entry.fbx
+package: P53
+scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
+status: final
+priority: P2
+needed_by: 2026-11-13
+size_m: [12.0, 12.0, 30.0]
+pivot: center
+tris_max: 1500
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HabModule_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_HabModule_Emission.png   # 128x128, Point
+texel_px_per_m: 8
+palette: docs/style/palette.png
+look: >
+  Extra der Pipeline, von Max zum Bau freigegeben 06.11.: SM_Ext_HabModule mit geöffneter Südkappe für die Röhre: statt der Andockluke ein Ring vom Flansch (Apothem 2,8) zur Röhre (1,6); sonst gleich, ersetzt das Modul an Hab_West (gleiche Transformation); nutzt die Texturen von SM_Ext_HabModule (gleiche Pixel, keine neue Textur): Slot Hull auf M_Ext_HabModule legen. Platzierung: docs/station/wohnmodul.md.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [docs/station/wohnmodul_plan.png]
+placeholder: none (direkt geliefert)
+feedback: []
+```
