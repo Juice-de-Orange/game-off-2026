@@ -61,7 +61,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| martin | P10 Abrechnung & Familie + P11 Händlervorrat (zusammen) | `Main.unity`, `PF_Economy.prefab`, `PF_DayFlow.prefab`, `Data/Economy/*`, `Data/Days/*`, `Scripts/Travelers/CounterShift.cs` (nur ein Getter) | 06.11. |
+| martin | P10 Abrechnung & Familie + P11 Händlervorrat (zusammen) | `Main.unity`, `PF_Economy.prefab`, `PF_DayFlow.prefab`, `Data/Economy/*`, `Data/Days/*`, `Scripts/Travelers/CounterShift.cs` (nur ein Getter), `Menu.unity`, `Boot.unity`, `PF_PauseMenu.prefab` (Dev-Knöpfe ±100 CR) | 06.11. |
 | max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
 
 ## Backlog
