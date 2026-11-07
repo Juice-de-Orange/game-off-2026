@@ -334,6 +334,17 @@ namespace GameOff.EditorTools
             Rumour(smugglers, "Security is about to raid a smuggler ring. By tomorrow drugs will be worth a fortune.");
             Rumour(cold, "A cold front is coming back home. Power cells will be dear tomorrow.");
 
+            // P36: how hard each event shakes the station (only where still 0).
+            void Crisis(MarketEvent e, float value)
+            {
+                if (e.crisis > 0f) return;
+                e.crisis = value;
+                EditorUtility.SetDirty(e);
+            }
+            Crisis(border, 0.4f);
+            Crisis(smugglers, 0.3f);
+            Crisis(cold, 0.3f);
+
             var schedule = AssetDatabase.LoadAssetAtPath<GameOff.Day.DaySchedule>(SchedulePath);
             if (schedule == null) { log.Add("no DaySchedule - market events not placed"); return; }
             var sso = new SerializedObject(schedule);

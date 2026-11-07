@@ -2,7 +2,10 @@ using UnityEngine;
 
 namespace GameOff.Core
 {
-    /// <summary>A tired neon tube: mostly steady, now and then a short burst of flicker. Needs a realtime Light.</summary>
+    /// <summary>
+    /// A tired neon tube: mostly steady, now and then a short burst of flicker. Needs a realtime Light.
+    /// P36: StationMood sets the pause between bursts from the station's situation and switches the light off in a blackout.
+    /// </summary>
     [RequireComponent(typeof(Light))]
     public class LightFlicker : MonoBehaviour
     {
@@ -14,6 +17,7 @@ namespace GameOff.Core
         private float _baseIntensity;
         private float _nextBurst;
         private float _burstEnd;
+        private bool _off;
 
         private void Awake()
         {
@@ -28,8 +32,23 @@ namespace GameOff.Core
             if (_light != null) _light.intensity = _baseIntensity;
         }
 
+        /// <summary>New pause between bursts (seconds, min..max); a longer wait already running is cut short.</summary>
+        public void SetPause(Vector2 seconds)
+        {
+            pauseSeconds = seconds;
+            _nextBurst = Mathf.Min(_nextBurst, Time.time + Random.Range(seconds.x, seconds.y));
+        }
+
+        /// <summary>Blackout: the light stays dark until switched on again.</summary>
+        public void SetOff(bool off) => _off = off;
+
         private void Update()
         {
+            if (_off)
+            {
+                _light.intensity = 0f;
+                return;
+            }
             float now = Time.time;
             if (now >= _nextBurst && now >= _burstEnd)
             {

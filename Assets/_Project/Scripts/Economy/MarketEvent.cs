@@ -17,6 +17,8 @@ namespace GameOff.Economy
         [TextArea(1, 3)] public string announcement;
         [Tooltip("What the barkeeper whispers the evening before (P65). Must be true – it describes this event.")]
         [TextArea(1, 3)] public string rumour;
+        [Tooltip("How much this event shakes the station (P36): adds to the situation that makes lamps flicker and the power fail.")]
+        [Range(0f, 1f)] public float crisis;
         public List<LabelEffect> labels = new List<LabelEffect>();
         public List<StockChange> stock = new List<StockChange>();
     }

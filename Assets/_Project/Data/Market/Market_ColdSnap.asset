@@ -16,6 +16,7 @@ MonoBehaviour:
   announcement: 'Weather report from home: a cold snap. Power cells are in short
     supply.'
   rumour: A cold front is coming back home. Power cells will be dear tomorrow.
+  crisis: 0.3
   labels:
   - tag: {fileID: 11400000, guid: b383f9fa0014ed44c9c87250378ff26d, type: 2}
     price: 1.25

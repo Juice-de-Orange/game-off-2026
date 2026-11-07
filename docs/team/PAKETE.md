@@ -532,12 +532,17 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Ein Fall lässt sich über einen Kistenfund lösen; Einstecken verändert Moral.
 
 ### P36 — Lebendige Station: Flackern & Stromausfälle
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 07.11.)
+- Größe: S · Priorität: Soll · Status: fertig (martin, 07.11.)
 - Braucht: P09, P20
 - Ziel: Der Zustand der Station verschiebt sich über die Tage (Theme "Shift").
 - Enthalten: Neonschild "THE LAST ORBIT" flackert (ein Buchstabe fällt aus); an Tag 3 fallen Schilder und Lichter häufiger aus;
   `LightFlicker` wiederverwenden, Stärke pro Tag
 - Abnahme: Tag 1 ruhig, Tag 3 sichtbar instabil.
+- Ergebnis (martin, 07.11.): Stärke kommt aus der **Lage der Station** (Martin): `MarketEvent.crisis` (Grenze 0,4, Schmuggler 0,3, Kälte 0,3);
+  `Day/StationMood` (in PF_DayFlow) rechnet jeden Morgen Krisen von heute + Hälfte von gestern, max. 1 → Tag 1: 0, Tag 2: 0,4, Tag 3: 0,8.
+  Flacker-Lampen: Pause 15–30 s (ruhig) bis 1–3 s (Lage 1); Neonschilder (Bar-Schild, Neon_Bar/Diner/Kiosk inkl. Buchstabe E) setzen ab 0,2
+  aus (Emission aus); ab 0,5 Stromausfälle alle 45–90 s für 2–4 s. Werte in `Data/Days/StationMoodTuning.asset`, Tests `StationMoodTests`.
+  Grenze: Die Station hat nur 2 Echtzeit-Flackerlampen, der Rest ist gebacken – ein Stromausfall macht nicht die ganze Halle dunkel.
 
 ### P37 — Station-Fixes innen
 - Größe: M · Priorität: Muss · Status: fertig (max, 04.11.)

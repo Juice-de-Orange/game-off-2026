@@ -18,6 +18,7 @@ MonoBehaviour:
     at once.'
   rumour: Security is about to raid a smuggler ring. By tomorrow drugs will be worth
     a fortune.
+  crisis: 0.3
   labels:
   - tag: {fileID: 11400000, guid: 6fb8a1b3c51568c4f8aa6d549a58f4fb, type: 2}
     price: 1.5

@@ -127,6 +127,9 @@ namespace GameOff.EditorTools
             Set(manager, "bedDebugView", debugView);
             Set(manager, "ui", ui);
             BuildHallBoard(root.transform);
+            var mood = root.AddComponent<StationMood>();
+            Set(mood, "day", manager);
+            Set(mood, "tuning", EnsureMoodTuning(log));
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
             Object.DestroyImmediate(root);
             log.Add("PF_DayFlow built");
@@ -308,9 +311,40 @@ namespace GameOff.EditorTools
                 Set(board, "shift", shift);
                 PrefabUtility.RecordPrefabInstancePropertyModifications(board);
             }
+            string mood = WireStationMood(scene, instance);
             string bed = FitBedTrigger(scene, instance);
             EditorSceneManager.MarkSceneDirty(scene);
-            log.Add($"placed in {scene.name} (shift {Ok(shift)}, sky {Ok(sky)}, player {Ok(player)}, spawn {Ok(spawn)}, {bed})");
+            log.Add($"placed in {scene.name} (shift {Ok(shift)}, sky {Ok(sky)}, player {Ok(player)}, spawn {Ok(spawn)}, {bed}, {mood})");
+        }
+
+        private const string MoodTuningPath = "Assets/_Project/Data/Days/StationMoodTuning.asset";
+
+        // P36: glowing signs that drop out when the station is in trouble (from StationGrayboxBuilder, letters included).
+        private static readonly HashSet<string> NeonNames = new HashSet<string> { "SM_Bar_NeonSign", "Neon_Bar", "Neon_Diner", "Neon_Kiosk" };
+
+        /// <summary>Tuning of the station's situation (created once; then it is content, edit it in the inspector).</summary>
+        private static StationMoodTuning EnsureMoodTuning(List<string> log)
+        {
+            var tuning = AssetDatabase.LoadAssetAtPath<StationMoodTuning>(MoodTuningPath);
+            if (tuning != null) return tuning;
+            tuning = ScriptableObject.CreateInstance<StationMoodTuning>();
+            AssetDatabase.CreateAsset(tuning, MoodTuningPath);
+            log.Add("StationMoodTuning created");
+            return tuning;
+        }
+
+        /// <summary>Wires StationMood to every flicker lamp and neon sign of the station in the scene.</summary>
+        private static string WireStationMood(Scene scene, GameObject dayFlow)
+        {
+            var mood = dayFlow.GetComponent<StationMood>();
+            var all = scene.GetRootGameObjects().Where(g => g != dayFlow).SelectMany(g => g.GetComponentsInChildren<Transform>(true)).ToList();
+            var lamps = all.Select(t => t.GetComponent<LightFlicker>()).Where(l => l != null).Cast<Object>().ToArray();
+            var neons = all.Where(t => NeonNames.Contains(t.name))
+                .SelectMany(t => t.GetComponentsInChildren<Renderer>(true)).Distinct().Cast<Object>().ToArray();
+            SetArray(mood, "lamps", lamps);
+            SetArray(mood, "neons", neons);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(mood);
+            return $"station mood: {lamps.Length} lamps, {neons.Length} neon renderers";
         }
 
         private static string Ok(Object o) => o != null ? "ok" : "MISSING";
