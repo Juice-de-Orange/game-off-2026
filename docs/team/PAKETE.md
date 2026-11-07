@@ -1488,3 +1488,16 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Schleuse (Ende „Airlocked“).
 - Enthalten: Tag und Inhalt der Bitte (offen in `docs/FIGUREN.md`), die Wendung an Tag 7, das Ende.
 - Abnahme: Mit Hilfe bei der Bitte endet Tag 7 mit „Airlocked“, sonst geht das Spiel weiter.
+
+### P88 — Wegweiser zeigen zu den richtigen Räumen
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 07.11.) · Zuständig: max
+- Braucht: — · Folgt auf: —
+- Ziel: Wer durch die Station läuft, findet Schalter, Diner, Bar, Kiosk, Motel und Hangar über die Schilder.
+- Befund (max, 07.11.): Alle drei Schilder (`SM_Hall_Sign_Staff/_Motel/_Bar`) zeigen „MOTEL“ – der Builder verschiebt den 6-Zeilen-Atlas
+  `T_Hall_Sign_*` nicht. Außerdem ist das Modell ein beidseitiges Hängeschild (Pfeil zeigt von beiden Seiten in dieselbe Weltrichtung,
+  nach lokal −X), hängt aber flach an der Wand.
+- Enthalten: Material je Atlas-Zeile (wie `M_Motel_DoorSign_10x`); Hängeschilder quer zum Weg mit Pfeil zur richtigen Tür: in der Halle am
+  Motel-Eingang (CUSTOMS, DINER, KIOSK, BAR) und vor der Dienst-Tür (MOTEL, DINER, BAR, KIOSK), im Dienstgang (CUSTOMS, HANGAR – STAFF ONLY);
+  die drei Wandschilder fallen weg. Alles im `StationGrayboxBuilder`.
+- Nicht enthalten: neue Schild-Modelle, Bodenmarkierungen.
+- Abnahme: Jedes Schild zeigt den richtigen Raum, und sein Pfeil zeigt zur richtigen Tür (Bilder aus Main); Occlusion-Check grün.
