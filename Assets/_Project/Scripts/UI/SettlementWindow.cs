@@ -172,7 +172,7 @@ namespace GameOff.UI
         {
             var wallet = Economy.Wallet;
             if (Wage > 0) wallet.Add(Wage, $"Wage · {_correctToday} of {_travelersToday} correct");
-            if (Penalty > 0) wallet.Charge(Penalty, $"Penalty · {Payroll.PenalizedCitations(Citations, FreeWarnings)} citations");
+            if (Penalty > 0) wallet.Charge(Penalty, "Penalty · " + ExtraCitations(Payroll.PenalizedCitations(Citations, FreeWarnings)));
             wallet.Charge(Tuning.rent, "Rent · room 103");
             for (int i = 0; i < 3; i++)
                 if (_paid[i]) wallet.Charge(Cost(i), "Family · " + NeedNames[i].ToLowerInvariant());
@@ -189,7 +189,8 @@ namespace GameOff.UI
             var sb = new StringBuilder();
             sb.AppendLine(Line($"Wage  ·  {_correctToday} of {_travelersToday} correct × {t.wagePerTraveler}", Wage));
             int penalized = Payroll.PenalizedCitations(Citations, FreeWarnings);
-            if (penalized > 0) sb.AppendLine(Line($"Penalty  ·  {penalized} citations beyond {FreeWarnings} warnings", -Penalty));
+            // Short enough to stay left of the amount column (B06); the free warnings are explained on the citation itself.
+            if (penalized > 0) sb.AppendLine(Line("Penalty  ·  " + ExtraCitations(penalized), -Penalty));
             sb.AppendLine(Line("Rent  ·  room 103", -t.rent));
             if (!CanPayRent)
                 sb.AppendLine("\n<color=#E2463F>You can't pay the rent.</color>\n<color=#8B9096>RETURN and sell something – or CONFIRM and lose your room.</color>");
@@ -229,6 +230,8 @@ namespace GameOff.UI
             balance.text = $"BALANCE  {e.Format(e.Wallet.Balance)}  →  " +
                            (after < 0 ? $"<color=#E2463F>{e.Format(after)}</color>" : e.Format(after));
         }
+
+        private static string ExtraCitations(int n) => n == 1 ? "1 extra citation" : $"{n} extra citations";
 
         private string Line(string label, int amount) =>
             $"{label}<pos=78%>{(amount >= 0 ? "+" : "−")}{Economy.Format(Mathf.Abs(amount))}";
