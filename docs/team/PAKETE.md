@@ -1228,7 +1228,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 ### P75 — Wiederkehrende Figuren: Gedächtnis, Auftritte, Folgen
 - Größe: M–L · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.)
 - Braucht: P07, P09, P41 (Pinnwand), P68 (Markt-Ereignisse), P36 (Lage der Station) · Inhalt dazu: P76 · Beschlagnahme als Ausgang erst mit P08
-- Ziel: Etwa fünf Figuren kommen geskriptet wieder, erinnern sich, wie man sie behandelt hat, und ihre Geschichte verändert die Station.
+- Ziel: Acht Figuren (Ablauf: `docs/FIGUREN.md`) kommen geskriptet wieder, erinnern sich, wie man sie behandelt hat, und ihre Geschichte verändert die Station.
 - Enthalten:
   - **Figur** (`RecurringCharacter`, ScriptableObject in `Data/Characters/`): Id, Name, Spezies, Liste von **Auftritten**.
   - **Auftritt:** eigener `TravelerData` (eigene Papiere je Begegnung); **wann** = fester Tag oder Zeitfenster (von–bis, Spielraum);
@@ -1253,14 +1253,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - **Prüfung:** Validator spielt für jede Figur alle Zweige durch (jede Entscheidung bei jedem Auftritt) und prüft, dass die
     berechnete Entscheidung zur beabsichtigten passt; EditMode-Tests für Bedingung, Platz, Gedächtnis, ausgelöste Ereignisse/Fahndungen.
   - Dev-Werkzeug: Gedächtnis im Dev-Reiter anzeigen und setzen (zum Testen späterer Tage).
-- Nicht enthalten: die fünf Figuren und ihre Texte (P76), Beschlagnahme selbst (P08), Endbildschirme (P12).
+- Nicht enthalten: die Figuren und ihre Texte (P76), Beschlagnahme selbst (P08), Endbildschirme (P12).
 - Abnahme: Eine Testfigur mit drei Auftritten: Tag 1 frei, Tag 2 als dritte Person nur wenn geholfen, sonst Tag 3 auf der Fahndungsliste;
   jeder Zweig spielbar, Begrüßung reagiert, ein ausgelöstes Ereignis ändert Preise und Lage der Station am nächsten Tag.
 - Zusammenhang: P73 (endlos) zieht nach den Story-Tagen weitere Auftritte aus Zeitfenstern; P15 (Fälle) plant die Figuren-Auftritte
   zwischen den übrigen Reisenden ein; die bisherigen festen Ereignisse (Tag 2 Grenze, Tag 3 Schmuggler + Kälte) können ganz oder teilweise
   von Figuren ausgelöst werden (Entscheidung in P76).
 
-### P76 — Die fünf wiederkehrenden Figuren
+### P76 — Die wiederkehrenden Figuren (8)
 - Größe: M · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) – Figuren sind ein Vorschlag, Martin wählt und ändert
 - Braucht: P75 · Folgt auf: — · Teil der Inhalte von P15 · Beschlagnahme-Zweige erst mit P08
 - Ziel: Fünf Figuren mit kleinen Geschichten über die Tage, die zum Theme „Shift“ passen und Geld, Familie, Moral und Station verbinden.
@@ -1268,7 +1268,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Passfotos aus den vorhandenen Spezies-Modellen.
 - Vorschlag (martin, 07.11.):
   1. **The Shifter** (Mensch, schon als `T_Test_06_Shifter`, DESIGN.md): jeden Tag neue Identität, erkennbar an einem Detail.
-     Tag 1–2 harmlos; geholfen → Tag 3 Steckbrief „auf Sicht terminieren“. Schleuse = Befehl befolgt (Moral), verhaftet = Befehl
+     Tag 1–2 harmlos; Tag 3 **immer** Steckbrief „auf Sicht terminieren“ (wie Max geplant hat). Schleuse = Befehl befolgt (Moral), verhaftet = Befehl
      verweigert, durchgelassen = er steckt dir etwas für die Familie zu. Der Faden der Hauptgeschichte.
   2. **Quill Barragh** (Mensch, Kurier des Barkeepers): Tag 1 sauber und freundlich; Tag 3 mit Spice im Gepäck und dem
      Bestechungszettel (P66). Durchgelassen = geholfen (Umschlag, später größere Aufträge); verhaftet/beschlagnahmt = verraten →
@@ -1284,10 +1284,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
      Später kommt er **verdeckt** wieder (z. B. Tag 2 als dritte Person) mit einem kleinen, verlockenden Fehler: „Helfen“ heißt hier
      nach Vorschrift entscheiden → Lob per Durchsage, Lohnbonus; durchgelassen = Rüge (zusätzliche Verwarnung), er kommt unangekündigt
      wieder. Zeigt: Nicht jedes Wegsehen ist gut. Das Tutorial geht erst, wenn P75 steht (fester Platz 1 an Tag 1, eigene Texte je Schritt).
-- Offen: Arten und Namen ändern? Welche festen Ereignisse sollen künftig von Figuren ausgelöst werden? Ab welchem Tag kommen
-  Figuren im Endlos-Teil wieder (P73)?
+- Ergänzt (martin, 07.11.): drei weitere Figuren, die zwischen Tag 5 und 8 Stück für Stück dazukommen (**Tobin Rask**, **Nell Varga**,
+  **Pim Oddo**), und der **Ablaufplan über 12 Story-Tage** (kürzbar) in `docs/FIGUREN.md` – dort stehen Auftritte, Ausgänge und Ereignisse.
+- Offen: siehe `docs/FIGUREN.md` → „Offen“. Schmuggler-Razzia von Quill auslösen lassen statt fest an Tag 3 → nach Plan und neuen Figuren
+  (mit Rebalancing).
 - Abnahme: Jede Figur hat mindestens zwei Auftritte mit Reaktion auf den vorherigen Ausgang; jeder Zweig validiert; ein Durchgang
-  über die Story-Tage zeigt alle fünf.
+  über die Story-Tage zeigt alle acht.
 
 ### P77 — Verwahrung: Figuren geben dir Dinge zur Aufbewahrung
 - Größe: S–M · Priorität: Soll (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) – erst planen, nicht bauen
