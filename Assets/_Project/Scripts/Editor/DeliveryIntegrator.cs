@@ -19,6 +19,8 @@ namespace GameOff.EditorTools
         private const string MaterialRoot = "Assets/_Project/Art/Materials";
         private const string UiRoot = "Assets/_Project/Art/UI";
         private const string SkyTextureFolder = TextureRoot + "/Sky"; // configured by SkyExteriorBuilder
+        private const string DocumentTextureFolder = TextureRoot + "/Documents"; // bilinear + mipmaps, configured by DocumentPrefabBuilder
+        private const string IconFolder = UiRoot + "/Icons"; // pixel-art item icons: Point, Sprite Multiple, set by hand
         private const string TemplateMaterialPath = MaterialRoot + "/Diner/M_Diner_Counter.mat";
         private const string GlassMaterialPath = MaterialRoot + "/Station/M_Station_Glass.mat";
         public const string HabMaterialPath = MaterialRoot + "/Exterior/M_Ext_HabModule.mat";
@@ -46,7 +48,7 @@ namespace GameOff.EditorTools
             foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { TextureRoot }))
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
-                if (path.StartsWith(SkyTextureFolder + "/")) continue;
+                if (path.StartsWith(SkyTextureFolder + "/") || path.StartsWith(DocumentTextureFolder + "/")) continue;
                 if (!(AssetImporter.GetAtPath(path) is TextureImporter ti)) continue;
                 if (ti.filterMode == FilterMode.Point && !ti.mipmapEnabled) continue;
                 ti.filterMode = FilterMode.Point;
@@ -62,6 +64,7 @@ namespace GameOff.EditorTools
             foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { UiRoot }))
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
+                if (path.StartsWith(IconFolder + "/")) continue;
                 if (!(AssetImporter.GetAtPath(path) is TextureImporter ti)) continue;
                 if (ti.textureType == TextureImporterType.Sprite && ti.filterMode == FilterMode.Bilinear && !ti.mipmapEnabled
                     && ti.npotScale == TextureImporterNPOTScale.None) continue;

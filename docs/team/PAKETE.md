@@ -1323,12 +1323,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: In der Live-Version öffnet der Knopf ein neues Tab mit vorausgefülltem Issue samt richtigem Commit; das Spiel läuft weiter.
 
 ### P79 — DeliveryIntegrator: Icons und Dokumente nicht verstellen
-- Größe: XS · Priorität: Soll · Status: in Arbeit (max, 07.11.) · Zuständig: max (Call 07.11.)
+- Größe: XS · Priorität: Soll · Status: fertig (max, 07.11.) · Zuständig: max (Call 07.11.)
 - Braucht: — · Folgt auf: —
 - Ziel: `GameOff/Integrate Asset Deliveries` (auch in Rebuild All) ändert nur, was er ändern soll.
 - Enthalten: Waren-Icons (`Art/UI/Icons`, Pixel-Art, Point, Sprite Multiple) und Dokument-Texturen (`Art/Textures/Documents`) bleiben, wie sie sind; heute stellt der Integrator Icons auf Bilinear/Single und Dokumente auf Point (am 07.11. von Hand zurückgesetzt).
 - Nicht enthalten: andere Importregeln.
 - Abnahme: Integrator zweimal laufen lassen → `git status` zeigt keine geänderten `.meta` unter Icons und Documents.
+- Ergebnis (max, 07.11.): `DeliveryIntegrator` überspringt `Art/UI/Icons` (UI-Regel) und `Art/Textures/Documents` (Welt-Regel; die setzte Point, `DocumentPrefabBuilder` wieder Bilinear – die beiden haben sich gegenseitig umgestellt). Zwei Batch-Läufe: „nothing to do“, keine geänderten `.meta`. Regel in `ASSETS.md`.
 
 ### P80 — Umschlag-Modell beim Bestechungszettel
 - Größe: XS · Priorität: Kann · Status: offen · Zuständig: martin (Call 07.11.)
