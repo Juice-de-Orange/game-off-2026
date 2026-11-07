@@ -32,3 +32,5 @@ Nichts von P75/P76/P77 wird gebaut. Der Plan in `docs/FIGUREN.md` bleibt Entwurf
 
 ## Antwort
 **A** (Max, 07.11.): Ja, gemeinsamer Call – erst die Figuren (Namen, Arten, Charakter, Rolle), dann der Ablauf Tag für Tag. Am besten im selben Call wie Schicht-Inventar/Beschlagnahme (P08) und Warenliste 2. Bis dahin bleibt alles wie in der Annahme (nichts von P75–P77 wird gebaut).
+
+**Im Call entschieden (max + martin, 07.11.):** steht in `docs/FIGUREN.md` unter „Entschieden im Call“ und in DECISIONS.md. Verteilung: Martin P73, P75, P76, P77; Max P15 (Story-Reisende, 12 Tage) und P72.

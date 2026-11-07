@@ -39,3 +39,5 @@ Nichts wird gebaut. Martin und Max sprechen darüber (zusammen mit der Frage `sc
 
 ## Antwort
 **C** (Max, 07.11.): Im gemeinsamen Call zusammen mit Schicht-Inventar/Beschlagnahme (P08) klären – Fracht-Stichworte und CONFISCATED hängen daran. Bis dahin gilt die Annahme (nichts wird gebaut).
+
+**Im Call entschieden (max + martin, 07.11.): A.** Martin legt „Warenliste 2“ an und baut es, inkl. Icons an die Waren hängen (P46-Icons sind seit 07.11. auf `main`, `icon` ist bei allen Items noch leer). CONFISCATED = eigene Item-Variante (siehe `schichtinventar-beschlagnahme`).

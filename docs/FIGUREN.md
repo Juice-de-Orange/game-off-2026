@@ -20,7 +20,7 @@ Endlos-Schleife (P73), in der Figuren nur noch selten und nach Bedingung auftauc
 |---|---|---|---|---|---|
 | 1 | **Inspector Vaal Korr** | Sorvak | Prüfer der Behörde; Tag 1 Tutorial, später verdeckt | 1 | Lohn, Verwarnungen, „Inspection week“ |
 | 2 | **Quill Barragh** | Mensch | Kurier des Barkeepers, Schmuggler | 1 | Bestechung (P66), „Smugglers busted“, Verwahrung |
-| 3 | **The Shifter** | Mensch | jeden Tag neue Identität, Hauptgeschichte (DESIGN.md) | 1 | Fahndung „auf Sicht terminieren“, „Security lockdown“ |
+| 3 | **The Shifter** | Mensch | jeden Tag neue Identität; gibt sich als Widerstandskämpfer aus, ist ein Spion (Call 07.11.) | 1 | Fahndung „auf Sicht terminieren“, „Security lockdown“ |
 | 4 | **Mira Talsk** | Quobb | Mutter auf dem Weg zu ihren Kindern, Spiegel des Spielers | 2 | „Border closed“, Familie (FOOD) |
 | 5 | **Dr. Iro Senn** | Xirrik | Ärztin mit Antibiotika ohne Schein | 3 | Familie (MEDICINE), „Clinic shortage“, Verwahrung |
 | 6 | **Tobin Rask** | Vellani | Dockarbeiter, organisiert die Kollegen | 5 | „Dock strike“ (Mengen ↓, Krise ↑) |
@@ -81,8 +81,16 @@ Tag 3 kommt, wird nach diesem Plan und den neuen Figuren gemacht (Martin, 07.11.
 5. Bedingungen über den Familienzustand (Senn bringt Medizin nur, wenn jemand krank ist) und über andere Figuren (Nells Sohn = wen du verhaftet hast).
 6. Folgen ohne Begegnung: Durchsage, Brief-Zeile oder Paket an einem späteren Tag.
 
+## Entschieden im Call (max + martin, 07.11.)
+- Alle acht Figuren bleiben, 12 Story-Tage, gekürzt wird von hinten.
+- **Shifter:** gibt sich an Tag 1–7 als Widerstandskämpfer aus und versucht, dich anzuwerben bzw. zu überreden, ihm zu helfen. An Tag 7
+  kommt heraus, dass er ein **Spion** ist. Es gibt **eine Schlüsselentscheidung** (große Bitte, Tag noch festzulegen): Wer ihm dabei hilft,
+  wird an Tag 7 durch die Luftschleuse geworfen → Ende „Airlocked“ (P12). Alle anderen Hilfen bleiben ohne diese Folge.
+  Der Steckbrief „auf Sicht terminieren“ an Tag 3 bleibt als Test der Behörde.
+- **Korr:** Tutorial an Tag 1 (#1), danach verdeckter Prüfer.
+- **Nells Sohn**, wenn der Spieler niemanden verhaftet hat: ein fester Reisender aus P15 (Max).
+- **Ab Tag 13** tauchen keine Figuren mehr auf, nur normale Reisende aus Pools (P73).
+- **Schmuggler-Razzia** löst Quill aus (Verrat an Tag 3 → Tag 4), nicht mehr fest an Tag 3 → Rebalancing.
+
 ## Offen
-- Namen, Arten und Einzelheiten der Figuren sind Vorschläge.
-- Wer ist Nells Sohn, wenn der Spieler niemanden verhaftet hat?
-- Was ist die „Wendung“ des Shifters an Tag 7?
-- Endlos-Teil ab Tag 13 (P73): Welche Figuren tauchen noch auf, und wie oft?
+- An welchem Tag liegt die Schlüsselentscheidung des Shifters, und was genau verlangt er?

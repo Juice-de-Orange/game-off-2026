@@ -250,6 +250,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 ### P12 — Enden
 - Größe: S · Priorität: Muss · Status: offen
+- Hinweis (Call 07.11.): neue Enden: **Game Over nach 3 Disziplinarstrafen** (P08) und **„Airlocked“** – wer dem Shifter bei seiner Schlüsselentscheidung hilft, fliegt an Tag 7 durch die Schleuse (`docs/FIGUREN.md`). Hauptende ist das Ticket (P72).
 - Braucht: P10, P08
 - Ziel: Nach Tag 3 oder bei Niederlage ein Endbildschirm.
 - Enthalten: Niederlage (Familie zerbrochen / gefeuert), mindestens 2 Enden je nach Moral & Familie
@@ -296,7 +297,8 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Eine Schicht läuft mit sichtbar ankommenden Reisenden.
 
 ### P15 — Inhalte: Fälle für 3 Tage
-- Größe: M · Priorität: Muss · Status: offen
+- Größe: M · Priorität: Muss · Status: offen · Zuständig: max (Call 07.11.)
+- Hinweis (Call 07.11.): Umfang jetzt **12 Story-Tage** (von hinten kürzbar), normale Reisende neben den Figuren aus P76 (max. 3 Begegnungen/Tag, mit Martin pro Tag abgleichen). Ein fester Reisender wird Nells Sohn, falls der Spieler niemanden verhaftet hat.
 - Braucht: P07
 - Ziel: Alle Reisenden, Regeln, Briefe und Texte für 3 Tage (~15 Fälle, Englisch).
 - Regel (Max, 06.11., P58): Reisende mit gefälschtem Siegel erst an Tagen, an denen die UV-Lampe verfügbar ist; der Validator soll das prüfen.
@@ -1197,7 +1199,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     müssen das abfangen. Der Simulator zählt das Ticket nur bei gesunder Familie.
 
 ### P72 — Ticket nach Hause
-- Größe: M · Priorität: Muss (Vorschlag) · Status: offen (von Max bestätigt, 07.11., Frage `endlos-und-ticket`)
+- Größe: M · Priorität: Muss (Vorschlag) · Status: offen (von Max bestätigt, 07.11., Frage `endlos-und-ticket`) · Zuständig: max (Call 07.11.)
 - Braucht: P71 (Ticketpreis), P12 · Folgt auf: —
 - Ziel: Das Spielziel: genug sparen, ein teures Ticket kaufen und mit einem Schiff vom Hangar aus heimfliegen – „das Ende der Game Jam“.
 - Enthalten: Ticket-Terminal im Hangar (nur abends, wie jeder Handel), Kauf zum Ticketpreis (`HouseholdTuning.ticketPrice`, von P71 festgelegt),
@@ -1207,7 +1209,8 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Hinweis aus P71 (martin, 07.11.): Ohne Familienprüfung ist „Familie vernachlässigen“ der schnellste Weg zum Ticket (Tag 5). Das Ende muss den Familienzustand werten (P12/P69).
 
 ### P73 — Endlose Tage
-- Größe: M–L · Priorität: Muss (Vorschlag) · Status: offen (von Max bestätigt, 07.11., Frage `endlos-und-ticket`)
+- Größe: M–L · Priorität: Muss (Vorschlag) · Status: offen (von Max bestätigt, 07.11., Frage `endlos-und-ticket`) · Zuständig: martin (Call 07.11.)
+- Hinweis (Call 07.11.): Ab Tag 13 **keine Figuren** mehr, nur normale Reisende aus Pools.
 - Braucht: P09, P15, P68 · Folgt auf: P09
 - Ziel: Das Spiel endet nicht mehr nach Tag 3: erst die geschriebenen Story-Tage (P15), danach eine Schleife aus Pools.
 - Enthalten: Pools für Reisende, Regeln, Marktereignisse und Bar-Wünsche; jeder Tag nach der Story wird mit festem Startwert gezogen
@@ -1226,7 +1229,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   jedem Start. Geprüft im Play-Modus: alter Wert „an“ gespeichert → Start mit „aus“; RETURN schließt das Panel, Steuerung zurück (Bild).
 
 ### P75 — Wiederkehrende Figuren: Gedächtnis, Auftritte, Folgen
-- Größe: M–L · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.)
+- Größe: M–L · Priorität: Muss (Vorschlag) · Status: offen (im Call 07.11. bestätigt) · Zuständig: martin
 - Braucht: P07, P09, P41 (Pinnwand), P68 (Markt-Ereignisse), P36 (Lage der Station) · Inhalt dazu: P76 · Beschlagnahme als Ausgang erst mit P08
 - Ziel: Acht Figuren (Ablauf: `docs/FIGUREN.md`) kommen geskriptet wieder, erinnern sich, wie man sie behandelt hat, und ihre Geschichte verändert die Station.
 - Enthalten:
@@ -1261,7 +1264,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   von Figuren ausgelöst werden (Entscheidung in P76).
 
 ### P76 — Die wiederkehrenden Figuren (8)
-- Größe: M · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) – Figuren sind ein Vorschlag, Martin wählt und ändert
+- Größe: M · Priorität: Muss (Vorschlag) · Status: offen (im Call 07.11. bestätigt: alle acht Figuren, 12 Story-Tage) · Zuständig: martin
 - Braucht: P75 · Folgt auf: — · Teil der Inhalte von P15 · Beschlagnahme-Zweige erst mit P08
 - Ziel: Fünf Figuren mit kleinen Geschichten über die Tage, die zum Theme „Shift“ passen und Geld, Familie, Moral und Station verbinden.
 - Enthalten: Figuren-Daten, Papiere je Auftritt, Begrüßungen/Antworten je Ausgang und Ereignis, ausgelöste Ereignisse und Fahndungen,
@@ -1293,7 +1296,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   über die Story-Tage zeigt alle acht.
 
 ### P77 — Verwahrung: Figuren geben dir Dinge zur Aufbewahrung
-- Größe: S–M · Priorität: Soll (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) – erst planen, nicht bauen
+- Größe: S–M · Priorität: Soll (Vorschlag) · Status: offen (im Call 07.11. bestätigt) · Zuständig: martin
 - Braucht: P75 (Gedächtnis, Auftritte), P46 (Inventar), P11 (Händler) · Folgt auf: P75 · Inhalte in P76
 - Ziel: Vertrauen wird greifbar: Eine Figur lässt dir etwas da, und du entscheidest, ob du es hütest oder zu Geld machst.
 - Enthalten (Vorschlag):
@@ -1310,3 +1313,27 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: Beschlagnahme (P08), neue Händler.
 - Abnahme: Eine Figur gibt einen Gegenstand ab; Verkaufen bringt Geld und die Figur reagiert verraten; Verwahren bringt beim nächsten
   Auftritt den Pfand und die Figur reagiert geholfen.
+
+### P78 — Bugreport-Knopf im Pausenmenü
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: max (Call 07.11.)
+- Braucht: P49 · Folgt auf: —
+- Ziel: Testspieler melden Bugs mit einem Klick als vorausgefülltes GitHub-Issue (Frage `bugreport-server`, Antwort B).
+- Enthalten: Knopf „REPORT BUG“ im Pausenmenü (über `Build Menu Scenes`), öffnet `github.com/Juice-de-Orange/game-off-2026/issues/new` mit Titel und Text: Version (Commit, im Build eingebaut über `WebBuild`), Tag, Phase, Szene, Browser; Hinweis im Text, keine persönlichen Daten einzutragen.
+- Nicht enthalten: eigener Server, Sammeln mehrerer Bugs im Spiel.
+- Abnahme: In der Live-Version öffnet der Knopf ein neues Tab mit vorausgefülltem Issue samt richtigem Commit; das Spiel läuft weiter.
+
+### P79 — DeliveryIntegrator: Icons und Dokumente nicht verstellen
+- Größe: XS · Priorität: Soll · Status: offen · Zuständig: max (Call 07.11.)
+- Braucht: — · Folgt auf: —
+- Ziel: `GameOff/Integrate Asset Deliveries` (auch in Rebuild All) ändert nur, was er ändern soll.
+- Enthalten: Waren-Icons (`Art/UI/Icons`, Pixel-Art, Point, Sprite Multiple) und Dokument-Texturen (`Art/Textures/Documents`) bleiben, wie sie sind; heute stellt der Integrator Icons auf Bilinear/Single und Dokumente auf Point (am 07.11. von Hand zurückgesetzt).
+- Nicht enthalten: andere Importregeln.
+- Abnahme: Integrator zweimal laufen lassen → `git status` zeigt keine geänderten `.meta` unter Icons und Documents.
+
+### P80 — Umschlag-Modell beim Bestechungszettel
+- Größe: XS · Priorität: Kann · Status: offen · Zuständig: martin (Call 07.11.)
+- Braucht: P66 · Folgt auf: P66
+- Ziel: Der Bestechungszettel liegt sichtbar in `SM_Prop_BribeEnvelope` (geliefert und eingebaut am 07.11., Material `M_Prop_BribeEnvelope`).
+- Enthalten: Modell am `NoteSpot` des `BribeNote` (EconomyBuilder), nur sichtbar, solange der Zettel liegt.
+- Nicht enthalten: neue Mechanik.
+- Abnahme: Tag 3 → Umschlag liegt links neben den Papieren, verschwindet mit dem Zettel.
