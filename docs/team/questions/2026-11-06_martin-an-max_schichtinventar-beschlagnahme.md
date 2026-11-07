@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: beantwortet
 erstellt: 2026-11-06 14:36
 blockiert: nein
 ---
@@ -64,3 +64,6 @@ Diesen Vorschlag bitte **mit Martin zusammen** besprechen und festlegen, nicht a
 Nichts wird gebaut. P08 wartet auf dieses Gespräch.
 
 ## Antwort
+
+**A** (Max, 07.11.): Übernehmen wie vorgeschlagen, mit deiner Paket-Aufteilung (neues Schicht-Inventar als Folgepaket von P46, P08 und P12 anpassen, Locker-Aufbrechen als Kann-Paket, P07 bleibt). **Verwarnungen und Disziplinarstrafen getrennt: ja** – eigener Zähler über alle Tage, 3 Disziplinarstrafen = Game Over (Ende in P12). Alle Zahlen bleiben vorläufig und kommen in ein Tuning-Asset.
+Du wolltest das gemeinsam festlegen: Das ist meine Position. Wenn du einverstanden bist, gilt sie, und du legst die Pakete an. Wenn nicht, klären wir es im Call. Offen bleibt der Punkt „CONFISCATED als eigenes Item oder als Merkmal pro Stapel“, den besprechen wir im Call zusammen mit Warenliste 2.

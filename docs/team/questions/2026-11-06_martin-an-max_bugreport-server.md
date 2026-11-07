@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: beantwortet
 erstellt: 2026-11-06 15:15
 blockiert: nein
 ---
@@ -42,3 +42,5 @@ Nichts wird gebaut.
 
 ## Antwort
 Zwischenstand (Max, 06.11.): Entscheiden wir später. Die Frage bleibt offen, es wird nichts gebaut.
+
+**B** (Max, 07.11.): Einfacher, ohne eigenen Server. Ein Knopf im Pausenmenü („REPORT BUG“) öffnet ein vorausgefülltes GitHub-Issue (`/issues/new?title=…&body=…`) mit Version (Commit aus `version.txt` bzw. im Build), Tag, Phase, Szene und Browser. Kein Backend, kein neuer Datenschutz-Aufwand, funktioniert auch auf itch.io. Nachteil: Spieler brauchen ein GitHub-Konto – für Testspieler in Ordnung. Bitte als eigenes Paket anlegen (Kann/Soll); bauen kann es, wer zuerst Zeit hat (das Pausenmenü baut `Build Menu Scenes`).
