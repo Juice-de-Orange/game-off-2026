@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: beantwortet
 erstellt: 2026-11-07
 blockiert: nein
 ---
@@ -26,3 +26,4 @@ A – Martin baut die Gerüste jetzt. Platzhalter-Reisende und Regeln darfst du 
 anders bewertet, sag Bescheid.
 
 ## Antwort
+**A** (Max, 07.11.): Passt so. Du baust die Gerüste, max füllt sie in P15 (normale Reisende, Regeln, Briefe, echte Daten) und lässt die Figuren-Reisenden (`Data/Travelers/Story/`, `Build Story Characters`) in Ruhe. P15 startet nach P88 (Wegweiser).
