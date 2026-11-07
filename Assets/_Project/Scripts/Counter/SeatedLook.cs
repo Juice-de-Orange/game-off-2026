@@ -40,7 +40,7 @@ namespace GameOff.Counter
 
         private void Update()
         {
-            if (!station.IsSeated || station.IsHoldingStamp || desk.IsHandlingPaper) return;
+            if (!station.IsSeated || station.IsHoldingStamp || desk.IsHandlingPaper || station.InputBlocked) return;
             float input = moveAction.action.ReadValue<Vector2>().x;
             if (Mathf.Approximately(input, 0f)) return;
             _yaw = Mathf.Clamp(_yaw + input * tuning.turnSpeed * Time.deltaTime, -tuning.yawLimit, tuning.yawLimit);

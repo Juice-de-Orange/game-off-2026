@@ -1354,7 +1354,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Tag 3 → Umschlag liegt links neben den Papieren, verschwindet mit dem Zettel.
 
 ### P81 — Schicht-Inventar
-- Größe: S–M · Priorität: Muss · Status: in Arbeit (martin, 07.11.) · Zuständig: martin (Call 07.11.)
+- Größe: S–M · Priorität: Muss · Status: fertig (martin, 07.11.) · Zuständig: martin (Call 07.11.)
 - Braucht: P46 · Folgt auf: P46
 - Ziel: Was während der Schicht beschlagnahmt wird, liegt in einem **eigenen Inventar am Tisch**, nicht im normalen Inventar
   (Frage `schichtinventar-beschlagnahme`, im Call bestätigt).
@@ -1364,9 +1364,15 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: die Wahl am Schichtende und Strafen (P08), Asservatenschrank (P32/P83).
 - Abnahme: Test-Ware ins Schicht-Inventar → am Tisch sichtbar, normales Inventar dort gesperrt; nach der Schicht ist das Schicht-Inventar leer,
   das normale Inventar unverändert.
+- Ergebnis (martin, 07.11.): `PlayerEconomy.ShiftItems` (zweites `Inventory`). Sitzend öffnet [I] dasselbe Inventar-Fenster als
+  „SHIFT · CONFISCATED“; der Schalter (Klicks, Q/Esc, Umschauen) ruht solange (`CounterStation.SetInputBlocked`), Esc schließt nur das Fenster.
+  Eigenes Inventar am Tisch weiterhin gesperrt. Schichtende (`CounterShift.ShiftEnded`) → `PlayerEconomy.ShiftClosing(inventory)` für P08,
+  danach geleert. Roter Knopf `Dev_fill_Shift` (nur mit Dev-Tools) legt die Dev-Startwaren hinein. Gebaut von `Build Economy`. Tests:
+  `ShiftInventoryTests` (3), 112/112 grün; im Play-Modus geprüft, Konsole 0 Fehler. Offen: Der Sitz-Hinweis unten nennt [I] noch nicht
+  (Text kommt aus der Schalter-Verkabelung) – mit P08, wenn das Schicht-Inventar wirklich gefüllt wird.
 
 ### P82 — Warenliste 2: jede Ware mit Modell, Zweck und Icon
-- Größe: M · Priorität: Muss · Status: offen · Zuständig: martin (Call 07.11.)
+- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 07.11.) · Zuständig: martin (Call 07.11.)
 - Braucht: P70, P71 · Folgt auf: P70
 - Ziel: Alle Waren haben einen Grund, sie zu kaufen, zu beschlagnahmen oder zu verkaufen, und sehen im Inventar fertig aus
   (Frage `warenliste-2`, im Call: A).
