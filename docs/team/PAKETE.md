@@ -1288,3 +1288,22 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Figuren im Endlos-Teil wieder (P73)?
 - Abnahme: Jede Figur hat mindestens zwei Auftritte mit Reaktion auf den vorherigen Ausgang; jeder Zweig validiert; ein Durchgang
   über die Story-Tage zeigt alle fünf.
+
+### P77 — Verwahrung: Figuren geben dir Dinge zur Aufbewahrung
+- Größe: S–M · Priorität: Soll (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) – erst planen, nicht bauen
+- Braucht: P75 (Gedächtnis, Auftritte), P46 (Inventar), P11 (Händler) · Folgt auf: P75 · Inhalte in P76
+- Ziel: Vertrauen wird greifbar: Eine Figur lässt dir etwas da, und du entscheidest, ob du es hütest oder zu Geld machst.
+- Enthalten (Vorschlag):
+  - Ein Auftritt kann einen Gegenstand **zur Verwahrung** übergeben (eigene Ware mit Label, z. B. `ENTRUSTED`, erkennbar im Inventar
+    mit Name der Figur und Tag der Rückgabe).
+  - **Verkaufen:** Gegenstand wie jede Ware beim Händler loswerden → sofort Geld; bei der nächsten Begegnung zählt das als
+    **verraten** (die Figur reagiert, kommt ggf. nicht wieder oder setzt eine Folge aus P75).
+  - **Verwahren und gegen Pfand herausgeben:** Gegenstand bis zum Auftritt behalten, dann der Figur zurückgeben; sie zahlt den
+    **Pfandbetrag** (im Auftritt festgelegt) → zählt als **geholfen**.
+  - Ist der Gegenstand bei der Rückgabe weg (verkauft, verloren, beschlagnahmt), reagiert die Figur entsprechend.
+  - Werte (Pfandbeträge, Verkaufswerte) in den Daten; **jede Geldänderung braucht ein neues Rebalancing** (Economy Report).
+- Offen: Wo wird zurückgegeben – am Schalter beim nächsten Auftritt oder abends (Handel nur nach der Schicht)? Darf man verwahrte Dinge
+  per Drohne nach Hause schicken? Kostet das Verwahren etwas (Platz, Miete)?
+- Nicht enthalten: Beschlagnahme (P08), neue Händler.
+- Abnahme: Eine Figur gibt einen Gegenstand ab; Verkaufen bringt Geld und die Figur reagiert verraten; Verwahren bringt beim nächsten
+  Auftritt den Pfand und die Figur reagiert geholfen.
