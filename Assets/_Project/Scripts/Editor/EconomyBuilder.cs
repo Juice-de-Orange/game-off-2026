@@ -28,6 +28,7 @@ namespace GameOff.EditorTools
     /// </summary>
     public static class EconomyBuilder
     {
+        private static readonly Color DevRed = new Color(0.89f, 0.27f, 0.25f); // STYLE.md alarm red, like Dev_end_Day
         private const string PrefabPath = "Assets/_Project/Prefabs/Economy/PF_Economy.prefab";
         private const string TagFolder = "Assets/_Project/Data/Items/Tags/";
         private const string ItemFolder = "Assets/_Project/Data/Items/";
@@ -872,7 +873,7 @@ namespace GameOff.EditorTools
             var holder = new GameObject("InventoryWindowLogic", typeof(RectTransform));
             holder.transform.SetParent(canvas, false);
             var w = WindowRoot(canvas, "InventoryWindow", out var root);
-            Text(w, "Title", "INVENTORY", 26, Amber, new Vector2(-180f, 215f), new Vector2(480f, 36f), TextAlignmentOptions.MidlineLeft);
+            var title = Text(w, "Title", "INVENTORY", 26, Amber, new Vector2(-180f, 215f), new Vector2(480f, 36f), TextAlignmentOptions.MidlineLeft);
             var credits = Text(w, "Credits", "0 CR", 22, Amber, new Vector2(300f, 215f), new Vector2(240f, 36f), TextAlignmentOptions.MidlineRight);
             var items = ListBox(w, "ItemList", new Vector2(-217f, 75f), new Vector2(420f, 210f), "YOUR ITEMS", out var itemsHeader, out var itemsEmpty);
             itemsEmpty.text = "Nothing on you.";
@@ -886,9 +887,20 @@ namespace GameOff.EditorTools
             var today = ListBox(w, "TodayList", new Vector2(0f, -122f), new Vector2(854f, 170f), "TODAY", out _, out var todayEmpty);
             todayEmpty.text = "No money moved today.";
             var close = MenuButton(w, "CloseButton", "CLOSE  [I]", new Vector2(327f, -226f), new Vector2(200f, 30f), 15);
+            // P81: only in the shift view with the dev tools on
+            var devFill = MenuButton(w, "DevFillShiftButton", "Dev_fill_Shift", new Vector2(-327f, -226f), new Vector2(200f, 30f), 15);
+            var devColors = devFill.colors;
+            devColors.normalColor = DevRed;
+            devColors.highlightedColor = Color.Lerp(DevRed, Color.white, 0.25f);
+            devColors.selectedColor = DevRed;
+            devColors.pressedColor = Color.Lerp(DevRed, Color.black, 0.3f);
+            devFill.colors = devColors;
+            devFill.gameObject.SetActive(false);
 
             var window = holder.AddComponent<InventoryWindow>();
             Set(window, "root", root);
+            Set(window, "title", title);
+            Set(window, "devFillButton", devFill);
             Set(window, "credits", credits);
             Set(window, "itemsHeader", itemsHeader);
             Set(window, "itemList", items);
@@ -961,11 +973,13 @@ namespace GameOff.EditorTools
             var day = Object.FindFirstObjectByType<DayManager>();
             var dialogs = Object.FindFirstObjectByType<DayFlowUI>();
 
+            var counter = Object.FindFirstObjectByType<GameOff.Counter.CounterStation>();
             var economy = instance.GetComponent<PlayerEconomy>();
             Set(economy, "dayManager", day);
+            Set(economy, "shift", Object.FindFirstObjectByType<CounterShift>());
             Record(economy);
             foreach (var w in instance.GetComponentsInChildren<TradeWindow>(true)) { Set(w, "player", player); Record(w); }
-            foreach (var w in instance.GetComponentsInChildren<InventoryWindow>(true)) { Set(w, "player", player); Record(w); }
+            foreach (var w in instance.GetComponentsInChildren<InventoryWindow>(true)) { Set(w, "player", player); Set(w, "counter", counter); Record(w); }
             foreach (var v in instance.GetComponentsInChildren<Vendor>(true))
             {
                 Set(v, "player", player);

@@ -34,6 +34,15 @@ namespace GameOff.Economy
             return count;
         }
 
+        /// <summary>Empties the inventory (P81: the shift inventory at shift end).</summary>
+        public void Clear()
+        {
+            if (_order.Count == 0) return;
+            _order.Clear();
+            _counts.Clear();
+            Changed?.Invoke();
+        }
+
         public bool Remove(ItemData item, int count = 1)
         {
             if (Count(item) < count || count <= 0) return false;

@@ -58,6 +58,18 @@ namespace GameOff.Counter
 
         public bool IsSeated => _seated;
         public bool IsHoldingStamp => _held != null;
+        /// <summary>P81: a window over the desk (shift inventory) takes the keys and the mouse; the desk ignores them meanwhile.</summary>
+        public bool InputBlocked => _inputBlocked || Time.frameCount == _unblockedFrame;
+
+        private bool _inputBlocked;
+        private int _unblockedFrame = -1;
+
+        /// <summary>Blocks desk input while a window is open; the frame it closes stays blocked, so its Esc doesn't also leave the counter.</summary>
+        public void SetInputBlocked(bool blocked)
+        {
+            if (_inputBlocked && !blocked) _unblockedFrame = Time.frameCount;
+            _inputBlocked = blocked;
+        }
         /// <summary>The camera the mouse rays come from (desk view while seated).</summary>
         public Camera ViewCamera => viewCamera;
 
@@ -131,7 +143,7 @@ namespace GameOff.Counter
 
         private void Update()
         {
-            if (!_seated || Time.frameCount == _seatedFrame) return;
+            if (!_seated || Time.frameCount == _seatedFrame || InputBlocked) return;
             if (_held != null && _held.IsPressing) return; // a started press always finishes and counts
 
             if (leaveAction.action.WasPressedThisFrame())

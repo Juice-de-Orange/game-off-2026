@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameOff.Counter;
 using GameOff.Economy;
 using GameOff.Player;
 using TMPro;
@@ -11,12 +12,19 @@ namespace GameOff.UI
     /// <summary>
     /// Inventory without a vendor (P46, design 1): your items left, details right, today's money movements (TODAY) below,
     /// credits top right – the only place outside vendors where the balance is shown. I opens/closes it while walking freely
-    /// (not at the counter, not in other windows); Esc or CLOSE closes. The player stands still meanwhile.
+    /// (not in other windows); Esc or CLOSE closes. The player stands still meanwhile.
+    /// P81: seated at the counter, I opens the same window as the SHIFT inventory (what was confiscated this shift) instead;
+    /// your own items can't be reached from the desk. The desk ignores keys and mouse meanwhile.
     /// </summary>
     public class InventoryWindow : MonoBehaviour
     {
         [SerializeField] private FirstPersonController player;
+        [Tooltip("P81: seated here, I shows the shift inventory.")]
+        [SerializeField] private CounterStation counter;
         [SerializeField] private GameObject root;
+        [SerializeField] private TMP_Text title;
+        [Tooltip("P81: red dev button in the shift view, fills it with test items.")]
+        [SerializeField] private Button devFillButton;
         [SerializeField] private TMP_Text credits;
         [SerializeField] private TMP_Text itemsHeader;
         [SerializeField] private ItemListView itemList;
@@ -36,8 +44,13 @@ namespace GameOff.UI
         private InputAction _toggle;
         private ItemData _selected;
         private int _openedFrame = -1;
+        private bool _shiftView;
 
         public bool IsOpen => root.activeSelf;
+        public bool IsShiftView => IsOpen && _shiftView;
+
+        /// <summary>The inventory this window shows: your items, or the shift inventory at the counter.</summary>
+        private Inventory Shown => _shiftView ? Economy.ShiftItems : Economy.Inventory;
 
         private static PlayerEconomy Economy => PlayerEconomy.Instance;
 
@@ -45,6 +58,7 @@ namespace GameOff.UI
         {
             _toggle = new InputAction("Inventory", InputActionType.Button, "<Keyboard>/i");
             closeButton.onClick.AddListener(Close);
+            if (devFillButton != null) devFillButton.onClick.AddListener(() => Economy.DevFillShift());
             root.SetActive(false);
         }
 
@@ -67,18 +81,31 @@ namespace GameOff.UI
                 if ((pressed && Time.frameCount != _openedFrame) || esc) Close();
                 return;
             }
-            // Only while walking freely: not seated at the counter, not in another window (they all take the player's control).
-            if (pressed && player.ControlEnabled && Economy != null) Open();
+            if (!pressed || Economy == null) return;
+            // Seated: the shift inventory, unless a stamp or a paper is in hand. Else only while walking freely
+            // (not in another window: they all take the player's control).
+            if (counter != null && counter.IsSeated)
+            {
+                if (!counter.IsHoldingStamp && !counter.InputBlocked) Open(true);
+            }
+            else if (player.ControlEnabled) Open(false);
         }
 
-        public void Open()
+        public void Open() => Open(false);
+
+        public void Open(bool shiftView)
         {
             _openedFrame = Time.frameCount;
             _selected = null;
-            player.SetControlEnabled(false);
+            _shiftView = shiftView;
+            if (shiftView) counter.SetInputBlocked(true);
+            else player.SetControlEnabled(false);
+            if (title != null) title.text = shiftView ? "SHIFT · CONFISCATED" : "INVENTORY";
+            if (devFillButton != null) devFillButton.gameObject.SetActive(shiftView && Economy.DevTools);
             root.SetActive(true);
             Economy.Wallet.Changed += Refresh;
             Economy.Inventory.Changed += Refresh;
+            Economy.ShiftItems.Changed += Refresh;
             Refresh();
         }
 
@@ -87,7 +114,9 @@ namespace GameOff.UI
             if (!IsOpen) return;
             root.SetActive(false);
             Unsubscribe();
-            player.SetControlEnabled(true);
+            // Seated, the player's control stays off: the counter gets its input back instead.
+            if (_shiftView) counter.SetInputBlocked(false);
+            else player.SetControlEnabled(true);
         }
 
         private void Unsubscribe()
@@ -95,6 +124,7 @@ namespace GameOff.UI
             if (Economy == null) return;
             Economy.Wallet.Changed -= Refresh;
             Economy.Inventory.Changed -= Refresh;
+            Economy.ShiftItems.Changed -= Refresh;
         }
 
         private void Refresh()
@@ -103,16 +133,18 @@ namespace GameOff.UI
             var economy = Economy;
             credits.text = economy.Format(economy.Wallet.Balance);
 
-            var items = economy.Inventory.Items;
-            itemsHeader.text = $"YOUR ITEMS · {items.Count}";
-            if (_selected != null && economy.Inventory.Count(_selected) == 0) _selected = null;
+            var shown = Shown;
+            var items = shown.Items;
+            itemsHeader.text = (_shiftView ? "CONFISCATED · " : "YOUR ITEMS · ") + items.Count;
+            itemsEmpty.text = _shiftView ? "Nothing confiscated this shift." : "Nothing on you.";
+            if (_selected != null && shown.Count(_selected) == 0) _selected = null;
             var rows = new List<ItemListView.Row>();
             foreach (var item in items)
             {
                 var it = item;
                 rows.Add(new ItemListView.Row
                 {
-                    Label = item.DisplayName, Value = "×" + economy.Inventory.Count(item),
+                    Label = item.DisplayName, Value = "×" + shown.Count(item),
                     Selected = _selected == item, OnClick = () => { _selected = it; Refresh(); },
                 });
             }

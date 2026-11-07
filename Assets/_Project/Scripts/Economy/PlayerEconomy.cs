@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameOff.Day;
+using GameOff.Travelers;
 using UnityEngine;
 
 namespace GameOff.Economy
@@ -21,11 +22,20 @@ namespace GameOff.Economy
         [SerializeField] private DayManager dayManager;
         [Tooltip("Given at the start while the dev tools are on (to test selling and sending home).")]
         [SerializeField] private List<ItemData> devStartItems = new List<ItemData>();
+        [Tooltip("P81: empties the shift inventory when the shift ends.")]
+        [SerializeField] private CounterShift shift;
 
         public static PlayerEconomy Instance { get; private set; }
 
         public Wallet Wallet { get; private set; }
         public Inventory Inventory { get; private set; }
+        /// <summary>
+        /// P81: what was confiscated during this shift. Only exists at the counter (I while seated) and is emptied at shift end;
+        /// ShiftClosing runs first, so P08 can decide what happens to it (report, keep, hand in).
+        /// </summary>
+        public Inventory ShiftItems { get; private set; }
+        public event System.Action<Inventory> ShiftClosing;
+        public bool DevTools => dayManager == null || dayManager.DevTools;
         public EconomyTuning Tuning => tuning;
         public HouseholdTuning HouseholdTuning => household;
         public Household Household { get; private set; }
@@ -98,6 +108,7 @@ namespace GameOff.Economy
             Instance = this;
             Wallet = new Wallet(tuning != null ? tuning.startCredits : 0);
             Inventory = new Inventory();
+            ShiftItems = new Inventory();
             Market.Begin(1, null); // a new run starts without yesterday's events (Market is static)
             var cold = new List<bool>();
             if (household != null) foreach (var m in household.members) cold.Add(m.feelsCold);
@@ -109,11 +120,26 @@ namespace GameOff.Economy
         private void OnEnable()
         {
             if (dayManager != null) dayManager.DayStarted += OnDayStarted;
+            if (shift != null) shift.ShiftEnded += CloseShift;
         }
 
         private void OnDisable()
         {
             if (dayManager != null) dayManager.DayStarted -= OnDayStarted;
+            if (shift != null) shift.ShiftEnded -= CloseShift;
+        }
+
+        /// <summary>P81: end of shift – listeners (P08) handle the confiscated items, then the shift inventory is emptied.</summary>
+        public void CloseShift()
+        {
+            ShiftClosing?.Invoke(ShiftItems);
+            ShiftItems.Clear();
+        }
+
+        /// <summary>P81 dev button: one of each dev start item into the shift inventory.</summary>
+        public void DevFillShift()
+        {
+            foreach (var item in devStartItems) ShiftItems.Add(item);
         }
 
         private void OnDestroy()

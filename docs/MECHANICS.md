@@ -27,6 +27,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Schalter & Dokumente | P05, P06, P38, P40 | Papiere ziehen, lesen, stempeln, Schublade, Nachfragen per Klick auf ein Feld, Reisende in der Prüfkammer | Reisender → Entscheidung (`DecisionMade`) | `Data/Travelers/…`, Dokument-Prefabs |
 | Regeln & Urteil | P07, P41 | Regeln des Tages, Pinnwand, Durchsagen; jede Entscheidung wird geprüft | Entscheidung → `Judgement` (richtig/falsch, Moral-Kosten) → bei Fehler Verwarnzettel | `DayRules`, `freeWarnings` (2) in `CounterShift` |
 | Geld & Inventar | P46 | Kontostand mit Tagesbuchungen (TODAY), Inventar (I), Gegenstände mit Labels | alle Käufe/Verkäufe/Abrechnung → `Wallet` | `EconomyTuning` (Start 40 CR), `Data/Items/*` |
+| Schicht-Inventar | P81 | Am Schalter öffnet [I] „SHIFT · CONFISCATED“ statt des eigenen Inventars (Schalter ruht solange); am Schichtende geht es an P08 (`ShiftClosing`) und wird geleert | Beschlagnahme (P08) → `PlayerEconomy.ShiftItems` | Dev: `Dev_fill_Shift` (Dev-Startwaren) |
 | Labels | P64, P13, P70 | gemeinsame Kategorien für alle Systeme | Händler-Regeln, Bedarfe der Familie, später Gerüchte/Wünsche | `Data/Items/Tags/Tag_*` (13 Labels inkl. LUXURY, Liste bei P64) |
 | Markt: Label-Faktoren, feste Ereignisse pro Tag (Preis, Menge, Ankauf, Sortiment), Verderb | P68 | Grundpreis × Schwankung × Labels × Ereignisse; Ankündigung als MARKET-Zettel und Durchsage | Händler, Vorrat, Bett, Brief (verdorben), später P65 | `ItemTag.priceFactor`, `Data/Market/Market_*`, `DaySchedule.marketEvents`, `EconomyTuning.perishableTag` |
 | Barkeeper: Wunsch nach Label → Gerücht über morgen | P65 | Schild an der Bar, Dialog nach der Schicht, GIVE nimmt die billigste passende Ware, Gerücht = `rumour` der Ereignisse von morgen | Labels, Markt (P68), Inventar (Notiz unter TODAY) | `DayEntry.barWish`, `MarketEvent.rumour` |
@@ -50,7 +51,6 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Mechanik | Paket | Hängt an | Stand |
 |---|---|---|---|
 | Moral, Lohn je Entscheidung, Beschlagnahme | P08 | Schalter, Abrechnung, P81, P82 | im Call 07.11. festgelegt, offen |
-| Schicht-Inventar (nur am Tisch) | P81 | Inventar (P46), P08 | offen (Call 07.11.) |
 | Wahl am Schichtende: „Nothing to report / missed that / as ordered“ | P08 | P81, CONFISCATED-Varianten (P82), Asservatenschrank | offen (Call 07.11.) |
 | Disziplinarstrafen (3 = Game Over), getrennt von Verwarnungen | P08, P12 | Enden | offen (Call 07.11.) |
 | Beschlagnahmte Ware als eigene Item-Variante (CONFISCATED) | P82 | Inventar, Schwarzmarkt (P64), P08 | offen (Call 07.11.) |
