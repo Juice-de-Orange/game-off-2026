@@ -168,7 +168,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   (The Shifter), `storyTag`.
 
 ### P08 — Entscheidungen & Moral
-- Größe: M · Priorität: Muss · Status: offen
+- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 07.11.)
 - Braucht: P07, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Durchlassen/Abweisen/Verhaften/Luftschleuse mit Folgen.
 - Enthalten: Lohn/Abzug je Entscheidung, Beschlagnahme bei Verhaftung (Gegenstände ins Inventar),
