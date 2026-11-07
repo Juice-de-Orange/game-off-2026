@@ -1023,7 +1023,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   (10 CR), nicht Spice; Bar kauft nichts. Konsole 0 Fehler. Kein WebGL-Build.
 
 ### P65 — Barkeeper: Wunschliste & Gerüchte
-- Größe: M · Priorität: Soll · Status: offen
+- Größe: M · Priorität: Soll · Status: in Arbeit (martin, 07.11.)
 - Braucht: P68 (Markt, Ereignisse pro Tag), P64 · Folgt auf: —
 - Ziel: Der Barkeeper kauft nichts für Geld, sondern tauscht Gegenstände gegen Wissen für den nächsten Tag.
 - Enthalten: Täglich hängt vor der Bar ein Schild mit Gegenständen oder Labels, die der Barkeeper haben will. Wer liefert, bekommt ein
