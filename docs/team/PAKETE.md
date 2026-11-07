@@ -1310,7 +1310,10 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   von Figuren ausgelöst werden (Entscheidung in P76).
 
 ### P76 — Die wiederkehrenden Figuren (8)
-- Größe: M · Priorität: Muss (Vorschlag) · Status: offen (im Call 07.11. bestätigt: alle acht Figuren, 12 Story-Tage) · Zuständig: martin
+- Größe: M · Priorität: Muss (Vorschlag) · Status: in Arbeit (martin, 07.11.) · Zuständig: martin
+- Zuschnitt (Martin, 07.11.): P76 = alle 8 Figuren mit Auftritten, Papieren, Begrüßungen, Ereignissen und Fahndungen (was P75 kann),
+  die neuen Markt-Ereignisse aus `docs/FIGUREN.md` mit Rebalancing und **12 Tag-Gerüste** (Datum, Grundregeln, Platzhalter-Reisende),
+  die Max in P15 füllt. Was P75 noch nicht kann, kommt in **P85–P87**.
 - Braucht: P75 · Folgt auf: — · Teil der Inhalte von P15 · Beschlagnahme-Zweige erst mit P08
 - Ziel: Fünf Figuren mit kleinen Geschichten über die Tage, die zum Theme „Shift“ passen und Geld, Familie, Moral und Station verbinden.
 - Enthalten: Figuren-Daten, Papiere je Auftritt, Begrüßungen/Antworten je Ausgang und Ereignis, ausgelöste Ereignisse und Fahndungen,
@@ -1459,3 +1462,29 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: In der Live-Version Text tippen → SEND → „Thanks“ mit Issue-Nummer, Issue liegt im Repo; zu viele Berichte → freundliche
   Ablehnung; ohne Backend lädt das Spiel trotzdem.
 - Ergebnis (max, 07.11.): Backend `deploy/reports` (Python ohne Pakete, 12 Tests) läuft auf Geoffrey als `kestrel9-reports`; Spiel-nginx leitet `/api/report` weiter, Host-nginx setzt `X-Forwarded-For`. Begrenzung 5/10 min pro Client (IPv6 /64), 60/h gesamt, nur erfolgreiche zählen; CORS nur Kestrel + itch; `@` wird entschärft. Formular `BugReportForm` im Pausenmenü (P tippt, Esc/BACK zurück und bricht Senden ab). GitHub-Link aus P78 entfernt. Token: Max mit `python deploy/set-report-token.py`. Datenschutz auf maxlworks.com (EN/DE) ergänzt. Geprüft: Formular im WebGL-Build (Tippen inkl. „p“, Fehlermeldung ohne Backend), `curl` live.
+
+### P85 — Figuren-Folgen ohne Begegnung und neue Bedingungen
+- Größe: M · Priorität: Soll (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) · Zuständig: martin
+- Braucht: P75, P76 · Folgt auf: P75
+- Ziel: Was `docs/FIGUREN.md` (Punkte 5 und 6) verlangt und P75 noch nicht kann.
+- Enthalten: Geschenke an die Familie (Mira bringt Essen = FOOD heute Nacht gedeckt, Senn Medizin), Lohnbonus/Rüge per Durchsage (Korr),
+  Zeile im Morgenbrief oder Paket (Shifter schickt etwas, Verhör-Durchsage, Zusammenfassung Tag 11), Bedingungen über die Familie
+  („jemand krank“) und über andere (Nells Sohn = wen du verhaftet hast, sonst ein fester Reisender aus P15).
+- Nicht enthalten: Tutorial (P86), Shifter-Ende (P87), Verwahrung (P77).
+- Abnahme: Jede dieser Folgen ist mit der Testfigur oder einer echten Figur einmal spielbar; Tests für die neuen Bedingungen.
+
+### P86 — Korr-Tutorial an Tag 1
+- Größe: M · Priorität: Soll (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) · Zuständig: martin
+- Braucht: P75, P76 · Folgt auf: —
+- Ziel: Inspector Vaal Korr kommt an Tag 1 als Erster und erklärt den Schalter Schritt für Schritt (Papiere ziehen, Feld anklicken, Regeln an
+  der Pinnwand, stempeln, Schublade); er lässt sich selbst prüfen.
+- Enthalten: Schritt-Texte in der Sprechblase, die erst weitergehen, wenn der Schritt getan ist; überspringbar; nur an Tag 1.
+- Abnahme: Neuer Spieler kommt ohne Vorwissen durch Korrs Prüfung.
+
+### P87 — Shifter: Schlüsselentscheidung und Ende „Airlocked“
+- Größe: S–M · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) · Zuständig: offen
+- Braucht: P75, P76, P12 · Folgt auf: —
+- Ziel: Call 07.11.: Der Shifter gibt sich als Widerstandskämpfer aus; wer ihm bei **einer** großen Bitte hilft, fliegt an Tag 7 durch die
+  Schleuse (Ende „Airlocked“).
+- Enthalten: Tag und Inhalt der Bitte (offen in `docs/FIGUREN.md`), die Wendung an Tag 7, das Ende.
+- Abnahme: Mit Hilfe bei der Bitte endet Tag 7 mit „Airlocked“, sonst geht das Spiel weiter.
