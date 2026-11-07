@@ -6309,3 +6309,62 @@ refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
 placeholder: PNG 128x128, Magenta/Grau-Raster
 feedback: []
 ```
+
+### SM_Hangar_TicketTerminal.fbx
+*(P72: steht im Hangar westlich der Shuttle-Rampe bei X -4,5, Z -21, Vorderseite zur Rampe. Bis zur Lieferung setzt `Build Departure into Main` eine graue Box.)*
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_TicketTerminal.fbx
+package: P72
+scene: Hangar
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.8, 0.6, 1.8]
+pivot: bottom_center
+tris_max: 600
+materials: [Terminal]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_TicketTerminal_Albedo.png   # 128x256, Point
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_TicketTerminal_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Ticketautomat für den Flug nach Hause: schmale, stehende Säule im Stil der Station (beige Kunststoff, Metallkanten, abgestoßene Ecken),
+  oben ein kleiner CRT-Bildschirm mit grüner Schrift "TICKETS - COLONIES" (Emission), darunter Kartenschlitz und Ticket-Ausgabe,
+  ein verblasster Aufkleber mit Shuttle-Silhouette. Vorderseite (Bildschirm) zeigt nach +Z. Gleiche Machart wie SM_Hall_VendingMachine.
+interaction: none
+variants: []
+animations: []
+collision: prefab
+refs: [docs/style/refs/ai_lounge_terminal_01.webp, docs/style/refs/ai_counter_terminal_01.webp]
+placeholder: Graue Box 0.8 x 0.6 x 1.8 m vom DepartureBuilder, Pivot bottom_center, Material-Slots [Terminal]
+feedback: []
+```
+
+### SFX_Shuttle_Engine_Loop.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Shuttle_Engine_Loop.ogg
+package: P72
+scene: Hangar / Flug nach Hause
+status: offen
+priority: P3
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Triebwerk eines kleinen, alten Shuttles im Flug: tiefes, gleichmäßiges Brummen mit leichtem Rauschen, kein Startknall.
+  Nahtlos loopend, 5-15 s. Die Tonhöhe wird im Spiel mit der Geschwindigkeit verändert. Freier Sound (CC0 bevorzugt,
+  sonst CC-BY mit Eintrag in CREDITS.md), umgewandelt nach OGG, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, der Flug ist bisher stumm. Der Builder hängt den Ton ein, sobald die Datei da ist.
+feedback: []
+```
