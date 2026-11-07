@@ -23,7 +23,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 
 | Mechanik | Paket | Was sie tut | Eingänge → Ausgänge | Daten / Einstellwerte |
 |---|---|---|---|---|
-| Tagesablauf | P09 (Abnahme bei max) | Morgen → Schicht → Abend → Nacht → nächster Tag, 3 Tage | `CounterShift.ShiftEnded` → Abend; Bett → `NightStep` (Abrechnung) → nächster Tag; `LetterAddendum` → Brief | `Data/Days/DaySchedule.asset` |
+| Tagesablauf | P09 (abgenommen, 07.11.) | Morgen → Schicht → Abend → Nacht → nächster Tag, 3 Tage | `CounterShift.ShiftEnded` → Abend; Bett → `NightStep` (Abrechnung) → nächster Tag; `LetterAddendum` → Brief | `Data/Days/DaySchedule.asset` |
 | Schalter & Dokumente | P05, P06, P38, P40 | Papiere ziehen, lesen, stempeln, Schublade, Nachfragen per Klick auf ein Feld, Reisende in der Prüfkammer | Reisender → Entscheidung (`DecisionMade`) | `Data/Travelers/…`, Dokument-Prefabs |
 | Regeln & Urteil | P07, P41 | Regeln des Tages, Pinnwand, Durchsagen; jede Entscheidung wird geprüft | Entscheidung → `Judgement` (richtig/falsch, Moral-Kosten) → bei Fehler Verwarnzettel | `DayRules`, `freeWarnings` (2) in `CounterShift` |
 | Geld & Inventar | P46 | Kontostand mit Tagesbuchungen (TODAY), Inventar (I), Gegenstände mit Labels | alle Käufe/Verkäufe/Abrechnung → `Wallet` | `EconomyTuning` (Start 40 CR), `Data/Items/*` |
@@ -46,6 +46,9 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Abrechnung | P10, P13, P70 | Lohn pro **richtig** entschiedenem Reisendem, Abzug für Verwarnungen über den freien, Miete, Bedarfe selbst anklicken (nichts vorausgewählt), RETURN zurück; **Miete nicht bezahlbar → Game Over „STRANDED“** (Platzhalter) | Reisende + Verwarnungen + Lieferungen → Wallet + Familie | `Data/Economy/Household.asset`: Lohn 15, Abzug 10, Miete 30, Geld am Bett = Händlerwert × 1,35 |
 | Familie | P10 | Mom, Lena, Pip; Stufen well → weak → sick → critical; ohne Essen alle schlechter, ohne Wärme Pip, Medizin heilt | Abrechnung → `Household` → Zeilen im Morgenbrief | `Household.asset` (Namen, Texte je Stufe) |
 | Verkehr & Atmo | P47, P55, P67 | Schiffe vor den Fenstern, Stations-Loop | – (Stimmung) | `ShipTraffic_*.asset`, `SFX_Amb_Station_Loop` |
+| Ticket nach Hause & Abflug | P72 | Ticketautomat im Hangar neben der Rampe (nur abends, zeigt den Fehlbetrag), Kauf zieht den Ticketpreis ab; an der Rampe „Leave Kestrel-9 for good?“ → selbst gesteuerter Flug (W/S, Maus oder A/D, Shift) durch die Barriere; 320 m weg oder 45 s → Ende | Wallet → `PlayerEconomy.HasTicket` → `ShuttleFlight` → `DayManager.FinishRun` | `HouseholdTuning.ticketPrice` (350), `Data/Departure/DepartureTuning.asset` (Flug, Endtexte) |
+| Ticket-Enden | P72 (P12 hängt weitere an) | Der schlechteste Familienzustand beim Abflug entscheidet: well/weak → HOME, sick → HOME, BARELY, critical → TOO LATE? (mit Namen) | `Household` → `TicketEnding.Pick` → Endbildschirm | Texte in `DepartureTuning` |
+| Bugreport im Spiel | P84 (ersetzt P78) | Pausenmenü → REPORT BUG → Text tippen → SEND; das Backend auf Geoffrey legt ein GitHub-Issue an (Labels `bug`, `player-report`) | Version, Tag, Phase, Szene, Browser → `/api/report` | `Data/Menu/BugReportSettings.asset`, `deploy/reports` |
 | Dev-Werkzeuge | P09, P56, P10 | Dev_end_Day, Hitboxen, TRAFFIC_LINE_DEV, CREDITS ±100 | – | **vor der Abgabe ausschalten** (DEV-Reiter weg) |
 
 ## Geplant (Paket offen oder Entwurf)
@@ -60,7 +63,6 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Gadgets: Scanner, UV-Lampe | P16, P62 | Schalter, Kiosk | Scanner-Funktion unklar (siehe Lücken) |
 | Wiederkehrende Figuren (Gedächtnis, Auftritte, Steckbriefe, Verwahrung) | P75, P76, P77 (im Call 07.11. bestätigt) | Schalter, Markt-Ereignisse, Lage der Station, Fahndung, P08 | offen |
 | Familie in der Welt (Stadtlichter, Foto) | P29 | Familie | Assets bestellt |
-| Bugreport im Spiel | P78 | Pausenmenü → GitHub-Issue | gebaut (max, 07.11.) |
 
 ## Lücken / passt noch nicht
 - **Brief von Tag 3** sagt fest „Pip is sick now“, auch wenn Pip gesund ist → P15.
@@ -71,7 +73,9 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 - **Schmuggel nach Hause:** geht ohne Wirkung und ohne Risiko → später mit P08.
 - **Niederlage:** Bisher nur „Miete nicht bezahlbar“ (Platzhalter). Familie kann dauerhaft „critical“ sein, ohne Folge → P69, P12.
 - **Jede Geldänderung braucht ein neues Rebalancing** (GameOff → Economy Report bis alle Ziele ✓; `EconomyBalanceTests` bricht sonst).
-- **Vernachlässigen lohnt sich:** Ohne Folgen von „critical“ (P69) und ohne Familienprüfung beim Ticket (P72) ist „nichts versorgen“ der schnellste Weg nach Hause.
+- **Vernachlässigen lohnt sich noch halb:** Das Ticket-Ende wertet die Familie jetzt (TOO LATE?), aber ohne Folgen von „critical“ (P69) bleibt „nichts versorgen“ der schnellste Weg zum Ticket.
+- **Ticket erst ab Tag ~7 erreichbar, das Spiel endet aber nach Tag 3** → braucht P15/P73. Bis dahin nur mit Dev (`Dev_free_Ticket`, CREDITS ±100).
+- **Während des Flugs gibt es kein Pausenmenü** (Steuerung gehört dem Flug, höchstens 45 s).
 - **Endlos noch nicht gebaut:** Der Simulator wiederholt die Story-Tage ab Tag 4, bis P73 Pools liefert; das Spiel selbst endet noch nach Tag 3.
 - **Waren ohne Quelle bis P08:** Pistol, Waffenteile, Wertsachen, Alien-Zeug, Liquor kommen nur über die Fracht (Beschlagnahme, P08) – bis dahin gibt es sie im Spiel nicht.
 - **Icons nur in den Daten:** Inventar und Handelsfenster zeigen noch keine Icons (Listen nur mit Namen) – eigenes Paket.

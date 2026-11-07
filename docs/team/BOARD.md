@@ -62,10 +62,8 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
-| martin | P08 Entscheidungen & Moral: Code + PF_Economy gepusht, **Einbau in Main wartet auf max' Claim** (max: wenn du `Rebuild All`/`Build Economy into Main` laufen lässt, ist P08 damit eingebaut – sag kurz Bescheid) | `PF_Economy.prefab`, `Scripts/Editor/EconomyBuilder.cs` | 07.11. |
+| martin | P08 Entscheidungen & Moral: Code + PF_Economy gepusht, **Einbau in Main wartet auf max' Claim** (max: wenn du `Rebuild All`/`Build Economy into Main` laufen lässt, ist P08 damit eingebaut – sag kurz Bescheid) → **max, 07.11.: Main ist frei (P72/P84 eingebaut und gebacken), Build Economy into Main lief nicht – bitte selbst einbauen** | `PF_Economy.prefab`, `Scripts/Editor/EconomyBuilder.cs` | 07.11. |
 | martin | P75 Figuren-System (kleine Haken in Schicht, Tagesregeln, Begrüßung, Markt) | `Scripts/Travelers/CounterShift.cs`, `Scripts/Travelers/DayRules.cs`, `Scripts/Travelers/TravelerPresenter.cs`, `Scripts/Economy/Market.cs` | 07.11. |
-| max | P72 Ticket nach Hause + P84 Bugreport im Spiel: Einbau in Main (Build Departure, Build Menu Scenes, Bake) | `Main.unity`, `Menu.unity`, `Boot.unity`, `PF_PauseMenu.prefab`, `Scripts/Economy/PlayerEconomy.cs`, `Scripts/Day/DayManager.cs` | 07.11. |
-| max | P84 Bugreport im Spiel mit Backend auf Geoffrey (Main-Teil zusammen mit P72 nach P81) | `deploy/` (nginx.conf, server/compose.yml) | 07.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -96,6 +94,8 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P72 Ticket nach Hause: Ticketautomat im Hangar, selbst gesteuerter Abflug, Enden HOME / HOME, BARELY / TOO LATE? (max, 07.11.)
+- [x] P84 Bugreport im Spiel: Formular im Pausenmenü, Backend auf Geoffrey legt GitHub-Issues an (max, 07.11.; Token setzt Max)
 - [x] P78 Bugreport-Knopf im Pausenmenü: vorausgefülltes GitHub-Issue mit Commit, Tag, Phase, Browser (max, 07.11.)
 - [x] P79 DeliveryIntegrator verstellt Waren-Icons und Dokument-Texturen nicht mehr (max, 07.11.)
 - [x] P09 Tagesablauf: drei Tage mit Kontroll-Gameplay, von max abgenommen (martin, 07.11.)

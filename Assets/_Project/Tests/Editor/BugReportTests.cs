@@ -1,56 +1,56 @@
-using System;
 using GameOff.UI;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace GameOff.Tests
 {
-    /// <summary>P78: the bug report link opens a new issue in our repo, pre-filled and correctly escaped.</summary>
+    /// <summary>P84: what the in-game bug report sends and how the form reads the backend's answer.</summary>
     public class BugReportTests
     {
-        private static string Body(string url) => Uri.UnescapeDataString(url.Substring(url.IndexOf("&body=", StringComparison.Ordinal) + 6));
-        private static string Title(string url)
+        [System.Serializable]
+        private class Sent
         {
-            int start = url.IndexOf("&title=", StringComparison.Ordinal) + 7;
-            return Uri.UnescapeDataString(url.Substring(start, url.IndexOf("&body=", StringComparison.Ordinal) - start));
+            public string text, version, phase, scene, browser;
+            public int day;
         }
 
         [Test]
-        public void Url_points_at_new_issue_with_bug_label()
+        public void Json_carries_text_and_game_state()
         {
-            string url = BugReport.IssueUrl("0.1.0", 2, "Shift", "Main", "Firefox");
-            StringAssert.StartsWith("https://github.com/Juice-de-Orange/game-off-2026/issues/new?labels=bug&title=", url);
+            var sent = JsonUtility.FromJson<Sent>(BugReport.Json("  Door stuck \"open\" & more  ", "0.1.0+abc1234", 3, "Evening", "Main", "Firefox"));
+            Assert.AreEqual("Door stuck \"open\" & more", sent.text, "trimmed, quotes survive");
+            Assert.AreEqual("0.1.0+abc1234", sent.version);
+            Assert.AreEqual(3, sent.day);
+            Assert.AreEqual("Evening", sent.phase);
+            Assert.AreEqual("Main", sent.scene);
+            Assert.AreEqual("Firefox", sent.browser);
         }
 
         [Test]
-        public void Body_has_day_phase_scene_browser_and_commit_link()
+        public void Send_needs_a_few_characters_and_not_too_many()
         {
-            string url = BugReport.IssueUrl("0.1.0+abc1234", 3, "Evening", "Main", "Mozilla/5.0 (X11; Linux) & more");
-            string body = Body(url);
-            StringAssert.Contains("Version: 0.1.0+abc1234 (https://github.com/Juice-de-Orange/game-off-2026/commit/abc1234)", body);
-            StringAssert.Contains("Day: 3 · Phase: Evening", body);
-            StringAssert.Contains("Scene: Main", body);
-            StringAssert.Contains("Browser: Mozilla/5.0 (X11; Linux) & more", body);
-            StringAssert.Contains("personal data", body);
-            Assert.AreEqual("[Bug] Day 3, Evening: ", Title(url));
+            Assert.IsFalse(BugReport.CanSend(null));
+            Assert.IsFalse(BugReport.CanSend("   "));
+            Assert.IsFalse(BugReport.CanSend("ab"));
+            Assert.IsTrue(BugReport.CanSend("abc"));
+            Assert.IsTrue(BugReport.CanSend(new string('x', BugReport.MaxLength)));
+            Assert.IsFalse(BugReport.CanSend(new string('x', BugReport.MaxLength + 1)));
         }
 
         [Test]
-        public void Special_characters_are_escaped()
+        public void Answers_become_readable_lines()
         {
-            string url = BugReport.IssueUrl("0.1.0", 1, "Shift", "Main", "a&b=c #d");
-            string query = url.Substring(url.IndexOf('?') + 1);
-            Assert.AreEqual(3, query.Split('&').Length, "only labels, title and body may be separated by &");
-            Assert.IsFalse(query.Contains("#"), "a raw # would cut the link");
-            Assert.IsFalse(query.Contains(" "));
-        }
-
-        [Test]
-        public void Without_day_manager_the_scene_is_named()
-        {
-            string url = BugReport.IssueUrl("0.1.0", 0, "-", "Menu", "Chrome");
-            Assert.AreEqual("[Bug] Menu: ", Title(url));
-            StringAssert.Contains("Day: - · Phase: -", Body(url));
-            StringAssert.Contains("Version: 0.1.0\n", Body(url));
+            Assert.AreEqual("Thanks! Your report is in (#42).", BugReport.Result(201, "{\"ok\": true, \"issue\": 42}"));
+            Assert.IsTrue(BugReport.Succeeded(201, "{\"ok\": true, \"issue\": 42}"));
+            Assert.IsFalse(BugReport.Succeeded(201, "<html>"), "a proxy page is not a success");
+            StringAssert.Contains("Too many reports", BugReport.Result(429, "{\"ok\": false}"));
+            StringAssert.Contains("write a little more", BugReport.Result(400, "{\"ok\": false, \"error\": \"text too short\"}"));
+            StringAssert.Contains("shorten", BugReport.Result(400, "{\"ok\": false, \"error\": \"text too long\"}"));
+            StringAssert.Contains("try again later", BugReport.Result(400, "{\"ok\": false, \"error\": \"not JSON\"}"));
+            StringAssert.Contains("try again later", BugReport.Result(502, "{\"ok\": false, \"error\": \"github 401\"}"));
+            StringAssert.Contains("try again later", BugReport.Result(0, null), "no connection");
+            StringAssert.Contains("try again later", BugReport.Result(201, "<html>"), "garbage is not a success");
+            Assert.IsFalse(BugReport.Succeeded(502, "{\"ok\": false}"));
         }
     }
 }

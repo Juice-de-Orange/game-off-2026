@@ -550,14 +550,90 @@ namespace GameOff.EditorTools
             Set(pause, "optionsButton", options);
             Set(pause, "optionsBackButton", optionsBack);
             Set(pause, "menuButton", menu);
-            var bugReportButton = bugReport.gameObject.AddComponent<BugReportButton>();
-            Set(bugReportButton, "button", bugReport);
-            Set(pause, "bugReportButton", bugReportButton);
+            Set(pause, "bugReportButton", bugReport);
+            Set(pause, "bugReportForm", BuildBugReportForm(dim.transform));
 
             var prefab = PrefabUtility.SaveAsPrefabAsset(rootGo, PauseMenuPrefab);
             Object.DestroyImmediate(rootGo);
             log.Add("PF_PauseMenu built");
             return prefab;
+        }
+
+        // ---------- Bug report form (P84) ----------
+
+        private const string BugReportSettingsPath = "Assets/_Project/Data/Menu/BugReportSettings.asset";
+
+        private static BugReportForm BuildBugReportForm(Transform parent)
+        {
+            var settings = AssetDatabase.LoadAssetAtPath<BugReportSettings>(BugReportSettingsPath);
+            if (settings == null) // content: only created if missing
+            {
+                settings = ScriptableObject.CreateInstance<BugReportSettings>();
+                AssetDatabase.CreateAsset(settings, BugReportSettingsPath);
+            }
+            var panel = PanelRoot(parent, "BugReportPanel", false);
+            Title(Label(panel, "Heading", "REPORT A BUG", 36, Amber, new Vector2(0f, 190f), new Vector2(600f, 48f)));
+            var input = InputField(panel, new Vector2(0f, 60f), new Vector2(600f, 180f));
+            var status = Label(panel, "Status", "", 15, TextDim, new Vector2(0f, -70f), new Vector2(600f, 48f));
+            status.enableAutoSizing = false;
+            var send = MenuButton(panel, "SendButton", "SEND", new Vector2(-100f, -140f), new Vector2(180f, 46f), 22);
+            var back = MenuButton(panel, "BackButton", "BACK", new Vector2(100f, -140f), new Vector2(180f, 46f), 22);
+            Label(panel, "Hint", "[Esc] back", 14, TextDim, new Vector2(0f, -190f), new Vector2(600f, 22f));
+
+            var form = panel.gameObject.AddComponent<BugReportForm>();
+            Set(form, "settings", settings);
+            Set(form, "input", input);
+            Set(form, "sendButton", send);
+            Set(form, "backButton", back);
+            Set(form, "status", status);
+            panel.gameObject.SetActive(false);
+            return form;
+        }
+
+        /// <summary>Multi-line TMP input field in the station look (ShareTechMono, readable while typing).</summary>
+        private static TMP_InputField InputField(Transform parent, Vector2 pos, Vector2 size)
+        {
+            var mono = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontAssetPath);
+            var go = new GameObject("Input", typeof(RectTransform), typeof(Image), typeof(TMP_InputField));
+            go.transform.SetParent(parent, false);
+            var rt = go.GetComponent<RectTransform>();
+            rt.anchoredPosition = pos;
+            rt.sizeDelta = size;
+            go.GetComponent<Image>().color = Panel;
+
+            var area = new GameObject("TextArea", typeof(RectTransform), typeof(RectMask2D));
+            area.transform.SetParent(go.transform, false);
+            var areaRt = area.GetComponent<RectTransform>();
+            Stretch(areaRt);
+            areaRt.offsetMin = new Vector2(12f, 10f);
+            areaRt.offsetMax = new Vector2(-12f, -10f);
+
+            TMP_Text Text(string name, string value, Color color)
+            {
+                var t = Label(area.transform, name, value, 18, color, Vector2.zero, Vector2.zero);
+                Stretch(t.rectTransform);
+                if (mono != null) t.font = mono;
+                t.enableAutoSizing = false;
+                t.alignment = TextAlignmentOptions.TopLeft;
+                t.textWrappingMode = TextWrappingModes.Normal;
+                return t;
+            }
+            var text = Text("Text", "", TextLight);
+            var placeholder = Text("Placeholder", "What happened? What did you expect?", TextDim);
+            placeholder.fontStyle = FontStyles.Italic;
+
+            var field = go.GetComponent<TMP_InputField>();
+            field.textViewport = areaRt;
+            field.textComponent = text;
+            field.placeholder = placeholder;
+            if (mono != null) field.fontAsset = mono;
+            field.pointSize = 18;
+            field.lineType = TMP_InputField.LineType.MultiLineNewline;
+            field.characterLimit = BugReport.MaxLength;
+            field.caretColor = Amber;
+            field.customCaretColor = true;
+            field.selectionColor = new Color(Amber.r, Amber.g, Amber.b, 0.35f);
+            return field;
         }
 
         // ---------- Audio (P18) ----------

@@ -122,7 +122,7 @@ Asset naming, specs and the placeholder → final swap are defined in `docs/ASSE
 - **Generated content — don't hand-edit:** the station (`PF_Station_Graybox`), the exterior (`PF_Exterior`, `PF_SkyRig`), the
   document prefabs, the counter wiring and the front end (`Boot.unity`, `Menu.unity`, `PF_PauseMenu`) are built by editor tools
   (menu `GameOff/`: Build Station Graybox, Build Hab Module into Main, Build Sky & Exterior, Build Documents, Build Test Day, Integrate Asset Deliveries,
-  Setup Main Lighting + Bake, Build Menu Scenes, Build Traffic into Main, Build Ambience into Main, Build Travelers, Build Sound Set). Change the builder code in `Scripts/Editor/`, run the menu, rebake; manual edits
+  Setup Main Lighting + Bake, Build Menu Scenes, Build Traffic into Main, Build Ambience into Main, Build Departure into Main, Build Travelers, Build Sound Set). Change the builder code in `Scripts/Editor/`, run the menu, rebake; manual edits
   in those prefabs are lost on the next run. **Occlusion:** Build Station clears Main's occlusion data, Setup Main Lighting + Bake bakes it again, Build Menu Scenes bakes the menu's; afterwards GameOff/Check Occlusion Bake. The menu shows the station as background: after rebuilding station or exterior,
   run Build Menu Scenes too. After asset deliveries, **GameOff/Rebuild All After Deliveries** runs all of them in order; bake after it.
 - **Unity changes files by itself** when opening, playing or building: `ShareTechMono SDF.asset`, `Orbitron SDF.asset`, `ProjectSettings.asset`, `QualitySettings.asset`, `UniversalRenderPipelineGlobalSettings.asset`, `M_Ext_NavGreen.mat`, `M_Ext_NavRed.mat`, `Assets/Resources/`. Restore them before committing unless you changed them on purpose.

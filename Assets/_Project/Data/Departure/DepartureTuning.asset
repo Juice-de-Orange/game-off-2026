@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccdad83dc1fe6f458161c09c0c49023, type: 3}
+  m_Name: DepartureTuning
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Departure.DepartureTuning
+  liftOffSeconds: 2.5
+  liftOffHeight: 4
+  acceleration: 10
+  braking: 14
+  maxSpeed: 30
+  boostSpeed: 70
+  mouseTurn: 0.12
+  keyTurn: 60
+  exitDistance: 320
+  maxSeconds: 45
+  cameraDistance: 16
+  cameraHeight: 5
+  cameraFollow: 4
+  homeTitle: HOME
+  homeBody: 'The shuttle drops out of the jump above the colony. Lena is waiting
+    at the dock with Pip on her shoulders, Mom right behind them.
+
+
+    Everyone
+    is there. Everyone is well.
+
+    Kestrel-9 is just a cold little light in the
+    sky now.'
+  barelyTitle: HOME, BARELY
+  barelyBody: 'You made it home. The dock smells of rain and engine oil.
+
+
+    {names}
+    can hardly stand. The ticket ate every credit you had, and the medicine will
+    have to wait a little longer.
+
+    But you are together.'
+  lateTitle: TOO LATE?
+  lateBody: 'Nobody is waiting at the dock.
+
+
+    A neighbour finds you: {names}
+    went to the clinic three nights ago. You saved every credit for the ticket.
+
+    The
+    ticket was the easy part.'

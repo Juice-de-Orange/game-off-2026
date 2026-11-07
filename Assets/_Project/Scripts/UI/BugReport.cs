@@ -1,40 +1,76 @@
 using System;
+using UnityEngine;
 
 namespace GameOff.UI
 {
     /// <summary>
-    /// P78: link to a new GitHub issue, pre-filled with what the game knows (version with commit, day, phase, scene, browser).
-    /// The player only describes the bug. No server: the issue is written on GitHub under the player's own account.
+    /// P84: what the in-game bug report sends to the backend (deploy/reports), which turns it into a GitHub issue.
+    /// The player only writes the text; version (with commit, set by WebBuild), day, phase, scene and browser come from the game.
     /// </summary>
     public static class BugReport
     {
-        public const string RepoUrl = "https://github.com/Juice-de-Orange/game-off-2026";
+        public const int MinLength = 3;
+        public const int MaxLength = 1000;
 
-        /// <param name="version">Application.version; WebBuild sets it to "&lt;bundleVersion&gt;+&lt;commit&gt;".</param>
-        /// <param name="day">1-based day, 0 when unknown.</param>
-        public static string IssueUrl(string version, int day, string phase, string scene, string browser)
+        [Serializable]
+        private class Payload
         {
-            string where = day > 0 ? $"Day {day}, {phase}" : scene;
-            string title = $"[Bug] {where}: ";
-            string body =
-                "**What happened?**\n\n\n" +
-                "**What did you expect?**\n\n\n" +
-                "**How can we make it happen again?**\n\n\n" +
-                "---\n" +
-                "_Filled in by the game. Please don't add personal data (name, e-mail, address)._\n" +
-                $"- Version: {VersionLine(version)}\n" +
-                $"- Day: {(day > 0 ? day.ToString() : "-")} · Phase: {(day > 0 ? phase : "-")}\n" +
-                $"- Scene: {scene}\n" +
-                $"- Browser: {browser}\n";
-            return $"{RepoUrl}/issues/new?labels=bug&title={Uri.EscapeDataString(title)}&body={Uri.EscapeDataString(body)}";
+            public string text;
+            public string version;
+            public int day;
+            public string phase;
+            public string scene;
+            public string browser;
         }
 
-        /// <summary>"0.1.0+abc1234" → "0.1.0+abc1234 (commit link)"; a version without commit stays as it is.</summary>
-        private static string VersionLine(string version)
+        [Serializable]
+        public class Answer
         {
-            int plus = version.IndexOf('+');
-            if (plus < 0 || plus == version.Length - 1) return version;
-            return $"{version} ({RepoUrl}/commit/{version.Substring(plus + 1)})";
+            public bool ok;
+            public int issue;
+            public string error;
+        }
+
+        public static bool CanSend(string text)
+        {
+            int length = string.IsNullOrWhiteSpace(text) ? 0 : text.Trim().Length;
+            return length >= MinLength && length <= MaxLength;
+        }
+
+        /// <param name="day">1-based day, 0 when unknown (e.g. outside Main).</param>
+        public static string Json(string text, string version, int day, string phase, string scene, string browser) =>
+            JsonUtility.ToJson(new Payload
+            {
+                text = (text ?? "").Trim(),
+                version = version,
+                day = day,
+                phase = phase,
+                scene = scene,
+                browser = browser,
+            });
+
+        private static Answer Parse(string body)
+        {
+            try { return string.IsNullOrEmpty(body) ? null : JsonUtility.FromJson<Answer>(body); }
+            catch (ArgumentException) { return null; }
+        }
+
+        /// <summary>Only a 201 whose answer says ok with an issue number counts (a proxy page with 201 doesn't).</summary>
+        public static bool Succeeded(long status, string body)
+        {
+            var answer = Parse(body);
+            return status == 201 && answer != null && answer.ok && answer.issue > 0;
+        }
+
+        /// <summary>The line under the form after sending, from the HTTP status and the backend's answer.</summary>
+        public static string Result(long status, string body)
+        {
+            var answer = Parse(body);
+            if (Succeeded(status, body)) return $"Thanks! Your report is in (#{answer.issue}).";
+            if (status == 429) return "Too many reports right now. Please try again in a few minutes.";
+            if (status == 400 && answer != null && answer.error == "text too short") return "Please write a little more about what happened.";
+            if (status == 400 && answer != null && answer.error == "text too long") return "That's a bit long - please shorten it.";
+            return "Couldn't send the report. Please try again later.";
         }
     }
 }

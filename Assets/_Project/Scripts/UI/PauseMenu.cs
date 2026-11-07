@@ -26,8 +26,9 @@ namespace GameOff.UI
         [SerializeField] private Button optionsButton;
         [SerializeField] private Button optionsBackButton;
         [SerializeField] private Button menuButton;
-        [Tooltip("P78: opens a pre-filled GitHub issue in a new tab.")]
-        [SerializeField] private BugReportButton bugReportButton;
+        [Tooltip("P84: opens the in-game bug report form.")]
+        [SerializeField] private Button bugReportButton;
+        [SerializeField] private BugReportForm bugReportForm;
         [Tooltip("Optional: day and phase for the bug report.")]
         [SerializeField] private DayManager dayManager;
 
@@ -55,7 +56,14 @@ namespace GameOff.UI
             optionsButton.onClick.AddListener(() => ShowOptions(true));
             optionsBackButton.onClick.AddListener(() => ShowOptions(false));
             menuButton.onClick.AddListener(BackToMenu);
-            if (bugReportButton != null) bugReportButton.Url = BugReportUrl;
+            if (bugReportButton != null && bugReportForm == null) bugReportButton.gameObject.SetActive(false); // nothing to open
+            if (bugReportButton != null && bugReportForm != null)
+            {
+                bugReportButton.onClick.AddListener(OpenReport);
+                bugReportForm.Context = BugReportJson;
+                bugReportForm.Closed += () => mainPanel.SetActive(true);
+                bugReportForm.gameObject.SetActive(false);
+            }
             root.SetActive(false);
         }
 
@@ -72,6 +80,12 @@ namespace GameOff.UI
         private void Update()
         {
             bool pressed = _pauseAction.WasPressedThisFrame();
+            if (_paused && ReportOpen)
+            {
+                // Typing goes into the form: P must not resume. Esc goes back to the pause menu (not while sending).
+                if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) bugReportForm.Close();
+                return;
+            }
             if (_paused)
             {
                 if (pressed)
@@ -97,10 +111,13 @@ namespace GameOff.UI
             if (pressed || lostLock) Pause();
         }
 
+        private bool ReportOpen => bugReportForm != null && bugReportForm.IsOpen;
+
         public void Pause()
         {
             _paused = true;
             root.SetActive(true);
+            if (bugReportForm != null) bugReportForm.Hide();
             ShowOptions(false);
             player.SetControlEnabled(false); // frees the cursor, stops look/move and interaction
             SetTime(true);
@@ -108,6 +125,7 @@ namespace GameOff.UI
 
         public void Resume()
         {
+            if (bugReportForm != null) bugReportForm.Hide(); // aborts a report that is still sending
             _paused = false;
             root.SetActive(false);
             SetTime(false);
@@ -123,12 +141,18 @@ namespace GameOff.UI
             SceneManager.LoadScene(SceneNames.Menu);
         }
 
-        /// <summary>The game stays paused while the issue opens in a new tab; the player comes back and resumes.</summary>
-        private string BugReportUrl()
+        private void OpenReport()
+        {
+            mainPanel.SetActive(false);
+            bugReportForm.Open();
+        }
+
+        /// <summary>The report for the backend: the player's text plus where the game stands (P84).</summary>
+        private string BugReportJson(string text)
         {
             int day = dayManager != null ? dayManager.Day : 0;
-            string phase = dayManager != null ? dayManager.CurrentPhase.ToString() : "-";
-            return BugReport.IssueUrl(Application.version, day, phase, SceneManager.GetActiveScene().name, BrowserBridge.UserAgent);
+            string phase = day > 0 ? dayManager.CurrentPhase.ToString() : "-";
+            return BugReport.Json(text, Application.version, day, phase, SceneManager.GetActiveScene().name, BrowserBridge.UserAgent);
         }
 
         private void ShowOptions(bool show)

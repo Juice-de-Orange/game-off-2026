@@ -3,6 +3,7 @@ using GameOff.Core;
 using GameOff.Day;
 using GameOff.Economy;
 using GameOff.Player;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -77,6 +78,9 @@ namespace GameOff.Departure
             _visualRest = _visual.localRotation; // keeps any import rotation of the model; the lean goes on top
             _yaw = _body.eulerAngles.y;
 
+            // Cinemachine drives the player's camera every frame (counter view, P03); the flight takes it over for good.
+            var brain = playerCamera.GetComponent<CinemachineBrain>();
+            if (brain != null) brain.enabled = false;
             playerCamera.transform.SetParent(null, true);
             playerCamera.useOcclusionCulling = false; // the bake only covers the inside of the station
             PlaceCamera(1f);

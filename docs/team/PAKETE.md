@@ -1225,7 +1225,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     müssen das abfangen. Der Simulator zählt das Ticket nur bei gesunder Familie.
 
 ### P72 — Ticket nach Hause
-- Größe: M · Priorität: Muss (Vorschlag) · Status: in Arbeit (max, 07.11.) · Zuständig: max (Call 07.11.)
+- Größe: M · Priorität: Muss (Vorschlag) · Status: fertig (max, 07.11.) · Zuständig: max (Call 07.11.)
 - Braucht: P71 (Ticketpreis), P12 · Folgt auf: —
 - Ziel: Das Spielziel: genug sparen, ein teures Ticket kaufen und mit einem Schiff vom Hangar aus heimfliegen – „das Ende der Game Jam“.
 - Enthalten: Ticket-Terminal im Hangar (nur abends, wie jeder Handel), Kauf zum Ticketpreis (`HouseholdTuning.ticketPrice`, von P71 festgelegt),
@@ -1233,6 +1233,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: Flugsteuerung über das Nötigste hinaus, weitere Enden (P12).
 - Abnahme: Mit genug Geld abends Ticket kaufen → Schiff → Abflug → Ende; ohne genug Geld zeigt das Terminal, wie viel fehlt.
 - Hinweis aus P71 (martin, 07.11.): Ohne Familienprüfung ist „Familie vernachlässigen“ der schnellste Weg zum Ticket (Tag 5). Das Ende muss den Familienzustand werten (P12/P69).
+- Ergebnis (max, 07.11.): `Scripts/Departure/` – `TicketTerminal` (Hangar, X -4,5 Z -21, graue Box bis `SM_Hangar_TicketTerminal` geliefert ist; nur abends; Fehlbetrag; Dev `Dev_free_Ticket`), `ShuttleBoarding` (Rampe, „Leave Kestrel-9 for good?“), `ShuttleFlight` (Kopie des Shuttle-Modells, Verfolgerkamera, W/S Schub, Maus oder A/D, Shift Boost, keine Kollision; Cinemachine-Brain wird dafür abgeschaltet; Ende bei 320 m oder 45 s), `TicketEnding` (HOME / HOME, BARELY / TOO LATE? nach dem schlechtesten Familienzustand, Namen im Text), `DayManager.FinishRun` als gemeinsame Stelle für Enden (P12 hängt sich dort an). Builder **GameOff/Build Departure into Main** (in Rebuild All). Werte und Texte in `Data/Departure/DepartureTuning.asset`. Bestellt: `SM_Hangar_TicketTerminal`, `SFX_Shuttle_Engine_Loop`. Geprüft: Tests `DepartureTests`; WebGL-Build im Headless-Chrome: Terminal zeigt „You have 40 CR. You need 310 CR more“, Dev-Ticket, LEAVE, Flug durch die Barriere ins All (Bilder), nach 17 s Ende HOME. Kein Rebalancing nötig (Ticketpreis unverändert). Das Ticket ist im normalen Spiel erst mit mehr Tagen erreichbar (P15/P73).
 
 ### P73 — Endlose Tage
 - Größe: M–L · Priorität: Muss (Vorschlag) · Status: offen (von Max bestätigt, 07.11., Frage `endlos-und-ticket`) · Zuständig: martin (Call 07.11.)
@@ -1429,7 +1430,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: „As ordered“ → Ware liegt im Schrank; Aufbrechen gibt sie (als CONFISCATED) ins Inventar oder bringt eine Disziplinarstrafe.
 
 ### P84 — Bugreport direkt im Spiel (Backend auf Geoffrey)
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 07.11.; P72 wartet derweil auf P81) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig (max, 07.11.; Erfolgsfall live erst mit dem Token) · Zuständig: max
 - Braucht: P49, P78 · Folgt auf: P78 (ersetzt den GitHub-Link)
 - Ziel: Tester melden Bugs ohne GitHub-Konto direkt im Spiel; daraus wird automatisch ein GitHub-Issue.
 - Enthalten: Formular im Pausenmenü (Text + automatisch Version, Tag, Phase, Szene, Browser), kleines Backend auf Geoffrey
@@ -1438,3 +1439,4 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: Screenshots, Antworten an den Tester, eigene Admin-Seite.
 - Abnahme: In der Live-Version Text tippen → SEND → „Thanks“ mit Issue-Nummer, Issue liegt im Repo; zu viele Berichte → freundliche
   Ablehnung; ohne Backend lädt das Spiel trotzdem.
+- Ergebnis (max, 07.11.): Backend `deploy/reports` (Python ohne Pakete, 12 Tests) läuft auf Geoffrey als `kestrel9-reports`; Spiel-nginx leitet `/api/report` weiter, Host-nginx setzt `X-Forwarded-For`. Begrenzung 5/10 min pro Client (IPv6 /64), 60/h gesamt, nur erfolgreiche zählen; CORS nur Kestrel + itch; `@` wird entschärft. Formular `BugReportForm` im Pausenmenü (P tippt, Esc/BACK zurück und bricht Senden ab). GitHub-Link aus P78 entfernt. Token: Max mit `python deploy/set-report-token.py`. Datenschutz auf maxlworks.com (EN/DE) ergänzt. Geprüft: Formular im WebGL-Build (Tippen inkl. „p“, Fehlermeldung ohne Backend), `curl` live.
