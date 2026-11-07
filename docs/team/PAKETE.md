@@ -1394,3 +1394,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Disziplinarstrafe, Werte im Tuning-Asset aus P08); Entnommenes bekommt die CONFISCATED-Variante (P82).
 - Nicht enthalten: Minispiel zum Schlossknacken.
 - Abnahme: „As ordered“ → Ware liegt im Schrank; Aufbrechen gibt sie (als CONFISCATED) ins Inventar oder bringt eine Disziplinarstrafe.
+
+### P84 — Bugreport direkt im Spiel (Backend auf Geoffrey)
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 07.11.; P72 wartet derweil auf P81) · Zuständig: max
+- Braucht: P49, P78 · Folgt auf: P78 (ersetzt den GitHub-Link)
+- Ziel: Tester melden Bugs ohne GitHub-Konto direkt im Spiel; daraus wird automatisch ein GitHub-Issue.
+- Enthalten: Formular im Pausenmenü (Text + automatisch Version, Tag, Phase, Szene, Browser), kleines Backend auf Geoffrey
+  (`deploy/reports/`, Python ohne Pakete, Container neben dem Spiel, `/api/report` über den Spiel-nginx), Issue per Bot-Token mit
+  Labels `bug` + `player-report`, Begrenzung pro IP (nur im Speicher), CORS für den itch.io-Build; GitHub-Link aus P78 entfällt.
+- Nicht enthalten: Screenshots, Antworten an den Tester, eigene Admin-Seite.
+- Abnahme: In der Live-Version Text tippen → SEND → „Thanks“ mit Issue-Nummer, Issue liegt im Repo; zu viele Berichte → freundliche
+  Ablehnung; ohne Backend lädt das Spiel trotzdem.

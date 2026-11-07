@@ -64,6 +64,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 | martin | P81 Schicht-Inventar | `Main.unity`, `PF_Economy.prefab`, `Scripts/Counter/CounterStation.cs`, `Scripts/Counter/SeatedLook.cs` | 07.11. |
 | max | P72 Ticket nach Hause: Terminal im Hangar, Shuttle-Flug, Ticket-Enden – Einbau in Main (`Build Departure into Main`) erst nach Martins P81 | `Scripts/Economy/PlayerEconomy.cs`, `Scripts/Day/DayManager.cs` (kleine Ergänzungen) | 07.11. |
+| max | P84 Bugreport im Spiel mit Backend auf Geoffrey (Main-Teil zusammen mit P72 nach P81) | `deploy/` (nginx.conf, server/compose.yml) | 07.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
