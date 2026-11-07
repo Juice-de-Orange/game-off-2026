@@ -1501,3 +1501,4 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   die drei Wandschilder fallen weg. Alles im `StationGrayboxBuilder`.
 - Nicht enthalten: neue Schild-Modelle, Bodenmarkierungen.
 - Abnahme: Jedes Schild zeigt den richtigen Raum, und sein Pfeil zeigt zur richtigen Tür (Bilder aus Main); Occlusion-Check grün.
+- Stand (max, 07.11.): Code im `StationGrayboxBuilder` (`BuildWayfinding`, `HangSigns`, `HallSignMaterial`) und fünf Materialien `M_Hall_Sign_<Zeile>` sind gepusht. Geprüft in einer Sandbox-Kopie von Main (Bilder): Motel-Eingang CUSTOMS →, DINER →, KIOSK →, ← BAR (Rückseite gleiche Richtung); vor der Dienst-Tür ← MOTEL, ← DINER, BAR →, KIOSK →; Dienstgang CUSTOMS zur Schalter-Tür, HANGAR – STAFF ONLY zur Hangar-Tür. **Offen:** Build Station + Build Day Flow + Setup Main Lighting + Bake + Check Occlusion Bake, sobald Martin Main freigibt (P76). `PF_Station_Graybox` und Main sind bis dahin unverändert.
