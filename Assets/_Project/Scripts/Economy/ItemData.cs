@@ -16,8 +16,15 @@ namespace GameOff.Economy
         [SerializeField] private List<ItemTag> tags = new List<ItemTag>();
         [Tooltip("Can be owned only once (gadgets like the scanner, story items). Vendors don't sell it again while you have it.")]
         [SerializeField] private bool unique;
-        [Tooltip("Optional, for later (the lists show names only for now).")]
+        [Tooltip("Pixel-art icon (P46/P82, 128 px, Point); the lists show names only for now.")]
         [SerializeField] private Sprite icon;
+        [Tooltip("P82: the 3D model of this item (for the evidence locker, the desk or the hangar), optional.")]
+        [SerializeField] private GameObject model;
+        [Tooltip("P82: word(s) on a cargo manifest that mean this item, upper case, e.g. STIMULANT. Empty = never carried by travelers. " +
+                 "P15 writes cargo lines with these words, P08 turns them into items when confiscating.")]
+        [SerializeField] private string cargoWord;
+        [Tooltip("P82: the CONFISCATED variant of this item (own item with the label CONFISCATED), what P08 hands out; empty = can't be confiscated.")]
+        [SerializeField] private ItemData confiscatedVariant;
 
         public string DisplayName => displayName;
         public string Description => description;
@@ -25,6 +32,9 @@ namespace GameOff.Economy
         public IReadOnlyList<ItemTag> Tags => tags;
         public bool Unique => unique;
         public Sprite Icon => icon;
+        public GameObject Model => model;
+        public string CargoWord => cargoWord;
+        public ItemData ConfiscatedVariant => confiscatedVariant;
 
         public bool HasTag(ItemTag tag) => tag != null && tags.Contains(tag);
 

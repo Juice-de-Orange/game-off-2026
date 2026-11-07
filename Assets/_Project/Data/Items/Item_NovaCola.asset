@@ -22,4 +22,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: df73a66dd95c513448baced3fe575726, type: 2}
   unique: 0
-  icon: {fileID: 0}
+  icon: {fileID: -8995900440682585851, guid: 04bcd576a8c1e184684872b2ff77c791, type: 3}
+  model: {fileID: 919132149155446097, guid: 216fe03ab34bc3243b31e1ad15044715, type: 3}
+  cargoWord: COLA
+  confiscatedVariant: {fileID: 11400000, guid: a49403895e8dc16468b41a1d74dd41f7, type: 2}

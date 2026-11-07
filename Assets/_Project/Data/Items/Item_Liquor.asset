@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777e03cad483684198013defb55935a, type: 3}
+  m_Name: Item_Liquor
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemData
+  displayName: Liquor
+  description: Station-brewed, strong enough to strip paint. Someone always wants
+    a bottle.
+  baseValue: 14
+  dailyChange: []
+  tags:
+  - {fileID: 11400000, guid: df73a66dd95c513448baced3fe575726, type: 2}
+  unique: 0
+  icon: {fileID: -8995900440682585851, guid: 9f22222eb9005b54bbf0b6efb3987b02, type: 3}
+  model: {fileID: 919132149155446097, guid: 38b2e2e8d9c4c1049b5fe318fd81a463, type: 3}
+  cargoWord: LIQUOR
+  confiscatedVariant: {fileID: 11400000, guid: e22cdc6f4fac8ad4da62564117878d8a, type: 2}

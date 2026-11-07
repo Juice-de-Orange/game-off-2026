@@ -24,4 +24,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
   - {fileID: 11400000, guid: 6fb8a1b3c51568c4f8aa6d549a58f4fb, type: 2}
   unique: 0
-  icon: {fileID: 0}
+  icon: {fileID: -8995900440682585851, guid: 4eaede21e4770914fa3cdb744e8dc05a, type: 3}
+  model: {fileID: 0}
+  cargoWord: SPICE
+  confiscatedVariant: {fileID: 11400000, guid: 4b7ed5cb1fcdd1342a2b321f64600ffa, type: 2}

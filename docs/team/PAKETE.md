@@ -1372,7 +1372,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   (Text kommt aus der Schalter-Verkabelung) – mit P08, wenn das Schicht-Inventar wirklich gefüllt wird.
 
 ### P82 — Warenliste 2: jede Ware mit Modell, Zweck und Icon
-- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 07.11.) · Zuständig: martin (Call 07.11.)
+- Größe: M · Priorität: Muss · Status: fertig (martin, 07.11.) · Zuständig: martin (Call 07.11.)
 - Braucht: P70, P71 · Folgt auf: P70
 - Ziel: Alle Waren haben einen Grund, sie zu kaufen, zu beschlagnahmen oder zu verkaufen, und sehen im Inventar fertig aus
   (Frage `warenliste-2`, im Call: A).
@@ -1391,6 +1391,20 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: Beschlagnahme selbst (P08), Asservatenschrank (P32), Gadget-Funktionen (P16, P62).
 - Abnahme: Jede Ware hat Icon (oder Platzhalter mit Bestellung), Modell-Verweis, mindestens einen Zweck und eine Quelle; Test prüft das;
   Validate Travelers und EditMode-Tests grün; Economy Report alle Ziele ✓.
+- Ergebnis (martin, 07.11.):
+  - **Zweck (Martin):** Waren wirken *nicht* stärker – sie sind eine **andere Quelle** als der Laden (z. B. beschlagnahmte Medizin nach Hause,
+    wenn das Geld fehlt). Familienregeln unverändert. Jede Ware kann irgendwo verkauft werden und kommt von einem Händler oder aus der Fracht.
+  - `ItemData`: neue Felder `model`, `cargoWord` (Fracht-Stichwort, ganzes Wort, groß), `confiscatedVariant`.
+  - Neue Waren: Liquor 14 (LUXURY), Weapon parts 45 (CONTRABAND+WEAPON), Cash bundle 40 (VALUABLE), Alien specimen 50 (ALIEN+CONTRABAND),
+    UV lamp 45 (GADGET, einmalig, Verkauf mit P62). Ohne Händler: Quelle ist die Fracht (P08). **Stim injector → Stimulant vials** (GUID gleich).
+  - Modelle: Pill bottle = Painkillers, Data chip, Scanner, Liquor, Weapon parts, Cash bundle, Alien specimen, UV lamp, Nova Cola = SodaCan.
+  - Icons: 12 gelieferte zugeordnet, 12 weitere bestellt (M022) mit Platzhaltern – alle 24 Waren haben ein Icon.
+  - **22 CONFISCATED-Varianten** in `Data/Items/Confiscated/` (gleiche Labels + CONFISCATED, gleicher Preis/Icon), bei jedem Lauf von
+    `Update Economy Data` neu abgeglichen. Fracht-Stichworte: RATION, PROTEIN, STEW, FRUIT, COLA, BATTERY, FUSION, FUSE, SYRUP, PAINKILLERS,
+    ANTIBIOTICS, STIMULANT, SPICE, CHIP, PISTOL, WEAPON, WATCH, RING, TRINKET, CASH, LIQUOR, SPECIMEN.
+  - Tests `GoodsListTests` (4), 123/123 grün; Economy Report unverändert, alle Ziele ✓; Validate Travelers ok.
+  - Nicht enthalten / offen: Icons werden in Inventar und Handelsfenster noch nicht angezeigt (eigenes Paket); Bar-Wünsche nach Waffen/
+    Wertsachen kommen mit den Tagesplänen (P15/P73).
 
 ### P83 — Asservatenschrank aufbrechen
 - Größe: S · Priorität: Kann · Status: offen · Zuständig: martin (Call 07.11.)

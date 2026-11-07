@@ -22,4 +22,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: 74c26e4bb62f1884ab816ec412ab79fc, type: 2}
   unique: 0
-  icon: {fileID: 0}
+  icon: {fileID: -8995900440682585851, guid: 5bb50c551a979744090354c2d6e923ff, type: 3}
+  model: {fileID: 0}
+  cargoWord: STEW
+  confiscatedVariant: {fileID: 11400000, guid: 79eec6b6b2aa4524aab99326207d43d3, type: 2}

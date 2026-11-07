@@ -27,6 +27,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Schalter & Dokumente | P05, P06, P38, P40 | Papiere ziehen, lesen, stempeln, Schublade, Nachfragen per Klick auf ein Feld, Reisende in der Prüfkammer | Reisender → Entscheidung (`DecisionMade`) | `Data/Travelers/…`, Dokument-Prefabs |
 | Regeln & Urteil | P07, P41 | Regeln des Tages, Pinnwand, Durchsagen; jede Entscheidung wird geprüft | Entscheidung → `Judgement` (richtig/falsch, Moral-Kosten) → bei Fehler Verwarnzettel | `DayRules`, `freeWarnings` (2) in `CounterShift` |
 | Geld & Inventar | P46 | Kontostand mit Tagesbuchungen (TODAY), Inventar (I), Gegenstände mit Labels | alle Käufe/Verkäufe/Abrechnung → `Wallet` | `EconomyTuning` (Start 40 CR), `Data/Items/*` |
+| Warenliste 2: Icon, Modell, Fracht-Stichwort je Ware | P82 | 24 Waren (neu: Liquor, Weapon parts, Cash bundle, Alien specimen, UV lamp; Stim injector heißt jetzt Stimulant vials). Waren wirken nicht stärker als andere, sie sind **eine andere Quelle** (z. B. beschlagnahmte Medizin statt Laden). Jede Ware mit Fracht-Stichwort (`cargoWord`) hat eine **CONFISCATED-Variante** (`Data/Items/Confiscated/`, gleiche Labels + CONFISCATED → hilft der Familie, nur der Schwarzmarkt kauft sie) | Fracht der Reisenden (P15) → Beschlagnahme (P08); Familie, Händler | `Data/Items/*`, gebaut von `Update Economy Data` |
 | Schicht-Inventar | P81 | Am Schalter öffnet [I] „SHIFT · CONFISCATED“ statt des eigenen Inventars (Schalter ruht solange); am Schichtende geht es an P08 (`ShiftClosing`) und wird geleert | Beschlagnahme (P08) → `PlayerEconomy.ShiftItems` | Dev: `Dev_fill_Shift` (Dev-Startwaren) |
 | Labels | P64, P13, P70 | gemeinsame Kategorien für alle Systeme | Händler-Regeln, Bedarfe der Familie, später Gerüchte/Wünsche | `Data/Items/Tags/Tag_*` (13 Labels inkl. LUXURY, Liste bei P64) |
 | Markt: Label-Faktoren, feste Ereignisse pro Tag (Preis, Menge, Ankauf, Sortiment), Verderb | P68 | Grundpreis × Schwankung × Labels × Ereignisse; Ankündigung als MARKET-Zettel und Durchsage | Händler, Vorrat, Bett, Brief (verdorben), später P65 | `ItemTag.priceFactor`, `Data/Market/Market_*`, `DaySchedule.marketEvents`, `EconomyTuning.perishableTag` |
@@ -53,8 +54,6 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Moral, Lohn je Entscheidung, Beschlagnahme | P08 | Schalter, Abrechnung, P81, P82 | im Call 07.11. festgelegt, offen |
 | Wahl am Schichtende: „Nothing to report / missed that / as ordered“ | P08 | P81, CONFISCATED-Varianten (P82), Asservatenschrank | offen (Call 07.11.) |
 | Disziplinarstrafen (3 = Game Over), getrennt von Verwarnungen | P08, P12 | Enden | offen (Call 07.11.) |
-| Beschlagnahmte Ware als eigene Item-Variante (CONFISCATED) | P82 | Inventar, Schwarzmarkt (P64), P08 | offen (Call 07.11.) |
-| Warenliste 2: Modell, Zweck, Icon je Ware; Fracht-Stichworte = Warennamen | P82 | Preise, Familie, Bar-Wünsche, Regeln | offen (Call 07.11.) |
 | Asservatenschrank aufbrechen | P83 (Kann) | P08, P32 | offen |
 | Familienschicksal: Folgen von „kritisch“ | P69 (Entwurf) | Familie → P12 | mit max abstimmen |
 | Enden (Familie, Moral, gefeuert) | P12 | Familie, P08, P69 | offen |
@@ -75,4 +74,6 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 - **Jede Geldänderung braucht ein neues Rebalancing** (GameOff → Economy Report bis alle Ziele ✓; `EconomyBalanceTests` bricht sonst).
 - **Vernachlässigen lohnt sich:** Ohne Folgen von „critical“ (P69) und ohne Familienprüfung beim Ticket (P72) ist „nichts versorgen“ der schnellste Weg nach Hause.
 - **Endlos noch nicht gebaut:** Der Simulator wiederholt die Story-Tage ab Tag 4, bis P73 Pools liefert; das Spiel selbst endet noch nach Tag 3.
-- **Waren ohne Zweck:** Pistol, Data chip, Antibiotics (beim Dealer teurer als Medizin am Bett) und Wertsachen (keine Quelle) → P82. Scanner erst mit P16.
+- **Waren ohne Quelle bis P08:** Pistol, Waffenteile, Wertsachen, Alien-Zeug, Liquor kommen nur über die Fracht (Beschlagnahme, P08) – bis dahin gibt es sie im Spiel nicht.
+- **Icons nur in den Daten:** Inventar und Handelsfenster zeigen noch keine Icons (Listen nur mit Namen) – eigenes Paket.
+- **Gadgets ohne Laden:** Scanner (P16) und UV-Lampe (P62) haben noch keinen Verkäufer. Scanner erst mit P16.

@@ -22,4 +22,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: a6959e60727c37747b2376cfc4f50971, type: 2}
   unique: 0
-  icon: {fileID: 0}
+  icon: {fileID: -8995900440682585851, guid: 25a554b199687b145b4a63e6c06087db, type: 3}
+  model: {fileID: 0}
+  cargoWord: RING
+  confiscatedVariant: {fileID: 11400000, guid: 12aa37f1b1e8fed41a8b3b34c7809613, type: 2}

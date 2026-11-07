@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0777e03cad483684198013defb55935a, type: 3}
-  m_Name: Item_StimInjector
+  m_Name: Item_StimulantVials
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemData
-  displayName: Stim injector
+  displayName: Stimulant vials
   description: Keeps you standing. Not legal anywhere decent.
   baseValue: 18
   dailyChange:
@@ -24,4 +24,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6fb8a1b3c51568c4f8aa6d549a58f4fb, type: 2}
   - {fileID: 11400000, guid: 64529f16bdb07784f8a6dcc11678a666, type: 2}
   unique: 0
-  icon: {fileID: 0}
+  icon: {fileID: -8995900440682585851, guid: 9a6cd03e6b6511441bbc5bc05ed69638, type: 3}
+  model: {fileID: 0}
+  cargoWord: STIMULANT
+  confiscatedVariant: {fileID: 11400000, guid: 45e80c942c425bf49b68a98119952522, type: 2}

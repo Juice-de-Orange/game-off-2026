@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777e03cad483684198013defb55935a, type: 3}
+  m_Name: Item_Confiscated_Spice
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemData
+  displayName: Confiscated spice
+  description: Banned, sweet-smelling and much asked for. Worth more under the bar
+    than at the kiosk. Taken at the counter - only the black market will touch it.
+  baseValue: 12
+  dailyChange:
+  - 0
+  - 0
+  - 0
+  tags:
+  - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
+  - {fileID: 11400000, guid: 6fb8a1b3c51568c4f8aa6d549a58f4fb, type: 2}
+  - {fileID: 11400000, guid: 987504bd07ab3c14985cc1e8f37c39db, type: 2}
+  unique: 0
+  icon: {fileID: -8995900440682585851, guid: 4eaede21e4770914fa3cdb744e8dc05a, type: 3}
+  model: {fileID: 0}
+  cargoWord: 
+  confiscatedVariant: {fileID: 0}

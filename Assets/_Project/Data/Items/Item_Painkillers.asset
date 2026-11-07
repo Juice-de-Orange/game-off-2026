@@ -22,4 +22,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: 64529f16bdb07784f8a6dcc11678a666, type: 2}
   unique: 0
-  icon: {fileID: 0}
+  icon: {fileID: -8995900440682585851, guid: f99c6d3a9dddca74e82830552a5a3947, type: 3}
+  model: {fileID: 919132149155446097, guid: 38dd2608618d9344bb2d5f076f4c7756, type: 3}
+  cargoWord: PAINKILLERS
+  confiscatedVariant: {fileID: 11400000, guid: 62ad29c2c17e0b046938461aacd8e0cb, type: 2}

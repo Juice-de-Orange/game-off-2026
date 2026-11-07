@@ -22,4 +22,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: 9e56bc2f97936a943a97d66ea4954de2, type: 2}
   unique: 0
-  icon: {fileID: 0}
+  icon: {fileID: -8995900440682585851, guid: a2f808adf50f57844bf3a95c40163680, type: 3}
+  model: {fileID: 0}
+  cargoWord: FUSE
+  confiscatedVariant: {fileID: 11400000, guid: 755bba283aefbbd43804764d35bfe3e3, type: 2}

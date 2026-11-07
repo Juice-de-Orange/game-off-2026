@@ -22,4 +22,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: 74c26e4bb62f1884ab816ec412ab79fc, type: 2}
   unique: 0
-  icon: {fileID: 0}
+  icon: {fileID: -8995900440682585851, guid: edb8764fff87d0f4392e45236fdbfd81, type: 3}
+  model: {fileID: 0}
+  cargoWord: RATION
+  confiscatedVariant: {fileID: 11400000, guid: 51bba4a29eda2604abc213ab8dcf72e5, type: 2}

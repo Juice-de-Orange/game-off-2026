@@ -157,12 +157,14 @@ namespace GameOff.EditorTools
             AddEntry(data.Stocks["Stock_Kiosk_Test"], data.Items["fusion"], 2, log);
             SetNeeds(data.Household, (food, data.Items["ration"]), (power, data.Items["fusion"]), (medicine, data.Items["painkillers"]), log);
 
+            RenameStim(log);
             BuildPriceList(data, contraband, medicine, gadget, food, power, drug, valuable, log, ref created);
             BuildMarket(data, contraband, food, power, drug, log, ref created);
             // P30: the drinks machine in the hall sells Nova Cola, 6 a day.
             data.Stocks["Stock_Vending"] = Stock("Stock_Vending", "NOVA COLA MACHINE", 1f, 0f, "Sold out.", new[] { data.Items["cola"] }, new ItemTag[0], ref created);
             MigrateToEntries(data.Stocks["Stock_Vending"], log);
             SetDailyAmount(data.Stocks["Stock_Vending"], data.Items["cola"], 6);
+            BuildGoodsList2(data, contraband, gadget, valuable, confiscated, log, ref created);
 
             AssetDatabase.SaveAssets();
             if (created > 0) log.Add($"{created} test assets created");
@@ -253,7 +255,7 @@ namespace GameOff.EditorTools
             Goods("scanner", "DocumentScanner", "", "", 60, null, null, 0, 0f, 0f, -0.1f);
             if (RemoveEntry(kiosk, data.Items["scanner"])) log.Add("scanner off the kiosk until P16");
             Goods("spice", "Spice", "", "", 12, null, dealer, 3, 0f, 0.2f, -0.1f);
-            Goods("stim", "StimInjector", "Stim injector", "Keeps you standing. Not legal anywhere decent.", 18, new[] { contraband, drug, medicine }, dealer, 2, 0f, 0f, 0.2f);
+            Goods("stim", "StimulantVials", "Stimulant vials", "Keeps you standing. Not legal anywhere decent.", 18, new[] { contraband, drug, medicine }, dealer, 2, 0f, 0f, 0.2f);
             Goods("antibiotics", "Antibiotics", "Antibiotics", "Military stock. The clinic back home would kill for these.", 30, new[] { contraband, medicine }, dealer, 1, 0f, 0.1f, 0.4f);
             Goods("chip", "DataChip", "Data chip", "Someone's records. Someone else wants them.", 25, new[] { contraband, tech }, dealer, 2, 0f, -0.1f, 0f);
             Goods("pistol", "Pistol", "Pistol", "Small, old and loaded.", 60, new[] { contraband, weapon }, dealer, 1, 0f, 0f, 0.1f);
@@ -263,6 +265,133 @@ namespace GameOff.EditorTools
             // P71: a cheap TECH item, so the barkeeper's TECH wish costs ~6 CR instead of a 44 CR data chip.
             Goods("fuse", "SpareFuse", "Spare fuse", "A fuse for a station console. Somebody always needs one.", 6, new[] { tech }, kiosk, 2, 0f, 0f, 0f);
             created += made;
+        }
+
+        /// <summary>P82: "Stim injector" is "Stimulant vials" now, like the cargo line and the STIMULANT rule (asset moved, GUID kept).</summary>
+        private static void RenameStim(List<string> log)
+        {
+            const string oldPath = ItemFolder + "Item_StimInjector.asset", newPath = ItemFolder + "Item_StimulantVials.asset";
+            if (AssetDatabase.LoadAssetAtPath<ItemData>(oldPath) == null || AssetDatabase.LoadAssetAtPath<ItemData>(newPath) != null) return;
+            string error = AssetDatabase.MoveAsset(oldPath, newPath);
+            if (!string.IsNullOrEmpty(error)) { log.Add("stim rename failed: " + error); return; }
+            SetFields(AssetDatabase.LoadAssetAtPath<ItemData>(newPath), ("displayName", "Stimulant vials"));
+            log.Add("Stim injector -> Stimulant vials");
+        }
+
+        private const string ConfiscatedFolder = ItemFolder + "Confiscated/";
+        private const string IconFolder = "Assets/_Project/Art/UI/Icons/";
+
+        // P82: the word a cargo manifest uses for each item (whole word, upper case). P15 writes cargo with these, P08 confiscates by them.
+        private static readonly Dictionary<string, string> CargoWords = new Dictionary<string, string>
+        {
+            { "ration", "RATION" }, { "protein", "PROTEIN" }, { "stew", "STEW" }, { "fruit", "FRUIT" }, { "cola", "COLA" },
+            { "battery", "BATTERY" }, { "fusion", "FUSION" }, { "fuse", "FUSE" },
+            { "syrup", "SYRUP" }, { "painkillers", "PAINKILLERS" }, { "antibiotics", "ANTIBIOTICS" }, { "stim", "STIMULANT" },
+            { "spice", "SPICE" }, { "chip", "CHIP" }, { "pistol", "PISTOL" }, { "weaponparts", "WEAPON" },
+            { "watch", "WATCH" }, { "ring", "RING" }, { "trinket", "TRINKET" }, { "cash", "CASH" }, { "liquor", "LIQUOR" }, { "specimen", "SPECIMEN" },
+        };
+
+        // P82: delivered models that belong to an item (Pill bottle = Painkillers, Martin 07.11.).
+        private static readonly Dictionary<string, string> ItemModels = new Dictionary<string, string>
+        {
+            { "painkillers", "Assets/_Project/Art/Models/Items/SM_Item_PillBottle.fbx" },
+            { "chip", "Assets/_Project/Art/Models/Items/SM_Item_DataChip.fbx" },
+            { "scanner", "Assets/_Project/Art/Models/Items/SM_Item_DocScanner.fbx" },
+            { "liquor", "Assets/_Project/Art/Models/Items/SM_Item_Liquor.fbx" },
+            { "weaponparts", "Assets/_Project/Art/Models/Items/SM_Item_WeaponParts.fbx" },
+            { "cash", "Assets/_Project/Art/Models/Items/SM_Item_CashBundle.fbx" },
+            { "specimen", "Assets/_Project/Art/Models/Items/SM_Item_AlienSpecimen.fbx" },
+            { "uvlamp", "Assets/_Project/Art/Models/Items/SM_Item_UVLamp.fbx" },
+            { "cola", "Assets/_Project/Art/Models/Props/SM_Prop_SodaCan.fbx" },
+        };
+
+        /// <summary>
+        /// P82 goods list 2 (call 07.11.): delivered models become goods, every item gets its icon, model and cargo word, and everything
+        /// travelers can carry gets a CONFISCATED variant (own item: same labels + CONFISCATED, so confiscated medicine still helps the
+        /// family, but only the black market buys it). Goods are no stronger than others - they are another way to get them (Martin).
+        /// Hand-set icon/model/cargo word stay; variants are generated and synced on every run.
+        /// </summary>
+        private static void BuildGoodsList2(Data data, ItemTag contraband, ItemTag gadget, ItemTag valuable, ItemTag confiscated, List<string> log, ref int created)
+        {
+            var weapon = Tag("WEAPON", "444B55", ref created);
+            var alien = Tag("ALIEN", "C27BD6", ref created);
+            var luxury = Tag("LUXURY", "B9824A", ref created);
+            int made = 0;
+            void New(string key, string file, string name, string text, int value, params ItemTag[] tags)
+            {
+                if (!data.Items.ContainsKey(key)) data.Items[key] = Item(file, name, text, value, ref made, tags);
+            }
+            New("liquor", "Liquor", "Liquor", "Station-brewed, strong enough to strip paint. Someone always wants a bottle.", 14, luxury);
+            New("weaponparts", "WeaponParts", "Weapon parts", "Springs, a barrel, a trigger group. Nobody needs them for anything good.", 45, contraband, weapon);
+            New("cash", "CashBundle", "Cash bundle", "Old notes in a rubber band. Hard to explain at the counter.", 40, valuable);
+            New("specimen", "AlienSpecimen", "Alien specimen", "Something in a jar. It moved once. Collectors pay well.", 50, alien, contraband);
+            New("uvlamp", "UVLamp", "UV lamp", "Shows hidden seals and stamps on papers (P62).", 45, gadget);
+            SetFields(data.Items["uvlamp"], ("unique", true));
+
+            if (!AssetDatabase.IsValidFolder(ConfiscatedFolder.TrimEnd('/'))) AssetDatabase.CreateFolder(ItemFolder.TrimEnd('/'), "Confiscated");
+            int icons = 0, models = 0, variants = 0;
+            foreach (var pair in data.Items)
+            {
+                var item = pair.Value;
+                if (item == null) continue;
+                var so = new SerializedObject(item);
+                var icon = so.FindProperty("icon");
+                if (icon.objectReferenceValue == null)
+                {
+                    var sprite = AssetDatabase.LoadAllAssetsAtPath(IconFolder + "UI_Icon_" + item.name + ".png").OfType<Sprite>().FirstOrDefault();
+                    if (sprite != null) { icon.objectReferenceValue = sprite; icons++; }
+                }
+                var model = so.FindProperty("model");
+                if (model.objectReferenceValue == null && ItemModels.TryGetValue(pair.Key, out var modelPath))
+                {
+                    var go = AssetDatabase.LoadAssetAtPath<GameObject>(modelPath);
+                    if (go != null) { model.objectReferenceValue = go; models++; }
+                }
+                var word = so.FindProperty("cargoWord");
+                if (string.IsNullOrEmpty(word.stringValue) && CargoWords.TryGetValue(pair.Key, out var w)) word.stringValue = w;
+                so.ApplyModifiedPropertiesWithoutUndo();
+                EditorUtility.SetDirty(item);
+
+                if (item.Unique || string.IsNullOrEmpty(item.CargoWord)) continue;
+                var variant = LoadOrCreate<ItemData>(ConfiscatedFolder + "Item_Confiscated_" + item.name.Substring("Item_".Length) + ".asset", _ => { }, ref made);
+                SyncVariant(item, variant, confiscated);
+                SetObject(item, "confiscatedVariant", variant);
+                variants++;
+            }
+            created += made;
+            log.Add($"goods list 2: {icons} icons, {models} models set, {variants} confiscated variants");
+        }
+
+        /// <summary>P82: the variant mirrors its original (name, text, price, daily change, labels + CONFISCATED, icon, model); no cargo word.</summary>
+        private static void SyncVariant(ItemData item, ItemData variant, ItemTag confiscated)
+        {
+            string name = item.DisplayName;
+            string lower = name.StartsWith("Nova") ? name : char.ToLowerInvariant(name[0]) + name.Substring(1);
+            var src = new SerializedObject(item);
+            var so = new SerializedObject(variant);
+            so.FindProperty("displayName").stringValue = "Confiscated " + lower;
+            so.FindProperty("description").stringValue = item.Description + " Taken at the counter - only the black market will touch it.";
+            so.FindProperty("baseValue").intValue = item.BaseValue;
+            so.CopyFromSerializedProperty(src.FindProperty("dailyChange"));
+            so.FindProperty("icon").objectReferenceValue = item.Icon;
+            so.FindProperty("model").objectReferenceValue = item.Model;
+            so.FindProperty("cargoWord").stringValue = "";
+            so.FindProperty("confiscatedVariant").objectReferenceValue = null;
+            var tags = so.FindProperty("tags");
+            var list = item.Tags.Where(t => t != confiscated).ToList();
+            list.Add(confiscated);
+            tags.arraySize = list.Count;
+            for (int i = 0; i < list.Count; i++) tags.GetArrayElementAtIndex(i).objectReferenceValue = list[i];
+            so.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(variant);
+        }
+
+        private static void SetObject(Object target, string field, Object value)
+        {
+            var so = new SerializedObject(target);
+            so.FindProperty(field).objectReferenceValue = value;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(target);
         }
 
         private const string MarketFolder = "Assets/_Project/Data/Market/";

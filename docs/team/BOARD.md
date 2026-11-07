@@ -62,7 +62,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
-| martin | P82 Warenliste 2 (nur Daten und Economy-Code, nicht Main) | `Data/Items/*`, `Data/Economy/*`, `Scripts/Economy/ItemData.cs`, `Scripts/Economy/Household.cs` | 07.11. |
 | max | P72 Ticket nach Hause + P84 Bugreport im Spiel: Einbau in Main (Build Departure, Build Menu Scenes, Bake) | `Main.unity`, `Menu.unity`, `Boot.unity`, `PF_PauseMenu.prefab`, `Scripts/Economy/PlayerEconomy.cs`, `Scripts/Day/DayManager.cs` | 07.11. |
 | max | P84 Bugreport im Spiel mit Backend auf Geoffrey (Main-Teil zusammen mit P72 nach P81) | `deploy/` (nginx.conf, server/compose.yml) | 07.11. |
 

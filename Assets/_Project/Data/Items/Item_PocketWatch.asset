@@ -22,4 +22,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: a6959e60727c37747b2376cfc4f50971, type: 2}
   unique: 0
-  icon: {fileID: 0}
+  icon: {fileID: -8995900440682585851, guid: bd734f2e077cc1b46bed80531276b8ef, type: 3}
+  model: {fileID: 0}
+  cargoWord: WATCH
+  confiscatedVariant: {fileID: 11400000, guid: ec5dd96a1cdaa674b95e1fa228b31bf6, type: 2}

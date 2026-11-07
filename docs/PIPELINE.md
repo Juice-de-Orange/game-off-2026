@@ -386,3 +386,14 @@ in `docs/ASSET-REQUESTS.md`.
   Die übrigen Waren (Pistol, Data chip, Pocket watch, Silver ring, Alien trinket, Stim injector, Document scanner) kommen später, weil sie sich mit
   „Warenliste 2“ noch ändern können.
 - antwort:
+
+### M022 — Zwölf weitere Waren-Icons (P82)
+- datum: 2026-11-07
+- von: martin
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`, die zwölf neuen Einträge `UI_Icon_Item_*` mit `package: P82` (Pistol, DataChip, PocketWatch, SilverRing, AlienTrinket, StimulantVials, DocumentScanner, Liquor, WeaponParts, CashBundle, AlienSpecimen, UVLamp)
+- status: offen
+- meldung: Die elf Icons aus M021 sind super angekommen. Bitte die restlichen Waren im selben Stil liefern (128x128, transparent, Point,
+  ca. 2 px dunkle Kontur, Dreiviertel-Ansicht, Palette, bei 48 px lesbar), gern wieder alle auf einem Branch mit Lineup. Wo es schon
+  ein Modell gibt (`SM_Item_*`), bitte das Icon passend dazu. Mergen und Einbau macht Max wie immer.
+- antwort:

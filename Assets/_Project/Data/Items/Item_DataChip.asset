@@ -23,4 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
   - {fileID: 11400000, guid: 9e56bc2f97936a943a97d66ea4954de2, type: 2}
   unique: 0
-  icon: {fileID: 0}
+  icon: {fileID: -8995900440682585851, guid: 55977f8a55adf3c4c86df551e9acd5e0, type: 3}
+  model: {fileID: 919132149155446097, guid: fb9d186285e8f184991632884248aacb, type: 3}
+  cargoWord: CHIP
+  confiscatedVariant: {fileID: 11400000, guid: df6d1f853a38519469c68e03f91815b1, type: 2}

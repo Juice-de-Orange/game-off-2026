@@ -6368,3 +6368,351 @@ refs: []
 placeholder: Kein Ton, der Flug ist bisher stumm. Der Builder hängt den Ton ein, sobald die Datei da ist.
 feedback: []
 ```
+
+### UI_Icon_Item_Pistol.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Pistol.png
+package: P82
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_Pistol.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Pistol" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola und die elf aus P46): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: kleine, alte Pistole, abgegriffenes Griffstück, leicht schräg.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_DataChip.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_DataChip.png
+package: P82
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_DataChip.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Data chip" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola und die elf aus P46): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: Datenchip wie SM_Item_DataChip: flaches Modul mit Kontakten und kleiner Status-LED.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_PocketWatch.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_PocketWatch.png
+package: P82
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_PocketWatch.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Pocket watch" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola und die elf aus P46): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: alte Taschenuhr mit Deckel offen und Kette, Messing.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_SilverRing.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_SilverRing.png
+package: P82
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_SilverRing.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Silver ring" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola und die elf aus P46): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: schlichter Silberring, Gravur innen angedeutet, ein Glanzpunkt.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_AlienTrinket.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_AlienTrinket.png
+package: P82
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_AlienTrinket.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Alien trinket" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola und die elf aus P46): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: kleines fremdartiges Schmuckstück, leicht leuchtend, organische Form.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_StimulantVials.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_StimulantVials.png
+package: P82
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_StimulantVials.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Stimulant vials" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola und die elf aus P46): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: drei kleine Glasampullen mit grellgrüner Flüssigkeit in einem Halter (wie Fracht „CHEM STIMULANT VIALS“).
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_DocumentScanner.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_DocumentScanner.png
+package: P82
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_DocumentScanner.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Document scanner" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola und die elf aus P46): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: Handscanner wie SM_Item_DocScanner: Griff, kleines Display, Scanfenster.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_Liquor.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Liquor.png
+package: P82
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_Liquor.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Liquor" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola und die elf aus P46): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: Flasche wie SM_Item_Liquor: selbstgebrannter Schnaps, handgeschriebenes Etikett.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_WeaponParts.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_WeaponParts.png
+package: P82
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_WeaponParts.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Weapon parts" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola und die elf aus P46): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: Waffenteile wie SM_Item_WeaponParts: Lauf, Feder, Abzugsgruppe, lose zusammengelegt.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_CashBundle.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_CashBundle.png
+package: P82
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_CashBundle.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Cash bundle" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola und die elf aus P46): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: Geldbündel wie SM_Item_CashBundle: alte Scheine mit Gummiband.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_AlienSpecimen.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_AlienSpecimen.png
+package: P82
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_AlienSpecimen.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Alien specimen" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola und die elf aus P46): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: Glas mit etwas Fremdem darin wie SM_Item_AlienSpecimen, trübe Flüssigkeit.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_UVLamp.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_UVLamp.png
+package: P82
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_UVLamp.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "UV lamp" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola und die elf aus P46): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: UV-Handlampe wie SM_Item_UVLamp, violetter Lichtkegel angedeutet.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777e03cad483684198013defb55935a, type: 3}
+  m_Name: Item_Confiscated_WeaponParts
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemData
+  displayName: Confiscated weapon parts
+  description: Springs, a barrel, a trigger group. Nobody needs them for anything
+    good. Taken at the counter - only the black market will touch it.
+  baseValue: 45
+  dailyChange: []
+  tags:
+  - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
+  - {fileID: 11400000, guid: 2959b78887525eb488bc34d643b0de4d, type: 2}
+  - {fileID: 11400000, guid: 987504bd07ab3c14985cc1e8f37c39db, type: 2}
+  unique: 0
+  icon: {fileID: -8995900440682585851, guid: d2b6af16176aa3c4088aea5d63c92551, type: 3}
+  model: {fileID: 919132149155446097, guid: 64c1f3b20d29b81439582fde937da438, type: 3}
+  cargoWord: 
+  confiscatedVariant: {fileID: 0}
