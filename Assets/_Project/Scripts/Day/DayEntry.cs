@@ -20,5 +20,7 @@ namespace GameOff.Day
         public List<MarketEvent> marketEvents = new List<MarketEvent>();
         [Tooltip("What the barkeeper wants today for a rumour about tomorrow (P65). Amount 0 = nothing.")]
         public BarWish barWish = new BarWish();
+        [Tooltip("The barkeeper's bribe note at shift start (P66). No traveler = no note.")]
+        public Bribe bribe = new Bribe();
     }
 }

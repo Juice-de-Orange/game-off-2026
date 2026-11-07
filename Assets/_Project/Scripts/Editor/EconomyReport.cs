@@ -45,6 +45,7 @@ namespace GameOff.EditorTools
             var sloppy = sim.Play(EconomySimulator.Style.Clever, 2, Days);
             var skip = sim.Play(EconomySimulator.Style.Skip, 0, 3);
             var rumour = sim.Play(EconomySimulator.Style.Rumour, 0, Days);
+            var corrupt = sim.Play(EconomySimulator.Style.Corrupt, 0, Days);
             float perUnit = rumour.SpeculatedUnits > 0 ? (float)(rumour.SpeculationProfit - rumour.WishCost) / rumour.SpeculatedUnits : 0f;
             string Day(EconomySimulator.Run r) => r.TicketDay < 0 ? "never" : "day " + r.TicketDay;
             return new List<Goal>
@@ -54,6 +55,7 @@ namespace GameOff.EditorTools
                 new Goal { Name = "Bed, no mistakes: ticket on day 9–11", Ok = bed.TicketDay >= 9 && bed.TicketDay <= 11 && !bed.GameOver, Detail = Day(bed) },
                 new Goal { Name = "2 mistakes a day: no ticket by day 12, or a need skipped", Ok = sloppy.TicketDay < 0 || sloppy.SkippedAnyNeed, Detail = Day(sloppy) + (sloppy.SkippedAnyNeed ? ", skipped a need" : "") },
                 new Goal { Name = "Nothing for the family: someone critical by day 3", Ok = skip.WorstCondition >= Household.Critical, Detail = "worst " + skip.WorstCondition },
+                new Goal { Name = "Bribes help, but the ticket not before day 6", Ok = corrupt.TicketDay >= 6 || corrupt.TicketDay < 0, Detail = Day(corrupt) + $", {corrupt.Bribes} CR in envelopes" },
                 new Goal { Name = "Rumour pays 5–8 CR per speculated unit (after the wish)", Ok = perUnit >= 5f && perUnit <= 8f, Detail = $"{perUnit:0.0} CR × {rumour.SpeculatedUnits}, wish {rumour.WishCost} CR" },
             };
         }
@@ -89,6 +91,7 @@ namespace GameOff.EditorTools
             {
                 ("Clever 6/6", sim.Play(EconomySimulator.Style.Clever, 0, Days)),
                 ("Rumour 6/6", sim.Play(EconomySimulator.Style.Rumour, 0, Days)),
+                ("Corrupt 6/6", sim.Play(EconomySimulator.Style.Corrupt, 0, Days)),
                 ("Bed 6/6", sim.Play(EconomySimulator.Style.Bed, 0, Days)),
                 ("Clever 4/6", sim.Play(EconomySimulator.Style.Clever, 2, Days)),
                 ("Bed 4/6", sim.Play(EconomySimulator.Style.Bed, 2, Days)),

@@ -24,6 +24,10 @@ MonoBehaviour:
       tag: {fileID: 11400000, guid: df73a66dd95c513448baced3fe575726, type: 2}
       amount: 2
       sign: 
+    bribe:
+      traveler: {fileID: 0}
+      amount: 0
+      note: 
   - rules: {fileID: 11400000, guid: d3739030e2733034688bd72f48fb7bf8, type: 2}
     letterTitle: A letter from home
     letter: "Dad,\nThe rent man came by. Mom gave him what we had. Pip has a cough
@@ -36,6 +40,10 @@ MonoBehaviour:
       tag: {fileID: 11400000, guid: 9e56bc2f97936a943a97d66ea4954de2, type: 2}
       amount: 1
       sign: 
+    bribe:
+      traveler: {fileID: 0}
+      amount: 0
+      note: 
   - rules: {fileID: 11400000, guid: d3739030e2733034688bd72f48fb7bf8, type: 2}
     letterTitle: A letter from home
     letter: "Dad,\nPip is sick now, really sick. The clinic wants money first.\nMom
@@ -49,3 +57,7 @@ MonoBehaviour:
       tag: {fileID: 0}
       amount: 0
       sign: 
+    bribe:
+      traveler: {fileID: 11400000, guid: d9cad411ac3bca34eb2ea95b990177b2, type: 2}
+      amount: 60
+      note: 

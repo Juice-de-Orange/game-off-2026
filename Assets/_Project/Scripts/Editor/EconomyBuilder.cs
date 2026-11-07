@@ -348,6 +348,20 @@ namespace GameOff.EditorTools
             }
             Wish(1, Tag("LUXURY", "B9824A", ref created), 2);
             Wish(2, Tag("TECH", "5EC8FF", ref created), 1);
+
+            // P66 bribe (Martin, 07.11.): day 3, the smuggler Quill Barragh, 60 CR – only where the day has none. Not day 2: refusing
+            // makes the barkeeper sulk, and day 2 is the evening of the one rumour that pays.
+            var quill = AssetDatabase.LoadAssetAtPath<GameOff.Travelers.TravelerData>("Assets/_Project/Data/Travelers/Test/T_Test_04_Quill.asset");
+            if (quill != null && days.arraySize >= 3)
+            {
+                var bribe = days.GetArrayElementAtIndex(2).FindPropertyRelative("bribe");
+                if (bribe.FindPropertyRelative("traveler").objectReferenceValue == null)
+                {
+                    bribe.FindPropertyRelative("traveler").objectReferenceValue = quill;
+                    bribe.FindPropertyRelative("amount").intValue = 60;
+                    placed = true;
+                }
+            }
             void Place(int day, params MarketEvent[] events)
             {
                 if (days.arraySize < day) return;
@@ -570,6 +584,13 @@ namespace GameOff.EditorTools
             vendors.SetParent(root.transform, false);
             foreach (var spot in Vendors) BuildVendor(vendors, spot, data.Stocks[spot.Stock], trade);
             BuildDrone(root.transform, trade);
+            // P66: the bribe note lies on the left front of the counter desk (desk spots are around x -1, z -9; the player sits at x -2).
+            var bribeGo = new GameObject("BribeNote");
+            bribeGo.transform.SetParent(root.transform, false);
+            var bribeSpot = new GameObject("NoteSpot").transform;
+            bribeSpot.SetParent(bribeGo.transform, false);
+            bribeSpot.SetPositionAndRotation(new Vector3(-1.12f, 0.856f, -8.5f), Quaternion.Euler(0f, 84f, 0f));
+            Set(bribeGo.AddComponent<BribeNote>(), "spot", bribeSpot);
 
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
             Object.DestroyImmediate(root);
@@ -914,6 +935,15 @@ namespace GameOff.EditorTools
                 Record(b);
             }
             foreach (var s in instance.GetComponentsInChildren<BarWishSign>(true)) { Set(s, "day", day); Record(s); }
+            var desk = Object.FindFirstObjectByType<GameOff.Documents.DocumentDesk>();
+            var counterShift = Object.FindFirstObjectByType<CounterShift>();
+            foreach (var b in instance.GetComponentsInChildren<BribeNote>(true))
+            {
+                Set(b, "day", day);
+                Set(b, "shift", counterShift);
+                Set(b, "desk", desk);
+                Record(b);
+            }
             var shift = Object.FindFirstObjectByType<CounterShift>();
             foreach (var w in instance.GetComponentsInChildren<SettlementWindow>(true))
             {

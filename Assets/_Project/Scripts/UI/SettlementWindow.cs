@@ -117,7 +117,8 @@ namespace GameOff.UI
         private ItemData Delivered(int need) => Economy.Delivery.CoveringItem(Tuning.TagOf((FamilyNeed)need));
         private bool Covered(int need) => Delivered(need) != null;
         private bool Met(int need) => _paid[need] || Covered(need);
-        private int AfterFixed => Economy.Wallet.Balance + Wage - Penalty - Tuning.rent;
+        private int Bribe => Economy.BribeTonight; // P66: the barkeeper's envelope for letting his man through
+        private int AfterFixed => Economy.Wallet.Balance + Wage + Bribe - Penalty - Tuning.rent;
         /// <summary>The rent is the one thing that must be paid; without it CONFIRM ends the run.</summary>
         private bool CanPayRent => AfterFixed >= 0;
 
@@ -172,6 +173,8 @@ namespace GameOff.UI
         {
             var wallet = Economy.Wallet;
             if (Wage > 0) wallet.Add(Wage, $"Wage · {_correctToday} of {_travelersToday} correct");
+            if (Bribe > 0) wallet.Add(Bribe, "Envelope from the bar · " + Economy.BribeFrom);
+            Economy.BribeTonight = 0;
             if (Penalty > 0) wallet.Charge(Penalty, "Penalty · " + ExtraCitations(Payroll.PenalizedCitations(Citations, FreeWarnings)));
             wallet.Charge(Tuning.rent, "Rent · room 103");
             for (int i = 0; i < 3; i++)
@@ -191,6 +194,7 @@ namespace GameOff.UI
             int penalized = Payroll.PenalizedCitations(Citations, FreeWarnings);
             // Short enough to stay left of the amount column (B06); the free warnings are explained on the citation itself.
             if (penalized > 0) sb.AppendLine(Line("Penalty  ·  " + ExtraCitations(penalized), -Penalty));
+            if (Bribe > 0) sb.AppendLine(Line("Envelope from the bar", Bribe));
             sb.AppendLine(Line("Rent  ·  room 103", -t.rent));
             if (!CanPayRent)
                 sb.AppendLine("\n<color=#E2463F>You can't pay the rent.</color>\n<color=#8B9096>RETURN and sell something – or CONFIRM and lose your room.</color>");

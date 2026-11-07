@@ -31,6 +31,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Markt: Label-Faktoren, feste Ereignisse pro Tag (Preis, Menge, Ankauf, Sortiment), Verderb | P68 | Grundpreis × Schwankung × Labels × Ereignisse; Ankündigung als MARKET-Zettel und Durchsage | Händler, Vorrat, Bett, Brief (verdorben), später P65 | `ItemTag.priceFactor`, `Data/Market/Market_*`, `DaySchedule.marketEvents`, `EconomyTuning.perishableTag` |
 | Barkeeper: Wunsch nach Label → Gerücht über morgen | P65 | Schild an der Bar, Dialog nach der Schicht, GIVE nimmt die billigste passende Ware, Gerücht = `rumour` der Ereignisse von morgen | Labels, Markt (P68), Inventar (Notiz unter TODAY) | `DayEntry.barWish`, `MarketEvent.rumour` |
 | Balancing & Sparziel | P71 | Simulator spielt 12 Tage mit den echten Regeln; Ziele (Ticket nach ~7–8 Tagen guter Arbeit) als Test | alles Geld; Ticket (P72) | `HouseholdTuning.ticketPrice` (350), `docs/ECONOMY-REPORT.md` |
+| Bestechungszettel | P66 | Zettel auf dem Tisch an Tagen mit Bestechung; Durchlassen → Umschlag in der Abrechnung, Ablehnen → kein Gerücht heute und morgen | Schalter-Entscheidung, Abrechnung, Barkeeper (P65) | `DayEntry.bribe` |
 | Preisliste & Marktpreis | P70 | 18 Waren mit Grundpreis, Labels, Tagesmenge und fester Schwankung je Tag; Sortiment Holly/Dealer | Marktpreis (`Market.PriceOf`) → Händler (× Faktor), Bett (× 1,35) | `Data/Items/Item_*` (`dailyChange`), `Stock_*` |
 | Händler & Vorrat | P46, P11 (teilweise) | Kaufen/Verkaufen zu Faktoren; Vorrat pro Tag, „Sold out“, morgens aufgefüllt; Verkauftes liegt beim Händler | Inventar ↔ Geld; `PlayerEconomy.Supply` | `Stock_*_Test.asset` (Einträge mit Tagesmenge) |
 | Schwarzmarkt-Regel | P64 | nur der Schwarzmarkt kauft CONTRABAND/CONFISCATED, und nichts anderes | Label → `VendorStock.Buys` | `refusedTags`, `onlyTags` |
@@ -53,7 +54,6 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Enden (Familie, Moral, gefeuert) | P12 | Familie, P08, P69 | offen |
 | Briefe reagieren auf den Zustand | P15 | Familie | offen |
 | Balancing über 3 Tage (Economy Report) | P71 (geplant) | alles Geld | nach P68 |
-| Barkeeper: Bestechungszettel | P66 (Entwurf) | P08, Abrechnung | Frage an max |
 | Gadgets: Scanner, UV-Lampe | P16, P62 | Schalter, Kiosk | Scanner-Funktion unklar (siehe Lücken) |
 | Getränkeautomat | P30 | Geld, Inventar | offen, nur nach der Schicht |
 | Familie in der Welt (Stadtlichter, Foto) | P29 | Familie | Assets bestellt |
@@ -61,7 +61,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 
 ## Lücken / passt noch nicht
 - **Brief von Tag 3** sagt fest „Pip is sick now“, auch wenn Pip gesund ist → P15.
-- **Lohn ohne Moral:** Lohn zählt nur Reisende; Moral, Bestechung, Beschlagnahme fehlen → P08, P66.
+- **Lohn ohne Moral:** Lohn zählt nur richtige Entscheidungen, Bestechung gibt es (P66); Moral und Beschlagnahme fehlen → P08.
 - **P11 nur halb:** Schwarzmarkt-Einkauf und Beschlagnahmtes verkaufen warten auf P08.
 - **Scanner (P16):** In den Daten gibt es nur „gefälschtes Siegel“, und das deckt laut P58 die UV-Lampe auf. Was der Scanner zeigt, ist offen.
 - **Schmuggel nach Hause:** geht ohne Wirkung und ohne Risiko → später mit P08.

@@ -1044,7 +1044,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     mit 2 Cola Gerücht über die Grenze (Notiz im Inventar), Tag 2 Notiz weg, Data chip → Gerücht über Schmuggler und Kälte; Bild vom Schild.
 
 ### P66 — Barkeeper: Bestechungszettel
-- Größe: S–M · Priorität: Soll · Status: in Arbeit (martin, 07.11.)
+- Größe: S–M · Priorität: Soll · Status: fertig (martin, 07.11.)
 - Braucht: P08, P10 · Folgt auf: —
 - Ziel: Moralische Versuchung am Schalter: Geld dafür, eine bestimmte Person durchzulassen.
 - Enthalten: Zu Schichtbeginn liegt manchmal ein Zettel vom Barkeeper auf dem Tisch („Lass Person XY durch, nach der Schicht
@@ -1052,6 +1052,17 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   trotzdem als Fehler. Zettel je Tag in den Tages- bzw. Reisenden-Daten.
 - Vorschlag an Max: siehe Frage `barkeeper-p65-p66`. Entschieden (Max, 06.11.): Weigern kostet nichts. Abweisen oder Verhaften bringt nur kein Geld, XY wird normal bewertet. Das Durchlassen bleibt ein normaler Fehler aus P07.
 - Abnahme: Zettel erscheint am vorgesehenen Tag; XY durchlassen → Geld nach der Schicht; abweisen → kein Geld.
+- Ergebnis (martin, 07.11.):
+  - **Zettel** (`Shops/BribeNote`): an Tagen mit Bestechung (`DayEntry.bribe`) liegt beim ersten Hinsetzen ein Zettel „A NOTE“ links vorn auf dem
+    Schaltertisch (angepinnt wie die Pinnwand-Zettel, daher ignorieren Schublade und Beschlagnahme ihn; anklickbar zum Lesen), weg bei Schichtende.
+  - **Platzhalter:** Tag 3 (nicht Tag 2, siehe unten), **Quill Barragh**, **60 CR**, Text vom Barkeeper („… Burn this. – L.“).
+  - **Durchlassen** → Abrechnung „Envelope from the bar +60 CR“; die Entscheidung wird ganz normal bewertet (Verwarnzettel, kein Lohn für ihn).
+  - **Abweisen/Verhaften → Barkeeper ist sauer (Martin, 07.11., ändert Max' „Weigern kostet nichts“):** am selben und am nächsten Abend kein
+    Gerücht („Not today, officer. You know why.“). Kein Geldverlust.
+  - **Warum Tag 3:** Auf Tag 2 hätte ein ehrlicher Spieler genau das lohnende Schmuggler-Gerücht verloren (Report: 0 CR statt +7 je Stück).
+  - **Balancing (P71-Regel):** Simulator kennt Bestechung (Spielweise „Corrupt“); neues Ziel „korrupt Ticket nicht vor Tag 6“ – erfüllt (Tag 6,
+    Ehrlich mit Gerüchten ebenfalls Tag 6, Clever Tag 8). Report neu.
+  - Geprüft: 102/102 EditMode-Tests (neu `BribeTests`); Play-Modus Tag 3: Zettel liegt da (Bild), Quill durchgelassen → +60 in der Abrechnung.
 
 ### P67 — Stations-Atmo vorab hörbar
 - Größe: XS · Priorität: Soll · Status: fertig (martin, 06.11.)

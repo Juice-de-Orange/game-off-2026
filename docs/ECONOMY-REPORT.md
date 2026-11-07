@@ -12,13 +12,15 @@ Days beyond the schedule loop over the story days (until P73).
 - ✓ Bed, no mistakes: ticket on day 9–11 – day 11
 - ✓ 2 mistakes a day: no ticket by day 12, or a need skipped – never
 - ✓ Nothing for the family: someone critical by day 3 – worst 3
-- ✓ Rumour pays 5–8 CR per speculated unit (after the wish) – 6,6 CR × 19, wish 40 CR
+- ✓ Bribes help, but the ticket not before day 6 – day 6, 240 CR in envelopes
+- ✓ Rumour pays 5–8 CR per speculated unit (after the wish) – 7,0 CR × 20, wish 28 CR
 
 ## Evenings (balance after the bed · family: W well, w weak, S sick, C critical)
 | Style | Ticket | D1 | D2 | D3 | D4 | D5 | D6 | D7 | D8 | D9 | D10 | D11 | D12 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Clever 6/6 | D8 | 89 WWW | 131 WWW | 168 WWW | 217 WWW | 259 WWW | 296 WWW | 345 WWW | 387 WWW | 424 WWW | 473 WWW | 515 WWW | 552 WWW |
-| Rumour 6/6 | D7 | 85 WWW | 63 WWW | 179 WWW | 224 WWW | 121 WWW | 344 WWW | 389 WWW | 222 WWW | 511 WWW | 556 WWW | 389 WWW | 678 WWW |
+| Rumour 6/6 | D6 | 85 WWW | 63 WWW | 179 WWW | 228 WWW | 61 WWW | 350 WWW | 399 WWW | 232 WWW | 521 WWW | 570 WWW | 403 WWW | 692 WWW |
+| Corrupt 6/6 | D6 | 85 WWW | 63 WWW | 224 WWW | 269 WWW | 102 WWW | 436 WWW | 481 WWW | 314 WWW | 648 WWW | 693 WWW | 526 WWW | 860 WWW |
 | Bed 6/6 | D11 | 74 WWW | 102 WWW | 126 WWW | 160 WWW | 188 WWW | 212 WWW | 246 WWW | 274 WWW | 298 WWW | 332 WWW | 360 WWW | 384 WWW |
 | Clever 4/6 | – | 59 WWW | 71 WWW | 78 WWW | 97 WWW | 109 WWW | 116 WWW | 135 WWW | 147 WWW | 154 WWW | 173 WWW | 185 WWW | 192 WWW |
 | Bed 4/6 | – | 44 WWW | 42 WWW | 36 WWW | 40 WWW | 38 WWW | 32 WWW | 36 WWW | 34 WWW | 28 WWW | 32 WWW | 30 WWW | 24 WWW |

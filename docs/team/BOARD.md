@@ -61,7 +61,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| martin | P66 Bestechungszettel | `Scripts/Documents/DocumentDesk.cs` (eine Methode), `Data/Days/DaySchedule.asset`, `Data/Economy/*`, `PF_Economy.prefab`, `PF_CounterStation.prefab`, `Main.unity` | 07.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): wartet auf das P08-Gespräch mit max | — | 06.11. |
 | max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
 
@@ -89,11 +88,12 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B01 | Spieler fällt beim Laden von Main **sofort durch den Boden** der Station | Unity: Play neu gestartet, über das Menü ins Spiel (Start Shift). Tritt nicht jedes Mal auf: Claude konnte es am 05.11. nicht nachstellen (Menü → Main dreimal, Play aus dem Menü mit Messung pro Frame: Spieler steht stabil bei y = 0,03). Unklar, ob es beim Tageswechsel (Teleport ins Bett-Zimmer, P09) auch passieren kann. Ideen: Spawn genau auf Bodenhöhe (`PlayerSpawn` y = 0, Kapsel-Unterkante = Boden), erster Frame nach dem Laden mit großem `deltaTime`. Möglicher Schutz: etwas über dem Boden spawnen + Auffangen unter dem Boden (zurück zur letzten sicheren Position) | martin, 05.11. | max | abgesichert, **nicht bestätigt** (max, 06.11., P57): nie nachgestellt. Fallschritt gedeckelt, Spawn 5 cm über dem Boden, Rettung auf den letzten sicheren Boden. Tritt es nochmal auf, bitte melden |
 | B06 | In der **Abrechnung** überlappt die Zeile „Penalty · 1 citations beyond 2 warnings“ den Betrag -10 CR; außerdem „1 citations“ | Tag mit mehr als 2 Fehlern beenden, dann ins Bett | max, 06.11. (Durchlauf P60) | martin | behoben (martin, 07.11.): Zeile heißt jetzt „Penalty · 1 extra citation“ (Einzahl/Mehrzahl), passt links neben den Betrag |
 | B05 | **Verwarnzettel bleiben am nächsten Tag auf dem Tisch liegen** (nach einem Dev-Sprung auch die Papiere des letzten Reisenden) | Falsch entscheiden, dann neuer Tag | max, 05.11. (P41) | max | behoben (max, 06.11., P57): Tisch wird jeden Morgen geleert, im WebGL-Build bestätigt |
-| B04 | Ware beim Händler **sinkt beim Kauf nicht** (man kann z. B. beliebig viele Painkillers kaufen) | Händler öffnen, denselben Gegenstand mehrfach kaufen | martin, 05.11. | — | offen – entschieden (Max, 06.11.): Vorrat, morgens aufgefüllt; Umsetzung in **P11** |
+| B04 | Ware beim Händler **sinkt beim Kauf nicht** (man kann z. B. beliebig viele Painkillers kaufen) | Händler öffnen, denselben Gegenstand mehrfach kaufen | martin, 05.11. | martin | behoben (martin, 06.11., P11): begrenzter Vorrat pro Tag, „Sold out“, morgens aufgefüllt |
 | B03 | Nach dem Schließen von Fenstern (Brief, Handel, BACK) musste man erst klicken, bevor die Kamera sich dreht | WebGL, Fenster mit Klick schließen | martin, 05.11. | martin | behoben (martin, 05.11.): Maus wird beim Zurückgeben der Steuerung sofort gefangen |
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P66 Bestechungszettel: Zettel an Tag 3 (Quill, 60 CR), Umschlag in der Abrechnung, Ablehnen → Barkeeper zwei Abende ohne Gerücht; Balance-Ziel „korrupt nicht vor Tag 6“; B04 geschlossen (martin, 07.11.)
 - [x] P71 Balancing: Simulator + Economy Report + Balance-Test, Ticket 350 CR (~7–8 Tage gute Arbeit), Ereignisse härter, Gerüchte gedämpft, Rundung ,5 auf; P72/P73 als Entwurf, Frage an Max (martin, 07.11.)
 - [x] P65 Barkeeper: Schild mit Wunsch nach Label, GIVE gegen ein Gerücht über die Marktereignisse von morgen, Notiz im Inventar; Modell SM_Bar_WishBoard bestellt (martin, 07.11.)
 - [x] P68 Markt: Label-Faktoren, feste Ereignisse Tag 2/3 (Preis, Menge, Ankauf, Sortiment), MARKET-Zettel, Durchsage, Verderb über Nacht (martin, 07.11.)

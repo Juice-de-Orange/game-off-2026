@@ -66,6 +66,12 @@ namespace GameOff.Shops
             player.SetControlEnabled(false);
             var wish = Wish;
             if (_servedDay == day.Day) { ShowRumour(); return; }
+            if (Economy.BarkeeperSulks(day.Day))
+            {
+                // P66: you turned his man away – no rumour tonight or tomorrow (Martin, 07.11.).
+                dialogs.ShowDialog("THE LAST ORBIT", "Not today, officer. You know why.", null, null, null, Resume);
+                return;
+            }
             if (wish == null || !wish.Active)
             {
                 dialogs.ShowDialog("THE LAST ORBIT", "Nothing I need today. Have a drink some other time.", null, null, null, Resume);

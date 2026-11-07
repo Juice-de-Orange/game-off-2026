@@ -34,6 +34,13 @@ namespace GameOff.Economy
         /// <summary>Notes of the day, e.g. the barkeeper's rumour (P65); shown under TODAY in the inventory, cleared every morning.</summary>
         public List<string> Notes { get; } = new List<string>();
 
+        /// <summary>P66: the bribe earned today (paid in tonight's settlement) and who paid it; 0 = none.</summary>
+        public int BribeTonight { get; set; }
+        public string BribeFrom { get; set; } = "";
+        /// <summary>P66: the barkeeper sulks from this day until the next (no rumour) after a refused bribe; 0 = never.</summary>
+        public int BarkeeperSulksFrom { get; set; }
+        public bool BarkeeperSulks(int day) => BarkeeperSulksFrom > 0 && day >= BarkeeperSulksFrom && day <= BarkeeperSulksFrom + 1;
+
         private readonly Dictionary<VendorStock, VendorSupply> _supplies = new Dictionary<VendorStock, VendorSupply>();
 
         /// <summary>The vendor's shelf right now (created full on first use).</summary>
@@ -116,6 +123,7 @@ namespace GameOff.Economy
         {
             Wallet.BeginDay();
             Notes.Clear();
+            BribeTonight = 0;
             // Market.Begin(day, events) already ran in DayManager.BeginDay (before the pinboard notes).
             if (day > 1) Spoil();
             foreach (var supply in _supplies.Values) supply.Refill();

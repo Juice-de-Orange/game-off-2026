@@ -21,8 +21,10 @@ namespace GameOff.EditorTools
             Bed,
             /// <summary>Pays only the rent.</summary>
             Skip,
-            /// <summary>Clever plus the barkeeper's wish and speculating on the rumour.</summary>
+            /// <summary>Clever plus the barkeeper's wish and speculating on the rumour; turns bribes down (the barkeeper sulks).</summary>
             Rumour,
+            /// <summary>Like Rumour, but takes every bribe (one wrong decision more, the envelope on top, no sulking).</summary>
+            Corrupt,
         }
 
         public class Evening
@@ -41,7 +43,7 @@ namespace GameOff.EditorTools
             public int TicketDay = -1;
             public bool SkippedAnyNeed => Evenings.Any(e => e.SkippedNeed);
             public int WorstCondition => Evenings.Count == 0 ? 0 : Evenings.Max(e => e.Family.Max());
-            public int SpeculationProfit, SpeculatedUnits, WishCost;
+            public int SpeculationProfit, SpeculatedUnits, WishCost, Bribes;
             public bool GameOver => Evenings.Any(e => e.GameOver);
         }
 
@@ -72,6 +74,7 @@ namespace GameOff.EditorTools
             int balance = _economy.startCredits;
             var family = new Household(_household.members.Select(m => m.feelsCold).ToList());
             var held = new Dictionary<ItemData, int>(); // speculation stock carried to the next evening
+            int sulksFrom = 0; // P66: the barkeeper sulks the day a bribe is turned down and the next
             try
             {
                 for (int day = 1; day <= days; day++)
@@ -80,9 +83,21 @@ namespace GameOff.EditorTools
                     Market.Begin(ScheduleDay(day), entry.marketEvents);
                     int travelers = entry.rules != null ? entry.rules.Travelers.Count : 0;
                     int correct = Mathf.Max(0, travelers - wrongPerDay);
+                    int bribeMoney = 0;
+                    var bribe = entry.bribe;
+                    if (bribe != null && bribe.Active)
+                    {
+                        if (style == Style.Corrupt)
+                        {
+                            bribeMoney = bribe.amount;
+                            run.Bribes += bribe.amount;
+                            if (bribe.traveler.IntendedVerdict != GameOff.Travelers.Verdict.Admit && correct > 0) correct--;
+                        }
+                        else sulksFrom = day;
+                    }
                     run.Travelers = travelers;
                     run.Correct = correct;
-                    int wage = Payroll.Wage(correct, _household);
+                    int wage = Payroll.Wage(correct, _household) + bribeMoney;
                     int penalty = Payroll.Penalty(travelers - correct, _freeWarnings, _household);
                     int rent = _household.rent;
                     var kiosk = new VendorSupply(_kiosk);
@@ -104,7 +119,7 @@ namespace GameOff.EditorTools
                     var covered = new HashSet<FamilyNeed>();
                     bool Needed(FamilyNeed n) => n != FamilyNeed.Medicine || family.AnySick;
 
-                    if (style == Style.Clever || style == Style.Rumour)
+                    if (style == Style.Clever || style == Style.Rumour || style == Style.Corrupt)
                         foreach (FamilyNeed need in System.Enum.GetValues(typeof(FamilyNeed)))
                         {
                             if (!Needed(need)) continue;
@@ -120,7 +135,8 @@ namespace GameOff.EditorTools
                             covered.Add(need);
                         }
 
-                    if (style == Style.Rumour && day < days)
+                    bool sulking = sulksFrom > 0 && day >= sulksFrom && day <= sulksFrom + 1;
+                    if ((style == Style.Rumour || style == Style.Corrupt) && day < days && !sulking)
                     {
                         var wish = entry.barWish;
                         if (wish != null && wish.Active)
