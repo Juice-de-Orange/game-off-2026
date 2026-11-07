@@ -180,7 +180,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Festgelegt im Asset-Durchgang (max, 02.11.): Luftschleuse: Außenschott **klappt nach außen ins All** (Rework mit Angel bestellt), Sog, Warnlampe dreht rot, Reisender wird hinausgerissen. Verhaftung: Warnlampe rot. Beschlagnahmtes landet physisch im Asservatenschrank (P32).
 
 ### P09 — Tagesablauf
-- Größe: M · Priorität: Muss · Status: Abnahme bei max (martin, 06.11.)
+- Größe: M · Priorität: Muss · Status: fertig (martin, 06.11.; abgenommen von max, 07.11.)
 - Braucht: P03
 - Ziel: Morgen → Schicht → Feierabend → Schlafen → nächster Tag, 3 Tage.
 - Enthalten: `DayManager`, Morgen-Brief + Bulletin, Schichtende nach Anzahl Reisender, Bett in der Unterkunft beendet den Tag
@@ -960,7 +960,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Nicht geprüft: echte Tasten und Laufwege, andere Geräte und Browser. Halle, Hangar, Gang und Rumpf nur als Editor-Ansichten, nicht im Build abgelaufen.
 
 ### P61 — Ton am Schalter und in der Station
-- Größe: M · Priorität: Soll · Status: gebaut, wartet auf Abnahme nach Gehör (max, 06.11.)
+- Größe: M · Priorität: Soll · Status: fertig (max, 06.11.; nach Gehör abgenommen, 07.11.)
 - Braucht: P18 · Folgt auf: P18
 - Ziel: Was der Spieler tut, ist zu hören, und die Station klingt nach einem Ort. Bisher liegt keine einzige Sounddatei im Projekt.
 - Bestellt (18 Einträge `package: P61` in `ASSET-REQUESTS.md`, bis 16.11.):
@@ -1323,7 +1323,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: In der Live-Version öffnet der Knopf ein neues Tab mit vorausgefülltem Issue samt richtigem Commit; das Spiel läuft weiter.
 
 ### P79 — DeliveryIntegrator: Icons und Dokumente nicht verstellen
-- Größe: XS · Priorität: Soll · Status: offen · Zuständig: max (Call 07.11.)
+- Größe: XS · Priorität: Soll · Status: in Arbeit (max, 07.11.) · Zuständig: max (Call 07.11.)
 - Braucht: — · Folgt auf: —
 - Ziel: `GameOff/Integrate Asset Deliveries` (auch in Rebuild All) ändert nur, was er ändern soll.
 - Enthalten: Waren-Icons (`Art/UI/Icons`, Pixel-Art, Point, Sprite Multiple) und Dokument-Texturen (`Art/Textures/Documents`) bleiben, wie sie sind; heute stellt der Integrator Icons auf Bilinear/Single und Dokumente auf Point (am 07.11. von Hand zurückgesetzt).

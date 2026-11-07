@@ -62,7 +62,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): wartet auf das P08-Gespräch mit max | — | 06.11. |
-| max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
+| max | P79 DeliveryIntegrator: Icons und Dokumente nicht verstellen, danach P78 | — | 07.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -93,6 +93,8 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P09 Tagesablauf: drei Tage mit Kontroll-Gameplay, von max abgenommen (martin, 07.11.)
+- [x] P61 Ton am Schalter und in der Station: nach Gehör abgenommen (max, 07.11.)
 - [x] P36 Flackern nach Stationslage: Krisen-Ereignisse → Lampen flackern öfter, Neon setzt aus, ab Lage 0,5 Stromausfälle; Tag 1 ruhig, Tag 3 instabil (martin, 07.11.)
 - [x] P31 Anzeigesäule: Tag, Phase, nächstes Shuttle und Marktereignis auf den CRTs der Säule in der Halle (martin, 07.11.)
 - [x] P30 Getränkeautomat: [E] kauft Nova Cola, 6 pro Tag, nur abends (martin, 07.11.)
