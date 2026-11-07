@@ -19,7 +19,7 @@ Schlägt ein Lauf fehl, bleibt die letzte Version online, und GitHub schickt ein
 ## Dateien
 | Wo | Was |
 |---|---|
-| `Scripts/Editor/WebBuild.cs` | Build-Einstieg; setzt Vorlage und Statistik nur für diesen Build |
+| `Scripts/Editor/WebBuild.cs` | Build-Einstieg; setzt Vorlage, Statistik und Version (`0.1.0+<commit>`, für den Bugreport-Knopf P78) nur für diesen Build |
 | `Assets/WebGLTemplates/Kestrel9/` | Webseite um das Spiel (Vollfenster, Ladebalken, Impressum und Datenschutz) |
 | `deploy/Dockerfile`, `deploy/nginx.conf` | Container: nginx ohne Root-Rechte, ohne Access-Log, mit `version.txt` |
 | `deploy/server/` | Vorlagen für Geoffrey: `deploy.sh`, `compose.yml`, `nginx-site.conf` |

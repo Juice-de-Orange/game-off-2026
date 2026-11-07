@@ -1,5 +1,6 @@
 using GameOff.Core;
 using GameOff.Counter;
+using GameOff.Day;
 using GameOff.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -25,6 +26,10 @@ namespace GameOff.UI
         [SerializeField] private Button optionsButton;
         [SerializeField] private Button optionsBackButton;
         [SerializeField] private Button menuButton;
+        [Tooltip("P78: opens a pre-filled GitHub issue in a new tab.")]
+        [SerializeField] private BugReportButton bugReportButton;
+        [Tooltip("Optional: day and phase for the bug report.")]
+        [SerializeField] private DayManager dayManager;
 
         private InputAction _pauseAction;
         private bool _paused;
@@ -50,6 +55,7 @@ namespace GameOff.UI
             optionsButton.onClick.AddListener(() => ShowOptions(true));
             optionsBackButton.onClick.AddListener(() => ShowOptions(false));
             menuButton.onClick.AddListener(BackToMenu);
+            if (bugReportButton != null) bugReportButton.Url = BugReportUrl;
             root.SetActive(false);
         }
 
@@ -115,6 +121,14 @@ namespace GameOff.UI
         {
             SetTime(false);
             SceneManager.LoadScene(SceneNames.Menu);
+        }
+
+        /// <summary>The game stays paused while the issue opens in a new tab; the player comes back and resumes.</summary>
+        private string BugReportUrl()
+        {
+            int day = dayManager != null ? dayManager.Day : 0;
+            string phase = dayManager != null ? dayManager.CurrentPhase.ToString() : "-";
+            return BugReport.IssueUrl(Application.version, day, phase, SceneManager.GetActiveScene().name, BrowserBridge.UserAgent);
         }
 
         private void ShowOptions(bool show)

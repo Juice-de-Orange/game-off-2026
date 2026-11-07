@@ -1315,12 +1315,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Auftritt den Pfand und die Figur reagiert geholfen.
 
 ### P78 — Bugreport-Knopf im Pausenmenü
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 07.11.) · Zuständig: max (Call 07.11.)
+- Größe: S · Priorität: Soll · Status: fertig (max, 07.11.; Live-Check nach dem nächsten Deploy) · Zuständig: max (Call 07.11.)
 - Braucht: P49 · Folgt auf: —
 - Ziel: Testspieler melden Bugs mit einem Klick als vorausgefülltes GitHub-Issue (Frage `bugreport-server`, Antwort B).
 - Enthalten: Knopf „REPORT BUG“ im Pausenmenü (über `Build Menu Scenes`), öffnet `github.com/Juice-de-Orange/game-off-2026/issues/new` mit Titel und Text: Version (Commit, im Build eingebaut über `WebBuild`), Tag, Phase, Szene, Browser; Hinweis im Text, keine persönlichen Daten einzutragen.
 - Nicht enthalten: eigener Server, Sammeln mehrerer Bugs im Spiel.
 - Abnahme: In der Live-Version öffnet der Knopf ein neues Tab mit vorausgefülltem Issue samt richtigem Commit; das Spiel läuft weiter.
+- Ergebnis (max, 07.11.): Knopf „REPORT BUG“ im Pausenmenü (zwischen OPTIONS und MAIN MENU, `MenuSceneBuilder`). `BugReport` baut den Link (Label `bug`, Titel „[Bug] Day n, Phase: “, Text mit Version + Commit-Link, Tag, Phase, Szene, Browser, Hinweis auf persönliche Daten). `BugReportButton` + `Plugins/WebGL/Browser.jslib` öffnen das Tab beim `pointerup` des Browsers (wie der Vollbild-Knopf), sonst blockt der Popup-Blocker. `WebBuild` setzt `bundleVersion` nur für den Build auf `0.1.0+<commit>` (GITHUB_SHA, sonst git). Geprüft: lokaler WebGL-Build in Headless-Chrome, echter Klick → neues Tab mit richtigem Issue (Commit 5e4839c, Day 1, Morning, Main), Spiel läuft nach RESUME weiter; Test `BugReportTests`, 109/109 grün. **Solange das Repo privat ist, sehen Spieler ohne Zugriff eine 404.** `tools/measure-webgl.mjs`: MAIN MENU im Pausenmenü liegt jetzt bei v = 0,769.
 
 ### P79 — DeliveryIntegrator: Icons und Dokumente nicht verstellen
 - Größe: XS · Priorität: Soll · Status: fertig (max, 07.11.) · Zuständig: max (Call 07.11.)

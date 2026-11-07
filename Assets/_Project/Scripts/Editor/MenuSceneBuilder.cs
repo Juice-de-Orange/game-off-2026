@@ -4,6 +4,7 @@ using System.Linq;
 using GameOff.Audio;
 using GameOff.Core;
 using GameOff.Counter;
+using GameOff.Day;
 using GameOff.Player;
 using GameOff.UI;
 using TMPro;
@@ -529,10 +530,11 @@ namespace GameOff.EditorTools
 
             var mainPanel = PanelRoot(dim.transform, "MainPanel", false);
             Title(Label(mainPanel, "Heading", "PAUSED", 48, Amber, new Vector2(0f, 130f), new Vector2(600f, 60f)));
-            var resume = MenuButton(mainPanel, "ResumeButton", "RESUME", new Vector2(0f, 30f));
-            var options = MenuButton(mainPanel, "OptionsButton", "OPTIONS", new Vector2(0f, -35f));
-            var menu = MenuButton(mainPanel, "MenuButton", "MAIN MENU", new Vector2(0f, -100f));
-            Label(mainPanel, "Hint", "[Esc] / [P] resume", 16, TextDim, new Vector2(0f, -170f), new Vector2(600f, 24f));
+            var resume = MenuButton(mainPanel, "ResumeButton", "RESUME", new Vector2(0f, 50f));
+            var options = MenuButton(mainPanel, "OptionsButton", "OPTIONS", new Vector2(0f, -15f));
+            var bugReport = MenuButton(mainPanel, "BugReportButton", "REPORT BUG", new Vector2(0f, -80f)); // P78
+            var menu = MenuButton(mainPanel, "MenuButton", "MAIN MENU", new Vector2(0f, -145f));
+            Label(mainPanel, "Hint", "[Esc] / [P] resume", 16, TextDim, new Vector2(0f, -210f), new Vector2(600f, 24f));
 
             var optionsPanel = BuildOptionsPanel(dim.transform, out var optionsBack);
             optionsPanel.GetComponent<Image>().color = Color.clear; // dim backdrop is enough here
@@ -548,6 +550,9 @@ namespace GameOff.EditorTools
             Set(pause, "optionsButton", options);
             Set(pause, "optionsBackButton", optionsBack);
             Set(pause, "menuButton", menu);
+            var bugReportButton = bugReport.gameObject.AddComponent<BugReportButton>();
+            Set(bugReportButton, "button", bugReport);
+            Set(pause, "bugReportButton", bugReportButton);
 
             var prefab = PrefabUtility.SaveAsPrefabAsset(rootGo, PauseMenuPrefab);
             Object.DestroyImmediate(rootGo);
@@ -620,12 +625,14 @@ namespace GameOff.EditorTools
             var counter = Object.FindFirstObjectByType<CounterStation>();
             Set(pause, "player", player);
             Set(pause, "counter", counter);
+            var dayManager = Object.FindFirstObjectByType<DayManager>();
+            Set(pause, "dayManager", dayManager);
             PrefabUtility.RecordPrefabInstancePropertyModifications(pause);
             foreach (var old in scene.GetRootGameObjects().Where(g => g.name == _audioPrefab.name)) Object.DestroyImmediate(old);
             PlaceAudioManager(scene);
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
-            log.Add($"pause menu + audio manager placed in Main (player {(player != null ? "ok" : "MISSING")}, counter {(counter != null ? "ok" : "missing")})");
+            log.Add($"pause menu + audio manager placed in Main (player {(player != null ? "ok" : "MISSING")}, counter {(counter != null ? "ok" : "missing")}, day manager {(dayManager != null ? "ok" : "missing")})");
         }
 
         private static void CheckBuildSettings(List<string> log)

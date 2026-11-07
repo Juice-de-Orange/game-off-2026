@@ -115,7 +115,7 @@ async function measure(name, seconds) {
   console.log(name, JSON.stringify({ ...result.phases[name], spikes: undefined }), JSON.stringify(result.memory[name]));
 }
 
-const START = [0.206, 0.446], MENU_IN_PAUSE = [0.5, 0.684];
+const START = [0.206, 0.446], MENU_IN_PAUSE = [0.5, 0.769]; // y = 0.5 + 145/540 (MenuSceneBuilder, P78 moved it down)
 async function intoShift(firstRun) {
   await click(...START);
   await sleep(firstRun ? 9000 : 7000);
