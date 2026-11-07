@@ -55,6 +55,9 @@ namespace GameOff.Counter
         {
             Say(lines.shiftStart, lines.shiftStartClip);
             if (!string.IsNullOrWhiteSpace(shift.NewToday)) Say(shift.NewToday, null);
+            // P68: the day's market events, as text (no recording yet).
+            foreach (var e in GameOff.Economy.Market.TodayEvents)
+                if (!string.IsNullOrWhiteSpace(e.announcement)) Say(e.announcement, null);
         }
 
         private void OnDecisionMade(TravelerData traveler, Verdict chosen, Judgement judgement)

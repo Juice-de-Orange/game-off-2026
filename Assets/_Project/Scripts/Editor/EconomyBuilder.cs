@@ -157,6 +157,7 @@ namespace GameOff.EditorTools
             SetNeeds(data.Household, (food, data.Items["ration"]), (power, data.Items["fusion"]), (medicine, data.Items["painkillers"]), log);
 
             BuildPriceList(data, contraband, medicine, gadget, food, power, drug, valuable, log, ref created);
+            BuildMarket(data, contraband, food, power, drug, log, ref created);
 
             AssetDatabase.SaveAssets();
             if (created > 0) log.Add($"{created} test assets created");
@@ -243,7 +244,9 @@ namespace GameOff.EditorTools
             Goods("syrup", "CoughSyrup", "Cough syrup", "Sweet, sticky and better than nothing.", 9, new[] { medicine }, kiosk, 2, 0f, 0f, 0.15f);
             Goods("painkillers", "Painkillers", "", "", 15, null, kiosk, 2, 0f, 0.1f, 0.3f);
             Goods("cola", "NovaCola", "", "", 2, null, kiosk, 5, 0f, 0f, 0f);
-            Goods("scanner", "DocumentScanner", "", "", 60, null, kiosk, 1, 0f, 0f, -0.1f);
+            // Off the kiosk until P16 makes it useful (Martin, 07.11.); re-add with AddEntry(kiosk, scanner, 1) there.
+            Goods("scanner", "DocumentScanner", "", "", 60, null, null, 0, 0f, 0f, -0.1f);
+            if (RemoveEntry(kiosk, data.Items["scanner"])) log.Add("scanner off the kiosk until P16");
             Goods("spice", "ContrabandSpice", "", "", 12, null, dealer, 3, 0f, 0.2f, -0.1f);
             Goods("stim", "StimInjector", "Stim injector", "Keeps you standing. Not legal anywhere decent.", 18, new[] { contraband, drug, medicine }, dealer, 2, 0f, 0f, 0.2f);
             Goods("antibiotics", "Antibiotics", "Antibiotics", "Military stock. The clinic back home would kill for these.", 30, new[] { contraband, medicine }, dealer, 1, 0f, 0.1f, 0.4f);
@@ -253,6 +256,102 @@ namespace GameOff.EditorTools
             Goods("ring", "SilverRing", "Silver ring", "Engraved on the inside. The name is scratched out.", 35, new[] { valuable }, null, 0, 0f, 0.1f, 0f);
             Goods("trinket", "AlienTrinket", "Alien trinket", "Warm to the touch. Nobody knows what it does.", 30, new[] { alien, valuable }, null, 0, 0f, 0f, 0.2f);
             created += made;
+        }
+
+        private const string MarketFolder = "Assets/_Project/Data/Market/";
+        private const string SchedulePath = "Assets/_Project/Data/Days/DaySchedule.asset";
+
+        /// <summary>
+        /// P68 market (Martin, 07.11.): label base factors (only where still 1), the placeholder events and their days (only where the
+        /// day has none), spoiling for PERISHABLE, and the one-time Spice correction (day 3 change 0 instead of −10 %).
+        /// </summary>
+        private static void BuildMarket(Data data, ItemTag contraband, ItemTag food, ItemTag power, ItemTag drug, List<string> log, ref int created)
+        {
+            var weapon = Tag("WEAPON", "444B55", ref created);
+            var valuable = Tag("VALUABLE", "FFD36B", ref created);
+            var luxury = Tag("LUXURY", "B9824A", ref created);
+            var perishable = Tag("PERISHABLE", "9BE05A", ref created);
+            foreach (var (tag, factor) in new[] { (contraband, 1.3f), (weapon, 1.2f), (valuable, 1.2f), (luxury, 1.2f), (perishable, 0.8f) })
+            {
+                var so = new SerializedObject(tag);
+                var p = so.FindProperty("priceFactor");
+                if (!Mathf.Approximately(p.floatValue, 1f)) continue; // tuned by hand: leave it
+                p.floatValue = factor;
+                so.ApplyModifiedPropertiesWithoutUndo();
+                EditorUtility.SetDirty(tag);
+            }
+            if (data.Tuning.perishableTag == null) { data.Tuning.perishableTag = perishable; EditorUtility.SetDirty(data.Tuning); }
+
+            // Spice: day 3 without the dip, so the barkeeper's rumour (P65) pays off.
+            var spice = new SerializedObject(data.Items["spice"]);
+            var change = spice.FindProperty("dailyChange");
+            if (change.arraySize == 3 && Mathf.Approximately(change.GetArrayElementAtIndex(2).floatValue, -0.1f))
+            {
+                change.GetArrayElementAtIndex(2).floatValue = 0f;
+                spice.ApplyModifiedPropertiesWithoutUndo();
+                EditorUtility.SetDirty(data.Items["spice"]);
+                log.Add("spice day 3 change 0");
+            }
+
+            var kiosk = data.Stocks["Stock_Kiosk_Test"];
+            var dealer = data.Stocks["Stock_BlackMarket_Test"];
+            var border = LoadOrCreate<MarketEvent>(MarketFolder + "Market_BorderClosed.asset", e =>
+            {
+                e.bulletinLine = "Border closed on the home planet. Food deliveries are cut - food is scarce and expensive.";
+                e.announcement = "Attention: due to the border closure, food supplies on the station are limited.";
+                e.labels.Add(new LabelEffect { tag = food, price = 1.3f, amount = 0.5f });
+                e.stock.Add(new StockChange { stock = kiosk, item = data.Items["fruit"], amount = 0 });
+            }, ref created);
+            var smugglers = LoadOrCreate<MarketEvent>(MarketFolder + "Market_SmugglersBusted.asset", e =>
+            {
+                e.bulletinLine = "Smuggler ring busted by station security. Drugs are hard to get; contraband sells high.";
+                e.announcement = "Security notice: a smuggler ring has been arrested. Report any contraband at once.";
+                e.labels.Add(new LabelEffect { tag = drug, price = 1.8f });
+                e.labels.Add(new LabelEffect { tag = contraband, buy = 1.3f });
+                e.stock.Add(new StockChange { stock = dealer, item = data.Items["spice"], amount = 2 });
+            }, ref created);
+            var cold = LoadOrCreate<MarketEvent>(MarketFolder + "Market_ColdSnap.asset", e =>
+            {
+                e.bulletinLine = "Cold snap on the home planet. Power cells are in demand.";
+                e.announcement = "Weather report from home: a cold snap. Power cells are in short supply.";
+                e.labels.Add(new LabelEffect { tag = power, price = 1.25f });
+            }, ref created);
+
+            var schedule = AssetDatabase.LoadAssetAtPath<GameOff.Day.DaySchedule>(SchedulePath);
+            if (schedule == null) { log.Add("no DaySchedule - market events not placed"); return; }
+            var sso = new SerializedObject(schedule);
+            var days = sso.FindProperty("days");
+            bool placed = false;
+            void Place(int day, params MarketEvent[] events)
+            {
+                if (days.arraySize < day) return;
+                var list = days.GetArrayElementAtIndex(day - 1).FindPropertyRelative("marketEvents");
+                if (list.arraySize > 0) return; // the day has its own events already
+                list.arraySize = events.Length;
+                for (int i = 0; i < events.Length; i++) list.GetArrayElementAtIndex(i).objectReferenceValue = events[i];
+                placed = true;
+            }
+            Place(2, border);
+            Place(3, smugglers, cold);
+            if (!placed) return;
+            sso.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(schedule);
+            log.Add("market events: day 2 border closed, day 3 smugglers busted + cold snap");
+        }
+
+        private static bool RemoveEntry(VendorStock stock, ItemData item)
+        {
+            var so = new SerializedObject(stock);
+            var entries = so.FindProperty("entries");
+            for (int i = 0; i < entries.arraySize; i++)
+            {
+                if (entries.GetArrayElementAtIndex(i).FindPropertyRelative("item").objectReferenceValue != item) continue;
+                entries.DeleteArrayElementAtIndex(i);
+                so.ApplyModifiedPropertiesWithoutUndo();
+                EditorUtility.SetDirty(stock);
+                return true;
+            }
+            return false;
         }
 
         private static void SetDailyChange(ItemData item, float[] change)

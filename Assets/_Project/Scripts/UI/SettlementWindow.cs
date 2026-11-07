@@ -74,7 +74,7 @@ namespace GameOff.UI
             if (dayManager != null)
             {
                 dayManager.NightStep = Run;
-                dayManager.LetterAddendum = () => Economy != null ? Economy.FamilyReport() : "";
+                dayManager.LetterAddendum = () => Economy != null ? Economy.MorningReport() : "";
             }
             if (shift != null)
             {

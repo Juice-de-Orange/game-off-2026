@@ -18,7 +18,7 @@ MonoBehaviour:
   dailyChange:
   - 0
   - 0.2
-  - -0.1
+  - 0
   tags:
   - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
   - {fileID: 11400000, guid: 6fb8a1b3c51568c4f8aa6d549a58f4fb, type: 2}

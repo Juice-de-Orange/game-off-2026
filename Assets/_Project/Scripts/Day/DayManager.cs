@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using GameOff.Core;
+using GameOff.Economy;
 using GameOff.Player;
 using GameOff.Travelers;
 using UnityEngine;
@@ -60,6 +61,8 @@ namespace GameOff.Day
         /// <summary>Dev tools on (Dev_end_Day, visible hitboxes, vendors open during the shift via a dev button).</summary>
         public bool DevTools => showDevTools && GameSettings.DevTools;
         public int DayCount => schedule.Count;
+        /// <summary>The schedule entry of day n (1-based), e.g. tomorrow's market events for the barkeeper's rumour (P65).</summary>
+        public DayEntry Entry(int day) => schedule.Get(day);
         public Phase CurrentPhase => _phase;
 
         private void OnEnable()
@@ -96,6 +99,7 @@ namespace GameOff.Day
             _phase = Phase.Morning;
             var entry = schedule.Get(day);
             if (sky != null) sky.SetDay(day);
+            Market.Begin(day, entry.marketEvents); // before the counter pins today's notes (P68)
             shift.BeginDay(entry.rules, entry.newToday);
             player.Teleport(wakeUpPoint.position, wakeUpPoint.rotation);
             player.SetControlEnabled(false);

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemTag
   displayName: VALUABLE
   color: {r: 1, g: 0.827451, b: 0.41960785, a: 1}
+  priceFactor: 1.2

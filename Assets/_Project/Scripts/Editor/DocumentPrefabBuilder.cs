@@ -449,8 +449,10 @@ namespace GameOff.EditorTools
             // the counter stands at (-2, 0, -9). Page top up, page face into the room (-Z).
             board.localPosition = new Vector3(0.5f, 1.75f, 2.74f);
             board.localRotation = Quaternion.LookRotation(Vector3.up, Vector3.back);
-            var bulletinSpot = BoardSpot(board, "Bulletin", -0.17f);
-            var wantedSpot = BoardSpot(board, "Wanted", 0.17f);
+            // Three 0.30 m notes side by side on the 1 m board (P68 added MARKET, only hung on days with market events).
+            var bulletinSpot = BoardSpot(board, "Bulletin", -0.33f);
+            var wantedSpot = BoardSpot(board, "Wanted", 0f);
+            var marketSpot = BoardSpot(board, "Market", 0.33f);
             var pinBoard = root.GetComponent<PinBoard>();
             if (pinBoard == null) pinBoard = root.AddComponent<PinBoard>();
             var pso = new SerializedObject(pinBoard);
@@ -458,6 +460,7 @@ namespace GameOff.EditorTools
             pso.FindProperty("desk").objectReferenceValue = desk;
             pso.FindProperty("bulletinSpot").objectReferenceValue = bulletinSpot;
             pso.FindProperty("wantedSpot").objectReferenceValue = wantedSpot;
+            pso.FindProperty("marketSpot").objectReferenceValue = marketSpot;
             pso.ApplyModifiedPropertiesWithoutUndo();
 
             var deskCamera = (Component)new SerializedObject(station).FindProperty("deskCamera").objectReferenceValue;

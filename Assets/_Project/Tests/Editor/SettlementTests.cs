@@ -139,7 +139,7 @@ namespace GameOff.Tests
             Assert.IsTrue(supply.Take(watch));
             CollectionAssert.DoesNotContain(supply.Items.ToList(), watch);
             supply.Refill();
-            Assert.AreEqual(2, supply.Count(ration), "refill never takes away");
+            Assert.AreEqual(1, supply.Count(ration), "every morning the shelf holds exactly the daily amount (P68)");
         }
 
         // ---------- Drone delivery (P13) ----------
@@ -187,7 +187,7 @@ namespace GameOff.Tests
         // ---------- Market price (P70) ----------
 
         [TearDown]
-        public void ResetMarketDay() => GameOff.Economy.Market.Day = 1;
+        public void ResetMarketDay() => GameOff.Economy.Market.Begin(1, null);
 
         private ItemData Changing(int value, params float[] change)
         {

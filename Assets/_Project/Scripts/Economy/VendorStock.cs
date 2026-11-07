@@ -40,7 +40,7 @@ namespace GameOff.Economy
 
         // From today's market price (P70: base × fixed daily change; P68 adds labels and events).
         public int PriceFor(ItemData item) => Market.Rounded(Market.PriceOf(item) * sellFactor);
-        public int OfferFor(ItemData item) => Market.Rounded(Market.PriceOf(item) * buyFactor);
+        public int OfferFor(ItemData item) => Market.Rounded(Market.PriceOf(item) * buyFactor * Market.BuyFactor(item));
 
         public bool Buys(ItemData item)
         {

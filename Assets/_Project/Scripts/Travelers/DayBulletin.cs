@@ -1,4 +1,5 @@
 using System.Text;
+using GameOff.Economy;
 
 namespace GameOff.Travelers
 {
@@ -37,6 +38,15 @@ namespace GameOff.Travelers
                 text.Append('\n');
             }
             return text.ToString();
+        }
+
+        /// <summary>P68: one line per market event of today (Market.TodayEvents); empty on days without events.</summary>
+        public static string Market()
+        {
+            var text = new StringBuilder();
+            foreach (var e in GameOff.Economy.Market.TodayEvents)
+                if (!string.IsNullOrWhiteSpace(e.bulletinLine)) text.Append("- ").Append(e.bulletinLine).Append("\n\n");
+            return text.ToString().TrimEnd();
         }
 
         public static string Order(WantedOrder order) => order == WantedOrder.Terminate ? "TERMINATE: AIRLOCK" : "ARREST";

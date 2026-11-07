@@ -3,9 +3,10 @@ using System.Collections.Generic;
 namespace GameOff.Economy
 {
     /// <summary>
-    /// What one vendor has on the shelf right now (P11, bug B04). Every morning each stock item is topped up to its daily
+    /// What one vendor has on the shelf right now (P11, bug B04). Every morning each stock item is set to its daily
     /// amount; buying takes one, selling to the vendor puts one there (also items the vendor doesn't normally sell –
     /// those disappear from the list when bought back).
+    /// P68: the morning amount follows the day's market (events can halve it or take it away) and events can add items for the day.
     /// </summary>
     public class VendorSupply
     {
@@ -37,7 +38,16 @@ namespace GameOff.Economy
             foreach (var e in _stock.Entries)
             {
                 if (e == null || e.item == null) continue;
-                if (Count(e.item) < e.dailyAmount) _counts[e.item] = e.dailyAmount;
+                // Every morning the shelf holds exactly today's amount (P68): a shortage shows even if yesterday's stock was left.
+                _counts[e.item] = Market.Amount(e.item, e.dailyAmount);
+            }
+            foreach (var change in Market.StockChanges(_stock))
+            {
+                if (change.amount == 0) { _counts[change.item] = 0; continue; }
+                // Something the vendor sells anyway comes on top of today's amount; anything else is on the shelf for the day.
+                if (_stock.Sells(change.item)) { _counts[change.item] = Count(change.item) + change.amount; continue; }
+                if (!_extras.Contains(change.item)) _extras.Add(change.item);
+                if (Count(change.item) < change.amount) _counts[change.item] = change.amount;
             }
         }
 

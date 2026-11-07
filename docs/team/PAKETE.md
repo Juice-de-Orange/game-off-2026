@@ -311,6 +311,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Gekaufter Scanner markiert gefälschte Felder auf Dokumenten.
 - Assets: `SM_Item_DocScanner` (bestellt am 06.11.)
 - Abnahme: Mit Scanner wird ein gefälschtes Feld sichtbar markiert.
+- Hinweis (martin, 07.11., P68): Der Scanner ist bis dahin **nicht im Kiosk-Sortiment** (sonst kauft man 60 CR ohne Nutzen). Mit P16 in `EconomyBuilder.BuildPriceList` wieder per `AddEntry(kiosk, scanner, 1)` aufnehmen.
 
 ### P17 — Retro-Look
 - Größe: S · Priorität: Soll · Status: fertig (max, 02.11.)
@@ -1058,7 +1059,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   **Weiter in P61 (max).**
 
 ### P68 — Markt: Preise und Ereignisse pro Tag
-- Größe: M · Priorität: Muss (Vorschlag, Preise und Bett hängen daran) · Status: in Arbeit (martin, 07.11.)
+- Größe: M · Priorität: Muss (Vorschlag, Preise und Bett hängen daran) · Status: fertig (martin, 07.11.)
 - Braucht: P11 (Händlervorrat), P10, P13, P70 (Waren) · Folgt auf: — · Hängt zusammen mit P65 (Gerüchte), P15 (Inhalte), P71 (Balancing)
 - Ziel: Ein Markt bestimmt, was es wann zu welchem Preis gibt – mit festen Ereignissen pro Tag (politische Lage, Tagesereignisse).
 - **Preisformel (martin, 06.11., DECISIONS.md):**
@@ -1080,6 +1081,22 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: Gerüchte (P65), Texte der Ereignisse (P15), Warenliste (P70), Durchrechnen (P71).
 - Abnahme: An einem Tag mit Ereignis ist die betroffene Ware sichtbar teurer, knapper oder fehlt; das Bett zieht mit; Bulletin und
   Durchsage nennen das Ereignis.
+- Ergebnis (martin, 07.11.):
+  - **Formel umgesetzt** (`Market`): Marktpreis = Basis × (1 + Tagesschwankung) × `ItemTag.priceFactor` jedes Labels × Ereignis-Preisfaktoren;
+    Ankauf zusätzlich × Ereignis-Ankaufsfaktor; Menge = Tagesmenge × Ereignis-Mengenfaktor, **aufgerundet** (mind. 1, nur Faktor 0 = weg);
+    **jeden Morgen genau die Tagesmenge** im Regal (Reste vom Vortag zählen nicht). Bett folgt dem Marktpreis.
+  - **Label-Grundfaktoren:** CONTRABAND ×1,3, WEAPON ×1,2, VALUABLE ×1,2, LUXURY ×1,2, PERISHABLE ×0,8, Rest ×1,0.
+  - **Ereignisse** (`MarketEvent`, `Data/Market/`, je Tag in `DaySchedule` → `marketEvents`):
+    Tag 2 „Border closed“ – FOOD ×1,3, Menge ×0,5, Fresh fruit fehlt. Tag 3 „Smugglers busted“ – DRUG ×1,8, Ankauf CONTRABAND ×1,3,
+    Dealer +2 Spice; „Cold snap“ – POWER ×1,25. Spice-Schwankung Tag 3 jetzt 0 (Gerücht lohnt: Tag 2 kaufen ≈ 28, Tag 3 verkaufen 44).
+  - **Ankündigung:** dritter Zettel **MARKET** an der Pinnwand (nur an Tagen mit Ereignis; die drei Zettel sitzen jetzt bei −0,33 / 0 / +0,33,
+    `DocumentPrefabBuilder.WireBoard`), Durchsage nach Schichtbeginn (`Announcer`, Text ohne Aufnahme).
+  - **Verderb:** PERISHABLE-Ware im Inventar ist am Morgen weg (`EconomyTuning.perishableTag`), der Brief nennt es („Spoiled overnight: …“).
+    Vorher per Drohne Geschicktes zählt.
+  - **Scanner** vorerst nicht im Kiosk (kommt mit P16 zurück).
+  - Haken: `DayManager.BeginDay` → `Market.Begin(day, events)` vor dem Zettel-Aufhängen; `DayManager.Entry(day)` für P65 (Ereignisse von morgen).
+  - Geprüft: 95/95 EditMode-Tests (neu `MarketTests`); Play-Modus 3 Tage: Tag 1 Spice beim Dealer 23; Tag 2 Essen teurer und halb so viel,
+    Fresh fruit fehlt, Zettel und Durchsage, verdorbene Frucht im Brief; Tag 3 Spice 42 ×5, Ankauf 44, Wärme am Bett 22. Konsole 0 Fehler.
 
 ### P69 — Familienschicksal: was „kritisch“ bedeutet
 - Größe: S · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 06.11.) – mit Max abstimmen

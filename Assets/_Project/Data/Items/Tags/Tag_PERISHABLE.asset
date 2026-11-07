@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemTag
   displayName: PERISHABLE
   color: {r: 0.60784316, g: 0.8784314, b: 0.3529412, a: 1}
+  priceFactor: 0.8

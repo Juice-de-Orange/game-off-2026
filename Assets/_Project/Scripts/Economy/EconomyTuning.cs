@@ -9,6 +9,8 @@ namespace GameOff.Economy
         public int startCredits = 40;
         [Tooltip("Shown after amounts, e.g. \"115 CR\".")]
         public string currency = "CR";
+        [Tooltip("Items with this label go bad overnight in the inventory (P68). Send them home or sell them the same evening.")]
+        public ItemTag perishableTag;
 
         public string Format(int amount) => $"{amount} {currency}";
     }

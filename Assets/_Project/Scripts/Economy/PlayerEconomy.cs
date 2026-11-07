@@ -54,12 +54,40 @@ namespace GameOff.Economy
             return string.Join("\n", lines);
         }
 
+        /// <summary>What went bad overnight (P68), e.g. "Spoiled overnight: Fresh fruit ×1." – empty if nothing.</summary>
+        public string SpoiledReport { get; private set; } = "";
+
+        /// <summary>Under the morning letter: the family's lines, then what spoiled.</summary>
+        public string MorningReport()
+        {
+            string family = FamilyReport();
+            if (string.IsNullOrEmpty(SpoiledReport)) return family;
+            return string.IsNullOrEmpty(family) ? SpoiledReport : family + "\n\n" + SpoiledReport;
+        }
+
+        /// <summary>P68: perishable items in the inventory go bad overnight (what went home by drone before the night still counted).</summary>
+        private void Spoil()
+        {
+            SpoiledReport = "";
+            var tag = tuning != null ? tuning.perishableTag : null;
+            if (tag == null) return;
+            var spoiled = new List<string>();
+            foreach (var item in new List<ItemData>(Inventory.Items))
+            {
+                if (!item.HasTag(tag)) continue;
+                int n = Inventory.Count(item);
+                Inventory.Remove(item, n);
+                spoiled.Add($"{item.DisplayName} ×{n}");
+            }
+            if (spoiled.Count > 0) SpoiledReport = "Spoiled overnight: " + string.Join(", ", spoiled) + ".";
+        }
+
         private void Awake()
         {
             Instance = this;
             Wallet = new Wallet(tuning != null ? tuning.startCredits : 0);
             Inventory = new Inventory();
-            Market.Day = 1;
+            Market.Begin(1, null); // a new run starts without yesterday's events (Market is static)
             var cold = new List<bool>();
             if (household != null) foreach (var m in household.members) cold.Add(m.feelsCold);
             Household = new Household(cold);
@@ -85,8 +113,9 @@ namespace GameOff.Economy
         private void OnDayStarted(int day)
         {
             Wallet.BeginDay();
-            Market.Day = day;
-            if (day > 1) foreach (var supply in _supplies.Values) supply.Refill();
+            // Market.Begin(day, events) already ran in DayManager.BeginDay (before the pinboard notes).
+            if (day > 1) Spoil();
+            foreach (var supply in _supplies.Values) supply.Refill();
         }
 
         public string Format(int amount) => tuning != null ? tuning.Format(amount) : amount.ToString();
