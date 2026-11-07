@@ -11,7 +11,7 @@ GitHub Actions (.github/workflows/deploy-web.yml), nachts 03:00 Uhr MEZ oder per
   → docker save | ssh geoffrey → /opt/kestrel9/deploy.sh
        prüft den Image-Namen, startet das Image, prüft die Antwort, bei Fehler zurück auf die vorige Version
 ```
-**Stand 05.11.:** Der Workflow baut noch nicht, weil die Secrets fehlen. Bis dahin spielt max von Hand ein (unten).
+**Stand 07.11.:** Der Workflow baut noch nicht, weil die Secrets fehlen. Bis dahin spielt max von Hand ein (unten). Live: `5a6d0f6` (P72 Ticket nach Hause, P84 Bugreport-Formular + Backend). Claudes Auto-Modus blockt den Live-Deploy als Produktions-Deploy: Claude baut und legt ein Skript bereit, max startet es mit `! bash <skript>`.
 
 Wer sofort eine neue Version will: GitHub → Actions → **Deploy web version** → **Run workflow**.
 Schlägt ein Lauf fehl, bleibt die letzte Version online, und GitHub schickt eine Mail.
@@ -42,6 +42,7 @@ Danach Unitys eigene Änderungen zurücksetzen: `ShareTechMono SDF.asset`, `Orbi
 2. Build als `site/` zusammen mit `deploy/Dockerfile` und `deploy/nginx.conf` nach Geoffrey in einen leeren Ordner kopieren, dort `docker build --build-arg GIT_SHA=$S -t kestrel9:$S .`
 3. `docker save kestrel9:$S | SSH_ORIGINAL_COMMAND="deploy $S" /opt/kestrel9/deploy.sh` (startet, prüft, rollt bei Fehler zurück).
 4. Prüfen: `curl https://kestrel9.maxlworks.com/version.txt`. Besucher sind nur Sekunden unterbrochen.
+   Von Windows aus: `C:/Windows/System32/OpenSSH/ssh.exe geoffrey` nehmen (der Schlüssel liegt im Windows-ssh-agent, Git Bashs `ssh` kennt ihn nicht); Docker Desktop muss dafür nicht laufen, gebaut wird auf Geoffrey.
 
 **Messen und durchspielen:** `node tools/measure-webgl.mjs <Build> <Ausgabe> [full|quick]`, mit `K9_CPU=4` für ein schwächeres Gerät; `node tools/drive-webgl.mjs <Build> <Ausgabe>` spielt per Skript mit echten Eingaben. Beide starten ein eigenes Chrome ohne Fenster und liefern nichts mit dem Spiel aus.
 
