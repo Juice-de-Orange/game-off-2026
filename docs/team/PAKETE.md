@@ -1255,7 +1255,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   jedem Start. Geprüft im Play-Modus: alter Wert „an“ gespeichert → Start mit „aus“; RETURN schließt das Panel, Steuerung zurück (Bild).
 
 ### P75 — Wiederkehrende Figuren: Gedächtnis, Auftritte, Folgen
-- Größe: M–L · Priorität: Muss (Vorschlag) · Status: offen (im Call 07.11. bestätigt) · Zuständig: martin
+- Größe: M–L · Priorität: Muss (Vorschlag) · Status: in Arbeit (martin, 07.11.) · Zuständig: martin
 - Braucht: P07, P09, P41 (Pinnwand), P68 (Markt-Ereignisse), P36 (Lage der Station) · Inhalt dazu: P76 · Beschlagnahme als Ausgang erst mit P08
 - Ziel: Acht Figuren (Ablauf: `docs/FIGUREN.md`) kommen geskriptet wieder, erinnern sich, wie man sie behandelt hat, und ihre Geschichte verändert die Station.
 - Enthalten:

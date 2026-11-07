@@ -63,6 +63,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 | martin | P08 Entscheidungen & Moral: Code + PF_Economy gepusht, **Einbau in Main wartet auf max' Claim** (max: wenn du `Rebuild All`/`Build Economy into Main` laufen lässt, ist P08 damit eingebaut – sag kurz Bescheid) | `PF_Economy.prefab`, `Scripts/Editor/EconomyBuilder.cs` | 07.11. |
+| martin | P75 Figuren-System (kleine Haken in Schicht, Tagesregeln, Begrüßung, Markt) | `Scripts/Travelers/CounterShift.cs`, `Scripts/Travelers/DayRules.cs`, `Scripts/Travelers/TravelerPresenter.cs`, `Scripts/Economy/Market.cs` | 07.11. |
 | max | P72 Ticket nach Hause + P84 Bugreport im Spiel: Einbau in Main (Build Departure, Build Menu Scenes, Bake) | `Main.unity`, `Menu.unity`, `Boot.unity`, `PF_PauseMenu.prefab`, `Scripts/Economy/PlayerEconomy.cs`, `Scripts/Day/DayManager.cs` | 07.11. |
 | max | P84 Bugreport im Spiel mit Backend auf Geoffrey (Main-Teil zusammen mit P72 nach P81) | `deploy/` (nginx.conf, server/compose.yml) | 07.11. |
 
