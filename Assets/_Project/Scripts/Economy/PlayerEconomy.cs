@@ -39,6 +39,8 @@ namespace GameOff.Economy
         public string BribeFrom { get; set; } = "";
         /// <summary>P66: the barkeeper sulks from this day until the next (no rumour) after a refused bribe; 0 = never.</summary>
         public int BarkeeperSulksFrom { get; set; }
+        /// <summary>P72: the ticket home is bought; boarding the shuttle in the evening ends the run.</summary>
+        public bool HasTicket { get; set; }
         public bool BarkeeperSulks(int day) => BarkeeperSulksFrom > 0 && day >= BarkeeperSulksFrom && day <= BarkeeperSulksFrom + 1;
 
         private readonly Dictionary<VendorStock, VendorSupply> _supplies = new Dictionary<VendorStock, VendorSupply>();

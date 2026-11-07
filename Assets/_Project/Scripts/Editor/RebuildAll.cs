@@ -30,6 +30,7 @@ namespace GameOff.EditorTools
             Debug.Log(DocumentPrefabBuilder.Build());
             DayFlowBuilder.BuildIntoMainFromMenu();
             EconomyBuilder.BuildIntoMainFromMenu();
+            DepartureBuilder.BuildIntoMainFromMenu();
             TrafficBuilder.BuildIntoMainFromMenu();
             AmbienceBuilder.BuildIntoMainFromMenu();
             MenuSceneBuilder.BuildFromMenu();

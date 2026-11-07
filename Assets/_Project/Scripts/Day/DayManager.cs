@@ -166,6 +166,33 @@ namespace GameOff.Day
             _nightCancelled = false;
         }
 
+        /// <summary>
+        /// Ends the run with an ending (P72: the flight home; P12 adds more). Fades out and shows the end screen; its only button
+        /// goes back to the main menu.
+        /// </summary>
+        public void FinishRun(string title, string body)
+        {
+            if (_phase == Phase.Finished) return;
+            StartCoroutine(FinishRunRoutine(title, body));
+        }
+
+        private IEnumerator FinishRunRoutine(string title, string body)
+        {
+            _phase = Phase.Finished;
+            player.SetControlEnabled(false); // frees the mouse for the end screen
+            yield return ui.FadeTo(1f, fadeSeconds);
+            ShowRunEnd(title, body);
+        }
+
+        /// <summary>The one place a run ends with an ending text (game over, ticket home; P12 adds more).</summary>
+        private void ShowRunEnd(string title, string body)
+        {
+            _phase = Phase.Finished;
+            Debug.Log($"[Day] Run finished on day {_day}: {title}");
+            RunFinished?.Invoke();
+            ui.ShowEnd(title, body, "RETURN TO MENU");
+        }
+
         private IEnumerator EndDay()
         {
             var before = _phase;
@@ -183,10 +210,7 @@ namespace GameOff.Day
             yield return ui.FadeTo(1f, fadeSeconds);
             if (_gameOver.HasValue)
             {
-                _phase = Phase.Finished;
-                Debug.Log($"[Day] Game over on day {_day}: {_gameOver.Value.title}");
-                RunFinished?.Invoke();
-                ui.ShowEnd(_gameOver.Value.title, _gameOver.Value.body, "RETURN TO MENU");
+                ShowRunEnd(_gameOver.Value.title, _gameOver.Value.body);
                 yield break;
             }
             DayEnded?.Invoke(_day);
