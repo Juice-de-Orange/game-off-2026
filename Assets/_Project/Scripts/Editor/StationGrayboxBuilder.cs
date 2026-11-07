@@ -1662,9 +1662,7 @@ namespace GameOff.EditorTools
             KitProp(p, "Hall/SM_Hall_Bench.fbx", "SM_Hall_Bench_B", 2.5f, 3.2f, 2.8f, 0.6f, 0.9f, 0, 180f);
             KitProp(p, "Hall/SM_Hall_Bench.fbx", "SM_Hall_Bench_C", -2.5f, -3.5f, 2.8f, 0.6f, 0.9f, 0, 180f);
             KitProp(p, "Hall/SM_Hall_VendingMachine.fbx", "SM_Hall_VendingMachine", -7.4f, 4.5f, 0.8f, 1.0f, 1.9f, 0, -90f);
-            KitProp(p, "Hall/SM_Hall_Sign.fbx", "SM_Hall_Sign_Staff", -7f, -5.6f, 1.2f, 0.1f, 0.4f, 3.2f, 180f); // pivot top_center
-            KitProp(p, "Hall/SM_Hall_Sign.fbx", "SM_Hall_Sign_Motel", -7.6f, 1f, 0.1f, 1.2f, 0.4f, 3.2f, -90f);
-            KitProp(p, "Hall/SM_Hall_Sign.fbx", "SM_Hall_Sign_Bar", 7.6f, 3f, 0.1f, 1.2f, 0.4f, 3.2f, 90f);
+            BuildWayfinding(p); // P88: hanging signs with the right room and arrow
             KitProp(p, "Hall/SM_Hall_Planter.fbx", "SM_Hall_Planter", 7.2f, 5.2f, 1, 1, 1.4f);
             // Kiosk
             // Sign and glass face local -X = the hall side; the grille box tops out at 2.4 m.
@@ -1808,6 +1806,77 @@ namespace GameOff.EditorTools
             var go = PlaceKit(parent, kitPath, position, yaw);
             if (go != null) go.name = name;
             return go;
+        }
+
+        // ---------- Wayfinding (P88) ----------
+        // SM_Hall_Sign is a double-sided hanging sign (pivot top center). Its atlas T_Hall_Sign_* has one 40 px row per destination
+        // and the model shows the first; both faces show the arrow pointing to the sign's local -X. Signs hang across the way, so the
+        // arrow points left or right of someone walking up to them.
+        private enum SignRow { Motel, Diner, Bar, Kiosk, HangarStaff, Customs }
+        private const string KitHallSign = "Hall/SM_Hall_Sign.fbx";
+        private const float SignHeight = 0.4f, SignGap = 0.05f, SignHalfWidth = 0.6f;
+
+        private static void BuildWayfinding(GameObject p)
+        {
+            var north = Vector3.forward; var south = Vector3.back; var east = Vector3.right; var west = Vector3.left;
+            // Hall, at the motel entrance: the player comes in from room 103 heading east (doors: diner x -8 z -3, service x -7 z -6,
+            // kiosk x 8 z -4, bar x 8 z 3). Hall ceiling 6 m.
+            HangSigns(p, "Motel", new Vector3(-5.5f, 4.2f, 1f), 6f,
+                (SignRow.Customs, south), (SignRow.Diner, south), (SignRow.Kiosk, south), (SignRow.Bar, north));
+            // Hall, in front of the service door: coming back from the counter heading north (motel door x -8 z 1).
+            HangSigns(p, "Service", new Vector3(-6f, 4.2f, -3.5f), 6f,
+                (SignRow.Motel, west), (SignRow.Diner, west), (SignRow.Bar, east), (SignRow.Kiosk, east));
+            // Service corridor (x -8..-6, 3 m high): from the hall the counter door is on the right (x -6 z -9) ...
+            HangSigns(p, "CorridorHall", new Vector3(-7f, 2.95f, -7.4f), 3f, (SignRow.Customs, east));
+            // ... and leaving the counter, the hangar door is to the left (z -12).
+            HangSigns(p, "CorridorCounter", new Vector3(-7f, 2.95f, -9.6f), 3f, (SignRow.HangarStaff, south));
+        }
+
+        /// <summary>A stack of signs hanging from the ceiling at <paramref name="top"/>; all in one stack point along one axis.</summary>
+        private static void HangSigns(GameObject parent, string name, Vector3 top, float ceiling, params (SignRow row, Vector3 arrow)[] signs)
+        {
+            if (Kit(KitHallSign) == null) return;
+            var group = new GameObject("Wayfinding_" + name);
+            group.transform.SetParent(parent.transform, false);
+            float yaw = 0f;
+            for (int i = 0; i < signs.Length; i++)
+            {
+                var (row, arrow) = signs[i];
+                // Local -X must point along the arrow: yaw = atan2(z, -x).
+                yaw = Mathf.Atan2(arrow.z, -arrow.x) * Mathf.Rad2Deg;
+                var sign = PlaceDecor(group, KitHallSign, $"SM_Hall_Sign_{row}", top + Vector3.down * (i * (SignHeight + SignGap)), yaw);
+                var material = HallSignMaterial(row);
+                var renderer = sign != null ? sign.GetComponentInChildren<Renderer>() : null;
+                if (renderer != null && material != null) renderer.sharedMaterial = material;
+            }
+            // Two thin hangers from the top sign to the ceiling.
+            float length = ceiling - top.y;
+            if (length <= 0.01f) return;
+            var along = Quaternion.Euler(0f, yaw, 0f) * Vector3.right;
+            foreach (float side in new[] { -0.45f, 0.45f })
+            {
+                var rod = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                rod.name = "Hanger";
+                Object.DestroyImmediate(rod.GetComponent<Collider>());
+                rod.transform.SetParent(group.transform, false);
+                rod.transform.SetPositionAndRotation(top + along * side + Vector3.up * (length * 0.5f), Quaternion.Euler(0f, yaw, 0f));
+                rod.transform.localScale = new Vector3(0.02f, length, 0.02f);
+                rod.GetComponent<MeshRenderer>().sharedMaterial = _prop;
+                GameObjectUtility.SetStaticEditorFlags(rod, StaticEditorFlags.BatchingStatic | StaticEditorFlags.ContributeGI);
+            }
+        }
+
+        /// <summary>One material per atlas row (40 of 256 px); the first row is the delivered material itself.</summary>
+        private static Material HallSignMaterial(SignRow row)
+        {
+            const string source = "Assets/_Project/Art/Materials/Hall/M_Hall_Sign.mat";
+            if (row == SignRow.Motel || AssetDatabase.LoadAssetAtPath<Material>(source) == null) return null;
+            string path = $"Assets/_Project/Art/Materials/Hall/M_Hall_Sign_{row}.mat";
+            if (AssetDatabase.LoadAssetAtPath<Material>(path) == null) AssetDatabase.CopyAsset(source, path);
+            var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+            material.SetTextureOffset("_BaseMap", new Vector2(0f, -40f / 256f * (int)row)); // URP's Lit uses it for the emission too
+            EditorUtility.SetDirty(material);
+            return material;
         }
 
         /// <summary>The door sign's atlas has one row per room, and the model shows the first: 101 keeps its material, the others shift it.</summary>
