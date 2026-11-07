@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: beantwortet
 erstellt: 2026-11-07 14:00
 blockiert: nein
 ---
@@ -31,3 +31,4 @@ keinen Zweck. Martin sagt, ihr habt ein Ticket nach Hause schon besprochen, es i
 P71 rechnet mit dem endlosen Spiel und dem Ticket als Sparziel; nur Werte und Tests ändern sich, keine Szenen. DESIGN.md bleibt unverändert.
 
 ## Antwort
+**A** (Max, 07.11.): Ja, so machen wir es. DESIGN.md ist angepasst (Ziel: Ticket nach Hause, Story-Tage + endlose Tage aus Pools), P72 und P73 stehen auf `offen`, Eintrag in DECISIONS.md. Wer was baut, verteilen wir im Call.

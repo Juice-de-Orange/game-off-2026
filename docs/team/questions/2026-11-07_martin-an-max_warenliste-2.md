@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: beantwortet
 erstellt: 2026-11-07 16:30
 blockiert: nein
 ---
@@ -38,3 +38,4 @@ hat ein Label, jeder Familienbedarf hat genug Waren (Essen 4, Wärme 2, Medizin 
 Nichts wird gebaut. Martin und Max sprechen darüber (zusammen mit der Frage `schichtinventar-beschlagnahme`).
 
 ## Antwort
+**C** (Max, 07.11.): Im gemeinsamen Call zusammen mit Schicht-Inventar/Beschlagnahme (P08) klären – Fracht-Stichworte und CONFISCATED hängen daran. Bis dahin gilt die Annahme (nichts wird gebaut).

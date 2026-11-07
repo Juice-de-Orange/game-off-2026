@@ -28,7 +28,9 @@ Sprache des Spiels: Englisch.
    (Essen, Wärme, Medizin). Was nicht bezahlt wird, hat Folgen (Familienmitglied wird krank, hungert, ...).
 5. Nächster Tag: neue Regeln, schwierigere Fälle, neue Gadgets.
 
-**Ziel:** 3 Tage (ca. 10–15 Minuten) überstehen, ohne dass die Familie zerbricht oder du gefeuert wirst.
+**Ziel:** Genug sparen für ein **Ticket nach Hause** (350 CR, mit guter Arbeit und versorgter Familie ca. 7 Tage), es abends im Hangar kaufen
+und mit einem Schiff abfliegen – ohne dass die Familie zerbricht oder du gefeuert wirst. Erst kommen die geschriebenen Story-Tage,
+danach geht es **endlos** weiter mit Tagen aus Pools (Reisende, Regeln, Marktereignisse, Bar-Wünsche). Entscheidung 07.11.
 **Herausforderung:** Zeitdruck am Schalter, wachsende Regelmenge, Geldknappheit, moralische Entscheidungen.
 **Belohnung:** Geld, Gadgets, die die Prüfung erleichtern, Story-Momente, mehrere Enden.
 
@@ -101,7 +103,8 @@ flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit di
 ### Muss (ohne das kein Spiel)
 - Zollschalter mit Dokumentenprüfung: 2–3 Dokumenttypen, Regeln pro Tag, Durchlassen/Abweisen/Verhaften/Luftschleuse
 - Reisende als Daten (ScriptableObjects): Aussehen, Dokumente, Fehler, Gepäck
-- Tagesablauf: Morgen → Schicht → Feierabend → Schlafen → Abrechnung, 3 Tage (~15 Reisende)
+- Tagesablauf: Morgen → Schicht → Feierabend → Schlafen → Abrechnung; Story-Tage, danach endlose Tage aus Pools (P73)
+- Ticket nach Hause als Hauptziel: abends im Hangar kaufen, Abflug mit dem Schiff (P72)
 - Geld + Familie mit Bedarfen und Folgen
 - Begehbare Station: Schalter, Unterkunft, Bar (Schwarzmarkt), Hangar (Pakete)
 - 1 Gadget (Dokumentenscanner) kaufbar

@@ -1197,7 +1197,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     müssen das abfangen. Der Simulator zählt das Ticket nur bei gesunder Familie.
 
 ### P72 — Ticket nach Hause
-- Größe: M · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) – mit Max abstimmen (Frage `endlos-und-ticket`)
+- Größe: M · Priorität: Muss (Vorschlag) · Status: offen (von Max bestätigt, 07.11., Frage `endlos-und-ticket`)
 - Braucht: P71 (Ticketpreis), P12 · Folgt auf: —
 - Ziel: Das Spielziel: genug sparen, ein teures Ticket kaufen und mit einem Schiff vom Hangar aus heimfliegen – „das Ende der Game Jam“.
 - Enthalten: Ticket-Terminal im Hangar (nur abends, wie jeder Handel), Kauf zum Ticketpreis (`HouseholdTuning.ticketPrice`, von P71 festgelegt),
@@ -1207,7 +1207,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Hinweis aus P71 (martin, 07.11.): Ohne Familienprüfung ist „Familie vernachlässigen“ der schnellste Weg zum Ticket (Tag 5). Das Ende muss den Familienzustand werten (P12/P69).
 
 ### P73 — Endlose Tage
-- Größe: M–L · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) – mit Max abstimmen (Frage `endlos-und-ticket`)
+- Größe: M–L · Priorität: Muss (Vorschlag) · Status: offen (von Max bestätigt, 07.11., Frage `endlos-und-ticket`)
 - Braucht: P09, P15, P68 · Folgt auf: P09
 - Ziel: Das Spiel endet nicht mehr nach Tag 3: erst die geschriebenen Story-Tage (P15), danach eine Schleife aus Pools.
 - Enthalten: Pools für Reisende, Regeln, Marktereignisse und Bar-Wünsche; jeder Tag nach der Story wird mit festem Startwert gezogen

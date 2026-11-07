@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: beantwortet
 erstellt: 2026-11-07 06:30
 blockiert: nein
 ---
@@ -31,3 +31,4 @@ Schmuggler-Razzia von Quill auslösen statt fest an Tag 3 · Inspector als Tutor
 Nichts von P75/P76/P77 wird gebaut. Der Plan in `docs/FIGUREN.md` bleibt Entwurf.
 
 ## Antwort
+**A** (Max, 07.11.): Ja, gemeinsamer Call – erst die Figuren (Namen, Arten, Charakter, Rolle), dann der Ablauf Tag für Tag. Am besten im selben Call wie Schicht-Inventar/Beschlagnahme (P08) und Warenliste 2. Bis dahin bleibt alles wie in der Annahme (nichts von P75–P77 wird gebaut).
