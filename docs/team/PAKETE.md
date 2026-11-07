@@ -1145,7 +1145,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     Play-Modus: Listen, Preise Tag 1 und Tag 3, Lohn nur für richtige.
 
 ### P71 — Balancing über 3 Tage
-- Größe: S · Priorität: Muss · Status: in Arbeit (martin, 07.11.)
+- Größe: S · Priorität: Muss · Status: fertig (martin, 07.11.)
 - Braucht: P68, P70, P10, P13 · Folgt auf: —
 - Ziel: Lohn, Abzüge, Miete, Bedarfe und Marktereignisse ergeben über 3 Tage ein knappes, aber schaffbares Spiel.
 - Enthalten: Menü **GameOff → Economy Report**: rechnet typische Spielweisen durch (alles beim Händler + Drohne / alles Geld am Bett /
@@ -1160,6 +1160,19 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   (Bar-Wünsche 5–15 CR). Ereignisse nehmen die billigste Ware weg; Rundung „,5 rundet auf“.
 - **Regel:** Jede Geldanpassung (Lohn, Miete, Preise, Faktoren, Ereignisse, Wünsche, Mengen, Ticketpreis) braucht danach ein neues
   Rebalancing: `GameOff → Economy Report` bis alle Ziele ✓ (die Balance-Tests erzwingen es).
+- Ergebnis (martin, 07.11.): alle Ziele ✓ – Tabelle in **`docs/ECONOMY-REPORT.md`** (vom Menü erzeugt, nicht von Hand ändern).
+  - **Werkzeuge:** `EconomySimulator` (Editor, spielt N Tage mit den echten Regeln: Markt, Vorrat, Preise, Bett, Lohn, Familie, Barkeeper)
+    und Menü **GameOff → Economy Report**; Test `EconomyBalanceTests` prüft dieselben Ziele.
+  - **Ergebnis (12 Tage):** Clever fehlerfrei → Ticket **Tag 8**, Familie gesund; mit Gerüchten → **Tag 7** (+6,6 CR je spekuliertem Stück,
+    Wünsche zusammen 40 CR); alles am Bett → **Tag 11**; 2 Fehler/Tag → kein Ticket bis Tag 12 (Clever 192 CR, Bett pendelt um 30 CR);
+    nichts versorgen → Familie kritisch an Tag 3.
+  - **Ticketpreis 350 CR** (`HouseholdTuning.ticketPrice`); Lohn 15, Abzug 10, Miete 30, Startgeld 40 und Bettfaktor 1,35 bleiben.
+  - **Geändert:** „Border closed“ nimmt zusätzlich die Protein bar weg, „Cold snap“ die Battery packs; „Smugglers busted“ DRUG ×1,5 statt ×1,8,
+    kein Zusatz-Ankauf für CONTRABAND mehr; Spice ohne Tag-2-Aufschlag; neue Kiosk-Ware **Spare fuse** (TECH, 6 CR, 2/Tag) für den Tag-2-Wunsch;
+    Preise runden jetzt „,5 auf“ (z. B. Painkillers Tag 2: 17 statt 16).
+  - **Wichtig für P69/P72:** Wer die Familie gar nicht versorgt, hat das meiste Geld (Tag 5 schon 340 CR). Solange „critical“ keine Folge hat
+    und das Ticket die Familie nicht prüft, ist Vernachlässigen der schnellste Weg nach Hause → P69 (Folgen) und P72 (Ende abhängig von der Familie)
+    müssen das abfangen. Der Simulator zählt das Ticket nur bei gesunder Familie.
 
 ### P72 — Ticket nach Hause
 - Größe: M · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) – mit Max abstimmen (Frage `endlos-und-ticket`)
@@ -1169,6 +1182,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   ins Schiff steigen, Abflug (man kann auch absichtlich aus der Map fliegen), Endbildschirm abhängig vom Familienzustand (P12).
 - Nicht enthalten: Flugsteuerung über das Nötigste hinaus, weitere Enden (P12).
 - Abnahme: Mit genug Geld abends Ticket kaufen → Schiff → Abflug → Ende; ohne genug Geld zeigt das Terminal, wie viel fehlt.
+- Hinweis aus P71 (martin, 07.11.): Ohne Familienprüfung ist „Familie vernachlässigen“ der schnellste Weg zum Ticket (Tag 5). Das Ende muss den Familienzustand werten (P12/P69).
 
 ### P73 — Endlose Tage
 - Größe: M–L · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) – mit Max abstimmen (Frage `endlos-und-ticket`)

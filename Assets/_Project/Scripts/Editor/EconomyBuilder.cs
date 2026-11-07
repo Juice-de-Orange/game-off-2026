@@ -255,6 +255,8 @@ namespace GameOff.EditorTools
             Goods("watch", "PocketWatch", "", "", 20, null, null, 0, 0f, 0f, 0f);
             Goods("ring", "SilverRing", "Silver ring", "Engraved on the inside. The name is scratched out.", 35, new[] { valuable }, null, 0, 0f, 0.1f, 0f);
             Goods("trinket", "AlienTrinket", "Alien trinket", "Warm to the touch. Nobody knows what it does.", 30, new[] { alien, valuable }, null, 0, 0f, 0f, 0.2f);
+            // P71: a cheap TECH item, so the barkeeper's TECH wish costs ~6 CR instead of a 44 CR data chip.
+            Goods("fuse", "SpareFuse", "Spare fuse", "A fuse for a station console. Somebody always needs one.", 6, new[] { tech }, kiosk, 2, 0f, 0f, 0f);
             created += made;
         }
 
@@ -355,12 +357,47 @@ namespace GameOff.EditorTools
                 for (int i = 0; i < events.Length; i++) list.GetArrayElementAtIndex(i).objectReferenceValue = events[i];
                 placed = true;
             }
+            BalanceCorrections(data, border, smugglers, cold, contraband, drug, log);
             Place(2, border);
             Place(3, smugglers, cold);
             if (!placed) return;
             sso.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(schedule);
             log.Add("day schedule: market events and bar wishes placed where empty");
+        }
+
+        /// <summary>
+        /// P71 balancing (Martin, 07.11.), one-time corrections of the P68 placeholders – each only if the value is still the old one:
+        /// events take the cheapest goods away (border: protein bar; cold snap: battery pack), the rumour pays 5–8 CR per unit
+        /// (DRUG ×1.5 instead of ×1.8, no extra contraband buy price, Spice without the day-2 rise). See docs/ECONOMY-REPORT.md.
+        /// </summary>
+        private static void BalanceCorrections(Data data, MarketEvent border, MarketEvent smugglers, MarketEvent cold, ItemTag contraband,
+            ItemTag drug, List<string> log)
+        {
+            var kiosk = data.Stocks["Stock_Kiosk_Test"];
+            void Missing(MarketEvent e, ItemData item)
+            {
+                if (e.stock.Exists(c => c.stock == kiosk && c.item == item)) return;
+                e.stock.Add(new StockChange { stock = kiosk, item = item, amount = 0 });
+                EditorUtility.SetDirty(e);
+                log.Add($"{e.name}: {item.name} missing that day");
+            }
+            Missing(border, data.Items["protein"]);
+            Missing(cold, data.Items["battery"]);
+
+            var drugEffect = smugglers.labels.Find(l => l.tag == drug);
+            if (drugEffect != null && Mathf.Approximately(drugEffect.price, 1.8f)) { drugEffect.price = 1.5f; EditorUtility.SetDirty(smugglers); }
+            if (smugglers.labels.RemoveAll(l => l.tag == contraband && Mathf.Approximately(l.buy, 1.3f) && Mathf.Approximately(l.price, 1f)) > 0)
+                EditorUtility.SetDirty(smugglers);
+
+            var spice = new SerializedObject(data.Items["spice"]);
+            var change = spice.FindProperty("dailyChange");
+            if (change.arraySize == 3 && Mathf.Approximately(change.GetArrayElementAtIndex(1).floatValue, 0.2f))
+            {
+                change.GetArrayElementAtIndex(1).floatValue = 0f;
+                spice.ApplyModifiedPropertiesWithoutUndo();
+                EditorUtility.SetDirty(data.Items["spice"]);
+            }
         }
 
         private static bool RemoveEntry(VendorStock stock, ItemData item)

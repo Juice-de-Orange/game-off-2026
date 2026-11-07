@@ -27,3 +27,6 @@ MonoBehaviour:
   - stock: {fileID: 11400000, guid: aba7d5b0e4b8550458428005c91569e4, type: 2}
     item: {fileID: 11400000, guid: a0696af6944fc7c459ef3eafb6d84ac5, type: 2}
     amount: 0
+  - stock: {fileID: 11400000, guid: aba7d5b0e4b8550458428005c91569e4, type: 2}
+    item: {fileID: 11400000, guid: d2edcdba608d63d49bf945af474aaa1b, type: 2}
+    amount: 0

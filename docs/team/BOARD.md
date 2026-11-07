@@ -61,7 +61,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| martin | P71 Balancing (endlos, Ticket als Sparziel) | `Data/Economy/*`, `Data/Items/*`, `Data/Market/*`, `Data/Days/DaySchedule.asset` | 07.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): wartet auf das P08-Gespräch mit max | — | 06.11. |
 | max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
 
@@ -94,6 +93,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P71 Balancing: Simulator + Economy Report + Balance-Test, Ticket 350 CR (~7–8 Tage gute Arbeit), Ereignisse härter, Gerüchte gedämpft, Rundung ,5 auf; P72/P73 als Entwurf, Frage an Max (martin, 07.11.)
 - [x] P65 Barkeeper: Schild mit Wunsch nach Label, GIVE gegen ein Gerücht über die Marktereignisse von morgen, Notiz im Inventar; Modell SM_Bar_WishBoard bestellt (martin, 07.11.)
 - [x] P68 Markt: Label-Faktoren, feste Ereignisse Tag 2/3 (Preis, Menge, Ankauf, Sortiment), MARKET-Zettel, Durchsage, Verderb über Nacht (martin, 07.11.)
 - [x] P53 Wohnmodul begehbar, NavMesh jetzt wirklich gebacken, P26 Deko und P51 Hundebild nachgebessert (max, 06.11.)

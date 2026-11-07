@@ -131,6 +131,8 @@ Asset naming, specs and the placeholder → final swap are defined in `docs/ASSE
 - **Performance is measured, not guessed:** `node tools/measure-webgl.mjs <build> <out> [full|quick]` (`K9_CPU=4` for a weak device), `tools/drive-webgl.mjs` plays a build from a script, `GameOff/Audit Main Scene` counts what the scene costs, `GameOff/List Placeholders` lists what is not final art. Numbers from P57 are the baseline.
 - Tuning values (speed, damage, timings) go into ScriptableObjects in `Data/`, not hard-coded —
   both people can tweak them without touching scripts or scenes.
+- **Every change to money needs a new rebalancing** (wage, rent, prices, label factors, market events, bar wishes, amounts, ticket price):
+  run `GameOff/Economy Report` until every goal is ✓ (`docs/ECONOMY-REPORT.md`); `EconomyBalanceTests` fails otherwise.
 
 ## C# conventions
 - Namespace `GameOff` (sub-namespaces per feature folder optional, e.g. `GameOff.Player`).

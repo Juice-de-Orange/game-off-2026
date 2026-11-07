@@ -16,6 +16,10 @@ namespace GameOff.Economy
         [Tooltip("Deducted for every citation beyond the free warnings of the day (CounterShift.FreeWarnings).")]
         public int penaltyPerCitation = 10;
 
+        [Header("Goal (P71/P72)")]
+        [Tooltip("The ticket home – the goal of the endless game. Set by balancing (GameOff → Economy Report): about 7 days of good work.")]
+        public int ticketPrice = 350;
+
         [Header("Costs per night")]
         [Tooltip("Room 103 – always paid, may push the balance below zero.")]
         public int rent = 30;

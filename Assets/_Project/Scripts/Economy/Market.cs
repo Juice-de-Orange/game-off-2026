@@ -55,7 +55,8 @@ namespace GameOff.Economy
                     if (change != null && change.stock == stock && change.item != null) yield return change;
         }
 
-        public static int Rounded(float price) => Mathf.Max(0, Mathf.RoundToInt(price));
+        /// <summary>Half rounds up (6.5 → 7), the way players expect it (P71).</summary>
+        public static int Rounded(float price) => Mathf.Max(0, (int)System.Math.Round(price + 0.0001f, System.MidpointRounding.AwayFromZero)); // tiny nudge: 13.4999 from float math is 13.5
 
         private static float EventFactor(ItemData item, System.Func<LabelEffect, float> pick)
         {

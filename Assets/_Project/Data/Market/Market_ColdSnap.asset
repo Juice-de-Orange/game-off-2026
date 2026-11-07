@@ -21,4 +21,7 @@ MonoBehaviour:
     price: 1.25
     amount: 1
     buy: 1
-  stock: []
+  stock:
+  - stock: {fileID: 11400000, guid: aba7d5b0e4b8550458428005c91569e4, type: 2}
+    item: {fileID: 11400000, guid: 2007b103b290d374cb47c7a1ee8ef20a, type: 2}
+    amount: 0

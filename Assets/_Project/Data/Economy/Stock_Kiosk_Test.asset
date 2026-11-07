@@ -32,6 +32,8 @@ MonoBehaviour:
     dailyAmount: 2
   - item: {fileID: 11400000, guid: a2d217b5d6ca9d445b1d1c210919a72a, type: 2}
     dailyAmount: 5
+  - item: {fileID: 11400000, guid: 161abb7819e8873488489cb63432573c, type: 2}
+    dailyAmount: 2
   items: []
   sellFactor: 1
   buyFactor: 0.5
