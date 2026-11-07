@@ -61,6 +61,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
+| martin | P66 Bestechungszettel | `Scripts/Documents/DocumentDesk.cs` (eine Methode), `Data/Days/DaySchedule.asset`, `Data/Economy/*`, `PF_Economy.prefab`, `PF_CounterStation.prefab`, `Main.unity` | 07.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): wartet auf das P08-Gespräch mit max | — | 06.11. |
 | max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
 

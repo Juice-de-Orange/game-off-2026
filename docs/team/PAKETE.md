@@ -1044,7 +1044,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     mit 2 Cola Gerücht über die Grenze (Notiz im Inventar), Tag 2 Notiz weg, Data chip → Gerücht über Schmuggler und Kälte; Bild vom Schild.
 
 ### P66 — Barkeeper: Bestechungszettel
-- Größe: S–M · Priorität: Soll · Status: offen
+- Größe: S–M · Priorität: Soll · Status: in Arbeit (martin, 07.11.)
 - Braucht: P08, P10 · Folgt auf: —
 - Ziel: Moralische Versuchung am Schalter: Geld dafür, eine bestimmte Person durchzulassen.
 - Enthalten: Zu Schichtbeginn liegt manchmal ein Zettel vom Barkeeper auf dem Tisch („Lass Person XY durch, nach der Schicht
