@@ -55,8 +55,13 @@ namespace GameOff.Tests
                 {
                     var entry = schedule.Get(d);
                     if (entry.bribe == null || !entry.bribe.Active) continue;
-                    Assert.IsTrue(entry.rules != null && entry.rules.Travelers.Contains(entry.bribe.traveler),
-                        $"{schedule.name} day {d}: {entry.bribe.traveler.DisplayName} is not among the day's travelers");
+                    // P76: the traveler may also come as a recurring character's appearance on that day
+                    bool character = false;
+                    foreach (var g in AssetDatabase.FindAssets("t:RecurringCharacter"))
+                        foreach (var ap in AssetDatabase.LoadAssetAtPath<GameOff.Characters.RecurringCharacter>(AssetDatabase.GUIDToAssetPath(g)).Appearances)
+                            if (ap.traveler == entry.bribe.traveler && ap.InWindow(d)) character = true;
+                    Assert.IsTrue(character || (entry.rules != null && entry.rules.Travelers.Contains(entry.bribe.traveler)),
+                        $"{schedule.name} day {d}: {entry.bribe.traveler.DisplayName} is neither among the day's travelers nor a character appearance that day");
                 }
             }
         }

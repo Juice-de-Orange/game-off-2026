@@ -136,6 +136,12 @@ namespace GameOff.EditorTools
             log.Add(CharacterBuilder.Build());
             var test = AssetDatabase.LoadAssetAtPath<GameOff.Characters.RecurringCharacter>(CharacterBuilder.CharacterPath);
             if (test != null) SetArray(director, "devCharacters", new Object[] { test });
+            // P76: the story characters
+            log.Add(StoryCharacterBuilder.Build());
+            EconomySimulator.ResetCharacters();
+            var story = AssetDatabase.FindAssets("t:RecurringCharacter", new[] { "Assets/_Project/Data/Characters/Story" })
+                .Select(g => (Object)AssetDatabase.LoadAssetAtPath<GameOff.Characters.RecurringCharacter>(AssetDatabase.GUIDToAssetPath(g))).ToArray();
+            SetArray(director, "characters", story);
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
             Object.DestroyImmediate(root);
             log.Add("PF_DayFlow built");

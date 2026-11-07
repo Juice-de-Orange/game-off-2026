@@ -447,7 +447,7 @@ namespace GameOff.EditorTools
             {
                 e.bulletinLine = "Smuggler ring busted by station security. Drugs are hard to get; contraband sells high.";
                 e.announcement = "Security notice: a smuggler ring has been arrested. Report any contraband at once.";
-                e.labels.Add(new LabelEffect { tag = drug, price = 1.8f });
+                e.labels.Add(new LabelEffect { tag = drug, price = 2.0f }); // 1.8 → 2.0 (P76 rebalancing: one raid on day 6 instead of every cycle)
                 e.labels.Add(new LabelEffect { tag = contraband, buy = 1.3f });
                 e.stock.Add(new StockChange { stock = dealer, item = data.Items["spice"], amount = 2 });
             }, ref created);
@@ -479,6 +479,53 @@ namespace GameOff.EditorTools
             Crisis(border, 0.4f);
             Crisis(smugglers, 0.3f);
             Crisis(cold, 0.3f);
+
+            // P76 (docs/FIGUREN.md): events the recurring characters set off, plus the fixed inspection week (day 9).
+            var medicine = Tag("MEDICINE", "2F5B66", ref created);
+            var tech = Tag("TECH", "5EC8FF", ref created);
+            var lockdown = LoadOrCreate<MarketEvent>(MarketFolder + "Market_SecurityLockdown.asset", e =>
+            {
+                e.bulletinLine = "Security lockdown after an incident at the counter. Weapons and tech are hard to get.";
+                e.announcement = "Attention: station security has raised the alert level. Expect searches.";
+                e.rumour = "Security is jumpy tomorrow. Somebody got through who shouldn't have.";
+                e.labels.Add(new LabelEffect { tag = weapon, price = 1.4f, amount = 0.5f });
+                e.labels.Add(new LabelEffect { tag = tech, price = 1.2f });
+            }, ref created);
+            var clinic = LoadOrCreate<MarketEvent>(MarketFolder + "Market_ClinicShortage.asset", e =>
+            {
+                e.bulletinLine = "Clinic shortage: the station clinic is out of antibiotics. Medicine is scarce and expensive.";
+                e.announcement = "Notice from the station clinic: medical supplies are low. Please be patient.";
+                e.rumour = "The clinic's shelves will be bare tomorrow. Medicine will cost you.";
+                e.labels.Add(new LabelEffect { tag = medicine, price = 1.5f, amount = 0.5f });
+            }, ref created);
+            var strike = LoadOrCreate<MarketEvent>(MarketFolder + "Market_DockStrike.asset", e =>
+            {
+                e.bulletinLine = "Dock strike: the dock workers have laid down their tools. Fewer goods on every shelf.";
+                e.announcement = "Attention: due to industrial action at the docks, deliveries are delayed.";
+                e.rumour = "The dockers walk out tomorrow. Buy what you need tonight.";
+                e.labels.Add(new LabelEffect { tag = food, amount = 0.6f });
+                e.labels.Add(new LabelEffect { tag = power, amount = 0.6f });
+                e.labels.Add(new LabelEffect { tag = medicine, amount = 0.6f });
+            }, ref created);
+            var inspection = LoadOrCreate<MarketEvent>(MarketFolder + "Market_InspectionWeek.asset", e =>
+            {
+                e.bulletinLine = "Inspection week: the Border Authority audits the station. Contraband is hard to move.";
+                e.announcement = "The Border Authority is on board for its yearly inspection. Every decision is being reviewed.";
+                e.rumour = "Inspectors on board tomorrow. Keep your hands clean.";
+                e.labels.Add(new LabelEffect { tag = contraband, buy = 0.7f, amount = 0.5f });
+            }, ref created);
+            var caravan = LoadOrCreate<MarketEvent>(MarketFolder + "Market_OddosCaravan.asset", e =>
+            {
+                e.bulletinLine = "Oddo's caravan is in dock: luxuries at bargain prices, today only.";
+                e.announcement = "Pim Oddo's travelling market has arrived at dock two. Everything must go!";
+                e.rumour = "Old Oddo's caravan docks tomorrow. Luxuries for a song.";
+                e.labels.Add(new LabelEffect { tag = luxury, price = 0.7f, amount = 1.5f });
+            }, ref created);
+            Crisis(lockdown, 0.4f);
+            Crisis(clinic, 0.3f);
+            Crisis(strike, 0.4f);
+            Crisis(inspection, 0.3f);
+            Crisis(caravan, 0.05f);
 
             var schedule = AssetDatabase.LoadAssetAtPath<GameOff.Day.DaySchedule>(SchedulePath);
             if (schedule == null) { log.Add("no DaySchedule - market events not placed"); return; }

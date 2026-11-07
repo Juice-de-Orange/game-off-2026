@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 437759cb285558443bccd8f63941e5a9, type: 3}
+  m_Name: Char_Nell
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Characters.RecurringCharacter
+  id: nell
+  displayName: NELL VARGA
+  species: Human
+  appearances:
+  - traveler: {fileID: 11400000, guid: 10d63435fc3d6fe4f876a920b0512e9e, type: 2}
+    dayFrom: 6
+    dayTo: 6
+    slot: 0
+    condition: 1
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []
+  - traveler: {fileID: 11400000, guid: ea9be00c2f8fdb04e958df40c973e2b3, type: 2}
+    dayFrom: 8
+    dayTo: 8
+    slot: 0
+    condition: 2
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: You were kind to an old woman. Did my letter reach him?
+    greetingAfterBetrayed: You sent me away last time. I came back anyway. Mothers
+      do.
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []
+  - traveler: {fileID: 11400000, guid: 3bffeedb7e331c446a7e682adbe42f31, type: 2}
+    dayFrom: 11
+    dayTo: 11
+    slot: 0
+    condition: 2
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: My boy is coming home. I won't forget your face.
+    greetingAfterBetrayed: My boy is coming home - no thanks to you.
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []

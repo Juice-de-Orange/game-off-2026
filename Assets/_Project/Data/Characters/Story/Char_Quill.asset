@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 437759cb285558443bccd8f63941e5a9, type: 3}
+  m_Name: Char_Quill
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Characters.RecurringCharacter
+  id: quill
+  displayName: QUILL BARRAGH
+  species: Human
+  appearances:
+  - traveler: {fileID: 11400000, guid: c2553227dcfca0147b67adb1bf764764, type: 2}
+    dayFrom: 1
+    dayTo: 1
+    slot: 0
+    condition: 1
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []
+  - traveler: {fileID: 11400000, guid: 7c29e7ebbcb24fd45ad901b18f3e4dab, type: 2}
+    dayFrom: 3
+    dayTo: 3
+    slot: 0
+    condition: 2
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 4
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: You again. Let's try this once more, friendly this time.
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences:
+    - when: 2
+      marketEvent: {fileID: 11400000, guid: 499c80581acc6d241bb1a53254ffe24f, type: 2}
+      eventInDays: 3
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+    - when: 4
+      marketEvent: {fileID: 11400000, guid: 499c80581acc6d241bb1a53254ffe24f, type: 2}
+      eventInDays: 3
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+    - when: 2
+      marketEvent: {fileID: 0}
+      eventInDays: 1
+      wanted: 1
+      wantedOrder: 0
+      wantedInDays: 3
+      wantedForDays: 1
+      wantedNote: Smuggling, threats against an officer
+    - when: 4
+      marketEvent: {fileID: 0}
+      eventInDays: 1
+      wanted: 1
+      wantedOrder: 0
+      wantedInDays: 3
+      wantedForDays: 1
+      wantedNote: Smuggling, threats against an officer
+  - traveler: {fileID: 11400000, guid: 81b6bab00ba24f947b58d098cc9adb18, type: 2}
+    dayFrom: 4
+    dayTo: 4
+    slot: 0
+    condition: 3
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: You looked the other way. Quill doesn't forget a favour.
+      Bigger job today.
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []
+  - traveler: {fileID: 11400000, guid: c65bbfd25c49f394c9490d9ea568789d, type: 2}
+    dayFrom: 6
+    dayTo: 6
+    slot: 0
+    condition: 6
+    onAdmit: 3
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: Remember me? Thanks to you the whole ring went down.
+    greetingAfterConfiscated: You took my goods and my living. Now look at me.
+    eventLines: []
+    consequences: []
+  - traveler: {fileID: 11400000, guid: 56e102b99c68fdf4194170ff56f2a253, type: 2}
+    dayFrom: 9
+    dayTo: 9
+    slot: 0
+    condition: 3
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: Last run for me. Thanks for everything, officer - I mean
+      it.
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []

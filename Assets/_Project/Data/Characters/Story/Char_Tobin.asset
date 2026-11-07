@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 437759cb285558443bccd8f63941e5a9, type: 3}
+  m_Name: Char_Tobin
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Characters.RecurringCharacter
+  id: tobin
+  displayName: TOBIN RASK
+  species: Vellani
+  appearances:
+  - traveler: {fileID: 11400000, guid: e2d95e6b3a8787f43ac5d577bed58ce5, type: 2}
+    dayFrom: 5
+    dayTo: 5
+    slot: 0
+    condition: 1
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines:
+    - marketEvent: {fileID: 11400000, guid: abfbcbfc6fc68c944a3fe2c61ac7e1c3, type: 2}
+      line: And now the clinic is out of medicine too.
+    consequences: []
+  - traveler: {fileID: 11400000, guid: 84f5cfacf908f094caac4cfcd16d16b8, type: 2}
+    dayFrom: 7
+    dayTo: 7
+    slot: 0
+    condition: 2
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences:
+    - when: 1
+      marketEvent: {fileID: 11400000, guid: 4c0c131882bb4364eb8d4649a5bb6375, type: 2}
+      eventInDays: 1
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+  - traveler: {fileID: 11400000, guid: 28113c732e54ed546873fccd23f1ead3, type: 2}
+    dayFrom: 10
+    dayTo: 10
+    slot: 0
+    condition: 3
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: You let me through that day. We stopped the docks, and they
+      listened.
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []

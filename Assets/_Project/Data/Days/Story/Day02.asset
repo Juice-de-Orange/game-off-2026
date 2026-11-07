@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5164aafa9e178934a865676a1c4b86ce, type: 3}
+  m_Name: Day02
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.DayRules
+  date: 2290-11-06
+  rules:
+  - rid: 9041869203876348151
+  - rid: 9041869203876348152
+  - rid: 9041869203876348153
+  wanted:
+  - name: KAEL DROSS
+    id: DX-0013-44
+    order: 0
+    note: Armed robbery, Aska-3
+  travelers:
+  - {fileID: 11400000, guid: 0d582a4922a849542b77c348599c062d, type: 2}
+  - {fileID: 11400000, guid: 52e2f491a27e71c40b5f672a36f72e43, type: 2}
+  - {fileID: 11400000, guid: 0e176fa670824dc429cc2bc43f4adac3, type: 2}
+  - {fileID: 11400000, guid: 18d5a6f21e28d294bbe1e979760374b0, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 9041869203876348151
+      type: {class: BannedOriginRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
+      data:
+        origin: ORVAN
+    - rid: 9041869203876348152
+      type: {class: ForbiddenGoodsRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
+      data:
+        keyword: STIMULANT
+    - rid: 9041869203876348153
+      type: {class: QuarantineRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
+      data:
+        station: KETRA STATION

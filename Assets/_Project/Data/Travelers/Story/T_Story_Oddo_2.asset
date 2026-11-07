@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Story_Oddo_2
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: PIM ODDO
+  species: Quobb
+  model: {fileID: 2190294317704143118, guid: 2599d4a5607b12d4092e5eb3b17cd21a, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 6353fd132ab6db6458bbb305b426f290, type: 2}
+  - {fileID: 11400000, guid: 8be807b31abf8df499680b380e92e819, type: 2}
+  intendedVerdict: 0
+  intendedReason: Papers in order
+  trickIntended: 0
+  storyTag: P76 character, day 10
+  greeting: Oddo! The caravan is in, my friend. Come and see!
+  answers: []

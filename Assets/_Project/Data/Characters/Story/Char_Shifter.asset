@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 437759cb285558443bccd8f63941e5a9, type: 3}
+  m_Name: Char_Shifter
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Characters.RecurringCharacter
+  id: shifter
+  displayName: THE SHIFTER
+  species: Human
+  appearances:
+  - traveler: {fileID: 11400000, guid: f7b4de9435960c84dbfdc076697d8d61, type: 2}
+    dayFrom: 1
+    dayTo: 1
+    slot: 0
+    condition: 1
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []
+  - traveler: {fileID: 11400000, guid: 9a0c7aa7e88a2004096c6139f8e18c40, type: 2}
+    dayFrom: 2
+    dayTo: 2
+    slot: 0
+    condition: 2
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: We've met, haven't we? No? Must be my face.
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines:
+    - marketEvent: {fileID: 11400000, guid: f43d7922bcf28184f9e158056a4dd645, type: 2}
+      line: They closed the border right behind me. Lucky, eh?
+    consequences: []
+  - traveler: {fileID: 11400000, guid: 7664271fc131a8a4b8687a6ae753bedf, type: 2}
+    dayFrom: 3
+    dayTo: 3
+    slot: 0
+    condition: 2
+    onAdmit: 1
+    onDeny: 3
+    onArrest: 3
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences:
+    - when: 1
+      marketEvent: {fileID: 11400000, guid: 6ab9ba6f17db05f40a3390533816c0b4, type: 2}
+      eventInDays: 1
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+  - traveler: {fileID: 11400000, guid: 6517981b47dc4cf42bc6bd5795ee16b4, type: 2}
+    dayFrom: 7
+    dayTo: 7
+    slot: 0
+    condition: 2
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: You let me through when they wanted me dead. Now I need
+      one more favour.
+    greetingAfterBetrayed: You had me locked up. And still I'm here. Listen to me
+      anyway.
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []

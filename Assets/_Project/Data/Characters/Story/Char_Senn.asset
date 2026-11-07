@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 437759cb285558443bccd8f63941e5a9, type: 3}
+  m_Name: Char_Senn
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Characters.RecurringCharacter
+  id: senn
+  displayName: IRO SENN
+  species: Xirrik
+  appearances:
+  - traveler: {fileID: 11400000, guid: 7ef8b445fdb90bc449d046bb324d7ac7, type: 2}
+    dayFrom: 3
+    dayTo: 3
+    slot: 0
+    condition: 1
+    onAdmit: 1
+    onDeny: 3
+    onArrest: 4
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines:
+    - marketEvent: {fileID: 11400000, guid: 185c66fd5f1f3db4b9efbde0cf898138, type: 2}
+      line: And the cold is making everyone sick.
+    consequences:
+    - when: 4
+      marketEvent: {fileID: 11400000, guid: abfbcbfc6fc68c944a3fe2c61ac7e1c3, type: 2}
+      eventInDays: 2
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+  - traveler: {fileID: 11400000, guid: 624972ad3631f6b4e821845d8a0551c3, type: 2}
+    dayFrom: 5
+    dayTo: 5
+    slot: 0
+    condition: 3
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: You let my medicine through. Three children walked out of
+      the clinic today.
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []
+  - traveler: {fileID: 11400000, guid: 1ba38b71115446844970875002fa517e, type: 2}
+    dayFrom: 9
+    dayTo: 9
+    slot: 0
+    condition: 3
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: I'm leaving Kestrel. Thank you for trusting a stranger with
+      a case of pills.
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []

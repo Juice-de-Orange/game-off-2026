@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Story_Senn_1
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: IRO SENN
+  species: Xirrik
+  model: {fileID: 8372028664995244572, guid: 6fc5658331bc5e8408dc013c0086e1be, type: 3}
+  documents:
+  - {fileID: 11400000, guid: c9cb45cf756c0ef4ba4216a8f1e71466, type: 2}
+  - {fileID: 11400000, guid: 0900bfafeb594934f97fc668bc60723a, type: 2}
+  - {fileID: 11400000, guid: eb3fc9ab0e873b140a505a9bc984dfac, type: 2}
+  intendedVerdict: 2
+  intendedReason: Declares antibiotics without import licence
+  trickIntended: 0
+  storyTag: P76 character, day 3
+  greeting: Dr. Senn. These antibiotics are for the clinic. People will die without
+    them. Please.
+  answers: []

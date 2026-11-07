@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Story_Nell_3
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: NELL VARGA
+  species: Human
+  model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 6dcf726e4c016184e8351d3a3e6eaa68, type: 2}
+  - {fileID: 11400000, guid: fce226902d4a2de4d9a7cdccbbb98a39, type: 2}
+  intendedVerdict: 0
+  intendedReason: Papers in order
+  trickIntended: 0
+  storyTag: P76 character, day 11
+  greeting: Nell. They're letting him go home with me.
+  answers: []

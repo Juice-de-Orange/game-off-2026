@@ -64,6 +64,41 @@ namespace GameOff.EditorTools
             _freeWarnings = freeWarnings;
         }
 
+        private static List<GameOff.Characters.RecurringCharacter> _story;
+
+        private static List<GameOff.Characters.RecurringCharacter> Story
+        {
+            get
+            {
+                if (_story != null) return _story;
+                _story = new List<GameOff.Characters.RecurringCharacter>();
+                foreach (var g in UnityEditor.AssetDatabase.FindAssets("t:RecurringCharacter", new[] { "Assets/_Project/Data/Characters/Story" }))
+                    _story.Add(UnityEditor.AssetDatabase.LoadAssetAtPath<GameOff.Characters.RecurringCharacter>(UnityEditor.AssetDatabase.GUIDToAssetPath(g)));
+                return _story;
+            }
+        }
+
+        /// <summary>
+        /// P76: the story characters met on that day when every one is decided as intended; books their outcomes and schedules the
+        /// market events they set off (Market.Schedule). Returns how many came.
+        /// </summary>
+        public static int MeetCharacters(int day, GameOff.Characters.CharacterMemory memory)
+        {
+            var due = GameOff.Characters.CharacterPlanner.Due(day, Story, memory, 3, () => 0f);
+            foreach (var p in due)
+            {
+                var a = p.character.Appearances[p.appearance];
+                var outcome = a.OutcomeOf(p.traveler.IntendedVerdict);
+                memory.Remember(p.character, p.appearance, day, outcome);
+                foreach (var c in a.consequences)
+                    if (c.when == outcome && c.marketEvent != null) Market.Schedule(day + c.eventInDays, c.marketEvent);
+            }
+            return due.Count;
+        }
+
+        /// <summary>Forget the cached characters (after the story builder ran).</summary>
+        public static void ResetCharacters() => _story = null;
+
         private DayEntry Entry(int day) => _schedule.Get((day - 1) % _schedule.Count + 1);
         private int ScheduleDay(int day) => (day - 1) % _schedule.Count + 1;
 
@@ -75,13 +110,16 @@ namespace GameOff.EditorTools
             var family = new Household(_household.members.Select(m => m.feelsCold).ToList());
             var held = new Dictionary<ItemData, int>(); // speculation stock carried to the next evening
             int sulksFrom = 0; // P66: the barkeeper sulks the day a bribe is turned down and the next
+            var memory = new GameOff.Characters.CharacterMemory(); // P76: who was met and how it went
             try
             {
                 for (int day = 1; day <= days; day++)
                 {
                     var entry = Entry(day);
                     Market.Begin(ScheduleDay(day), entry.marketEvents);
-                    int travelers = entry.rules != null ? entry.rules.Travelers.Count : 0;
+                    // P76: the recurring characters come on top of the day's own travelers – on the path of an officer who
+                    // decides every one of them right (their outcomes set off tomorrow's events, e.g. Quill arrested → smuggler raid).
+                    int travelers = (entry.rules != null ? entry.rules.Travelers.Count : 0) + MeetCharacters(ScheduleDay(day), memory);
                     int correct = Mathf.Max(0, travelers - wrongPerDay);
                     int bribeMoney = 0;
                     var bribe = entry.bribe;

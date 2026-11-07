@@ -1310,7 +1310,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   von Figuren ausgelöst werden (Entscheidung in P76).
 
 ### P76 — Die wiederkehrenden Figuren (8)
-- Größe: M · Priorität: Muss (Vorschlag) · Status: in Arbeit (martin, 07.11.) · Zuständig: martin
+- Größe: M · Priorität: Muss (Vorschlag) · Status: fertig (martin, 07.11.) · Zuständig: martin
 - Zuschnitt (Martin, 07.11.): P76 = alle 8 Figuren mit Auftritten, Papieren, Begrüßungen, Ereignissen und Fahndungen (was P75 kann),
   die neuen Markt-Ereignisse aus `docs/FIGUREN.md` mit Rebalancing und **12 Tag-Gerüste** (Datum, Grundregeln, Platzhalter-Reisende),
   die Max in P15 füllt. Was P75 noch nicht kann, kommt in **P85–P87**.
@@ -1343,6 +1343,21 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   (mit Rebalancing).
 - Abnahme: Jede Figur hat mindestens zwei Auftritte mit Reaktion auf den vorherigen Ausgang; jeder Zweig validiert; ein Durchgang
   über die Story-Tage zeigt alle acht.
+- Ergebnis (martin, 07.11.):
+  - `GameOff/Build Story Characters` (läuft auch in `Build Day Flow`): 8 Figuren in `Data/Characters/Story/`, 27 Auftritte mit eigenen
+    Papieren (`Data/Travelers/Story/`, `Data/Documents/Story/`), Begrüßungen je letztem Ausgang, Zeilen zu Ereignissen, Folgen. Ablauf wie
+    `docs/FIGUREN.md`, mit zwei Änderungen: **Razzia an Tag 6** (3 Tage nach Quills Verhaftung – an Tag 3/4 schmollt der Barkeeper, P66),
+    und Korr kommt an Tag 4 **verdeckt als ODAN VREL** (Erlaubnis einen Tag abgelaufen; nach Vorschrift abweisen = geholfen).
+  - **12 Tag-Gerüste** `Data/Days/Story/Day01–Day12` (Datum 2290-11-05 + Tag − 1, Grundregeln, Tag 3 zusätzlich ANTIBIOTICS verboten und
+    der Shifter „PELL MARROW“ auf Sicht terminieren). Platzhalter-Reisende füllen jeden Tag auf **6 Begegnungen** (auf dem richtigen Weg
+    durch die Figuren): Vesna, Darro, Ixa + ARIN DOLE, BEKA NUR, CORIN HASK. `DaySchedule` hat 12 Tage; Briefe 4–12 sind Platzhalter (P15).
+  - Neue Markt-Ereignisse: Security lockdown, Clinic shortage, Dock strike, Inspection week (fest Tag 9), Oddo's caravan.
+  - **Rebalancing:** Simulator spielt jetzt den richtigen Weg durch die Figuren (Begegnungen + ausgelöste Ereignisse); Razzia DRUG ×1,8 → ×2,0;
+    Bar-Wunsch nur noch an Tag 5 dazu (2× LUXURY, vor der Razzia). Economy Report: alle Ziele ✓ (Clever Tag 7, Bett Tag 10, Gerücht 7,8 CR).
+  - Geprüft: 137/137 Tests (Validator: jeder Auftritt jeder Figur mit möglichen Fahndungen richtig bewertet), Validate Travelers ok;
+    Durchlauf in Main über 12 Tage mit den beabsichtigten Entscheidungen zeigt alle acht, Regeln = Absicht, Ereignisse am richtigen Tag, 0 Fehler.
+  - Für P15 (max): Gerüste füllen, Figuren-Reisende in Ruhe lassen; Frachtzeilen mit den Fracht-Stichworten aus P82.
+  - Offen in P85–P87: Geschenke/Lohn/Briefe/Bedingungen, Korr-Tutorial, Shifter-Bitte und Ende „Airlocked“; Verwahrung P77.
 
 ### P77 — Verwahrung: Figuren geben dir Dinge zur Aufbewahrung
 - Größe: S–M · Priorität: Soll (Vorschlag) · Status: offen (im Call 07.11. bestätigt) · Zuständig: martin

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Story_Mira_2
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: MIRA TALSK
+  species: Quobb
+  model: {fileID: 2190294317704143118, guid: 2599d4a5607b12d4092e5eb3b17cd21a, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 237fce3f9e325b341a0eac981e7ad5b4, type: 2}
+  - {fileID: 11400000, guid: 042af6dd703dd4049a34674fb8c7f6d3, type: 2}
+  intendedVerdict: 0
+  intendedReason: Papers in order
+  trickIntended: 0
+  storyTag: P76 character, day 4
+  greeting: It's me, Mira. My children are safe.
+  answers: []

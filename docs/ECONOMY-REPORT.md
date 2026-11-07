@@ -7,23 +7,23 @@ Start 40 CR · wage 15 per correct traveler · penalty 10 · rent 30 · bed × 1
 Days beyond the schedule loop over the story days (until P73).
 
 ## Goals
-- ✓ Clever, no mistakes: ticket on day 6–8 – day 8
+- ✓ Clever, no mistakes: ticket on day 6–8 – day 7
 - ✓ Clever, no mistakes: family never sick – worst 0
-- ✓ Bed, no mistakes: ticket on day 9–11 – day 11
+- ✓ Bed, no mistakes: ticket on day 9–11 – day 10
 - ✓ 2 mistakes a day: no ticket by day 12, or a need skipped – never
 - ✓ Nothing for the family: someone critical by day 3 – worst 3
-- ✓ Bribes help, but the ticket not before day 6 – day 6, 240 CR in envelopes
-- ✓ Rumour pays 5–8 CR per speculated unit (after the wish) – 7,0 CR × 20, wish 28 CR
+- ✓ Bribes help, but the ticket not before day 6 – day 6, 60 CR in envelopes
+- ✓ Rumour pays 5–8 CR per speculated unit (after the wish) – 7,8 CR × 4, wish 14 CR
 
 ## Evenings (balance after the bed · family: W well, w weak, S sick, C critical)
 | Style | Ticket | D1 | D2 | D3 | D4 | D5 | D6 | D7 | D8 | D9 | D10 | D11 | D12 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Clever 6/6 | D8 | 89 WWW | 131 WWW | 168 WWW | 217 WWW | 259 WWW | 296 WWW | 345 WWW | 387 WWW | 424 WWW | 473 WWW | 515 WWW | 552 WWW |
-| Rumour 6/6 | D6 | 85 WWW | 63 WWW | 179 WWW | 228 WWW | 61 WWW | 350 WWW | 399 WWW | 232 WWW | 521 WWW | 570 WWW | 403 WWW | 692 WWW |
-| Corrupt 6/6 | D6 | 85 WWW | 63 WWW | 224 WWW | 269 WWW | 102 WWW | 436 WWW | 481 WWW | 314 WWW | 648 WWW | 693 WWW | 526 WWW | 860 WWW |
-| Bed 6/6 | D11 | 74 WWW | 102 WWW | 126 WWW | 160 WWW | 188 WWW | 212 WWW | 246 WWW | 274 WWW | 298 WWW | 332 WWW | 360 WWW | 384 WWW |
-| Clever 4/6 | – | 59 WWW | 71 WWW | 78 WWW | 97 WWW | 109 WWW | 116 WWW | 135 WWW | 147 WWW | 154 WWW | 173 WWW | 185 WWW | 192 WWW |
-| Bed 4/6 | – | 44 WWW | 42 WWW | 36 WWW | 40 WWW | 38 WWW | 32 WWW | 36 WWW | 34 WWW | 28 WWW | 32 WWW | 30 WWW | 24 WWW |
+| Clever 6/6 | D7 | 89 WWW | 131 WWW | 168 WWW | 217 WWW | 266 WWW | 315 WWW | 364 WWW | 413 WWW | 462 WWW | 511 WWW | 560 WWW | 609 WWW |
+| Rumour 6/6 | D7 | 85 WWW | 121 WWW | 158 WWW | 207 WWW | 130 WWW | 346 WWW | 395 WWW | 444 WWW | 493 WWW | 542 WWW | 591 WWW | 640 WWW |
+| Corrupt 6/6 | D6 | 85 WWW | 121 WWW | 203 WWW | 252 WWW | 175 WWW | 391 WWW | 440 WWW | 489 WWW | 538 WWW | 587 WWW | 636 WWW | 685 WWW |
+| Bed 6/6 | D10 | 74 WWW | 102 WWW | 126 WWW | 160 WWW | 194 WWW | 228 WWW | 262 WWW | 296 WWW | 330 WWW | 364 WWW | 398 WWW | 432 WWW |
+| Clever 4/6 | – | 59 WWW | 71 WWW | 78 WWW | 97 WWW | 116 WWW | 135 WWW | 154 WWW | 173 WWW | 192 WWW | 211 WWW | 230 WWW | 249 WWW |
+| Bed 4/6 | – | 44 WWW | 42 WWW | 36 WWW | 40 WWW | 44 WWW | 48 WWW | 52 WWW | 56 WWW | 60 WWW | 64 WWW | 68 WWW | 72 WWW |
 | Skip 6/6 | – | 100 wwS! | 160 SSC! | 220 CCC! | 280 CCC! | 340 CCC! | 400 CCC! | 460 CCC! | 520 CCC! | 580 CCC! | 640 CCC! | 700 CCC! | 760 CCC! |
 
 `!` = a need was left out that evening. OUT = the rent could not be paid (game over).

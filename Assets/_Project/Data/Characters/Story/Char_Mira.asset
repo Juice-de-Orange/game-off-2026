@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 437759cb285558443bccd8f63941e5a9, type: 3}
+  m_Name: Char_Mira
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Characters.RecurringCharacter
+  id: mira
+  displayName: MIRA TALSK
+  species: Quobb
+  appearances:
+  - traveler: {fileID: 11400000, guid: 517527238dff1814c86c589f233246d1, type: 2}
+    dayFrom: 2
+    dayTo: 2
+    slot: 2
+    condition: 1
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines:
+    - marketEvent: {fileID: 11400000, guid: f43d7922bcf28184f9e158056a4dd645, type: 2}
+      line: And now they've closed the border behind me.
+    consequences: []
+  - traveler: {fileID: 11400000, guid: d0eaed4cb6edf1a4aa9e69154a679a86, type: 2}
+    dayFrom: 4
+    dayTo: 4
+    slot: 0
+    condition: 3
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: You let me through. My children ate tonight. This is for
+      yours.
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []
+  - traveler: {fileID: 11400000, guid: 7f390e258db0b224796a32712e64a524, type: 2}
+    dayFrom: 4
+    dayTo: 4
+    slot: 0
+    condition: 4
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: You sent me back. So I bought new papers. Please.
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []
+  - traveler: {fileID: 11400000, guid: d4774dbf5f72ab54eac5d2bd4de92346, type: 2}
+    dayFrom: 8
+    dayTo: 8
+    slot: 0
+    condition: 2
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: I came to say thank you. We're together again - because
+      of you.
+    greetingAfterBetrayed: I'm still trying. Every day. You'll see me until they
+      let me through.
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []

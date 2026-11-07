@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Story_Korr_2
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: ODAN VREL
+  species: Sorvak
+  model: {fileID: 2456880688624481046, guid: 1e6468b746c5f0e47b03509118fc1380, type: 3}
+  documents:
+  - {fileID: 11400000, guid: e91ad40e412a82d418eb0c831f4afc5a, type: 2}
+  - {fileID: 11400000, guid: 9e4cefb56ef2d9546ada872be2ba8f90, type: 2}
+  intendedVerdict: 1
+  intendedReason: Entry permit expired yesterday
+  trickIntended: 0
+  storyTag: P76 character, day 4
+  greeting: Just passing through, officer. One day late is hardly late, is it?
+  answers: []

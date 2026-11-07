@@ -63,7 +63,7 @@ Endlos-Schleife (P73), in der Figuren nur noch selten und nach Bedingung auftauc
 |---|---|---|---|
 | Border closed | fest, Tag 2 | – | FOOD teurer/knapp (gibt es schon, P68) |
 | Cold snap | fest, Tag 3 | – | POWER teurer (gibt es schon) |
-| Smugglers busted | ausgelöst | Quill verraten (Tag 3) → Tag 4 | DRUG teurer, CONTRABAND-Ankauf höher (gibt es schon, bisher fest Tag 3) |
+| Smugglers busted | ausgelöst | Quill verraten/beschlagnahmt (Tag 3) → **Tag 6** (P76: an Tag 3/4 schmollt der Barkeeper) | DRUG teurer, CONTRABAND-Ankauf höher (gibt es schon, bisher fest Tag 3) |
 | Security lockdown | ausgelöst | Shifter durchgelassen (Tag 3) → Tag 4 | Krise ↑, mehr Fahndungen, Durchsagen |
 | Clinic shortage | ausgelöst | Senn beschlagnahmt (Tag 3) → Tag 5 | MEDICINE teurer, Krise ↑ |
 | Dock strike | ausgelöst | Tobin geholfen (Tag 7) → Tag 8 | Mengen aller Waren ↓, Krise ↑ |
@@ -94,3 +94,8 @@ Tag 3 kommt, wird nach diesem Plan und den neuen Figuren gemacht (Martin, 07.11.
 
 ## Offen
 - An welchem Tag liegt die Schlüsselentscheidung des Shifters, und was genau verlangt er?
+
+## Umgesetzt (P76, martin, 07.11.)
+- Alle acht Figuren gebaut (`GameOff/Build Story Characters`), Ablauf wie oben. Änderungen: Razzia an Tag 6 statt 4; Korr an Tag 4 verdeckt als
+  „ODAN VREL“; Quill kommt an Tag 6 zur Rache (auf der Fahndungsliste), wenn er verraten oder beschlagnahmt wurde, an Tag 4 und 9 nur, wenn
+  geholfen. Geschenke, Lohn, Briefe, Nells Sohn → P85; Korr-Tutorial → P86; Shifter-Bitte und „Airlocked“ → P87; Verwahrung → P77.
