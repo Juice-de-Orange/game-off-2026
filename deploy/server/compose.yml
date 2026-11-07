@@ -27,3 +27,29 @@ services:
       options:
         max-size: 5m
         max-file: "2"
+
+  # P84: in-game bug reports → GitHub issues (deploy/reports). Build the image on Geoffrey before this file goes live:
+  # docker build -t kestrel9-reports:latest /opt/kestrel9/reports. Token: python deploy/set-report-token.py (writes reports.env).
+  reports:
+    image: kestrel9-reports:latest
+    pull_policy: never
+    container_name: kestrel9-reports
+    restart: unless-stopped
+    env_file:
+      - path: reports.env
+        required: false
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 64m
+    cpus: 0.5
+    pids_limit: 64
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: "2"

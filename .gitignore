@@ -129,3 +129,6 @@ Desktop.ini
 
 # Unity build inside the Docker context (docs/DEPLOY.md)
 /deploy/site/
+
+# Python bytecode (deploy/reports tests)
+__pycache__/
