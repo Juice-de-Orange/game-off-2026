@@ -5990,3 +5990,322 @@ refs: []
 placeholder: PNG 128x128, Magenta/Grau-Raster
 feedback: []
 ```
+
+### UI_Icon_Item_RationPack.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_RationPack.png
+package: P46
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_RationPack.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Ration pack" im Stil der freigegebenen Stilprobe UI_Icon_Item_NovaCola (Martin, 07.11.): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: graues, kompaktes Folienpaket mit Aufdruck-Streifen (Militärration), leicht zerknittert.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_ProteinBar.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_ProteinBar.png
+package: P46
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_ProteinBar.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Protein bar" im Stil der freigegebenen Stilprobe UI_Icon_Item_NovaCola (Martin, 07.11.): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: Riegel in schlichter Folie, ein Ende aufgerissen, heller Riegel schaut heraus.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_CannedStew.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_CannedStew.png
+package: P46
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_CannedStew.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Canned stew" im Stil der freigegebenen Stilprobe UI_Icon_Item_NovaCola (Martin, 07.11.): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: Konservendose mit Papieretikett (dampfende Schüssel als Bild), Deckel mit Ring.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_FreshFruit.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_FreshFruit.png
+package: P46
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_FreshFruit.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Fresh fruit" im Stil der freigegebenen Stilprobe UI_Icon_Item_NovaCola (Martin, 07.11.): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: zwei bis drei fremdartige, leuchtend frische Früchte (Hydro-Deck), grünes Blatt daran.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_BatteryPack.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_BatteryPack.png
+package: P46
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_BatteryPack.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Battery pack" im Stil der freigegebenen Stilprobe UI_Icon_Item_NovaCola (Martin, 07.11.): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: klobiger Akkublock mit Tragegriff und Ladeanzeige (drei grüne Balken).
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_FusionCell.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_FusionCell.png
+package: P46
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_FusionCell.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Fusion cell" im Stil der freigegebenen Stilprobe UI_Icon_Item_NovaCola (Martin, 07.11.): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: zylindrische Energiezelle mit Glasfenster, kühles Leuchten innen, Metallkappen oben und unten.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_SpareFuse.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_SpareFuse.png
+package: P46
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_SpareFuse.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Spare fuse" im Stil der freigegebenen Stilprobe UI_Icon_Item_NovaCola (Martin, 07.11.): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: Stations-Sicherung: Glasröhre mit Metallkappen und Glühdraht, Warn-Aufkleber.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_CoughSyrup.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_CoughSyrup.png
+package: P46
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_CoughSyrup.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Cough syrup" im Stil der freigegebenen Stilprobe UI_Icon_Item_NovaCola (Martin, 07.11.): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: kleine braune Flasche mit Schraubdeckel und Messbecher, klebriger Tropfen am Rand.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_Painkillers.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Painkillers.png
+package: P46
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_Painkillers.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Painkillers" im Stil der freigegebenen Stilprobe UI_Icon_Item_NovaCola (Martin, 07.11.): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: Blisterpackung mit weißen Tabletten, ein Fach leer.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_Antibiotics.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Antibiotics.png
+package: P46
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_Antibiotics.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Antibiotics" im Stil der freigegebenen Stilprobe UI_Icon_Item_NovaCola (Martin, 07.11.): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: Militär-Medizinschachtel mit Kreuz-Symbol und Schablonen-Nummer, Ampullen darin.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Icon_Item_Spice.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Spice.png
+package: P46
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_Spice.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Spice" im Stil der freigegebenen Stilprobe UI_Icon_Item_NovaCola (Martin, 07.11.): Pixel-Art, leichte
+  Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 %
+  der Fläche, ein Glanzlicht, klein (48 px) im Inventar lesbar. Motiv: kleines verschnürtes Tütchen mit orange-rotem Pulver, ein paar Krümel daneben (verboten, aber verlockend).
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```

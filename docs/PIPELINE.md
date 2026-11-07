@@ -373,3 +373,16 @@ in `docs/ASSET-REQUESTS.md`.
     über die Wandfuge läuft (`docs/asset-previews/lineup_P51-motel-dog-painting.png`). Wenn das Katzenbild höher rückt
     (P51), bitte das Hundebild mitziehen.
 - antwort: max/Claude, 06.11.: Hundebild freigegeben und gemergt, Einbau folgt in P51.
+
+### M021 — Waren-Icons: Stil freigegeben, elf neue Aufträge (P46)
+- datum: 2026-11-07
+- von: martin
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`, die elf neuen Einträge `UI_Icon_Item_*` mit `package: P46` (RationPack, ProteinBar, CannedStew, FreshFruit, BatteryPack, FusionCell, SpareFuse, CoughSyrup, Painkillers, Antibiotics, Spice)
+- status: offen
+- meldung: Die Stilprobe `UI_Icon_Item_NovaCola` (Branch `assets/P46-ui-inventar-handelsfenster-abrechnung`) gefällt Martin: Bitte alle elf Waren-Icons
+  genau in diesem Stil liefern (128x128, transparent, Point, ca. 2 px dunkle Kontur, Dreiviertel-Ansicht, Palette, bei 48 px lesbar). Gern alle auf
+  einem Branch mit einem gemeinsamen Lineup, damit der Stil nebeneinander vergleichbar ist. Mergen und Einbau macht Max wie immer.
+  Die übrigen Waren (Pistol, Data chip, Pocket watch, Silver ring, Alien trinket, Stim injector, Document scanner) kommen später, weil sie sich mit
+  „Warenliste 2“ noch ändern können.
+- antwort:
