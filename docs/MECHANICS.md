@@ -58,6 +58,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Briefe reagieren auf den Zustand | P15 | Familie | offen |
 | Balancing über 3 Tage (Economy Report) | P71 (geplant) | alles Geld | nach P68 |
 | Gadgets: Scanner, UV-Lampe | P16, P62 | Schalter, Kiosk | Scanner-Funktion unklar (siehe Lücken) |
+| Wiederkehrende Figuren (Gedächtnis, Auftritte, Steckbriefe) | P75, P76 (Entwurf) | Schalter, Markt-Ereignisse, Lage der Station, Fahndung, P08 | offen |
 | Familie in der Welt (Stadtlichter, Foto) | P29 | Familie | Assets bestellt |
 | Bugreport im Spiel | Frage `bugreport-server` | Live-Server | Frage an max |
 

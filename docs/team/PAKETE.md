@@ -1224,3 +1224,67 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   gelöscht); Knopf **RETURN** unten im Panel schaltet das Werkzeug aus und gibt die Steuerung zurück.
 - Ergebnis (martin, 07.11.): Ursache war der gespeicherte Schalter (PlayerPrefs) – wer ihn einmal eingeschaltet hatte, bekam das Werkzeug bei
   jedem Start. Geprüft im Play-Modus: alter Wert „an“ gespeichert → Start mit „aus“; RETURN schließt das Panel, Steuerung zurück (Bild).
+
+### P75 — Wiederkehrende Figuren: Gedächtnis, Auftritte, Folgen
+- Größe: M–L · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.)
+- Braucht: P07, P09, P41 (Pinnwand), P68 (Markt-Ereignisse), P36 (Lage der Station) · Inhalt dazu: P76 · Beschlagnahme als Ausgang erst mit P08
+- Ziel: Etwa fünf Figuren kommen geskriptet wieder, erinnern sich, wie man sie behandelt hat, und ihre Geschichte verändert die Station.
+- Enthalten:
+  - **Figur** (`RecurringCharacter`, ScriptableObject in `Data/Characters/`): Id, Name, Spezies, Liste von **Auftritten**.
+  - **Auftritt:** eigener `TravelerData` (eigene Papiere je Begegnung); **wann** = fester Tag oder Zeitfenster (von–bis, Spielraum);
+    **Platz in der Schlange** = fest (z. B. Tag 2 als dritte Person) oder frei; **Bedingung** = was vorher passiert sein muss
+    (lebt / geholfen / nicht verraten / beschlagnahmt / beliebig). Ist die Bedingung nicht erfüllt, kommt die Figur nicht (oder ein
+    anderer Auftritt greift, z. B. „kommt zurück, um sich zu rächen“).
+  - **Ausgang pro Auftritt, im Skript festgelegt** (Martin, 07.11.): Für jede Entscheidung (Durchlassen, Abweisen, Verhaften,
+    Schleuse) steht im Auftritt, was sie für die Figur bedeutet: **geholfen / verraten / neutral / beschlagnahmt / tot**. Schleuse = tot,
+    die Figur kommt nie wieder. Beschlagnahmt greift erst mit P08 (bis dahin zählt es wie verraten).
+  - **Gedächtnis** (`CharacterMemory`, für den laufenden Durchgang, kein Speichern über den Neustart, wie alles andere): pro Figur alle
+    Ausgänge mit Tag. Abfragen: lebt, letzter Ausgang, wie oft geholfen/verraten.
+  - **Reaktion bei der nächsten Begegnung:** Begrüßung und Antworten je nach letztem Ausgang (Dank, Vorwurf, Misstrauen).
+  - **Figuren reden über Ereignisse:** zusätzliche Begrüßungszeile je Markt-Ereignis des Tages (z. B. Grenze zu → „They closed the border
+    behind me.“).
+  - **Figuren lösen Ereignisse aus:** Ein Ausgang kann für morgen ein Markt-Ereignis setzen (Preis, Menge, `crisis`); es läuft
+    wie die festen Ereignisse über Pinnwand, Durchsage, Gerücht des Barkeepers (P65) und die Lage der Station (P36).
+  - **Fahndung zu einer Figur:** Ein Ausgang kann für einen späteren Tag einen Eintrag auf der Fahndungsliste setzen (verhaften /
+    auf Sicht terminieren). Er hängt als **Steckbrief mit Passfoto** (`T_Doc_Photo_<Spezies>`) an der Pinnwand am Kontrolltisch und
+    wird vom `RuleEvaluator` wie jede Fahndung geprüft – Steckbrief und richtige Entscheidung passen also immer zusammen.
+  - **Einbau:** `CounterShift.BeginDay` setzt die fälligen Auftritte an ihren Platz in die Schlange; `DayManager` hängt ausgelöste
+    Ereignisse an die Ereignisse des Tages (vor `Market.Begin`) und ausgelöste Fahndungen an die Fahndungsliste.
+  - **Prüfung:** Validator spielt für jede Figur alle Zweige durch (jede Entscheidung bei jedem Auftritt) und prüft, dass die
+    berechnete Entscheidung zur beabsichtigten passt; EditMode-Tests für Bedingung, Platz, Gedächtnis, ausgelöste Ereignisse/Fahndungen.
+  - Dev-Werkzeug: Gedächtnis im Dev-Reiter anzeigen und setzen (zum Testen späterer Tage).
+- Nicht enthalten: die fünf Figuren und ihre Texte (P76), Beschlagnahme selbst (P08), Endbildschirme (P12).
+- Abnahme: Eine Testfigur mit drei Auftritten: Tag 1 frei, Tag 2 als dritte Person nur wenn geholfen, sonst Tag 3 auf der Fahndungsliste;
+  jeder Zweig spielbar, Begrüßung reagiert, ein ausgelöstes Ereignis ändert Preise und Lage der Station am nächsten Tag.
+- Zusammenhang: P73 (endlos) zieht nach den Story-Tagen weitere Auftritte aus Zeitfenstern; P15 (Fälle) plant die Figuren-Auftritte
+  zwischen den übrigen Reisenden ein; die bisherigen festen Ereignisse (Tag 2 Grenze, Tag 3 Schmuggler + Kälte) können ganz oder teilweise
+  von Figuren ausgelöst werden (Entscheidung in P76).
+
+### P76 — Die fünf wiederkehrenden Figuren
+- Größe: M · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) – Figuren sind ein Vorschlag, Martin wählt und ändert
+- Braucht: P75 · Folgt auf: — · Teil der Inhalte von P15 · Beschlagnahme-Zweige erst mit P08
+- Ziel: Fünf Figuren mit kleinen Geschichten über die Tage, die zum Theme „Shift“ passen und Geld, Familie, Moral und Station verbinden.
+- Enthalten: Figuren-Daten, Papiere je Auftritt, Begrüßungen/Antworten je Ausgang und Ereignis, ausgelöste Ereignisse und Fahndungen,
+  Passfotos aus den vorhandenen Spezies-Modellen.
+- Vorschlag (martin, 07.11.):
+  1. **The Shifter** (Mensch, schon als `T_Test_06_Shifter`, DESIGN.md): jeden Tag neue Identität, erkennbar an einem Detail.
+     Tag 1–2 harmlos; geholfen → Tag 3 Steckbrief „auf Sicht terminieren“. Schleuse = Befehl befolgt (Moral), verhaftet = Befehl
+     verweigert, durchgelassen = er steckt dir etwas für die Familie zu. Der Faden der Hauptgeschichte.
+  2. **Quill Barragh** (Mensch, Kurier des Barkeepers): Tag 1 sauber und freundlich; Tag 3 mit Spice im Gepäck und dem
+     Bestechungszettel (P66). Durchgelassen = geholfen (Umschlag, später größere Aufträge); verhaftet/beschlagnahmt = verraten →
+     **löst „Smugglers busted“ für den nächsten Tag aus** (statt fest an Tag 3), der Barkeeper schmollt.
+  3. **Mira Talsk** (Quobb, Mutter auf dem Weg zu ihren Kindern – Spiegel des Spielers): Tag 2 während „Border closed“, Erlaubnis seit
+     einem Tag abgelaufen. Durchgelassen = geholfen (Regelbruch, Verwarnung) → sie kommt später zurück und bringt Essen für deine Familie
+     (FOOD gedeckt); abgewiesen = verraten → sie versucht es Tage später mit gefälschten Papieren (Verhaften richtig, aber bitter).
+  4. **Dr. Iro Senn** (Xirrik, Ärztin): bringt Antibiotika ohne Einfuhrschein. Geholfen → wenn deine Familie krank ist, kommt sie mit
+     Medizin wieder (MEDICINE gedeckt); beschlagnahmt (P08) = Antibiotika im Inventar (Schwarzmarkt), aber **löst „Clinic shortage“ aus**
+     (Medizin teurer, Krise ↑) und sie kommt nie wieder.
+  5. **Inspector Vaal Korr** (Sorvak, Prüfer der Behörde): **Tag 1 als erste Person – Tutorial** (Martin, 07.11.): Er erklärt den
+     Schalter Schritt für Schritt (Papiere ziehen, Feld anklicken, Regeln an der Pinnwand, stempeln) und lässt sich selbst prüfen.
+     Später kommt er **verdeckt** wieder (z. B. Tag 2 als dritte Person) mit einem kleinen, verlockenden Fehler: „Helfen“ heißt hier
+     nach Vorschrift entscheiden → Lob per Durchsage, Lohnbonus; durchgelassen = Rüge (zusätzliche Verwarnung), er kommt unangekündigt
+     wieder. Zeigt: Nicht jedes Wegsehen ist gut. Das Tutorial geht erst, wenn P75 steht (fester Platz 1 an Tag 1, eigene Texte je Schritt).
+- Offen: Arten und Namen ändern? Welche festen Ereignisse sollen künftig von Figuren ausgelöst werden? Ab welchem Tag kommen
+  Figuren im Endlos-Teil wieder (P73)?
+- Abnahme: Jede Figur hat mindestens zwei Auftritte mit Reaktion auf den vorherigen Ausgang; jeder Zweig validiert; ein Durchgang
+  über die Story-Tage zeigt alle fünf.
