@@ -49,18 +49,21 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 
 | Mechanik | Paket | Hängt an | Stand |
 |---|---|---|---|
-| Moral, Lohn je Entscheidung, Beschlagnahme | P08 | Schalter, Abrechnung | wartet auf Gespräch: Schicht-Inventar + Wahl am Schichtende (Frage an max) |
-| Schicht-Inventar, „Nothing to report / missed that / as ordered“ | Vorschlag (Frage `schichtinventar-beschlagnahme`) | P08, Labels CONFISCATED | mit max besprechen |
-| Disziplinarstrafen (3 = Game Over), getrennt von Verwarnungen | Vorschlag (gleiche Frage) | P08, P12 | mit max besprechen |
-| Beschlagnahmte Ware: eigene Items oder Merkmal pro Stapel | offen (P64/P08) | Inventar, Schwarzmarkt | mit max besprechen |
+| Moral, Lohn je Entscheidung, Beschlagnahme | P08 | Schalter, Abrechnung, P81, P82 | im Call 07.11. festgelegt, offen |
+| Schicht-Inventar (nur am Tisch) | P81 | Inventar (P46), P08 | offen (Call 07.11.) |
+| Wahl am Schichtende: „Nothing to report / missed that / as ordered“ | P08 | P81, CONFISCATED-Varianten (P82), Asservatenschrank | offen (Call 07.11.) |
+| Disziplinarstrafen (3 = Game Over), getrennt von Verwarnungen | P08, P12 | Enden | offen (Call 07.11.) |
+| Beschlagnahmte Ware als eigene Item-Variante (CONFISCATED) | P82 | Inventar, Schwarzmarkt (P64), P08 | offen (Call 07.11.) |
+| Warenliste 2: Modell, Zweck, Icon je Ware; Fracht-Stichworte = Warennamen | P82 | Preise, Familie, Bar-Wünsche, Regeln | offen (Call 07.11.) |
+| Asservatenschrank aufbrechen | P83 (Kann) | P08, P32 | offen |
 | Familienschicksal: Folgen von „kritisch“ | P69 (Entwurf) | Familie → P12 | mit max abstimmen |
 | Enden (Familie, Moral, gefeuert) | P12 | Familie, P08, P69 | offen |
 | Briefe reagieren auf den Zustand | P15 | Familie | offen |
 | Balancing über 3 Tage (Economy Report) | P71 (geplant) | alles Geld | nach P68 |
 | Gadgets: Scanner, UV-Lampe | P16, P62 | Schalter, Kiosk | Scanner-Funktion unklar (siehe Lücken) |
-| Wiederkehrende Figuren (Gedächtnis, Auftritte, Steckbriefe, Verwahrung) | P75, P76, P77 (Entwurf) | Schalter, Markt-Ereignisse, Lage der Station, Fahndung, P08 | offen |
+| Wiederkehrende Figuren (Gedächtnis, Auftritte, Steckbriefe, Verwahrung) | P75, P76, P77 (im Call 07.11. bestätigt) | Schalter, Markt-Ereignisse, Lage der Station, Fahndung, P08 | offen |
 | Familie in der Welt (Stadtlichter, Foto) | P29 | Familie | Assets bestellt |
-| Bugreport im Spiel | Frage `bugreport-server` | Live-Server | Frage an max |
+| Bugreport im Spiel | P78 | Pausenmenü → GitHub-Issue | gebaut (max, 07.11.) |
 
 ## Lücken / passt noch nicht
 - **Brief von Tag 3** sagt fest „Pip is sick now“, auch wenn Pip gesund ist → P15.
@@ -72,4 +75,4 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 - **Jede Geldänderung braucht ein neues Rebalancing** (GameOff → Economy Report bis alle Ziele ✓; `EconomyBalanceTests` bricht sonst).
 - **Vernachlässigen lohnt sich:** Ohne Folgen von „critical“ (P69) und ohne Familienprüfung beim Ticket (P72) ist „nichts versorgen“ der schnellste Weg nach Hause.
 - **Endlos noch nicht gebaut:** Der Simulator wiederholt die Story-Tage ab Tag 4, bis P73 Pools liefert; das Spiel selbst endet noch nach Tag 3.
-- **Waren ohne Zweck:** Pistol, Data chip, Antibiotics (beim Dealer teurer als Medizin am Bett) und Wertsachen (keine Quelle) – Ziel für P65-Wünsche und P08. Scanner erst mit P16.
+- **Waren ohne Zweck:** Pistol, Data chip, Antibiotics (beim Dealer teurer als Medizin am Bett) und Wertsachen (keine Quelle) → P82. Scanner erst mit P16.

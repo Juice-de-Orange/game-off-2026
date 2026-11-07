@@ -177,6 +177,15 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Alle vier Aktionen verändern Geld/Moral/Inventar korrekt.
 - **Zum Besprechen (Max + Martin, vor P08):** Labels hängen an der Sorte Gegenstand (`ItemData`), nicht am einzelnen Stück. Eine normale und eine beschlagnahmte Taschenuhr sind darum zwei Gegenstände („Pocket watch“ und „Confiscated pocket watch“ mit `CONFISCATED`); ein Stück im Inventar bekommt kein Label nachträglich. Beschlagnahme legt direkt die beschlagnahmte Variante ins Inventar. Folge: Jeder beschlagnahmbare Gegenstand braucht zwei Assets. Alternative wäre ein Merkmal pro Inventar-Stapel („beschlagnahmt“), das kostet Umbau an `Inventory`. Erst gemeinsam entscheiden, sonst kollidiert es mit P08. (aus P64, martin 06.11.)
 - Vorschlag Martin (06.11.): Schicht-Inventar nur am Tisch, Wahl am Schichtende (Nothing to report / Oh, seems I missed that / As ordered), Verwarnungen (P07) und Disziplinarstrafen getrennt, 3 Disziplinarstrafen = Game Over, alle Zahlen vorläufig → `questions/2026-11-06_martin-an-max_schichtinventar-beschlagnahme.md`, gemeinsam festlegen.
+- **Festgelegt im Call (max + martin, 07.11.):** Vorschlag Martin gilt (Frage `schichtinventar-beschlagnahme`, A). Damit gehört zu P08:
+  - Beschlagnahme legt Gegenstände ins **Schicht-Inventar (P81)**, nicht direkt ins Inventar.
+  - **Wahl am Schichtende:** „Nothing to report“ (alles behalten, 80 % erwischt → 100 CR + 1 Disziplinarstrafe) · „Oh, seems I missed that“
+    (60 %: ein Gegenstand nach Wahl als CONFISCATED-Variante ins Inventar, erwischt → nur Geldstrafe) · „As ordered“ (alles an den
+    Asservatenschrank, vorerst gelöscht; Aufbrechen = P83).
+  - **Disziplinarstrafen** als eigener Zähler über alle Tage, getrennt von den Verwarnungen (P07 bleibt); 3 = Game Over (Ende in P12).
+  - Beschlagnahmte Ware ist eine **eigene Item-Variante** mit CONFISCATED (Varianten legt P82 an).
+  - Alle Zahlen vorläufig in einem **Tuning-Asset** in `Data/`; jede Geldänderung → Rebalancing.
+  - Braucht damit zusätzlich: **P81, P82**.
 - Festgelegt im Asset-Durchgang (max, 02.11.): Luftschleuse: Außenschott **klappt nach außen ins All** (Rework mit Angel bestellt), Sog, Warnlampe dreht rot, Reisender wird hinausgerissen. Verhaftung: Warnlampe rot. Beschlagnahmtes landet physisch im Asservatenschrank (P32).
 
 ### P09 — Tagesablauf
@@ -259,6 +268,8 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   für Mom, Lena, Pip), z. B. alle gesund / jemand krank / jemand kritisch am Ende von Tag 3. „Familie zerbrochen“ als Niederlage
   kommt aus den Regeln von **P69**. Dazu Disziplinarstrafen (3 = Game Over, Vorschlag an Max) und Moral (P08).
   Schon da (Platzhalter, P13): **Miete nicht bezahlbar → „STRANDED“**; P12 ersetzt den Text durch ein echtes Ende. Haken: `DayManager.GameOver(title, body)`.
+- Angepasst (martin, 07.11., nach dem Call): Enthalten sind jetzt auch **„Discharged“** (3 Disziplinarstrafen aus P08, Zähler über alle Tage) und
+  **„Airlocked“** (Shifter-Schlüsselentscheidung, P75/P76). Abnahme: beide Enden lassen sich mit Dev-Knöpfen gezielt auslösen.
 
 ### P13 — Hangar: Pakete an die Familie
 - Größe: S · Priorität: Soll · Status: fertig (martin, 06.11.)
@@ -506,6 +517,8 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Beschlagnahmtes ist greifbar.
 - Enthalten: [E] Türen schwingen auf, Gegenstände liegen sichtbar in den Fächern, Rausnehmen = Inventar (Bar verkaufen / nach Hause schicken)
 - Abnahme: Verhaftung legt Gegenstände in den Schrank, man kann sie entnehmen.
+- Hinweis (martin, 07.11., nach dem Call): Seit dem Call landet Beschlagnahmtes erst im Schicht-Inventar (P81); in den Schrank kommt es nur mit
+  „As ordered“ (P08). Frei entnehmen widerspricht dem – P32 zeigt die Gegenstände, **herausholen nur durch Aufbrechen (P83)**.
 
 ### P33 — Pinnwand, Lautsprecher & Warnlampe
 - Größe: M · Priorität: Soll · Status: offen
@@ -1339,3 +1352,45 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: Modell am `NoteSpot` des `BribeNote` (EconomyBuilder), nur sichtbar, solange der Zettel liegt.
 - Nicht enthalten: neue Mechanik.
 - Abnahme: Tag 3 → Umschlag liegt links neben den Papieren, verschwindet mit dem Zettel.
+
+### P81 — Schicht-Inventar
+- Größe: S–M · Priorität: Muss · Status: offen · Zuständig: martin (Call 07.11.)
+- Braucht: P46 · Folgt auf: P46
+- Ziel: Was während der Schicht beschlagnahmt wird, liegt in einem **eigenen Inventar am Tisch**, nicht im normalen Inventar
+  (Frage `schichtinventar-beschlagnahme`, im Call bestätigt).
+- Enthalten: zweites `Inventory` „Schicht“ (in `PlayerEconomy`), nur während der Schicht am Schalter offen (eigene Taste oder Fach am Tisch,
+  Anzeige wie das Inventar aus P46); im Sitzen lässt sich das normale Inventar nicht öffnen; am Schichtende wird es geleert
+  (was damit passiert, entscheidet P08). Dev-Knopf zum Befüllen mit Test-Ware.
+- Nicht enthalten: die Wahl am Schichtende und Strafen (P08), Asservatenschrank (P32/P83).
+- Abnahme: Test-Ware ins Schicht-Inventar → am Tisch sichtbar, normales Inventar dort gesperrt; nach der Schicht ist das Schicht-Inventar leer,
+  das normale Inventar unverändert.
+
+### P82 — Warenliste 2: jede Ware mit Modell, Zweck und Icon
+- Größe: M · Priorität: Muss · Status: offen · Zuständig: martin (Call 07.11.)
+- Braucht: P70, P71 · Folgt auf: P70
+- Ziel: Alle Waren haben einen Grund, sie zu kaufen, zu beschlagnahmen oder zu verkaufen, und sehen im Inventar fertig aus
+  (Frage `warenliste-2`, im Call: A).
+- Enthalten:
+  - **Icons an die Waren:** die 12 gelieferten `UI_Icon_Item_*` (P46) in `ItemData.icon`; Icons für die übrigen Waren und die neuen Waren
+    bestellen (Stil wie Nova Cola, Entscheidung 07.11.).
+  - **Gelieferte Modelle werden Waren:** Liquor → LUXURY · Weapon parts → CONTRABAND + WEAPON · Cash bundle → VALUABLE ·
+    Alien specimen → ALIEN + CONTRABAND · Pill bottle → MEDICINE · UV lamp → GADGET (einmalig, mit P62); Clown shoes bleiben bei P63.
+    `ItemData` bekommt ein Feld für sein Modell (z. B. Nova Cola → `SM_Prop_SodaCan`).
+  - **Jede Ware bekommt einen Zweck:** teure Waren wirken stärker (z. B. Canned stew macht Geschwächte gesund), Antibiotics heilen „critical“
+    (zusammen mit P69), Waffen und Wertsachen sind Ziele für Bar-Wünsche (P65) und kommen aus Beschlagnahme (P08) oder Bestechung (P66).
+  - **Beschlagnahmte Varianten** (Call 07.11.): eigene Items „Confiscated …“ mit Label CONFISCATED für alles, was beschlagnahmt werden kann
+    (Feld in `ItemData`, das auf die Variante zeigt); P08 benutzt sie.
+  - **Fracht-Stichworte = Warennamen**, z. B. „Stimulant vials“ statt „Stim injector“ (Regeln und Reisende mit anpassen, Validate Travelers).
+  - **Rebalancing:** Economy Report, bis alle Ziele ✓.
+- Nicht enthalten: Beschlagnahme selbst (P08), Asservatenschrank (P32), Gadget-Funktionen (P16, P62).
+- Abnahme: Jede Ware hat Icon (oder Platzhalter mit Bestellung), Modell-Verweis, mindestens einen Zweck und eine Quelle; Test prüft das;
+  Validate Travelers und EditMode-Tests grün; Economy Report alle Ziele ✓.
+
+### P83 — Asservatenschrank aufbrechen
+- Größe: S · Priorität: Kann · Status: offen · Zuständig: martin (Call 07.11.)
+- Braucht: P08, P32 · Folgt auf: —
+- Ziel: Was mit „As ordered“ an den Schrank ging, ist nicht ganz verloren – mit Risiko kommt man wieder dran.
+- Enthalten: Der Schrank bekommt ein eigenes Inventar (statt Löschen in P08); abends [E] am Schrank → aufbrechen (Chance, erwischt zu werden →
+  Disziplinarstrafe, Werte im Tuning-Asset aus P08); Entnommenes bekommt die CONFISCATED-Variante (P82).
+- Nicht enthalten: Minispiel zum Schlossknacken.
+- Abnahme: „As ordered“ → Ware liegt im Schrank; Aufbrechen gibt sie (als CONFISCATED) ins Inventar oder bringt eine Disziplinarstrafe.
