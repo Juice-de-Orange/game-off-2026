@@ -5937,7 +5937,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_BribeEnvelope.fbx
 package: P66
 scene: Schalter (Schreibtisch, links neben den Papieren)
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-20
 size_m: [0.18, 0.11, 0.015]
