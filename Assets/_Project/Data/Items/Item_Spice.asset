@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0777e03cad483684198013defb55935a, type: 3}
-  m_Name: Item_ContrabandSpice
+  m_Name: Item_Spice
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemData
-  displayName: Contraband spice
-  description: Confiscated at the counter. Worth more under the bar than at the kiosk.
+  displayName: Spice
+  description: Banned, sweet-smelling and much asked for. Worth more under the bar
+    than at the kiosk.
   baseValue: 12
   dailyChange:
   - 0

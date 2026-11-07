@@ -120,7 +120,7 @@ namespace GameOff.EditorTools
             data.Items["ration"] = Item("RationPack", "Ration pack", "Grey, dense and filling. A day of food for one.", 8, ref created, food);
             data.Items["painkillers"] = Item("Painkillers", "Painkillers", "Strong enough for a bad cough. Not much more.", 15, ref created, medicine);
             data.Items["cola"] = Item("NovaCola", "Nova Cola", "Warm, flat and sweet. Keeps you awake at the counter.", 2, ref created, food);
-            data.Items["spice"] = Item("ContrabandSpice", "Contraband spice", "Confiscated at the counter. Worth more under the bar than at the kiosk.", 12, ref created, contraband);
+            data.Items["spice"] = Item("Spice", "Spice", "Banned, sweet-smelling and much asked for. Worth more under the bar than at the kiosk.", 12, ref created, contraband);
             data.Items["watch"] = Item("PocketWatch", "Pocket watch", "Old, heavy, still ticking. Someone will want it.", 20, ref created);
 
             data.Stocks["Stock_Kiosk_Test"] = Stock("Stock_Kiosk_Test", "KIOSK · HOLLY", 1f, 0.5f, "Sold out.",
@@ -186,7 +186,7 @@ namespace GameOff.EditorTools
         // Daily amounts of the test stocks (P11); anything else gets 3.
         private static readonly Dictionary<string, int> DailyAmounts = new Dictionary<string, int>
         {
-            { "Item_DocumentScanner", 1 }, { "Item_RationPack", 3 }, { "Item_Painkillers", 2 }, { "Item_NovaCola", 5 }, { "Item_ContrabandSpice", 3 },
+            { "Item_DocumentScanner", 1 }, { "Item_RationPack", 3 }, { "Item_Painkillers", 2 }, { "Item_NovaCola", 5 }, { "Item_Spice", 3 },
         };
 
         /// <summary>P11: moves the old item list (without amounts) into entries with a daily amount. Leaves tuned entries alone.</summary>
@@ -251,7 +251,7 @@ namespace GameOff.EditorTools
             // Off the kiosk until P16 makes it useful (Martin, 07.11.); re-add with AddEntry(kiosk, scanner, 1) there.
             Goods("scanner", "DocumentScanner", "", "", 60, null, null, 0, 0f, 0f, -0.1f);
             if (RemoveEntry(kiosk, data.Items["scanner"])) log.Add("scanner off the kiosk until P16");
-            Goods("spice", "ContrabandSpice", "", "", 12, null, dealer, 3, 0f, 0.2f, -0.1f);
+            Goods("spice", "Spice", "", "", 12, null, dealer, 3, 0f, 0.2f, -0.1f);
             Goods("stim", "StimInjector", "Stim injector", "Keeps you standing. Not legal anywhere decent.", 18, new[] { contraband, drug, medicine }, dealer, 2, 0f, 0f, 0.2f);
             Goods("antibiotics", "Antibiotics", "Antibiotics", "Military stock. The clinic back home would kill for these.", 30, new[] { contraband, medicine }, dealer, 1, 0f, 0.1f, 0.4f);
             Goods("chip", "DataChip", "Data chip", "Someone's records. Someone else wants them.", 25, new[] { contraband, tech }, dealer, 2, 0f, -0.1f, 0f);

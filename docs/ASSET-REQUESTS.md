@@ -5931,3 +5931,62 @@ refs: []
 placeholder: Dunkler Quader 0.9 x 0.6 x 0.04 m, Pivot center (EconomyBuilder, P65)
 feedback: []
 ```
+
+### SM_Prop_BribeEnvelope.fbx
+```yaml
+path: Assets/_Project/Art/Models/Props/SM_Prop_BribeEnvelope.fbx
+package: P66
+scene: Schalter (Schreibtisch, links neben den Papieren)
+status: offen
+priority: P3
+needed_by: 2026-11-20
+size_m: [0.18, 0.11, 0.015]
+pivot: bottom_center
+tris_max: 150
+materials: [Envelope]
+textures:
+  - Assets/_Project/Art/Textures/Props/T_Prop_BribeEnvelope_Albedo.png   # 64x64, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  Flacher, leicht zerknitterter Briefumschlag aus braunem Packpapier, Lasche offen, ein paar Credit-Scheine schauen
+  heraus. Kleiner Bar-Stempel "THE LAST ORBIT" (Orange/Violett) in einer Ecke. Liegt flach auf dem Schalter-Tisch an
+  Tagen mit Bestechung; der lesbare Zettel dazu bleibt ein eigenes Papier daneben (TextMeshPro).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Keiner im Spiel bis zur Lieferung; der Bestechungszettel ist bis dahin nur Papier (P66)
+feedback: []
+```
+
+### UI_Icon_Item_NovaCola.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png
+package: P46
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  STILPROBE für die Waren-Icons (Max gibt den Stil frei, danach folgen die anderen Waren im selben Stil).
+  Vorschlag: Dose "NOVA COLA" (wie SM_Prop_SodaCan) in leichter Dreiviertel-Ansicht, Pixel-Art mit ca. 2 px dunkler
+  Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 % der Fläche, ein Glanzlicht.
+  Muss klein (48 px) im Inventar lesbar sein.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
