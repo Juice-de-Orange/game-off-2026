@@ -1354,7 +1354,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Tag 3 → Umschlag liegt links neben den Papieren, verschwindet mit dem Zettel.
 
 ### P81 — Schicht-Inventar
-- Größe: S–M · Priorität: Muss · Status: offen · Zuständig: martin (Call 07.11.)
+- Größe: S–M · Priorität: Muss · Status: in Arbeit (martin, 07.11.) · Zuständig: martin (Call 07.11.)
 - Braucht: P46 · Folgt auf: P46
 - Ziel: Was während der Schicht beschlagnahmt wird, liegt in einem **eigenen Inventar am Tisch**, nicht im normalen Inventar
   (Frage `schichtinventar-beschlagnahme`, im Call bestätigt).
