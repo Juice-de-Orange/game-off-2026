@@ -5966,7 +5966,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
