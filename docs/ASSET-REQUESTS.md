@@ -5996,7 +5996,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_RationPack.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6025,7 +6025,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_ProteinBar.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6054,7 +6054,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_CannedStew.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6083,7 +6083,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_FreshFruit.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6112,7 +6112,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_BatteryPack.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6141,7 +6141,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_FusionCell.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6170,7 +6170,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_SpareFuse.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6199,7 +6199,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_CoughSyrup.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6228,7 +6228,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Painkillers.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6257,7 +6257,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Antibiotics.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6286,7 +6286,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Spice.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
