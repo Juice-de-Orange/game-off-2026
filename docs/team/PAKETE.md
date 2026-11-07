@@ -1212,7 +1212,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     müssen das abfangen. Der Simulator zählt das Ticket nur bei gesunder Familie.
 
 ### P72 — Ticket nach Hause
-- Größe: M · Priorität: Muss (Vorschlag) · Status: offen (von Max bestätigt, 07.11., Frage `endlos-und-ticket`) · Zuständig: max (Call 07.11.)
+- Größe: M · Priorität: Muss (Vorschlag) · Status: in Arbeit (max, 07.11.) · Zuständig: max (Call 07.11.)
 - Braucht: P71 (Ticketpreis), P12 · Folgt auf: —
 - Ziel: Das Spielziel: genug sparen, ein teures Ticket kaufen und mit einem Schiff vom Hangar aus heimfliegen – „das Ende der Game Jam“.
 - Enthalten: Ticket-Terminal im Hangar (nur abends, wie jeder Handel), Kauf zum Ticketpreis (`HouseholdTuning.ticketPrice`, von P71 festgelegt),
