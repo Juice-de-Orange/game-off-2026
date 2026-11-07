@@ -28,6 +28,20 @@ namespace GameOff.Travelers
         public static bool TryParseDate(string text, out DateTime value) =>
             DateTime.TryParseExact(text?.Trim(), DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out value);
 
+        /// <summary>
+        /// P75: a copy of this day for one run, with another traveler queue and extra wanted entries (recurring characters).
+        /// The asset itself stays untouched.
+        /// </summary>
+        public DayRules RuntimeCopy(List<TravelerData> newTravelers, List<WantedEntry> extraWanted)
+        {
+            var copy = Instantiate(this);
+            copy.name = name;
+            copy.travelers = newTravelers ?? new List<TravelerData>(travelers);
+            copy.wanted = new List<WantedEntry>(wanted);
+            if (extraWanted != null) copy.wanted.AddRange(extraWanted);
+            return copy;
+        }
+
 #if UNITY_EDITOR
         /// <summary>Editor setup (content builders and tests).</summary>
         public void EditorSet(string newDate, List<DayRule> newRules, List<WantedEntry> newWanted, List<TravelerData> newTravelers)

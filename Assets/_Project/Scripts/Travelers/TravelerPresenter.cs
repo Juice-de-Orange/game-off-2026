@@ -57,14 +57,18 @@ namespace GameOff.Travelers
             StopRoutine();
             bubble.Hide();
             Show(traveler);
-            if (!string.IsNullOrWhiteSpace(traveler.Greeting)) _routine = StartCoroutine(Greet(traveler));
+            string greeting = GreetingFor != null ? GreetingFor(traveler) : traveler.Greeting;
+            if (!string.IsNullOrWhiteSpace(greeting)) _routine = StartCoroutine(Greet(traveler, greeting));
         }
 
-        private IEnumerator Greet(TravelerData traveler)
+        /// <summary>P75: recurring characters greet by what happened last time; null = the traveler's own greeting.</summary>
+        public System.Func<TravelerData, string> GreetingFor;
+
+        private IEnumerator Greet(TravelerData traveler, string greeting)
         {
             yield return new WaitForSeconds(tuning.greetingDelay);
             _routine = null;
-            Say(traveler, traveler.Greeting);
+            Say(traveler, greeting);
         }
 
         private void OnFieldClicked(DocumentData document, string fieldKey)

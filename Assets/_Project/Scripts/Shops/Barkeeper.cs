@@ -1,3 +1,4 @@
+using System.Linq;
 using GameOff.Audio;
 using GameOff.Core;
 using GameOff.Day;
@@ -95,7 +96,9 @@ namespace GameOff.Shops
         private void ShowRumour() =>
             dialogs.ShowDialog("A RUMOUR", Rumour(), null, null, null, Resume);
 
-        private string Rumour() => day.Day >= day.DayCount ? BarWishRules.Quiet : BarWishRules.Rumour(day.Entry(day.Day + 1).marketEvents);
+        // P75: tomorrow's fixed events plus what recurring characters set off for tomorrow.
+        private string Rumour() => day.Day >= day.DayCount ? BarWishRules.Quiet
+            : BarWishRules.Rumour(day.Entry(day.Day + 1).marketEvents.Concat(Market.ScheduledFor(day.Day + 1)).Distinct());
 
         private void Resume() => player.SetControlEnabled(true);
     }

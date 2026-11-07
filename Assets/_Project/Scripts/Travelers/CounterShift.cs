@@ -81,10 +81,13 @@ namespace GameOff.Travelers
         }
 
         /// <summary>Starts a day (P09 will call this each morning); sitting down starts the first traveler.</summary>
+        /// <summary>P75: may change the day before it starts (recurring characters in the queue, their wanted entries).</summary>
+        public Func<DayRules, DayRules> PlanDay;
+
         public void BeginDay(DayRules newDay, string newToday = "")
         {
             StopAllCoroutines(); // a pending "next traveler" belongs to the old day
-            day = newDay;
+            day = PlanDay != null ? PlanDay(newDay) : newDay;
             NewToday = newToday ?? "";
             _index = -1;
             _started = false;

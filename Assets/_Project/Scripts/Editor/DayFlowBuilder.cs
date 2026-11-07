@@ -130,6 +130,12 @@ namespace GameOff.EditorTools
             var mood = root.AddComponent<StationMood>();
             Set(mood, "day", manager);
             Set(mood, "tuning", EnsureMoodTuning(log));
+            // P75: recurring characters (story ones come with P76; the test character only with the dev tools on)
+            var director = root.AddComponent<GameOff.Characters.CharacterDirector>();
+            Set(director, "dayManager", manager);
+            log.Add(CharacterBuilder.Build());
+            var test = AssetDatabase.LoadAssetAtPath<GameOff.Characters.RecurringCharacter>(CharacterBuilder.CharacterPath);
+            if (test != null) SetArray(director, "devCharacters", new Object[] { test });
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
             Object.DestroyImmediate(root);
             log.Add("PF_DayFlow built");
@@ -310,6 +316,12 @@ namespace GameOff.EditorTools
                 Set(board, "day", manager);
                 Set(board, "shift", shift);
                 PrefabUtility.RecordPrefabInstancePropertyModifications(board);
+            }
+            foreach (var director in instance.GetComponentsInChildren<GameOff.Characters.CharacterDirector>(true))
+            {
+                Set(director, "shift", shift);
+                Set(director, "presenter", Object.FindFirstObjectByType<TravelerPresenter>());
+                PrefabUtility.RecordPrefabInstancePropertyModifications(director);
             }
             string mood = WireStationMood(scene, instance);
             string bed = FitBedTrigger(scene, instance);

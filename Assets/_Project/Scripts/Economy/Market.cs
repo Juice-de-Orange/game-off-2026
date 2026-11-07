@@ -17,14 +17,33 @@ namespace GameOff.Economy
         public static int Day { get; set; } = 1;
         public static IReadOnlyList<MarketEvent> TodayEvents => Events;
 
+        // P75: events triggered by recurring characters for a later day, added to that day's fixed events.
+        private static readonly Dictionary<int, List<MarketEvent>> Scheduled = new Dictionary<int, List<MarketEvent>>();
+
         public static void Begin(int day, IEnumerable<MarketEvent> events)
         {
             Day = day;
             Events.Clear();
-            if (events == null) return;
-            foreach (var e in events)
-                if (e != null) Events.Add(e);
+            if (day <= 1) Scheduled.Clear(); // a new run
+            if (events != null)
+                foreach (var e in events)
+                    if (e != null && !Events.Contains(e)) Events.Add(e);
+            if (Scheduled.TryGetValue(day, out var extra))
+                foreach (var e in extra)
+                    if (e != null && !Events.Contains(e)) Events.Add(e);
         }
+
+        /// <summary>P75: an event happens on that day too (pinboard, announcement, rumour the evening before, station mood).</summary>
+        public static void Schedule(int day, MarketEvent e)
+        {
+            if (e == null) return;
+            if (!Scheduled.TryGetValue(day, out var list)) Scheduled[day] = list = new List<MarketEvent>();
+            if (!list.Contains(e)) list.Add(e);
+        }
+
+        /// <summary>P75: what is scheduled for that day so far (the barkeeper's rumour looks at tomorrow).</summary>
+        public static IReadOnlyList<MarketEvent> ScheduledFor(int day) =>
+            Scheduled.TryGetValue(day, out var list) ? list : (IReadOnlyList<MarketEvent>)System.Array.Empty<MarketEvent>();
 
         /// <summary>Unrounded market price today – round only at the end (vendor or bed price).</summary>
         public static float PriceOf(ItemData item)

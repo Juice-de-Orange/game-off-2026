@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 437759cb285558443bccd8f63941e5a9, type: 3}
+  m_Name: Char_Test_TessMarlo
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Characters.RecurringCharacter
+  id: test_tess
+  displayName: TESS MARLO
+  species: Human
+  appearances:
+  - traveler: {fileID: 11400000, guid: 62b5a99b4573fce488f5ec13b461fd2d, type: 2}
+    dayFrom: 1
+    dayTo: 1
+    slot: 0
+    condition: 1
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences:
+    - when: 2
+      marketEvent: {fileID: 11400000, guid: 185c66fd5f1f3db4b9efbde0cf898138, type: 2}
+      eventInDays: 1
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+    - when: 2
+      marketEvent: {fileID: 0}
+      eventInDays: 1
+      wanted: 1
+      wantedOrder: 0
+      wantedInDays: 2
+      wantedForDays: 1
+      wantedNote: Threatened an officer
+  - traveler: {fileID: 11400000, guid: 767ec92ab656c9e4982254d4e8f9ff94, type: 2}
+    dayFrom: 2
+    dayTo: 2
+    slot: 3
+    condition: 3
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: You let me through yesterday. I won't forget that.
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines:
+    - marketEvent: {fileID: 11400000, guid: 185c66fd5f1f3db4b9efbde0cf898138, type: 2}
+      line: And it's freezing back home, they say.
+    consequences: []
+  - traveler: {fileID: 11400000, guid: 5fcf4edcc4baaf042960652b479a6cdf, type: 2}
+    dayFrom: 3
+    dayTo: 3
+    slot: 1
+    condition: 6
+    onAdmit: 3
+    onDeny: 2
+    onArrest: 3
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: You sent me away. Let's see how you like it.
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []

@@ -168,7 +168,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   (The Shifter), `storyTag`.
 
 ### P08 — Entscheidungen & Moral
-- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 07.11.) – Code fertig, **Einbau in Main fehlt** (Main war bei max für P72)
+- Größe: M · Priorität: Muss · Status: fertig (martin, 07.11.)
 - Braucht: P07, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Durchlassen/Abweisen/Verhaften/Luftschleuse mit Folgen.
 - Enthalten: Lohn/Abzug je Entscheidung, Beschlagnahme bei Verhaftung (Gegenstände ins Inventar),
@@ -198,7 +198,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Effekte (Warnlampe, Schott) bleiben bei P33 / dem bestellten Schott-Rework (Martin).
   - Zahlen in `Data/Economy/ConfiscationTuning.asset`. Tests `ConfiscationTests` (7), 130/130 grün; in einer Kopie von Main durchgespielt
     (Quill verhaftet → 3 Stimulant vials, Fenster, alle drei Antworten, Entlassung), Konsole 0 Fehler.
-  - **Offen:** `GameOff/Build Economy into Main` (verkabelt Confiscation mit Schicht, Schalter, Tag), danach Abnahme im echten Main.
+  - In Main eingebaut (07.11.) und dort geprüft: Quill verhaftet → Schicht-Inventar, Fenster am Schichtende, Schalter gesperrt; 0 Fehler.
 - Festgelegt im Asset-Durchgang (max, 02.11.): Luftschleuse: Außenschott **klappt nach außen ins All** (Rework mit Angel bestellt), Sog, Warnlampe dreht rot, Reisender wird hinausgerissen. Verhaftung: Warnlampe rot. Beschlagnahmtes landet physisch im Asservatenschrank (P32).
 
 ### P09 — Tagesablauf
@@ -1256,7 +1256,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   jedem Start. Geprüft im Play-Modus: alter Wert „an“ gespeichert → Start mit „aus“; RETURN schließt das Panel, Steuerung zurück (Bild).
 
 ### P75 — Wiederkehrende Figuren: Gedächtnis, Auftritte, Folgen
-- Größe: M–L · Priorität: Muss (Vorschlag) · Status: in Arbeit (martin, 07.11.) · Zuständig: martin
+- Größe: M–L · Priorität: Muss (Vorschlag) · Status: fertig (martin, 07.11.) · Zuständig: martin
 - Braucht: P07, P09, P41 (Pinnwand), P68 (Markt-Ereignisse), P36 (Lage der Station) · Inhalt dazu: P76 · Beschlagnahme als Ausgang erst mit P08
 - Ziel: Acht Figuren (Ablauf: `docs/FIGUREN.md`) kommen geskriptet wieder, erinnern sich, wie man sie behandelt hat, und ihre Geschichte verändert die Station.
 - Enthalten:
@@ -1286,6 +1286,25 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: die Figuren und ihre Texte (P76), Beschlagnahme selbst (P08), Endbildschirme (P12).
 - Abnahme: Eine Testfigur mit drei Auftritten: Tag 1 frei, Tag 2 als dritte Person nur wenn geholfen, sonst Tag 3 auf der Fahndungsliste;
   jeder Zweig spielbar, Begrüßung reagiert, ein ausgelöstes Ereignis ändert Preise und Lage der Station am nächsten Tag.
+- Stand (martin, 07.11.):
+  - `Scripts/Characters/`: `RecurringCharacter` (Figur mit Auftritten), `Appearance` (Reisender, Tag von–bis, Platz 0 = beliebig,
+    Bedingung, Ausgang je Entscheidung, Begrüßung nach letztem Ausgang, Zeilen zu Markt-Ereignissen, Folgen), `CharacterMemory`,
+    `CharacterPlanner` (wer kommt heute, wo in der Schlange; Zeitfenster: jeder Tag 1/(Tage übrig), am letzten Tag sicher; max. 3 am Tag,
+    feste Plätze zuerst), `CharacterDirector` (in `PF_DayFlow`).
+  - Haken: `CounterShift.PlanDay` (Tag vor dem Start ändern → `DayRules.RuntimeCopy` mit Schlange + Fahndungen, das Asset bleibt),
+    `TravelerPresenter.GreetingFor`, `Market.Schedule` (ausgelöste Ereignisse laufen wie feste: Pinnwand, Durchsage, Lage der Station;
+    der Barkeeper kennt sie fürs Gerücht). DayManager blieb unverändert (Claim max).
+  - Folgen je Ausgang: Markt-Ereignis in n Tagen, Fahndung (Name der Figur, Anordnung, ab Tag, wie lange). Schleuse = tot, nie wieder.
+  - Testfigur „Tess Marlo“ (`GameOff/Build Test Character`, läuft auch mit Build Day Flow), nur mit Dev-Tools aktiv. In einer Main-Kopie
+    geprüft: Tag 1 abgewiesen → Tag 2 Kälteeinbruch (Fusionszelle 11,0 → 15,8 CR), Tess nicht da → Tag 3 als Erste, auf der Fahndungsliste,
+    Regeln sagen Verhaften, Begrüßung „You sent me away…“. Der Zweig „geholfen“ (Tag 2 an Platz 3, Dank) ist per Test geprüft.
+  - Tests `CharacterTests` (8, darunter der Validator: jeder Auftritt jeder Figur wird mit den möglichen Fahndungen richtig bewertet), 138/138 grün.
+  - In Main eingebaut (07.11.): Tess steht an Tag 1 in der Schlange (mit Dev-Tools). **Achtung:** `Build Day Flow into Main` allein baut
+    PF_DayFlow neu – danach zeigen `PF_Departure` (day, dialogs) und `PF_PauseMenu` (dayManager) ins Leere; `Rebuild All` macht es richtig
+    (Departure und Menüs kommen danach), sonst Departure/Menu-Builder nachlaufen lassen. Hier von Hand neu verkabelt, 0 fehlende Verweise.
+  - **Folgepakete nötig:** Steckbrief **mit Passfoto** an der Pinnwand
+    (heute steht die Fahndung als Text auf dem WANTED-Zettel); Dev-Reiter fürs Gedächtnis (PF_PauseMenu bei max); Folgen per Brief/Paket
+    ohne Begegnung (FIGUREN.md Punkt 6) und Bedingungen über andere Figuren/Familie (Punkt 5) – kommen mit P76, wenn die Inhalte es brauchen.
 - Zusammenhang: P73 (endlos) zieht nach den Story-Tagen weitere Auftritte aus Zeitfenstern; P15 (Fälle) plant die Figuren-Auftritte
   zwischen den übrigen Reisenden ein; die bisherigen festen Ereignisse (Tag 2 Grenze, Tag 3 Schmuggler + Kälte) können ganz oder teilweise
   von Figuren ausgelöst werden (Entscheidung in P76).

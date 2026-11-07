@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Tess_3_Revenge
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: TESS MARLO
+  species: Human
+  model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 5149f0d6017db4641bf2c921a35cdc55, type: 2}
+  - {fileID: 11400000, guid: 95f1d23a0c1e8bb4c94e0aeb2ac7138b, type: 2}
+  - {fileID: 11400000, guid: da9e5c6499b6cb345bbe445c74ce71a0, type: 2}
+  intendedVerdict: 2
+  intendedReason: On the wanted list (arrest)
+  trickIntended: 0
+  storyTag: P75 test character
+  greeting: Remember me? I remember you.
+  answers: []
