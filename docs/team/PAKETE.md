@@ -1315,7 +1315,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Auftritt den Pfand und die Figur reagiert geholfen.
 
 ### P78 — Bugreport-Knopf im Pausenmenü
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: max (Call 07.11.)
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 07.11.) · Zuständig: max (Call 07.11.)
 - Braucht: P49 · Folgt auf: —
 - Ziel: Testspieler melden Bugs mit einem Klick als vorausgefülltes GitHub-Issue (Frage `bugreport-server`, Antwort B).
 - Enthalten: Knopf „REPORT BUG“ im Pausenmenü (über `Build Menu Scenes`), öffnet `github.com/Juice-de-Orange/game-off-2026/issues/new` mit Titel und Text: Version (Commit, im Build eingebaut über `WebBuild`), Tag, Phase, Szene, Browser; Hinweis im Text, keine persönlichen Daten einzutragen.
