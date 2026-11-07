@@ -63,7 +63,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): wartet auf das P08-Gespräch mit max | — | 06.11. |
 | max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
-| max | Asset-Lieferungen einbauen (P46-Icons, P65 WishBoard, P66 Umschlag): Build Economy into Main | `Scenes/Main.unity`, `Prefabs/Economy/PF_Economy.prefab` | 07.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,

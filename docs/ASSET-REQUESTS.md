@@ -5908,7 +5908,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Bar/SM_Bar_WishBoard.fbx
 package: P65
 scene: Halle, neben der Bar-Tür (x 7,75, z 4,6, Blick in die Halle)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.9, 0.06, 0.6]
@@ -5937,7 +5937,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Props/SM_Prop_BribeEnvelope.fbx
 package: P66
 scene: Schalter (Schreibtisch, links neben den Papieren)
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-20
 size_m: [0.18, 0.11, 0.015]
@@ -5966,7 +5966,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -5996,7 +5996,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_RationPack.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6025,7 +6025,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_ProteinBar.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6054,7 +6054,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_CannedStew.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6083,7 +6083,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_FreshFruit.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6112,7 +6112,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_BatteryPack.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6141,7 +6141,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_FusionCell.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6170,7 +6170,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_SpareFuse.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6199,7 +6199,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_CoughSyrup.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6228,7 +6228,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Painkillers.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6257,7 +6257,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Antibiotics.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6286,7 +6286,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Spice.png
 package: P46
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
