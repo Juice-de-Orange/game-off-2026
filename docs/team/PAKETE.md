@@ -1058,7 +1058,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   **Weiter in P61 (max).**
 
 ### P68 — Markt: Preise und Ereignisse pro Tag
-- Größe: M · Priorität: Muss (Vorschlag, Preise und Bett hängen daran) · Status: offen, geplant (martin, 06.11.)
+- Größe: M · Priorität: Muss (Vorschlag, Preise und Bett hängen daran) · Status: in Arbeit (martin, 07.11.)
 - Braucht: P11 (Händlervorrat), P10, P13, P70 (Waren) · Folgt auf: — · Hängt zusammen mit P65 (Gerüchte), P15 (Inhalte), P71 (Balancing)
 - Ziel: Ein Markt bestimmt, was es wann zu welchem Preis gibt – mit festen Ereignissen pro Tag (politische Lage, Tagesereignisse).
 - **Preisformel (martin, 06.11., DECISIONS.md):**
