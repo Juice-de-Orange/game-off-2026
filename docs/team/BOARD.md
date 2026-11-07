@@ -63,7 +63,8 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 | martin | P08 Entscheidungen & Moral: Code + PF_Economy gepusht, **Einbau in Main wartet auf max' Claim** (max: wenn du `Rebuild All`/`Build Economy into Main` laufen lässt, ist P08 damit eingebaut – sag kurz Bescheid) → **max, 07.11.: Main ist frei (P72/P84 eingebaut und gebacken), Build Economy into Main lief nicht – bitte selbst einbauen** | `PF_Economy.prefab`, `Scripts/Editor/EconomyBuilder.cs` | 07.11. |
-| martin | P75 Figuren-System (kleine Haken in Schicht, Tagesregeln, Begrüßung, Markt) | `Scripts/Travelers/CounterShift.cs`, `Scripts/Travelers/DayRules.cs`, `Scripts/Travelers/TravelerPresenter.cs`, `Scripts/Economy/Market.cs` | 07.11. |
+| martin | P75 Figuren-System: Code + PF_DayFlow gepusht, **Einbau in Main wartet auf max' Claim** (max: `Rebuild All` baut P75 und P08 mit ein – sag kurz Bescheid) | `PF_DayFlow.prefab`, `Scripts/Editor/DayFlowBuilder.cs` | 07.11. |
+| martin | P08 + P75 in Main einbauen (Build Day Flow, Build Economy into Main) | `Main.unity` | 07.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
