@@ -90,15 +90,27 @@ namespace GameOff.Core
             }
         }
 
-        /// <summary>Traffic lane dev tool (P56): lanes as coloured lines + edit panel in Main. Own switch, independent of DevTools.</summary>
+        /// <summary>
+        /// Traffic lane dev tool (P56): lanes as coloured lines + edit panel in Main. Own switch, independent of DevTools.
+        /// Not saved: every start of the game begins with it off (Martin, 07.11.); an old saved "on" is ignored and removed.
+        /// </summary>
         public static bool TrafficLineDev
         {
-            get => PlayerPrefs.GetInt(TrafficLineDevKey, 0) == 1;
+            get => _trafficLineDev;
             set
             {
-                PlayerPrefs.SetInt(TrafficLineDevKey, value ? 1 : 0);
+                _trafficLineDev = value;
                 Changed?.Invoke();
             }
+        }
+
+        private static bool _trafficLineDev;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ForgetTrafficLineDev()
+        {
+            _trafficLineDev = false;
+            if (PlayerPrefs.HasKey(TrafficLineDevKey)) PlayerPrefs.DeleteKey(TrafficLineDevKey);
         }
 
         public static void ResetAudio()

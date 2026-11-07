@@ -500,6 +500,9 @@ namespace GameOff.UI
             MakeButton(row2, "SAVE LANE", SaveLane, out _);
             MakeButton(row2, "COPY ALL", CopyValues, out _);
             MakeButton(row2, "RESET", ResetLanes, out _);
+            var row3 = ButtonRow(panel);
+            // Leaves the tool without going through the options menu (Martin, 07.11.).
+            MakeButton(row3, "RETURN", () => GameSettings.TrafficLineDev = false, out _);
         }
 
         private static RectTransform ButtonRow(Transform parent)

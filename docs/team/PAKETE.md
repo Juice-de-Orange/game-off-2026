@@ -1204,3 +1204,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   prüft gezogene Tage wie die geschriebenen.
 - Nicht enthalten: Ticket/Abflug (P72), Enden (P12), neue Story-Inhalte (P15).
 - Abnahme: 12 Tage am Stück spielbar ohne Fehler; Tag 4+ unterscheiden sich; Balance-Tests (P71) laufen über die gezogenen Tage.
+
+### P74 — TRAFFIC_LINE_DEV: beim Start aus, RETURN im Panel
+- Größe: XS · Priorität: Kann · Status: fertig (martin, 07.11.)
+- Braucht: P56 · Folgt auf: P56
+- Ziel: Das Dev-Werkzeug für die Schiffslinien öffnet sich nicht mehr von selbst und lässt sich direkt verlassen.
+- Enthalten: `GameSettings.TrafficLineDev` wird nicht mehr gespeichert (jeder Spielstart beginnt mit „aus“, ein alter gespeicherter Wert wird
+  gelöscht); Knopf **RETURN** unten im Panel schaltet das Werkzeug aus und gibt die Steuerung zurück.
+- Ergebnis (martin, 07.11.): Ursache war der gespeicherte Schalter (PlayerPrefs) – wer ihn einmal eingeschaltet hatte, bekam das Werkzeug bei
+  jedem Start. Geprüft im Play-Modus: alter Wert „an“ gespeichert → Start mit „aus“; RETURN schließt das Panel, Steuerung zurück (Bild).
