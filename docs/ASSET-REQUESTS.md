@@ -5908,10 +5908,10 @@ feedback: []
 path: Assets/_Project/Art/Models/Bar/SM_Bar_WishBoard.fbx
 package: P65
 scene: Halle, neben der Bar-Tür (x 7,75, z 4,6, Blick in die Halle)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
-size_m: [0.9, 0.6, 0.06]
+size_m: [0.9, 0.06, 0.6]
 pivot: center
 tris_max: 300
 materials: [Board, Frame]
