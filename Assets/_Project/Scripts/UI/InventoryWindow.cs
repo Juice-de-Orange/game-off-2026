@@ -126,8 +126,18 @@ namespace GameOff.UI
             detailValue.text = any ? "Value ~" + economy.Format(_selected.BaseValue) : "";
 
             var today = new List<ItemListView.Row>();
+            // P65: notes (the barkeeper's rumour) first; click one to read it in full in the details.
+            foreach (var note in economy.Notes)
+            {
+                var text = note;
+                today.Add(new ItemListView.Row
+                {
+                    Label = "RUMOUR · " + text, Value = "",
+                    OnClick = () => { _selected = null; detailName.text = "Rumour"; detailTags.text = ""; detailDescription.text = text; detailValue.text = ""; },
+                });
+            }
             var entries = economy.Wallet.Today;
-            for (int i = Mathf.Max(0, entries.Count - TodayRows); i < entries.Count; i++) // newest rows fit the box
+            for (int i = Mathf.Max(0, entries.Count - (TodayRows - today.Count)); i < entries.Count; i++) // newest rows fit the box
             {
                 var entry = entries[i];
                 today.Add(new ItemListView.Row

@@ -18,5 +18,7 @@ namespace GameOff.Day
         public string newToday;
         [Tooltip("Fixed market events of this day (P68): prices, amounts, assortment; announced at the pinboard and over the loudspeaker.")]
         public List<MarketEvent> marketEvents = new List<MarketEvent>();
+        [Tooltip("What the barkeeper wants today for a rumour about tomorrow (P65). Amount 0 = nothing.")]
+        public BarWish barWish = new BarWish();
     }
 }

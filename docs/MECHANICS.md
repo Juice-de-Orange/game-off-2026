@@ -29,6 +29,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Geld & Inventar | P46 | Kontostand mit Tagesbuchungen (TODAY), Inventar (I), Gegenstände mit Labels | alle Käufe/Verkäufe/Abrechnung → `Wallet` | `EconomyTuning` (Start 40 CR), `Data/Items/*` |
 | Labels | P64, P13, P70 | gemeinsame Kategorien für alle Systeme | Händler-Regeln, Bedarfe der Familie, später Gerüchte/Wünsche | `Data/Items/Tags/Tag_*` (13 Labels inkl. LUXURY, Liste bei P64) |
 | Markt: Label-Faktoren, feste Ereignisse pro Tag (Preis, Menge, Ankauf, Sortiment), Verderb | P68 | Grundpreis × Schwankung × Labels × Ereignisse; Ankündigung als MARKET-Zettel und Durchsage | Händler, Vorrat, Bett, Brief (verdorben), später P65 | `ItemTag.priceFactor`, `Data/Market/Market_*`, `DaySchedule.marketEvents`, `EconomyTuning.perishableTag` |
+| Barkeeper: Wunsch nach Label → Gerücht über morgen | P65 | Schild an der Bar, Dialog nach der Schicht, GIVE nimmt die billigste passende Ware, Gerücht = `rumour` der Ereignisse von morgen | Labels, Markt (P68), Inventar (Notiz unter TODAY) | `DayEntry.barWish`, `MarketEvent.rumour` |
 | Preisliste & Marktpreis | P70 | 18 Waren mit Grundpreis, Labels, Tagesmenge und fester Schwankung je Tag; Sortiment Holly/Dealer | Marktpreis (`Market.PriceOf`) → Händler (× Faktor), Bett (× 1,35) | `Data/Items/Item_*` (`dailyChange`), `Stock_*` |
 | Händler & Vorrat | P46, P11 (teilweise) | Kaufen/Verkaufen zu Faktoren; Vorrat pro Tag, „Sold out“, morgens aufgefüllt; Verkauftes liegt beim Händler | Inventar ↔ Geld; `PlayerEconomy.Supply` | `Stock_*_Test.asset` (Einträge mit Tagesmenge) |
 | Schwarzmarkt-Regel | P64 | nur der Schwarzmarkt kauft CONTRABAND/CONFISCATED, und nichts anderes | Label → `VendorStock.Buys` | `refusedTags`, `onlyTags` |
@@ -51,7 +52,6 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Enden (Familie, Moral, gefeuert) | P12 | Familie, P08, P69 | offen |
 | Briefe reagieren auf den Zustand | P15 | Familie | offen |
 | Balancing über 3 Tage (Economy Report) | P71 (geplant) | alles Geld | nach P68 |
-| Barkeeper: Wunschliste → Gerüchte | P65 (Entwurf) | Labels, P68 | Frage an max |
 | Barkeeper: Bestechungszettel | P66 (Entwurf) | P08, Abrechnung | Frage an max |
 | Gadgets: Scanner, UV-Lampe | P16, P62 | Schalter, Kiosk | Scanner-Funktion unklar (siehe Lücken) |
 | Getränkeautomat | P30 | Geld, Inventar | offen, nur nach der Schicht |
@@ -67,4 +67,3 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 - **Niederlage:** Bisher nur „Miete nicht bezahlbar“ (Platzhalter). Familie kann dauerhaft „critical“ sein, ohne Folge → P69, P12.
 - **Preise vorläufig:** Liste (P70) und Markt (P68) stehen; ob 3 Tage aufgehen, rechnet erst P71 durch. Die Gerüchte-Rechnung (Spice Tag 2 → Tag 3, +16 CR) ist kräftig.
 - **Waren ohne Zweck:** Pistol, Data chip, Antibiotics (beim Dealer teurer als Medizin am Bett) und Wertsachen (keine Quelle) – Ziel für P65-Wünsche und P08. Scanner erst mit P16.
-- **Ereignisse noch ohne Vorab-Wissen:** Nur P65 (Barkeeper) soll sie einen Tag vorher verraten; bis dahin trifft man sie unvorbereitet.

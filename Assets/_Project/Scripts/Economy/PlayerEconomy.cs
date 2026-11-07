@@ -31,6 +31,8 @@ namespace GameOff.Economy
         public Household Household { get; private set; }
         /// <summary>Items sent home by drone since the last settlement (P13).</summary>
         public HomeDelivery Delivery { get; } = new HomeDelivery();
+        /// <summary>Notes of the day, e.g. the barkeeper's rumour (P65); shown under TODAY in the inventory, cleared every morning.</summary>
+        public List<string> Notes { get; } = new List<string>();
 
         private readonly Dictionary<VendorStock, VendorSupply> _supplies = new Dictionary<VendorStock, VendorSupply>();
 
@@ -113,6 +115,7 @@ namespace GameOff.Economy
         private void OnDayStarted(int day)
         {
             Wallet.BeginDay();
+            Notes.Clear();
             // Market.Begin(day, events) already ran in DayManager.BeginDay (before the pinboard notes).
             if (day > 1) Spoil();
             foreach (var supply in _supplies.Values) supply.Refill();

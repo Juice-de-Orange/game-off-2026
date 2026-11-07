@@ -317,11 +317,35 @@ namespace GameOff.EditorTools
                 e.labels.Add(new LabelEffect { tag = power, price = 1.25f });
             }, ref created);
 
+            // P65: what the barkeeper whispers the evening before (only where still empty).
+            void Rumour(MarketEvent e, string text)
+            {
+                if (!string.IsNullOrWhiteSpace(e.rumour)) return;
+                e.rumour = text;
+                EditorUtility.SetDirty(e);
+            }
+            Rumour(border, "Word is the border on the home planet closes tomorrow. Food will be scarce - stock up tonight.");
+            Rumour(smugglers, "Security is about to raid a smuggler ring. By tomorrow drugs will be worth a fortune.");
+            Rumour(cold, "A cold front is coming back home. Power cells will be dear tomorrow.");
+
             var schedule = AssetDatabase.LoadAssetAtPath<GameOff.Day.DaySchedule>(SchedulePath);
             if (schedule == null) { log.Add("no DaySchedule - market events not placed"); return; }
             var sso = new SerializedObject(schedule);
             var days = sso.FindProperty("days");
             bool placed = false;
+
+            // P65 bar wishes by label (Martin, 07.11.): day 1 two LUXURY (Nova Cola), day 2 one TECH (data chip); day 3 none.
+            void Wish(int day, ItemTag tag, int amount)
+            {
+                if (days.arraySize < day) return;
+                var wish = days.GetArrayElementAtIndex(day - 1).FindPropertyRelative("barWish");
+                if (wish.FindPropertyRelative("amount").intValue > 0) return;
+                wish.FindPropertyRelative("tag").objectReferenceValue = tag;
+                wish.FindPropertyRelative("amount").intValue = amount;
+                placed = true;
+            }
+            Wish(1, Tag("LUXURY", "B9824A", ref created), 2);
+            Wish(2, Tag("TECH", "5EC8FF", ref created), 1);
             void Place(int day, params MarketEvent[] events)
             {
                 if (days.arraySize < day) return;
@@ -336,7 +360,7 @@ namespace GameOff.EditorTools
             if (!placed) return;
             sso.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(schedule);
-            log.Add("market events: day 2 border closed, day 3 smugglers busted + cold snap");
+            log.Add("day schedule: market events and bar wishes placed where empty");
         }
 
         private static bool RemoveEntry(VendorStock stock, ItemData item)
@@ -516,6 +540,51 @@ namespace GameOff.EditorTools
             return prefab;
         }
 
+        private const string WishBoardModel = "Assets/_Project/Art/Models/Bar/SM_Bar_WishBoard.fbx";
+
+        /// <summary>
+        /// P65 sign in the hall next to the bar door (hall ↔ bar at x 8, z 3, docs/STATION.md), facing the hall: the delivered
+        /// SM_Bar_WishBoard if it exists, otherwise a dark placeholder board. The text is world-space TMP, set every morning.
+        /// </summary>
+        private static void BuildWishSign(Transform parent)
+        {
+            var go = new GameObject("BarWishSign");
+            go.transform.SetParent(parent, false);
+            go.transform.position = new Vector3(7.75f, 1.45f, 4.6f);
+            go.transform.rotation = Quaternion.Euler(0f, 90f, 0f); // front (−Z of the text) towards the hall (−X)
+
+            var model = AssetDatabase.LoadAssetAtPath<GameObject>(WishBoardModel);
+            if (model != null) ((GameObject)PrefabUtility.InstantiatePrefab(model)).transform.SetParent(go.transform, false);
+            else
+            {
+                var board = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                board.name = "SM_Bar_WishBoard_Placeholder";
+                Object.DestroyImmediate(board.GetComponent<Collider>());
+                board.transform.SetParent(go.transform, false);
+                board.transform.localScale = new Vector3(0.9f, 0.6f, 0.04f);
+                board.transform.localPosition = new Vector3(0f, 0f, 0.03f);
+                var mat = new Material(Shader.Find("Universal Render Pipeline/Unlit")) { color = new Color(0.08f, 0.09f, 0.11f) };
+                Directory.CreateDirectory("Assets/_Project/Art/Materials/Bar");
+                const string matPath = "Assets/_Project/Art/Materials/Bar/M_Bar_WishBoard_Placeholder.mat";
+                var existing = AssetDatabase.LoadAssetAtPath<Material>(matPath);
+                if (existing == null) { AssetDatabase.CreateAsset(mat, matPath); existing = mat; }
+                board.GetComponent<MeshRenderer>().sharedMaterial = existing;
+            }
+
+            var textGo = new GameObject("Text", typeof(RectTransform), typeof(TextMeshPro));
+            textGo.transform.SetParent(go.transform, false);
+            var rt = textGo.GetComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(0.8f, 0.5f);
+            var tmp = textGo.GetComponent<TextMeshPro>();
+            tmp.text = "THE LAST ORBIT";
+            tmp.fontSize = 0.9f;
+            tmp.alignment = TextAlignmentOptions.Center;
+            tmp.color = Amber;
+            tmp.font = TitleFont();
+            var sign = go.AddComponent<BarWishSign>();
+            Set(sign, "text", tmp);
+        }
+
         private static void BuildVendor(Transform parent, VendorSpot spot, VendorStock stock, TradeWindow trade)
         {
             var go = new GameObject("Vendor_" + spot.Name);
@@ -537,6 +606,15 @@ namespace GameOff.EditorTools
             figure.transform.rotation = Quaternion.Euler(0f, spot.Yaw, 0f);
 
             var (interactable, debugView) = Trigger(go.transform, "Trigger", spot.TriggerCenter, spot.TriggerSize, "Talk to " + spot.Name);
+            if (spot.Name == "Barkeeper")
+            {
+                // P65: the barkeeper trades rumours for wished items, not goods for money.
+                var barkeeper = go.AddComponent<Barkeeper>();
+                Set(barkeeper, "interactable", interactable);
+                Set(barkeeper, "debugView", debugView);
+                BuildWishSign(go.transform);
+                return;
+            }
             var vendor = go.AddComponent<Vendor>();
             SetFields(vendor, ("vendorName", spot.Name));
             Set(vendor, "stock", stock);
@@ -791,6 +869,14 @@ namespace GameOff.EditorTools
                 Set(v, "dialogs", dialogs);
                 Record(v);
             }
+            foreach (var b in instance.GetComponentsInChildren<Barkeeper>(true))
+            {
+                Set(b, "player", player);
+                Set(b, "day", day);
+                Set(b, "dialogs", dialogs);
+                Record(b);
+            }
+            foreach (var s in instance.GetComponentsInChildren<BarWishSign>(true)) { Set(s, "day", day); Record(s); }
             var shift = Object.FindFirstObjectByType<CounterShift>();
             foreach (var w in instance.GetComponentsInChildren<SettlementWindow>(true))
             {

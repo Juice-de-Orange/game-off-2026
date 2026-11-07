@@ -1023,7 +1023,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   (10 CR), nicht Spice; Bar kauft nichts. Konsole 0 Fehler. Kein WebGL-Build.
 
 ### P65 — Barkeeper: Wunschliste & Gerüchte
-- Größe: M · Priorität: Soll · Status: in Arbeit (martin, 07.11.)
+- Größe: M · Priorität: Soll · Status: fertig (martin, 07.11.)
 - Braucht: P68 (Markt, Ereignisse pro Tag), P64 · Folgt auf: —
 - Ziel: Der Barkeeper kauft nichts für Geld, sondern tauscht Gegenstände gegen Wissen für den nächsten Tag.
 - Enthalten: Täglich hängt vor der Bar ein Schild mit Gegenständen oder Labels, die der Barkeeper haben will. Wer liefert, bekommt ein
@@ -1033,6 +1033,15 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: Bestechungszettel (P66), Gespräch am Barhocker (P28).
 - Vorschlag an Max: `questions/2026-11-06_martin-an-max_barkeeper-p65-p66.md` (bei Zustimmung legt sein Claude es fest). Entschieden (Max, 06.11.): Ersetzt den Bar-Ankauf. Ein Gerücht pro Tag, immer wahr.
 - Abnahme: An Tag 1 Wunsch erfüllen → Gerücht; an Tag 2 ist der Preis für das genannte Label beim Schwarzmarkt wie angekündigt.
+- Ergebnis (martin, 07.11.):
+  - **Wunsch nach Label** (`DayEntry.barWish`): Tag 1 „2× LUXURY“ (Nova Cola), Tag 2 „1× TECH“ (Data chip beim Dealer), Tag 3 keiner.
+  - **Barkeeper** (`Shops/Barkeeper`, ersetzt den Händler an der Bar): nur nach der Schicht; Dialog „Today I'd like … You have …“ → **GIVE**
+    (nur mit genug passender Ware, nimmt die billigste zuerst) → Dialog „A RUMOUR“; danach steht das Gerücht bis zum Morgen im Inventar
+    unter TODAY („RUMOUR · …“, anklicken = ganzer Text). Schon bedient: zeigt das Gerücht erneut. Kein Wunsch: „Nothing I need today.“
+  - **Gerücht = `rumour` der Marktereignisse von morgen** (`MarketEvent.rumour`, `BarWishRules.Rumour`) → immer wahr; nichts los → „Quiet times ahead.“
+  - **Schild** neben der Bar-Tür in der Halle (`BarWishSign`, Platzhalter-Tafel mit Text, morgens neu); Modell `SM_Bar_WishBoard` bestellt.
+  - Geprüft: 98/98 EditMode-Tests (neu `BarkeeperTests`); Play-Modus: Tag 1 Schild, Bar während der Schicht zu, mit 1 Cola kein GIVE,
+    mit 2 Cola Gerücht über die Grenze (Notiz im Inventar), Tag 2 Notiz weg, Data chip → Gerücht über Schmuggler und Kälte; Bild vom Schild.
 
 ### P66 — Barkeeper: Bestechungszettel
 - Größe: S–M · Priorität: Soll · Status: offen

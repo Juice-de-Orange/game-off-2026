@@ -20,6 +20,10 @@ MonoBehaviour:
       hard and come home soon.\n\u2014 Lena\n\n(placeholder text \u2013 P15)"
     newToday: 
     marketEvents: []
+    barWish:
+      tag: {fileID: 11400000, guid: df73a66dd95c513448baced3fe575726, type: 2}
+      amount: 2
+      sign: 
   - rules: {fileID: 11400000, guid: d3739030e2733034688bd72f48fb7bf8, type: 2}
     letterTitle: A letter from home
     letter: "Dad,\nThe rent man came by. Mom gave him what we had. Pip has a cough
@@ -28,6 +32,10 @@ MonoBehaviour:
     newToday: 'New today: check the cargo manifest against the ID.'
     marketEvents:
     - {fileID: 11400000, guid: f43d7922bcf28184f9e158056a4dd645, type: 2}
+    barWish:
+      tag: {fileID: 11400000, guid: 9e56bc2f97936a943a97d66ea4954de2, type: 2}
+      amount: 1
+      sign: 
   - rules: {fileID: 11400000, guid: d3739030e2733034688bd72f48fb7bf8, type: 2}
     letterTitle: A letter from home
     letter: "Dad,\nPip is sick now, really sick. The clinic wants money first.\nMom
@@ -37,3 +45,7 @@ MonoBehaviour:
     marketEvents:
     - {fileID: 11400000, guid: 499c80581acc6d241bb1a53254ffe24f, type: 2}
     - {fileID: 11400000, guid: 185c66fd5f1f3db4b9efbde0cf898138, type: 2}
+    barWish:
+      tag: {fileID: 0}
+      amount: 0
+      sign: 

@@ -5902,3 +5902,32 @@ refs: [docs/station/wohnmodul_plan.png]
 placeholder: none (direkt geliefert)
 feedback: []
 ```
+
+### SM_Bar_WishBoard.fbx
+```yaml
+path: Assets/_Project/Art/Models/Bar/SM_Bar_WishBoard.fbx
+package: P65
+scene: Halle, neben der Bar-Tür (x 7,75, z 4,6, Blick in die Halle)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.9, 0.6, 0.06]
+pivot: center
+tris_max: 300
+materials: [Board, Frame]
+textures:
+  - Assets/_Project/Art/Textures/Bar/T_Bar_WishBoard_Albedo.png   # 128x128, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Kleine Kreidetafel oder dunkles Leuchtschild der Bar "The Last Orbit" an der Wand neben der Bar-Tür. Die Schreibfläche
+  (ca. 0,8 x 0,5 m, Vorderseite zeigt nach -Z) bleibt dunkel und leer: Der Text (was der Barkeeper heute haben will) kommt
+  im Spiel als TextMeshPro darüber. Rahmen in Bar-Farben (Orange/Violett), etwas abgenutzt.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: Dunkler Quader 0.9 x 0.6 x 0.04 m, Pivot center (EconomyBuilder, P65)
+feedback: []
+```
