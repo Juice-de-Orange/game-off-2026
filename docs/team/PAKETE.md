@@ -477,7 +477,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Hinweis (martin, 06.11.): Der Familienzustand existiert seit P10: `PlayerEconomy.Household` (Stufe je Person), Event `Household.Changed`.
 
 ### P30 — Getränkeautomat
-- Größe: S · Priorität: Soll · Status: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 07.11.)
 - Braucht: P10 (Geld), P11 (Inventar) · Assets: `SM_Hall_VendingMachine` (da), `SM_Prop_SodaCan` (bestellt)
 - Ziel: Kleine Versuchung, Geld auszugeben.
 - Enthalten: [E] "NOVA COLA – 2 Credits": Geld weg, Dose fällt rumpelnd heraus, ins Inventar; nach Hause schicken (P13) oder am Schalter
@@ -486,7 +486,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Hinweis (martin, 06.11.): Grundregel – jeder Handel (Händler, Drohne, Automat) ist nur nach der Schicht möglich.
 
 ### P31 — Anzeigesäule mit Live-Ankunftsplan
-- Größe: S · Priorität: Soll · Status: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 07.11.)
 - Braucht: P09 · Assets: `SM_Hall_DepartureBoard` (da)
 - Ziel: Auf einen Blick sehen, wie viel Schicht noch kommt.
 - Enthalten: TextMeshPro auf den CRT-Flächen: nächstes Shuttle, Reisende in der Schlange, Tag/Schicht-Uhr, Warnungen ("SECURITY LEVEL RAISED")
@@ -526,7 +526,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Ein Fall lässt sich über einen Kistenfund lösen; Einstecken verändert Moral.
 
 ### P36 — Lebendige Station: Flackern & Stromausfälle
-- Größe: S · Priorität: Soll · Status: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 07.11.)
 - Braucht: P09, P20
 - Ziel: Der Zustand der Station verschiebt sich über die Tage (Theme "Shift").
 - Enthalten: Neonschild "THE LAST ORBIT" flackert (ein Buchstabe fällt aus); an Tag 3 fallen Schilder und Lichter häufiger aus;

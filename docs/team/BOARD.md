@@ -61,6 +61,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
+| martin | P30 Getränkeautomat, P31 Anzeigesäule, P36 Flackern (nacheinander) | `Main.unity`, `PF_Economy.prefab`, `PF_DayFlow.prefab`, `Data/Economy/*`, `Data/Market/*`, `Scripts/Core/LightFlicker.cs` | 07.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): wartet auf das P08-Gespräch mit max | — | 06.11. |
 | max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
 
