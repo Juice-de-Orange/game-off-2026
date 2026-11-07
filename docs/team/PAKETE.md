@@ -1372,7 +1372,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   (Text kommt aus der Schalter-Verkabelung) – mit P08, wenn das Schicht-Inventar wirklich gefüllt wird.
 
 ### P82 — Warenliste 2: jede Ware mit Modell, Zweck und Icon
-- Größe: M · Priorität: Muss · Status: offen · Zuständig: martin (Call 07.11.)
+- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 07.11.) · Zuständig: martin (Call 07.11.)
 - Braucht: P70, P71 · Folgt auf: P70
 - Ziel: Alle Waren haben einen Grund, sie zu kaufen, zu beschlagnahmen oder zu verkaufen, und sehen im Inventar fertig aus
   (Frage `warenliste-2`, im Call: A).
