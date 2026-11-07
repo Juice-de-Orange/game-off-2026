@@ -1284,6 +1284,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
      Später kommt er **verdeckt** wieder (z. B. Tag 2 als dritte Person) mit einem kleinen, verlockenden Fehler: „Helfen“ heißt hier
      nach Vorschrift entscheiden → Lob per Durchsage, Lohnbonus; durchgelassen = Rüge (zusätzliche Verwarnung), er kommt unangekündigt
      wieder. Zeigt: Nicht jedes Wegsehen ist gut. Das Tutorial geht erst, wenn P75 steht (fester Platz 1 an Tag 1, eigene Texte je Schritt).
+- Figuren und Ablauf werden mit Max genauer gemacht (Frage `figuren-und-ablauf`).
 - Ergänzt (martin, 07.11.): drei weitere Figuren, die zwischen Tag 5 und 8 Stück für Stück dazukommen (**Tobin Rask**, **Nell Varga**,
   **Pim Oddo**), und der **Ablaufplan über 12 Story-Tage** (kürzbar) in `docs/FIGUREN.md` – dort stehen Auftritte, Ausgänge und Ereignisse.
 - Offen: siehe `docs/FIGUREN.md` → „Offen“. Schmuggler-Razzia von Quill auslösen lassen statt fest an Tag 3 → nach Plan und neuen Figuren
