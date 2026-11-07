@@ -1145,7 +1145,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     Play-Modus: Listen, Preise Tag 1 und Tag 3, Lohn nur für richtige.
 
 ### P71 — Balancing über 3 Tage
-- Größe: S · Priorität: Muss · Status: offen, geplant (martin, 06.11.)
+- Größe: S · Priorität: Muss · Status: in Arbeit (martin, 07.11.)
 - Braucht: P68, P70, P10, P13 · Folgt auf: —
 - Ziel: Lohn, Abzüge, Miete, Bedarfe und Marktereignisse ergeben über 3 Tage ein knappes, aber schaffbares Spiel.
 - Enthalten: Menü **GameOff → Economy Report**: rechnet typische Spielweisen durch (alles beim Händler + Drohne / alles Geld am Bett /
@@ -1154,3 +1154,28 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   übersteht 3 Tage, „nichts versorgen“ führt zu P69-Folgen.
 - Nicht enthalten: neue Mechaniken.
 - Abnahme: Report zeigt für jede Spielweise 3 Abende; Standard-Spielweise endet mit Geld ≥ 0 und ohne kritische Familie.
+- **Neu ausgerichtet (martin, 07.11.):** Das Spiel wird **endlos** (P73), Ziel ist ein **teures Ticket nach Hause** (P72), mit guter Arbeit
+  und versorgter Familie in **ca. 7 Tagen**. P71 rechnet pro Tag über ~12 Tage statt 3 Tage. Ziele: Clever 6/6 → Ticket Tag 6–8; am Bett 6/6
+  → Tag 9–11; 4/6 → nicht vor Tag 12 oder Bedarfe auslassen; nichts versorgen → Familie kritisch bis Tag 3; Gerücht +5–8 CR je Spice
+  (Bar-Wünsche 5–15 CR). Ereignisse nehmen die billigste Ware weg; Rundung „,5 rundet auf“.
+- **Regel:** Jede Geldanpassung (Lohn, Miete, Preise, Faktoren, Ereignisse, Wünsche, Mengen, Ticketpreis) braucht danach ein neues
+  Rebalancing: `GameOff → Economy Report` bis alle Ziele ✓ (die Balance-Tests erzwingen es).
+
+### P72 — Ticket nach Hause
+- Größe: M · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) – mit Max abstimmen (Frage `endlos-und-ticket`)
+- Braucht: P71 (Ticketpreis), P12 · Folgt auf: —
+- Ziel: Das Spielziel: genug sparen, ein teures Ticket kaufen und mit einem Schiff vom Hangar aus heimfliegen – „das Ende der Game Jam“.
+- Enthalten: Ticket-Terminal im Hangar (nur abends, wie jeder Handel), Kauf zum Ticketpreis (`HouseholdTuning.ticketPrice`, von P71 festgelegt),
+  ins Schiff steigen, Abflug (man kann auch absichtlich aus der Map fliegen), Endbildschirm abhängig vom Familienzustand (P12).
+- Nicht enthalten: Flugsteuerung über das Nötigste hinaus, weitere Enden (P12).
+- Abnahme: Mit genug Geld abends Ticket kaufen → Schiff → Abflug → Ende; ohne genug Geld zeigt das Terminal, wie viel fehlt.
+
+### P73 — Endlose Tage
+- Größe: M–L · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) – mit Max abstimmen (Frage `endlos-und-ticket`)
+- Braucht: P09, P15, P68 · Folgt auf: P09
+- Ziel: Das Spiel endet nicht mehr nach Tag 3: erst die geschriebenen Story-Tage (P15), danach eine Schleife aus Pools.
+- Enthalten: Pools für Reisende, Regeln, Marktereignisse und Bar-Wünsche; jeder Tag nach der Story wird mit festem Startwert gezogen
+  (testbar, gleiche Folge bei gleichem Start); `DayManager` endet nicht mehr nach dem letzten Tag; Briefe für die Schleife; Validator
+  prüft gezogene Tage wie die geschriebenen.
+- Nicht enthalten: Ticket/Abflug (P72), Enden (P12), neue Story-Inhalte (P15).
+- Abnahme: 12 Tage am Stück spielbar ohne Fehler; Tag 4+ unterscheiden sich; Balance-Tests (P71) laufen über die gezogenen Tage.
