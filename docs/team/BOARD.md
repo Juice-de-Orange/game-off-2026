@@ -62,7 +62,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): wartet auf das P08-Gespräch mit max | — | 06.11. |
-| max | P78 Bugreport-Knopf im Pausenmenü | — | 07.11. |
+| max | P78 Bugreport-Knopf im Pausenmenü | `Main.unity`, `Menu.unity`, `Boot.unity`, `PF_PauseMenu.prefab` (Build Menu Scenes) | 07.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
