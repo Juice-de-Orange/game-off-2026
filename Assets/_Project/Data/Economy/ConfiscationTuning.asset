@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8949ee2c3f1c8004f9bcb651ac76a8a2, type: 3}
+  m_Name: ConfiscationTuning
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ConfiscationTuning
+  goods:
+  - {fileID: 11400000, guid: 574f9dff573cc9d4d909ed17904fc8f5, type: 2}
+  - {fileID: 11400000, guid: e1b4d6a84c3e1dd4ca380cf7c310f187, type: 2}
+  - {fileID: 11400000, guid: 67974c849890c5b4aadcb23660d4f06f, type: 2}
+  - {fileID: 11400000, guid: 2007b103b290d374cb47c7a1ee8ef20a, type: 2}
+  - {fileID: 11400000, guid: b11fc09941fec2f47982df46f09907a0, type: 2}
+  - {fileID: 11400000, guid: b0f59d11e5306c146ac98f08bd92834c, type: 2}
+  - {fileID: 11400000, guid: 44fbcde8893760c4e9a1d21128b996b7, type: 2}
+  - {fileID: 11400000, guid: e0d6da73f80ef0b4bbca1641d443c69c, type: 2}
+  - {fileID: 11400000, guid: a0696af6944fc7c459ef3eafb6d84ac5, type: 2}
+  - {fileID: 11400000, guid: b19c192b0b7cbd143b467867b30d0f47, type: 2}
+  - {fileID: 11400000, guid: a8f4a520a65def34187401e7888690ed, type: 2}
+  - {fileID: 11400000, guid: a2d217b5d6ca9d445b1d1c210919a72a, type: 2}
+  - {fileID: 11400000, guid: 04bda7305b9639e499630ecc7e65086b, type: 2}
+  - {fileID: 11400000, guid: 2c71f878a38669942bdf6ea5d18990f3, type: 2}
+  - {fileID: 11400000, guid: d3ff70c2f31c6fd4caa4d0d3cd7300e0, type: 2}
+  - {fileID: 11400000, guid: d2edcdba608d63d49bf945af474aaa1b, type: 2}
+  - {fileID: 11400000, guid: 247f021f035f8f04593273eb8afa1517, type: 2}
+  - {fileID: 11400000, guid: d6458a0bc14861046949d58077ba09f2, type: 2}
+  - {fileID: 11400000, guid: 161abb7819e8873488489cb63432573c, type: 2}
+  - {fileID: 11400000, guid: 95ed42a555ca29c44adb1a7a87f3c5aa, type: 2}
+  - {fileID: 11400000, guid: df59c3f9bd707eb4db4315f3127fb1bb, type: 2}
+  - {fileID: 11400000, guid: 18a8d96638a55a74dbdcd41297b5e8be, type: 2}
+  maxPerItem: 3
+  keepAllCaughtChance: 0.8
+  keepAllFine: 100
+  missedSuccessChance: 0.6
+  missedFine: 30
+  disciplinaryLimit: 3
+  airlockGuilty: -1
+  airlockInnocent: -3

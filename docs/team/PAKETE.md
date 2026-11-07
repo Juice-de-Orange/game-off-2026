@@ -168,7 +168,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   (The Shifter), `storyTag`.
 
 ### P08 — Entscheidungen & Moral
-- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 07.11.)
+- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 07.11.) – Code fertig, **Einbau in Main fehlt** (Main war bei max für P72)
 - Braucht: P07, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Durchlassen/Abweisen/Verhaften/Luftschleuse mit Folgen.
 - Enthalten: Lohn/Abzug je Entscheidung, Beschlagnahme bei Verhaftung (Gegenstände ins Inventar),
@@ -186,6 +186,19 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Beschlagnahmte Ware ist eine **eigene Item-Variante** mit CONFISCATED (Varianten legt P82 an).
   - Alle Zahlen vorläufig in einem **Tuning-Asset** in `Data/`; jede Geldänderung → Rebalancing.
   - Braucht damit zusätzlich: **P81, P82**.
+- Stand (martin, 07.11.):
+  - **Verhaften** liest den Frachtbrief (`CargoReader`, Fracht-Stichworte aus P82) und legt die Waren ins Schicht-Inventar (P81), höchstens
+    `maxPerItem` (3) je Ware – mit den Frachtmengen aus P15 abzustimmen (Martin).
+  - **Schichtende:** Fenster „END OF SHIFT · CONFISCATIONS“ (nur wenn etwas beschlagnahmt wurde, Schalter ruht solange): Nothing to report
+    (80 % erwischt → **Ware weg** (Martin), 100 CR, 1 Disziplinarstrafe; sonst alles als CONFISCATED-Variante ins Inventar) · Oh, seems I
+    missed that (Ware anklicken; 60 % ein Stück als Variante, sonst 30 CR) · As ordered (alles an den Schrank, vorerst gelöscht).
+  - **Disziplinarstrafen** (`Conduct`, über den ganzen Lauf): bei 3 nach CONTINUE Ende „DISCHARGED“ (`DayManager.FinishRun`, Text bis P12).
+  - **Moral** (versteckt, `Conduct.Morale`): Schleuse −1, Schleuse bei Unschuldigen −3; liest P12.
+  - Lohn/Abzug je Entscheidung gab es schon (P07/P10/P70: Lohn nur für richtige, Strafe ab der 3. Verwarnung) – unverändert.
+  - Effekte (Warnlampe, Schott) bleiben bei P33 / dem bestellten Schott-Rework (Martin).
+  - Zahlen in `Data/Economy/ConfiscationTuning.asset`. Tests `ConfiscationTests` (7), 130/130 grün; in einer Kopie von Main durchgespielt
+    (Quill verhaftet → 3 Stimulant vials, Fenster, alle drei Antworten, Entlassung), Konsole 0 Fehler.
+  - **Offen:** `GameOff/Build Economy into Main` (verkabelt Confiscation mit Schicht, Schalter, Tag), danach Abnahme im echten Main.
 - Festgelegt im Asset-Durchgang (max, 02.11.): Luftschleuse: Außenschott **klappt nach außen ins All** (Rework mit Angel bestellt), Sog, Warnlampe dreht rot, Reisender wird hinausgerissen. Verhaftung: Warnlampe rot. Beschlagnahmtes landet physisch im Asservatenschrank (P32).
 
 ### P09 — Tagesablauf

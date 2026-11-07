@@ -100,6 +100,7 @@ namespace GameOff.EditorTools
         private class Data
         {
             public EconomyTuning Tuning;
+            public ConfiscationTuning Confiscation;
             public HouseholdTuning Household;
             public readonly Dictionary<string, ItemData> Items = new Dictionary<string, ItemData>();
             public readonly Dictionary<string, VendorStock> Stocks = new Dictionary<string, VendorStock>();
@@ -165,6 +166,10 @@ namespace GameOff.EditorTools
             MigrateToEntries(data.Stocks["Stock_Vending"], log);
             SetDailyAmount(data.Stocks["Stock_Vending"], data.Items["cola"], 6);
             BuildGoodsList2(data, contraband, gadget, valuable, confiscated, log, ref created);
+            // P08: numbers for confiscation and the shift-end answer; the goods list follows the cargo words (P82).
+            data.Confiscation = LoadOrCreate<ConfiscationTuning>(EconomyFolder + "ConfiscationTuning.asset", _ => { }, ref created);
+            data.Confiscation.goods = data.Items.Values.Where(i => i != null && !string.IsNullOrEmpty(i.CargoWord)).OrderBy(i => i.name).ToList();
+            EditorUtility.SetDirty(data.Confiscation);
 
             AssetDatabase.SaveAssets();
             if (created > 0) log.Add($"{created} test assets created");
@@ -724,6 +729,10 @@ namespace GameOff.EditorTools
             var trade = BuildTradeWindow(canvas);
             var inventory = BuildInventoryWindow(canvas);
             BuildSettlementWindow(canvas);
+            var report = BuildShiftReportWindow(canvas);
+            var confiscation = root.AddComponent<Confiscation>();
+            Set(confiscation, "tuning", data.Confiscation);
+            Set(confiscation, "window", report);
 
             var vendors = new GameObject("Vendors").transform;
             vendors.SetParent(root.transform, false);
@@ -1044,6 +1053,36 @@ namespace GameOff.EditorTools
             return window;
         }
 
+        /// <summary>P08: the supervisor's question at shift end – confiscated goods left, the three answers right, outcome and CONTINUE.</summary>
+        private static ShiftReportWindow BuildShiftReportWindow(Transform canvas)
+        {
+            var holder = new GameObject("ShiftReportWindowLogic", typeof(RectTransform));
+            holder.transform.SetParent(canvas, false);
+            var w = WindowRoot(canvas, "ShiftReportWindow", out var root);
+            Text(w, "Title", "END OF SHIFT  ·  CONFISCATIONS", 26, Amber, new Vector2(-120f, 215f), new Vector2(600f, 36f), TextAlignmentOptions.MidlineLeft);
+            var items = ListBox(w, "ItemList", new Vector2(-217f, 30f), new Vector2(420f, 300f), "CONFISCATED TODAY", out _, out var empty);
+            empty.text = "";
+            var side = Box(w, "Answers", new Vector2(217f, 30f), new Vector2(420f, 300f), Panel);
+            var question = Text(side, "Question", "", 15, TextLight, new Vector2(0f, 110f), new Vector2(390f, 60f), TextAlignmentOptions.TopLeft);
+            var nothing = MenuButton(side, "NothingButton", "\"NOTHING TO REPORT\"", new Vector2(0f, 30f), new Vector2(390f, 40f), 15);
+            var missed = MenuButton(side, "MissedButton", "\"OH, SEEMS I MISSED THAT\"", new Vector2(0f, -20f), new Vector2(390f, 40f), 13);
+            var ordered = MenuButton(side, "OrderedButton", "\"AS ORDERED\"", new Vector2(0f, -70f), new Vector2(390f, 40f), 15);
+            var outcome = Text(w, "Outcome", "", 16, TextLight, new Vector2(0f, -170f), new Vector2(854f, 70f), TextAlignmentOptions.TopLeft);
+            var cont = MenuButton(w, "ContinueButton", "CONTINUE", new Vector2(327f, -226f), new Vector2(200f, 30f), 15);
+
+            var window = holder.AddComponent<ShiftReportWindow>();
+            Set(window, "root", root);
+            Set(window, "itemList", items);
+            Set(window, "question", question);
+            Set(window, "nothingButton", nothing);
+            Set(window, "missedButton", missed);
+            Set(window, "missedLabel", missed.GetComponentInChildren<TMP_Text>());
+            Set(window, "orderedButton", ordered);
+            Set(window, "outcome", outcome);
+            Set(window, "continueButton", cont);
+            return window;
+        }
+
         /// <summary>P10: nightly settlement – income and rent, three needs to tick off, family before → after, balance, CONFIRM.</summary>
         private static SettlementWindow BuildSettlementWindow(Transform canvas)
         {
@@ -1141,6 +1180,14 @@ namespace GameOff.EditorTools
                 Record(w);
             }
             if (shift == null) log.Add("WARNING: no CounterShift in the scene - no wage");
+            // P08: confiscation listens to the decisions; the report window blocks the desk while it is open.
+            foreach (var c in instance.GetComponentsInChildren<Confiscation>(true))
+            {
+                Set(c, "shift", shift);
+                Set(c, "dayManager", day);
+                Record(c);
+            }
+            foreach (var w in instance.GetComponentsInChildren<ShiftReportWindow>(true)) { Set(w, "counter", counter); Record(w); }
             foreach (var m in instance.GetComponentsInChildren<VendingMachine>(true))
             {
                 Set(m, "player", player);
