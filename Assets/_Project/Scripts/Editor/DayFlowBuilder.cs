@@ -5,6 +5,7 @@ using GameOff.Core;
 using GameOff.Day;
 using GameOff.Player;
 using GameOff.Travelers;
+using GameOff.UI;
 using TMPro;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -125,10 +126,73 @@ namespace GameOff.EditorTools
             Set(manager, "bed", interactable);
             Set(manager, "bedDebugView", debugView);
             Set(manager, "ui", ui);
+            BuildHallBoard(root.transform);
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
             Object.DestroyImmediate(root);
             log.Add("PF_DayFlow built");
             return prefab;
+        }
+
+        /// <summary>
+        /// P31: text on the small CRTs of SM_Hall_DepartureBoard (hall centre, x 0 z 0). Each of the four sides has two CRTs, 0.40 × 0.30 m,
+        /// centred ±0.28 m beside the middle at 1.88 m height, 0.76 m from the centre (measured from the mesh on 07.11.); the header above
+        /// stays as delivered. A dark backing hides the printed table; left CRT = status, right CRT = market notice (HallBoard).
+        /// </summary>
+        private static void BuildHallBoard(Transform parent)
+        {
+            var go = new GameObject("HallBoard");
+            go.transform.SetParent(parent, false);
+            var status = new List<Object>();
+            var notice = new List<Object>();
+            var backing = HallBoardBacking();
+            foreach (float yaw in new[] { 0f, 180f, -90f, 90f })
+            {
+                var rotation = Quaternion.Euler(0f, yaw, 0f);
+                foreach (int side in new[] { -1, 1 })
+                {
+                    // Local frame of the −Z side: the viewer stands at −Z looking +Z, so −X is on the left.
+                    var center = rotation * new Vector3(side * 0.28f, 1.88f, -0.766f);
+                    var back = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                    back.name = "Backing";
+                    Object.DestroyImmediate(back.GetComponent<Collider>());
+                    back.transform.SetParent(go.transform, false);
+                    back.transform.SetPositionAndRotation(center + rotation * new Vector3(0f, 0f, 0.002f), rotation);
+                    back.transform.localScale = new Vector3(0.38f, 0.28f, 1f);
+                    var r = back.GetComponent<MeshRenderer>();
+                    r.sharedMaterial = backing;
+                    r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+
+                    var t = new GameObject(side < 0 ? "Status" : "Notice", typeof(RectTransform), typeof(TextMeshPro));
+                    t.transform.SetParent(go.transform, false);
+                    t.transform.SetPositionAndRotation(center + rotation * new Vector3(0f, 0f, -0.002f), rotation);
+                    t.GetComponent<RectTransform>().sizeDelta = new Vector2(0.35f, 0.26f);
+                    var tmp = t.GetComponent<TextMeshPro>();
+                    tmp.font = TitleFont();
+                    tmp.enableAutoSizing = true;
+                    tmp.fontSizeMin = 0.05f;
+                    tmp.fontSizeMax = 0.35f;
+                    tmp.alignment = TextAlignmentOptions.Center;
+                    tmp.color = new Color(0.61f, 0.88f, 0.35f); // CRT green #9BE05A
+                    tmp.text = side < 0 ? "KESTREL-9" : "NOTICE";
+                    (side < 0 ? status : notice).Add(tmp);
+                }
+            }
+            var board = go.AddComponent<HallBoard>();
+            SetArray(board, "statusScreens", status.ToArray());
+            SetArray(board, "noticeScreens", notice.ToArray());
+        }
+
+        private const string HallBoardBackingPath = "Assets/_Project/Art/Materials/Hall/M_Hall_DepartureBoard_Backing.mat";
+
+        /// <summary>Near-black unlit screen backing (created once).</summary>
+        private static Material HallBoardBacking()
+        {
+            var mat = AssetDatabase.LoadAssetAtPath<Material>(HallBoardBackingPath);
+            if (mat != null) return mat;
+            Directory.CreateDirectory(Path.GetDirectoryName(HallBoardBackingPath));
+            mat = new Material(Shader.Find("Universal Render Pipeline/Unlit")) { color = new Color(0.02f, 0.04f, 0.03f) };
+            AssetDatabase.CreateAsset(mat, HallBoardBackingPath);
+            return mat;
         }
 
         private static DayFlowUI BuildUI(Transform parent)
@@ -238,6 +302,12 @@ namespace GameOff.EditorTools
             Set(manager, "player", player);
             Set(manager, "wakeUpPoint", spawn);
             PrefabUtility.RecordPrefabInstancePropertyModifications(manager);
+            foreach (var board in instance.GetComponentsInChildren<HallBoard>(true))
+            {
+                Set(board, "day", manager);
+                Set(board, "shift", shift);
+                PrefabUtility.RecordPrefabInstancePropertyModifications(board);
+            }
             string bed = FitBedTrigger(scene, instance);
             EditorSceneManager.MarkSceneDirty(scene);
             log.Add($"placed in {scene.name} (shift {Ok(shift)}, sky {Ok(sky)}, player {Ok(player)}, spawn {Ok(spawn)}, {bed})");

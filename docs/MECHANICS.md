@@ -36,6 +36,8 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Händler & Vorrat | P46, P11 (teilweise) | Kaufen/Verkaufen zu Faktoren; Vorrat pro Tag, „Sold out“, morgens aufgefüllt; Verkauftes liegt beim Händler | Inventar ↔ Geld; `PlayerEconomy.Supply` | `Stock_*_Test.asset` (Einträge mit Tagesmenge) |
 | Schwarzmarkt-Regel | P64 | nur der Schwarzmarkt kauft CONTRABAND/CONFISCATED, und nichts anderes | Label → `VendorStock.Buys` | `refusedTags`, `onlyTags` |
 | Handel nur nach der Schicht | Grundregel (06.11.) | Händler, Drohne und jede Handelsoption nur abends | Phase Evening | Dev-Knöpfe `Dev_force_Trade` / `Dev_force_Send` |
+| Getränkeautomat | P30 | [E] kauft sofort eine Nova Cola zum Marktpreis, 6 pro Tag, nur abends (tagsüber „Out of order“); noch keine Trink-Wirkung | Geld → Inventar (LUXURY) | `Data/Economy/Stock_Vending.asset` |
+| Anzeigesäule in der Halle | P31 | linker CRT: Tag, Phase, nächstes Shuttle (fiktive Uhrzeit, rückt mit jeder Entscheidung) und Dock; rechter CRT: Marktereignisse des Tages | DayManager, CounterShift, `Market.TodayEvents` | `HallBoard` (erstes Shuttle 08:00, alle 25 min) |
 | Frachtdrohne | P13 (Abnahme bei martin) | Gegenstand nach Hause schicken; FOOD/POWER/MEDICINE deckt den Bedarf heute Nacht | Inventar → `PlayerEconomy.Delivery` → Abrechnung | Bedarf → Label in `Household.asset` |
 | Abrechnung | P10, P13, P70 | Lohn pro **richtig** entschiedenem Reisendem, Abzug für Verwarnungen über den freien, Miete, Bedarfe selbst anklicken (nichts vorausgewählt), RETURN zurück; **Miete nicht bezahlbar → Game Over „STRANDED“** (Platzhalter) | Reisende + Verwarnungen + Lieferungen → Wallet + Familie | `Data/Economy/Household.asset`: Lohn 15, Abzug 10, Miete 30, Geld am Bett = Händlerwert × 1,35 |
 | Familie | P10 | Mom, Lena, Pip; Stufen well → weak → sick → critical; ohne Essen alle schlechter, ohne Wärme Pip, Medizin heilt | Abrechnung → `Household` → Zeilen im Morgenbrief | `Household.asset` (Namen, Texte je Stufe) |
@@ -55,7 +57,6 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 | Briefe reagieren auf den Zustand | P15 | Familie | offen |
 | Balancing über 3 Tage (Economy Report) | P71 (geplant) | alles Geld | nach P68 |
 | Gadgets: Scanner, UV-Lampe | P16, P62 | Schalter, Kiosk | Scanner-Funktion unklar (siehe Lücken) |
-| Getränkeautomat | P30 | Geld, Inventar | offen, nur nach der Schicht |
 | Familie in der Welt (Stadtlichter, Foto) | P29 | Familie | Assets bestellt |
 | Bugreport im Spiel | Frage `bugreport-server` | Live-Server | Frage an max |
 

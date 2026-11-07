@@ -158,6 +158,10 @@ namespace GameOff.EditorTools
 
             BuildPriceList(data, contraband, medicine, gadget, food, power, drug, valuable, log, ref created);
             BuildMarket(data, contraband, food, power, drug, log, ref created);
+            // P30: the drinks machine in the hall sells Nova Cola, 6 a day.
+            data.Stocks["Stock_Vending"] = Stock("Stock_Vending", "NOVA COLA MACHINE", 1f, 0f, "Sold out.", new[] { data.Items["cola"] }, new ItemTag[0], ref created);
+            MigrateToEntries(data.Stocks["Stock_Vending"], log);
+            SetDailyAmount(data.Stocks["Stock_Vending"], data.Items["cola"], 6);
 
             AssetDatabase.SaveAssets();
             if (created > 0) log.Add($"{created} test assets created");
@@ -584,6 +588,7 @@ namespace GameOff.EditorTools
             vendors.SetParent(root.transform, false);
             foreach (var spot in Vendors) BuildVendor(vendors, spot, data.Stocks[spot.Stock], trade);
             BuildDrone(root.transform, trade);
+            BuildVendingMachine(root.transform, data.Stocks["Stock_Vending"]);
             // P66: the bribe note lies on the left front of the counter desk (desk spots are around x -1, z -9; the player sits at x -2).
             var bribeGo = new GameObject("BribeNote");
             bribeGo.transform.SetParent(root.transform, false);
@@ -679,6 +684,36 @@ namespace GameOff.EditorTools
             Set(vendor, "interactable", interactable);
             Set(vendor, "window", trade);
             Set(vendor, "debugView", debugView);
+        }
+
+        private const string VendingModelName = "SM_Hall_VendingMachine";
+
+        /// <summary>P30: [E] at the hall's drinks machine (x −7.4, z 4.5); Place() fits the trigger to the delivered model.</summary>
+        private static void BuildVendingMachine(Transform parent, VendorStock stock)
+        {
+            var go = new GameObject("VendingMachine");
+            go.transform.SetParent(parent, false);
+            var (interactable, debugView) = Trigger(go.transform, "Trigger", new Vector3(-7.4f, 1f, 4.5f), new Vector3(1.0f, 2.0f, 1.2f), "Buy Nova Cola");
+            var machine = go.AddComponent<VendingMachine>();
+            Set(machine, "stock", stock);
+            Set(machine, "interactable", interactable);
+            Set(machine, "debugView", debugView);
+        }
+
+        private static void SetDailyAmount(VendorStock stock, ItemData item, int amount)
+        {
+            var so = new SerializedObject(stock);
+            var entries = so.FindProperty("entries");
+            for (int i = 0; i < entries.arraySize; i++)
+            {
+                var e = entries.GetArrayElementAtIndex(i);
+                if (e.FindPropertyRelative("item").objectReferenceValue != item || e.FindPropertyRelative("dailyAmount").intValue == amount) continue;
+                int now = e.FindPropertyRelative("dailyAmount").intValue;
+                if (now != 3 && now != 5) return; // tuned by hand (3 and 5 come from the migration): leave it
+                e.FindPropertyRelative("dailyAmount").intValue = amount;
+                so.ApplyModifiedPropertiesWithoutUndo();
+                EditorUtility.SetDirty(stock);
+            }
         }
 
         private static void BuildDrone(Transform parent, TradeWindow trade)
@@ -952,6 +987,14 @@ namespace GameOff.EditorTools
                 Record(w);
             }
             if (shift == null) log.Add("WARNING: no CounterShift in the scene - no wage");
+            foreach (var m in instance.GetComponentsInChildren<VendingMachine>(true))
+            {
+                Set(m, "player", player);
+                Set(m, "day", day);
+                Set(m, "dialogs", dialogs);
+                Record(m);
+                log.Add(FitTrigger(scene, instance, m.transform, VendingModelName, "vending"));
+            }
             var drone = instance.GetComponentInChildren<DroneTerminal>(true);
             Set(drone, "day", day);
             Set(drone, "player", player);
@@ -963,12 +1006,16 @@ namespace GameOff.EditorTools
             log.Add($"placed in {scene.name} (player {Ok(player)}, day {Ok(day)}, dialogs {Ok(dialogs)}, {fit})");
         }
 
-        private static string FitDroneTrigger(Scene scene, GameObject economy, DroneTerminal drone)
+        private static string FitDroneTrigger(Scene scene, GameObject economy, DroneTerminal drone) =>
+            FitTrigger(scene, economy, drone.transform, DroneModelName, "drone");
+
+        /// <summary>Fits a trigger box ("Trigger" child of owner) around a model in the scene and the small colliders touching it.</summary>
+        private static string FitTrigger(Scene scene, GameObject economy, Transform owner, string modelName, string what)
         {
             var model = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Transform>(true))
-                .FirstOrDefault(t => t.name == DroneModelName && !t.IsChildOf(economy.transform));
+                .FirstOrDefault(t => t.name == modelName && !t.IsChildOf(economy.transform));
             var renderers = model != null ? model.GetComponentsInChildren<Renderer>() : new Renderer[0];
-            if (renderers.Length == 0) return "drone model not found, default trigger";
+            if (renderers.Length == 0) return what + " model not found, default trigger";
             var bounds = renderers[0].bounds;
             foreach (var r in renderers) bounds.Encapsulate(r.bounds);
             // Solid colliders around the drone (its own and the pad's: the pad's box is 1.4 m high and encloses the drone) would
@@ -978,20 +1025,20 @@ namespace GameOff.EditorTools
             {
                 if (c.isTrigger || c.transform.IsChildOf(economy.transform)) continue;
                 var cb = c.bounds;
-                if (cb.size.x > 5f || cb.size.z > 5f || !cb.Intersects(droneBounds)) continue; // skip floors and walls
+                if (cb.size.x > 5f || cb.size.z > 5f || cb.size.y > 3f || !cb.Intersects(droneBounds)) continue; // skip floors and walls
                 bounds.Encapsulate(cb);
             }
             bounds.Expand(new Vector3(0.2f, 0f, 0.2f));
             var center = bounds.center + Vector3.up * 0.1f;
             var size = bounds.size + Vector3.up * 0.2f;
-            var trigger = drone.transform.Find("Trigger");
+            var trigger = owner.Find("Trigger");
             trigger.position = center;
             trigger.GetComponent<BoxCollider>().size = size;
             trigger.Find("DebugView").localScale = size;
             Record(trigger);
             Record(trigger.GetComponent<BoxCollider>());
             Record(trigger.Find("DebugView"));
-            return $"drone trigger fitted ({size.x:0.0} × {size.y:0.0} × {size.z:0.0} m)";
+            return $"{what} trigger fitted ({size.x:0.0} × {size.y:0.0} × {size.z:0.0} m)";
         }
 
         private static void Record(Object o) => PrefabUtility.RecordPrefabInstancePropertyModifications(o);

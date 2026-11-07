@@ -61,7 +61,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| martin | P30 Getränkeautomat, P31 Anzeigesäule, P36 Flackern (nacheinander) | `Main.unity`, `PF_Economy.prefab`, `PF_DayFlow.prefab`, `Data/Economy/*`, `Data/Market/*`, `Scripts/Core/LightFlicker.cs` | 07.11. |
+| martin | P36 Flackern (P30, P31 fertig) | `Main.unity`, `PF_Economy.prefab`, `PF_DayFlow.prefab`, `Data/Economy/*`, `Data/Market/*`, `Scripts/Core/LightFlicker.cs` | 07.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): wartet auf das P08-Gespräch mit max | — | 06.11. |
 | max | P09 Tagesablauf abnehmen: drei Tage mit Kontroll-Gameplay (von martin übergeben, im Dev-Modus getestet) | — | 06.11. |
 
@@ -94,6 +94,8 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P31 Anzeigesäule: Tag, Phase, nächstes Shuttle und Marktereignis auf den CRTs der Säule in der Halle (martin, 07.11.)
+- [x] P30 Getränkeautomat: [E] kauft Nova Cola, 6 pro Tag, nur abends (martin, 07.11.)
 - [x] P66 Bestechungszettel: Zettel an Tag 3 (Quill, 60 CR), Umschlag in der Abrechnung, Ablehnen → Barkeeper zwei Abende ohne Gerücht; Balance-Ziel „korrupt nicht vor Tag 6“; B04 geschlossen (martin, 07.11.)
 - [x] P71 Balancing: Simulator + Economy Report + Balance-Test, Ticket 350 CR (~7–8 Tage gute Arbeit), Ereignisse härter, Gerüchte gedämpft, Rundung ,5 auf; P72/P73 als Entwurf, Frage an Max (martin, 07.11.)
 - [x] P65 Barkeeper: Schild mit Wunsch nach Label, GIVE gegen ein Gerücht über die Marktereignisse von morgen, Notiz im Inventar; Modell SM_Bar_WishBoard bestellt (martin, 07.11.)

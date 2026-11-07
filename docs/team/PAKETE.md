@@ -477,20 +477,26 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Hinweis (martin, 06.11.): Der Familienzustand existiert seit P10: `PlayerEconomy.Household` (Stufe je Person), Event `Household.Changed`.
 
 ### P30 — Getränkeautomat
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 07.11.)
+- Größe: S · Priorität: Soll · Status: fertig (martin, 07.11.)
 - Braucht: P10 (Geld), P11 (Inventar) · Assets: `SM_Hall_VendingMachine` (da), `SM_Prop_SodaCan` (bestellt)
 - Ziel: Kleine Versuchung, Geld auszugeben.
 - Enthalten: [E] "NOVA COLA – 2 Credits": Geld weg, Dose fällt rumpelnd heraus, ins Inventar; nach Hause schicken (P13) oder am Schalter
   trinken (kleiner Bonus, z. B. Schichtzeit kurz langsamer)
 - Abnahme: Kaufen, Inventar, Wirkung und Versand funktionieren.
 - Hinweis (martin, 06.11.): Grundregel – jeder Handel (Händler, Drohne, Automat) ist nur nach der Schicht möglich.
+- Ergebnis (martin, 07.11.): `Shops/VendingMachine.cs`, gebaut von EconomyBuilder (Trigger am Modell, Sortiment `Stock_Vending`: Nova Cola, 6/Tag).
+  [E] kauft sofort eine Dose zum Marktpreis (Ton + Hinweis), leer → „Sold out“, tagsüber Dialog „Out of order“ (Dev-Knopf `Dev_force_Buy`).
+  **Trink-Bonus bewusst weggelassen** (Martin) → später eigenes Paket. Versand per Drohne geht wie bei jeder Ware. Economy Report ✓.
 
 ### P31 — Anzeigesäule mit Live-Ankunftsplan
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 07.11.)
+- Größe: S · Priorität: Soll · Status: fertig (martin, 07.11.)
 - Braucht: P09 · Assets: `SM_Hall_DepartureBoard` (da)
 - Ziel: Auf einen Blick sehen, wie viel Schicht noch kommt.
 - Enthalten: TextMeshPro auf den CRT-Flächen: nächstes Shuttle, Reisende in der Schlange, Tag/Schicht-Uhr, Warnungen ("SECURITY LEVEL RAISED")
 - Abnahme: Anzeige folgt dem Spielstand.
+- Ergebnis (martin, 07.11.): `UI/HallBoard.cs`, gebaut von DayFlowBuilder (PF_DayFlow). Je Seite der Säule zwei CRTs mit dunklem Hintergrund:
+  links Tag + Phase + nächstes Shuttle (fiktiv: 08:00 + 25 min je Entscheidung) + Dock, rechts die Marktereignisse des Tages (`bulletinLine`) oder „NONE TODAY“.
+  Kopfzeile des Modells bleibt frei. Warteschlangen-Länge und Sicherheitswarnungen nicht enthalten (gibt es noch nicht als Daten).
 
 ### P32 — Asservatenschrank mit echten Gegenständen
 - Größe: M · Priorität: Soll · Status: offen
