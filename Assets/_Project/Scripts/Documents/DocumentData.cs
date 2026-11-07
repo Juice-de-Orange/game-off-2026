@@ -32,6 +32,21 @@ namespace GameOff.Documents
             return data;
         }
 
+        /// <summary>
+        /// P73: a traveler's paper made by the day generator (endless days). Not marked runtime, so the desk doesn't destroy it
+        /// while its traveler may still be looked at; it lives as long as the generated day.
+        /// </summary>
+        public static DocumentData CreateGenerated(DocumentType type, Texture2D photo, List<DocumentField> fields, bool forged = false)
+        {
+            var data = CreateInstance<DocumentData>();
+            data.type = type;
+            data.photo = photo;
+            data.fields = fields;
+            data.forgedSeal = forged;
+            data.name = type.ToString();
+            return data;
+        }
+
         /// <summary>Value of a field by key, or null if the document doesn't have it.</summary>
         public string Get(string key)
         {

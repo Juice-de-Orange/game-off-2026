@@ -1,0 +1,338 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7cb6cd52bde6844b9a0ea05cfebad31, type: 3}
+  m_Name: DayPool
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Day.DayPool
+  species:
+  - name: Human
+    idPrefix: HM
+    model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
+    photo: {fileID: 2800000, guid: c8ac425c6a1d8ab43ab10da17ec65ca4, type: 3}
+    origins:
+    - TORVIK COLONY
+    - ASKA-3
+    - NEW HADRA
+  - name: Vellani
+    idPrefix: VL
+    model: {fileID: 7545026988212257677, guid: 5d6ec526c1583de48a952ef7a4217cbc, type: 3}
+    photo: {fileID: 2800000, guid: c32b5c37ada19aa41b24a8c4257ffcb3, type: 3}
+    origins:
+    - VELL PRIME
+    - SELUNE
+  - name: Quobb
+    idPrefix: QB
+    model: {fileID: 2190294317704143118, guid: 2599d4a5607b12d4092e5eb3b17cd21a, type: 3}
+    photo: {fileID: 2800000, guid: 301aa66d9296d8b41bbac774cce3a10d, type: 3}
+    origins:
+    - QUOBB MARSH
+    - ORVAN
+  - name: Xirrik
+    idPrefix: XR
+    model: {fileID: 8372028664995244572, guid: 6fc5658331bc5e8408dc013c0086e1be, type: 3}
+    photo: {fileID: 2800000, guid: 2e230d1b640c8624bbd8580a387ab918, type: 3}
+    origins:
+    - LUMEN REACH
+    - XIR HOLLOW
+  - name: Sorvak
+    idPrefix: SV
+    model: {fileID: 2456880688624481046, guid: 1e6468b746c5f0e47b03509118fc1380, type: 3}
+    photo: {fileID: 2800000, guid: 22a8011810e1f044c95058dd848837e0, type: 3}
+    origins:
+    - SORVAK DEEP
+    - KHARN
+  givenNames:
+  - ADA
+  - BRAM
+  - CEL
+  - DASH
+  - EDO
+  - FENN
+  - GALE
+  - HOLT
+  - IVO
+  - JUNA
+  - KAI
+  - LIO
+  - MAREK
+  - NIA
+  - ORIN
+  - PIA
+  - RUNE
+  - SAL
+  - TAVI
+  - UMA
+  - VAREK
+  - WREN
+  - YARA
+  - ZEV
+  familyNames:
+  - ASHBY
+  - BRENN
+  - CALDER
+  - DUVAL
+  - ESKER
+  - FARO
+  - GRIMM
+  - HALVER
+  - IRRO
+  - JASK
+  - KOVAC
+  - LUND
+  - MORROW
+  - NAVIK
+  - ODELL
+  - PRAX
+  - ROOK
+  - SAVO
+  - TARN
+  - ULLER
+  - VANCE
+  - WESTA
+  - YORIN
+  - ZELL
+  stops:
+  - KETRA STATION
+  - DUNMOR RELAY
+  - PIKE GATE
+  - HALDEN DOCKS
+  - MERIDIAN HUB
+  - OSSA BEACON
+  purposes:
+  - WORK
+  - TRADE
+  - TRANSIT
+  - FAMILY VISIT
+  - MEDICAL
+  - PILGRIMAGE
+  ships:
+  - RUSTWING
+  - DAWN OF ASKA
+  - TALLOW 9
+  - GREY HERON
+  - LOW TIDE
+  - KESSLER'S LUCK
+  - IRON PSALM
+  - SLOW BLOOM
+  cargo:
+  - item: {fileID: 11400000, guid: 247f021f035f8f04593273eb8afa1517, type: 2}
+    line: RATION PACK CRATE
+    canBeForbidden: 0
+  - item: {fileID: 11400000, guid: d2edcdba608d63d49bf945af474aaa1b, type: 2}
+    line: PROTEIN BAR BOX
+    canBeForbidden: 0
+  - item: {fileID: 11400000, guid: b11fc09941fec2f47982df46f09907a0, type: 2}
+    line: CANNED STEW CASE
+    canBeForbidden: 0
+  - item: {fileID: 11400000, guid: a0696af6944fc7c459ef3eafb6d84ac5, type: 2}
+    line: FRESH FRUIT CRATE
+    canBeForbidden: 0
+  - item: {fileID: 11400000, guid: a2d217b5d6ca9d445b1d1c210919a72a, type: 2}
+    line: NOVA COLA CRATE
+    canBeForbidden: 0
+  - item: {fileID: 11400000, guid: 2007b103b290d374cb47c7a1ee8ef20a, type: 2}
+    line: BATTERY PACK CASE
+    canBeForbidden: 0
+  - item: {fileID: 11400000, guid: b19c192b0b7cbd143b467867b30d0f47, type: 2}
+    line: FUSION CELL
+    canBeForbidden: 0
+  - item: {fileID: 11400000, guid: 161abb7819e8873488489cb63432573c, type: 2}
+    line: SPARE FUSE BOX
+    canBeForbidden: 0
+  - item: {fileID: 11400000, guid: 44fbcde8893760c4e9a1d21128b996b7, type: 2}
+    line: COUGH SYRUP CASE
+    canBeForbidden: 0
+  - item: {fileID: 11400000, guid: 04bda7305b9639e499630ecc7e65086b, type: 2}
+    line: PAINKILLERS BOX
+    canBeForbidden: 1
+  - item: {fileID: 11400000, guid: 67974c849890c5b4aadcb23660d4f06f, type: 2}
+    line: ANTIBIOTICS CASE
+    canBeForbidden: 1
+  - item: {fileID: 11400000, guid: df59c3f9bd707eb4db4315f3127fb1bb, type: 2}
+    line: STIMULANT VIALS
+    canBeForbidden: 1
+  - item: {fileID: 11400000, guid: 95ed42a555ca29c44adb1a7a87f3c5aa, type: 2}
+    line: SPICE SACK
+    canBeForbidden: 1
+  - item: {fileID: 11400000, guid: e0d6da73f80ef0b4bbca1641d443c69c, type: 2}
+    line: DATA CHIP CASE
+    canBeForbidden: 1
+  - item: {fileID: 11400000, guid: 2c71f878a38669942bdf6ea5d18990f3, type: 2}
+    line: PISTOL
+    canBeForbidden: 1
+  - item: {fileID: 11400000, guid: 18a8d96638a55a74dbdcd41297b5e8be, type: 2}
+    line: WEAPON PARTS CRATE
+    canBeForbidden: 1
+  - item: {fileID: 11400000, guid: d3ff70c2f31c6fd4caa4d0d3cd7300e0, type: 2}
+    line: POCKET WATCH
+    canBeForbidden: 0
+  - item: {fileID: 11400000, guid: d6458a0bc14861046949d58077ba09f2, type: 2}
+    line: SILVER RING
+    canBeForbidden: 0
+  - item: {fileID: 11400000, guid: e1b4d6a84c3e1dd4ca380cf7c310f187, type: 2}
+    line: ALIEN TRINKET BOX
+    canBeForbidden: 1
+  - item: {fileID: 11400000, guid: b0f59d11e5306c146ac98f08bd92834c, type: 2}
+    line: CASH BUNDLE
+    canBeForbidden: 1
+  - item: {fileID: 11400000, guid: a8f4a520a65def34187401e7888690ed, type: 2}
+    line: LIQUOR BOTTLE
+    canBeForbidden: 1
+  - item: {fileID: 11400000, guid: 574f9dff573cc9d4d909ed17904fc8f5, type: 2}
+    line: ALIEN SPECIMEN JAR
+    canBeForbidden: 1
+  greetings:
+  - Long trip. Please make it quick.
+  - Good evening, officer. Or is it morning here?
+  - Everything should be in order.
+  - I've been in that queue for three hours.
+  - My cousin said this station is friendly.
+  - Is the bar still open after this?
+  - Don't look at me like that. I'm just tired.
+  - Here. All of it.
+  - First time on Kestrel. Is it always this cold?
+  - They told me to talk to you.
+  - I have a connecting shuttle. Please.
+  - You look like you need a drink more than I do.
+  - Same as last time, officer.
+  - Mind the papers, they got wet.
+  - I'm only passing through.
+  - Work is work. Where do I go?
+  crimes:
+  - Armed robbery.
+  - Smuggling, three counts.
+  - Escaped from a labour camp.
+  - Desertion.
+  - Forgery of transit papers.
+  - Sabotage at a fuel depot.
+  - Fraud, Meridian Hub.
+  - Assault on an officer.
+  standingWanted:
+  - name: KAEL DROSS
+    id: DX-0013-44
+    order: 0
+    note: Armed robbery, Aska-3
+  letters:
+  - title: A letter from home
+    body: 'The heater rattles again, but it still works if you hit it twice. We hit
+      it a lot.
+
+
+      We count the days. Don''t work too hard.'
+  - title: A letter from home
+    body: 'The little one drew a picture of your station. It has too many windows
+      and a cat on the roof.
+
+
+      We keep it on the wall.'
+  - title: A letter from home
+    body: 'Prices went up again at the depot. Everyone says it will get better after
+      the winter.
+
+
+      Nobody says which winter.'
+  - title: A letter from home
+    body: 'Your mother asks if you eat properly. I told her you do. Do you?
+
+
+      Write
+      back when you can.'
+  - title: A letter from home
+    body: 'The neighbours left for the inner colonies last week. Their flat is dark
+      now.
+
+
+      We are fine. We just miss you.'
+  - title: A letter from home
+    body: 'There was a power cut all night. We sat together under the blankets and
+      told stories about you.
+
+
+      They were mostly true.'
+  - title: A letter from home
+    body: 'The school wants new shoes for the winter term. I said we''ll see.
+
+
+      Don''t
+      worry about it. Just come home.'
+  - title: A letter from home
+    body: 'I found your old jacket in the cupboard. It still smells like you, a little.
+
+
+      How
+      long now?'
+  - title: A letter from home
+    body: 'The radio says the routes are getting worse. Be careful who you let through.
+
+
+      And
+      be careful who you don''t.'
+  - title: A letter from home
+    body: 'We had soup three days in a row. Good soup, though.
+
+
+      Save what
+      you can. We can wait a bit longer.'
+  marketEvents:
+  - marketEvent: {fileID: 11400000, guid: f43d7922bcf28184f9e158056a4dd645, type: 2}
+    weight: 1
+  - marketEvent: {fileID: 11400000, guid: 185c66fd5f1f3db4b9efbde0cf898138, type: 2}
+    weight: 1
+  - marketEvent: {fileID: 11400000, guid: 499c80581acc6d241bb1a53254ffe24f, type: 2}
+    weight: 0.8
+  - marketEvent: {fileID: 11400000, guid: 6ab9ba6f17db05f40a3390533816c0b4, type: 2}
+    weight: 1
+  - marketEvent: {fileID: 11400000, guid: abfbcbfc6fc68c944a3fe2c61ac7e1c3, type: 2}
+    weight: 1
+  - marketEvent: {fileID: 11400000, guid: 4c0c131882bb4364eb8d4649a5bb6375, type: 2}
+    weight: 1
+  - marketEvent: {fileID: 11400000, guid: 5abb6d2dd34a7184e83d89c7b9389401, type: 2}
+    weight: 0.6
+  - marketEvent: {fileID: 11400000, guid: efe96a2bc90424846b07f65bda579193, type: 2}
+    weight: 0.3
+  eventChance: 0.35
+  barWishes:
+  - tag: {fileID: 11400000, guid: 74c26e4bb62f1884ab816ec412ab79fc, type: 2}
+    amount: 2
+    sign: 
+  - tag: {fileID: 11400000, guid: df73a66dd95c513448baced3fe575726, type: 2}
+    amount: 2
+    sign: 
+  - tag: {fileID: 11400000, guid: 64529f16bdb07784f8a6dcc11678a666, type: 2}
+    amount: 1
+    sign: 
+  - tag: {fileID: 11400000, guid: b383f9fa0014ed44c9c87250378ff26d, type: 2}
+    amount: 2
+    sign: 
+  - tag: {fileID: 11400000, guid: 6fb8a1b3c51568c4f8aa6d549a58f4fb, type: 2}
+    amount: 1
+    sign: 
+  - tag: {fileID: 11400000, guid: a6959e60727c37747b2376cfc4f50971, type: 2}
+    amount: 1
+    sign: 
+  - tag: {fileID: 11400000, guid: d84f89d8a930dd94e99e5f6dfb3440f3, type: 2}
+    amount: 1
+    sign: 
+  barWishChance: 0.5
+  bribeChance: 0.25
+  bribeMin: 30
+  bribeMax: 60
+  rampDays: 8
+  travelersStart: 6
+  travelersMax: 8
+  rulesStart: 1
+  rulesMax: 3
+  flawedStart: 0.4
+  flawedMax: 0.6
+  trickyStart: 0.1
+  trickyMax: 0.5
+  wantedMax: 2
+  terminateChance: 0.15

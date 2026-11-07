@@ -57,6 +57,24 @@ namespace GameOff.Travelers
             return null;
         }
 
+        /// <summary>P73: a traveler made by the day generator (endless days), not a project asset.</summary>
+        public static TravelerData CreateGenerated(string name, string species, List<DocumentData> documents, Verdict verdict, string reason,
+            string greeting, GameObject model, bool trick)
+        {
+            var t = CreateInstance<TravelerData>();
+            t.name = "T_Gen_" + name.Replace(' ', '_');
+            t.displayName = name;
+            t.species = species;
+            t.documents = documents;
+            t.intendedVerdict = verdict;
+            t.intendedReason = reason;
+            t.greeting = greeting;
+            t.model = model;
+            t.trickIntended = trick;
+            t.storyTag = "P73 generated";
+            return t;
+        }
+
 #if UNITY_EDITOR
         /// <summary>Editor setup (content builders and tests).</summary>
         public void EditorSet(string newName, string newSpecies, List<DocumentData> newDocuments, Verdict verdict, string reason,

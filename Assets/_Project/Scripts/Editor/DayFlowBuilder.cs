@@ -138,6 +138,7 @@ namespace GameOff.EditorTools
             if (test != null) SetArray(director, "devCharacters", new Object[] { test });
             // P76: the story characters
             log.Add(StoryCharacterBuilder.Build());
+            log.Add(DayPoolBuilder.Build()); // P73: endless days after the story
             EconomySimulator.ResetCharacters();
             var story = AssetDatabase.FindAssets("t:RecurringCharacter", new[] { "Assets/_Project/Data/Characters/Story" })
                 .Select(g => (Object)AssetDatabase.LoadAssetAtPath<GameOff.Characters.RecurringCharacter>(AssetDatabase.GUIDToAssetPath(g))).ToArray();

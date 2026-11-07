@@ -9,7 +9,7 @@ namespace GameOff.EditorTools
     /// <summary>
     /// Plays the economy for N days without the game (P71), with the real rules: Market (prices, events, amounts), VendorSupply,
     /// VendorStock prices, the bed price (HouseholdTuning.MoneyCost), Payroll, Household and the barkeeper's rules. Days beyond the
-    /// schedule loop over the story days until the pools of P73 exist. Used by the Economy Report and the balance tests.
+    /// story are drawn from the loop pool (P73) with a fixed seed; without a pool they loop over the story days. Used by the Economy Report and the balance tests.
     /// </summary>
     public class EconomySimulator
     {
@@ -99,8 +99,13 @@ namespace GameOff.EditorTools
         /// <summary>Forget the cached characters (after the story builder ran).</summary>
         public static void ResetCharacters() => _story = null;
 
-        private DayEntry Entry(int day) => _schedule.Get((day - 1) % _schedule.Count + 1);
-        private int ScheduleDay(int day) => (day - 1) % _schedule.Count + 1;
+        /// <summary>P73: the seed the simulator draws the endless days with (a fixed run, so the report is the same every time).</summary>
+        public const int Seed = 7301;
+
+        public int StoryDays => _schedule.Count;
+
+        private DayEntry Entry(int day) => _schedule.Endless ? _schedule.Get(day, Seed) : _schedule.Get((day - 1) % _schedule.Count + 1);
+        private int ScheduleDay(int day) => _schedule.Endless ? day : (day - 1) % _schedule.Count + 1;
 
         /// <summary>Plays `days` days. `wrongPerDay` travelers each day are decided wrongly.</summary>
         public Run Play(Style style, int wrongPerDay, int days)

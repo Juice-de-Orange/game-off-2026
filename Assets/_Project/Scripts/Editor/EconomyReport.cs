@@ -18,6 +18,8 @@ namespace GameOff.EditorTools
     public static class EconomyReport
     {
         public const int Days = 12;
+        /// <summary>P73: how far the endless days are checked.</summary>
+        public const int EndlessDays = 30;
         private const string ReportPath = "docs/ECONOMY-REPORT.md";
 
         public struct Goal
@@ -46,6 +48,8 @@ namespace GameOff.EditorTools
             var skip = sim.Play(EconomySimulator.Style.Skip, 0, 3);
             var rumour = sim.Play(EconomySimulator.Style.Rumour, 0, Days);
             var corrupt = sim.Play(EconomySimulator.Style.Corrupt, 0, Days);
+            var endless = sim.Play(EconomySimulator.Style.Clever, 0, EndlessDays);
+            var endlessSloppy = sim.Play(EconomySimulator.Style.Clever, 1, EndlessDays);
             float perUnit = rumour.SpeculatedUnits > 0 ? (float)(rumour.SpeculationProfit - rumour.WishCost) / rumour.SpeculatedUnits : 0f;
             string Day(EconomySimulator.Run r) => r.TicketDay < 0 ? "never" : "day " + r.TicketDay;
             return new List<Goal>
@@ -56,6 +60,8 @@ namespace GameOff.EditorTools
                 new Goal { Name = "2 mistakes a day: no ticket by day 12, or a need skipped", Ok = sloppy.TicketDay < 0 || sloppy.SkippedAnyNeed, Detail = Day(sloppy) + (sloppy.SkippedAnyNeed ? ", skipped a need" : "") },
                 new Goal { Name = "Nothing for the family: someone critical by day 3", Ok = skip.WorstCondition >= Household.Critical, Detail = "worst " + skip.WorstCondition },
                 new Goal { Name = "Bribes help, but the ticket not before day 6", Ok = corrupt.TicketDay >= 6 || corrupt.TicketDay < 0, Detail = Day(corrupt) + $", {corrupt.Bribes} CR in envelopes" },
+                new Goal { Name = $"Endless days: clever without mistakes lasts {EndlessDays} days, family never sick", Ok = !endless.GameOver && endless.WorstCondition < Household.Sick, Detail = endless.GameOver ? "out" : $"balance {endless.Evenings.Last().Balance}, worst {endless.WorstCondition}" },
+                new Goal { Name = $"Endless days: 1 mistake a day still lasts {EndlessDays} days", Ok = !endlessSloppy.GameOver, Detail = endlessSloppy.GameOver ? "out on day " + endlessSloppy.Evenings.Last().Day : $"balance {endlessSloppy.Evenings.Last().Balance}" },
                 new Goal { Name = "Rumour pays 5–8 CR per speculated unit (after the wish)", Ok = perUnit >= 5f && perUnit <= 8f, Detail = $"{perUnit:0.0} CR × {rumour.SpeculatedUnits}, wish {rumour.WishCost} CR" },
             };
         }
@@ -81,7 +87,7 @@ namespace GameOff.EditorTools
             var e = AssetDatabase.LoadAssetAtPath<EconomyTuning>("Assets/_Project/Data/Economy/EconomyTuning.asset");
             sb.AppendLine();
             sb.AppendLine($"Start {e.startCredits} CR · wage {h.wagePerTraveler} per correct traveler · penalty {h.penaltyPerCitation} · rent {h.rent} · bed × {h.moneyFactor} · **ticket {h.ticketPrice} CR**");
-            sb.AppendLine($"Days beyond the schedule loop over the story days (until P73).");
+            sb.AppendLine($"Days after the {sim.StoryDays} story days are drawn from the day pool (P73, seed {EconomySimulator.Seed}).");
             sb.AppendLine();
             sb.AppendLine("## Goals");
             foreach (var g in Goals(sim)) sb.AppendLine($"- {(g.Ok ? "✓" : "✗")} {g.Name} – {g.Detail}");

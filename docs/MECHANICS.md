@@ -4,7 +4,7 @@ Wofür: Auf einen Blick sehen, welche Spielmechaniken es gibt, wie sie ineinande
 Pflege: Wer ein Paket fertigstellt, das eine Mechanik neu baut oder ändert, zieht diese Datei im selben Push nach (siehe `CLAUDE.md`).
 Wer ein Paket plant, prüft hier zuerst auf Konflikte. Details stehen in `PAKETE.md`, Entscheidungen in `DECISIONS.md`.
 
-Stand: 06.11.2026 (martin)
+Stand: 07.11.2026 (martin)
 
 ## Der Kreislauf eines Tages
 ```
@@ -16,19 +16,20 @@ Feierabend (nur jetzt Handel): Kiosk · Schwarzmarkt · Drohne nach Hause
   ↓
 Bett → Abrechnung: Lohn − Abzug − Miete − Bedarfe (oder per Drohne gedeckt) → Familie ändert sich
   ↓
-nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
+nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos weiter mit gezogenen Tagen (P73), bis ein Ende kommt
 ```
 
 ## Gebaut
 
 | Mechanik | Paket | Was sie tut | Eingänge → Ausgänge | Daten / Einstellwerte |
 |---|---|---|---|---|
-| Tagesablauf | P09 (abgenommen, 07.11.) | Morgen → Schicht → Abend → Nacht → nächster Tag, 3 Tage | `CounterShift.ShiftEnded` → Abend; Bett → `NightStep` (Abrechnung) → nächster Tag; `LetterAddendum` → Brief | `Data/Days/DaySchedule.asset` |
+| Tagesablauf | P09 (abgenommen, 07.11.); P73 | Morgen → Schicht → Abend → Nacht → nächster Tag; 12 Story-Tage, danach endlos | `CounterShift.ShiftEnded` → Abend; Bett → `NightStep` (Abrechnung) → nächster Tag; `LetterAddendum` → Brief | `Data/Days/DaySchedule.asset` |
 | Schalter & Dokumente | P05, P06, P38, P40 | Papiere ziehen, lesen, stempeln, Schublade, Nachfragen per Klick auf ein Feld, Reisende in der Prüfkammer | Reisender → Entscheidung (`DecisionMade`) | `Data/Travelers/…`, Dokument-Prefabs |
 | Regeln & Urteil | P07, P41 | Regeln des Tages, Pinnwand, Durchsagen; jede Entscheidung wird geprüft | Entscheidung → `Judgement` (richtig/falsch, Moral-Kosten) → bei Fehler Verwarnzettel | `DayRules`, `freeWarnings` (2) in `CounterShift` |
 | Geld & Inventar | P46 | Kontostand mit Tagesbuchungen (TODAY), Inventar (I), Gegenstände mit Labels | alle Käufe/Verkäufe/Abrechnung → `Wallet` | `EconomyTuning` (Start 40 CR), `Data/Items/*` |
 | Warenliste 2: Icon, Modell, Fracht-Stichwort je Ware | P82 | 24 Waren (neu: Liquor, Weapon parts, Cash bundle, Alien specimen, UV lamp; Stim injector heißt jetzt Stimulant vials). Waren wirken nicht stärker als andere, sie sind **eine andere Quelle** (z. B. beschlagnahmte Medizin statt Laden). Jede Ware mit Fracht-Stichwort (`cargoWord`) hat eine **CONFISCATED-Variante** (`Data/Items/Confiscated/`, gleiche Labels + CONFISCATED → hilft der Familie, nur der Schwarzmarkt kauft sie) | Fracht der Reisenden (P15) → Beschlagnahme (P08); Familie, Händler | `Data/Items/*`, gebaut von `Update Economy Data` |
 | Beschlagnahme, Wahl am Schichtende, Disziplinarstrafen, Moral | P08 | Verhaften → Frachtbrief → Schicht-Inventar (max. 3 je Ware). Schichtende: „Nothing to report“ (80 % erwischt: Ware weg, 100 CR, 1 Disziplinarstrafe) / „Oh, seems I missed that“ (60 % ein Stück, sonst 30 CR) / „As ordered“. 3 Disziplinarstrafen = DISCHARGED. Moral: Schleuse −1, bei Unschuldigen −3 (nur für P12) | Fracht-Stichworte (P82), Schicht-Inventar (P81), Inventar (CONFISCATED-Varianten), Wallet (Strafen in TODAY), Enden (P12) | `Data/Economy/ConfiscationTuning.asset` |
+| Endlose Tage | P73 | Nach dem letzten Story-Tag zieht `DayGenerator` jeden Tag aus `DayPool`: Regeln (1→3), Fahndungen, 6→8 Reisende mit Papieren passend zum Datum und einem Fehler (abgelaufen, Name/ID falsch, Siegel, verbotene Ware, Herkunft, Quarantäne, Frachtbrief fehlt, gesucht; knifflige Varianten werden häufiger), Marktereignis (35 %), Bar-Wunsch (50 %), Bestechung (25 %), Brief. Startwert neu je Durchgang, gleicher Startwert = gleiche Tage; schwerer bis ca. Tag 20 | `DaySchedule.loop` → `DayManager.Entry(day)` (Barkeeper, Bestechung, Markt wie Story-Tage); Simulator mit Startwert 7301 | `Data/Days/DayPool.asset` (GameOff/Build Day Pool), `EndlessDayTests` |
 | Wiederkehrende Figuren: Auftritte, Gedächtnis, Folgen | P75; acht Figuren über 12 Story-Tage P76 (`docs/FIGUREN.md`); Verwahrung P77 | Figuren kommen geskriptet in die Schlange (fester Tag/Platz oder Zeitfenster, Bedingung über den letzten Ausgang), grüßen je nach letztem Ausgang, reden über Markt-Ereignisse. Jede Entscheidung = Ausgang je Auftritt (geholfen/verraten/neutral/beschlagnahmt/tot) → Folgen: Markt-Ereignis in n Tagen, Fahndung. Schleuse = nie wieder | Schalter (`CounterShift.PlanDay`), Markt (`Market.Schedule` → Pinnwand, Durchsage, Gerücht, Lage der Station), Fahndungsliste (RuleEvaluator) | `Data/Characters/` (Test: Tess Marlo, nur mit Dev-Tools) |
 | Schicht-Inventar | P81 | Am Schalter öffnet [I] „SHIFT · CONFISCATED“ statt des eigenen Inventars (Schalter ruht solange); am Schichtende geht es an P08 (`ShiftClosing`) und wird geleert | Beschlagnahme (P08) → `PlayerEconomy.ShiftItems` | Dev: `Dev_fill_Shift` (Dev-Startwaren) |
 | Labels | P64, P13, P70 | gemeinsame Kategorien für alle Systeme | Händler-Regeln, Bedarfe der Familie, später Gerüchte/Wünsche | `Data/Items/Tags/Tag_*` (13 Labels inkl. LUXURY, Liste bei P64) |
@@ -74,9 +75,8 @@ nächster Morgen (Brief zeigt die Folgen) … nach Tag 3: Ende (Platzhalter)
 - **Niederlage:** Bisher nur „Miete nicht bezahlbar“ (Platzhalter). Familie kann dauerhaft „critical“ sein, ohne Folge → P69, P12.
 - **Jede Geldänderung braucht ein neues Rebalancing** (GameOff → Economy Report bis alle Ziele ✓; `EconomyBalanceTests` bricht sonst).
 - **Vernachlässigen lohnt sich noch halb:** Das Ticket-Ende wertet die Familie jetzt (TOO LATE?), aber ohne Folgen von „critical“ (P69) bleibt „nichts versorgen“ der schnellste Weg zum Ticket.
-- **Ticket erst ab Tag ~7 erreichbar, das Spiel endet aber nach Tag 3** → braucht P15/P73. Bis dahin nur mit Dev (`Dev_free_Ticket`, CREDITS ±100).
 - **Während des Flugs gibt es kein Pausenmenü** (Steuerung gehört dem Flug, höchstens 45 s).
-- **Endlos noch nicht gebaut:** Der Simulator wiederholt die Story-Tage ab Tag 4, bis P73 Pools liefert; das Spiel selbst endet noch nach Tag 3.
+- **Endlose Tage ohne Geschichte:** Ab Tag 13 nur gezogene Reisende ohne Figuren, Briefe aus einem kleinen Pool (10) – das Geld wächst nach dem Ticket weiter (Report: Tag 30 ≈ 1900 CR), es gibt nur das Ticket als Ziel. Reisende ab Tag 13 haben keine Antworten auf Nachfragen (P40) und keine Fracht-Geschichten.
 - **Waren ohne Quelle bis P08:** Pistol, Waffenteile, Wertsachen, Alien-Zeug, Liquor kommen nur über die Fracht (Beschlagnahme, P08) – bis dahin gibt es sie im Spiel nicht.
 - **Icons nur in den Daten:** Inventar und Handelsfenster zeigen noch keine Icons (Listen nur mit Namen) – eigenes Paket.
 - **Gadgets ohne Laden:** Scanner (P16) und UV-Lampe (P62) haben noch keinen Verkäufer. Scanner erst mit P16.

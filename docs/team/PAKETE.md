@@ -1236,7 +1236,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 07.11.): `Scripts/Departure/` – `TicketTerminal` (Hangar, X -4,5 Z -21, graue Box bis `SM_Hangar_TicketTerminal` geliefert ist; nur abends; Fehlbetrag; Dev `Dev_free_Ticket`), `ShuttleBoarding` (Rampe, „Leave Kestrel-9 for good?“), `ShuttleFlight` (Kopie des Shuttle-Modells, Verfolgerkamera, W/S Schub, Maus oder A/D, Shift Boost, keine Kollision; Cinemachine-Brain wird dafür abgeschaltet; Ende bei 320 m oder 45 s), `TicketEnding` (HOME / HOME, BARELY / TOO LATE? nach dem schlechtesten Familienzustand, Namen im Text), `DayManager.FinishRun` als gemeinsame Stelle für Enden (P12 hängt sich dort an). Builder **GameOff/Build Departure into Main** (in Rebuild All). Werte und Texte in `Data/Departure/DepartureTuning.asset`. Bestellt: `SM_Hangar_TicketTerminal`, `SFX_Shuttle_Engine_Loop`. Geprüft: Tests `DepartureTests`; WebGL-Build im Headless-Chrome: Terminal zeigt „You have 40 CR. You need 310 CR more“, Dev-Ticket, LEAVE, Flug durch die Barriere ins All (Bilder), nach 17 s Ende HOME. Kein Rebalancing nötig (Ticketpreis unverändert). Das Ticket ist im normalen Spiel erst mit mehr Tagen erreichbar (P15/P73).
 
 ### P73 — Endlose Tage
-- Größe: M–L · Priorität: Muss (Vorschlag) · Status: in Arbeit (martin, 07.11.) · Zuständig: martin (Call 07.11.)
+- Größe: M–L · Priorität: Muss (Vorschlag) · Status: fertig (martin, 07.11.) · Zuständig: martin (Call 07.11.)
 - Zuschnitt (Martin, 07.11.): Reisende ab Tag 13 werden **erzeugt** (Pools für Namen, Spezies, Herkunft, Fracht-Stichworte, Grüße, Fehlertypen; Papiere passend zum Datum), Startwert **neu je Durchgang** (gleicher Startwert = gleiche Tage), **langsam schwerer** (Regeln 1→3, Reisende 6→8, gedeckelt um Tag 20).
 - Hinweis (Call 07.11.): Ab Tag 13 **keine Figuren** mehr, nur normale Reisende aus Pools.
 - Braucht: P09, P15, P68 · Folgt auf: P09
@@ -1246,6 +1246,20 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   prüft gezogene Tage wie die geschriebenen.
 - Nicht enthalten: Ticket/Abflug (P72), Enden (P12), neue Story-Inhalte (P15).
 - Abnahme: 12 Tage am Stück spielbar ohne Fehler; Tag 4+ unterscheiden sich; Balance-Tests (P71) laufen über die gezogenen Tage.
+- Ergebnis (martin, 07.11.):
+  - `DaySchedule` hat ein Feld `loop` (DayPool): nach dem letzten Story-Tag zieht `DayGenerator` jeden Tag für den Startwert des Durchgangs
+    (`DayManager.RunSeed`, neu je Durchgang, steht im Log). Der Tagesablauf endet nicht mehr, nur noch über ein Ende (Ticket, Game over).
+  - Gezogen werden: Regeln (Herkunft gesperrt, Ware verboten, Quarantäne, Frachtbrief Pflicht; 1 → 3), Fahndungen (KAEL DROSS immer, dazu
+    0–2 neue, manche „terminieren“), 6 → 8 Reisende mit Papieren passend zum Datum und einem Fehler, knifflige Varianten (gestern abgelaufen,
+    ein Buchstabe/eine Ziffer falsch) 10 % → 50 %; Steigerung über 8 Tage. Jeder Reisende wird beim Ziehen mit den Regeln geprüft.
+  - Dazu Marktereignis (35 %), Bar-Wunsch (50 %), Bestechung (25 %, 30–60 CR) und ein Brief aus 10 Briefen; „New today“ = neue Regel.
+  - Inhalte in `GameOff/Build Day Pool` (`Data/Days/DayPool.asset`, läuft auch in Build Day Flow) – Werte dort ändern.
+  - Rebalancing: Simulator zieht die Tage mit Startwert 7301; neue Ziele „30 Tage ohne Fehler: kein Aus, Familie nie krank“ und
+    „1 Fehler am Tag: 30 Tage“ – alle ✓, bestehende Ziele unverändert.
+  - Geprüft: 142/142 Tests (neu `EndlessDayTests`: 5 Startwerte × 30 Tage durch den Validator, gleicher Startwert = gleicher Tag, Datum,
+    Steigerung); Main im Play-Modus Tag 12 → 13/14/25: Datum, Brief, Regeln, 6/6/8 Reisende mit Modell und Foto, 0 Fehler.
+    Main und PF_DayFlow mussten nicht neu gebaut werden.
+  - Offen: Gezogene Reisende haben keine Antworten auf Nachfragen (P40); Endlos-Briefe ohne Bezug zur Familie (Zustand kommt weiter darunter).
 
 ### P74 — TRAFFIC_LINE_DEV: beim Start aus, RETURN im Panel
 - Größe: XS · Priorität: Kann · Status: fertig (martin, 07.11.)

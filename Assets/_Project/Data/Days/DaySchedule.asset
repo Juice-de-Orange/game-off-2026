@@ -178,3 +178,4 @@ MonoBehaviour:
       traveler: {fileID: 0}
       amount: 0
       note: 
+  loop: {fileID: 11400000, guid: 442076ee6625ce5438551526caf39ee5, type: 2}

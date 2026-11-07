@@ -11,8 +11,9 @@ namespace GameOff.Day
 {
     /// <summary>
     /// Day flow (P09): Morning (wake up in room 103, letter from home) → Shift (the counter, CounterShift) →
-    /// Evening (shift over, go to bed) → Night (fade, DayEnded) → next morning; after the last day the placeholder end
-    /// screen (real endings: P12). Uses CounterShift.BeginDay / ShiftEnded and SkyRig.SetDay without changing them.
+    /// Evening (shift over, go to bed) → Night (fade, DayEnded) → next morning. After the written story days the days are
+    /// drawn from a pool for this run's seed (P73) and the run goes on until an ending (ticket home, game over).
+    /// Without a pool the placeholder end screen follows the last day. Uses CounterShift.BeginDay / ShiftEnded and SkyRig.SetDay without changing them.
     /// Hooks for later packages: DayStarted (P31 board, P36 flicker), ShiftOver, DayEnded, RunFinished (P12).
     /// P10 plugs in through NightStep (the settlement runs after "SLEEP", before the fade) and LetterAddendum (family lines
     /// under the morning letter from day 2 on).
@@ -39,6 +40,7 @@ namespace GameOff.Day
         [SerializeField] private GameObject bedDebugView;
 
         private int _day;
+        private int _runSeed;
         private Phase _phase;
         private bool _nightCancelled;
         private (string title, string body)? _gameOver;
@@ -60,9 +62,12 @@ namespace GameOff.Day
         public int Day => _day;
         /// <summary>Dev tools on (Dev_end_Day, visible hitboxes, vendors open during the shift via a dev button).</summary>
         public bool DevTools => showDevTools && GameSettings.DevTools;
-        public int DayCount => schedule.Count;
+        /// <summary>Days of this run: the written ones, or no end with the endless loop (P73).</summary>
+        public int DayCount => schedule.Endless ? int.MaxValue : schedule.Count;
+        /// <summary>The seed the endless days of this run are drawn with (P73); new every run.</summary>
+        public int RunSeed => _runSeed;
         /// <summary>The schedule entry of day n (1-based), e.g. tomorrow's market events for the barkeeper's rumour (P65).</summary>
-        public DayEntry Entry(int day) => schedule.Get(day);
+        public DayEntry Entry(int day) => schedule.Get(day, _runSeed);
         public Phase CurrentPhase => _phase;
 
         private void OnEnable()
@@ -84,6 +89,8 @@ namespace GameOff.Day
         private void Start()
         {
             ApplyDevTools();
+            _runSeed = UnityEngine.Random.Range(1, int.MaxValue);
+            Debug.Log($"[Day] Run seed {_runSeed} (endless days after day {schedule.Count}: {schedule.Endless})");
             ui.SetBlack(true);
             StartCoroutine(BeginDay(1));
         }
@@ -97,7 +104,7 @@ namespace GameOff.Day
         {
             _day = day;
             _phase = Phase.Morning;
-            var entry = schedule.Get(day);
+            var entry = Entry(day);
             if (sky != null) sky.SetDay(day);
             Market.Begin(day, entry.marketEvents); // before the counter pins today's notes (P68)
             shift.BeginDay(entry.rules, entry.newToday);
@@ -216,7 +223,7 @@ namespace GameOff.Day
             DayEnded?.Invoke(_day);
             yield return new WaitForSecondsRealtime(nightSeconds);
 
-            if (_day < schedule.Count)
+            if (_day < schedule.Count || schedule.Endless)
             {
                 yield return BeginDay(_day + 1);
                 yield break;

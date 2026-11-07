@@ -42,6 +42,18 @@ namespace GameOff.Travelers
             return copy;
         }
 
+        /// <summary>P73: a day made by the day generator (endless days), not a project asset.</summary>
+        public static DayRules CreateGenerated(string name, string date, List<DayRule> rules, List<WantedEntry> wanted, List<TravelerData> travelers)
+        {
+            var day = CreateInstance<DayRules>();
+            day.name = name;
+            day.date = date;
+            day.rules = rules;
+            day.wanted = wanted;
+            day.travelers = travelers;
+            return day;
+        }
+
 #if UNITY_EDITOR
         /// <summary>Editor setup (content builders and tests).</summary>
         public void EditorSet(string newDate, List<DayRule> newRules, List<WantedEntry> newWanted, List<TravelerData> newTravelers)
