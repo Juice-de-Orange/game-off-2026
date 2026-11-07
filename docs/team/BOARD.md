@@ -63,7 +63,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 | martin | P73 Endlose Tage | `Main.unity`, `PF_DayFlow.prefab`, `Data/Days/*`, `Scripts/Day/*`, `Scripts/Editor/DayFlowBuilder.cs`, `Scripts/Editor/EconomySimulator.cs` | 07.11. |
-| max | P88 Wegweiser (Code; Einbau mit Build Station + Bake erst nach Martins P76-Claim auf Main) | `Scripts/Editor/StationGrayboxBuilder.cs` | 07.11. |
+| max | P88 Wegweiser (Code gepusht; Einbau mit Build Station + Bake, sobald Main frei ist) | `Scripts/Editor/StationGrayboxBuilder.cs` | 07.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
