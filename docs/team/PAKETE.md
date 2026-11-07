@@ -1468,7 +1468,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: „As ordered“ → Ware liegt im Schrank; Aufbrechen gibt sie (als CONFISCATED) ins Inventar oder bringt eine Disziplinarstrafe.
 
 ### P84 — Bugreport direkt im Spiel (Backend auf Geoffrey)
-- Größe: M · Priorität: Soll · Status: fertig (max, 07.11.; Erfolgsfall live erst mit dem Token) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig (max, 07.11.; live geprüft: Test-Issue #14 mit Labels angelegt und geschlossen) · Zuständig: max
 - Braucht: P49, P78 · Folgt auf: P78 (ersetzt den GitHub-Link)
 - Ziel: Tester melden Bugs ohne GitHub-Konto direkt im Spiel; daraus wird automatisch ein GitHub-Issue.
 - Enthalten: Formular im Pausenmenü (Text + automatisch Version, Tag, Phase, Szene, Browser), kleines Backend auf Geoffrey
