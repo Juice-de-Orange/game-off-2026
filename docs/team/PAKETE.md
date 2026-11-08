@@ -1567,7 +1567,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Stand (max, 08.11.): #27 Deckel bleibt über dem Tisch (Winkel +110, gemessen). #15 gesperrte Türen: Ton nur auf [E] (`SlidingDoor`). #18 Kiste verschoben. #23 Dealer 13 cm höher, sitzt auf dem Hocker. #17 Mipmaps für alle Hangar-Texturen: 26–43 % weniger Flimmern bei 3 cm Bewegung (gemessen), **nicht ganz weg, Max prüft, ob es das gemeldete Flackern war**. #21 braucht ein neues Modell: `SM_Kiosk_Counter` auf rework, `SM_Kiosk_Shutter` bestellt; offen, bis geliefert. Geprüft: 155/155 EditMode-Tests, Validate Travelers ok, Occlusion wie bisher 1 Ansicht (105 px). #15 im Spiel nicht automatisiert geprüft.
 
 ### P91 — Reisende gehen wirklich, Verhaftung hinter dem Gitter
-- Größe: L · Priorität: Soll · Status: offen · Zuständig: max
+- Größe: L · Priorität: Soll · Status: in Arbeit (max, 08.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P14, P40
 - Ziel: Reisende kommen und gehen sichtbar durch die Türen; eine Verhaftung ist spürbar, ohne dass eine Wache zu sehen ist (#28).
 - Enthalten: Reisende betreten die Kammer zu Fuß von außerhalb der Sicht und gehen nach der Entscheidung durch die passende Tür. Nur bei Verhaftung fällt ein Sichtgitter vor die Scheibe, dazu Schritte, Handschellen, Gerangel. Kein Gitter beim normalen Wechsel (Max, 08.11.). Sounds bestellen.
