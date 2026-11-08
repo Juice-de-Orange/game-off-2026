@@ -62,7 +62,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
-| max | P88 Wegweiser (Code gepusht; Einbau mit Build Station + Bake, sobald Main frei ist) | `Scripts/Editor/StationGrayboxBuilder.cs` | 07.11. |
+| max | P88 Einbau + Lieferungen P72/P82 (Rebuild All, Bake, Deploy) | `Scripts/Editor/StationGrayboxBuilder.cs`, `Main.unity`, `Menu.unity`, `Boot.unity`, alle generierten Prefabs (`PF_Station_Graybox`, `PF_Exterior`, `PF_SkyRig`, `PF_DayFlow`, `PF_Economy`, `PF_Departure`, `PF_PauseMenu`, Dokumente, Traffic, Ambience) | 08.11. 15:28 |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
