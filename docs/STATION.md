@@ -78,6 +78,7 @@
 - **Reisende:** Shuttle → Warteschlange → Prüfkammer (Standmarkierung) → Durchlassen: Nordtür → Halle → Motel/Bar.
   Abweisen: zurück in den Hangar. Verhaften: Wache kommt über die Halle durch die Nordtür.
   Luftschleuse: hinter dem heruntergefallenen Gitter, nur zu hören (P91).
+- **Geplant (08.11.):** Heim-Shuttle außen am Hangar angedockt, Schott und Sichtfenster in der Hangarwand (P106); Schiffe auf Landeplätzen im Hangar (P107); Durchgelassene abends in Bar, Halle und Wohnmodul (P101).
 - **Spieler:** Zimmer 103 → Motelgang → Halle → Servicegang → Schalter. Hangar (Frachtdrohne) über den Servicegang.
   Der Spieler betritt die Prüfkammer nie.
 - Laufwege bei 4 m/s: Zimmer → Schalter 6 s, Halle → Plattform 3 s, Schalter → Hangar-Südende 11 s (gemessen, Stand 2.0).

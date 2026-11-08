@@ -52,9 +52,11 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 
 ### Stand 08.11. abends (max)
 - Fertig: **P15** alle 12 Story-Tage, **P86** Korr-Tutorial, **P89** Papiere nebeneinander, **P91** Reisende gehen + Gitter, P88, P92, P93, P96; P90 bis auf #21 und #17
-- Live: `c96d596`. GitHub-Issues #15–#28 sortiert, offen: #16, #17, #19, #20, #21, #25
+- Live: `4975772` (mit Favicon). GitHub-Issues #15–#28 sortiert, offen: #16, #17, #19, #20, #21, #23 (Hocker, wieder geöffnet → P99), #25
 - Martin im Urlaub bis Dienstag, sein Claude übernimmt P98, P97, P85, P77, P94 (Frage liegt bei ihm)
-- **Als Nächstes:** Max spielt alles an, Lieferungen Kiosk + Favicon freigeben, P95 Menüs
+- Nach Max' erstem Anspielen neu: P99–P102 (Hocker, Reaktionen, Leute in der Station, Papier-Geräusche), P103–P107 (Essen andeuten, Wachmann, Schleuse mit Ragdoll, Shuttle angedockt, Hangar-Schiffe), P29 geschärft; Assets dafür bestellt (M023)
+- Feature-Freeze 22.11. wird eng: Muss-Pakete P12, P16, P69 nicht aus den Augen verlieren
+- **Als Nächstes:** Reihenfolge festlegen, Kiosk-Gitter wartet auf die überarbeitete Theke
 
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).

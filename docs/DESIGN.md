@@ -39,8 +39,8 @@ danach geht es **endlos** weiter mit Tagen aus Pools (Reisende, Regeln, Marktere
 |---|---|---|
 | Durchlassen | Reisender betritt die Station | Falsch durchgelassen → Abzug |
 | Abweisen | Reisender fliegt zurück | Falsch abgewiesen → Abzug |
-| Verhaften (Knopf) | Ein Gitter fällt vor die Scheibe, man hört die Festnahme; beschlagnahmte Gegenstände landen bei dir | Unschuldig verhaftet → größerer Abzug |
-| Luftschleuse (Knopf) | Sofortige Eliminierung, kein Zeitverlust | Unschuldige: hoher Abzug. Jede Nutzung senkt einen versteckten Moral-Wert → färbt Familienbriefe und Ende |
+| Verhaften (Knopf) | Ein Gitter fällt vor die Scheibe, man hört die Festnahme (geplant: Wache kommt sichtbar dazu, P104); beschlagnahmte Gegenstände landen bei dir | Unschuldig verhaftet → größerer Abzug |
+| Luftschleuse (Knopf) | Sofortige Eliminierung (geplant: sichtbar als Ragdoll ins All gerissen, P105), kein Zeitverlust | Unschuldige: hoher Abzug. Jede Nutzung senkt einen versteckten Moral-Wert → färbt Familienbriefe und Ende |
 
 ## Regeln am Schalter (festgelegt 04.11., Max)
 **Fehlerarten:** Papiere widersprechen sich (Name/ID) · Papier abgelaufen oder fehlt · Tagesregeln aus dem Bulletin (wechseln täglich:
@@ -69,7 +69,7 @@ geholfen, steckt er dir etwas für die Familie zu. Gehorchen (Schleuse), verhaft
 | Ort | Funktion im Spiel |
 |---|---|
 | **Zollschalter + Prüfkammer** | Arbeitsplatz; Reisende stehen in der Kammer, die zugleich Luftschleuse ist (Außenschott klappt ins All). Kein sichtbarer Vorgesetzter: Lautsprecher-Durchsagen, Memos, Pinnwand |
-| **Hangar** (36 × 28 × 16 m) | Shuttle fliegt morgens durch die Energiebarriere ein, Reisende steigen über die Rampe aus und stellen sich an; Frachtdrohne für Pakete nach Hause; durchsuchbare Kisten |
+| **Hangar** (36 × 28 × 16 m) | Geplant: Morgens landen wechselnde Schiffe durch die Energiebarriere, tagsüber parken 2–4 (P107); das Heim-Shuttle dockt außen am Hangar an und ist begehbar (P106); Frachtdrohne für Pakete nach Hause; durchsuchbare Kisten |
 | **Transithalle** | Knotenpunkt mit Anzeigesäule (Live-Ankunftsplan), Bänken, Getränkeautomat |
 | **Aussichtsplattform** | Halbrunde Glasfront: Blick auf den Heimatplaneten (Stadtlichter = Zustand der Familie), Sonne, Gasriese; Münzfernrohr |
 | **Bar "The Last Orbit"** | Barkeeper (Hocker = Gespräch; kauft nichts, tauscht Wünsche gegen Gerüchte, P65; Bestechungszettel, P66), Schwarzmarkt unter der Theke, Fensterband |
@@ -93,6 +93,8 @@ flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit di
   Idee: Ein Medikament direkt zu schicken ist billiger als das Geld dafür — aber Schmuggelware nach Hause
   zu schicken kann auffliegen.
 - Briefe der Familie am Morgen erzählen die Story und zeigen die Folgen deiner Entscheidungen.
+- Kiosk + Drohne ist rund ein Viertel billiger als Geld über die Abrechnung; das wird nur angedeutet (P103).
+- Wen man durchlässt, ist abends in der Station zu sehen und am nächsten Tag weg (geplant, P101).
 
 ## Steuerung
 - Ego-Perspektive, **WASD + Maus**, **E** = interagieren.
