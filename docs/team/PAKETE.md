@@ -1573,14 +1573,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Niemand erscheint oder verschwindet sichtbar aus dem Nichts; Verhaftung ist nur über Gitter und Ton erzählt.
 
 ### P92 — Diner außer Betrieb
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: max
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P26
 - Ziel: Das Diner wirkt glaubwürdig geschlossen (#26) und lässt sich später wieder nutzen.
 - Enthalten: Preise weg, Schild „geschlossen“, Spinnweben, Licht aus, Tür gesperrt.
 - Abnahme: Das Diner verspricht nichts mehr, was es nicht hält.
 
 ### P93 — Barkeeper sagt seinen Wunsch
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: max
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P65
 - Ziel: Der Wunsch des Barkeepers kommt im Gespräch statt vom Schild (#22).
 - Enthalten: Schild `BarWishSign` entfernt, Barkeeper nennt den Wunsch beim Ansprechen. Martin im Handover informieren (sein P65).
@@ -1601,7 +1601,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Alle Fenster teilen denselben Stil und bleiben bedienbar.
 
 ### P96 — Lebendige Händler
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: max
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P52
 - Ziel: Barkeeper, Holly und Dealer stehen nicht mehr starr da (#24).
 - Enthalten: Kleines Skript: leichtes Atmen, Schwanken, ab und zu Kopfdrehung für die statischen Modelle.
