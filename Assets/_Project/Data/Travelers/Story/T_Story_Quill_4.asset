@@ -24,3 +24,5 @@ MonoBehaviour:
   storyTag: P76 character, day 6
   greeting: Remember me? You cost me everything. Go on, stamp it.
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 

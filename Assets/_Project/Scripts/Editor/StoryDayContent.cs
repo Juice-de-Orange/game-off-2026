@@ -21,7 +21,22 @@ namespace GameOff.EditorTools
 
         private const string Stimulant = "STIMULANT", Antibiotics = "ANTIBIOTICS";
 
-        private static FieldAnswer Say(string key, string line) => new FieldAnswer(key, line);
+        internal static FieldAnswer Say(string key, string line) => new FieldAnswer(key, line);
+
+        /// <summary>P100: own lines after the stamp (admitted, denied), by asset file name; everybody else uses the species' pool.</summary>
+        internal static readonly Dictionary<string, (string admitted, string denied)> Reactions = new Dictionary<string, (string, string)>
+        {
+            { "Irin", (null, "Orvan is all I have left. Do you even know where it is?") },
+            { "Pela", (null, "A manifest? Nobody told me. Nobody ever tells me.") },
+            { "Tzo", (null, "Kss. One new rule a day. I know your game.") },
+            { "Hedda", (null, "It's a typing error! A typing error, and you know it.") },
+            { "Oren", (null, "The list changes every week. I can't keep up with it.") },
+            { "Kiss", ("Kss. Right. Efficient.", null) },
+            { "Mira_1", (null, "Nine days. And you stamp it like it's nothing.") },
+            { "Mira_2", ("Thank you. I won't forget it.", null) },
+            { "Mira_3", (null, "Then there is nothing left to try.") },
+            { "Tobin_2", (null, "It's one day old. One day! I have shifts to work.") },
+        };
 
         public static Dictionary<int, StoryDayContent> Build() => new Dictionary<int, StoryDayContent>
         {

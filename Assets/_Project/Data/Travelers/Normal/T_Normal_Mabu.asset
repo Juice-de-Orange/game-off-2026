@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Fruit! Very fresh! Smell it.
   - key: origin
     line: Quob Atoll. You should visit. You look tired.
+  reactionAdmitted: 
+  reactionDenied: 

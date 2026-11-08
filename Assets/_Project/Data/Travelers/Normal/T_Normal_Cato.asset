@@ -29,3 +29,5 @@ MonoBehaviour:
     line: It's for the officers' mess. Ask them.
   - key: name
     line: Brill. You'll want to remember it kindly.
+  reactionAdmitted: 
+  reactionDenied: 

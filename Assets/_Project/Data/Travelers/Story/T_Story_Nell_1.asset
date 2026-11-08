@@ -24,3 +24,5 @@ MonoBehaviour:
   storyTag: P76 character, day 6
   greeting: Nell Varga. I'm here to see my son. He's in your prison, they tell me.
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 

@@ -138,6 +138,26 @@ namespace GameOff.Audio
             if (sound.clip != null) sfxGame.PlayOneShot(sound.clip, sound.volume);
         }
 
+        /// <summary>P102: one of the variants at a slightly different pitch, so many papers in a row don't drill; else the single sound.</summary>
+        public static void PlayVaried(Func<SoundSet, Sound[]> variants, Func<SoundSet, Sound> single)
+        {
+            if (Instance == null || Instance.sounds == null) return;
+            var list = variants(Instance.sounds);
+            var sound = list != null && list.Length > 0 ? list[UnityEngine.Random.Range(0, list.Length)] : single(Instance.sounds);
+            if (sound == null || sound.clip == null) return;
+            if (Instance._variedSource == null)
+            {
+                Instance._variedSource = Instance.gameObject.AddComponent<AudioSource>();
+                Instance._variedSource.playOnAwake = false;
+                Instance._variedSource.spatialBlend = 0f;
+                Instance._variedSource.outputAudioMixerGroup = Instance.sfxGame.outputAudioMixerGroup;
+            }
+            Instance._variedSource.pitch = UnityEngine.Random.Range(0.94f, 1.06f);
+            Instance._variedSource.PlayOneShot(sound.clip, sound.volume);
+        }
+
+        private AudioSource _variedSource;
+
         /// <summary>A sound of the SoundSet on the Voice group, for what stands in for a voice. Doesn't cut off a line that is playing.</summary>
         public static void PlayOnVoice(Func<SoundSet, Sound> pick)
         {

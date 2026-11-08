@@ -25,3 +25,5 @@ MonoBehaviour:
   greeting: My renewal stamp didn't come through. One day. The others are waiting
     for me.
   answers: []
+  reactionAdmitted: 
+  reactionDenied: It's one day old. One day! I have shifts to work.

@@ -25,3 +25,5 @@ MonoBehaviour:
   greeting: Tobin. Dock work. They pay us nothing and the heaters don't work. Don't
     get me started.
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 

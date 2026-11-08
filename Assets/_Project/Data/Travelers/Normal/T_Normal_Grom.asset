@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Batteries. Counted twice.
   - key: purpose
     line: Contract work. Your strike is not my concern.
+  reactionAdmitted: 
+  reactionDenied: 

@@ -253,6 +253,7 @@ namespace GameOff.EditorTools
             box.transform.SetParent(dialog.transform, false);
             box.GetComponent<RectTransform>().sizeDelta = new Vector2(560f, 250f);
             box.GetComponent<Image>().color = Panel;
+            TerminalStyle.Frame(box.GetComponent<Image>()); // P95
             var dTitle = Label(box.transform, "Title", "End day 1?", 30, Amber, new Vector2(0f, 80f), new Vector2(520f, 40f));
             var dBody = Label(box.transform, "Body", "", 18, TextLight, new Vector2(0f, 20f), new Vector2(500f, 60f));
             var dConfirm = MenuButton(box.transform, "ConfirmButton", "SLEEP", new Vector2(-140f, -70f), new Vector2(200f, 44f), 20);
@@ -264,6 +265,7 @@ namespace GameOff.EditorTools
             devColors.selectedColor = DevRed;
             devColors.pressedColor = Color.Lerp(DevRed, Color.black, 0.3f);
             dDev.colors = devColors;
+            TerminalStyle.Flat(dDev);
 
             // Fade over everything except the end screen
             var fadeGo = new GameObject("Fade", typeof(RectTransform), typeof(Image), typeof(CanvasGroup));

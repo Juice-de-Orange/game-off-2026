@@ -24,4 +24,12 @@ MonoBehaviour:
   trickIntended: 0
   storyTag: P76 character, day 1
   greeting: Morning! Quill. Say hi to the barkeeper from me, will you?
-  answers: []
+  answers:
+  - key: purpose
+    line: Business. Cola is business, officer.
+  - key: cargo
+    line: Nova Cola. Someone on this station has to stay awake.
+  - key: ship
+    line: The Skiff Pell. She leaks a little.
+  reactionAdmitted: 
+  reactionDenied: 

@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Meridian Gate. Everyone goes through Meridian.
   - key: purpose
     line: Work. Same as you.
+  reactionAdmitted: 
+  reactionDenied: 

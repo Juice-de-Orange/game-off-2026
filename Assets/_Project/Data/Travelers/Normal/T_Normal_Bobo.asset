@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Eight sacks is a little. We are a big family.
   - key: route
     line: Straight here. Fresh is fresh.
+  reactionAdmitted: 
+  reactionDenied: 

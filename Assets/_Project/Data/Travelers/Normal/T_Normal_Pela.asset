@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Visiting. Is one bag a cargo now?
   - key: origin
     line: Vell Prime, like every Vellani you'll send home today.
+  reactionAdmitted: 
+  reactionDenied: A manifest? Nobody told me. Nobody ever tells me.

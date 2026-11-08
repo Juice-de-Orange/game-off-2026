@@ -23,4 +23,10 @@ MonoBehaviour:
   trickIntended: 0
   storyTag: P76 character, day 4
   greeting: It's me, Mira. My children are safe.
-  answers: []
+  answers:
+  - key: purpose
+    line: My children. They are safe now.
+  - key: route
+    line: Direct this time. I borrowed for the fare.
+  reactionAdmitted: Thank you. I won't forget it.
+  reactionDenied: 

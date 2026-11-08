@@ -25,3 +25,5 @@ MonoBehaviour:
   storyTag: P75 test character
   greeting: Remember me? I remember you.
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 

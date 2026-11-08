@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Visiting. Or I was.
   - key: origin
     line: Aska-3. It's on the card.
+  reactionAdmitted: 
+  reactionDenied: 

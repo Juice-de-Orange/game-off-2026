@@ -185,10 +185,10 @@ namespace GameOff.EditorTools
             // 1 Inspector Vaal Korr (Sorvak): day 1 first in line, later undercover with a tempting flaw, then the final check.
             {
                 const string n = "VAAL KORR", sp = "Sorvak", id = "SK-1000-01", origin = "SORV DEEP";
-                var k1 = Person("Korr_1", n, sp, Verdict.Admit, "Papers in order", 1,
+                var k1 = Talker(new[] { StoryDayContent.Say("purpose", "Inspection. Of you, as it happens."), StoryDayContent.Say("route", "Sorv Deep. Direct. Inspectors don't change ships."), StoryDayContent.Say("issued", "The Border Authority signs its own papers. Note that down.") }, "Korr_1", n, sp, Verdict.Admit, "Papers in order", 1,
                     "Inspector Vaal Korr, Border Authority. Today I watch you work - starting with me. Check my papers, then stamp them.",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "INSPECTION", Valid, "BORDER AUTHORITY", "SORV DEEP > KESTREL-9"));
-                var k2 = Person("Korr_2", "ODAN VREL", sp, Verdict.Deny, "Entry permit expired yesterday", 4,
+                var k2 = Talker(new[] { StoryDayContent.Say("purpose", "Trade. Small trade."), StoryDayContent.Say("expires", "Dates, dates. It was good yesterday."), StoryDayContent.Say("route", "Sorv Deep to here. Nothing to see.") }, "Korr_2", "ODAN VREL", sp, Verdict.Deny, "Entry permit expired yesterday", 4,
                     "Just passing through, officer. One day late is hardly late, is it?",
                     IdCard(sp, "ODAN VREL", origin, "SK-4410-08"), PermitDoc(sp, "ODAN VREL", "SK-4410-08", "TRADE", Yesterday(4), "ASKA-3 CONSULATE", "SORV DEEP > KESTREL-9"));
                 var k3 = Person("Korr_3", n, sp, Verdict.Admit, "Papers in order", 10,
@@ -209,15 +209,15 @@ namespace GameOff.EditorTools
             // 2 Quill Barragh (Human): the barkeeper's courier. Day 3 with stimulants and the bribe; wronged → smuggler raid + revenge.
             {
                 const string n = "QUILL BARRAGH", sp = "Human", id = "QB-7720-05", origin = "TORVIK COLONY";
-                var q1 = Person("Quill_1", n, sp, Verdict.Admit, "Papers in order", 1,
+                var q1 = Talker(new[] { StoryDayContent.Say("purpose", "Business. Cola is business, officer."), StoryDayContent.Say("cargo", "Nova Cola. Someone on this station has to stay awake."), StoryDayContent.Say("ship", "The Skiff Pell. She leaks a little.") }, "Quill_1", n, sp, Verdict.Admit, "Papers in order", 1,
                     "Morning! Quill. Say hi to the barkeeper from me, will you?",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "BUSINESS", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"),
                     Manifest(n, "SKIFF PELL", "TORVIK", "4x NOVA COLA CRATE"));
-                quillDay3 = Person("Quill_2", n, sp, Verdict.Arrest, "Declares chem stimulants, forbidden", 3,
+                quillDay3 = Talker(new[] { StoryDayContent.Say("purpose", "Business, same as ever."), StoryDayContent.Say("cargo", "Spare parts and personal supplies. You read too much."), StoryDayContent.Say("route", "Torvik, same as ever. You know me.") }, "Quill_2", n, sp, Verdict.Arrest, "Declares chem stimulants, forbidden", 3,
                     "Same as always. Just a few personal supplies. You didn't see anything, right?",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "BUSINESS", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"),
                     Manifest(n, "SKIFF PELL", "TORVIK", "2x SPARE PARTS CRATE\n 6x CHEM STIMULANT VIALS"));
-                var q3 = Person("Quill_3", n, sp, Verdict.Admit, "Papers in order", 4,
+                var q3 = Talker(new[] { StoryDayContent.Say("purpose", "Business. Bigger business."), StoryDayContent.Say("route", "Torvik. Don't write that down.") }, "Quill_3", n, sp, Verdict.Admit, "Papers in order", 4,
                     "Quill. Bigger job today. The barkeeper says you're one of us now.",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "BUSINESS", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
                 var q4 = Person("Quill_4", n, sp, Verdict.Arrest, "On the wanted list (arrest)", 6,
@@ -253,13 +253,13 @@ namespace GameOff.EditorTools
             TravelerData shifter3;
             {
                 const string sp = "Human";
-                var s1 = Person("Shifter_1", "LONN ABERNATHY", sp, Verdict.Admit, "The Shifter, day 1: papers clean", 1,
+                var s1 = Talker(new[] { StoryDayContent.Say("purpose", "Tourism! I hear the view is magnificent."), StoryDayContent.Say("route", "Aska-3, and what a lovely route it is."), StoryDayContent.Say("issued", "The consulate was most helpful. They always are.") }, "Shifter_1", "LONN ABERNATHY", sp, Verdict.Admit, "The Shifter, day 1: papers clean", 1,
                     "Officer! What a fine day to cross a border, wouldn't you say?",
                     IdCard(sp, "LONN ABERNATHY", "ASKA-3", "AB-0777-77"), PermitDoc(sp, "LONN ABERNATHY", "AB-0777-77", "TOURISM", Valid, "ASKA-3 CONSULATE", "ASKA-3 > KESTREL-9"));
-                var s2 = Person("Shifter_2", "ORREN VALE", sp, Verdict.Admit, "The Shifter, day 2: papers clean", 2,
+                var s2 = Talker(new[] { StoryDayContent.Say("purpose", "Trade, officer. One trades what one can."), StoryDayContent.Say("route", "From Torvik. Or so the paper tells us."), StoryDayContent.Say("issued", "Aska-3. A very obliging consulate.") }, "Shifter_2", "ORREN VALE", sp, Verdict.Admit, "The Shifter, day 2: papers clean", 2,
                     "Good day, officer. New face, same old station, hm?",
                     IdCard(sp, "ORREN VALE", "TORVIK COLONY", "AB-1977-77"), PermitDoc(sp, "ORREN VALE", "AB-1977-77", "TRADE", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
-                shifter3 = Person("Shifter_3", "PELL MARROW", sp, Verdict.Airlock, "On the wanted list: terminate on sight", 3,
+                shifter3 = Talker(new[] { StoryDayContent.Say("purpose", "Transit. Everyone is passing through something."), StoryDayContent.Say("route", "Aska-3, officer. Does it matter?"), StoryDayContent.Say("issued", "The same hand as always, if you know how to look.") }, "Shifter_3", "PELL MARROW", sp, Verdict.Airlock, "On the wanted list: terminate on sight", 3,
                     "Officer. You and I want the same thing, you know. A station that serves its people.",
                     IdCard(sp, "PELL MARROW", "ASKA-3", "AB-3377-77"), PermitDoc(sp, "PELL MARROW", "AB-3377-77", "TRANSIT", Valid, "ASKA-3 CONSULATE", "ASKA-3 > KESTREL-9"));
                 // P87: day 6 the big ask - join the resistance. Day 7 the twist: joined → he reveals himself and the run ends (AIRLOCKED).
@@ -304,13 +304,13 @@ namespace GameOff.EditorTools
             // 4 Mira Talsk (Quobb): a mother on the way to her children – the player's mirror. Day 2 her permit is one day late.
             {
                 const string n = "MIRA TALSK", sp = "Quobb", id = "QT-0091-12", origin = "QUOB ATOLL";
-                var m1 = Person("Mira_1", n, sp, Verdict.Deny, "Entry permit expired yesterday", 2,
+                var m1 = Talker(new[] { StoryDayContent.Say("purpose", "My children. That is the whole purpose."), StoryDayContent.Say("route", "Nine days, through Aska-3. I counted each one."), StoryDayContent.Say("expires", "The office closed before I could reach it. Please.") }, "Mira_1", n, sp, Verdict.Deny, "Entry permit expired yesterday", 2,
                     "Please. My children are on the other side. Nine days I travelled.",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "FAMILY VISIT", Yesterday(2), "ASKA-3 CONSULATE", "QUOB ATOLL > ASKA-3 > KESTREL-9"));
-                var m2 = Person("Mira_2", n, sp, Verdict.Admit, "Papers in order", 4,
+                var m2 = Talker(new[] { StoryDayContent.Say("purpose", "My children. They are safe now."), StoryDayContent.Say("route", "Direct this time. I borrowed for the fare.") }, "Mira_2", n, sp, Verdict.Admit, "Papers in order", 4,
                     "It's me, Mira. My children are safe.",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "FAMILY VISIT", Valid, "ASKA-3 CONSULATE", "QUOB ATOLL > KESTREL-9"));
-                var m3 = Person("Mira_3", n, sp, Verdict.Deny, "Permit issued to MIRA TALAK, ID says MIRA TALSK", 4,
+                var m3 = Talker(new[] { StoryDayContent.Say("purpose", "My children. Still my children."), StoryDayContent.Say("issued", "The consulate on Quob Atoll. They did it quickly. Don't ask how."), StoryDayContent.Say("route", "Home, and back here. Again.") }, "Mira_3", n, sp, Verdict.Deny, "Permit issued to MIRA TALAK, ID says MIRA TALSK", 4,
                     "New papers. They cost me everything I had. Please don't look too closely.",
                     IdCard(sp, n, origin, id), PermitDoc(sp, "MIRA TALAK", id, "FAMILY VISIT", Valid, "QUOB ATOLL CONSULATE", "QUOB ATOLL > KESTREL-9"));
                 var m4 = Person("Mira_4", n, sp, Verdict.Admit, "Papers in order", 8,
@@ -331,7 +331,7 @@ namespace GameOff.EditorTools
             // 5 Dr. Iro Senn (Xirrik): a doctor with antibiotics but no import licence (forbidden on day 3). Confiscated → clinic shortage.
             {
                 const string n = "IRO SENN", sp = "Xirrik", id = "XR-5150-21", origin = "LUMEN REACH";
-                var s1 = Person("Senn_1", n, sp, Verdict.Arrest, "Declares antibiotics without import licence", 3,
+                var s1 = Talker(new[] { StoryDayContent.Say("purpose", "Medical aid. The clinic has none left."), StoryDayContent.Say("cargo", "Antibiotics and dressings. Count them if you have to, but quickly."), StoryDayContent.Say("ship", "The Ora. She carries nothing but medicine.") }, "Senn_1", n, sp, Verdict.Arrest, "Declares antibiotics without import licence", 3,
                     "Dr. Senn. These antibiotics are for the clinic. People will die without them. Please.",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "MEDICAL AID", Valid, "LUMEN REACH CONSULATE", "LUMEN REACH > KESTREL-9"),
                     Manifest(n, "MEDSHIP ORA", "LUMEN REACH", "4x ANTIBIOTICS CASE\n 2x STERILE DRESSING BOX"));
@@ -436,6 +436,11 @@ namespace GameOff.EditorTools
             params DocumentData[] docs) =>
             Make(TravelerFolder + $"T_Story_{file}.asset", DocFolder + $"Doc_{file}_", name, species, verdict, reason, $"P76 character, day {day}", greeting, null, docs);
 
+        /// <summary>P98: a recurring character with own answers to questions about their papers.</summary>
+        private static TravelerData Talker(FieldAnswer[] answers, string file, string name, string species, Verdict verdict, string reason, int day, string greeting,
+            params DocumentData[] docs) =>
+            Make(TravelerFolder + $"T_Story_{file}.asset", DocFolder + $"Doc_{file}_", name, species, verdict, reason, $"P76 character, day {day}", greeting, new List<FieldAnswer>(answers), docs);
+
         /// <summary>P15: an ordinary traveler (no recurring character), in Data/Travelers/Normal/.</summary>
         internal static TravelerData Normal(string file, string name, string species, Verdict verdict, string reason, int day, string greeting,
             FieldAnswer[] answers, params DocumentData[] docs) =>
@@ -456,6 +461,9 @@ namespace GameOff.EditorTools
                 docs[i] = existing;
             }
             t.EditorSet(name, species, new List<DocumentData>(docs), verdict, reason, tag, greeting, answers, model);
+            string storyKey = System.IO.Path.GetFileNameWithoutExtension(travelerPath).Replace("T_Story_", "").Replace("T_Normal_", "");
+            StoryDayContent.Reactions.TryGetValue(storyKey, out var reaction);
+            t.EditorSetReactions(reaction.admitted, reaction.denied);
             EditorUtility.SetDirty(t);
             return t;
         }

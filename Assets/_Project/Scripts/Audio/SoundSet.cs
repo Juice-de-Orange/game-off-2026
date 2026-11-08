@@ -28,6 +28,9 @@ namespace GameOff.Audio
         public Sound paChime = new Sound();
         public Sound vendorGreet = new Sound();
         public Sound tradeBuy = new Sound();
+        [Tooltip("P102: variants, played at random with a slight change of pitch; empty = paperPickup / paperSlide.")]
+        public Sound[] paperPickups = new Sound[0];
+        public Sound[] paperSlides = new Sound[0];
         public Sound[] footsteps = new Sound[0];
         [Tooltip("P63: with the clown shoes on.")]
         public Sound[] clownFootsteps = new Sound[0];

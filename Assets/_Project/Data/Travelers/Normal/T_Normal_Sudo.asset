@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Dates, dates. Close enough, surely.
   - key: purpose
     line: I sell cables. Very good cables.
+  reactionAdmitted: 
+  reactionDenied: 

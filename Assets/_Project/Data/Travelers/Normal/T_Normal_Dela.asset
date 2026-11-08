@@ -28,3 +28,5 @@ MonoBehaviour:
     line: We only refuelled at Ketra. Nobody even got off.
   - key: purpose
     line: Going home. That's the whole plan.
+  reactionAdmitted: 
+  reactionDenied: 

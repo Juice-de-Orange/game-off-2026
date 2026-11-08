@@ -28,3 +28,5 @@ MonoBehaviour:
     line: That's what it says, isn't it?
   - key: purpose
     line: Work. The kind that doesn't need a chat.
+  reactionAdmitted: 
+  reactionDenied: 

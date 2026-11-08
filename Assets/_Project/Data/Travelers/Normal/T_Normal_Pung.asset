@@ -28,3 +28,5 @@ MonoBehaviour:
     line: I come to see the station. Is it not allowed to look?
   - key: route
     line: Direct. Very boring.
+  reactionAdmitted: 
+  reactionDenied: 

@@ -25,4 +25,12 @@ MonoBehaviour:
   storyTag: P76 character, day 3
   greeting: Dr. Senn. These antibiotics are for the clinic. People will die without
     them. Please.
-  answers: []
+  answers:
+  - key: purpose
+    line: Medical aid. The clinic has none left.
+  - key: cargo
+    line: Antibiotics and dressings. Count them if you have to, but quickly.
+  - key: ship
+    line: The Ora. She carries nothing but medicine.
+  reactionAdmitted: 
+  reactionDenied: 

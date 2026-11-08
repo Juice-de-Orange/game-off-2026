@@ -23,4 +23,12 @@ MonoBehaviour:
   trickIntended: 0
   storyTag: P76 character, day 2
   greeting: Good day, officer. New face, same old station, hm?
-  answers: []
+  answers:
+  - key: purpose
+    line: Trade, officer. One trades what one can.
+  - key: route
+    line: From Torvik. Or so the paper tells us.
+  - key: issued
+    line: Aska-3. A very obliging consulate.
+  reactionAdmitted: 
+  reactionDenied: 

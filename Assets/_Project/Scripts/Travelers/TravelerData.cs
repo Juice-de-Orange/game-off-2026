@@ -28,6 +28,10 @@ namespace GameOff.Travelers
         [Header("Dialogue (P40)")]
         [TextArea] [SerializeField] private string greeting;
         [SerializeField] private List<FieldAnswer> answers = new List<FieldAnswer>();
+        [Tooltip("P100: said after the stamp when let through; empty = a line from the species' pool.")]
+        [SerializeField] private string reactionAdmitted;
+        [Tooltip("P100: said after the stamp when turned away; empty = a line from the species' pool.")]
+        [SerializeField] private string reactionDenied;
 
         public string DisplayName => displayName;
         public string Species => species;
@@ -40,6 +44,14 @@ namespace GameOff.Travelers
         public bool TrickIntended => trickIntended;
         public string Greeting => greeting;
         public IReadOnlyList<FieldAnswer> Answers => answers;
+        public string ReactionAdmitted => reactionAdmitted;
+        public string ReactionDenied => reactionDenied;
+
+        public void EditorSetReactions(string admitted, string denied)
+        {
+            reactionAdmitted = admitted;
+            reactionDenied = denied;
+        }
 
         /// <summary>The traveler's answer to a question about a document field, or null.</summary>
         public string AnswerFor(string fieldKey)

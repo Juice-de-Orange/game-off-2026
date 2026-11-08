@@ -23,4 +23,12 @@ MonoBehaviour:
   trickIntended: 0
   storyTag: P76 character, day 2
   greeting: Please. My children are on the other side. Nine days I travelled.
-  answers: []
+  answers:
+  - key: purpose
+    line: My children. That is the whole purpose.
+  - key: route
+    line: Nine days, through Aska-3. I counted each one.
+  - key: expires
+    line: The office closed before I could reach it. Please.
+  reactionAdmitted: 
+  reactionDenied: Nine days. And you stamp it like it's nothing.

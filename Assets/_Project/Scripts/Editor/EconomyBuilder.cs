@@ -814,6 +814,26 @@ namespace GameOff.EditorTools
                 Set(bribe, "envelope", envelope);
             }
 
+            // P101: those let through today stand around after the shift.
+            var crowdGo = new GameObject("EveningCrowd");
+            crowdGo.transform.SetParent(root.transform, false);
+            var crowd = crowdGo.AddComponent<EveningCrowd>();
+            Set(crowd, "tuning", AssetDatabase.LoadAssetAtPath<GameOff.Counter.DialogueTuning>("Assets/_Project/Data/Counter/DialogueTuning.asset"));
+            var crowdSpots = new List<Object>();
+            for (int i = 0; i < CrowdSpots.Length; i++)
+            {
+                var (position, yaw) = CrowdSpots[i];
+                var spot = new GameObject("CrowdSpot_" + i).transform;
+                spot.SetParent(crowdGo.transform, false);
+                spot.SetPositionAndRotation(position, Quaternion.Euler(0f, yaw, 0f));
+                crowdSpots.Add(spot);
+            }
+            var crowdSo = new SerializedObject(crowd);
+            var crowdList = crowdSo.FindProperty("spots");
+            crowdList.arraySize = crowdSpots.Count;
+            for (int i = 0; i < crowdSpots.Count; i++) crowdList.GetArrayElementAtIndex(i).objectReferenceValue = crowdSpots[i];
+            crowdSo.ApplyModifiedPropertiesWithoutUndo();
+
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
             Object.DestroyImmediate(root);
             log.Add("PF_Economy built");
@@ -847,6 +867,17 @@ namespace GameOff.EditorTools
             Set(vendor, "shutter", shutter);
             slats.gameObject.SetActive(false); // SecurityShutter shows it when it falls
         }
+
+        /// <summary>P101: where people stand in the evening: one at the bar, the rest in the hall, checked free of furniture.</summary>
+        private static readonly (Vector3 position, float yaw)[] CrowdSpots =
+        {
+            (new Vector3(12f, 0f, 2.2f), 200f),
+            (new Vector3(5.6f, 0f, 2.4f), 120f),
+            (new Vector3(-2.2f, 0f, -4.4f), 20f),
+            (new Vector3(4.8f, 0f, -2.2f), 300f),
+            (new Vector3(-5.2f, 0f, 3.6f), 140f),
+            (new Vector3(1.4f, 0f, 2f), 210f),
+        };
 
         private static void BuildVendor(Transform parent, VendorSpot spot, VendorStock stock, TradeWindow trade)
         {
@@ -962,6 +993,7 @@ namespace GameOff.EditorTools
             rt.anchoredPosition = pos;
             rt.sizeDelta = size;
             go.GetComponent<Image>().color = color;
+            if (color == Panel) TerminalStyle.Inset(go.GetComponent<Image>()); // P95
             return go.transform;
         }
 
@@ -971,7 +1003,10 @@ namespace GameOff.EditorTools
             root.transform.SetParent(canvas, false);
             Stretch(root.GetComponent<RectTransform>());
             root.GetComponent<Image>().color = new Color(Backdrop.r, Backdrop.g, Backdrop.b, 0.9f);
-            return Box(root.transform, "Window", Vector2.zero, new Vector2(880f, 490f), Backdrop);
+            var window = Box(root.transform, "Window", Vector2.zero, new Vector2(880f, 490f), Backdrop);
+            TerminalStyle.Frame(window.GetComponent<Image>()); // P95
+            TerminalStyle.AddDivider(window, new Vector2(0f, 192f), 820f);
+            return window;
         }
 
         private static TMP_Text Text(Transform parent, string name, string text, float size, Color color, Vector2 pos, Vector2 box, TextAlignmentOptions align)
@@ -1006,6 +1041,7 @@ namespace GameOff.EditorTools
             layout.childForceExpandHeight = false;
 
             var row = MenuButton(content.transform, "RowTemplate", "", Vector2.zero, new Vector2(size.x - 16f, 26f), 15);
+            TerminalStyle.Flat(row); // rows show selection by colour
             Object.DestroyImmediate(row.GetComponentInChildren<TMP_Text>().gameObject);
             row.gameObject.AddComponent<LayoutElement>().preferredHeight = 26f;
             var label = Text(row.transform, "Label", "Item", 15, TextLight, Vector2.zero, Vector2.zero, TextAlignmentOptions.MidlineLeft);
@@ -1086,6 +1122,7 @@ namespace GameOff.EditorTools
             devColors.selectedColor = DevRed;
             devColors.pressedColor = Color.Lerp(DevRed, Color.black, 0.3f);
             devFill.colors = devColors;
+            TerminalStyle.Flat(devFill);
             devFill.gameObject.SetActive(false);
 
             var window = holder.AddComponent<InventoryWindow>();
@@ -1208,6 +1245,12 @@ namespace GameOff.EditorTools
                 Set(v, "day", day);
                 Set(v, "dialogs", dialogs);
                 Record(v);
+            }
+            foreach (var c in instance.GetComponentsInChildren<EveningCrowd>(true))
+            {
+                Set(c, "day", day);
+                Set(c, "shift", Object.FindFirstObjectByType<CounterShift>());
+                Record(c);
             }
             foreach (var b in instance.GetComponentsInChildren<Barkeeper>(true))
             {

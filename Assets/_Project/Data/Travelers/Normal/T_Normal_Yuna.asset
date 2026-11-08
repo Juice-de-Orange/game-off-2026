@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Cells. For the families in the lower docks.
   - key: name
     line: Yuna Press. You'll hear it again.
+  reactionAdmitted: 
+  reactionDenied: 

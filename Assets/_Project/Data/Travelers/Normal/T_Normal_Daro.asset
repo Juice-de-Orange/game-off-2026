@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Daro. Just Daro, between friends.
   - key: purpose
     line: Business. The usual kind.
+  reactionAdmitted: 
+  reactionDenied: 

@@ -659,6 +659,24 @@ namespace GameOff.EditorTools
             slats.gameObject.SetActive(false); // shown when it falls; at height 0 it would hang below the floor
             var pso = new SerializedObject(root.GetComponent<TravelerPresenter>());
             pso.FindProperty("shutter").objectReferenceValue = shutter;
+            // P104: the guard's own model when delivered, until then a human traveler
+            var guard = AssetDatabase.LoadAssetAtPath<GameObject>(TravelerPrefabBuilder.PrefabFolder + "PF_NPC_Guard.prefab");
+            if (guard == null) guard = AssetDatabase.LoadAssetAtPath<GameObject>(TravelerPrefabBuilder.PrefabFolder + "PF_NPC_Human.prefab");
+            pso.FindProperty("guardModel").objectReferenceValue = guard;
+            // P105: the lock's alarm, a red light above the marking (chair = origin, lock centre at x 4)
+            var alarmT = root.transform.Find("AirlockAlarm");
+            if (alarmT == null) alarmT = new GameObject("AirlockAlarm").transform;
+            alarmT.SetParent(root.transform, false);
+            alarmT.localPosition = new Vector3(4f, 2.6f, 0f);
+            var alarm = alarmT.GetComponent<Light>();
+            if (alarm == null) alarm = alarmT.gameObject.AddComponent<Light>();
+            alarm.type = LightType.Point;
+            alarm.color = new Color(1f, 0.12f, 0.08f);
+            alarm.intensity = 8f;
+            alarm.range = 7f;
+            alarm.shadows = LightShadows.None;
+            alarm.enabled = false;
+            pso.FindProperty("alarmLight").objectReferenceValue = alarm;
             pso.ApplyModifiedPropertiesWithoutUndo();
             log.Add("security shutter");
         }

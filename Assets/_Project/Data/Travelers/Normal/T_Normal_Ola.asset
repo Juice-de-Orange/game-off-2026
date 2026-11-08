@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Kss. They will not know my face. I brought a picture of it.
   - key: route
     line: Direct. I paid for the fast one.
+  reactionAdmitted: 
+  reactionDenied: 

@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Dates are a formality. Any renewal takes eleven cycles on Sorv Deep.
   - key: purpose
     line: Engineering contract. Your hull needs it.
+  reactionAdmitted: 
+  reactionDenied: 

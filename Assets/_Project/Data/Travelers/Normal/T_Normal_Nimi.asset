@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Canned stew. Nothing that can be misread.
   - key: purpose
     line: Trade, very quietly.
+  reactionAdmitted: 
+  reactionDenied: 

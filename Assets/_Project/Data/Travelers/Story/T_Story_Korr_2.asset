@@ -23,4 +23,12 @@ MonoBehaviour:
   trickIntended: 0
   storyTag: P76 character, day 4
   greeting: Just passing through, officer. One day late is hardly late, is it?
-  answers: []
+  answers:
+  - key: purpose
+    line: Trade. Small trade.
+  - key: expires
+    line: Dates, dates. It was good yesterday.
+  - key: route
+    line: Sorv Deep to here. Nothing to see.
+  reactionAdmitted: 
+  reactionDenied: 

@@ -24,4 +24,12 @@ MonoBehaviour:
   storyTag: P76 character, day 3
   greeting: Officer. You and I want the same thing, you know. A station that serves
     its people.
-  answers: []
+  answers:
+  - key: purpose
+    line: Transit. Everyone is passing through something.
+  - key: route
+    line: Aska-3, officer. Does it matter?
+  - key: issued
+    line: The same hand as always, if you know how to look.
+  reactionAdmitted: 
+  reactionDenied: 

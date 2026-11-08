@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Kss. Painkillers. Half the station has a headache.
   - key: purpose
     line: Kss. Trade.
+  reactionAdmitted: 
+  reactionDenied: 

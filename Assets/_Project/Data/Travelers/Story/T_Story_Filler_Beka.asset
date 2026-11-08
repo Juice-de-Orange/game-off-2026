@@ -24,3 +24,5 @@ MonoBehaviour:
   storyTag: P76 character, day 0
   greeting: I'm sure it's still fine. Isn't it?
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 

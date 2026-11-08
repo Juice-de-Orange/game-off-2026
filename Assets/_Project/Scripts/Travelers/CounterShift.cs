@@ -48,6 +48,8 @@ namespace GameOff.Travelers
         /// <summary>The day's new rule in one line, for the announcement; empty if there is none.</summary>
         public string NewToday { get; private set; } = "";
         public TravelerData Current => _current;
+        /// <summary>P97: 0 to 1, share of today's travelers already dealt with.</summary>
+        public float Progress => day == null || day.Travelers.Count == 0 ? 0f : Mathf.Clamp01(_index / (float)day.Travelers.Count);
         public int Citations => _citations;
         /// <summary>Citations per day that are only warnings (P10 deducts a penalty for every one beyond).</summary>
         public int FreeWarnings => freeWarnings;

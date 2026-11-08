@@ -24,3 +24,5 @@ MonoBehaviour:
   storyTag: P76 character, day 10
   greeting: Oddo! The caravan is in, my friend. Come and see!
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 

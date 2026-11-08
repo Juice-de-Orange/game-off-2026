@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Vials and a bit of liquor. Half the station buys it.
   - key: name
     line: Varga. Don't tell my mother you saw me.
+  reactionAdmitted: 
+  reactionDenied: 

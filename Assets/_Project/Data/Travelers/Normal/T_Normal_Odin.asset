@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Ketra was just a stop. I never left the seat.
   - key: purpose
     line: Work. They said it couldn't wait.
+  reactionAdmitted: 
+  reactionDenied: 

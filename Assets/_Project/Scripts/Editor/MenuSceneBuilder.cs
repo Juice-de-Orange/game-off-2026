@@ -189,6 +189,7 @@ namespace GameOff.EditorTools
         private static Transform BuildOptionsPanel(Transform parent, out Button back)
         {
             var panel = PanelRoot(parent, "OptionsPanel");
+            TerminalStyle.AddFrame(panel, new Vector2(900f, 640f));
             Title(Label(panel, "Heading", "OPTIONS", 40, Amber, new Vector2(0f, 205f), new Vector2(600f, 50f)));
 
             string[] tabNames = { "AUDIO", "CONTROLS", "DEV" };
@@ -373,6 +374,7 @@ namespace GameOff.EditorTools
         private static Transform BuildCreditsPanel(Transform parent, out Button back)
         {
             var panel = PanelRoot(parent, "CreditsPanel");
+            TerminalStyle.AddFrame(panel, new Vector2(900f, 640f));
             Title(Label(panel, "Heading", "CREDITS", 40, Amber, new Vector2(0f, 200f), new Vector2(700f, 50f)));
             var text = Label(panel, "Body", CreditsText(), 18, TextLight, new Vector2(0f, 10f), new Vector2(760f, 320f));
             text.alignment = TextAlignmentOptions.Top;
@@ -874,6 +876,7 @@ namespace GameOff.EditorTools
             button.colors = colors;
             var label = Label(go.transform, "Label", text, fontSize, TextLight, Vector2.zero, Vector2.zero);
             Stretch(label.rectTransform);
+            TerminalStyle.Button(button);
             return button;
         }
 

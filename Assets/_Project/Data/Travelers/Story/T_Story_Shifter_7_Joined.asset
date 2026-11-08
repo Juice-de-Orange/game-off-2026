@@ -25,3 +25,5 @@ MonoBehaviour:
   greeting: Officer. Thank you, truly. There is no resistance. There never was. Only
     a list of names... and yours is on it now.
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 

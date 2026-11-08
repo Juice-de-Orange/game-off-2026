@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Going home. Finally.
   - key: route
     line: Torvik to here. No stops, thank god.
+  reactionAdmitted: 
+  reactionDenied: 

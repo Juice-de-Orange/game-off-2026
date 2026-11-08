@@ -207,7 +207,7 @@ namespace GameOff.Documents
                 if (view.Type != DocumentType.Citation) papers.Add(view);
             if (papers.Count == 0) return;
             papers.Sort((a, b) => a.Type.CompareTo(b.Type)); // always ID, permit, manifest from left to right
-            AudioManager.Play(s => s.paperPickup);
+            AudioManager.PlayVaried(s => s.paperPickups, s => s.paperPickup);
             foreach (var view in papers)
             {
                 if (_reading.Count >= tuning.maxPapersRead) break;
@@ -238,7 +238,7 @@ namespace GameOff.Documents
                     UpdateLayers();
                     _pressed = top;
                     _dragging = true;
-                    AudioManager.Play(s => s.paperPickup);
+                    AudioManager.PlayVaried(s => s.paperPickups, s => s.paperPickup);
                     _dragOffset = Vector3.zero;
                     SetColliders(top, false);
                     BringToFront(top);
@@ -253,7 +253,7 @@ namespace GameOff.Documents
                 if (!_dragging && (screenPos - _pressScreen).sqrMagnitude > tuning.dragThresholdPixels * tuning.dragThresholdPixels)
                 {
                     _dragging = true;
-                    AudioManager.Play(s => s.paperPickup);
+                    AudioManager.PlayVaried(s => s.paperPickups, s => s.paperPickup);
                     SetColliders(_pressed, false); // the mouse ray must see what is under the paper (desk, drawer)
                 }
                 if (_dragging) _pressed.transform.position = DragTarget(screenPos) + Vector3.up * tuning.dragLift;
@@ -481,7 +481,7 @@ namespace GameOff.Documents
 
         private void FinishDrag(Vector2 screenPos)
         {
-            AudioManager.Play(s => s.paperSlide);
+            AudioManager.PlayVaried(s => s.paperSlides, s => s.paperSlide);
             Drop(_pressed, !_busy && PointerOnDrawer(screenPos)); // a moving drawer takes nothing: its tray has no fixed place yet
             SetColliders(_pressed, true);
             _pressed = null;
@@ -577,7 +577,7 @@ namespace GameOff.Documents
         {
             if (_reading.Contains(doc)) return;
             if (_reading.Count >= tuning.maxPapersRead) PutDown(_reading[0], instant: false);
-            if (!quiet) AudioManager.Play(s => s.paperPickup);
+            if (!quiet) AudioManager.PlayVaried(s => s.paperPickups, s => s.paperPickup);
             _readingReturn[doc] = returnPose ?? new Pose(doc.transform.position, doc.transform.rotation);
             _reading.Add(doc);
             LayOutReading();
@@ -619,7 +619,7 @@ namespace GameOff.Documents
         private void PutDownAll(bool instant)
         {
             if (_reading.Count == 0) return;
-            if (!instant) AudioManager.Play(s => s.paperSlide);
+            if (!instant) AudioManager.PlayVaried(s => s.paperSlides, s => s.paperSlide);
             foreach (var view in new List<DocumentView>(_reading)) PutDown(view, instant, quiet: true);
         }
 
@@ -637,7 +637,7 @@ namespace GameOff.Documents
                 doc.transform.SetPositionAndRotation(pose.position, pose.rotation);
                 return;
             }
-            if (!quiet) AudioManager.Play(s => s.paperSlide);
+            if (!quiet) AudioManager.PlayVaried(s => s.paperSlides, s => s.paperSlide);
             StartGlide(doc.transform, pose.position, pose.rotation, tuning.inspectDuration);
         }
 

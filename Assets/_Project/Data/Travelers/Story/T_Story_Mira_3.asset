@@ -23,4 +23,12 @@ MonoBehaviour:
   trickIntended: 0
   storyTag: P76 character, day 4
   greeting: New papers. They cost me everything I had. Please don't look too closely.
-  answers: []
+  answers:
+  - key: purpose
+    line: My children. Still my children.
+  - key: issued
+    line: The consulate on Quob Atoll. They did it quickly. Don't ask how.
+  - key: route
+    line: Home, and back here. Again.
+  reactionAdmitted: 
+  reactionDenied: Then there is nothing left to try.

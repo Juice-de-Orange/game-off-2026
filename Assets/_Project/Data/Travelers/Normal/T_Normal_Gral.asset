@@ -28,3 +28,5 @@ MonoBehaviour:
     line: You read it fine. Move on.
   - key: purpose
     line: None of yours.
+  reactionAdmitted: 
+  reactionDenied: 

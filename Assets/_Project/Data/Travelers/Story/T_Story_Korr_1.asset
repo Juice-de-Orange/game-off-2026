@@ -24,4 +24,12 @@ MonoBehaviour:
   storyTag: P76 character, day 1
   greeting: Inspector Vaal Korr, Border Authority. Today I watch you work - starting
     with me. Check my papers, then stamp them.
-  answers: []
+  answers:
+  - key: purpose
+    line: Inspection. Of you, as it happens.
+  - key: route
+    line: Sorv Deep. Direct. Inspectors don't change ships.
+  - key: issued
+    line: The Border Authority signs its own papers. Note that down.
+  reactionAdmitted: 
+  reactionDenied: 

@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Canned stew. Yes, all of it. Yes, again.
   - key: purpose
     line: Trade, if you call stew trade.
+  reactionAdmitted: 
+  reactionDenied: 

@@ -28,3 +28,5 @@ MonoBehaviour:
     line: A visit. Short, if you allow it.
   - key: route
     line: Direct from home.
+  reactionAdmitted: 
+  reactionDenied: The list changes every week. I can't keep up with it.

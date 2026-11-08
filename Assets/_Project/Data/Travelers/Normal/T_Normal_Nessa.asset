@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Batteries for the colony run. Nothing that bites.
   - key: purpose
     line: Trade. Always trade.
+  reactionAdmitted: 
+  reactionDenied: 

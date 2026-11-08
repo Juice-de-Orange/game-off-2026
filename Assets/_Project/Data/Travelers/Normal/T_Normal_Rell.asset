@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Vials. The crews ask for them. I only carry.
   - key: name
     line: Rell Asta. Ask anyone on the docks.
+  reactionAdmitted: 
+  reactionDenied: 

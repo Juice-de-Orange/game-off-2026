@@ -28,3 +28,5 @@ MonoBehaviour:
     line: It's my name. Is that what this is about?
   - key: purpose
     line: I just want to get through. Please.
+  reactionAdmitted: 
+  reactionDenied: 

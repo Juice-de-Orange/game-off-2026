@@ -23,4 +23,10 @@ MonoBehaviour:
   trickIntended: 0
   storyTag: P76 character, day 4
   greeting: Quill. Bigger job today. The barkeeper says you're one of us now.
-  answers: []
+  answers:
+  - key: purpose
+    line: Business. Bigger business.
+  - key: route
+    line: Torvik. Don't write that down.
+  reactionAdmitted: 
+  reactionDenied: 

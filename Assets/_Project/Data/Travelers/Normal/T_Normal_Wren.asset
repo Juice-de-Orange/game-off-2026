@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Rations. Always rations.
   - key: purpose
     line: Business, one last time.
+  reactionAdmitted: 
+  reactionDenied: 

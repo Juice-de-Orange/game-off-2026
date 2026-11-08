@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Cargo handler. They promised heated boots.
   - key: origin
     line: Torvik. You can smell it on my coat.
+  reactionAdmitted: 
+  reactionDenied: 

@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Kai. Common name. Very common.
   - key: purpose
     line: Consulting. The kind that pays in advance.
+  reactionAdmitted: 
+  reactionDenied: 

@@ -25,3 +25,5 @@ MonoBehaviour:
   greeting: You turned me down. Good instinct. There is no resistance, officer. Only
     the Directorate, and people like me who test people like you. You passed.
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 

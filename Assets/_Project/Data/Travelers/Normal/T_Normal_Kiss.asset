@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Kss. Fuses. Your station eats them.
   - key: purpose
     line: Trade. Kss.
+  reactionAdmitted: Kss. Right. Efficient.
+  reactionDenied: 

@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Orvan. Since when is that a crime?
   - key: purpose
     line: He works in your hangar. Ask him.
+  reactionAdmitted: 
+  reactionDenied: 

@@ -33,6 +33,9 @@ namespace GameOff.EditorTools
             Assign(set.stampDeny, "SFX_Stamp_Deny");
             Assign(set.paperSlide, "SFX_Paper_Slide");
             Assign(set.paperPickup, "SFX_Paper_Pickup");
+            set.paperSlide.volume = set.paperPickup.volume = PaperVolume; // P102
+            set.paperPickups = Variants("SFX_Paper_Pickup_0{0}", 4, PaperVolume);
+            set.paperSlides = Variants("SFX_Paper_Slide_0{0}", 4, PaperVolume);
             Assign(set.drawerOpen, "SFX_Drawer_Open");
             Assign(set.drawerClose, "SFX_Drawer_Close");
             Assign(set.printerCitation, "SFX_Printer_Citation");
@@ -66,6 +69,20 @@ namespace GameOff.EditorTools
         {
             bool delivered = AssetDatabase.LoadAssetAtPath<AudioClip>($"{ClipFolder}{clipName}.ogg") != null;
             Assign(sound, delivered ? clipName : placeholder);
+        }
+
+        private const float PaperVolume = 0.32f;
+
+        /// <summary>P102: the delivered variants; empty as long as there are none.</summary>
+        private static Sound[] Variants(string format, int count, float volume)
+        {
+            var list = new System.Collections.Generic.List<Sound>();
+            for (int i = 1; i <= count; i++)
+            {
+                var clip = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/_Project/Audio/SFX/" + string.Format(format, i) + ".ogg");
+                if (clip != null) list.Add(new Sound { clip = clip, volume = volume });
+            }
+            return list.ToArray();
         }
 
         private static void Assign(Sound sound, string clipName)

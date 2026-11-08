@@ -24,3 +24,5 @@ MonoBehaviour:
   storyTag: P76 character, day 5
   greeting: Dr. Senn. The clinic is running thanks to you.
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 

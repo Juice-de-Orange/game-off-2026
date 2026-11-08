@@ -25,4 +25,12 @@ MonoBehaviour:
   storyTag: P76 character, day 3
   greeting: Same as always. Just a few personal supplies. You didn't see anything,
     right?
-  answers: []
+  answers:
+  - key: purpose
+    line: Business, same as ever.
+  - key: cargo
+    line: Spare parts and personal supplies. You read too much.
+  - key: route
+    line: Torvik, same as ever. You know me.
+  reactionAdmitted: 
+  reactionDenied: 

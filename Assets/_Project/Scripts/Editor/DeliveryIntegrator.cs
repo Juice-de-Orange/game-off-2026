@@ -37,6 +37,7 @@ namespace GameOff.EditorTools
             var report = new List<string>();
             ConfigureWorldTextures(report);
             ConfigureUiTextures(report);
+            ConfigureTerminalSprites(report);
             var textures = IndexTextures();
             foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { ModelRoot }))
                 IntegrateModel(AssetDatabase.GUIDToAssetPath(guid), textures, report);
@@ -66,7 +67,7 @@ namespace GameOff.EditorTools
             foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { UiRoot }))
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
-                if (path.StartsWith(IconFolder + "/")) continue;
+                if (path.StartsWith(IconFolder + "/") || path.StartsWith(TerminalStyle.Folder)) continue;
                 if (!(AssetImporter.GetAtPath(path) is TextureImporter ti)) continue;
                 if (ti.textureType == TextureImporterType.Sprite && ti.filterMode == FilterMode.Bilinear && !ti.mipmapEnabled
                     && ti.npotScale == TextureImporterNPOTScale.None) continue;
@@ -78,6 +79,30 @@ namespace GameOff.EditorTools
                 ti.alphaIsTransparency = true;
                 ti.SaveAndReimport();
                 report.Add("ui       " + path);
+            }
+        }
+
+        /// <summary>P95: pixel art, Point, with the slice borders of TerminalStyle.</summary>
+        private static void ConfigureTerminalSprites(List<string> report)
+        {
+            foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { TerminalStyle.Folder.TrimEnd('/') }))
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                if (!(AssetImporter.GetAtPath(path) is TextureImporter ti)) continue;
+                float border = TerminalStyle.BorderOf(Path.GetFileNameWithoutExtension(path));
+                var wanted = new Vector4(border, border, border, border);
+                if (ti.textureType == TextureImporterType.Sprite && ti.filterMode == FilterMode.Point && !ti.mipmapEnabled && ti.spriteBorder == wanted) continue;
+                ti.textureType = TextureImporterType.Sprite;
+                ti.spriteImportMode = SpriteImportMode.Single;
+                ti.filterMode = FilterMode.Point;
+                ti.mipmapEnabled = false;
+                ti.npotScale = TextureImporterNPOTScale.None;
+                ti.textureCompression = TextureImporterCompression.Uncompressed;
+                ti.alphaIsTransparency = true;
+                ti.wrapMode = TextureWrapMode.Repeat;
+                ti.spriteBorder = wanted;
+                ti.SaveAndReimport();
+                report.Add("terminal " + path);
             }
         }
 

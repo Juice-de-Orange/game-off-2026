@@ -25,3 +25,5 @@ MonoBehaviour:
   storyTag: P75 test character
   greeting: You again! I'm back - thanks to you.
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 

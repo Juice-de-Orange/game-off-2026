@@ -34,6 +34,8 @@ namespace GameOff.Day
         [SerializeField] private float fadeSeconds = 1.2f;
         [Tooltip("Black screen between the days (P10 shows the settlement here later).")]
         [SerializeField] private float nightSeconds = 1f;
+        [Tooltip("P97: real seconds in which the station clocks run from 18:00 to 23:00.")]
+        [SerializeField] private float eveningClockSeconds = 300f;
         [Tooltip("Master switch for the dev tools (red Dev_end_Day button, visible bed hitbox); players switch them in the options (GameSettings.DevTools). TURN OFF for the jam build.")]
         [SerializeField] private bool showDevTools = true;
         [Tooltip("Translucent box showing the bed trigger (only with showDevTools).")]
@@ -43,6 +45,7 @@ namespace GameOff.Day
         private int _runSeed;
         private Phase _phase;
         private bool _nightCancelled;
+        private float _eveningSince;
         private (string title, string body)? _gameOver;
 
         /// <summary>Morning of day n (1-based), before the letter.</summary>
@@ -101,6 +104,12 @@ namespace GameOff.Day
             StartCoroutine(BeginDay(1));
         }
 
+        private void Update()
+        {
+            float evening = eveningClockSeconds > 0f ? (Time.time - _eveningSince) / eveningClockSeconds : 1f;
+            GameClock.Set(GameClock.Compute(_phase, shift.Progress, evening));
+        }
+
         private void ApplyDevTools()
         {
             if (bedDebugView != null) bedDebugView.SetActive(DevTools);
@@ -139,6 +148,7 @@ namespace GameOff.Day
         {
             if (_phase != Phase.Shift) return;
             _phase = Phase.Evening;
+            _eveningSince = Time.time;
             bed.SetPrompt("Sleep");
             ShiftOver?.Invoke(_day);
             ui.ShowHint("Shift over. Go back to room 103 and get some sleep.", 6f);

@@ -24,3 +24,5 @@ MonoBehaviour:
   storyTag: P76 character, day 0
   greeting: Evening shift? Lucky you.
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 

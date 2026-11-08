@@ -28,3 +28,5 @@ MonoBehaviour:
     line: The hatchery, yes. A very small one.
   - key: purpose
     line: To sell songs.
+  reactionAdmitted: 
+  reactionDenied: 

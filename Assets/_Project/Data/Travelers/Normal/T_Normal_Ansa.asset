@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Ketra was the cheapest way. Is it not allowed?
   - key: purpose
     line: Going to my mother. She is old.
+  reactionAdmitted: 
+  reactionDenied: 

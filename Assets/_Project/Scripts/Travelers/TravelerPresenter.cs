@@ -11,7 +11,7 @@ namespace GameOff.Travelers
     /// <summary>
     /// The traveler in the inspection lock (P40, P91): comes in through the hangar door, stands at the marking behind the glass, greets
     /// the officer and answers questions about the fields on their papers. Admitted: leaves through the hall door; denied: back through
-    /// the hangar door; arrest and airlock happen behind the shutter. Figures are reused per model. Idle, Talk and Walk are states of the
+    /// the hangar door; arrest: a guard comes, then the shutter (P104); airlock: the hatch opens and the figure is torn out (P105). Figures are reused per model. Idle, Talk and Walk are states of the
     /// model's Animator.
     /// </summary>
     public class TravelerPresenter : MonoBehaviour
@@ -29,12 +29,20 @@ namespace GameOff.Travelers
         [SerializeField] private Transform hallDoor;
         [SerializeField] private Transform hangarDoor;
         [SerializeField] private SecurityShutter shutter;
+        [Tooltip("P104: comes through the hall door when someone is arrested. Prefab with Idle and Walk.")]
+        [SerializeField] private GameObject guardModel;
+        [Tooltip("P105: flashes while the airlock is open; off otherwise.")]
+        [SerializeField] private Light alarmLight;
 
         private readonly Dictionary<GameObject, GameObject> _figures = new Dictionary<GameObject, GameObject>();
         private GameObject _figure;
+        private GameObject _figureModel;
+        private GameObject _guard;
+        private Animator _guardAnimator;
         private Animator _animator;
         private Transform _head;
         private Coroutine _routine;
+        private bool _walking;
 
         private void OnEnable()
         {
@@ -108,11 +116,13 @@ namespace GameOff.Travelers
             var heading = Vector3.ProjectOnPlane(target - figure.position, Vector3.up);
             if (heading.sqrMagnitude > 0.001f) figure.rotation = Quaternion.LookRotation(heading);
             Play(Walk);
+            _walking = true;
             while ((figure.position - target).sqrMagnitude > 0.0001f)
             {
                 figure.position = Vector3.MoveTowards(figure.position, target, tuning.walkSpeed * Time.deltaTime);
                 yield return null;
             }
+            _walking = false;
         }
 
         /// <summary>A spot out of sight behind a lock door, seen from the marking.</summary>
@@ -124,9 +134,20 @@ namespace GameOff.Travelers
         private float ArrivalSeconds() => tuning.doorLeadSeconds + WalkSeconds(hangarDoor) + tuning.turnSeconds;
 
         /// <summary>P91: how long the lock is occupied after a decision.</summary>
-        private float LeaveSeconds(Verdict chosen) => chosen == Verdict.Arrest || chosen == Verdict.Airlock
-            ? tuning.shutterDropSeconds + tuning.shutterHoldSeconds + tuning.shutterRiseSeconds
+        private float LeaveSeconds(Verdict chosen) => chosen == Verdict.Airlock
+            ? tuning.hatchSeconds + tuning.airlockBlowSeconds + tuning.hatchSeconds
+            : chosen == Verdict.Arrest
+            ? GuardSeconds() + tuning.shutterDropSeconds + tuning.shutterHoldSeconds + tuning.shutterRiseSeconds
             : tuning.doorLeadSeconds + WalkSeconds(chosen == Verdict.Admit ? hallDoor : hangarDoor) + DoorCloseSeconds(chosen);
+
+        private Vector3 GuardSpot()
+        {
+            var fromDoor = Offstage(hallDoor) - standSpot.position;
+            return standSpot.position + fromDoor.normalized * tuning.guardStopMeters;
+        }
+
+        private float GuardSeconds() => guardModel == null ? 0f
+            : tuning.doorLeadSeconds + Vector3.Distance(Offstage(hallDoor), GuardSpot()) / tuning.guardWalkSpeed;
 
         private static float DoorCloseSeconds(Verdict chosen)
         {
@@ -173,14 +194,20 @@ namespace GameOff.Travelers
             Play(Talk);
         }
 
-        private void OnBubbleFinished() => Play(Idle);
+        private void OnBubbleFinished()
+        {
+            if (!_walking) Play(Idle); // a reaction can end while they are already leaving
+        }
 
         private void OnDecision(TravelerData traveler, Verdict chosen, Judgement judgement)
         {
             StopRoutine();
             bubble.Hide();
             CloseDoors();
-            if (chosen == Verdict.Arrest || chosen == Verdict.Airlock) _routine = StartCoroutine(BehindShutter(chosen));
+            string reaction = TravelerDialogue.Reaction(traveler, chosen, tuning, Random.value); // P100: said on the way out, costs no time
+            if (!string.IsNullOrWhiteSpace(reaction)) Say(traveler, reaction);
+            if (chosen == Verdict.Arrest) _routine = StartCoroutine(Arrest());
+            else if (chosen == Verdict.Airlock) _routine = StartCoroutine(Airlock());
             else if (_figure != null) _routine = StartCoroutine(WalkOff(chosen == Verdict.Admit ? SlidingDoor.Role.LockHall : SlidingDoor.Role.LockHangar,
                 chosen == Verdict.Admit ? hallDoor : hangarDoor));
         }
@@ -200,14 +227,81 @@ namespace GameOff.Travelers
             HideFigure();
         }
 
+        /// <summary>P104: a guard walks in and takes the traveler; then the shutter falls and the rest is only heard (P91).</summary>
+        private IEnumerator Arrest()
+        {
+            var door = SlidingDoor.ForRole(SlidingDoor.Role.LockHall);
+            if (guardModel != null)
+            {
+                if (_guard == null)
+                {
+                    _guard = Instantiate(guardModel, transform);
+                    _guardAnimator = _guard.GetComponent<Animator>();
+                }
+                _guard.transform.SetPositionAndRotation(Offstage(hallDoor), Quaternion.LookRotation(Vector3.ProjectOnPlane(standSpot.position - hallDoor.position, Vector3.up)));
+                _guard.SetActive(true);
+                if (door != null) door.Open();
+                yield return new WaitForSeconds(tuning.doorLeadSeconds);
+                if (_guardAnimator != null) _guardAnimator.CrossFade(Walk, tuning.animationBlendSeconds);
+                var guard = _guard.transform;
+                var spot = GuardSpot();
+                while ((guard.position - spot).sqrMagnitude > 0.0001f)
+                {
+                    guard.position = Vector3.MoveTowards(guard.position, spot, tuning.guardWalkSpeed * Time.deltaTime);
+                    yield return null;
+                }
+                if (_guardAnimator != null) _guardAnimator.CrossFade(Idle, tuning.animationBlendSeconds);
+            }
+            yield return BehindShutter();
+        }
+
+        /// <summary>P105: no shutter. The outer hatch swings open, the alarm flashes and the traveler is torn out into space.</summary>
+        private IEnumerator Airlock()
+        {
+            var hatch = AirlockHatch.Instance;
+            if (hatch != null) hatch.Open(tuning.hatchSeconds);
+            shift.Station.Shake(tuning.hatchSeconds + tuning.airlockBlowSeconds, 0.02f);
+            bubble.Hide();
+            yield return new WaitForSeconds(tuning.hatchSeconds * 0.5f);
+            var outward = Vector3.ProjectOnPlane(-standSpot.forward, Vector3.up).normalized;
+            var bodies = _figure != null ? Ragdoll.Build(_figure) : null;
+            for (float t = 0f; t < tuning.airlockBlowSeconds; t += Time.fixedDeltaTime)
+            {
+                if (alarmLight != null) alarmLight.enabled = Mathf.Repeat(t * 4f, 1f) < 0.5f;
+                if (bodies != null)
+                    foreach (var body in bodies)
+                        body.AddForce(outward * tuning.airlockSuction, ForceMode.Acceleration);
+                yield return new WaitForFixedUpdate();
+            }
+            if (alarmLight != null) alarmLight.enabled = false;
+            DestroyFigure(); // its bones have joints now: the next one of this model is a fresh copy
+            if (hatch != null) hatch.Close(tuning.hatchSeconds);
+            yield return new WaitForSeconds(tuning.hatchSeconds);
+            _routine = null;
+        }
+
+        private void DestroyFigure()
+        {
+            if (_figure != null)
+            {
+                _figures.Remove(_figureModel);
+                Destroy(_figure);
+            }
+            _figure = null;
+            _animator = null;
+            _head = null;
+        }
+
         /// <summary>P91: the shutter falls, the figure is gone when it rises. What happened is only heard.</summary>
-        private IEnumerator BehindShutter(Verdict chosen)
+        private IEnumerator BehindShutter()
         {
             AudioManager.Play(s => s.shutterDrop);
             shutter.Drop(tuning.shutterDropSeconds);
             yield return new WaitForSeconds(tuning.shutterDropSeconds);
             HideFigure();
-            if (chosen == Verdict.Arrest) AudioManager.Play(s => s.arrestScuffle); // the airlock's own sound already plays
+            HideGuard();
+            CloseDoors();
+            AudioManager.Play(s => s.arrestScuffle);
             yield return new WaitForSeconds(tuning.shutterHoldSeconds);
             AudioManager.Play(s => s.shutterRise);
             shutter.Raise(tuning.shutterRiseSeconds);
@@ -218,6 +312,7 @@ namespace GameOff.Travelers
         {
             HideFigure();
             var model = traveler.Model;
+            _figureModel = model;
             if (model == null) return;
             if (!_figures.TryGetValue(model, out _figure) || _figure == null)
             {
@@ -237,8 +332,16 @@ namespace GameOff.Travelers
             StopRoutine();
             bubble.Hide();
             HideFigure();
+            HideGuard();
+            if (alarmLight != null) alarmLight.enabled = false;
+            if (AirlockHatch.Instance != null) AirlockHatch.Instance.Close(0.01f);
             CloseDoors();
             shutter.ResetOpen();
+        }
+
+        private void HideGuard()
+        {
+            if (_guard != null) _guard.SetActive(false);
         }
 
         private void HideFigure()
@@ -253,6 +356,7 @@ namespace GameOff.Travelers
         {
             if (_routine != null) StopCoroutine(_routine);
             _routine = null;
+            _walking = false;
         }
 
         private void Play(int state)

@@ -25,10 +25,11 @@ namespace GameOff.EditorTools
         public static string Build()
         {
             var log = new List<string>();
-            foreach (string species in Species)
+            foreach (string species in System.Linq.Enumerable.Concat(Species, new[] { "Guard" }))
             {
                 string fbx = ModelFolder + $"SK_NPC_{species}.fbx";
                 var model = AssetDatabase.LoadAssetAtPath<GameObject>(fbx);
+                if (model == null && species == "Guard") continue; // P104: ordered, a human stands in until then
                 if (model == null)
                 {
                     log.Add($"WARNING no {fbx}");

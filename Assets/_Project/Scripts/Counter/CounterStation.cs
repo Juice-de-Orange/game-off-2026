@@ -93,6 +93,28 @@ namespace GameOff.Counter
             }
         }
 
+        /// <summary>P105: the desk shakes with the airlock (only the view).</summary>
+        public void Shake(float seconds, float amount)
+        {
+            if (_shaking != null) return;
+            _shaking = StartCoroutine(ShakeRoutine(seconds, amount));
+        }
+
+        private Coroutine _shaking;
+
+        private System.Collections.IEnumerator ShakeRoutine(float seconds, float amount)
+        {
+            var view = deskCamera.transform;
+            var home = view.localPosition;
+            for (float t = 0f; t < seconds; t += Time.deltaTime)
+            {
+                view.localPosition = home + UnityEngine.Random.insideUnitSphere * (amount * (1f - t / seconds));
+                yield return null;
+            }
+            view.localPosition = home;
+            _shaking = null;
+        }
+
         public void Sit()
         {
             if (_seated || player == null || viewCamera == null) return;

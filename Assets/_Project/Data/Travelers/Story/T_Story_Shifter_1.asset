@@ -23,4 +23,12 @@ MonoBehaviour:
   trickIntended: 0
   storyTag: P76 character, day 1
   greeting: Officer! What a fine day to cross a border, wouldn't you say?
-  answers: []
+  answers:
+  - key: purpose
+    line: Tourism! I hear the view is magnificent.
+  - key: route
+    line: Aska-3, and what a lovely route it is.
+  - key: issued
+    line: The consulate was most helpful. They always are.
+  reactionAdmitted: 
+  reactionDenied: 

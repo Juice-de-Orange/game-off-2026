@@ -28,3 +28,5 @@ MonoBehaviour:
     line: I wrote it myself. Is it not the same?
   - key: purpose
     line: To see the big station! And my cousin.
+  reactionAdmitted: 
+  reactionDenied: 

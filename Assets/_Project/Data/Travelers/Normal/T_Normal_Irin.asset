@@ -28,3 +28,5 @@ MonoBehaviour:
     line: A place on a card. I haven't been back in years.
   - key: purpose
     line: Work. Any work.
+  reactionAdmitted: 
+  reactionDenied: Orvan is all I have left. Do you even know where it is?

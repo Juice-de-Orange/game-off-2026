@@ -197,7 +197,13 @@ namespace GameOff.EditorTools
             var hatch = Block(root, "Airlock_OuterHatch_Collider", new Vector3(4.1f, 1.1f, -9), new Vector3(0.2f, 2.2f, 1.6f), _hatch);
             hatch.GetComponent<MeshRenderer>().enabled = Kit(KitHatch) == null;
             // Pivot hinge_left: the hatch spans local X 0..1.6 (= world -Z at yaw 90), so the hinge sits at the opening's north edge.
-            PlaceKit(visual, KitHatch, new Vector3(4f, 0f, -9f + KitDoorWidth * 0.5f), 90f); // front (local -Z) faces into the lock
+            var hatchModel = PlaceKit(visual, KitHatch, new Vector3(4f, 0f, -9f + KitDoorWidth * 0.5f), 90f); // front (local -Z) faces into the lock
+            if (hatchModel != null) // P105: it moves, so it is not static
+            {
+                foreach (var t in hatchModel.GetComponentsInChildren<Transform>())
+                    GameObjectUtility.SetStaticEditorFlags(t.gameObject, 0);
+                hatchModel.AddComponent<GameOff.Station.AirlockHatch>();
+            }
             BuildEnergyBarrier(root, visual);
             BuildDoors(root);
             BuildRoundDetails(visual);
@@ -1753,14 +1759,14 @@ namespace GameOff.EditorTools
         private static void BuildDecor(GameObject p)
         {
             // Hall: y 0..6, doors west z 1 and -3, east z 3 and -4 (hatch), south x -7 and 2
-            WallDecor(p, KitClock, "Clock_Hall", false, -6, 1, -3f, 3.2f);
+            AddClockDisplay(WallDecor(p, KitClock, "Clock_Hall", false, -6, 1, -3f, 3.2f));
             WallDecor(p, KitSpeaker, "Speaker_Hall", false, -6, 1, 4.5f, 4.6f);
             FloorDecor(p, KitPlant, "Plant_Hall", 5.6f, -5.4f, 0.5f, 0.5f, 1f);
             FloorDecor(p, KitBin, "Bin_Hall", -7.55f, 2.7f, 0.5f, 0.5f, 0.9f);
             FloorDecor(p, KitBot, "CleaningBot", 7.4f, 0.6f, 0.6f, 0.6f, 0.4f, 0f, -90f);
 
             // Counter: west door z -9, south window x -6..-2, north board and speaker x -1.5, -2.5
-            WallDecor(p, KitClock, "Clock_Counter", false, -12, 1, -1f, 2.2f);
+            AddClockDisplay(WallDecor(p, KitClock, "Clock_Counter", false, -12, 1, -1f, 2.2f));
             WallDecor(p, KitExtinguisher, "Extinguisher_Counter", true, -6, 1, -7.2f, 0.8f);
             WallDecor(p, KitVent, "Vent_Counter", false, -6, -1, -5.2f, 2.3f);
 
@@ -2006,6 +2012,34 @@ namespace GameOff.EditorTools
         }
 
         /// <summary>A piece on a wall face without collider: its back touches the wall, y is the height of its pivot.</summary>
+        /// <summary>P97: a live readout over the painted digits of the wall clock (its front looks along local -Z).</summary>
+        private static void AddClockDisplay(GameObject clock)
+        {
+            if (clock == null) return;
+            float front = KitZRange(KitClock).Item1 - 0.002f;
+            var screen = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            screen.name = "Screen";
+            Object.DestroyImmediate(screen.GetComponent<Collider>());
+            screen.transform.SetParent(clock.transform, false);
+            screen.transform.localPosition = new Vector3(0f, 0.02f, front);
+            screen.transform.localScale = new Vector3(0.31f, 0.23f, 1f);
+            screen.GetComponent<MeshRenderer>().sharedMaterial = GetOrCreateMaterial("M_Clock_Screen", new Color(0.01f, 0.01f, 0.012f), false);
+            var text = new GameObject("Text", typeof(RectTransform), typeof(TMPro.TextMeshPro));
+            text.transform.SetParent(clock.transform, false);
+            text.transform.localPosition = new Vector3(0f, 0.02f, front - 0.003f);
+            ((RectTransform)text.transform).sizeDelta = new Vector2(0.3f, 0.2f);
+            var tmp = text.GetComponent<TMPro.TextMeshPro>();
+            tmp.font = AssetDatabase.LoadAssetAtPath<TMPro.TMP_FontAsset>("Assets/_Project/Fonts/ShareTechMono SDF.asset");
+            tmp.text = "08:00";
+            tmp.fontSize = 1.2f;
+            tmp.color = new Color(0.9f, 0.16f, 0.12f);
+            tmp.alignment = TMPro.TextAlignmentOptions.Center;
+            var display = clock.AddComponent<GameOff.Day.ClockDisplay>();
+            var so = new SerializedObject(display);
+            so.FindProperty("text").objectReferenceValue = tmp;
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
         private static GameObject WallDecor(GameObject parent, string kitPath, string name, bool onXLine, float line, int side, float along, float y)
         {
             var (zMin, zMax) = KitZRange(kitPath);

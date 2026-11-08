@@ -26,3 +26,5 @@ MonoBehaviour:
   greeting: Pim Oddo, purveyor of the remarkable! Clown shoes, lucky charms, liquor
     - samples for the officer?
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 

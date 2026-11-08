@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Pipe fitter. Your pipes need me, believe me.
   - key: origin
     line: Aska-3. Born there, leaving there.
+  reactionAdmitted: 
+  reactionDenied: 

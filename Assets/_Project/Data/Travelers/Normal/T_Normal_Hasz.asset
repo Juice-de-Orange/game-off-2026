@@ -28,3 +28,5 @@ MonoBehaviour:
     line: Clan record. Nothing more.
   - key: purpose
     line: Work. As ordered.
+  reactionAdmitted: 
+  reactionDenied: 

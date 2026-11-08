@@ -29,3 +29,5 @@ MonoBehaviour:
     line: Oster, Ostern, the clerk at Aska can't spell.
   - key: cargo
     line: Rations. The border's closed, somebody has to eat.
+  reactionAdmitted: 
+  reactionDenied: 

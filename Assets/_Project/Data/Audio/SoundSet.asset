@@ -20,10 +20,10 @@ MonoBehaviour:
     volume: 1
   paperSlide:
     clip: {fileID: 8300000, guid: 88ae0c1b51d7c914d84435172dc27b82, type: 3}
-    volume: 1
+    volume: 0.32
   paperPickup:
     clip: {fileID: 8300000, guid: adcdafd3275107f4f9fd11a5ad460c5c, type: 3}
-    volume: 1
+    volume: 0.32
   drawerOpen:
     clip: {fileID: 8300000, guid: 49884fccff38f064c8154d2f4f4077a7, type: 3}
     volume: 1
@@ -60,6 +60,8 @@ MonoBehaviour:
   tradeBuy:
     clip: {fileID: 8300000, guid: 8b6b70a878a30ca488468b64a59db9df, type: 3}
     volume: 1
+  paperPickups: []
+  paperSlides: []
   footsteps:
   - clip: {fileID: 8300000, guid: 2a103e33802aebc44823a323169d815d, type: 3}
     volume: 0.5

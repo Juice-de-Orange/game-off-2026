@@ -25,3 +25,5 @@ MonoBehaviour:
   greeting: 'No games today, officer. There are people on this station who want what
     you want: a fair wage, a way home, an end to all this.'
   answers: []
+  reactionAdmitted: 
+  reactionDenied: 
