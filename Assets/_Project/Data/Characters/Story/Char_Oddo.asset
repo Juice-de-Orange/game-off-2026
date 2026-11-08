@@ -41,6 +41,15 @@ MonoBehaviour:
       wantedInDays: 1
       wantedForDays: 1
       wantedNote: 
+      afterDays: 0
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: 
+    entrustItem: {fileID: 11400000, guid: d6458a0bc14861046949d58077ba09f2, type: 2}
+    entrustDeposit: 20
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -66,6 +75,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -90,6 +101,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES

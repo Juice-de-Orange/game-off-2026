@@ -41,6 +41,15 @@ MonoBehaviour:
       wantedInDays: 1
       wantedForDays: 1
       wantedNote: 
+      afterDays: 0
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: 
+    entrustItem: {fileID: 11400000, guid: 67974c849890c5b4aadcb23660d4f06f, type: 2}
+    entrustDeposit: 20
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -65,7 +74,24 @@ MonoBehaviour:
     greetingAfterBetrayed: 
     greetingAfterConfiscated: 
     eventLines: []
-    consequences: []
+    consequences:
+    - when: 1
+      marketEvent: {fileID: 0}
+      eventInDays: 1
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+      afterDays: 0
+      giftItem: {fileID: 11400000, guid: 67974c849890c5b4aadcb23660d4f06f, type: 2}
+      giftOnlyIfFamilySick: 1
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: Dr. Senn sent medicine on the drone. He says you earned it.
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -91,6 +117,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES

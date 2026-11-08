@@ -31,6 +31,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -54,7 +56,41 @@ MonoBehaviour:
     greetingAfterBetrayed: 
     greetingAfterConfiscated: 
     eventLines: []
-    consequences: []
+    consequences:
+    - when: 1
+      marketEvent: {fileID: 0}
+      eventInDays: 1
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+      afterDays: 2
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 25
+      wageNote: "Bonus \xB7 Inspector Korr"
+      announcement: Inspector Korr commends the officer at lane two for correct conduct.
+        A bonus has been paid.
+      letterLine: 
+    - when: 2
+      marketEvent: {fileID: 0}
+      eventInDays: 1
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+      afterDays: 2
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: -20
+      wageNote: "Reprimand \xB7 Inspector Korr"
+      announcement: Inspector Korr reports irregularities at lane two. The officer's
+        wage has been docked.
+      letterLine: 
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -81,6 +117,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES

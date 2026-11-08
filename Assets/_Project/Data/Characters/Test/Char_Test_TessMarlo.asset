@@ -39,6 +39,13 @@ MonoBehaviour:
       wantedInDays: 1
       wantedForDays: 1
       wantedNote: 
+      afterDays: 0
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: 
     - when: 2
       marketEvent: {fileID: 0}
       eventInDays: 1
@@ -47,6 +54,15 @@ MonoBehaviour:
       wantedInDays: 2
       wantedForDays: 1
       wantedNote: Threatened an officer
+      afterDays: 0
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: 
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -73,6 +89,8 @@ MonoBehaviour:
     - marketEvent: {fileID: 11400000, guid: 185c66fd5f1f3db4b9efbde0cf898138, type: 2}
       line: And it's freezing back home, they say.
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -97,6 +115,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES

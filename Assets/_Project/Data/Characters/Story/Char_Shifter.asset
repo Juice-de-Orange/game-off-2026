@@ -31,6 +31,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -57,6 +59,8 @@ MonoBehaviour:
     - marketEvent: {fileID: 11400000, guid: f43d7922bcf28184f9e158056a4dd645, type: 2}
       line: They closed the border right behind me. Lucky, eh?
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -89,6 +93,31 @@ MonoBehaviour:
       wantedInDays: 1
       wantedForDays: 1
       wantedNote: 
+      afterDays: 0
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: 
+    - when: 1
+      marketEvent: {fileID: 0}
+      eventInDays: 1
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+      afterDays: 0
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: 'A parcel came with no sender. Inside was a note: "Thank you, officer."
+        Mom burned it.'
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -113,6 +142,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: JOIN THE RESISTANCE?
     questionBody: '"We need someone at this counter. Nobody has to know. Say yes,
       and when this is over, you and your family go free."'
@@ -142,6 +173,8 @@ MonoBehaviour:
       There never was. Only a list of names... and yours is on it now.
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -172,6 +205,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES

@@ -31,6 +31,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -63,6 +65,13 @@ MonoBehaviour:
       wantedInDays: 1
       wantedForDays: 1
       wantedNote: 
+      afterDays: 0
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: 
     - when: 4
       marketEvent: {fileID: 11400000, guid: 499c80581acc6d241bb1a53254ffe24f, type: 2}
       eventInDays: 3
@@ -71,6 +80,13 @@ MonoBehaviour:
       wantedInDays: 1
       wantedForDays: 1
       wantedNote: 
+      afterDays: 0
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: 
     - when: 2
       marketEvent: {fileID: 0}
       eventInDays: 1
@@ -79,6 +95,13 @@ MonoBehaviour:
       wantedInDays: 3
       wantedForDays: 1
       wantedNote: Smuggling, threats against an officer
+      afterDays: 0
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: 
     - when: 4
       marketEvent: {fileID: 0}
       eventInDays: 1
@@ -87,6 +110,15 @@ MonoBehaviour:
       wantedInDays: 3
       wantedForDays: 1
       wantedNote: Smuggling, threats against an officer
+      afterDays: 0
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: 
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -112,6 +144,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 11400000, guid: 95ed42a555ca29c44adb1a7a87f3c5aa, type: 2}
+    entrustDeposit: 30
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -136,6 +170,8 @@ MonoBehaviour:
     greetingAfterConfiscated: You took my goods and my living. Now look at me.
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -161,6 +197,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES

@@ -33,6 +33,8 @@ MonoBehaviour:
     - marketEvent: {fileID: 11400000, guid: f43d7922bcf28184f9e158056a4dd645, type: 2}
       line: And now they've closed the border behind me.
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -57,7 +59,25 @@ MonoBehaviour:
     greetingAfterBetrayed: 
     greetingAfterConfiscated: 
     eventLines: []
-    consequences: []
+    consequences:
+    - when: 1
+      marketEvent: {fileID: 0}
+      eventInDays: 1
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+      afterDays: 0
+      giftItem: {fileID: 11400000, guid: b11fc09941fec2f47982df46f09907a0, type: 2}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: A woman called Mira left a tin of stew at our door. She said you
+        would know why.
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -82,6 +102,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -108,6 +130,8 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
     questionTitle: 
     questionBody: 
     acceptLabel: YES
