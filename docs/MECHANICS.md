@@ -60,13 +60,12 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Asservatenschrank aufbrechen | P83 (Kann) | P08, P32 | offen |
 | Familienschicksal: Folgen von „kritisch“ | P69 (Entwurf) | Familie → P12 | mit max abstimmen |
 | Enden (Familie, Moral, gefeuert) | P12 | Familie, P08, P69 | offen |
-| Briefe reagieren auf den Zustand | P15 | Familie | offen |
+| Briefe reagieren auf den Zustand | P15 | Familie | Tage 1–4 gebaut (`DayEntry.letterIfTrouble`, wenn jemand mindestens krank ist; Hook `DayManager.FamilyInTrouble`), Tage 5–12 offen |
 | Balancing über 3 Tage (Economy Report) | P71 (geplant) | alles Geld | nach P68 |
 | Gadgets: Scanner, UV-Lampe | P16, P62 | Schalter, Kiosk | Scanner-Funktion unklar (siehe Lücken) |
 | Familie in der Welt (Stadtlichter, Foto) | P29 | Familie | Assets bestellt |
 
 ## Lücken / passt noch nicht
-- **Brief von Tag 3** sagt fest „Pip is sick now“, auch wenn Pip gesund ist → P15.
 - **Moral ohne Wirkung:** P08 zählt sie, aber erst P12 (Enden) liest sie.
 - **Beschlagnahme vs. Simulator:** Der Economy Report rechnet Beschlagnahme und Strafen nicht mit – Mengen (`maxPerItem`) mit P15 abstimmen.
 - **P11 nur halb:** Schwarzmarkt-Einkauf und Beschlagnahmtes verkaufen warten auf P08.

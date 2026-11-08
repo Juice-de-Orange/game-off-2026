@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Hana
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: HANA ROEK
+  species: Human
+  model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
+  documents:
+  - {fileID: 11400000, guid: f53ebe70ba82d32498c083dbe3f1d015, type: 2}
+  - {fileID: 11400000, guid: 6a91845017f2dfc46972b41bc3e4f53c, type: 2}
+  intendedVerdict: 0
+  intendedReason: Papers in order
+  trickIntended: 0
+  storyTag: P15, day 1
+  greeting: First shift on the docks. Is it always this cold up here?
+  answers:
+  - key: purpose
+    line: Cargo handler. They promised heated boots.
+  - key: origin
+    line: Torvik. You can smell it on my coat.

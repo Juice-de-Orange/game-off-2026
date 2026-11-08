@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Jonas
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: JONAS VARGA
+  species: Human
+  model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 43067df484df61a4fa27dcc983bbecad, type: 2}
+  - {fileID: 11400000, guid: bb9424ca7a379ab47b8f541308ef66b6, type: 2}
+  - {fileID: 11400000, guid: 85108cd54c992e34399e825406046743, type: 2}
+  intendedVerdict: 2
+  intendedReason: Declares stimulants, forbidden
+  trickIntended: 0
+  storyTag: P15, day 4
+  greeting: My mother says stay out of trouble. This isn't trouble, it's freight.
+  answers:
+  - key: cargo
+    line: Vials and a bit of liquor. Half the station buys it.
+  - key: name
+    line: Varga. Don't tell my mother you saw me.

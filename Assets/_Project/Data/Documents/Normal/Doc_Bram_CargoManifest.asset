@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddc5e85903ecd443a8bdbe5f40e8659, type: 3}
+  m_Name: Doc_Bram_CargoManifest
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
+  type: 2
+  photo: {fileID: 0}
+  fields:
+  - key: name
+    value: BRAM OSTERN
+  - key: ship
+    value: THE LUCKY DUE
+  - key: origin
+    value: ASKA-3
+  - key: destination
+    value: KESTREL-9
+  - key: cargo
+    value: 2x RATION CRATE
+  forgedSeal: 0

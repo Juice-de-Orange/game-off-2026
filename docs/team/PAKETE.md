@@ -327,6 +327,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Alle Reisenden, Regeln, Briefe und Texte für 3 Tage (~15 Fälle, Englisch).
 - Regel (Max, 06.11., P58): Reisende mit gefälschtem Siegel erst an Tagen, an denen die UV-Lampe verfügbar ist; der Validator soll das prüfen.
 - Abnahme: Kompletter Durchlauf 10–15 Minuten ohne Platzhaltertexte.
+- Stand Etappe 1 (max, 08.11.): Tage 1–4 gefüllt (`Scripts/Editor/StoryDayContent.cs`, Reisende in `Data/Travelers/Normal/`; `Build Story Characters` baut sie). Regeln wachsen von Tag zu Tag, Tag 1 nur ORVAN. Briefe mit zweiter Fassung bei kranker Familie. Geprüft: Validate Travelers ok, 150/150 EditMode-Tests, Economy Report unverändert (alle ✓), WebGL Tag 1 gestartet. **Offen:** Max spielt 1–4 an; Tage 5–12 (Etappe 2, dort auch Kael Dross von der Liste nehmen); Figuren an Tag 1–4 haben noch keine eigenen Feld-Antworten (Martin baut die Figuren).
 - Ergänzung (martin, 06.11.): **Briefe reagieren auf den Familienzustand**, statt ihn vorzugeben (der Platzhalter von Tag 3 sagt fest
   „Pip is sick now“, auch wenn Pip gesund ist). Je Tag Brieftext pro Zustand oder Bausteine je Person; Haken ist
   `DayManager.LetterAddendum` bzw. `PlayerEconomy.FamilyReport()` (heute eine Zeile pro Person unter dem Brief).

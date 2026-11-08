@@ -75,6 +75,7 @@ namespace GameOff.UI
             {
                 dayManager.NightStep = Run;
                 dayManager.LetterAddendum = () => Economy != null ? Economy.MorningReport() : "";
+                dayManager.FamilyInTrouble = () => Economy != null && Economy.Household != null && Economy.Household.AnySick;
             }
             if (shift != null)
             {
@@ -89,6 +90,7 @@ namespace GameOff.UI
             {
                 dayManager.NightStep = null;
                 dayManager.LetterAddendum = null;
+                dayManager.FamilyInTrouble = null;
             }
             if (shift != null)
             {

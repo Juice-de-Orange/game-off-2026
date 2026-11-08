@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddc5e85903ecd443a8bdbe5f40e8659, type: 3}
+  m_Name: Doc_Jonas_IdCard
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
+  type: 0
+  photo: {fileID: 2800000, guid: c8ac425c6a1d8ab43ab10da17ec65ca4, type: 3}
+  fields:
+  - key: name
+    value: JONAS VARGA
+  - key: species
+    value: HUMAN
+  - key: origin
+    value: TORVIK COLONY
+  - key: id
+    value: JV-3097-52
+  - key: expires
+    value: 2293-01-01
+  forgedSeal: 0

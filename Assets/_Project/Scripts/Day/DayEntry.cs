@@ -14,6 +14,8 @@ namespace GameOff.Day
         public DayRules rules;
         public string letterTitle = "A letter from home";
         [TextArea(4, 10)] public string letter;
+        [Tooltip("P15: the letter when someone in the family is at least sick. Empty = always the letter above.")]
+        [TextArea(4, 10)] public string letterIfTrouble;
         [Tooltip("One line under the letter, e.g. \"New today: no entry from Vesk.\" The full bulletin hangs at the counter (P41). Empty = no line.")]
         public string newToday;
         [Tooltip("Fixed market events of this day (P68): prices, amounts, assortment; announced at the pinboard and over the loudspeaker.")]
@@ -22,5 +24,9 @@ namespace GameOff.Day
         public BarWish barWish = new BarWish();
         [Tooltip("The barkeeper's bribe note at shift start (P66). No traveler = no note.")]
         public Bribe bribe = new Bribe();
+
+        /// <summary>The morning letter for the family's state (P15).</summary>
+        public string LetterFor(bool familyInTrouble) =>
+            familyInTrouble && !string.IsNullOrWhiteSpace(letterIfTrouble) ? letterIfTrouble : letter;
     }
 }

@@ -27,12 +27,14 @@ namespace GameOff.EditorTools
         private const string SchedulePath = "Assets/_Project/Data/Days/DaySchedule.asset";
         private const string TestTravelers = "Assets/_Project/Data/Travelers/Test/";
         public const int StoryDays = 12;
-        private const string Valid = "2290-11-30";
+        private const string NormalTravelerFolder = "Assets/_Project/Data/Travelers/Normal/";
+        private const string NormalDocFolder = "Assets/_Project/Data/Documents/Normal/";
+        internal const string Valid = "2290-11-30";
         /// <summary>P87: set when the player joins the Shifter's resistance on day 6.</summary>
         public const string ResistanceFlag = "joined_resistance";
 
         public static string Date(int day) => $"2290-11-{4 + day:00}";
-        private static string Yesterday(int day) => $"2290-11-{3 + day:00}";
+        internal static string Yesterday(int day) => $"2290-11-{3 + day:00}";
 
         [MenuItem("GameOff/Build Story Characters")]
         public static void BuildFromMenu() => Debug.Log("[StoryCharacterBuilder] " + Build());
@@ -46,8 +48,9 @@ namespace GameOff.EditorTools
 
             var chars = new List<RecurringCharacter>();
             var shifterDay3 = BuildCharacters(ev, chars, out var quillDay3);
-            var days = BuildDays(shifterDay3, chars);
-            BuildSchedule(days, ev, quillDay3);
+            var authored = StoryDayContent.Build(); // P15
+            var days = BuildDays(shifterDay3, chars, authored);
+            BuildSchedule(days, ev, quillDay3, authored);
             AssetDatabase.SaveAssets();
             return $"{chars.Count} story characters, {days.Count} story days";
         }
@@ -57,7 +60,7 @@ namespace GameOff.EditorTools
         /// <summary>Encounters per day as before (6): placeholders fill up what the characters leave on the intended path.</summary>
         private const int EncountersPerDay = 6;
 
-        private static List<DayRules> BuildDays(TravelerData shifterDay3, List<RecurringCharacter> chars)
+        private static List<DayRules> BuildDays(TravelerData shifterDay3, List<RecurringCharacter> chars, Dictionary<int, StoryDayContent> authored)
         {
             var fillers = new List<TravelerData>();
             foreach (var f in new[] { "T_Test_01_Vesna", "T_Test_02_Darro", "T_Test_05_Ixa" })
@@ -87,20 +90,34 @@ namespace GameOff.EditorTools
             var list = new List<DayRules>();
             for (int d = 1; d <= StoryDays; d++)
             {
-                var rules = new List<DayRule> { new BannedOriginRule("ORVAN"), new ForbiddenGoodsRule("STIMULANT"), new QuarantineRule("KETRA STATION") };
-                if (d == 3) rules.Add(new ForbiddenGoodsRule("ANTIBIOTICS")); // Dr. Senn's cargo needs an import licence today
-                var wanted = new List<WantedEntry> { new WantedEntry("KAEL DROSS", "DX-0013-44", WantedOrder.Arrest, "Armed robbery, Aska-3") };
+                List<DayRule> rules;
+                List<WantedEntry> wanted;
+                List<TravelerData> travelers;
+                if (authored.TryGetValue(d, out var content))
+                {
+                    rules = content.Rules;
+                    wanted = content.Wanted;
+                    travelers = content.Travelers;
+                    if (travelers.Count != EncountersPerDay - met[d])
+                        Debug.LogWarning($"[StoryCharacterBuilder] day {d}: {travelers.Count} ordinary travelers + {met[d]} characters, not {EncountersPerDay} encounters (changes the wage balance)");
+                }
+                else
+                {
+                    rules = new List<DayRule> { new BannedOriginRule("ORVAN"), new ForbiddenGoodsRule("STIMULANT"), new QuarantineRule("KETRA STATION") };
+                    wanted = new List<WantedEntry> { new WantedEntry("KAEL DROSS", "DX-0013-44", WantedOrder.Arrest, "Armed robbery, Aska-3") };
+                    travelers = fillers.GetRange(0, System.Math.Max(3, System.Math.Min(fillers.Count, EncountersPerDay - met[d])));
+                }
                 // Max's plan: the Shifter is on the list on day 3, to be terminated on sight – always.
                 if (d == 3) wanted.Add(new WantedEntry(shifterDay3.DisplayName, "AB-3377-77", WantedOrder.Terminate, "Enemy agent. Terminate on sight."));
                 var day = Asset<DayRules>(DayFolder + $"Day{d:00}.asset");
-                day.EditorSet(Date(d), rules, wanted, fillers.GetRange(0, System.Math.Max(3, System.Math.Min(fillers.Count, EncountersPerDay - met[d]))));
+                day.EditorSet(Date(d), rules, wanted, travelers);
                 EditorUtility.SetDirty(day);
                 list.Add(day);
             }
             return list;
         }
 
-        private static void BuildSchedule(List<DayRules> days, Dictionary<string, MarketEvent> ev, TravelerData quillDay3)
+        private static void BuildSchedule(List<DayRules> days, Dictionary<string, MarketEvent> ev, TravelerData quillDay3, Dictionary<int, StoryDayContent> authored)
         {
             var schedule = AssetDatabase.LoadAssetAtPath<DaySchedule>(SchedulePath);
             if (schedule == null) return;
@@ -120,6 +137,12 @@ namespace GameOff.EditorTools
                     e.FindPropertyRelative("barWish").FindPropertyRelative("amount").intValue = 0;
                     e.FindPropertyRelative("bribe").FindPropertyRelative("traveler").objectReferenceValue = null;
                     e.FindPropertyRelative("bribe").FindPropertyRelative("amount").intValue = 0;
+                }
+                if (authored.TryGetValue(d, out var content))
+                {
+                    e.FindPropertyRelative("letter").stringValue = content.Letter;
+                    e.FindPropertyRelative("letterIfTrouble").stringValue = content.LetterIfTrouble ?? "";
+                    e.FindPropertyRelative("newToday").stringValue = content.NewToday ?? "";
                 }
                 var fixedEvents = d switch
                 {
@@ -410,20 +433,29 @@ namespace GameOff.EditorTools
         }
 
         private static TravelerData Person(string file, string name, string species, Verdict verdict, string reason, int day, string greeting,
-            params DocumentData[] docs)
+            params DocumentData[] docs) =>
+            Make(TravelerFolder + $"T_Story_{file}.asset", DocFolder + $"Doc_{file}_", name, species, verdict, reason, $"P76 character, day {day}", greeting, null, docs);
+
+        /// <summary>P15: an ordinary traveler (no recurring character), in Data/Travelers/Normal/.</summary>
+        internal static TravelerData Normal(string file, string name, string species, Verdict verdict, string reason, int day, string greeting,
+            FieldAnswer[] answers, params DocumentData[] docs) =>
+            Make(NormalTravelerFolder + $"T_Normal_{file}.asset", NormalDocFolder + $"Doc_{file}_", name, species, verdict, reason, $"P15, day {day}", greeting, new List<FieldAnswer>(answers), docs);
+
+        private static TravelerData Make(string travelerPath, string docPrefix, string name, string species, Verdict verdict, string reason, string tag, string greeting,
+            List<FieldAnswer> answers, DocumentData[] docs)
         {
-            var t = Asset<TravelerData>(TravelerFolder + $"T_Story_{file}.asset");
+            var t = Asset<TravelerData>(travelerPath);
             var model = AssetDatabase.LoadAssetAtPath<GameObject>(TravelerPrefabBuilder.PrefabFolder + $"PF_NPC_{species}.prefab");
             for (int i = 0; i < docs.Length; i++)
             {
-                var path = DocFolder + $"Doc_{file}_{docs[i].Type}.asset";
+                var path = docPrefix + $"{docs[i].Type}.asset";
                 var existing = AssetDatabase.LoadAssetAtPath<DocumentData>(path);
                 if (existing == null) { AssetFolders.EnsureForAsset(path); AssetDatabase.CreateAsset(docs[i], path); existing = docs[i]; }
                 else { existing.EditorSet(docs[i].Type, docs[i].Photo, new List<DocumentField>(docs[i].Fields), docs[i].ForgedSeal); Object.DestroyImmediate(docs[i]); }
                 EditorUtility.SetDirty(existing);
                 docs[i] = existing;
             }
-            t.EditorSet(name, species, new List<DocumentData>(docs), verdict, reason, $"P76 character, day {day}", greeting, null, model);
+            t.EditorSet(name, species, new List<DocumentData>(docs), verdict, reason, tag, greeting, answers, model);
             EditorUtility.SetDirty(t);
             return t;
         }
@@ -439,14 +471,14 @@ namespace GameOff.EditorTools
 
         private static Texture2D Photo(string species) => AssetDatabase.LoadAssetAtPath<Texture2D>($"{PhotoFolder}T_Doc_Photo_{species}.png");
 
-        private static DocumentData IdCard(string species, string name, string origin, string id) =>
-            Doc(DocumentType.IdCard, Photo(species), ("name", name), ("species", species.ToUpperInvariant()), ("origin", origin), ("id", id), ("expires", "2293-01-01"));
+        internal static DocumentData IdCard(string species, string name, string origin, string id, string expires = "2293-01-01") =>
+            Doc(DocumentType.IdCard, Photo(species), ("name", name), ("species", species.ToUpperInvariant()), ("origin", origin), ("id", id), ("expires", expires));
 
-        private static DocumentData PermitDoc(string species, string name, string id, string purpose, string expires, string issued, string route) =>
+        internal static DocumentData PermitDoc(string species, string name, string id, string purpose, string expires, string issued, string route) =>
             Doc(DocumentType.EntryPermit, Photo(species), ("name", name), ("id", id), ("purpose", purpose), ("duration", "3 CYCLES"),
                 ("expires", expires), ("issued", issued), ("route", route));
 
-        private static DocumentData Manifest(string name, string ship, string origin, string cargo) =>
+        internal static DocumentData Manifest(string name, string ship, string origin, string cargo) =>
             Doc(DocumentType.CargoManifest, null, ("name", name), ("ship", ship), ("origin", origin), ("destination", "KESTREL-9"), ("cargo", cargo));
 
         private static T Asset<T>(string path) where T : ScriptableObject

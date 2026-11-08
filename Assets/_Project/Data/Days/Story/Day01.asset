@@ -14,30 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.DayRules
   date: 2290-11-05
   rules:
-  - rid: 1231853440248840217
-  - rid: 1231853440248840218
-  - rid: 1231853440248840219
-  wanted:
-  - name: KAEL DROSS
-    id: DX-0013-44
-    order: 0
-    note: Armed robbery, Aska-3
+  - rid: 1231853440777584667
+  wanted: []
   travelers:
-  - {fileID: 11400000, guid: 0d582a4922a849542b77c348599c062d, type: 2}
-  - {fileID: 11400000, guid: 52e2f491a27e71c40b5f672a36f72e43, type: 2}
-  - {fileID: 11400000, guid: 0e176fa670824dc429cc2bc43f4adac3, type: 2}
+  - {fileID: 11400000, guid: fe84f22aa34f8834d818a33d6817fbdd, type: 2}
+  - {fileID: 11400000, guid: 0dcd4004ca5632147a85b82334d07f66, type: 2}
+  - {fileID: 11400000, guid: 45b7f2aba64ea0d41a66bba6112f2836, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 1231853440248840217
+    - rid: 1231853440777584667
       type: {class: BannedOriginRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         origin: ORVAN
-    - rid: 1231853440248840218
-      type: {class: ForbiddenGoodsRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
-      data:
-        keyword: STIMULANT
-    - rid: 1231853440248840219
-      type: {class: QuarantineRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
-      data:
-        station: KETRA STATION

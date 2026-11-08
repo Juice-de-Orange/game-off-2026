@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Sudo
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: SUDO VELK
+  species: Vellani
+  model: {fileID: 7545026988212257677, guid: 5d6ec526c1583de48a952ef7a4217cbc, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 7082237ee5a7e9e478f0a457e9b83a21, type: 2}
+  - {fileID: 11400000, guid: 2d2ff523407e392488a257c62475b472, type: 2}
+  intendedVerdict: 1
+  intendedReason: Entry permit expired yesterday
+  trickIntended: 0
+  storyTag: P15, day 1
+  greeting: Trade visa. A quick stamp, yes? My ship is waiting.
+  answers:
+  - key: expires
+    line: Dates, dates. Close enough, surely.
+  - key: purpose
+    line: I sell cables. Very good cables.

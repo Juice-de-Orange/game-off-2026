@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddc5e85903ecd443a8bdbe5f40e8659, type: 3}
+  m_Name: Doc_Nessa_EntryPermit
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
+  type: 1
+  photo: {fileID: 2800000, guid: c32b5c37ada19aa41b24a8c4257ffcb3, type: 3}
+  fields:
+  - key: name
+    value: NESSA KILO
+  - key: id
+    value: VL-4471-22
+  - key: purpose
+    value: TRADE
+  - key: duration
+    value: 3 CYCLES
+  - key: expires
+    value: 2290-11-30
+  - key: issued
+    value: VELL PRIME CONSULATE
+  - key: route
+    value: VELL PRIME > KESTREL-9
+  forgedSeal: 0

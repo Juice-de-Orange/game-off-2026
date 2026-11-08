@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Xit
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: XIT KOROL
+  species: Xirrik
+  model: {fileID: 8372028664995244572, guid: 6fc5658331bc5e8408dc013c0086e1be, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 62610082ff467184ea792a5dc541767e, type: 2}
+  - {fileID: 11400000, guid: c3ded550281168d44bb79d2061c3a19e, type: 2}
+  intendedVerdict: 1
+  intendedReason: ID number on the entry permit doesn't match the ID card
+  trickIntended: 0
+  storyTag: P15, day 2
+  greeting: Kss. Numbers, numbers. Stamp, please.
+  answers:
+  - key: id
+    line: Kss. All the same number. Look again.
+  - key: route
+    line: Straight from Lumen Reach. No stops.
