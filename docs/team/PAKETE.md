@@ -1626,3 +1626,31 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: 2–3 Antworten je Auftritt im `StoryCharacterBuilder` (`FieldAnswer`, wie `StoryDayContent`). Die Antworten dürfen nicht zum falschen Papier passen: Ein Feldschlüssel gilt für alle Papiere des Reisenden.
 - Nicht enthalten: Tage 5–12, neue Mechanik.
 - Abnahme: Validate Travelers und EditMode-Tests grün; keine Figur an Tag 1–4 antwortet mit der allgemeinen Zeile.
+
+### P99 — Dealer sitzt richtig auf dem Hocker
+- Größe: S · Priorität: Muss · Status: offen · Zuständig: offen
+- Braucht: — · Folgt auf: P90
+- Ziel: Der Dealer in der Bar sitzt sichtbar auf dem Hocker (#23, wieder geöffnet).
+- Enthalten: Nach dem Anspielen 08.11.: Mit y 0,58 steckt der Sitz noch in seinem Schoß, er muss noch etwas höher (`VendorSpot` Dealer im `EconomyBuilder`). Danach im Bild von der Seite prüfen.
+- Abnahme: Kein Hocker ragt durch die Figur, die Füße schweben nicht sichtbar.
+
+### P100 — Reisende reagieren auf die Entscheidung
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: offen
+- Braucht: — · Folgt auf: P40, P91
+- Ziel: Wer abgewiesen wird, regt sich auf; wer durchkommt, ist erleichtert. Bisher sagt niemand etwas (Anspielen 08.11.).
+- Enthalten: Eine Zeile nach dem Stempel in der Sprechblase, bevor die Figur geht: je Reisendem optional eigene Zeilen (`StoryDayContent`, Figuren je Auftritt), sonst ein Pool je Spezies für abgewiesen und durchgelassen. Darf das Tempo nicht bremsen.
+- Abnahme: Abgewiesene beschweren sich hörbar lesbar, mit Abwechslung; die Schicht wird nicht spürbar länger.
+
+### P101 — Durchgelassene sind wirklich in der Station
+- Größe: L · Priorität: Soll · Status: offen · Zuständig: offen
+- Braucht: — · Folgt auf: P91, P96
+- Ziel: Wen man durchlässt, trifft man abends in der Station wieder (Anspielen 08.11., wichtig für die Immersion). Bisher nicht geplant.
+- Enthalten: Entwurf, Umfang klären: Durchgelassene des Tages stehen oder sitzen abends in Halle und Bar auf festen Plätzen, mit Idle und einer Zeile beim Ansprechen. Offen: wie viele gleichzeitig (Leistung WebGL), ob sie laufen, ob Abgewiesene oder Verhaftete sichtbar fehlen.
+- Abnahme: Mindestens ein am selben Tag Durchgelassener steht abends sichtbar in der Station.
+
+### P102 — Dokument-Geräusche: leiser und abwechslungsreicher
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: offen
+- Braucht: — · Folgt auf: P61, P89
+- Ziel: Die Papier-Geräusche nerven nicht mehr (Anspielen 08.11.).
+- Enthalten: Lautstärke von `paperPickup` und `paperSlide` senken, Varianten bestellen und zufällig mit leichter Tonhöhe abspielen. Ton nach Gehör: Max.
+- Abnahme: Viele Papiere nacheinander klingen unaufdringlich.
