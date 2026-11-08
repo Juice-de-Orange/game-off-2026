@@ -2620,7 +2620,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Home_Albedo.png
 package: P24
 scene: Himmel
-status: final
+status: rework
 priority: P1
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2639,7 +2639,8 @@ animations: []
 collision: none
 refs: []
 placeholder: PNG 1024x512
-feedback: []
+feedback:
+  - "2026-11-08 max: (P29) Neu und größer, 2048x1024: klar erkennbare Kontinente mit Küstenlinien und Gebirgen, durchs Fernrohr muss man hineinzoomen können. Eine große Küstenregion auf der der Station zugewandten Seite (Längengrad 0, etwa 25° Nord) ist die Heimatregion."
 ```
 
 ### T_Planet_Home_Emission.png
@@ -2647,7 +2648,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Home_Emission.png
 package: P24
 scene: Himmel
-status: final
+status: rework
 priority: P1
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2666,7 +2667,8 @@ animations: []
 collision: none
 refs: []
 placeholder: PNG 1024x512
-feedback: []
+feedback:
+  - "2026-11-08 max: (P29) Neu, 2048x1024, passend zu den Kontinenten: Stadtlichter als Netze entlang von Küsten und Straßen, große Städte erkennbar. Die Heimatstadt liegt bei Längengrad 0, etwa 25° Nord. Dort ein eigener zusammenhängender heller Fleck, damit ihre Lichter später je nach Familienzustand flackern oder ausgehen können."
 ```
 
 ### T_Sun_Glow.png
@@ -6876,5 +6878,380 @@ animations: []
 collision: prefab
 refs: []
 placeholder: Bis zur Lieferung ein vorhandener Ton.
+feedback: []
+```
+
+### SK_NPC_Guard.fbx
+```yaml
+path: Assets/_Project/Art/Models/Characters/SK_NPC_Guard.fbx
+package: P104
+scene: Prüfkammer
+status: offen
+priority: P1
+needed_by: 2026-11-20
+size_m: [0.6, 0.4, 1.85]
+pivot: bottom_center
+tris_max: 3000
+materials: [Body]
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Guard_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Wachmann der Stationssicherheit, gleiche Bauart und gleiches Skelett wie die SK_NPC_*-Reisenden (Humanoid-Rig): dunkle Uniform, Helm mit Visier, Schlagstock am Gürtel, Handschellen. Wirkt massig und gesichtslos.
+interaction: "kommt in die Prüfkammer und packt den Reisenden"
+variants: []
+animations: [Idle, Walk, Grab]
+collision: prefab
+refs: [Assets/_Project/Art/Models/Characters/SK_NPC_Human.fbx]
+placeholder: Grauer Humanoid wie SK_NPC_Human
+feedback: []
+```
+
+### SM_Ext_Shuttle_Docked.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_Shuttle_Docked.fbx
+package: P106
+scene: Außen, Hangar
+status: offen
+priority: P1
+needed_by: 2026-11-20
+size_m: [6.0, 11.0, 4.0]
+pivot: center
+tris_max: 4000
+materials: [Hull, Detail]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_Shuttle_Docked_Albedo.png   # 512x512, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_Shuttle_Docked_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Das Personal-Shuttle von außen, an der Station angedockt, gleiche Bauart wie SM_Hangar_Shuttle: klobig, weißer Lack mit Rost, Seriennummer, Positionslichter, Fensterreihe. An einer Längsseite eine Luke für den Andockring.
+interaction: "hängt außen am Hangar, von einem Fenster aus sichtbar"
+variants: []
+animations: []
+collision: prefab
+refs: [Assets/_Project/Art/Models/Hangar/SM_Hangar_Shuttle.fbx]
+placeholder: Box 6 x 11 x 4 m
+feedback: []
+```
+
+### SM_Ext_DockingCollar.fbx
+```yaml
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_DockingCollar.fbx
+package: P106
+scene: Außen, Hangar
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [3.0, 3.0, 2.5]
+pivot: center
+tris_max: 800
+materials: [Collar]
+textures:
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_DockingCollar_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Andockring und kurze Röhre zwischen Hangarwand und Shuttle-Luke: Metallsegmente, Warnstreifen, Klammern, Kabel.
+interaction: "verbindet Station und Shuttle"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Röhre 3 x 3 x 2.5 m
+feedback: []
+```
+
+### SM_Shuttle_Cabin_Interior.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Shuttle_Cabin_Interior.fbx
+package: P106
+scene: Shuttle innen
+status: offen
+priority: P1
+needed_by: 2026-11-20
+size_m: [3.2, 8.0, 2.5]
+pivot: bottom_center
+tris_max: 3000
+materials: [Cabin, Detail]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Shuttle_Cabin_Albedo.png   # 512x512, Point
+  - Assets/_Project/Art/Textures/Hangar/T_Shuttle_Cabin_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Begehbare Kabine des Personal-Shuttles: schmaler Mittelgang, Sitzreihen links und rechts, kleine Fenster, Gepäckfächer, Warnschilder, vorne ein Sitz fürs Abheben und ein Panel. Innenansicht, Wände von innen geschlossen, abgenutzt.
+interaction: "begehbar, Sitz vorne startet den Abflug"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box innen 3.2 x 8 x 2.5 m
+feedback: []
+```
+
+### SM_Hangar_Wall_Viewport.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Wall_Viewport.fbx
+package: P106
+scene: Hangar
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [4.0, 0.3, 4.0]
+pivot: bottom_center
+tris_max: 800
+materials: [Wall, Glass]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_Wall_Viewport_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Hangarwand-Modul 4 x 4 m wie SM_Hangar_Wall_4x4, mit großem Sichtfenster in einer kleinen Nische und Haltestange. Daneben kann das Schott zum Shuttle sitzen.
+interaction: "Blick von innen auf das angedockte Shuttle"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Wandmodul mit Glas
+feedback: []
+```
+
+### SM_Hangar_Ship_Courier.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_Courier.fbx
+package: P107
+scene: Hangar
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [5.0, 8.0, 3.0]
+pivot: bottom_center
+tris_max: 2000
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_Ship_Courier_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Kleines schnelles Kurierschiff auf Landekufen, schlank, grell lackiert, zerkratzt. Passt in die Reihe von SM_Hangar_Shuttle.
+interaction: "steht auf einem Landeplatz, landet morgens"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 5 x 8 x 3 m
+feedback: []
+```
+
+### SM_Hangar_Ship_Hauler.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_Hauler.fbx
+package: P107
+scene: Hangar
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [5.0, 8.0, 3.0]
+pivot: bottom_center
+tris_max: 2000
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_Ship_Hauler_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Kleiner kastiger Frachter auf Landebeinen, Ladeluke hinten, rostig, Frachtbehälter außen verzurrt. Passt in die Reihe von SM_Hangar_Shuttle.
+interaction: "steht auf einem Landeplatz, landet morgens"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 5 x 8 x 3 m
+feedback: []
+```
+
+### SM_Hangar_Ship_Skiff.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_Skiff.fbx
+package: P107
+scene: Hangar
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [5.0, 8.0, 3.0]
+pivot: bottom_center
+tris_max: 2000
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_Ship_Skiff_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Einfaches offenes Beiboot, zwei Sitze, aufgeflickte Platten, passt zu Namen wie SKIFF PELL. Passt in die Reihe von SM_Hangar_Shuttle.
+interaction: "steht auf einem Landeplatz, landet morgens"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 5 x 8 x 3 m
+feedback: []
+```
+
+### SM_Hangar_Ship_Family.fbx
+```yaml
+path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_Family.fbx
+package: P107
+scene: Hangar
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [5.0, 8.0, 3.0]
+pivot: bottom_center
+tris_max: 2000
+materials: [Hull]
+textures:
+  - Assets/_Project/Art/Textures/Hangar/T_Hangar_Ship_Family_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Altes rundliches Familienschiff, Wohnwagen-Charakter, Vorhänge an den Fenstern, Quobb- oder Xirrik-Beschriftung. Passt in die Reihe von SM_Hangar_Shuttle.
+interaction: "steht auf einem Landeplatz, landet morgens"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 5 x 8 x 3 m
+feedback: []
+```
+
+### SFX_Guard_Boots.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Guard_Boots.ogg
+package: P104
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Schwere Stiefel auf Metall, ein paar entschlossene Schritte, ca. 1,5 s.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Airlock_Alarm.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Airlock_Alarm.ogg
+package: P105
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Schriller, kurzer Alarm vor dem Öffnen des Außenschotts, ca. 1 s.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Airlock_Decompress.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Airlock_Decompress.ogg
+package: P105
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Gewaltiger Luftsog ins All, dumpfes Ausrauschen, dann Stille, ca. 3 s.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Ship_Land.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Ship_Land.ogg
+package: P107
+scene: Hangar
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Kleines Schiff setzt mit Triebwerksfauchen und Fahrwerks-Schlag auf, gedämpft aus der Ferne, ca. 3 s.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Telescope_Coin.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Telescope_Coin.ogg
+package: P29
+scene: Plattform
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Münze fällt klackernd in ein altes Münzfernrohr, Mechanik klickt auf, ca. 0,8 s.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, bis die Lieferung da ist.
 feedback: []
 ```

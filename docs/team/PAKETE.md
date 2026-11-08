@@ -454,6 +454,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Hinweis (martin, 05.11.): Für die vorbeifliegenden Schiffe gibt es mit **P47** schon den Baustein `ShipTraffic` (Bahnen, Schiffsliste,
   Zufallsabstände, Obergrenze, Wiederverwenden, keine Lichter/Schatten) samt Tuning-Asset – für Main nur ein eigenes Tuning (seltener)
   und eine Instanz anlegen. Alle Schiffsmodelle (`Art/Models/Ships/`) sind geliefert.
+- Hinweis (max, 08.11.): Das Heim-Shuttle wandert nach außen (P106), die Ankunft der Reisenden regelt jetzt **P107**. Dieses Paket nur noch, wenn danach etwas fehlt.
 - Festgelegt im Asset-Durchgang (max, 02.11.): Shuttle mit **Rampe** (Rework bestellt): landen → Rampe klappt zischend herunter → Reisende steigen nacheinander aus und stellen sich an; abends Rampe hoch und Abflug.
 
 ### P26 — Details & Ausstattung
@@ -498,7 +499,8 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Größe: M · Priorität: Soll · Status: offen
 - Braucht: P24, P10 (Familienzustand) · Assets: `SM_Prop_CoinTelescope`, `UI_Telescope_Overlay`, `UI_Family_Photo` (bestellt)
 - Ziel: Die Familie ist in der Welt sichtbar, nicht nur in Briefen.
-- Enthalten: Fernrohr: 1 Credit, Okular-Overlay, Maus schwenkt, Mausrad zoomt, 20 s Zeit; Heimatstadt auf dem Planeten markiert, ihre
+- Festgelegt (Max, 08.11.): Fernrohr auf der Plattform wirklich nutzbar: [E] zieht 1 Credit ab, 30 s Blick mit Zoom und Schwenken. Heimatplanet mit erkennbaren Kontinenten und Städten (Karten neu bestellt).
+- Enthalten: Fernrohr: 1 Credit, Okular-Overlay, Maus schwenkt, Mausrad zoomt, 30 s Zeit; Heimatstadt auf dem Planeten markiert, ihre
   Lichter flackern/erlöschen je nach Familienzustand (auch von Plattform und Bullauge sichtbar); Familienfoto im Motelspind verblasst/reißt;
   Morgenbrief liegt physisch auf dem Tisch in 103, Handschrift wird zittriger
 - Abnahme: Familienzustand ändert sichtbar Stadtlichter, Foto und Brief.
@@ -1645,7 +1647,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Größe: L · Priorität: Soll · Status: offen · Zuständig: offen
 - Braucht: — · Folgt auf: P91, P96
 - Ziel: Wen man durchlässt, trifft man abends in der Station wieder (Anspielen 08.11., wichtig für die Immersion). Bisher nicht geplant.
-- Enthalten: Entwurf, Umfang klären: Durchgelassene des Tages stehen oder sitzen abends in Halle und Bar auf festen Plätzen, mit Idle und einer Zeile beim Ansprechen. Offen: wie viele gleichzeitig (Leistung WebGL), ob sie laufen, ob Abgewiesene oder Verhaftete sichtbar fehlen.
+- Enthalten (Max, 08.11.): Wer durchkam, sitzt oder steht ab Feierabend an festen Plätzen in Bar und Halle oder schläft in einem Zimmer des Wohnmoduls; am nächsten Tag sind sie weg. Idle und eine Zeile beim Ansprechen. Höchstens rund 6 Figuren je Abend (WebGL). Sie laufen nicht dorthin.
 - Abnahme: Mindestens ein am selben Tag Durchgelassener steht abends sichtbar in der Station.
 
 ### P102 — Dokument-Geräusche: leiser und abwechslungsreicher
@@ -1654,3 +1656,38 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Die Papier-Geräusche nerven nicht mehr (Anspielen 08.11.).
 - Enthalten: Lautstärke von `paperPickup` und `paperSlide` senken, Varianten bestellen und zufällig mit leichter Tonhöhe abspielen. Ton nach Gehör: Max.
 - Abnahme: Viele Papiere nacheinander klingen unaufdringlich.
+
+### P103 — Lena und Korr deuten den Weg über die Drohne an
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: offen
+- Braucht: — · Folgt auf: P13, P86, P15
+- Ziel: Der Spieler kommt selbst darauf, dass Kiosk + Drohne rund ein Viertel billiger ist als das [X] in der Abrechnung.
+- Enthalten: Nur angedeutet (Max, 08.11.): eine vage Frage von Lena in einem frühen Brief (etwa, ob man Sachen nicht auch per Drohne schicken kann) und ein Tipp von Korr im Tutorial oder bei einem späteren Auftritt. Keine Erklärung im Menü, Mechanik bleibt unverändert.
+- Abnahme: Beide Hinweise stehen im Spiel, ohne die Rechnung vorzurechnen.
+
+### P104 — Wachmann bei der Verhaftung
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: offen
+- Braucht: — · Folgt auf: P91
+- Ziel: Eine Verhaftung ist glaubhaft: Eine Wache kommt wirklich dazu.
+- Enthalten: Wache (`SK_NPC_Guard`) kommt durch die Hallentür und packt die Person, dann fällt das Gitter und der Rest ist zu hören (Max, 08.11.). Baut auf `TravelerPresenter.BehindShutter` auf; `LeaveSeconds` anpassen.
+- Abnahme: Bei jeder Verhaftung ist die Wache sichtbar, bevor das Gitter fällt.
+
+### P105 — Luftschleuse: Ragdoll und Sog
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: offen
+- Braucht: — · Folgt auf: P91
+- Ziel: Die Schleuse sieht man: Die Person wird heftig ins All gerissen.
+- Enthalten: Kein Gitter mehr bei der Schleuse (P91 ändern). Innenschott zu, Außenschott klappt auf, Figur wird zum Ragdoll (Skelett der `SK_NPC_*`) und von einer Kraft hinausgerissen, dazu Alarmlicht und zitternde Scheibe. Je Spezies abstimmen; im Browser nur eine Figur gleichzeitig. Außenschott braucht Animation.
+- Abnahme: Bei allen fünf Spezies fliegt die Figur sichtbar hinaus, ohne im Schott zu hängen; keine Konsolenfehler.
+
+### P106 — Heim-Shuttle dockt außen am Hangar an, begehbar
+- Größe: L · Priorität: Soll · Status: offen · Zuständig: offen
+- Braucht: — · Folgt auf: P72
+- Ziel: Es ist klar, wie das Personal hergekommen ist und womit man heimfliegt.
+- Enthalten: Shuttle hängt außen am Hangar an einem Andockring, Zugang über ein Schott in der Hangarwand, innen begehbar mit Sitzreihen; dort startet der Abflug (P72). **Sichtbar machen (Max, 08.11.):** Fenster oder eigene Nische im Hangar mit Blick aufs Shuttle. `SM_Hangar_Shuttle` verschwindet vom Landefeld. Betrifft `DepartureBuilder`, Hülle (`StationGrayboxBuilder`), Bake.
+- Abnahme: Man geht durchs Schott ins Shuttle, setzt sich und fliegt los; das Shuttle ist von innen aus dem Hangar zu sehen.
+
+### P107 — Hangar: Schiffe landen morgens, Reisende kommen glaubhaft an
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: offen
+- Braucht: — · Folgt auf: P25, P106
+- Ziel: Man versteht, wie die Reisenden des Tages auf die Station kommen.
+- Enthalten: Morgens fliegen wechselnde Schiffe durch die Barriere und landen; tagsüber stehen je Tag 2–4 kleine Schiffe auf festen Plätzen, passend zu den Frachtbriefen (`ship`-Feld). Reisende erscheinen hinter der Tür zur Prüfkammer, kein Laufweg durch den Hangar. Modelle bestellt.
+- Abnahme: An jedem Tag stehen andere Schiffe im Hangar; morgens landet sichtbar mindestens eines.

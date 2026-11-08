@@ -397,3 +397,12 @@ in `docs/ASSET-REQUESTS.md`.
   ca. 2 px dunkle Kontur, Dreiviertel-Ansicht, Palette, bei 48 px lesbar), gern wieder alle auf einem Branch mit Lineup. Wo es schon
   ein Modell gibt (`SM_Item_*`), bitte das Icon passend dazu. Mergen und Einbau macht Max wie immer.
 - antwort:
+
+### M023 — Großer Auftrag P104–P107, P29: Wache, angedocktes Shuttle, Hangar-Schiffe, Planet
+- datum: 2026-11-08
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`: `SK_NPC_Guard`, `SM_Ext_Shuttle_Docked`, `SM_Ext_DockingCollar`, `SM_Shuttle_Cabin_Interior`, `SM_Hangar_Wall_Viewport`, `SM_Hangar_Ship_*` (4), `SFX_Guard_Boots`, `SFX_Airlock_Alarm`, `SFX_Airlock_Decompress`, `SFX_Ship_Land`, `SFX_Telescope_Coin`; Rework `T_Planet_Home_Albedo`, `T_Planet_Home_Emission`
+- status: offen
+- meldung: Max bestellt das bewusst in dieser Größe. Zuerst die P1-Einträge (Wache muss wie die `SK_NPC_*` geriggt sein, damit sie im selben Skelett läuft; außerdem Shuttle außen und Kabine innen). Bei den Planetenkarten bitte auf die im Feedback genannte Lage der Heimatstadt achten. Bitte jede fertige Lieferung wie in M016 melden.
+- antwort:
