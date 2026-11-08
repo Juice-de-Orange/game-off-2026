@@ -1587,7 +1587,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Kein Schild mehr vor der Bar; der Wunsch ist beim Barkeeper zu erfahren.
 
 ### P94 — Stimmen: 10 Laute je Spezies
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: max
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: martin (08.11., im Urlaub per Claude; Abnahme durch Max)
 - Braucht: — · Folgt auf: P61
 - Ziel: Figuren reden abwechslungsreich statt mit einem einzigen Ton (#16).
 - Enthalten: Bei der Pipeline bestellen: je Spezies 10 kurze Murmel-Laute; zufällig abspielen, Tonhöhe leicht variieren.
@@ -1608,8 +1608,16 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Figuren wirken in Ruhe lebendig, ohne neue Assets.
 
 ### P97 — Eine gemeinsame Spieluhr
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: max
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: martin (08.11., im Urlaub per Claude; Abnahme durch Max)
 - Braucht: — · Folgt auf: P09, P31
 - Ziel: Alle Uhren zeigen dieselbe Spielzeit und laufen weiter (#19).
 - Enthalten: Spielzeit aus der Phase: Morgen 06:00, Schicht 08:00–18:00 nach Fortschritt der Reisenden, Abend bis 23:00. Kein Einfluss auf Geld oder Regeln.
 - Abnahme: Alle Uhren der Station stimmen überein und bewegen sich.
+
+### P98 — Eigene Feld-Antworten für die Figuren an Tag 1–4
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: martin (08.11., im Urlaub per Claude)
+- Braucht: P76 · Folgt auf: P15
+- Ziel: Korr, Quill, Shifter, Mira und Senn antworten an Tag 1–4 auf Feld-Klicks persönlich statt mit der allgemeinen Zeile („It says ...“); die normalen Reisenden daneben tun das schon.
+- Enthalten: 2–3 Antworten je Auftritt im `StoryCharacterBuilder` (`FieldAnswer`, wie `StoryDayContent`). Die Antworten dürfen nicht zum falschen Papier passen: Ein Feldschlüssel gilt für alle Papiere des Reisenden.
+- Nicht enthalten: Tage 5–12, neue Mechanik.
+- Abnahme: Validate Travelers und EditMode-Tests grün; keine Figur an Tag 1–4 antwortet mit der allgemeinen Zeile.
