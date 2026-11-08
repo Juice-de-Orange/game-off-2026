@@ -30,6 +30,7 @@ namespace GameOff.EditorTools
 
         public static string Build()
         {
+            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single); // first: opening a scene unloads assets held only here
             var looks = AssetDatabase.LoadAssetAtPath<TravelerLooks>(AssetPath);
             if (looks == null)
             {
@@ -64,7 +65,6 @@ namespace GameOff.EditorTools
             for (int i = 0; i < HairHeights.Length; i++) heights.GetArrayElementAtIndex(i).floatValue = HairHeights[i];
             so.ApplyModifiedPropertiesWithoutUndo();
 
-            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var lightGo = new GameObject("Light");
             var light = lightGo.AddComponent<Light>();
             light.type = LightType.Directional;

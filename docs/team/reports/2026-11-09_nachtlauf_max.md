@@ -3,9 +3,9 @@
 Stand am Ende des Laufs: siehe Abschnitt „Live und Prüfung“. Alles ist auf `main`, die Docs sind aktuell.
 
 ## Das Wichtigste in Kürze
-- **Fertig:** Muss-Pakete P69, P12, P16, P11, P99. Dazu P62, P63, P80, P77, P85 (zum Teil), P97, P98, P100, P101, P102, P103, P104, P105, P95, P29 (zum Teil), P33 (zum Teil), P26 (zum Teil), P83, P19-Vorbereitung, Kiosk-Gitter (#21).
-- **Nicht gebaut:** P106, P107, P108, P94 und P28, P32 (sichtbare Gegenstände), P48, P51. Warum, steht unten.
-- **Fünf Lieferungen** selbst freigegeben und eingebaut, eine (P106) nur angesehen.
+- **Fertig:** Muss-Pakete P69, P12, P16, P11, P99. Dazu P62, P63, P80, P77, P85 (zum Teil), P97, P98, P100, P101, P102, P103, P104, P105, P95, P107, P108, P29 (zum Teil), P33 (zum Teil), P26 (zum Teil), P50, P83, P19-Vorbereitung, Kiosk-Gitter (#21).
+- **Nicht gebaut:** P106, P94 und P28, P32 (sichtbare Gegenstände), P48, P51. Warum, steht unten.
+- **Zehn Lieferungen** selbst freigegeben und eingebaut, eine (P106) nur angesehen.
 - Geprüft mit Unity-Tests, Economy Report und im Browser auf Tag 1. **Was nur du beurteilen kannst, steht direkt unten.**
 
 ## Bitte anspielen oder anhören
@@ -22,6 +22,9 @@ Stand am Ende des Laufs: siehe Abschnitt „Live und Prüfung“. Alles ist auf 
 | **Papier-Geräusche** (P102) | Viele Papiere bewegen | **Nach Gehör**; Lautstärke `PaperVolume` im `SoundSetBuilder` |
 | **Gitter-Geräusche** (P91) | Verhaftung | **Nach Gehör** |
 | **Menüs** (P95) | Alle Fenster durchklicken | Lesbarkeit, Rahmen |
+| **Gesichter und Passfotos** (P108) | Ein paar Reisende vergleichen | Passt das Foto? Frisuren-Höhen: `HairHeights` im `TravelerPhotoBuilder` |
+| **Schiffe im Hangar** (P107) | Morgens in den Hangar | Landung, Plätze |
+| **Neue Geräusche** | Verhaftung, Schleuse, Hangar | **Nach Gehör:** Stiefel, Alarm, Dekompression, Landung |
 | **Clownsschuhe** (P63) | Pim Oddo an Tag 8 verhaften, dann Inventar | Quietscht es lustig genug? |
 
 ## Fertig im Einzelnen
@@ -42,7 +45,8 @@ Genaueres steht jeweils unter „Ergebnis“ in `PAKETE.md`.
 - P77: Senn, Quill, Nell und Oddo lassen etwas da. Noch da beim nächsten Auftritt: Pfand. Verkauft: zählt als verraten.
 
 **Station**
-- P101: Abendgäste. P99: Dealer sitzt. P80: Umschlag. P63: Clownsschuhe. P90: Kiosk-Gitter.
+- P101: Abendgäste. P99: Dealer sitzt. P80: Umschlag. P63: Clownsschuhe. P90: Kiosk-Gitter. P50: Türschilder.
+- P108: Jede Person sieht anders aus, mit passendem Passfoto, auch in den endlosen Tagen. P107: Schiffe im Hangar.
 - P26 (zum Teil): Bar-Ventilator dreht, Putzroboter fährt. P95: Terminal-Stil überall.
 - P29 (zum Teil): Fernrohr, Stadtlichter folgen der Familie. P83: Asservatenschrank aufbrechen.
 - P103: Lena fragt nach der Drohne, Korr gibt einen Tipp.
@@ -51,8 +55,6 @@ Genaueres steht jeweils unter „Ergebnis“ in `PAKETE.md`.
 | Paket | Stand | Grund |
 |---|---|---|
 | **P106** Shuttle angedockt, begehbar | Lieferung liegt auf `assets/P106-au-en-hangar`, **nicht gemergt** | Groß: Hangarwand, Innenraum, Abflug umbauen, muss man begehen und anspielen. Lieber mit dir |
-| **P107** Schiffe im Hangar | wartet | Modelle bestellt, noch nicht geliefert (`SM_Hangar_Ship_*`) |
-| **P108** Reisende verschieden | wartet | Texturen und Frisuren bestellt, noch nicht geliefert |
 | **P94** Laute je Spezies | wartet | 50 Laute bestellt, noch nicht geliefert |
 | P29 Rest | offen | Familienfoto im Spind, Brief auf dem Tisch |
 | P33 Rest | offen | Nahansicht der Pinnwand im Stehen |
@@ -75,13 +77,16 @@ Alle Vorschauen angesehen, Dateien gegen die Bestellung geprüft.
 | `assets/P104-pr-fkammer` | Wachmann | ja |
 | `assets/P24-planets-sky-2` | Heimatplanet neu | ja |
 | `assets/P102-paper-sfx` | 8 Papier-Geräusche, Münze fürs Fernrohr | ja |
+| `assets/P63-ui-…` | Icon der Clownsschuhe (ersetzt meinen Platzhalter) | ja |
+| `assets/P104-P107-sfx` | Stiefel, Alarm, Dekompression, Landung | ja |
+| `assets/P107-hangar` | 4 kleine Schiffe | ja |
+| `assets/P108-pr-fkammer` | 25 Texturen, 5 Frisuren/Hüte | ja |
 | `assets/P106-au-en-hangar` | Shuttle, Kabine, Fenster | **nein**, siehe oben |
 
-Ein Platzhalter von mir: Icon der Clownsschuhe (selbst gezeichnet, echtes Icon bestellt).
 
 ## Annahmen, die du leicht ändern kannst
 - **P77:** Rückgabe läuft automatisch beim nächsten Auftritt am Schalter. Es sind vorhandene Waren, keine eigenen Gegenstände mit Label.
-- **P101:** Niemand schläft im Wohnmodul, alle stehen.
+- **P101:** Niemand schläft im Wohnmodul, alle stehen. **P107:** Schiffe haben keine Kollision (stehen abseits).
 - **P105:** Statt der Scheibe wackelt die Sicht.
 - **Moral:** Befohlene Schleusen zählen weiter negativ (das war schon so). Fehlerfreies Spiel endet deshalb mit dem mittleren Satz („when the orders said to“), der saubere Satz bleibt für Spieler, die niemanden durch die Schleuse schicken. Grenze in `DepartureTuning.moraleBloodyBelow`.
 - **Zeth, Tag 5:** Aus „Erlaubnis abgelaufen“ wurde ein gefälschtes Siegel, damit Tag 5 das erste Beispiel hat. Varn, Nimi und Sirr sind jetzt ebenfalls Verhaftungen. An Tag 9 gibt es dadurch keinen echten Durchlass mehr, das passt zur Inspektionswoche.

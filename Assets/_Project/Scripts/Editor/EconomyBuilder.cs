@@ -885,7 +885,7 @@ namespace GameOff.EditorTools
             var models = new[] { "Courier", "Hauler", "Skiff", "Family" }
                 .Select(n => AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_{n}.fbx")).Where(m => m != null).ToArray();
             var pads = new List<Object>();
-            foreach (var (position, yaw) in new[] { (new Vector3(-13f, 0f, -20f), 90f), (new Vector3(13f, 0f, -20f), -90f), (new Vector3(-13f, 0f, -33f), 90f), (new Vector3(13f, 0f, -33f), -90f) })
+            foreach (var (position, yaw) in new[] { (new Vector3(-10f, 0f, -23f), 90f), (new Vector3(10f, 0f, -23f), -90f), (new Vector3(-8f, 0f, -33f), 90f), (new Vector3(10f, 0f, -35f), -90f) })
             {
                 var pad = new GameObject("Pad").transform;
                 pad.SetParent(go.transform, false);
