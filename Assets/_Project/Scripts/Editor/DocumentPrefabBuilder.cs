@@ -42,6 +42,7 @@ namespace GameOff.EditorTools
             }
         }
 
+        private const string KorrTutorialTraveler = "Assets/_Project/Data/Travelers/Story/T_Story_Korr_1.asset";
         private static float _unitsPerFontSize; // cap height of the font at fontSize 1
 
         [MenuItem("GameOff/Build Documents")]
@@ -287,7 +288,7 @@ namespace GameOff.EditorTools
                 clickable.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
                 if (clickable.Action != CounterAction.Airlock) continue;
                 var so = new SerializedObject(clickable);
-                so.FindProperty("coverOpenAngle").floatValue = -110f;
+                so.FindProperty("coverOpenAngle").floatValue = 110f; // measured: stays above the desk (-110 sinks 9 cm into it)
                 so.ApplyModifiedPropertiesWithoutUndo();
             }
             DeskLabel(controls, "Label_Arrest", "ARREST", new Vector3(0.8f, 0.002f, -0.55f), new Color(0.05f, 0.05f, 0.07f), font);
@@ -473,6 +474,7 @@ namespace GameOff.EditorTools
                 cso.ApplyModifiedPropertiesWithoutUndo();
                 WireBoard(root, desk, shift, hint, log);
                 WireTraveler(root, desk, shift, hint, log);
+                WireTutorial(root, desk, shift, hint, log);
                 foreach (var text in root.GetComponentsInChildren<TMP_Text>(true)) text.font = font; // hint, notice, subtitle, labels (P54)
                 PrefabUtility.SaveAsPrefabAsset(root, CounterPrefab);
                 log.Add("counter wired: drawer, 3 spots, DocumentDesk, pinboard, look-around, announcements");
@@ -562,6 +564,56 @@ namespace GameOff.EditorTools
             aso.FindProperty("subtitle").objectReferenceValue = subtitle;
             aso.ApplyModifiedPropertiesWithoutUndo();
             log.Add("pinboard spots, SeatedLook, Announcer");
+        }
+
+        /// <summary>P86: Inspector Korr's board, a strip along the top of the seated HUD, right of the day label and above the papers held up (they end at 90 %).</summary>
+        private static void WireTutorial(GameObject root, DocumentDesk desk, CounterShift shift, TextMeshProUGUI hint, List<string> log)
+        {
+            var hud = hint.transform.parent;
+            var panelT = hud.Find("TutorialPanel");
+            if (panelT == null)
+            {
+                panelT = new GameObject("TutorialPanel", typeof(RectTransform), typeof(UnityEngine.UI.Image)).transform;
+                panelT.SetParent(hud, false);
+                Object.Instantiate(hint.gameObject, panelT).name = "Text";
+            }
+            var panelRect = (RectTransform)panelT;
+            panelRect.anchorMin = new Vector2(0.25f, 0.905f);
+            panelRect.anchorMax = new Vector2(0.98f, 0.995f);
+            panelRect.offsetMin = panelRect.offsetMax = Vector2.zero;
+            var image = panelT.GetComponent<UnityEngine.UI.Image>();
+            image.color = new Color(0f, 0f, 0f, 0.8f);
+            image.raycastTarget = false;
+            var text = panelT.Find("Text").GetComponent<TextMeshProUGUI>();
+            var textRect = text.rectTransform;
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.pivot = new Vector2(0.5f, 0.5f);
+            textRect.offsetMin = new Vector2(12f, 3f);
+            textRect.offsetMax = new Vector2(-12f, -3f);
+            text.fontSize = hint.fontSize * 1.05f;
+            text.fontSizeMax = text.fontSize;
+            text.fontSizeMin = text.fontSize * 0.6f;
+            text.enableAutoSizing = true; // the longest step stays inside the board
+            text.color = new Color(0.89f, 0.87f, 0.81f);
+            text.alignment = TextAlignmentOptions.MidlineLeft;
+            text.raycastTarget = false;
+            text.text = "";
+            panelT.gameObject.SetActive(false);
+
+            var korr = AssetDatabase.LoadAssetAtPath<TravelerData>(KorrTutorialTraveler);
+            if (korr == null) log.Add("WARNING  no " + KorrTutorialTraveler + " - run GameOff/Build Story Characters, else no tutorial");
+            var tutorial = root.GetComponent<CounterTutorial>();
+            if (tutorial == null) tutorial = root.AddComponent<CounterTutorial>();
+            var so = new SerializedObject(tutorial);
+            so.FindProperty("shift").objectReferenceValue = shift;
+            so.FindProperty("desk").objectReferenceValue = desk;
+            so.FindProperty("station").objectReferenceValue = root.GetComponent<CounterStation>();
+            so.FindProperty("tutorialTraveler").objectReferenceValue = korr;
+            so.FindProperty("panel").objectReferenceValue = panelT.gameObject;
+            so.FindProperty("text").objectReferenceValue = text;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            log.Add("Korr's tutorial board");
         }
 
         /// <summary>P40: the traveler's marking and doors in the inspection lock, the speech bubble, a desk view that shows them.</summary>

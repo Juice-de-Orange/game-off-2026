@@ -49,12 +49,13 @@ namespace GameOff.Characters
             var queue = new List<TravelerData>(regular);
             var fixedOnes = due.FindAll(p => Slot(p) > 0);
             fixedOnes.Sort((x, y) => Slot(x).CompareTo(Slot(y)));
-            foreach (var p in fixedOnes) queue.Insert(Math.Min(Slot(p) - 1, queue.Count), p.traveler);
+            // Free ones first: a fixed place is only exact if nothing is inserted after it (Korr must stay first on day 1, P86).
             foreach (var p in due.FindAll(p => Slot(p) == 0))
             {
                 int at = Math.Min(queue.Count, (int)(random() * (queue.Count + 1)));
                 queue.Insert(at, p.traveler);
             }
+            foreach (var p in fixedOnes) queue.Insert(Math.Min(Slot(p) - 1, queue.Count), p.traveler);
             return queue;
         }
 

@@ -1505,12 +1505,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Jede dieser Folgen ist mit der Testfigur oder einer echten Figur einmal spielbar; Tests für die neuen Bedingungen.
 
 ### P86 — Korr-Tutorial an Tag 1
-- Größe: M · Priorität: Soll (Vorschlag) · Status: in Arbeit (max, 08.11.) · Zuständig: max (umgetragen 08.11.)
+- Größe: M · Priorität: Soll (Vorschlag) · Status: fertig (max, 08.11.) · Zuständig: max (umgetragen 08.11.)
 - Braucht: P75, P76 · Folgt auf: —
 - Ziel: Inspector Vaal Korr kommt an Tag 1 als Erster und erklärt den Schalter Schritt für Schritt (Papiere ziehen, Feld anklicken, Regeln an
   der Pinnwand, stempeln, Schublade); er lässt sich selbst prüfen.
 - Enthalten: Schritt-Texte in der Sprechblase, die erst weitergehen, wenn der Schritt getan ist; überspringbar; nur an Tag 1.
 - Abnahme: Neuer Spieler kommt ohne Vorwissen durch Korrs Prüfung.
+- Ergebnis (max, 08.11.): Tafel oben im Sitz-HUD statt in der Sprechblase (die Blase verschwindet, wird von Antworten ersetzt und ist beim Blick zur Pinnwand unsichtbar). `Counter/CounterTutorial` + `TutorialProgress` (immer der erste offene Schritt, nichts wird blockiert), [N] überspringt. `CharacterPlanner.Queue`: feste Plätze stehen jetzt exakt, Korr ist an Tag 1 immer Erster. Geprüft: 155/155 EditMode-Tests, Validate Travelers ok, WebGL bis Schritt Pinnwand und Überspringen; Stempeln und Lade nicht automatisiert geprüft. **Abnahme als neuer Spieler: Max.**
 
 ### P87 — Shifter: Schlüsselentscheidung und Ende „Airlocked“
 - Größe: S–M · Priorität: Muss (Vorschlag) · Status: fertig (martin, 08.11.) · Zuständig: martin
@@ -1555,3 +1556,59 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: neue Modelle, Tutorial (P86).
 - Abnahme: Ausweis und Erlaubnis lassen sich nebeneinander lesen und per Feld-Klick befragen; Lade und Deckel sehen richtig aus; beide Knöpfe sind vom Stuhl aus lesbar beschriftet.
 - Ergebnis (max, 08.11.): `DocumentDesk` hält bis zu 4 Papiere/Zettel in einer Reihe (Klick holt dazu, Klick aufs Papier legt es zurück, [R] alle, Esc alle zurück; mindestens 3 Plätze, damit ein einzelnes Papier den Tisch frei lässt). Umschauen beim Lesen geht, die Papiere folgen. Lade: Front zum Beamten, fährt entlang lokal +X. Beide Knöpfe um 180° gedreht, Deckel klappt Richtung Fenster auf, Beschriftung ARREST/AIRLOCK auf dem Tisch (`GameOff/Build Documents`). Geprüft: Validate Travelers ok, 150/150 EditMode-Tests, WebGL-Build mit Bildern von Lade, Deckel, Reihe, Umschauen.
+
+### P90 — Fehler aus den GitHub-Issues, Runde 1
+- Größe: M · Priorität: Muss · Status: offen · Zuständig: max
+- Braucht: — · Folgt auf: P89
+- Ziel: Die klaren Fehler aus den Issues sind weg.
+- Enthalten: #27 Airlock-Deckel klappt nicht mehr in den Tisch (Winkel +110, gemessen; schon mit P86 gebaut). #15 Sperr-Ton nur auf [E] an der gesperrten Tür, nicht beim Vorbeigehen. #17 Flackern an den Hangar-Wänden finden und beheben. #18 grüne Kisten im Hangar stecken nicht mehr ineinander. #21 Ladengitter füllt die ganze Front und ist entweder offen oder zu. #23 Figur sitzt auf dem Barhocker statt darin.
+- Abnahme: Jeder Punkt ist im Spiel nachgeprüft; danach die Issues schließen (Max).
+
+### P91 — Reisende gehen wirklich, Verhaftung hinter dem Gitter
+- Größe: L · Priorität: Soll · Status: offen · Zuständig: max
+- Braucht: — · Folgt auf: P14, P40
+- Ziel: Reisende kommen und gehen sichtbar durch die Türen; eine Verhaftung ist spürbar, ohne dass eine Wache zu sehen ist (#28).
+- Enthalten: Reisende betreten die Kammer zu Fuß von außerhalb der Sicht und gehen nach der Entscheidung durch die passende Tür. Nur bei Verhaftung fällt ein Sichtgitter vor die Scheibe, dazu Schritte, Handschellen, Gerangel. Kein Gitter beim normalen Wechsel (Max, 08.11.). Sounds bestellen.
+- Abnahme: Niemand erscheint oder verschwindet sichtbar aus dem Nichts; Verhaftung ist nur über Gitter und Ton erzählt.
+
+### P92 — Diner außer Betrieb
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: max
+- Braucht: — · Folgt auf: P26
+- Ziel: Das Diner wirkt glaubwürdig geschlossen (#26) und lässt sich später wieder nutzen.
+- Enthalten: Preise weg, Schild „geschlossen“, Spinnweben, Licht aus, Tür gesperrt.
+- Abnahme: Das Diner verspricht nichts mehr, was es nicht hält.
+
+### P93 — Barkeeper sagt seinen Wunsch
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: max
+- Braucht: — · Folgt auf: P65
+- Ziel: Der Wunsch des Barkeepers kommt im Gespräch statt vom Schild (#22).
+- Enthalten: Schild `BarWishSign` entfernt, Barkeeper nennt den Wunsch beim Ansprechen. Martin im Handover informieren (sein P65).
+- Abnahme: Kein Schild mehr vor der Bar; der Wunsch ist beim Barkeeper zu erfahren.
+
+### P94 — Stimmen: 10 Laute je Spezies
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: max
+- Braucht: — · Folgt auf: P61
+- Ziel: Figuren reden abwechslungsreich statt mit einem einzigen Ton (#16).
+- Enthalten: Bei der Pipeline bestellen: je Spezies 10 kurze Murmel-Laute; zufällig abspielen, Tonhöhe leicht variieren.
+- Abnahme: Keine zwei Äußerungen klingen gleich; Download-Zuwachs gemessen.
+
+### P95 — Menüs im Terminal-Stil
+- Größe: L · Priorität: Soll · Status: offen · Zuständig: max
+- Braucht: — · Folgt auf: P02, P43, P46
+- Ziel: Alle Menüs und Fenster sehen nach dem Spiel aus statt nach Standard (#20).
+- Enthalten: Gemeinsamer Stil im Builder: dunkle Metallrahmen, CRT-Grün/Bernstein, Warnstreifen. Hauptmenü, Optionen, Pause, Inventar, Handel, Abrechnung. Berührt Martins Fenster, also vorher absprechen und claimen.
+- Abnahme: Alle Fenster teilen denselben Stil und bleiben bedienbar.
+
+### P96 — Lebendige Händler
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: max
+- Braucht: — · Folgt auf: P52
+- Ziel: Barkeeper, Holly und Dealer stehen nicht mehr starr da (#24).
+- Enthalten: Kleines Skript: leichtes Atmen, Schwanken, ab und zu Kopfdrehung für die statischen Modelle.
+- Abnahme: Figuren wirken in Ruhe lebendig, ohne neue Assets.
+
+### P97 — Eine gemeinsame Spieluhr
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: max
+- Braucht: — · Folgt auf: P09, P31
+- Ziel: Alle Uhren zeigen dieselbe Spielzeit und laufen weiter (#19).
+- Enthalten: Spielzeit aus der Phase: Morgen 06:00, Schicht 08:00–18:00 nach Fortschritt der Reisenden, Abend bis 23:00. Kein Einfluss auf Geld oder Regeln.
+- Abnahme: Alle Uhren der Station stimmen überein und bewegen sich.

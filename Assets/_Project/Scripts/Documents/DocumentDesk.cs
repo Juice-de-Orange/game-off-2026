@@ -65,6 +65,8 @@ namespace GameOff.Documents
         public event Action<string> ReturnRefused;
         /// <summary>The officer clicked a printed field on a traveler's paper held up for reading (P40): document, field key.</summary>
         public event Action<DocumentData, string> FieldClicked;
+        /// <summary>A paper or pinned note was held up for reading (P86).</summary>
+        public event Action<DocumentView> PaperRead;
 
         /// <summary>
         /// Asked before the drawer hands papers back: (papers in the drawer, papers still on the desk) → null to allow, or a
@@ -577,6 +579,7 @@ namespace GameOff.Documents
             _readingReturn[doc] = returnPose ?? new Pose(doc.transform.position, doc.transform.rotation);
             _reading.Add(doc);
             LayOutReading();
+            PaperRead?.Invoke(doc);
         }
 
         /// <summary>
