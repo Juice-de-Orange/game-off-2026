@@ -52,7 +52,7 @@ MonoBehaviour:
     onDeny: 2
     onArrest: 2
     onAirlock: 5
-    greetingAfterHelped: You were kind to an old woman. Did my letter reach him?
+    greetingAfterHelped: You were kind to an old woman. Did my letter reach {kin}?
     greetingAfterBetrayed: You sent me away last time. I came back anyway. Mothers
       do.
     greetingAfterConfiscated: 
@@ -79,8 +79,8 @@ MonoBehaviour:
     onDeny: 2
     onArrest: 2
     onAirlock: 5
-    greetingAfterHelped: My boy is coming home. I won't forget your face.
-    greetingAfterBetrayed: My boy is coming home - no thanks to you.
+    greetingAfterHelped: My boy {kin} is coming home. I won't forget your face.
+    greetingAfterBetrayed: '{kin} is coming home - no thanks to you.'
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
@@ -95,3 +95,14 @@ MonoBehaviour:
     endingTitle: 
     endingBody: 
     endingWarning: 
+  kinName: JONAS VARGA
+  kinSpecies: Human
+  kinFateByYou: They tell me it was you who put him there.
+  kinFateByOthers: They took him off a cargo ship, right here at this station.
+  summaryHelped: Nell Varga took {kin} home. She tells everyone about the kind officer
+    at lane two.
+  summaryBetrayed: Nell Varga's letter never reached {kin}. She doesn't talk about
+    Kestrel any more.
+  summaryNeutral: 
+  summaryDead: Nell Varga came to see her son and went out of the airlock. {kin}
+    was told in his cell.

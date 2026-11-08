@@ -70,6 +70,41 @@ namespace GameOff.Characters
 
         private readonly List<(int day, Consequence effect)> _effects = new List<(int, Consequence)>();
 
+        // ---------- P85: arrests and a character's relative in the station prison ----------
+
+        public struct Arrest
+        {
+            public string name;
+            public string species;
+            public int day;
+        }
+
+        private readonly List<Arrest> _arrests = new List<Arrest>();
+        private readonly Dictionary<RecurringCharacter, (string name, bool byYou)> _kin = new Dictionary<RecurringCharacter, (string, bool)>();
+
+        /// <summary>P85: an ordinary traveler the player arrested (not a recurring character).</summary>
+        public void RememberArrest(string name, string species, int day) =>
+            _arrests.Add(new Arrest { name = name, species = species, day = day });
+
+        public IReadOnlyList<Arrest> Arrests => _arrests;
+
+        /// <summary>
+        /// P85: who the character's relative in prison is, fixed the first time it is asked: their own name if the player arrested
+        /// them before <paramref name="day"/>, else the latest arrest of the same species, else their own name (somebody else did it).
+        /// </summary>
+        public (string name, bool byYou) Kin(RecurringCharacter c, int day)
+        {
+            if (c == null || !c.HasKin) return (null, false);
+            if (_kin.TryGetValue(c, out var known)) return known;
+            (string, bool) kin = (c.KinName, false);
+            if (_arrests.Exists(a => a.day < day && a.name == c.KinName)) kin = (c.KinName, true);
+            else
+                for (int i = _arrests.Count - 1; i >= 0; i--)
+                    if (_arrests[i].day < day && _arrests[i].species == c.KinSpecies) { kin = (_arrests[i].name, true); break; }
+            _kin[c] = kin;
+            return kin;
+        }
+
         public bool HasFlag(string flag) => !string.IsNullOrWhiteSpace(flag) && _flags.Contains(flag);
 
         public IReadOnlyList<Record> Records => _records;

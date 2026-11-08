@@ -43,6 +43,8 @@ namespace GameOff.Characters
     public class Consequence
     {
         public Outcome when = Outcome.Betrayed;
+        [Tooltip("P85: only when the player chose arrest (e.g. the Shifter's interrogation; deny gives the same outcome).")]
+        public bool onlyIfArrested;
         [Tooltip("Market event that happens this many days later (pinboard, announcement, rumour, station mood).")]
         public MarketEvent marketEvent;
         [Min(1)] public int eventInDays = 1;
@@ -150,6 +152,36 @@ namespace GameOff.Characters
         [SerializeField] private string species = "Human";
         [SerializeField] private List<Appearance> appearances = new List<Appearance>();
 
+        [Header("A relative in the station prison (P85): {kin} and {kinFate} in greetings and the summary")]
+        [Tooltip("Who it is if the player arrested nobody fitting. This name first, then the latest arrest of the same species.")]
+        [SerializeField] private string kinName;
+        [SerializeField] private string kinSpecies = "Human";
+        [Tooltip("{kinFate} when the player made the arrest.")]
+        [SerializeField, TextArea] private string kinFateByYou;
+        [Tooltip("{kinFate} when somebody else did.")]
+        [SerializeField, TextArea] private string kinFateByOthers;
+
+        [Header("Day 11 summary in the morning letter (P85), by the last outcome; empty = not mentioned")]
+        [SerializeField, TextArea] private string summaryHelped;
+        [SerializeField, TextArea] private string summaryBetrayed;
+        [SerializeField, TextArea] private string summaryNeutral;
+        [SerializeField, TextArea] private string summaryDead;
+
+        public string KinName => kinName;
+        public string KinSpecies => kinSpecies;
+        public bool HasKin => !string.IsNullOrWhiteSpace(kinName);
+        public string KinFate(bool byYou) => byYou ? kinFateByYou : kinFateByOthers;
+
+        /// <summary>P85: the summary line for the last outcome (confiscated counts as betrayed), or null.</summary>
+        public string SummaryFor(Outcome last) => last switch
+        {
+            Outcome.Helped => summaryHelped,
+            Outcome.Betrayed or Outcome.Confiscated => summaryBetrayed,
+            Outcome.Neutral => summaryNeutral,
+            Outcome.Dead => summaryDead,
+            _ => null,
+        };
+
         public string Id => id;
         public string DisplayName => displayName;
         public string Species => species;
@@ -162,6 +194,22 @@ namespace GameOff.Characters
             displayName = newName;
             species = newSpecies;
             appearances = newAppearances;
+        }
+
+        public void EditorSetKin(string name, string species, string fateByYou, string fateByOthers)
+        {
+            kinName = name;
+            kinSpecies = species;
+            kinFateByYou = fateByYou;
+            kinFateByOthers = fateByOthers;
+        }
+
+        public void EditorSetSummary(string helped, string betrayed, string neutral, string dead)
+        {
+            summaryHelped = helped;
+            summaryBetrayed = betrayed;
+            summaryNeutral = neutral;
+            summaryDead = dead;
         }
 #endif
     }

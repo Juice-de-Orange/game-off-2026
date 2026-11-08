@@ -58,6 +58,7 @@ MonoBehaviour:
     eventLines: []
     consequences:
     - when: 2
+      onlyIfArrested: 0
       marketEvent: {fileID: 11400000, guid: 499c80581acc6d241bb1a53254ffe24f, type: 2}
       eventInDays: 3
       wanted: 0
@@ -73,6 +74,7 @@ MonoBehaviour:
       announcement: 
       letterLine: 
     - when: 4
+      onlyIfArrested: 0
       marketEvent: {fileID: 11400000, guid: 499c80581acc6d241bb1a53254ffe24f, type: 2}
       eventInDays: 3
       wanted: 0
@@ -88,6 +90,7 @@ MonoBehaviour:
       announcement: 
       letterLine: 
     - when: 2
+      onlyIfArrested: 0
       marketEvent: {fileID: 0}
       eventInDays: 1
       wanted: 1
@@ -103,6 +106,7 @@ MonoBehaviour:
       announcement: 
       letterLine: 
     - when: 4
+      onlyIfArrested: 0
       marketEvent: {fileID: 0}
       eventInDays: 1
       wanted: 1
@@ -208,3 +212,15 @@ MonoBehaviour:
     endingTitle: 
     endingBody: 
     endingWarning: 
+  kinName: 
+  kinSpecies: Human
+  kinFateByYou: 
+  kinFateByOthers: 
+  summaryHelped: 'Quill Barragh got out. A postcard from somewhere warm says only:
+    "Thanks, officer."'
+  summaryBetrayed: Quill Barragh's smuggling ring is finished, and so is Quill. The
+    barkeeper pours your drinks a little slower now.
+  summaryNeutral: Quill Barragh slipped past the wanted list and off the station.
+    Nobody has seen him since.
+  summaryDead: Quill Barragh went out of the airlock. The barkeeper hasn't said a
+    word since.

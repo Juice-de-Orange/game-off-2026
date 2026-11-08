@@ -22,7 +22,7 @@ MonoBehaviour:
   intendedReason: Papers in order
   trickIntended: 0
   storyTag: P76 character, day 6
-  greeting: Nell Varga. I'm here to see my son. He's in your prison, they tell me.
+  greeting: Nell Varga. I'm here to see my son, {kin}. He's in your prison. {kinFate}
   answers: []
   reactionAdmitted: 
   reactionDenied: 

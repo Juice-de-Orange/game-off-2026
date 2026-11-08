@@ -57,7 +57,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Spieluhr | P97 | Eine Uhrzeit für alle Wanduhren | `DayManager.Update` → `GameClock` → `ClockDisplay` | `eveningClockSeconds` |
 | Reaktionen, Abendgäste | P100, P101 | Zeile nach dem Stempel; bis zu 6 Durchgelassene stehen abends in Bar und Halle | `DecisionMade` → `TravelerDialogue`, `EveningCrowd` | `DialogueTuning.speciesLines` |
 | Wache, Schleuse | P104, P105 | Wache packt die Person, dann Gitter; Schleuse: Außenschott auf, Ragdoll fliegt hinaus | `TravelerPresenter` | `DialogueTuning` (`guard*`, `hatchSeconds`, `airlock*`) |
-| Figuren-Folgen, Verwahrung | P85, P77 | Geschenke an die Familie, Bonus/Rüge per Durchsage, Briefzeilen; zurückgelassene Dinge bringen beim nächsten Auftritt Pfand oder Verrat | `CharacterDirector` | `Consequence`, `Appearance.entrust*` (`StoryCharacterBuilder`) |
+| Figuren-Folgen, Verwahrung | P85, P77 | Geschenke an die Familie, Bonus/Rüge per Durchsage, Briefzeilen; zurückgelassene Dinge bringen beim nächsten Auftritt Pfand oder Verrat; Shifter an Tag 3 verhaftet → Verhör-Durchsage am Morgen danach; Nells Sohn ist jemand, den du verhaftet hast (Jonas Varga von Tag 4, sonst die letzte Mensch-Verhaftung, sonst Jonas von anderen gefasst); am Morgen von Tag 11 fasst der Brief die Wege aller getroffenen Figuren zusammen | `CharacterDirector` | `Consequence`, `Appearance.entrust*` (`StoryCharacterBuilder`) |
 | Terminal-Stil | P95 | Einheitliche Rahmen und Knöpfe | `TerminalStyle` (Editor) | Grafiken in `Art/UI/Terminal` |
 | Kiosk-Gitter | P90 | Gitter unten, solange der Kiosk zu ist | `Vendor.Update` → `SecurityShutter` | – |
 | Aussehen der Reisenden | P108 | Name → feste Textur, Frisur/Mütze; Passfoto gerendert | `TravelerLooks`, `TravelerPhotoBuilder` | `Data/Travelers/TravelerLooks.asset`, Fotos in `Art/Textures/Documents/Photos` |
@@ -80,6 +80,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 - **Schmuggel nach Hause:** geht ohne Wirkung und ohne Risiko → später mit P08.
 - **Tod im Simulator:** Der Economy Report rechnet ohne P69 (Grenze 0), der Tod spielt also für die Balance-Ziele keine Rolle.
 - **Figuren-Geschenke und Bonus** (P85, P77) rechnet der Economy Report nicht mit; es sind wenige Credits.
+- **Nells Sohn** wird beim ersten Nachfragen festgelegt (Tag 6) und zählt nur Verhaftungen bis zum Vortag. Gezogene Reisende ab Tag 13 zählen mit, spielen aber keine Rolle mehr. Das Ende (P12) wertet die Figuren noch nicht aus, nur die Zusammenfassung an Tag 11.
 - **Jede Geldänderung braucht ein neues Rebalancing** (GameOff → Economy Report bis alle Ziele ✓; `EconomyBalanceTests` bricht sonst).
 - **Während des Flugs gibt es kein Pausenmenü** (Steuerung gehört dem Flug, höchstens 45 s).
 - **Ende AIRLOCKED nur abseits des richtigen Wegs:** Wer den Shifter an Tag 3 wie befohlen terminiert, sieht seine Frage (Tag 6) nie. Gewollt (Test der Behörde), aber die meisten Spieler werden das Ende so nicht finden.

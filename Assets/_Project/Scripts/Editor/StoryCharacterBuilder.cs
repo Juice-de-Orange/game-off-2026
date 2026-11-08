@@ -48,6 +48,7 @@ namespace GameOff.EditorTools
 
             var chars = new List<RecurringCharacter>();
             var shifterDay3 = BuildCharacters(ev, chars, out var quillDay3);
+            Epilogue(chars); // P85
             var authored = StoryDayContent.Build(); // P15
             var days = BuildDays(shifterDay3, chars, authored);
             BuildSchedule(days, ev, quillDay3, authored);
@@ -293,6 +294,9 @@ namespace GameOff.EditorTools
                         {
                             new Consequence { when = Outcome.Helped, marketEvent = ev["SecurityLockdown"], eventInDays = 1 },
                             new Consequence { when = Outcome.Helped, letterLine = "A parcel came with no sender. Inside was a note: \"Thank you, officer.\" Mom burned it." },
+                            new Consequence { when = Outcome.Neutral, onlyIfArrested = true, afterDays = 1, // P85: the interrogation
+                                announcement = "Security notice. The man arrested at lane two yesterday gave a different name every hour of his interrogation. " +
+                                               "He was released at dawn: there was no name to charge." },
                         } },
                     new Appearance { traveler = s6, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.Alive,
                         onAdmit = Outcome.Helped, onDeny = Outcome.Neutral, onArrest = Outcome.Betrayed,
@@ -391,27 +395,28 @@ namespace GameOff.EditorTools
                         greetingAfterHelped = "You let me through that day. We stopped the docks, and they listened." }));
             }
 
-            // 7 Nell Varga (Human): an old woman visiting her son in the station prison (who he is comes with P85).
+            // 7 Nell Varga (Human): an old woman visiting her son in the station prison. P85: he is someone the player arrested
+            //   (Jonas Varga from day 4 if arrested, else the latest human arrest, else Jonas taken by someone else) - see Epilogue.
             {
                 const string n = "NELL VARGA", sp = "Human", id = "HM-6060-02", origin = "TORVIK COLONY";
                 var l1 = Person("Nell_1", n, sp, Verdict.Admit, "Papers in order", 6,
-                    "Nell Varga. I'm here to see my son. He's in your prison, they tell me.",
+                    "Nell Varga. I'm here to see my son, {kin}. He's in your prison. {kinFate}",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "FAMILY VISIT", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
                 var l2 = Person("Nell_2", n, sp, Verdict.Admit, "Papers in order", 8,
-                    "Nell again. Did my letter reach him?",
+                    "Nell again. Did my letter reach {kin}?",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "FAMILY VISIT", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
                 var l3 = Person("Nell_3", n, sp, Verdict.Admit, "Papers in order", 11,
-                    "Nell. They're letting him go home with me.",
+                    "Nell. They're letting {kin} go home with me.",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "FAMILY VISIT", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
                 chars.Add(Character("Nell", "nell", n, sp,
                     new Appearance { traveler = l1, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.NeverMet,
                         entrustItem = Goods("DataChip"), entrustDeposit = 15 },
                     new Appearance { traveler = l2, dayFrom = 8, dayTo = 8, condition = AppearanceCondition.Alive,
-                        greetingAfterHelped = "You were kind to an old woman. Did my letter reach him?",
+                        greetingAfterHelped = "You were kind to an old woman. Did my letter reach {kin}?",
                         greetingAfterBetrayed = "You sent me away last time. I came back anyway. Mothers do." },
                     new Appearance { traveler = l3, dayFrom = 11, dayTo = 11, condition = AppearanceCondition.Alive,
-                        greetingAfterHelped = "My boy is coming home. I won't forget your face.",
-                        greetingAfterBetrayed = "My boy is coming home - no thanks to you." }));
+                        greetingAfterHelped = "My boy {kin} is coming home. I won't forget your face.",
+                        greetingAfterBetrayed = "{kin} is coming home - no thanks to you." }));
             }
 
             // 8 Pim Oddo (Quobb): a cheerful travelling trader. Let through → his caravan two days later (luxuries cheap).
@@ -439,6 +444,71 @@ namespace GameOff.EditorTools
                         greetingAfterHelped = "Oddo never forgets a friend. Farewell, officer!" }));
             }
             return shifter3;
+        }
+
+        // ---------- P85: Nell's son and the day 11 summary ----------
+
+        public const string NellSon = "JONAS VARGA";
+
+        private static void Epilogue(List<RecurringCharacter> chars)
+        {
+            foreach (var c in chars)
+            {
+                switch (c.Id)
+                {
+                    case "korr":
+                        c.EditorSetSummary("Inspector Korr's final report calls the officer at lane two \"reliable\". From him, that is high praise.",
+                            "Inspector Korr's final report on lane two runs to nine pages. None of them are kind.",
+                            null,
+                            "Inspector Korr was lost in an \"airlock incident\". The Border Authority has sent three more inspectors.");
+                        break;
+                    case "quill":
+                        c.EditorSetSummary("Quill Barragh got out. A postcard from somewhere warm says only: \"Thanks, officer.\"",
+                            "Quill Barragh's smuggling ring is finished, and so is Quill. The barkeeper pours your drinks a little slower now.",
+                            "Quill Barragh slipped past the wanted list and off the station. Nobody has seen him since.",
+                            "Quill Barragh went out of the airlock. The barkeeper hasn't said a word since.");
+                        break;
+                    case "shifter":
+                        c.EditorSetSummary("The man with a hundred faces has left Kestrel. The Directorate thanks the officers who did not listen to him.",
+                            "The man with too many names was arrested again - and released again, by order from above.",
+                            "The man with too many names was last seen boarding a shuttle. Under which name, nobody can say.",
+                            "The man you put out of the airlock on day three carried eleven names. Nobody came to claim the body.");
+                        break;
+                    case "mira":
+                        c.EditorSetSummary("Mira Talsk and her children have a home on the far side of the border. She named the cat after you.",
+                            "Mira Talsk was sent back one time too many. Her children are still waiting on the other side.",
+                            null,
+                            "Mira Talsk never reached her children.");
+                        break;
+                    case "senn":
+                        c.EditorSetSummary("Dr. Senn's clinic got through the cold snap. Three children owe their lungs to a case of pills you let through.",
+                            "Dr. Senn's clinic ran dry during the cold. The station blamed the doctor. The doctor blamed customs.",
+                            "Dr. Senn found another way to bring the medicine in. It took a week longer.",
+                            "Dr. Senn went out of the airlock. The clinic has been closed since.");
+                        break;
+                    case "tobin":
+                        c.EditorSetSummary("Tobin Rask's strike won the dockers a fair wage and heaters that work.",
+                            "Tobin Rask was deported. His colleagues still talk about the officer who sent him away.",
+                            null,
+                            "Tobin Rask went out of the airlock. The docks went quiet for a day, then back to work.");
+                        break;
+                    case "nell":
+                        c.EditorSetKin(NellSon, "Human", "They tell me it was you who put him there.",
+                            "They took him off a cargo ship, right here at this station.");
+                        c.EditorSetSummary("Nell Varga took {kin} home. She tells everyone about the kind officer at lane two.",
+                            "Nell Varga's letter never reached {kin}. She doesn't talk about Kestrel any more.",
+                            null,
+                            "Nell Varga came to see her son and went out of the airlock. {kin} was told in his cell.");
+                        break;
+                    case "oddo":
+                        c.EditorSetSummary("Pim Oddo's caravan is the talk of three stations. He tells everyone about his friend at the counter.",
+                            "Pim Oddo never came back. Someone at the bar is selling his clown shoes.",
+                            null,
+                            "Pim Oddo went out of the airlock. His clown shoes are still on a shelf somewhere.");
+                        break;
+                }
+                EditorUtility.SetDirty(c);
+            }
         }
 
         // ---------- Helpers ----------

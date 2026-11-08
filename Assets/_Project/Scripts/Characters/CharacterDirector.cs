@@ -31,6 +31,9 @@ namespace GameOff.Characters
         [SerializeField] private float questionDelay = 4f;
         [Tooltip("P87: seconds after a character arrives before the run ends at them (time for the reveal).")]
         [SerializeField] private float endingDelay = 7f;
+        [Tooltip("P85: on this morning the letter sums up what became of every character met so far (0 = never).")]
+        [SerializeField] private int summaryDay = 11;
+        [SerializeField, TextArea] private string summaryHeader = "Your mother cut this out of the station newsletter. She says you should know how it all turned out:";
 
         private float WalkInSeconds => shift.ArrivalDelay != null ? shift.ArrivalDelay() : 0f;
 
@@ -78,6 +81,7 @@ namespace GameOff.Characters
             _today.Clear();
             _returned.Clear();
             foreach (var effect in Memory.TakeEffects(day)) Apply(effect);
+            if (day == summaryDay) Summarize(day);
             if (rules == null) return null;
             var due = CharacterPlanner.Due(day, Active, Memory, maxPerDay, () => Random.value);
             var wanted = Memory.WantedOn(day);
@@ -93,8 +97,13 @@ namespace GameOff.Characters
 
         private void OnDecision(TravelerData traveler, Verdict chosen, Judgement judgement)
         {
-            if (traveler == null || !_today.TryGetValue(traveler, out var p)) return;
+            if (traveler == null) return;
             int day = Market.Day;
+            if (!_today.TryGetValue(traveler, out var p))
+            {
+                if (chosen == Verdict.Arrest) Memory.RememberArrest(traveler.DisplayName, traveler.Species, day); // P85: maybe someone's son
+                return;
+            }
             var a = p.character.Appearances[p.appearance];
             var outcome = a.OutcomeOf(chosen);
             if (outcome == Outcome.Helped && _returned.TryGetValue(traveler, out bool kept) && !kept) outcome = Outcome.Betrayed; // P77: sold what they left
@@ -102,7 +111,7 @@ namespace GameOff.Characters
             Debug.Log($"[Characters] {p.character.DisplayName}: {chosen} → {outcome}");
             foreach (var c in a.consequences)
             {
-                if (c.when != outcome) continue;
+                if (c.when != outcome || (c.onlyIfArrested && chosen != Verdict.Arrest)) continue;
                 if (c.marketEvent != null)
                 {
                     Memory.ScheduleEvent(day + c.eventInDays, c.marketEvent);
@@ -189,6 +198,49 @@ namespace GameOff.Characters
             if (dayManager != null) dayManager.FinishRun(a.endingTitle, a.endingBody);
         }
 
+        // ---------- P85: a relative in prison, the summary on day 11 ----------
+
+        /// <summary>Replaces {kin} (first name of the character's relative in prison) and {kinFate} (who put them there).</summary>
+        private string Fill(RecurringCharacter c, string text, int day) => Fill(c, text, Memory, day);
+
+        public static string Fill(RecurringCharacter c, string text, CharacterMemory memory, int day)
+        {
+            if (string.IsNullOrEmpty(text) || !text.Contains("{kin")) return text;
+            var (name, byYou) = memory.Kin(c, day);
+            return text.Replace("{kinFate}", c.KinFate(byYou) ?? "").Replace("{kin}", FirstName(name));
+        }
+
+        public static string FirstName(string fullName)
+        {
+            if (string.IsNullOrWhiteSpace(fullName)) return "";
+            string first = fullName.Trim().Split(' ')[0];
+            return first.Substring(0, 1).ToUpperInvariant() + first.Substring(1).ToLowerInvariant();
+        }
+
+        /// <summary>One line per character met so far, by how it ended for them (under the morning letter).</summary>
+        private void Summarize(int day)
+        {
+            var economy = PlayerEconomy.Instance;
+            if (economy == null) return;
+            var lines = SummaryLines(Active, Memory, day);
+            if (lines.Count == 0) return;
+            economy.AddLetterLine(summaryHeader + "\n" + string.Join("\n", lines));
+        }
+
+        /// <summary>P85: the summary lines (also for tests): characters met, by their last outcome, placeholders filled.</summary>
+        public static List<string> SummaryLines(IEnumerable<RecurringCharacter> chars, CharacterMemory memory, int day)
+        {
+            var lines = new List<string>();
+            foreach (var c in chars)
+            {
+                if (c == null || !memory.Met(c)) continue;
+                string line = c.SummaryFor(memory.Last(c));
+                if (string.IsNullOrWhiteSpace(line)) continue;
+                lines.Add("· " + Fill(c, line, memory, day));
+            }
+            return lines;
+        }
+
         /// <summary>TravelerPresenter: the greeting of a character by the last outcome, plus a line about today's events.</summary>
         public string Greeting(TravelerData traveler)
         {
@@ -201,7 +253,7 @@ namespace GameOff.Characters
                 Outcome.Confiscated => a.greetingAfterConfiscated,
                 _ => null,
             };
-            var sb = new StringBuilder(string.IsNullOrWhiteSpace(text) ? traveler.Greeting : text);
+            var sb = new StringBuilder(Fill(p.character, string.IsNullOrWhiteSpace(text) ? traveler.Greeting : text, Market.Day));
             if (_returned.TryGetValue(traveler, out bool kept))
                 sb.Insert(0, kept ? "You kept it safe. Here is what I promised. " : "What I left with you is gone, isn't it. I won't forget that. ");
             foreach (var line in a.eventLines)

@@ -1512,7 +1512,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 07.11.): Backend `deploy/reports` (Python ohne Pakete, 12 Tests) läuft auf Geoffrey als `kestrel9-reports`; Spiel-nginx leitet `/api/report` weiter, Host-nginx setzt `X-Forwarded-For`. Begrenzung 5/10 min pro Client (IPv6 /64), 60/h gesamt, nur erfolgreiche zählen; CORS nur Kestrel + itch; `@` wird entschärft. Formular `BugReportForm` im Pausenmenü (P tippt, Esc/BACK zurück und bricht Senden ab). GitHub-Link aus P78 entfernt. Token: Max mit `python deploy/set-report-token.py`. Datenschutz auf maxlworks.com (EN/DE) ergänzt. Geprüft: Formular im WebGL-Build (Tippen inkl. „p“, Fehlermeldung ohne Backend), `curl` live.
 
 ### P85 — Figuren-Folgen ohne Begegnung und neue Bedingungen
-- Größe: M · Priorität: Soll (Vorschlag) · Status: in Arbeit (martin, 09.11.), Rest: Nells Sohn, Verhör-Durchsage, Zusammenfassung Tag 11 · Zuständig: martin
+- Größe: M · Priorität: Soll (Vorschlag) · Status: fertig (max, 08.11., Nachtlauf; Rest martin, 09.11.) · Zuständig: martin
 - Braucht: P75, P76 · Folgt auf: P75
 - Ziel: Was `docs/FIGUREN.md` (Punkte 5 und 6) verlangt und P75 noch nicht kann.
 - Enthalten: Geschenke an die Familie (Mira bringt Essen = FOOD heute Nacht gedeckt, Senn Medizin), Lohnbonus/Rüge per Durchsage (Korr),
@@ -1521,6 +1521,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: Tutorial (P86), Shifter-Ende (P87), Verwahrung (P77).
 - Abnahme: Jede dieser Folgen ist mit der Testfigur oder einer echten Figur einmal spielbar; Tests für die neuen Bedingungen.
 - Ergebnis (Nachtlauf, 08.11.): Mira bringt Essen, Senn Medizin wenn jemand krank ist, Korr Bonus/Rüge per Durchsage zwei Tage später, Shifter-Paket im Brief (`Consequence`). Offen: Nells Sohn, Zusammenfassung Tag 11, Verhör-Durchsage.
+- Ergebnis Rest (martin, 09.11.): Nells Sohn ist Jonas Varga, wenn du ihn verhaftet hast, sonst die letzte Mensch-Verhaftung (`CharacterMemory.Kin`, `{kin}`/`{kinFate}`). Shifter an Tag 3 verhaftet → Verhör-Durchsage an Tag 4 (`Consequence.onlyIfArrested`). Tag 11: Newsletter-Ausschnitt unter dem Brief, eine Zeile je Figur (`RecurringCharacter.SummaryFor`). Tests: `CharacterEpilogueTests`.
 
 ### P86 — Korr-Tutorial an Tag 1
 - Größe: M · Priorität: Soll (Vorschlag) · Status: fertig (max, 08.11.) · Zuständig: max (umgetragen 08.11.)

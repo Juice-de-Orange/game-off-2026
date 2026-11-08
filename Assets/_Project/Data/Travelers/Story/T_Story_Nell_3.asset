@@ -22,7 +22,7 @@ MonoBehaviour:
   intendedReason: Papers in order
   trickIntended: 0
   storyTag: P76 character, day 11
-  greeting: Nell. They're letting him go home with me.
+  greeting: Nell. They're letting {kin} go home with me.
   answers: []
   reactionAdmitted: 
   reactionDenied: 

@@ -58,6 +58,7 @@ MonoBehaviour:
     eventLines: []
     consequences:
     - when: 1
+      onlyIfArrested: 0
       marketEvent: {fileID: 0}
       eventInDays: 1
       wanted: 0
@@ -74,6 +75,7 @@ MonoBehaviour:
         A bonus has been paid.
       letterLine: 
     - when: 2
+      onlyIfArrested: 0
       marketEvent: {fileID: 0}
       eventInDays: 1
       wanted: 0
@@ -128,3 +130,14 @@ MonoBehaviour:
     endingTitle: 
     endingBody: 
     endingWarning: 
+  kinName: 
+  kinSpecies: Human
+  kinFateByYou: 
+  kinFateByOthers: 
+  summaryHelped: Inspector Korr's final report calls the officer at lane two "reliable".
+    From him, that is high praise.
+  summaryBetrayed: Inspector Korr's final report on lane two runs to nine pages.
+    None of them are kind.
+  summaryNeutral: 
+  summaryDead: Inspector Korr was lost in an "airlock incident". The Border Authority
+    has sent three more inspectors.

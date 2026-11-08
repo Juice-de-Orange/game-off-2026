@@ -61,6 +61,7 @@ MonoBehaviour:
     eventLines: []
     consequences:
     - when: 1
+      onlyIfArrested: 0
       marketEvent: {fileID: 0}
       eventInDays: 1
       wanted: 0
@@ -141,3 +142,13 @@ MonoBehaviour:
     endingTitle: 
     endingBody: 
     endingWarning: 
+  kinName: 
+  kinSpecies: Human
+  kinFateByYou: 
+  kinFateByOthers: 
+  summaryHelped: Mira Talsk and her children have a home on the far side of the border.
+    She named the cat after you.
+  summaryBetrayed: Mira Talsk was sent back one time too many. Her children are still
+    waiting on the other side.
+  summaryNeutral: 
+  summaryDead: Mira Talsk never reached her children.

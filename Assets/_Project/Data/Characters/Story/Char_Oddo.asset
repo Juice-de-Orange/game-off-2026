@@ -34,6 +34,7 @@ MonoBehaviour:
       line: The docks are dead today - more business for Oddo!
     consequences:
     - when: 1
+      onlyIfArrested: 0
       marketEvent: {fileID: 11400000, guid: efe96a2bc90424846b07f65bda579193, type: 2}
       eventInDays: 2
       wanted: 0
@@ -112,3 +113,14 @@ MonoBehaviour:
     endingTitle: 
     endingBody: 
     endingWarning: 
+  kinName: 
+  kinSpecies: Human
+  kinFateByYou: 
+  kinFateByOthers: 
+  summaryHelped: Pim Oddo's caravan is the talk of three stations. He tells everyone
+    about his friend at the counter.
+  summaryBetrayed: Pim Oddo never came back. Someone at the bar is selling his clown
+    shoes.
+  summaryNeutral: 
+  summaryDead: Pim Oddo went out of the airlock. His clown shoes are still on a shelf
+    somewhere.

@@ -111,4 +111,12 @@ Tag 3 kommt, wird nach diesem Plan und den neuen Figuren gemacht (Martin, 07.11.
 ## Umgesetzt (P85, P77, Nachtlauf 08.11.)
 - `Consequence`: Geschenke an die Familie (`giftItem`, Mira: Eintopf, Senn: Antibiotika wenn jemand krank ist), Lohn (`wageChange`, Korr: +25 oder −20, zwei Tage nach seiner verdeckten Prüfung), Durchsage, Briefzeile (Shifter).
 - Verwahrung: Senn (Antibiotika, 20 CR), Quill (Spice, 30), Nell (Datenchip, 15), Oddo (Silberring, 20). Beim nächsten Auftritt: noch da → Pfand; weg → zählt als verraten.
-- Noch offen: wer Nells Sohn ist, Zusammenfassung an Tag 11, Verhör-Durchsage.
+- Noch offen: wer Nells Sohn ist, Zusammenfassung an Tag 11, Verhör-Durchsage. → erledigt in P85 (martin, 09.11.), siehe unten.
+
+## Umgesetzt (P85 Rest, martin, 09.11.)
+- **Nells Sohn:** Jonas Varga (P15, Tag 4, Stimulanzien), wenn du ihn verhaftet hast; sonst die letzte Mensch-Verhaftung vor Tag 6; sonst Jonas,
+  von jemand anderem gefasst. Nell nennt ihn beim Namen und sagt, wer ihn eingesperrt hat (`{kin}`, `{kinFate}` in ihren Texten).
+- **Verhör-Durchsage:** Shifter an Tag 3 verhaftet → am Morgen von Tag 4: Er nannte jede Stunde einen anderen Namen und kam frei, weil es keinen
+  Namen für die Anklage gab (erklärt, warum er an Tag 6 wieder da ist).
+- **Zusammenfassung Tag 11:** Unter dem Morgenbrief steht ein Ausschnitt aus dem Stations-Newsletter, eine Zeile je getroffener Figur nach
+  ihrem letzten Ausgang (geholfen, verraten/beschlagnahmt, neutral, tot).
