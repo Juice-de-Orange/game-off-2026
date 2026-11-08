@@ -6316,7 +6316,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_TicketTerminal.fbx
 package: P72
 scene: Hangar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.8, 0.6, 1.8]
@@ -6346,7 +6346,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Shuttle_Engine_Loop.ogg
 package: P72
 scene: Hangar / Flug nach Hause
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6374,7 +6374,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Pistol.png
 package: P82
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6403,7 +6403,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_DataChip.png
 package: P82
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6432,7 +6432,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_PocketWatch.png
 package: P82
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6461,7 +6461,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_SilverRing.png
 package: P82
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6490,7 +6490,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_AlienTrinket.png
 package: P82
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6519,7 +6519,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_StimulantVials.png
 package: P82
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6548,7 +6548,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_DocumentScanner.png
 package: P82
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6577,7 +6577,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Liquor.png
 package: P82
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6606,7 +6606,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_WeaponParts.png
 package: P82
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6635,7 +6635,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_CashBundle.png
 package: P82
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6664,7 +6664,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_AlienSpecimen.png
 package: P82
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6693,7 +6693,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_UVLamp.png
 package: P82
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
