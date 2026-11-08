@@ -22,6 +22,8 @@ namespace GameOff.Economy
         [SerializeField] private DayManager dayManager;
 
         public Conduct Conduct { get; } = new Conduct();
+        /// <summary>P83: what was handed in "as ordered"; the player can try to break in for it in the evening.</summary>
+        public Inventory Locker { get; } = new Inventory();
         /// <summary>P12: the ticket ending reads the morale.</summary>
         public static Confiscation Instance { get; private set; }
         public ConfiscationTuning Tuning => tuning;
@@ -86,11 +88,35 @@ namespace GameOff.Economy
                 $"{tuning.disciplinaryLimit} disciplinary penalties. Station security walks you to the next shuttle - without pay.");
         }
 
+        /// <summary>P83: the break-in. Caught = a disciplinary penalty, the goods stay; otherwise all of it, as CONFISCATED goods.</summary>
+        public string BreakIn(float roll)
+        {
+            var economy = Economy;
+            if (economy == null) return "";
+            if (roll < tuning.lockerCaughtChance)
+            {
+                Conduct.AddDisciplinary(1);
+                DischargeIfDue();
+                return $"Caught at the locker. DISCIPLINARY PENALTY {Conduct.Disciplinary} OF {tuning.disciplinaryLimit}.";
+            }
+            var names = new List<string>();
+            foreach (var item in new List<ItemData>(Locker.Items))
+            {
+                int count = Locker.Count(item);
+                economy.Inventory.Add(item.ConfiscatedVariant != null ? item.ConfiscatedVariant : item, count);
+                names.Add($"{item.DisplayName} ×{count}");
+            }
+            Locker.Clear();
+            return "Nobody saw. Taken: " + string.Join(", ", names) + ".";
+        }
+
         /// <summary>Books the outcome of an answer: fine, kept goods, disciplinary penalty, discharge at the limit.</summary>
         public ShiftOutcome Apply(ShiftChoice choice, IReadOnlyList<(ItemData item, int count)> items, ItemData picked, float roll)
         {
             var o = ShiftReport.Resolve(choice, items, picked, tuning, roll);
             var economy = Economy;
+            if (choice == ShiftChoice.AsOrdered)
+                foreach (var (item, count) in items) Locker.Add(item, count);
             if (economy != null)
             {
                 foreach (var (item, count) in o.Kept) economy.Inventory.Add(item, count);

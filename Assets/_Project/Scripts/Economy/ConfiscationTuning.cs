@@ -24,6 +24,9 @@ namespace GameOff.Economy
         [Range(0f, 1f)] public float missedSuccessChance = 0.6f;
         public int missedFine = 30;
 
+        [Header("Breaking into the evidence locker (P83)")]
+        [Range(0f, 1f)] public float lockerCaughtChance = 0.35f;
+
         [Header("Disciplinary penalties (separate from the daily warnings, P07)")]
         [Tooltip("This many over the run and the officer is discharged (game over, ending in P12).")]
         public int disciplinaryLimit = 3;

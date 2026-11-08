@@ -814,6 +814,13 @@ namespace GameOff.EditorTools
                 Set(bribe, "envelope", envelope);
             }
 
+            BuildTelescope(root.transform, canvas);
+            var lockerGo = new GameObject("EvidenceLocker");
+            lockerGo.transform.SetParent(root.transform, false);
+            var (lockerUse, lockerView) = Trigger(lockerGo.transform, "Trigger", new Vector3(-4f, 0.9f, -6.45f), new Vector3(1.2f, 1.9f, 0.7f), "Evidence locker");
+            Object.DestroyImmediate(lockerView);
+            Set(lockerGo.AddComponent<EvidenceLocker>(), "interactable", lockerUse);
+
             // P101: those let through today stand around after the shift.
             var crowdGo = new GameObject("EveningCrowd");
             crowdGo.transform.SetParent(root.transform, false);
@@ -866,6 +873,33 @@ namespace GameOff.EditorTools
             SetFields(shutter, ("closedHeight", 2.34f), ("openHeight", 3.64f));
             Set(vendor, "shutter", shutter);
             slats.gameObject.SetActive(false); // SecurityShutter shows it when it falls
+        }
+
+        /// <summary>P29: trigger at the coin telescope on the deck, eye behind the eyepiece, overlay over the HUD.</summary>
+        private static void BuildTelescope(Transform parent, Transform canvas)
+        {
+            var go = new GameObject("CoinTelescope");
+            go.transform.SetParent(parent, false);
+            var (interactable, debugView) = Trigger(go.transform, "Trigger", new Vector3(0f, 0.75f, 9.6f), new Vector3(0.9f, 1.8f, 0.9f), "Look through the telescope (1 CR)");
+            Object.DestroyImmediate(debugView);
+            var eye = new GameObject("Eye").transform;
+            eye.SetParent(go.transform, false);
+            eye.position = new Vector3(0f, 1.3f, 9.2f);
+            var overlay = new GameObject("TelescopeOverlay", typeof(RectTransform), typeof(Image));
+            overlay.transform.SetParent(canvas, false);
+            Stretch(overlay.GetComponent<RectTransform>());
+            var image = overlay.GetComponent<Image>();
+            image.sprite = AssetDatabase.LoadAllAssetsAtPath("Assets/_Project/Art/UI/UI_Telescope_Overlay.png").OfType<Sprite>().FirstOrDefault();
+            image.color = Color.white;
+            image.raycastTarget = false;
+            var count = Text(overlay.transform, "Countdown", "30", 26, Amber, new Vector2(0f, -240f), new Vector2(200f, 40f), TextAlignmentOptions.Center);
+            Text(overlay.transform, "Hint", "Mouse pans  ·  Wheel zooms  ·  [Q] leave", 16, TextDim, new Vector2(0f, -280f), new Vector2(600f, 30f), TextAlignmentOptions.Center);
+            var telescope = go.AddComponent<CoinTelescope>();
+            Set(telescope, "interactable", interactable);
+            Set(telescope, "eye", eye);
+            Set(telescope, "overlay", overlay);
+            Set(telescope, "countdown", count);
+            go.AddComponent<HomeLights>();
         }
 
         /// <summary>P101: where people stand in the evening: one at the bar, the rest in the hall, checked free of furniture.</summary>
@@ -1245,6 +1279,28 @@ namespace GameOff.EditorTools
                 Set(v, "day", day);
                 Set(v, "dialogs", dialogs);
                 Record(v);
+            }
+            var planetT = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Transform>(true)).FirstOrDefault(t => t.name == "HomePlanet");
+            foreach (var t in instance.GetComponentsInChildren<CoinTelescope>(true))
+            {
+                Set(t, "player", player);
+                Set(t, "day", day);
+                Set(t, "playerCamera", player != null ? player.GetComponentInChildren<Camera>(true) : null);
+                Set(t, "homePlanet", planetT);
+                Record(t);
+            }
+            foreach (var h in instance.GetComponentsInChildren<HomeLights>(true))
+            {
+                Set(h, "day", day);
+                Set(h, "planet", planetT != null ? planetT.GetComponentInChildren<Renderer>(true) : null);
+                Record(h);
+            }
+            foreach (var l in instance.GetComponentsInChildren<EvidenceLocker>(true))
+            {
+                Set(l, "day", day);
+                Set(l, "dialogs", dialogs);
+                Set(l, "player", player);
+                Record(l);
             }
             foreach (var c in instance.GetComponentsInChildren<EveningCrowd>(true))
             {

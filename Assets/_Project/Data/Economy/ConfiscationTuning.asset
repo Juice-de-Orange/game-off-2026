@@ -41,6 +41,7 @@ MonoBehaviour:
   keepAllFine: 100
   missedSuccessChance: 0.6
   missedFine: 30
+  lockerCaughtChance: 0.35
   disciplinaryLimit: 3
   airlockGuilty: -1
   airlockInnocent: -3

@@ -57,6 +57,9 @@ MonoBehaviour:
   vendorGreet:
     clip: {fileID: 8300000, guid: f34b8a29f09757744a05940ed44ab031, type: 3}
     volume: 1
+  telescopeCoin:
+    clip: {fileID: 8300000, guid: 1518abc163406c7489be1d7b2b57a1e8, type: 3}
+    volume: 1
   tradeBuy:
     clip: {fileID: 8300000, guid: 8b6b70a878a30ca488468b64a59db9df, type: 3}
     volume: 1

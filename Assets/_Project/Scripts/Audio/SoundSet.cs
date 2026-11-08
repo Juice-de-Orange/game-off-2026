@@ -27,6 +27,7 @@ namespace GameOff.Audio
         [Header("Station")]
         public Sound paChime = new Sound();
         public Sound vendorGreet = new Sound();
+        public Sound telescopeCoin = new Sound();
         public Sound tradeBuy = new Sound();
         [Tooltip("P102: variants, played at random with a slight change of pitch; empty = paperPickup / paperSlide.")]
         public Sound[] paperPickups = new Sound[0];
