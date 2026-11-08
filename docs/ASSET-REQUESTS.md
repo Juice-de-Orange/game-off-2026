@@ -8071,7 +8071,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Panel.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8098,7 +8098,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_PanelInset.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8125,7 +8125,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Button_Normal.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8152,7 +8152,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Button_Hover.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8179,7 +8179,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Button_Pressed.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8206,7 +8206,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Divider.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8233,7 +8233,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_WarnStripe.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8260,7 +8260,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Scanlines.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
