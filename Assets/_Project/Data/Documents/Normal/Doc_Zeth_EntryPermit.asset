@@ -24,9 +24,9 @@ MonoBehaviour:
   - key: duration
     value: 3 CYCLES
   - key: expires
-    value: 2290-11-08
+    value: 2290-11-30
   - key: issued
     value: LUMEN REACH CONSULATE
   - key: route
     value: LUMEN REACH > KESTREL-9
-  forgedSeal: 0
+  forgedSeal: 1

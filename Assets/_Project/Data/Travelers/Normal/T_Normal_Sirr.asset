@@ -18,8 +18,8 @@ MonoBehaviour:
   documents:
   - {fileID: 11400000, guid: 78ff1210aca3d6f43929135eaa07ecbb, type: 2}
   - {fileID: 11400000, guid: 78b1964315ba8fe4aba664d56aca0a1a, type: 2}
-  intendedVerdict: 0
-  intendedReason: Papers in order
+  intendedVerdict: 2
+  intendedReason: Forged seal on the entry permit
   trickIntended: 0
   storyTag: P15, day 11
   greeting: Kss. You look tired, officer. Your kind sleeps, yes?

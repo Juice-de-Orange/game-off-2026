@@ -58,5 +58,37 @@ namespace GameOff.Economy
             "{0} is sick and needs medicine.",
             "{0} is in a very bad way.",
         };
+
+        [Header("Family fate (P69)")]
+        [Tooltip("Someone who stays critical for this many further nights dies; the morning letter warns the night before. 0 = nobody dies.")]
+        public int criticalNightsToDeath = 2;
+        [Tooltip("Morning line instead of the critical one when the next night would be the last; {0} = name.")]
+        public string dyingLine = "{0} won't last another night without medicine.";
+        public string deadName = "dead";
+        [Tooltip("Writes the letters home. Without this person the family is broken and the run ends.")]
+        public string letterWriterName = "Lena";
+        [Tooltip("Replaces the day's letter once someone has died.")]
+        public List<FamilyLossLetter> lossLetters = new List<FamilyLossLetter>
+        {
+            new FamilyLossLetter
+            {
+                name = "Mom",
+                firstMorning = "Dad,\nMom didn't wake up this morning. I tried for a long time.\nThe neighbours came. I am looking after Pip now.\nPlease come home.\n— Lena",
+                afterwards = "Dad,\nThe house is very quiet without Mom. I do the counting and the cooking now.\nWe are still here. Send what you can.\n— Lena",
+            },
+            new FamilyLossLetter
+            {
+                name = "Pip",
+                firstMorning = "Dad,\nPip's cough stopped in the night. We thought that was good.\nMom hasn't said anything since. I don't know what else to write.\n— Lena",
+                afterwards = "Dad,\nMom still sets out three bowls. I put one back when she isn't looking.\nPlease come home soon.\n— Lena",
+            },
+        };
+        [TextArea(2, 5)] public string lastSurvivorLetter = "Dad,\nIt's only me now.\nI don't know what else to write. Please come home.\n— Lena";
+        public string familyLostTitle = "FAMILY LOST";
+        [Tooltip("{names} = everyone who died.")]
+        [TextArea(3, 8)] public string familyLostBody =
+            "The message from the colony is three lines long, and it isn't in Lena's handwriting.\n\n" +
+            "{names} did not make it. Whoever is left has been taken in by the neighbours.\n\n" +
+            "There is nobody to send anything home to now. You hand in your badge and stop counting credits.";
     }
 }

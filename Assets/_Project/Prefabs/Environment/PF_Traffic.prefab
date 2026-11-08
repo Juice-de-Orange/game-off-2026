@@ -62,7 +62,7 @@ MonoBehaviour:
   player: {fileID: 0}
   lineMaterial: {fileID: 2100000, guid: c48991f67d49cd140acc0a8251fb7709, type: 2}
   stationBounds:
-    m_Center: {x: 3, y: 11.8550005, z: 13}
-    m_Extent: {x: 45.5, y: 14.065001, z: 63}
+    m_Center: {x: 3, y: 11.959999, z: 13}
+    m_Extent: {x: 45.5, y: 13.959999, z: 63}
   minClearance: 15
   timeLapse: 4

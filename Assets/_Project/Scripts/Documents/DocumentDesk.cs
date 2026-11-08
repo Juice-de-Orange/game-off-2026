@@ -78,6 +78,8 @@ namespace GameOff.Documents
         /// <summary>A paper is being moved or the drawer is pressed. (Reading doesn't count: the officer may look around meanwhile.)</summary>
         public bool IsMovingPaper => _pressed != null || _drawerPress;
         public IReadOnlyList<DocumentView> OnDesk => _onDesk;
+        /// <summary>P62: the papers in the drawer.</summary>
+        public IReadOnlyList<DocumentView> InDrawer => _inDrawer;
         private float DeskTop => deskSpots.Length > 0 ? deskSpots[0].position.y : transform.position.y;
 
         private void Awake()

@@ -5,7 +5,8 @@ namespace GameOff.Departure
 {
     /// <summary>
     /// P72: which ending the flight home gets. The family member in the worst condition decides:
-    /// well or weak → HOME, sick → HOME, BARELY, critical → TOO LATE? ({names} = everyone in that worst condition).
+    /// well or weak → HOME, sick → HOME, BARELY, critical → TOO LATE?, somebody died (P69) → the lost ending
+    /// ({names} = everyone in that worst condition). P12: a closing sentence about the airlock follows (MoraleLine).
     /// </summary>
     public static class TicketEnding
     {
@@ -18,9 +19,14 @@ namespace GameOff.Departure
             var who = new List<string>();
             for (int i = 0; i < conditions.Count; i++)
                 if (conditions[i] == worst) who.Add(i < names.Count ? names[i] : "?");
-            string body = worst >= Household.Critical ? texts.lateBody : texts.barelyBody;
-            return (worst >= Household.Critical ? texts.lateTitle : texts.barelyTitle, body.Replace("{names}", JoinNames(who)));
+            string title = worst == Household.Dead ? texts.lostTitle : worst == Household.Critical ? texts.lateTitle : texts.barelyTitle;
+            string body = worst == Household.Dead ? texts.lostBody : worst == Household.Critical ? texts.lateBody : texts.barelyBody;
+            return (title, body.Replace("{names}", JoinNames(who)));
         }
+
+        /// <summary>P12: closing sentence for the run's morale (Conduct.Morale: 0 or more clean, then stained, then bloody).</summary>
+        public static string MoraleLine(int morale, DepartureTuning texts) =>
+            morale >= 0 ? texts.moraleCleanLine : morale >= texts.moraleBloodyBelow ? texts.moraleStainedLine : texts.moraleBloodyLine;
 
         /// <summary>"Pip", "Mom and Pip", "Mom, Lena and Pip".</summary>
         public static string JoinNames(IReadOnlyList<string> names)

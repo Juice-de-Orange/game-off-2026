@@ -9789,3 +9789,30 @@ refs: []
 placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
 feedback: []
 ```
+
+### UI_Icon_Item_ClownShoes.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_ClownShoes.png
+package: P63
+scene: UI (Inventar, Handelsfenster, Abrechnung)
+status: offen
+priority: P3
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_ClownShoes.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Waren-Icon "Clown shoes" im Stil der freigegebenen Waren-Icons (UI_Icon_Item_NovaCola): Pixel-Art, leichte Dreiviertel-Ansicht, ca. 2 px dunkle Kontur, Farben aus der Palette, transparenter Hintergrund, Objekt füllt ca. 80 % der Fläche, klein (48 px) im Inventar lesbar. Motiv: übergroßer roter Clownsschuh wie SM_Item_ClownShoes.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: Selbst gezeichneter roter Schuh (32x32 hochskaliert), bis die Lieferung da ist.
+feedback: []
+```

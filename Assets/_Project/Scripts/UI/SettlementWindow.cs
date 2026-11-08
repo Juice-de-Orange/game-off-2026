@@ -76,6 +76,7 @@ namespace GameOff.UI
                 dayManager.NightStep = Run;
                 dayManager.LetterAddendum = () => Economy != null ? Economy.MorningReport() : "";
                 dayManager.FamilyInTrouble = () => Economy != null && Economy.Household != null && Economy.Household.AnySick;
+                dayManager.LetterOverride = () => Economy != null ? Economy.LossLetter() : null;
             }
             if (shift != null)
             {
@@ -91,6 +92,7 @@ namespace GameOff.UI
                 dayManager.NightStep = null;
                 dayManager.LetterAddendum = null;
                 dayManager.FamilyInTrouble = null;
+                dayManager.LetterOverride = null;
             }
             if (shift != null)
             {
@@ -114,7 +116,13 @@ namespace GameOff.UI
         private int Citations => shift != null ? shift.Citations : 0;
         private int FreeWarnings => shift != null ? shift.FreeWarnings : 0;
         private int Penalty => Payroll.Penalty(Citations, FreeWarnings, Tuning);
-        private int Cost(int need) => Tuning.MoneyCost((FamilyNeed)need);
+        /// <summary>P69: the need shrinks with the family.</summary>
+        private int Cost(int need)
+        {
+            int full = Tuning.MoneyCost((FamilyNeed)need);
+            var family = Economy.Household;
+            return family.Alive == family.Count ? full : Market.Rounded(full * family.Alive / (float)family.Count);
+        }
         /// <summary>P13: the item that came home by drone for this need tonight, or null.</summary>
         private ItemData Delivered(int need) => Economy.Delivery.CoveringItem(Tuning.TagOf((FamilyNeed)need));
         private bool Covered(int need) => Delivered(need) != null;
@@ -161,6 +169,7 @@ namespace GameOff.UI
                 yield break;
             }
             Book(day);
+            if (Economy.FamilyBroken) dayManager.GameOver(Tuning.familyLostTitle, Economy.FamilyLostBody());
         }
 
         private void Toggle(int need)
@@ -225,6 +234,11 @@ namespace GameOff.UI
             for (int i = 0; i < e.Household.Count && i < t.members.Count; i++)
             {
                 var m = t.members[i];
+                if (e.Household.IsDead(i))
+                {
+                    fb.AppendLine($"<color=#8B9096>{m.name} ({m.role})  ·  {t.deadName}</color>");
+                    continue;
+                }
                 string now = Name(e.Household.Condition(i)), then = Name(next[i]);
                 string arrow = next[i] > e.Household.Condition(i) ? "<color=#E2463F>" + then + "</color>"
                     : next[i] < e.Household.Condition(i) ? "<color=#9BE05A>" + then + "</color>" : then;
@@ -244,6 +258,7 @@ namespace GameOff.UI
 
         private string Name(int condition)
         {
+            if (condition == Household.Dead) return Tuning.deadName;
             var names = Tuning.conditionNames;
             return names.Length == 0 ? condition.ToString() : names[Mathf.Clamp(condition, 0, names.Length - 1)];
         }

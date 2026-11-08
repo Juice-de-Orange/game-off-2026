@@ -22,6 +22,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: 74c26e4bb62f1884ab816ec412ab79fc, type: 2}
   unique: 0
+  wearable: 0
   icon: {fileID: -8995900440682585851, guid: b0dd64dc057ace04daf5c7b415c449a9, type: 3}
   model: {fileID: 0}
   cargoWord: PROTEIN

@@ -1,5 +1,6 @@
 using GameOff.Audio;
 using GameOff.Core;
+using GameOff.Economy;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -91,6 +92,8 @@ namespace GameOff.Player
             _verticalVelocity = 0f;
         }
 
+        private static bool Clown => PlayerEconomy.Instance != null && PlayerEconomy.Instance.Wearing != null;
+
         private void Update()
         {
             if (_controlEnabled && !IsCursorCaptured() && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
@@ -131,7 +134,7 @@ namespace GameOff.Player
                 // What was really walked: pressing against a wall makes no steps.
                 Vector3 walked = _controller.velocity;
                 walked.y = 0f;
-                if (_footsteps.Advance(walked.magnitude * Time.deltaTime, tuning.stepLength)) AudioManager.PlayFootstep(_footsteps);
+                if (_footsteps.Advance(walked.magnitude * Time.deltaTime, tuning.stepLength)) AudioManager.PlayFootstep(_footsteps, Clown);
             }
 
             // Safety net: fell through something after all (B01). Back to where we last stood instead of falling forever.

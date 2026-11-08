@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using GameOff.Counter;
 using GameOff.Documents;
+using GameOff.Economy;
 using GameOff.Travelers;
 using TMPro;
 using UnityEditor;
@@ -64,6 +65,7 @@ namespace GameOff.EditorTools
                     Label("ORIGIN", -0.018f, -0.008f), Value("origin", -0.018f, -0.012f, 0.07f),
                     Label("ID NO.", -0.056f, -0.022f), Value("id", -0.056f, -0.026f, 0.05f),
                     Label("EXPIRES", 0.005f, -0.022f), Value("expires", 0.005f, -0.026f, 0.05f),
+                    UvMark(-0.056f, 0.004f, 0.11f),
                 }, log);
             var permit = BuildPrefab(DocumentType.EntryPermit, new Vector2(0.15f, 0.21f), 1.35f, font, photoMat, new Rect(0.028f, 0.072f, 0.038f, 0.048f),
                 new List<Text>
@@ -77,6 +79,7 @@ namespace GameOff.EditorTools
                     Label("VALID UNTIL", 0.0f, -0.01f), Value("expires", 0.0f, -0.015f, 0.066f),
                     Label("ISSUED AT", -0.066f, -0.035f), Value("issued", -0.066f, -0.04f, 0.13f),
                     Label("ROUTE", -0.066f, -0.06f), Value("route", -0.066f, -0.065f, 0.105f),
+                    UvMark(-0.066f, 0.0f, 0.13f),
                 }, log);
             var manifest = BuildPrefab(DocumentType.CargoManifest, new Vector2(0.21f, 0.30f), 1.6f, font, null, default,
                 new List<Text>
@@ -87,6 +90,7 @@ namespace GameOff.EditorTools
                     Label("FROM", -0.096f, 0.085f), Value("origin", -0.096f, 0.079f, 0.1f),
                     Label("TO", 0.01f, 0.085f), Value("destination", 0.01f, 0.079f, 0.09f),
                     Label("DECLARED GOODS", -0.096f, 0.058f), Value("cargo", -0.096f, 0.05f, 0.19f),
+                    UvMark(-0.096f, -0.03f, 0.19f),
                 }, log);
 
             var citation = BuildPrefab(DocumentType.Citation, new Vector2(0.08f, 0.14f), 1f, font, null, default,
@@ -116,6 +120,8 @@ namespace GameOff.EditorTools
             AssetDatabase.SaveAssets();
             return "DocumentPrefabBuilder:\n" + string.Join("\n", log);
         }
+
+        private static Text UvMark(float x, float z, float width) => new Text("UvMark", "", x, z, width, TitleSize * 1.5f, Color.white); // P62: only under the lamp
 
         private static Text Label(string text, float x, float z) => new Text("Label_" + text.Replace(" ", "").Replace(".", ""), text, x, z, 0.06f, LabelSize, LabelInk);
         private static Text Value(string key, float x, float z, float w) => new Text("Field_" + key, "", x, z, w, ValueSize, Ink);
@@ -295,6 +301,49 @@ namespace GameOff.EditorTools
             DeskLabel(controls, "Label_Airlock", "AIRLOCK", new Vector3(0.8f, 0.002f, -0.83f), new Color(0.72f, 0.04f, 0.03f), font);
         }
 
+        /// <summary>P16/P62: scanner and UV lamp lie toward the officer, outside the paper area so they never catch a paper, hidden until bought (PaperGadgets).</summary>
+        private static void WireGadgets(GameObject root, Transform controls, TMP_FontAsset font, List<string> log)
+        {
+            var layer = controls.Find("Stamp_Approve (SM_Counter_Stamp)");
+            var uv = Gadget(controls, "Gadget_UvLamp", "Assets/_Project/Art/Models/Items/SM_Item_UVLamp.fbx", new Vector3(0.6f, 0f, -0.2f), CounterAction.UvLamp, "UV", font, layer);
+            var scan = Gadget(controls, "Gadget_Scanner", "Assets/_Project/Art/Models/Items/SM_Item_DocScanner.fbx", new Vector3(0.6f, 0f, 0.2f), CounterAction.Scanner, "SCAN", font, layer);
+            var gadgets = root.GetComponent<PaperGadgets>();
+            if (gadgets == null) gadgets = root.AddComponent<PaperGadgets>();
+            var so = new SerializedObject(gadgets);
+            so.FindProperty("station").objectReferenceValue = root.GetComponent<CounterStation>();
+            so.FindProperty("desk").objectReferenceValue = root.GetComponent<DocumentDesk>();
+            so.FindProperty("shift").objectReferenceValue = root.GetComponent<CounterShift>();
+            so.FindProperty("uvLampItem").objectReferenceValue = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/_Project/Data/Items/Item_UVLamp.asset");
+            so.FindProperty("scannerItem").objectReferenceValue = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/_Project/Data/Items/Item_DocumentScanner.asset");
+            so.FindProperty("uvLamp").objectReferenceValue = uv;
+            so.FindProperty("scanner").objectReferenceValue = scan;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            log.Add("PaperGadgets wired");
+        }
+
+        private static GameObject Gadget(Transform controls, string name, string modelPath, Vector3 position, CounterAction action, string label, TMP_FontAsset font, Transform layerFrom)
+        {
+            var old = controls.Find(name);
+            if (old != null) Object.DestroyImmediate(old.gameObject);
+            var go = new GameObject(name);
+            go.transform.SetParent(controls, false);
+            go.transform.localPosition = position;
+            var model = AssetDatabase.LoadAssetAtPath<GameObject>(modelPath);
+            if (model != null) ((GameObject)PrefabUtility.InstantiatePrefab(model, go.transform)).transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
+            var box = go.AddComponent<BoxCollider>();
+            box.center = new Vector3(0f, 0.04f, 0f);
+            box.size = new Vector3(0.2f, 0.08f, 0.12f);
+            var clickable = go.AddComponent<CounterClickable>();
+            var so = new SerializedObject(clickable);
+            so.FindProperty("action").enumValueIndex = (int)action;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            DeskLabel(go.transform, "Label", label, new Vector3(0.13f, 0.002f, 0f), new Color(0.05f, 0.05f, 0.07f), font);
+            if (layerFrom != null)
+                foreach (var t in go.GetComponentsInChildren<Transform>(true)) t.gameObject.layer = layerFrom.gameObject.layer;
+            go.SetActive(false);
+            return go;
+        }
+
         private static void DeskLabel(Transform controls, string name, string text, Vector3 position, Color color, TMP_FontAsset font)
         {
             var label = controls.Find(name);
@@ -373,6 +422,7 @@ namespace GameOff.EditorTools
                 area.localRotation = Quaternion.identity;
 
                 WireButtons(root, controls, font);
+                WireGadgets(root, controls, font, log);
 
                 // Citation printer on the desk, slot toward the officer (yaw 90: model front -Z → world -X)
                 var printer = controls.Find("Printer");
@@ -606,6 +656,7 @@ namespace GameOff.EditorTools
             var so = new SerializedObject(shutter);
             so.FindProperty("slats").objectReferenceValue = slats;
             so.ApplyModifiedPropertiesWithoutUndo();
+            slats.gameObject.SetActive(false); // shown when it falls; at height 0 it would hang below the floor
             var pso = new SerializedObject(root.GetComponent<TravelerPresenter>());
             pso.FindProperty("shutter").objectReferenceValue = shutter;
             pso.ApplyModifiedPropertiesWithoutUndo();

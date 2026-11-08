@@ -9,5 +9,7 @@ namespace GameOff.Economy
     {
         public ItemData item;
         [Min(1)] public int dailyAmount = 3;
+        [Tooltip("On sale from this day (P62: UV lamp from day 4, scanner from day 6). 1 = always.")]
+        [Min(1)] public int fromDay = 1;
     }
 }

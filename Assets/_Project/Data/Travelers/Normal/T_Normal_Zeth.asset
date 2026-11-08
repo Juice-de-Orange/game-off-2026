@@ -18,13 +18,13 @@ MonoBehaviour:
   documents:
   - {fileID: 11400000, guid: a225efe7976a63744adf782be6442d1a, type: 2}
   - {fileID: 11400000, guid: 695ffc8f853d98d49b5460be491e5a81, type: 2}
-  intendedVerdict: 1
-  intendedReason: Entry permit expired yesterday
+  intendedVerdict: 2
+  intendedReason: Forged seal on the entry permit
   trickIntended: 0
   storyTag: P15, day 5
-  greeting: Kss. The office was closed. Everyone knows it was closed.
+  greeting: Kss. Fresh from the office. Everyone knows that office.
   answers:
   - key: expires
-    line: Kss. Dates. The office was closed.
+    line: Kss. Months yet. Read it.
   - key: route
     line: Lumen Reach, as always.

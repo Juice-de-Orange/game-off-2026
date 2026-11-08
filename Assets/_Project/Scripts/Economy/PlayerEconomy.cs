@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using GameOff.Day;
+using GameOff.Departure;
 using GameOff.Travelers;
 using UnityEngine;
 
@@ -51,6 +53,17 @@ namespace GameOff.Economy
         public int BarkeeperSulksFrom { get; set; }
         /// <summary>P72: the ticket home is bought; boarding the shuttle in the evening ends the run.</summary>
         public bool HasTicket { get; set; }
+        /// <summary>P63: the wearable item you have on right now, or null. Leaves your feet when it leaves your inventory.</summary>
+        public ItemData Wearing
+        {
+            get
+            {
+                if (_wearing != null && Inventory.Count(_wearing) == 0) _wearing = null;
+                return _wearing;
+            }
+            set => _wearing = value;
+        }
+        private ItemData _wearing;
         public bool BarkeeperSulks(int day) => BarkeeperSulksFrom > 0 && day >= BarkeeperSulksFrom && day <= BarkeeperSulksFrom + 1;
 
         private readonly Dictionary<VendorStock, VendorSupply> _supplies = new Dictionary<VendorStock, VendorSupply>();
@@ -69,10 +82,47 @@ namespace GameOff.Economy
             var lines = new List<string>();
             for (int i = 0; i < Household.Count; i++)
             {
+                if (Household.IsDead(i)) continue;
                 int c = Mathf.Clamp(Household.Condition(i), 0, household.letterLines.Length - 1);
-                lines.Add(string.Format(household.letterLines[c], household.members[i].name));
+                lines.Add(string.Format(Household.WillDieNextNight(i) ? household.dyingLine : household.letterLines[c], household.members[i].name));
             }
             return string.Join("\n", lines);
+        }
+
+        /// <summary>P69: the letter that replaces the day's letter once someone has died; null while everybody lives.</summary>
+        public string LossLetter()
+        {
+            if (household == null || Household == null || Household.Alive == Household.Count) return null;
+            if (Household.Alive == 1) return household.lastSurvivorLetter;
+            for (int i = 0; i < Household.Count; i++)
+            {
+                if (!Household.IsDead(i)) continue;
+                string name = household.members[i].name;
+                var letter = household.lossLetters.Find(l => l.name == name);
+                if (letter != null) return Household.DiedTonight.Contains(i) ? letter.firstMorning : letter.afterwards;
+            }
+            return household.lastSurvivorLetter;
+        }
+
+        /// <summary>P69: everybody is dead, or the one who writes home is.</summary>
+        public bool FamilyBroken
+        {
+            get
+            {
+                if (household == null || Household == null) return false;
+                if (Household.Alive == 0) return true;
+                for (int i = 0; i < Household.Count; i++)
+                    if (Household.IsDead(i) && household.members[i].name == household.letterWriterName) return true;
+                return false;
+            }
+        }
+
+        /// <summary>P12: the text of the FAMILY LOST ending.</summary>
+        public string FamilyLostBody()
+        {
+            var dead = new List<string>();
+            for (int i = 0; i < Household.Count; i++) if (Household.IsDead(i)) dead.Add(household.members[i].name);
+            return household.familyLostBody.Replace("{names}", TicketEnding.JoinNames(dead));
         }
 
         /// <summary>What went bad overnight (P68), e.g. "Spoiled overnight: Fresh fruit ×1." – empty if nothing.</summary>
@@ -112,7 +162,7 @@ namespace GameOff.Economy
             Market.Begin(1, null); // a new run starts without yesterday's events (Market is static)
             var cold = new List<bool>();
             if (household != null) foreach (var m in household.members) cold.Add(m.feelsCold);
-            Household = new Household(cold);
+            Household = new Household(cold, household != null ? household.criticalNightsToDeath : 0);
             if (dayManager == null || dayManager.DevTools)
                 foreach (var item in devStartItems) Inventory.Add(item);
         }

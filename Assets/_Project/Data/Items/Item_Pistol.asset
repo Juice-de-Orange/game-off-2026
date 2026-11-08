@@ -23,6 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
   - {fileID: 11400000, guid: 2959b78887525eb488bc34d643b0de4d, type: 2}
   unique: 0
+  wearable: 0
   icon: {fileID: -8995900440682585851, guid: b93b0fac75a2feb4985aa924e681f498, type: 3}
   model: {fileID: 0}
   cargoWord: PISTOL

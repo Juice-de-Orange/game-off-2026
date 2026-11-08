@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Item_UVLamp
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemData
   displayName: UV lamp
-  description: Shows hidden seals and stamps on papers (P62).
+  description: 'Click it on your desk: every seal shows up, forged ones glow red.'
   baseValue: 45
   dailyChange: []
   tags:
   - {fileID: 11400000, guid: 03bb08c020997444ca31535c02f20e1a, type: 2}
   unique: 1
+  wearable: 0
   icon: {fileID: -8995900440682585851, guid: 0e328c708a6b1014b8f210c22d5d3aeb, type: 3}
   model: {fileID: 919132149155446097, guid: a13b9754c69f85846a99fc1f517c5f3a, type: 3}
   cargoWord: 

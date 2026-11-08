@@ -16,6 +16,8 @@ namespace GameOff.Economy
         [SerializeField] private List<ItemTag> tags = new List<ItemTag>();
         [Tooltip("Can be owned only once (gadgets like the scanner, story items). Vendors don't sell it again while you have it.")]
         [SerializeField] private bool unique;
+        [Tooltip("P63: can be put on in the inventory; your steps sound different while it is.")]
+        [SerializeField] private bool wearable;
         [Tooltip("Pixel-art icon (P46/P82, 128 px, Point); the lists show names only for now.")]
         [SerializeField] private Sprite icon;
         [Tooltip("P82: the 3D model of this item (for the evidence locker, the desk or the hangar), optional.")]
@@ -31,6 +33,7 @@ namespace GameOff.Economy
         public int BaseValue => baseValue;
         public IReadOnlyList<ItemTag> Tags => tags;
         public bool Unique => unique;
+        public bool Wearable => wearable;
         public Sprite Icon => icon;
         public GameObject Model => model;
         public string CargoWord => cargoWord;

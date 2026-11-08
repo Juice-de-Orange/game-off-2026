@@ -173,7 +173,9 @@ namespace GameOff.Departure
                     conditions.Add(economy.Household.Condition(i));
                     names.Add(i < economy.HouseholdTuning.members.Count ? economy.HouseholdTuning.members[i].name : "?");
                 }
-            return TicketEnding.Pick(conditions, names, tuning);
+            var (title, body) = TicketEnding.Pick(conditions, names, tuning);
+            int morale = Confiscation.Instance != null ? Confiscation.Instance.Conduct.Morale : 0;
+            return (title, body + "\n\n" + TicketEnding.MoraleLine(morale, tuning));
         }
     }
 }

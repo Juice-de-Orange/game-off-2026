@@ -61,7 +61,7 @@ namespace GameOff.EditorTools
                 new Vector3(9.0f, 1.2f, -4f), new Vector3(2.2f, 1.6f, 2.6f)),
             new VendorSpot("Barkeeper", "SM_NPC_Barkeeper", "Stock_Bar_Test", new Vector3(15.5f, 0f, 4f), new Vector3(0.8f, 1.9f, 0.6f), -90f,
                 new Vector3(15.1f, 1.25f, 4f), new Vector3(2.2f, 1.5f, 2.0f)),
-            new VendorSpot("Dealer", "SM_NPC_Dealer", "Stock_BlackMarket_Test", new Vector3(13.6f, 0.58f, 6.4f), new Vector3(0.6f, 1.3f, 0.6f), 90f,
+            new VendorSpot("Dealer", "SM_NPC_Dealer", "Stock_BlackMarket_Test", new Vector3(13.6f, 0.74f, 6.4f), new Vector3(0.6f, 1.3f, 0.6f), 90f,
                 new Vector3(13.6f, 1.05f, 6.4f), new Vector3(1.0f, 1.7f, 1.0f)),
         };
 
@@ -256,9 +256,10 @@ namespace GameOff.EditorTools
             Goods("syrup", "CoughSyrup", "Cough syrup", "Sweet, sticky and better than nothing.", 9, new[] { medicine }, kiosk, 2, 0f, 0f, 0.15f);
             Goods("painkillers", "Painkillers", "", "", 15, null, kiosk, 2, 0f, 0.1f, 0.3f);
             Goods("cola", "NovaCola", "", "", 2, null, kiosk, 5, 0f, 0f, 0f);
-            // Off the kiosk until P16 makes it useful (Martin, 07.11.); re-add with AddEntry(kiosk, scanner, 1) there.
+            // P16: on the shelf from day 6, once contradicting papers get common.
             Goods("scanner", "DocumentScanner", "", "", 60, null, null, 0, 0f, 0f, -0.1f);
-            if (RemoveEntry(kiosk, data.Items["scanner"])) log.Add("scanner off the kiosk until P16");
+            AddEntry(kiosk, data.Items["scanner"], 1, log, 6);
+            SetFields(data.Items["scanner"], ("description", "Click it on your desk: fields that contradict each other across the papers light up."));
             Goods("spice", "Spice", "", "", 12, null, dealer, 3, 0f, 0.2f, -0.1f);
             Goods("stim", "StimulantVials", "Stimulant vials", "Keeps you standing. Not legal anywhere decent.", 18, new[] { contraband, drug, medicine }, dealer, 2, 0f, 0f, 0.2f);
             Goods("antibiotics", "Antibiotics", "Antibiotics", "Military stock. The clinic back home would kill for these.", 30, new[] { contraband, medicine }, dealer, 1, 0f, 0.1f, 0.4f);
@@ -290,7 +291,7 @@ namespace GameOff.EditorTools
         private static readonly Dictionary<string, string> CargoWords = new Dictionary<string, string>
         {
             { "ration", "RATION" }, { "protein", "PROTEIN" }, { "stew", "STEW" }, { "fruit", "FRUIT" }, { "cola", "COLA" },
-            { "battery", "BATTERY" }, { "fusion", "FUSION" }, { "fuse", "FUSE" },
+            { "battery", "BATTERY" }, { "fusion", "FUSION" }, { "fuse", "FUSE" }, { "clownshoes", "CLOWN" },
             { "syrup", "SYRUP" }, { "painkillers", "PAINKILLERS" }, { "antibiotics", "ANTIBIOTICS" }, { "stim", "STIMULANT" },
             { "spice", "SPICE" }, { "chip", "CHIP" }, { "pistol", "PISTOL" }, { "weaponparts", "WEAPON" },
             { "watch", "WATCH" }, { "ring", "RING" }, { "trinket", "TRINKET" }, { "cash", "CASH" }, { "liquor", "LIQUOR" }, { "specimen", "SPECIMEN" },
@@ -307,6 +308,7 @@ namespace GameOff.EditorTools
             { "cash", "Assets/_Project/Art/Models/Items/SM_Item_CashBundle.fbx" },
             { "specimen", "Assets/_Project/Art/Models/Items/SM_Item_AlienSpecimen.fbx" },
             { "uvlamp", "Assets/_Project/Art/Models/Items/SM_Item_UVLamp.fbx" },
+            { "clownshoes", "Assets/_Project/Art/Models/Items/SM_Item_ClownShoes.fbx" },
             { "cola", "Assets/_Project/Art/Models/Props/SM_Prop_SodaCan.fbx" },
         };
 
@@ -330,8 +332,12 @@ namespace GameOff.EditorTools
             New("weaponparts", "WeaponParts", "Weapon parts", "Springs, a barrel, a trigger group. Nobody needs them for anything good.", 45, contraband, weapon);
             New("cash", "CashBundle", "Cash bundle", "Old notes in a rubber band. Hard to explain at the counter.", 40, valuable);
             New("specimen", "AlienSpecimen", "Alien specimen", "Something in a jar. It moved once. Collectors pay well.", 50, alien, contraband);
-            New("uvlamp", "UVLamp", "UV lamp", "Shows hidden seals and stamps on papers (P62).", 45, gadget);
-            SetFields(data.Items["uvlamp"], ("unique", true));
+            New("uvlamp", "UVLamp", "UV lamp", "Shows hidden seals on papers. Forged ones glow red.", 45, gadget);
+            SetFields(data.Items["uvlamp"], ("unique", true), ("description", "Click it on your desk: every seal shows up, forged ones glow red."));
+            AddEntry(data.Stocks["Stock_Kiosk_Test"], data.Items["uvlamp"], 1, log, 4); // P62: forged seals start on day 5
+            // P63: comes off Pim Oddo's crates at the counter; only wearing them makes them worth anything to you.
+            New("clownshoes", "ClownShoes", "Clown shoes", "Size 48. They squeak at every step, and nobody can tell you not to.", 8, luxury);
+            SetFields(data.Items["clownshoes"], ("wearable", true));
 
             if (!AssetDatabase.IsValidFolder(ConfiscatedFolder.TrimEnd('/'))) AssetDatabase.CreateFolder(ItemFolder.TrimEnd('/'), "Confiscated");
             int icons = 0, models = 0, variants = 0;
@@ -381,6 +387,7 @@ namespace GameOff.EditorTools
             so.FindProperty("icon").objectReferenceValue = item.Icon;
             so.FindProperty("model").objectReferenceValue = item.Model;
             so.FindProperty("cargoWord").stringValue = "";
+            so.FindProperty("wearable").boolValue = item.Wearable;
             so.FindProperty("confiscatedVariant").objectReferenceValue = null;
             var tags = so.FindProperty("tags");
             var list = item.Tags.Where(t => t != confiscated).ToList();
@@ -653,7 +660,7 @@ namespace GameOff.EditorTools
         }
 
         /// <summary>Adds an item to a stock if it isn't sold there yet (existing assets too).</summary>
-        private static void AddEntry(VendorStock stock, ItemData item, int dailyAmount, List<string> log)
+        private static void AddEntry(VendorStock stock, ItemData item, int dailyAmount, List<string> log, int fromDay = 1)
         {
             if (stock.Sells(item)) return;
             var so = new SerializedObject(stock);
@@ -662,9 +669,10 @@ namespace GameOff.EditorTools
             var e = entries.GetArrayElementAtIndex(entries.arraySize - 1);
             e.FindPropertyRelative("item").objectReferenceValue = item;
             e.FindPropertyRelative("dailyAmount").intValue = dailyAmount;
+            e.FindPropertyRelative("fromDay").intValue = fromDay;
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(stock);
-            log.Add($"{item.name} added to {stock.name}");
+            log.Add($"{item.name} added to {stock.name} (from day {fromDay})");
         }
 
         /// <summary>P13: tag and price item per family need, only where still empty (tuned values stay).</summary>
@@ -792,7 +800,19 @@ namespace GameOff.EditorTools
             var bribeSpot = new GameObject("NoteSpot").transform;
             bribeSpot.SetParent(bribeGo.transform, false);
             bribeSpot.SetPositionAndRotation(new Vector3(-1.12f, 0.856f, -8.5f), Quaternion.Euler(0f, 84f, 0f));
-            Set(bribeGo.AddComponent<BribeNote>(), "spot", bribeSpot);
+            var bribe = bribeGo.AddComponent<BribeNote>();
+            Set(bribe, "spot", bribeSpot);
+            // P80: the envelope the note came in lies under it, only while the note lies there.
+            var envelopeModel = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Project/Art/Models/Props/SM_Prop_BribeEnvelope.fbx");
+            if (envelopeModel != null)
+            {
+                var envelope = (GameObject)PrefabUtility.InstantiatePrefab(envelopeModel);
+                envelope.name = "Envelope";
+                envelope.transform.SetParent(bribeGo.transform, false);
+                envelope.transform.SetPositionAndRotation(bribeSpot.position + new Vector3(0.05f, -0.002f, 0.12f), Quaternion.Euler(0f, 70f, 0f));
+                envelope.SetActive(false);
+                Set(bribe, "envelope", envelope);
+            }
 
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
             Object.DestroyImmediate(root);
@@ -808,6 +828,24 @@ namespace GameOff.EditorTools
             tuning = ScriptableObject.CreateInstance<IdleBreathingTuning>();
             AssetDatabase.CreateAsset(tuning, path);
             return tuning;
+        }
+
+        /// <summary>P90: the kiosk's roller shutter fills the hatch while it is closed; hidden while open.</summary>
+        private static void BuildKioskShutter(Transform parent, Vendor vendor)
+        {
+            var model = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Shutter.fbx");
+            if (model == null) return;
+            var shutterT = new GameObject("KioskShutter").transform;
+            shutterT.SetParent(parent, false);
+            shutterT.position = new Vector3(8.28f, 0f, -4f); // just behind the sign strip on the hall side
+            var slats = new GameObject("Slats").transform;
+            slats.SetParent(shutterT, false);
+            ((GameObject)PrefabUtility.InstantiatePrefab(model)).transform.SetParent(slats, false);
+            var shutter = shutterT.gameObject.AddComponent<Counter.SecurityShutter>();
+            Set(shutter, "slats", slats);
+            SetFields(shutter, ("closedHeight", 2.34f), ("openHeight", 3.64f));
+            Set(vendor, "shutter", shutter);
+            slats.gameObject.SetActive(false); // SecurityShutter shows it when it falls
         }
 
         private static void BuildVendor(Transform parent, VendorSpot spot, VendorStock stock, TradeWindow trade)
@@ -846,6 +884,7 @@ namespace GameOff.EditorTools
             Set(vendor, "interactable", interactable);
             Set(vendor, "window", trade);
             Set(vendor, "debugView", debugView);
+            if (spot.Name == "Holly") BuildKioskShutter(go.transform, vendor);
         }
 
         private const string VendingModelName = "SM_Hall_VendingMachine";
@@ -1033,6 +1072,8 @@ namespace GameOff.EditorTools
             var tags = Text(detail, "Tags", "", 13, TextLight, new Vector2(0f, 55f), new Vector2(390f, 20f), TextAlignmentOptions.MidlineLeft);
             var desc = Text(detail, "Description", "", 14, TextDim, new Vector2(0f, -5f), new Vector2(390f, 90f), TextAlignmentOptions.TopLeft);
             var value = Text(detail, "Value", "", 14, TextLight, new Vector2(0f, -85f), new Vector2(390f, 22f), TextAlignmentOptions.MidlineLeft);
+            var wear = MenuButton(detail, "WearButton", "PUT ON", new Vector2(115f, -80f), new Vector2(160f, 30f), 15); // P63
+            wear.gameObject.SetActive(false);
 
             var today = ListBox(w, "TodayList", new Vector2(0f, -122f), new Vector2(854f, 170f), "TODAY", out _, out var todayEmpty);
             todayEmpty.text = "No money moved today.";
@@ -1059,6 +1100,7 @@ namespace GameOff.EditorTools
             Set(window, "detailTags", tags);
             Set(window, "detailDescription", desc);
             Set(window, "detailValue", value);
+            Set(window, "wearButton", wear);
             Set(window, "todayList", today);
             Set(window, "todayEmpty", todayEmpty);
             Set(window, "closeButton", close);

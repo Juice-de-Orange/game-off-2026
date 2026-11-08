@@ -23,6 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 74c26e4bb62f1884ab816ec412ab79fc, type: 2}
   - {fileID: 11400000, guid: 84a35b8ed3834bf41a32c89bb70f3a88, type: 2}
   unique: 0
+  wearable: 0
   icon: {fileID: -8995900440682585851, guid: 6fe5c73536bc8c94c85588488141e257, type: 3}
   model: {fileID: 0}
   cargoWord: FRUIT

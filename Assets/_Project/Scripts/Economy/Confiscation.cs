@@ -22,12 +22,15 @@ namespace GameOff.Economy
         [SerializeField] private DayManager dayManager;
 
         public Conduct Conduct { get; } = new Conduct();
+        /// <summary>P12: the ticket ending reads the morale.</summary>
+        public static Confiscation Instance { get; private set; }
         public ConfiscationTuning Tuning => tuning;
 
         private static PlayerEconomy Economy => PlayerEconomy.Instance;
 
         private void OnEnable()
         {
+            Instance = this;
             if (shift != null) shift.DecisionMade += OnDecision;
             if (Economy != null) Economy.ShiftClosing += OnShiftClosing;
         }
@@ -40,6 +43,7 @@ namespace GameOff.Economy
 
         private void OnDisable()
         {
+            if (Instance == this) Instance = null;
             if (shift != null) shift.DecisionMade -= OnDecision;
             if (Economy != null) Economy.ShiftClosing -= OnShiftClosing;
         }

@@ -43,13 +43,13 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 17ee282a3ac452c44b57ccb863d45c15, type: 3}
     volume: 1
   shutterDrop:
-    clip: {fileID: 8300000, guid: 3aa1e3c3077540842bbf101df48a54bf, type: 3}
+    clip: {fileID: 8300000, guid: a8b759f054453e74abac52f7e44b466d, type: 3}
     volume: 1
   shutterRise:
-    clip: {fileID: 8300000, guid: 99c0936a240107b45ae017443aaf9516, type: 3}
+    clip: {fileID: 8300000, guid: 8f64565d686c42f4caa2b75da1e3ed1a, type: 3}
     volume: 1
   arrestScuffle:
-    clip: {fileID: 8300000, guid: 7c88cce92c2c4b7469e1c67376cb4c6d, type: 3}
+    clip: {fileID: 8300000, guid: a1c0cf5e837163f49abd14b3e258eaec, type: 3}
     volume: 1
   paChime:
     clip: {fileID: 8300000, guid: 361f0241b2a35de4ea129aaba4f41d33, type: 3}
@@ -66,6 +66,13 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: 62cec75baceaeae4182348069a434f7c, type: 3}
     volume: 0.5
   - clip: {fileID: 8300000, guid: 0b1a198ce7b987542b8b9303ea41c3fc, type: 3}
+    volume: 0.5
+  clownFootsteps:
+  - clip: {fileID: 8300000, guid: aa47c85a281a1414bb23baa141f40eb6, type: 3}
+    volume: 0.5
+  - clip: {fileID: 8300000, guid: 7723af6f24b12964dadca7995ad349fd, type: 3}
+    volume: 0.5
+  - clip: {fileID: 8300000, guid: b3d1806a40af18241a43622e40437fd1, type: 3}
     volume: 0.5
   ambienceVolume: 0.35
   humInRoomVolume: 0.12

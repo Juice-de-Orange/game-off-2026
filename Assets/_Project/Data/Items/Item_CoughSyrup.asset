@@ -22,6 +22,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: 64529f16bdb07784f8a6dcc11678a666, type: 2}
   unique: 0
+  wearable: 0
   icon: {fileID: -8995900440682585851, guid: 69f9fe308fb7a0f4c884cb4dfca1e6e6, type: 3}
   model: {fileID: 0}
   cargoWord: SYRUP

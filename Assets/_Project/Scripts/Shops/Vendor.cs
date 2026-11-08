@@ -26,6 +26,10 @@ namespace GameOff.Shops
         [SerializeField] private DayFlowUI dialogs;
         [Tooltip("Translucent box over the trigger, visible only with the dev tools.")]
         [SerializeField] private GameObject debugView;
+        [Tooltip("P90: optional shutter, down whenever this vendor is closed.")]
+        [SerializeField] private Counter.SecurityShutter shutter;
+
+        private bool _shutterOpen = true;
 
         private void OnEnable()
         {
@@ -40,6 +44,14 @@ namespace GameOff.Shops
         }
 
         private void Start() => ApplyDevTools();
+
+        private void Update()
+        {
+            if (shutter == null || IsOpen == _shutterOpen) return;
+            _shutterOpen = IsOpen;
+            if (_shutterOpen) shutter.Raise(1.2f);
+            else shutter.Drop(0f); // nobody watches the kiosk close: it happens while the player sleeps
+        }
 
         private void ApplyDevTools()
         {

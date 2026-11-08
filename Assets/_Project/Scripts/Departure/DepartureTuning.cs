@@ -56,6 +56,16 @@ namespace GameOff.Departure
         [TextArea(3, 8)] public string barelyBody =
             "You made it home. The dock smells of rain and engine oil.\n\n" +
             "{names} can hardly stand. The ticket ate every credit you had, and the medicine will have to wait a little longer.\nBut you are together.";
+        public string lostTitle = "HOME, WITHOUT THEM";
+        [TextArea(3, 8)] public string lostBody =
+            "The shuttle sets down in the rain. Lena is at the dock, taller than you remember, and she doesn't run.\n\n" +
+            "{names} never got to see you come back.\nThe ticket cost everything you had. It came too late to matter.";
+        [Header("Closing sentence by morale (P12)")]
+        [Tooltip("Conduct.Morale below this value counts as bloody. Orders alone cost up to -4 in the story days, so that is still stained.")]
+        public int moraleBloodyBelow = -4;
+        public string moraleCleanLine = "You never opened the airlock on anyone. Whatever else you did up there, you did not do that.";
+        public string moraleStainedLine = "You opened the airlock when the orders said to. Some nights you still hear it cycle.";
+        public string moraleBloodyLine = "You opened the airlock on people who had done nothing. It cycles in your sleep, and it always will.";
         public string lateTitle = "TOO LATE?";
         [TextArea(3, 8)] public string lateBody =
             "Nobody is waiting at the dock.\n\n" +

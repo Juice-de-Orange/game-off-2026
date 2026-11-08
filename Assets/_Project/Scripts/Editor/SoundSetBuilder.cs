@@ -47,6 +47,10 @@ namespace GameOff.EditorTools
             Assign(set.tradeBuy, "SFX_Trade_Buy");
             Assign(set.uiClick, "SFX_UI_Click");
 
+            if (set.clownFootsteps == null || set.clownFootsteps.Length != 3)
+                set.clownFootsteps = new[] { new Sound { volume = FootstepVolume }, new Sound { volume = FootstepVolume }, new Sound { volume = FootstepVolume } };
+            for (int i = 0; i < set.clownFootsteps.Length; i++)
+                Assign(set.clownFootsteps[i], $"SFX_ClownShoe_Squeak_0{i + 1}");
             if (set.footsteps == null || set.footsteps.Length != 3)
                 set.footsteps = new[] { new Sound { volume = FootstepVolume }, new Sound { volume = FootstepVolume }, new Sound { volume = FootstepVolume } };
             for (int i = 0; i < set.footsteps.Length; i++)

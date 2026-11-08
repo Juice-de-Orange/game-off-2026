@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Item_DocumentScanner
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemData
   displayName: Document scanner
-  description: Marks forged fields on papers. Use it at the counter (P16).
+  description: 'Click it on your desk: fields that contradict each other across the
+    papers light up.'
   baseValue: 60
   dailyChange:
   - 0
@@ -22,6 +23,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: 03bb08c020997444ca31535c02f20e1a, type: 2}
   unique: 1
+  wearable: 0
   icon: {fileID: -8995900440682585851, guid: d032a1aa9c87b9b4d870600b4c13efff, type: 3}
   model: {fileID: 919132149155446097, guid: ce215f7cab7af4e4caa18034273005fc, type: 3}
   cargoWord: 

@@ -13,6 +13,9 @@ namespace GameOff.Counter
         /// <summary>Korr's last words after an approval.</summary>
         public static string CorrectEnd(int freeWarnings) => $"Good. {Buttons} Your first {freeWarnings} mistakes each day are only warnings. Carry on.";
 
+        /// <summary>P103: after the good ending, a hint without the sums.</summary>
+        public const string DroneTip = "One more thing. Money sent home gets skimmed on the way. Goods on the cargo drone don't. You didn't hear that from me.";
+
         /// <summary>Korr's last words when his valid papers were refused (he can't say anything after an arrest or the airlock).</summary>
         public static string WrongEnd => $"My papers were in order, officer. It's in my report. {Buttons} Carry on.";
 

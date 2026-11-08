@@ -29,6 +29,8 @@ namespace GameOff.Audio
         public Sound vendorGreet = new Sound();
         public Sound tradeBuy = new Sound();
         public Sound[] footsteps = new Sound[0];
+        [Tooltip("P63: with the clown shoes on.")]
+        public Sound[] clownFootsteps = new Sound[0];
 
         [Header("Room sound")]
         [Tooltip("Volume of the station hum, and of the room sound in bar and hangar.")]

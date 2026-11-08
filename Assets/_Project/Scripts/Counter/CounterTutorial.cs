@@ -98,12 +98,17 @@ namespace GameOff.Counter
                 return;
             }
             text.text = Heading + (judgement.Correct ? TutorialProgress.CorrectEnd(shift.FreeWarnings) : TutorialProgress.WrongEnd);
-            _closing = StartCoroutine(CloseAfter(endSeconds));
+            _closing = StartCoroutine(CloseAfter(endSeconds, judgement.Correct));
         }
 
-        private IEnumerator CloseAfter(float seconds)
+        private IEnumerator CloseAfter(float seconds, bool tip)
         {
             yield return new WaitForSeconds(seconds);
+            if (tip)
+            {
+                text.text = Heading + TutorialProgress.DroneTip;
+                yield return new WaitForSeconds(seconds);
+            }
             _closing = null;
             Close();
         }

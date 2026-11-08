@@ -33,6 +33,8 @@ namespace GameOff.UI
         [SerializeField] private TMP_Text detailTags;
         [SerializeField] private TMP_Text detailDescription;
         [SerializeField] private TMP_Text detailValue;
+        [Tooltip("P63: PUT ON / TAKE OFF for wearable items.")]
+        [SerializeField] private Button wearButton;
         [SerializeField] private ItemListView todayList;
         [SerializeField] private TMP_Text todayEmpty;
         [SerializeField] private Button closeButton;
@@ -58,6 +60,7 @@ namespace GameOff.UI
         {
             _toggle = new InputAction("Inventory", InputActionType.Button, "<Keyboard>/i");
             closeButton.onClick.AddListener(Close);
+            wearButton.onClick.AddListener(ToggleWear);
             if (devFillButton != null) devFillButton.onClick.AddListener(() => Economy.DevFillShift());
             root.SetActive(false);
         }
@@ -127,6 +130,13 @@ namespace GameOff.UI
             Economy.ShiftItems.Changed -= Refresh;
         }
 
+        private void ToggleWear()
+        {
+            if (_selected == null) return;
+            Economy.Wearing = Economy.Wearing == _selected ? null : _selected;
+            Refresh();
+        }
+
         private void Refresh()
         {
             if (!IsOpen) return;
@@ -156,6 +166,9 @@ namespace GameOff.UI
             detailTags.text = any ? ItemTagText.Chips(_selected) : "";
             detailDescription.text = any ? _selected.Description : "";
             detailValue.text = any ? "Value ~" + economy.Format(_selected.BaseValue) : "";
+            bool wearable = any && !_shiftView && _selected.Wearable;
+            wearButton.gameObject.SetActive(wearable);
+            if (wearable) wearButton.GetComponentInChildren<TMP_Text>().text = economy.Wearing == _selected ? "TAKE OFF" : "PUT ON";
 
             var today = new List<ItemListView.Row>();
             // P65: notes (the barkeeper's rumour) first; click one to read it in full in the details.
@@ -165,7 +178,7 @@ namespace GameOff.UI
                 today.Add(new ItemListView.Row
                 {
                     Label = "RUMOUR · " + text, Value = "",
-                    OnClick = () => { _selected = null; detailName.text = "Rumour"; detailTags.text = ""; detailDescription.text = text; detailValue.text = ""; },
+                    OnClick = () => { _selected = null; wearButton.gameObject.SetActive(false); detailName.text = "Rumour"; detailTags.text = ""; detailDescription.text = text; detailValue.text = ""; },
                 });
             }
             var entries = economy.Wallet.Today;

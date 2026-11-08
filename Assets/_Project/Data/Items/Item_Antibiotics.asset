@@ -23,6 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
   - {fileID: 11400000, guid: 64529f16bdb07784f8a6dcc11678a666, type: 2}
   unique: 0
+  wearable: 0
   icon: {fileID: -8995900440682585851, guid: dce173cbe5467a24bbe61178e78a0e93, type: 3}
   model: {fileID: 0}
   cargoWord: ANTIBIOTICS

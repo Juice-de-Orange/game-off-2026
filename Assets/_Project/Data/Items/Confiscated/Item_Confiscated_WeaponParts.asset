@@ -22,6 +22,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2959b78887525eb488bc34d643b0de4d, type: 2}
   - {fileID: 11400000, guid: 987504bd07ab3c14985cc1e8f37c39db, type: 2}
   unique: 0
+  wearable: 0
   icon: {fileID: -8995900440682585851, guid: d2b6af16176aa3c4088aea5d63c92551, type: 3}
   model: {fileID: 919132149155446097, guid: 64c1f3b20d29b81439582fde937da438, type: 3}
   cargoWord: 

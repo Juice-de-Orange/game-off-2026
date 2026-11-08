@@ -474,6 +474,13 @@ namespace GameOff.EditorTools
         internal static DocumentData IdCard(string species, string name, string origin, string id, string expires = "2293-01-01") =>
             Doc(DocumentType.IdCard, Photo(species), ("name", name), ("species", species.ToUpperInvariant()), ("origin", origin), ("id", id), ("expires", expires));
 
+        /// <summary>P62: a paper with a forged seal (only the UV lamp shows it).</summary>
+        internal static DocumentData Forged(DocumentData doc)
+        {
+            doc.EditorSet(doc.Type, doc.Photo, new List<DocumentField>(doc.Fields), true);
+            return doc;
+        }
+
         internal static DocumentData PermitDoc(string species, string name, string id, string purpose, string expires, string issued, string route) =>
             Doc(DocumentType.EntryPermit, Photo(species), ("name", name), ("id", id), ("purpose", purpose), ("duration", "3 CYCLES"),
                 ("expires", expires), ("issued", issued), ("route", route));

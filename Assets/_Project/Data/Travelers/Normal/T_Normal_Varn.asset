@@ -18,8 +18,8 @@ MonoBehaviour:
   documents:
   - {fileID: 11400000, guid: e1028ed9f855f994696c8163170909d5, type: 2}
   - {fileID: 11400000, guid: c3a9b55cf3d7dfb43bd9b6aec1f19886, type: 2}
-  intendedVerdict: 0
-  intendedReason: Papers in order
+  intendedVerdict: 2
+  intendedReason: Forged seal on the entry permit
   trickIntended: 0
   storyTag: P15, day 7
   greeting: My clan's oldest died on this station. I bring the ashes home.

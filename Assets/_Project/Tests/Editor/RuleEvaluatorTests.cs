@@ -56,6 +56,14 @@ namespace GameOff.Tests
             return t;
         }
 
+        [Test]
+        public void Validator_RejectsForgedSealsBeforeTheLampIsOnSale()
+        {
+            var early = Day(null, null, Traveler(Verdict.Arrest, Id(), Permit(forged: true)));
+            early.EditorSet("2290-11-08", new List<DayRule>(), new List<WantedEntry>(), new List<TravelerData>(early.Travelers));
+            Assert.That(TravelerValidator.Validate(early), Has.Some.Contains("forged seal"));
+        }
+
         private DayRules Day(List<DayRule> rules = null, List<WantedEntry> wanted = null, params TravelerData[] travelers)
         {
             var d = ScriptableObject.CreateInstance<DayRules>();

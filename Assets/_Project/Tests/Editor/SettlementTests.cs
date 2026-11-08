@@ -99,6 +99,27 @@ namespace GameOff.Tests
 
         // ---------- Vendor supply ----------
 
+        [Test]
+        public void StockEntry_FromDay_HiddenAndEmptyBeforeThatDay()
+        {
+            var item = Make<ItemData>();
+            var stock = StockWith(item, 1);
+            var so = new SerializedObject(stock);
+            so.FindProperty("entries").GetArrayElementAtIndex(0).FindPropertyRelative("fromDay").intValue = 4;
+            so.ApplyModifiedPropertiesWithoutUndo();
+
+            Market.Begin(3, null);
+            var supply = new VendorSupply(stock);
+            Assert.AreEqual(0, supply.Count(item));
+            CollectionAssert.DoesNotContain(supply.Items, item);
+
+            Market.Begin(4, null);
+            supply.Refill();
+            Assert.AreEqual(1, supply.Count(item));
+            CollectionAssert.Contains(supply.Items, item);
+            Market.Begin(1, null); // Market is static
+        }
+
         private VendorStock StockWith(ItemData item, int amount)
         {
             var stock = Make<VendorStock>();

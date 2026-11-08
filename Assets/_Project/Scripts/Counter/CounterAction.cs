@@ -6,6 +6,8 @@ namespace GameOff.Counter
         Approve,
         Deny,
         Arrest,
-        Airlock
+        Airlock,
+        UvLamp,
+        Scanner
     }
 }

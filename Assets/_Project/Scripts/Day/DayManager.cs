@@ -60,6 +60,8 @@ namespace GameOff.Day
         public Func<string> LetterAddendum { get; set; }
         /// <summary>P15: picks the letter's second version (DayEntry.letterIfTrouble).</summary>
         public Func<bool> FamilyInTrouble { get; set; }
+        /// <summary>P69: replaces the day's letter when it returns text (someone in the family has died).</summary>
+        public Func<string> LetterOverride { get; set; }
 
         public int Day => _day;
         /// <summary>Dev tools on (Dev_end_Day, visible hitboxes, vendors open during the shift via a dev button).</summary>
@@ -119,7 +121,8 @@ namespace GameOff.Day
             DayStarted?.Invoke(day);
 
             yield return ui.FadeTo(0f, fadeSeconds);
-            string letter = entry.LetterFor(FamilyInTrouble != null && FamilyInTrouble());
+            string letter = LetterOverride?.Invoke();
+            if (string.IsNullOrEmpty(letter)) letter = entry.LetterFor(FamilyInTrouble != null && FamilyInTrouble());
             string home = day > 1 && LetterAddendum != null ? LetterAddendum() : "";
             if (!string.IsNullOrWhiteSpace(home)) letter += "\n\n" + home;
             ui.ShowLetter(entry.letterTitle, letter, entry.newToday, OnLetterClosed);

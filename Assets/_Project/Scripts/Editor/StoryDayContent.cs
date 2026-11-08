@@ -72,9 +72,9 @@ namespace GameOff.EditorTools
             Wanted = new List<WantedEntry>(),
             NewToday = "New today: Vellani travelers need a cargo manifest.",
             Letter = "Dad,\nThe rent man came by and Mom paid him. They say the border is closed, so food costs more now. We are careful.\n" +
-                     "Pip asks if you can see us from up there.\n— Lena",
+                     "Pip asks if you can see us from up there. Mrs Oren's son sends food on the cargo drone instead of money. Could you do that too?\n— Lena",
             LetterIfTrouble = "Dad,\nThe rent man came by and Mom paid him, but one of us is not well and the border is closed, so everything costs more.\n" +
-                              "Please send what you can.\n— Lena",
+                              "Please send what you can. Mrs Oren's son sends food on the cargo drone instead of money. Could you do that too?\n— Lena",
             Travelers = new List<TravelerData>
             {
                 Normal("Nessa", "NESSA KILO", "Vellani", Verdict.Admit, "Papers in order, manifest present", 2,
@@ -136,7 +136,7 @@ namespace GameOff.EditorTools
         {
             Rules = new List<DayRule> { new ForbiddenGoodsRule(Stimulant), new QuarantineRule("KETRA STATION") },
             Wanted = new List<WantedEntry>(),
-            NewToday = "New today: quarantine at KETRA STATION. Stimulants stay forbidden.",
+            NewToday = "New today: quarantine at KETRA STATION. Stimulants stay forbidden. Forged seals are turning up: the kiosk sells UV lamps.",
             Letter = "Dad,\nPip lost a tooth and wants you to have it. Mom said no. School is open again.\n" +
                      "We counted. It is too many days until you are home.\n— Lena",
             LetterIfTrouble = "Dad,\nNobody sleeps much here now. Pip keeps asking when you are coming.\n" +
@@ -201,11 +201,11 @@ namespace GameOff.EditorTools
                     new[] { Say("name", "Kai. Common name. Very common."), Say("purpose", "Consulting. The kind that pays in advance.") },
                     IdCard("Human", "NESTOR KAI", "LUMEN REACH", "NK-4102-77"),
                     PermitDoc("Human", "NESTOR KAI", "NK-4102-77", "BUSINESS", Valid, LumenC, "LUMEN REACH > KESTREL-9")),
-                Normal("Zeth", "ZETH ORRIK", "Xirrik", Verdict.Deny, "Entry permit expired yesterday", 5,
-                    "Kss. The office was closed. Everyone knows it was closed.",
-                    new[] { Say("expires", "Kss. Dates. The office was closed."), Say("route", "Lumen Reach, as always.") },
+                Normal("Zeth", "ZETH ORRIK", "Xirrik", Verdict.Arrest, "Forged seal on the entry permit", 5,
+                    "Kss. Fresh from the office. Everyone knows that office.",
+                    new[] { Say("expires", "Kss. Months yet. Read it."), Say("route", "Lumen Reach, as always.") },
                     IdCard("Xirrik", "ZETH ORRIK", "LUMEN REACH", "XR-3350-81"),
-                    PermitDoc("Xirrik", "ZETH ORRIK", "XR-3350-81", "TRANSIT", Yesterday(5), LumenC, "LUMEN REACH > KESTREL-9")),
+                    Forged(PermitDoc("Xirrik", "ZETH ORRIK", "XR-3350-81", "TRANSIT", Valid, LumenC, "LUMEN REACH > KESTREL-9"))),
             },
         };
 
@@ -273,11 +273,11 @@ namespace GameOff.EditorTools
                     new[] { Say("purpose", "I come to see the station. Is it not allowed to look?"), Say("route", "Direct. Very boring.") },
                     IdCard("Quobb", "PUNG ARLO", "QUOB ATOLL", "QU-5508-13"),
                     PermitDoc("Quobb", "PUNG ARLO", "QU-5508-13", "TOURISM", Valid, QuobC, "QUOB ATOLL > KESTREL-9")),
-                Normal("Varn", "VARN TESK", "Sorvak", Verdict.Admit, "Papers in order", 7,
+                Normal("Varn", "VARN TESK", "Sorvak", Verdict.Arrest, "Forged seal on the entry permit", 7,
                     "My clan's oldest died on this station. I bring the ashes home.",
                     new[] { Say("purpose", "Rites. It will not take long."), Say("origin", "Sorv Deep. We all go back.") },
                     IdCard("Sorvak", "VARN TESK", "SORV DEEP", "SK-8820-15"),
-                    PermitDoc("Sorvak", "VARN TESK", "SK-8820-15", "FAMILY VISIT", Valid, AskaC, "SORV DEEP > KESTREL-9")),
+                    Forged(PermitDoc("Sorvak", "VARN TESK", "SK-8820-15", "FAMILY VISIT", Valid, AskaC, "SORV DEEP > KESTREL-9"))),
             },
         };
 
@@ -323,11 +323,11 @@ namespace GameOff.EditorTools
             LetterIfTrouble = "Dad,\nThe inspectors were on the news and all I could think about was the rent. Mom doesn't sleep. I do the counting now.\nPlease don't lose this job.\n— Lena",
             Travelers = new List<TravelerData>
             {
-                Normal("Nimi", "NIMI SOLK", "Vellani", Verdict.Admit, "Papers in order, manifest present", 9,
+                Normal("Nimi", "NIMI SOLK", "Vellani", Verdict.Arrest, "Forged seal on the entry permit", 9,
                     "Everything is in order. Everyone has been so careful this week.",
                     new[] { Say("cargo", "Canned stew. Nothing that can be misread."), Say("purpose", "Trade, very quietly.") },
                     IdCard("Vellani", "NIMI SOLK", "VELL PRIME", "VL-4426-71"),
-                    PermitDoc("Vellani", "NIMI SOLK", "VL-4426-71", "TRADE", Valid, VellC, "VELL PRIME > KESTREL-9"),
+                    Forged(PermitDoc("Vellani", "NIMI SOLK", "VL-4426-71", "TRADE", Valid, VellC, "VELL PRIME > KESTREL-9")),
                     Manifest("NIMI SOLK", "SMALL MERCY", "VELL PRIME", "3x CANNED STEW CRATE")),
                 Normal("Oren", "OREN PADD", "Vellani", Verdict.Deny, "Vellani traveler without a cargo manifest", 9,
                     "I carry nothing, I declare nothing. Isn't that the point?",
@@ -421,11 +421,11 @@ namespace GameOff.EditorTools
                     new[] { Say("origin", "The hatchery, yes. A very small one."), Say("purpose", "To sell songs.") },
                     IdCard("Quobb", "OMBO LAIN", Orvan, "QU-1849-52"),
                     PermitDoc("Quobb", "OMBO LAIN", "QU-1849-52", "TOURISM", Valid, QuobC, "QUOB ATOLL > KESTREL-9")),
-                Normal("Sirr", "SIRR TAAL", "Xirrik", Verdict.Admit, "Papers in order", 11,
+                Normal("Sirr", "SIRR TAAL", "Xirrik", Verdict.Arrest, "Forged seal on the entry permit", 11,
                     "Kss. You look tired, officer. Your kind sleeps, yes?",
                     new[] { Say("purpose", "Kss. A small errand."), Say("origin", "Kss. Lumen Reach. Warm there.") },
                     IdCard("Xirrik", "SIRR TAAL", "LUMEN REACH", "XR-2506-97"),
-                    PermitDoc("Xirrik", "SIRR TAAL", "XR-2506-97", "TRANSIT", Valid, LumenC, "LUMEN REACH > KESTREL-9")),
+                    Forged(PermitDoc("Xirrik", "SIRR TAAL", "XR-2506-97", "TRANSIT", Valid, LumenC, "LUMEN REACH > KESTREL-9"))),
             },
         };
 

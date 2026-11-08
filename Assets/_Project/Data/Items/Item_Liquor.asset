@@ -20,6 +20,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: df73a66dd95c513448baced3fe575726, type: 2}
   unique: 0
+  wearable: 0
   icon: {fileID: -8995900440682585851, guid: 9f22222eb9005b54bbf0b6efb3987b02, type: 3}
   model: {fileID: 919132149155446097, guid: 38b2e2e8d9c4c1049b5fe318fd81a463, type: 3}
   cargoWord: LIQUOR

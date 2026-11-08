@@ -16,24 +16,40 @@ MonoBehaviour:
   entries:
   - item: {fileID: 11400000, guid: d2edcdba608d63d49bf945af474aaa1b, type: 2}
     dailyAmount: 4
+    fromDay: 1
   - item: {fileID: 11400000, guid: 247f021f035f8f04593273eb8afa1517, type: 2}
     dailyAmount: 3
+    fromDay: 1
   - item: {fileID: 11400000, guid: b11fc09941fec2f47982df46f09907a0, type: 2}
     dailyAmount: 2
+    fromDay: 1
   - item: {fileID: 11400000, guid: a0696af6944fc7c459ef3eafb6d84ac5, type: 2}
     dailyAmount: 1
+    fromDay: 1
   - item: {fileID: 11400000, guid: 2007b103b290d374cb47c7a1ee8ef20a, type: 2}
     dailyAmount: 3
+    fromDay: 1
   - item: {fileID: 11400000, guid: b19c192b0b7cbd143b467867b30d0f47, type: 2}
     dailyAmount: 2
+    fromDay: 1
   - item: {fileID: 11400000, guid: 44fbcde8893760c4e9a1d21128b996b7, type: 2}
     dailyAmount: 2
+    fromDay: 1
   - item: {fileID: 11400000, guid: 04bda7305b9639e499630ecc7e65086b, type: 2}
     dailyAmount: 2
+    fromDay: 1
   - item: {fileID: 11400000, guid: a2d217b5d6ca9d445b1d1c210919a72a, type: 2}
     dailyAmount: 5
+    fromDay: 1
   - item: {fileID: 11400000, guid: 161abb7819e8873488489cb63432573c, type: 2}
     dailyAmount: 2
+    fromDay: 1
+  - item: {fileID: 11400000, guid: 5d248fac0f017814fa23f240e7f025aa, type: 2}
+    dailyAmount: 1
+    fromDay: 6
+  - item: {fileID: 11400000, guid: 35696245c313c764e99011cd547b6748, type: 2}
+    dailyAmount: 1
+    fromDay: 4
   items: []
   sellFactor: 1
   buyFactor: 0.5

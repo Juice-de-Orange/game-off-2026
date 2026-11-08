@@ -147,8 +147,15 @@ namespace GameOff.Audio
         }
 
         /// <summary>The next footstep; steps remembers the last clip.</summary>
-        public static void PlayFootstep(Footsteps steps)
+        /// <param name="clown">P63: the clown shoes are on.</param>
+        public static void PlayFootstep(Footsteps steps, bool clown = false)
         {
+            if (clown && Instance != null && Instance.sounds != null && Instance.sounds.clownFootsteps != null && Instance.sounds.clownFootsteps.Length > 0)
+            {
+                var squeaks = Instance.sounds.clownFootsteps;
+                Instance.PlayGame(squeaks[steps.NextIndex(squeaks.Length, UnityEngine.Random.value)]);
+                return;
+            }
             if (Instance == null || Instance.sounds == null || Instance.sounds.footsteps == null || Instance.sounds.footsteps.Length == 0) return;
             var list = Instance.sounds.footsteps;
             Instance.PlayGame(list[steps.NextIndex(list.Length, UnityEngine.Random.value)]);

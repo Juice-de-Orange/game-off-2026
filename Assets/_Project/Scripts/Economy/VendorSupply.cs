@@ -26,7 +26,7 @@ namespace GameOff.Economy
             get
             {
                 foreach (var e in _stock.Entries)
-                    if (e != null && e.item != null) yield return e.item;
+                    if (e != null && e.item != null && Market.Day >= e.fromDay) yield return e.item;
                 foreach (var item in _extras) yield return item;
             }
         }
@@ -38,6 +38,7 @@ namespace GameOff.Economy
             foreach (var e in _stock.Entries)
             {
                 if (e == null || e.item == null) continue;
+                if (Market.Day < e.fromDay) { _counts[e.item] = 0; continue; }
                 // Every morning the shelf holds exactly today's amount (P68): a shortage shows even if yesterday's stock was left.
                 _counts[e.item] = Market.Amount(e.item, e.dailyAmount);
             }

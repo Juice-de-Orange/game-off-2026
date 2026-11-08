@@ -22,6 +22,7 @@ MonoBehaviour:
   tags:
   - {fileID: 11400000, guid: b383f9fa0014ed44c9c87250378ff26d, type: 2}
   unique: 0
+  wearable: 0
   icon: {fileID: -8995900440682585851, guid: 7108ad23573d3004182ef626a40419d6, type: 3}
   model: {fileID: 0}
   cargoWord: BATTERY

@@ -20,6 +20,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d84f89d8a930dd94e99e5f6dfb3440f3, type: 2}
   - {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
   unique: 0
+  wearable: 0
   icon: {fileID: -8995900440682585851, guid: 10e2e43a657e19c42bb4c64b9cd8e123, type: 3}
   model: {fileID: 919132149155446097, guid: 6637d448b49570e4eba8e81f66e846ef, type: 3}
   cargoWord: SPECIMEN

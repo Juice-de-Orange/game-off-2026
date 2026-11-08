@@ -33,10 +33,12 @@ MonoBehaviour:
     letterTitle: A letter from home
     letter: "Dad,\nThe rent man came by and Mom paid him. They say the border is
       closed, so food costs more now. We are careful.\nPip asks if you can see us
-      from up there.\n\u2014 Lena"
+      from up there. Mrs Oren's son sends food on the cargo drone instead of money.
+      Could you do that too?\n\u2014 Lena"
     letterIfTrouble: "Dad,\nThe rent man came by and Mom paid him, but one of us
       is not well and the border is closed, so everything costs more.\nPlease send
-      what you can.\n\u2014 Lena"
+      what you can. Mrs Oren's son sends food on the cargo drone instead of money.
+      Could you do that too?\n\u2014 Lena"
     newToday: 'New today: Vellani travelers need a cargo manifest.'
     marketEvents:
     - {fileID: 11400000, guid: f43d7922bcf28184f9e158056a4dd645, type: 2}
@@ -73,7 +75,8 @@ MonoBehaviour:
       Lena"
     letterIfTrouble: "Dad,\nNobody sleeps much here now. Pip keeps asking when you
       are coming.\nI said soon. Please don't make me a liar.\n\u2014 Lena"
-    newToday: 'New today: quarantine at KETRA STATION. Stimulants stay forbidden.'
+    newToday: 'New today: quarantine at KETRA STATION. Stimulants stay forbidden.
+      Forged seals are turning up: the kiosk sells UV lamps.'
     marketEvents: []
     barWish:
       tag: {fileID: 11400000, guid: 74c26e4bb62f1884ab816ec412ab79fc, type: 2}

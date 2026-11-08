@@ -19,6 +19,8 @@ namespace GameOff.Shops
         [SerializeField] private DocumentDesk desk;
         [Tooltip("Where the note lies on the desk (page top = local +Z, face = local +Y). Made by the EconomyBuilder.")]
         [SerializeField] private Transform spot;
+        [Tooltip("P80: the envelope the note came in, visible while the note lies on the desk.")]
+        [SerializeField] private GameObject envelope;
 
         private DocumentView _note;
 
@@ -53,6 +55,7 @@ namespace GameOff.Shops
                 new DocumentField("body", bribe.Text),
             });
             _note = desk.Pin(data, spot);
+            if (envelope != null) envelope.SetActive(true);
         }
 
         private void OnDecision(TravelerData traveler, Verdict chosen, Judgement judgement)
@@ -73,6 +76,7 @@ namespace GameOff.Shops
             if (_note == null) return;
             desk.Unpin(_note);
             _note = null;
+            if (envelope != null) envelope.SetActive(false);
         }
     }
 }

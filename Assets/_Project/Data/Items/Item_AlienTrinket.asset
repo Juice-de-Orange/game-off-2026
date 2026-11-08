@@ -23,6 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d84f89d8a930dd94e99e5f6dfb3440f3, type: 2}
   - {fileID: 11400000, guid: a6959e60727c37747b2376cfc4f50971, type: 2}
   unique: 0
+  wearable: 0
   icon: {fileID: -8995900440682585851, guid: 26e90fd7da29e1545b696bd43affc244, type: 3}
   model: {fileID: 0}
   cargoWord: TRINKET

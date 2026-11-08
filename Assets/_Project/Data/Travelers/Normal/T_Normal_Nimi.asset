@@ -19,8 +19,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 20f1adedd811bb7499747458c1b8a887, type: 2}
   - {fileID: 11400000, guid: 4ea2cfb318a614841b1ba3c526954ae3, type: 2}
   - {fileID: 11400000, guid: c7aef94dec3f2434da63d1fb3160f947, type: 2}
-  intendedVerdict: 0
-  intendedReason: Papers in order, manifest present
+  intendedVerdict: 2
+  intendedReason: Forged seal on the entry permit
   trickIntended: 0
   storyTag: P15, day 9
   greeting: Everything is in order. Everyone has been so careful this week.

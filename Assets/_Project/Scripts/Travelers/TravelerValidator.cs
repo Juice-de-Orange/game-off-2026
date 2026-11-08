@@ -13,6 +13,8 @@ namespace GameOff.Travelers
     public static class TravelerValidator
     {
         private static readonly string[] KnownSpecies = { "Human", "Vellani", "Quobb", "Xirrik", "Sorvak" };
+        /// <summary>P58: no forged seals before the UV lamp can be bought and used (date of story day 5).</summary>
+        public const string FirstForgedSeal = "2290-11-09";
 
         /// <summary>Fields every document of a type must have (keys of the "Field_" texts in its prefab).</summary>
         public static readonly IReadOnlyDictionary<DocumentType, string[]> RequiredFields = new Dictionary<DocumentType, string[]>
@@ -44,6 +46,9 @@ namespace GameOff.Travelers
                 if (string.IsNullOrWhiteSpace(t.DisplayName)) problems.Add($"{who}: no name");
                 if (Array.FindIndex(KnownSpecies, s => TextMatch.Same(s, t.Species)) < 0) problems.Add($"{who}: unknown species \"{t.Species}\"");
                 CheckDocuments(t, who, problems);
+                if (DayRules.TryParseDate(day.Date, out var today) && DayRules.TryParseDate(FirstForgedSeal, out var first) && today < first)
+                    foreach (var doc in t.Documents)
+                        if (doc != null && doc.ForgedSeal) problems.Add($"{who}: forged seal before the UV lamp is on sale ({FirstForgedSeal})");
                 if (!t.TrickIntended) NearMisses(t, day, who, problems);
 
                 var result = RuleEvaluator.Evaluate(t, day);
