@@ -6750,7 +6750,7 @@ feedback: []
 path: Assets/WebGLTemplates/Kestrel9/favicon.png
 package: P49
 scene: Browser-Tab (Web-Vorlage)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
