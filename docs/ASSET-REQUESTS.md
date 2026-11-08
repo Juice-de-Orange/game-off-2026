@@ -7023,7 +7023,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_Courier.fbx
 package: P107
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [5.0, 8.0, 3.0]
@@ -7050,7 +7050,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_Hauler.fbx
 package: P107
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [5.0, 8.0, 3.0]
@@ -7077,7 +7077,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_Skiff.fbx
 package: P107
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [5.0, 8.0, 3.0]
@@ -7104,7 +7104,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_Family.fbx
 package: P107
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [5.0, 8.0, 3.0]
