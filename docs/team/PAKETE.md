@@ -1532,7 +1532,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     Main/PF_DayFlow nicht neu gebaut (nur Daten + Skripte).
 
 ### P88 — Wegweiser zeigen zu den richtigen Räumen
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 07.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 08.11.) · Zuständig: max
 - Braucht: — · Folgt auf: —
 - Ziel: Wer durch die Station läuft, findet Schalter, Diner, Bar, Kiosk, Motel und Hangar über die Schilder.
 - Befund (max, 07.11.): Alle drei Schilder (`SM_Hall_Sign_Staff/_Motel/_Bar`) zeigen „MOTEL“ – der Builder verschiebt den 6-Zeilen-Atlas
@@ -1544,3 +1544,4 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: neue Schild-Modelle, Bodenmarkierungen.
 - Abnahme: Jedes Schild zeigt den richtigen Raum, und sein Pfeil zeigt zur richtigen Tür (Bilder aus Main); Occlusion-Check grün.
 - Stand (max, 07.11.): Code im `StationGrayboxBuilder` (`BuildWayfinding`, `HangSigns`, `HallSignMaterial`) und fünf Materialien `M_Hall_Sign_<Zeile>` sind gepusht. Geprüft in einer Sandbox-Kopie von Main (Bilder): Motel-Eingang CUSTOMS →, DINER →, KIOSK →, ← BAR (Rückseite gleiche Richtung); vor der Dienst-Tür ← MOTEL, ← DINER, BAR →, KIOSK →; Dienstgang CUSTOMS zur Schalter-Tür, HANGAR – STAFF ONLY zur Hangar-Tür. **Offen:** Build Station + Build Day Flow + Setup Main Lighting + Bake + Check Occlusion Bake, sobald Martin Main freigibt (P76). `PF_Station_Graybox` und Main sind bis dahin unverändert.
+- Ergebnis (max, 08.11.): Über Rebuild All After Deliveries eingebaut, Licht und Occlusion neu gebacken. Bilder aus Main: alle acht Schilder zeigen den richtigen Raum, alle Pfeile zur richtigen Tür. Validate Travelers ok, 147/147 EditMode-Tests. **Occlusion-Check nicht ganz grün:** 1 von 3768 Ansichten weicht ab (103 von 36864 px, (-9 | 1,6 | 1), Blick nach oben), dieselbe Ansicht wie am 07.11.; on/off-Bild sehen gleich aus.

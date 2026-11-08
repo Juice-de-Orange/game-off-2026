@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.DayRules
   date: 2290-11-10
   rules:
-  - rid: 9041869203876348170
-  - rid: 9041869203876348171
-  - rid: 9041869203876348172
+  - rid: 1231853440248840211
+  - rid: 1231853440248840212
+  - rid: 1231853440248840213
   wanted:
   - name: KAEL DROSS
     id: DX-0013-44
@@ -30,15 +30,15 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 9041869203876348170
+    - rid: 1231853440248840211
       type: {class: BannedOriginRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         origin: ORVAN
-    - rid: 9041869203876348171
+    - rid: 1231853440248840212
       type: {class: ForbiddenGoodsRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         keyword: STIMULANT
-    - rid: 9041869203876348172
+    - rid: 1231853440248840213
       type: {class: QuarantineRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         station: KETRA STATION

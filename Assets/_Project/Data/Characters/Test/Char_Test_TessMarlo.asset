@@ -21,6 +21,7 @@ MonoBehaviour:
     dayTo: 1
     slot: 0
     condition: 1
+    flag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -46,11 +47,21 @@ MonoBehaviour:
       wantedInDays: 2
       wantedForDays: 1
       wantedNote: Threatened an officer
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
   - traveler: {fileID: 11400000, guid: 767ec92ab656c9e4982254d4e8f9ff94, type: 2}
     dayFrom: 2
     dayTo: 2
     slot: 3
     condition: 3
+    flag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -62,11 +73,21 @@ MonoBehaviour:
     - marketEvent: {fileID: 11400000, guid: 185c66fd5f1f3db4b9efbde0cf898138, type: 2}
       line: And it's freezing back home, they say.
     consequences: []
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
   - traveler: {fileID: 11400000, guid: 5fcf4edcc4baaf042960652b479a6cdf, type: 2}
     dayFrom: 3
     dayTo: 3
     slot: 1
     condition: 6
+    flag: 
     onAdmit: 3
     onDeny: 2
     onArrest: 3
@@ -76,3 +97,12 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 

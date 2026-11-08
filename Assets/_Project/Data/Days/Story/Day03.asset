@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.DayRules
   date: 2290-11-07
   rules:
-  - rid: 9041869203876348154
-  - rid: 9041869203876348155
-  - rid: 9041869203876348156
-  - rid: 9041869203876348157
+  - rid: 1231853440248840195
+  - rid: 1231853440248840196
+  - rid: 1231853440248840197
+  - rid: 1231853440248840198
   wanted:
   - name: KAEL DROSS
     id: DX-0013-44
@@ -34,19 +34,19 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 9041869203876348154
+    - rid: 1231853440248840195
       type: {class: BannedOriginRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         origin: ORVAN
-    - rid: 9041869203876348155
+    - rid: 1231853440248840196
       type: {class: ForbiddenGoodsRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         keyword: STIMULANT
-    - rid: 9041869203876348156
+    - rid: 1231853440248840197
       type: {class: QuarantineRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         station: KETRA STATION
-    - rid: 9041869203876348157
+    - rid: 1231853440248840198
       type: {class: ForbiddenGoodsRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         keyword: ANTIBIOTICS
