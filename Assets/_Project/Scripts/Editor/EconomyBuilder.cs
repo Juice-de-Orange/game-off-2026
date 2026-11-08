@@ -61,7 +61,7 @@ namespace GameOff.EditorTools
                 new Vector3(9.0f, 1.2f, -4f), new Vector3(2.2f, 1.6f, 2.6f)),
             new VendorSpot("Barkeeper", "SM_NPC_Barkeeper", "Stock_Bar_Test", new Vector3(15.5f, 0f, 4f), new Vector3(0.8f, 1.9f, 0.6f), -90f,
                 new Vector3(15.1f, 1.25f, 4f), new Vector3(2.2f, 1.5f, 2.0f)),
-            new VendorSpot("Dealer", "SM_NPC_Dealer", "Stock_BlackMarket_Test", new Vector3(13.6f, 0.45f, 6.4f), new Vector3(0.6f, 1.3f, 0.6f), 90f,
+            new VendorSpot("Dealer", "SM_NPC_Dealer", "Stock_BlackMarket_Test", new Vector3(13.6f, 0.58f, 6.4f), new Vector3(0.6f, 1.3f, 0.6f), 90f,
                 new Vector3(13.6f, 1.05f, 6.4f), new Vector3(1.0f, 1.7f, 1.0f)),
         };
 

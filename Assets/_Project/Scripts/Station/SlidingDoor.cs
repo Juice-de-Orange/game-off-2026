@@ -6,7 +6,8 @@ using UnityEngine.AI;
 namespace GameOff.Station
 {
     /// <summary>
-    /// Sliding door (P27): opens with a hiss when someone allowed comes close, slides sideways into the wall.
+    /// Sliding door (P27): opens with a hiss when someone allowed comes close, slides sideways into the wall. A locked door only
+    /// says so when the player tries it with [E] (P90), not each time someone walks past.
     /// Needs a trigger collider on this object (the sensing area). The panel carries its own solid collider.
     /// Travelers count when they have a NavMeshAgent and a collider (P14). Scripted doors react only to Open()/Close().
     /// </summary>
@@ -35,6 +36,7 @@ namespace GameOff.Station
         private bool _scriptedOpen;
         private float _lastAllowedTime = -10f;
         private bool _wasOpening;
+        private Interactable _lockedPrompt;
 
         public DoorAccess Access => access;
         public bool IsOpen => _open > 0.99f;
@@ -43,14 +45,14 @@ namespace GameOff.Station
         {
             if (panel != null) _closedLocalPos = panel.localPosition;
             GetComponent<Collider>().isTrigger = true;
-            UpdateLamp();
+            UpdateLocked();
         }
 
         /// <summary>Change who may pass (e.g. unlock a room later).</summary>
         public void SetAccess(DoorAccess newAccess)
         {
             access = newAccess;
-            UpdateLamp();
+            UpdateLocked();
         }
 
         /// <summary>Open a door by code (Scripted doors, or force any door open).</summary>
@@ -63,7 +65,6 @@ namespace GameOff.Station
         {
             if (!IsRelevant(other)) return;
             _inside.Add(other);
-            if (access == DoorAccess.Locked && IsPlayer(other)) Play(lockedClip);
         }
 
         private void OnTriggerExit(Collider other) => _inside.Remove(other);
@@ -119,9 +120,18 @@ namespace GameOff.Station
             if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
         }
 
-        private void UpdateLamp()
+        private void UpdateLocked()
         {
-            if (lockedLamp != null) lockedLamp.SetActive(access == DoorAccess.Locked);
+            bool locked = access == DoorAccess.Locked;
+            if (lockedLamp != null) lockedLamp.SetActive(locked);
+            if (locked && _lockedPrompt == null)
+            {
+                // On this object: the interaction ray meets the sensing trigger before the leaf.
+                _lockedPrompt = gameObject.AddComponent<Interactable>();
+                _lockedPrompt.SetPrompt("Locked");
+                _lockedPrompt.OnInteract.AddListener(() => Play(lockedClip));
+            }
+            if (_lockedPrompt != null) _lockedPrompt.SetInteractionEnabled(locked);
         }
     }
 }

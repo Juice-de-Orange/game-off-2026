@@ -1713,7 +1713,7 @@ namespace GameOff.EditorTools
             KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_C", -16.5f, -26.7f, 1.2f, 1.2f, 1, 1, 15f);
             KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_D", -15.2f, -33, 1.2f, 1.2f, 1, 0, -10f);
             KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_A", -15.4f, -26.2f, 0.6f, 0.6f, 0.5f);
-            KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_B", -14.6f, -33.4f, 0.6f, 0.6f, 0.5f, 0, 30f);
+            KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_B", -13.9f, -33.4f, 0.6f, 0.6f, 0.5f, 0, 30f);
             KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_C", -11.2f, -14.6f, 0.6f, 0.6f, 0.5f); // next to the drone pad
             KitProp(p, "Hangar/SM_Hangar_Tank.fbx", "SM_Hangar_Tank_A", 16.3f, -16, 1.4f, 1.4f, 3.5f);
             KitProp(p, "Hangar/SM_Hangar_Tank.fbx", "SM_Hangar_Tank_B", 16.3f, -18.5f, 1.4f, 1.4f, 3.5f, 0, 40f);
