@@ -321,7 +321,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Eine Schicht läuft mit sichtbar ankommenden Reisenden.
 
 ### P15 — Inhalte: Fälle für 3 Tage
-- Größe: M · Priorität: Muss · Status: offen · Zuständig: max (Call 07.11.)
+- Größe: M · Priorität: Muss · Status: in Arbeit (max, 08.11.; Etappe 1: Tage 1–4) · Zuständig: max (Call 07.11.)
 - Hinweis (Call 07.11.): Umfang jetzt **12 Story-Tage** (von hinten kürzbar), normale Reisende neben den Figuren aus P76 (max. 3 Begegnungen/Tag, mit Martin pro Tag abgleichen). Ein fester Reisender wird Nells Sohn, falls der Spieler niemanden verhaftet hat.
 - Braucht: P07
 - Ziel: Alle Reisenden, Regeln, Briefe und Texte für 3 Tage (~15 Fälle, Englisch).
