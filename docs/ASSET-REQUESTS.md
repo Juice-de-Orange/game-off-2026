@@ -7261,7 +7261,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V1.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7288,7 +7288,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V2.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7315,7 +7315,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V3.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7342,7 +7342,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V4.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7369,7 +7369,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V5.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7396,7 +7396,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V1.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7423,7 +7423,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V2.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7450,7 +7450,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V3.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7477,7 +7477,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V4.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7504,7 +7504,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V5.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7531,7 +7531,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V1.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7558,7 +7558,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V2.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7585,7 +7585,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V3.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7612,7 +7612,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V4.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7639,7 +7639,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V5.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7666,7 +7666,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V1.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7693,7 +7693,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V2.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7720,7 +7720,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V3.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7747,7 +7747,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V4.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7774,7 +7774,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V5.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7801,7 +7801,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V1.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7828,7 +7828,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V2.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7855,7 +7855,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V3.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7882,7 +7882,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V4.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7909,7 +7909,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V5.png
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7936,7 +7936,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Hair_Short.fbx
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.28, 0.3, 0.25]
@@ -7963,7 +7963,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Hair_Long.fbx
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.28, 0.3, 0.25]
@@ -7990,7 +7990,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Hair_Bun.fbx
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.28, 0.3, 0.25]
@@ -8017,7 +8017,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Hat_Cap.fbx
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.28, 0.3, 0.25]
@@ -8044,7 +8044,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Hat_Beanie.fbx
 package: P108
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.28, 0.3, 0.25]
