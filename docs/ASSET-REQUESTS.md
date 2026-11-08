@@ -7131,7 +7131,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Guard_Boots.ogg
 package: P104
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7157,7 +7157,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Airlock_Alarm.ogg
 package: P105
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7183,7 +7183,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Airlock_Decompress.ogg
 package: P105
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7209,7 +7209,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Ship_Land.ogg
 package: P107
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
