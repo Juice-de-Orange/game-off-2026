@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex">
+    <title>Kestrel-9</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+      html, body { height: 100%; margin: 0; background: #0b0d10; color: #8b9096; font: 12px/20px monospace; overflow: hidden; }
+      body { display: flex; flex-direction: column; }
+      #stage { position: relative; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+      /* The menus are laid out for 16:9 (reference 960x540): keep that shape, narrow windows get bars instead of cut-off menus */
+      #unity-canvas { display: block; width: min(100%, calc(100vh * 16 / 9)); aspect-ratio: 16 / 9; outline: none; background: #0b0d10; }
+      #loading { position: absolute; top: 50%; left: 50%; width: min(320px, 70%); transform: translate(-50%, -50%); text-align: center; }
+      #track { height: 4px; margin-top: 8px; background: #2b3037; }
+      #bar { width: 0; height: 100%; background: #ffd46b; }
+      #error { color: #ffb74d; }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+      <div id="loading"><span id="status">Loading…</span><div id="track"><div id="bar"></div></div></div>
+    </div>
+    <script>
+      function showError(message) {
+        var status = document.querySelector("#status");
+        status.id = "error";
+        status.textContent = "The game could not start: " + message;
+        document.querySelector("#track").remove();
+      }
+    </script>
+    <script src="Build/{{{ LOADER_FILENAME }}}" onerror="showError('the download failed. Please reload the page.')"></script>
+    <script>
+      if (window.createUnityInstance) createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/{{{ DATA_FILENAME }}}",
+        frameworkUrl: "Build/{{{ FRAMEWORK_FILENAME }}}",
+#if USE_THREADS
+        workerUrl: "Build/{{{ WORKER_FILENAME }}}",
+#endif
+#if USE_WASM
+        codeUrl: "Build/{{{ CODE_FILENAME }}}",
+#endif
+#if SYMBOLS_FILENAME
+        symbolsUrl: "Build/{{{ SYMBOLS_FILENAME }}}",
+#endif
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
+        productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
+        productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
+        // Browsers may refuse the mouse lock (window not focused, just after Esc). Unity's loader would stop the game with an
+        // alert for that; the next click locks anyway. True = handled, every other error still reaches the player.
+        errorHandler: function (message) { return /pointer ?lock|exited the lock/i.test(String(message)); },
+      }, function (progress) {
+        document.querySelector("#bar").style.width = Math.round(progress * 100) + "%";
+      }).then(function () {
+        document.querySelector("#loading").remove();
+      }).catch(showError);
+    </script>
+  </body>
+</html>

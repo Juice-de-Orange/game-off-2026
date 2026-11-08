@@ -97,6 +97,7 @@ namespace GameOff.Characters
             int day = Market.Day;
             var a = p.character.Appearances[p.appearance];
             var outcome = a.OutcomeOf(chosen);
+            if (outcome == Outcome.Helped && _returned.TryGetValue(traveler, out bool kept) && !kept) outcome = Outcome.Betrayed; // P77: sold what they left
             Memory.Remember(p.character, p.appearance, day, outcome);
             Debug.Log($"[Characters] {p.character.DisplayName}: {chosen} → {outcome}");
             foreach (var c in a.consequences)

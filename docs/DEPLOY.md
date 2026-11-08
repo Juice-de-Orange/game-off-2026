@@ -90,3 +90,9 @@ des SNI-Routers erfasst die Subdomain (14 Rotationen). Das Spiel speichert Einst
 sein Text plus Version, Tag, Phase, Szene und Browserkennung; daraus wird ein GitHub-Issue (GitHub Inc., USA; ab der Abgabe öffentlich).
 Die IP wird seit dem 08.11. nicht mehr ausgewertet (vorher nur für die Begrenzung) und weder gespeichert noch geloggt.
 **Die Datenschutzerklärung auf maxlworks.com muss das erwähnen (Absatz von Claude, 07.11., in Max' Handover).**
+
+## itch.io (P19, Abgabe)
+Upload braucht Max' itch-Login (`butler login` einmalig), deshalb nicht automatisch.
+1. Build: `Unity.exe -batchmode -nographics -buildTarget WebGL -projectPath . -executeMethod GameOff.EditorTools.WebBuild.Build -customBuildPath Builds/itch -itch -quit`. Die Vorlage `Kestrel9Itch` hat keine Impressum-Fußzeile (nur für die Live-Seite) und fängt abgelehnte Maussperren genauso ab.
+2. `butler push Builds/itch <user>/<spiel>:html5`, oder den Ordner gezippt auf der itch-Seite hochladen.
+3. itch-Seite: „This file will be played in the browser“, Viewport 1280×720, Fullscreen-Button an. In Chrome und Firefox prüfen.

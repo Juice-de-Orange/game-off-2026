@@ -18,6 +18,7 @@ namespace GameOff.EditorTools
     public static class WebBuild
     {
         private const string LiveTemplate = "PROJECT:Kestrel9";
+        private const string ItchTemplate = "PROJECT:Kestrel9Itch"; // P19: without the imprint footer of the live page; -itch on the command line
         private const string DefaultOutput = "Builds/WebGL";
 
         public static void Build()
@@ -29,7 +30,7 @@ namespace GameOff.EditorTools
             string output = OutputPath();
             try
             {
-                PlayerSettings.WebGL.template = LiveTemplate;
+                PlayerSettings.WebGL.template = System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "-itch") >= 0 ? ItchTemplate : LiveTemplate;
                 HardwareStatistics = false; // the site promises not to pass visitor data on
                 string commit = Commit();
                 if (commit != null) PlayerSettings.bundleVersion = version + "+" + commit;

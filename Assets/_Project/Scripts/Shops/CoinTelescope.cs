@@ -59,8 +59,10 @@ namespace GameOff.Shops
         {
             _looking = true;
             player.SetControlEnabled(false);
+            yield return null; // the browser needs a frame after the release before it grants the lock again
             Cursor.lockState = CursorLockMode.Locked;
             PointerLockBridge.Request();
+            bool held = false;
             var brain = playerCamera.GetComponent<CinemachineBrain>();
             if (brain != null) brain.enabled = false;
             var cam = playerCamera.transform;
@@ -79,11 +81,21 @@ namespace GameOff.Shops
             {
                 var keys = Keyboard.current;
                 if (keys != null && (keys.qKey.wasPressedThisFrame || keys.escapeKey.wasPressedThisFrame)) break;
+                held |= PointerLockBridge.IsLocked;
+                if (held && !PointerLockBridge.IsLocked) break; // in the browser Esc only releases the mouse
+                float scale = mouseDegrees * zoom / wideFov;
+                if (keys != null) // the arrow keys and WASD work without the mouse lock
+                {
+                    float turn = (keys.dKey.isPressed || keys.rightArrowKey.isPressed ? 1f : 0f) - (keys.aKey.isPressed || keys.leftArrowKey.isPressed ? 1f : 0f);
+                    float tilt = (keys.wKey.isPressed || keys.upArrowKey.isPressed ? 1f : 0f) - (keys.sKey.isPressed || keys.downArrowKey.isPressed ? 1f : 0f);
+                    yaw = Mathf.Clamp(yaw + turn * scale * 600f * Time.deltaTime, -panLimit, panLimit);
+                    pitch = Mathf.Clamp(pitch - tilt * scale * 600f * Time.deltaTime, -panLimit, panLimit);
+                }
                 var mouse = Mouse.current;
                 if (mouse != null)
                 {
                     // Slower the further it is zoomed in, so the view stays controllable.
-                    Vector2 delta = PointerLockBridge.IsLocked ? mouse.delta.ReadValue() * (mouseDegrees * zoom / wideFov) : Vector2.zero;
+                    Vector2 delta = PointerLockBridge.IsLocked ? mouse.delta.ReadValue() * scale : Vector2.zero;
                     yaw = Mathf.Clamp(yaw + delta.x, -panLimit, panLimit);
                     pitch = Mathf.Clamp(pitch - delta.y, -panLimit, panLimit);
                     float wheel = mouse.scroll.ReadValue().y;

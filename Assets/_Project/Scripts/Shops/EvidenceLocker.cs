@@ -47,8 +47,8 @@ namespace GameOff.Shops
         private void Break()
         {
             _triedTonight = true;
+            player.SetControlEnabled(true); // first: a discharge at the limit ends the run and frees the mouse for the end screen
             string result = Confiscation.Instance.BreakIn(Random.value);
-            player.SetControlEnabled(true);
             dialogs.ShowHint(result, 6f);
         }
     }

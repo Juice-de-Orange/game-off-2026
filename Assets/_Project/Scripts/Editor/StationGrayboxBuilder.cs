@@ -206,6 +206,7 @@ namespace GameOff.EditorTools
             }
             BuildEnergyBarrier(root, visual);
             BuildDoors(root);
+            BuildDoorSigns(visual);
             BuildRoundDetails(visual);
             BuildHull(root);
 
@@ -1832,6 +1833,55 @@ namespace GameOff.EditorTools
             var go = PlaceKit(parent, kitPath, position, yaw);
             if (go != null) go.name = name;
             return go;
+        }
+
+        private enum DoorSignStyle { Neon, Stencil, Restricted }
+
+        /// <summary>P50: doors without a sign of their own (diner and bar have theirs). (door centre on its wall line, side of the wall the text is read from, text, style).</summary>
+        private static readonly (bool onXLine, float line, float center, int side, string text, DoorSignStyle style)[] DoorSigns =
+        {
+            (true, -20f, 1f, 1, "HAB MODULE", DoorSignStyle.Neon),
+            (false, -6f, -7f, 1, "STAFF ONLY", DoorSignStyle.Restricted),
+            (false, -6f, 2f, 1, "ARRIVALS", DoorSignStyle.Stencil),
+            (false, -12f, -7f, 1, "HANGAR", DoorSignStyle.Stencil),
+            (true, -6f, -9f, -1, "CUSTOMS", DoorSignStyle.Restricted),
+            (false, -6f, -7f, -1, "HALL", DoorSignStyle.Stencil),
+            (false, -12f, -7f, -1, "SERVICE", DoorSignStyle.Stencil),
+        };
+
+        /// <summary>P50: a lettered plate over each door; three looks so they don't all read the same.</summary>
+        private static void BuildDoorSigns(GameObject parent)
+        {
+            var group = new GameObject("DoorSigns");
+            group.transform.SetParent(parent.transform, false);
+            var font = AssetDatabase.LoadAssetAtPath<TMPro.TMP_FontAsset>(SignFont);
+            var stencil = AssetDatabase.LoadAssetAtPath<TMPro.TMP_FontAsset>("Assets/_Project/Fonts/ShareTechMono SDF.asset");
+            foreach (var (onXLine, line, center, side, text, style) in DoorSigns)
+            {
+                float across = line + side * (WallFace + 0.04f);
+                float yaw = onXLine ? (side < 0 ? 90f : -90f) : (side < 0 ? 0f : 180f);
+                var plate = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                plate.name = "DoorSign_" + text.Replace(" ", "");
+                Object.DestroyImmediate(plate.GetComponent<Collider>());
+                plate.transform.SetParent(group.transform, false);
+                plate.transform.SetPositionAndRotation(onXLine ? new Vector3(across, 2.5f, center) : new Vector3(center, 2.5f, across), Quaternion.Euler(0f, yaw, 0f));
+                plate.transform.localScale = new Vector3(0.28f * text.Length * 0.42f + 0.25f, 0.26f, 0.03f);
+                Color back = style == DoorSignStyle.Restricted ? new Color(0.45f, 0.08f, 0.06f) : style == DoorSignStyle.Stencil ? new Color(0.62f, 0.5f, 0.12f) : new Color(0.03f, 0.03f, 0.05f);
+                plate.GetComponent<MeshRenderer>().sharedMaterial = GetOrCreateMaterial("M_DoorSign_" + style, back, false);
+                GameObjectUtility.SetStaticEditorFlags(plate, StaticEditorFlags.BatchingStatic | StaticEditorFlags.ContributeGI);
+                var label = new GameObject("Text", typeof(RectTransform), typeof(TMPro.TextMeshPro));
+                label.transform.SetParent(group.transform, false);
+                label.transform.SetPositionAndRotation(plate.transform.position + plate.transform.forward * -0.02f, plate.transform.rotation);
+                label.name = plate.name + "_Text";
+                ((RectTransform)label.transform).sizeDelta = new Vector2(plate.transform.localScale.x, 0.26f);
+                var tmp = label.GetComponent<TMPro.TextMeshPro>();
+                tmp.font = style == DoorSignStyle.Neon ? font : stencil;
+                tmp.text = text;
+                tmp.fontSize = 1.5f;
+                tmp.textWrappingMode = TMPro.TextWrappingModes.NoWrap;
+                tmp.color = style == DoorSignStyle.Neon ? new Color(0.61f, 0.88f, 0.35f) : style == DoorSignStyle.Restricted ? new Color(0.98f, 0.9f, 0.82f) : new Color(0.07f, 0.06f, 0.05f);
+                tmp.alignment = TMPro.TextAlignmentOptions.Center;
+            }
         }
 
         /// <summary>P26: what moves must not be static (and is left out of the light bake).</summary>
