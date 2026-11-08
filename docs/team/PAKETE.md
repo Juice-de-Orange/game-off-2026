@@ -248,7 +248,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     alle „weak“ im Brief von Tag 2, Kontostand 85; Tag 2 → 3 läuft. Kein WebGL-Build.
 
 ### P11 — Läden: Gadget-Shop & Bar-Schwarzmarkt
-- Größe: M · Priorität: Muss · Status: in Arbeit (max, 08.11., Nachtlauf: Rest)
+- Größe: M · Priorität: Muss · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: P03, P08, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Kaufen und Verkaufen über ein gemeinsames Shop-System.
 - Enthalten: Shop-UI, Bar (illegale Gegenstände kaufen, Beschlagnahmtes verkaufen), Dokumentenscanner kaufbar
@@ -269,9 +269,10 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - **Angebote:** Tagesangebote/Rabatte, Ware nur an bestimmten Tagen, Sortiment pro Tag (z. B. Dealer an Tag 3 anders)
   - evtl. Teilung: **P11 Kiosk** (Muss) + **Schwarzmarkt** als eigenes Soll-Paket
   - **Nachtrag (martin, 06.11.):** Schmuggelware kauft nur der Schwarzmarkt (P64). Der Barkeeper soll nichts kaufen, sondern Wünsche gegen Gerüchte tauschen (P65, Entwurf) und manchmal Bestechungszettel schicken (P66, Entwurf).
+- Ergebnis (Nachtlauf, 08.11.): Rest erledigt: Scanner im Kiosk (ab Tag 6), Beschlagnahmtes geht an den Dealer (P64, P82). Geprüft über Tests, nicht von Hand durchgespielt.
 
 ### P12 — Enden
-- Größe: S · Priorität: Muss · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: S · Priorität: Muss · Status: fertig (max, 08.11., Nachtlauf)
 - Hinweis (Call 07.11.): neue Enden: **Game Over nach 3 Disziplinarstrafen** (P08) und **„Airlocked“** – wer dem Shifter bei seiner Schlüsselentscheidung hilft, fliegt an Tag 7 durch die Schleuse (`docs/FIGUREN.md`). Hauptende ist das Ticket (P72).
 - Braucht: P10, P08
 - Ziel: Nach Tag 3 oder bei Niederlage ein Endbildschirm.
@@ -283,6 +284,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Schon da (Platzhalter, P13): **Miete nicht bezahlbar → „STRANDED“**; P12 ersetzt den Text durch ein echtes Ende. Haken: `DayManager.GameOver(title, body)`.
 - Angepasst (martin, 07.11., nach dem Call): Enthalten sind jetzt auch **„Discharged“** (3 Disziplinarstrafen aus P08, Zähler über alle Tage) und
   **„Airlocked“** (Shifter-Schlüsselentscheidung, P75/P76). Abnahme: beide Enden lassen sich mit Dev-Knöpfen gezielt auslösen.
+- Ergebnis (Nachtlauf, 08.11.): FAMILY LOST neu (P69), DISCHARGED gab es schon, Ticket-Ende mit Tod (HOME, WITHOUT THEM) und Schlusssatz je nach Moral (`TicketEnding.MoraleLine`). AIRLOCKED kommt aus P87.
 
 ### P13 — Hangar: Pakete an die Familie
 - Größe: S · Priorität: Soll · Status: fertig (martin, 06.11.)
@@ -334,12 +336,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   `DayManager.LetterAddendum` bzw. `PlayerEconomy.FamilyReport()` (heute eine Zeile pro Person unter dem Brief).
 
 ### P16 — Gadget: Dokumentenscanner
-- Größe: S · Priorität: Muss · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: S · Priorität: Muss · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: P06, P11
 - Ziel: Gekaufter Scanner markiert gefälschte Felder auf Dokumenten.
 - Assets: `SM_Item_DocScanner` (bestellt am 06.11.)
 - Abnahme: Mit Scanner wird ein gefälschtes Feld sichtbar markiert.
 - Hinweis (martin, 07.11., P68): Der Scanner ist bis dahin **nicht im Kiosk-Sortiment** (sonst kauft man 60 CR ohne Nutzen). Mit P16 in `EconomyBuilder.BuildPriceList` wieder per `AddEntry(kiosk, scanner, 1)` aufnehmen.
+- Ergebnis (Nachtlauf, 08.11.): Scanner liegt gekauft links hinten auf dem Tisch, Klick schaltet: NAME und ID, die sich zwischen Papieren auf dem Tisch widersprechen, werden rot. Reiner Komfort (`PaperGadgets`).
 
 ### P17 — Retro-Look
 - Größe: S · Priorität: Soll · Status: fertig (max, 02.11.)
@@ -458,7 +461,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Festgelegt im Asset-Durchgang (max, 02.11.): Shuttle mit **Rampe** (Rework bestellt): landen → Rampe klappt zischend herunter → Reisende steigen nacheinander aus und stellen sich an; abends Rampe hoch und Abflug.
 
 ### P26 — Details & Ausstattung
-- Größe: M · Priorität: Soll · Status: offen, Deko eingebaut (max, 06.11.), Bewegung und Schilder fehlen
+- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf)
 - Braucht: P22 und Lieferungen
 - Ziel: Station wirkt bewohnt und heruntergekommen.
 - Enthalten: Rohre, Kabel, Lüftungen, Verteilerkästen, Feuerlöscher, Müll, Pflanzen, Schilder/Poster/Schmutz-Decals, Putzroboter (fährt per
@@ -472,6 +475,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 > **P27–P36: Mechaniken aus dem Asset-Durchgang** (max, 02.11.). Max hat jedes gelieferte Asset durchgesehen und festgelegt,
 > was man damit tun kann. Alle Soll; Reihenfolge und Verteilung im Call.
+- Ergebnis (Nachtlauf, 08.11.): Bar-Ventilator dreht sich, Putzroboter fährt in der Halle hin und her. Rest siehe Stand.
 
 ### P27 — Automatische Türen mit Zugangsstufen
 - Größe: S · Priorität: Soll · Status: fertig (max, 02.11.)
@@ -538,7 +542,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   „As ordered“ (P08). Frei entnehmen widerspricht dem – P32 zeigt die Gegenstände, **herausholen nur durch Aufbrechen (P83)**.
 
 ### P33 — Pinnwand, Lautsprecher & Warnlampe
-- Größe: M · Priorität: Soll · Status: offen
+- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf)
 - Braucht: P07, P09 · Assets: `SM_Counter_Board`, `SM_Counter_Speaker`, `SM_Counter_WarningLamp` (da)
 - Ziel: Der unsichtbare Vorgesetzte und die Regeln sind im Raum präsent.
 - Hinweis (max, 05.11.): Zettel im Sitzen und Durchsagen macht schon P41; hier bleiben Nahansicht im Stehen, Fotos/Memos und die Lampen.
@@ -546,6 +550,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   leuchtet bei Durchsagen (Lob, Rüge, neue Anweisung mitten in der Schicht, Text bis Voicelines kommen); Warnlampe dreht rot bei
   Verhaftung/Luftschleuse, gelb wenn ein Reisender eintritt
 - Abnahme: Alle drei reagieren auf das Spielgeschehen.
+- Ergebnis (Nachtlauf, 08.11.): Warnlampe in der Prüfkammer: gelb bei Ankunft, rot bei Verhaftung und Schleuse. Lämpchen am Lautsprecher bei Durchsagen. Offen: Nahansicht der Pinnwand im Stehen.
 
 ### P34 — Terminal-Datenbank am Schalter
 - Größe: M · Priorität: Soll · Status: offen
@@ -1012,7 +1017,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Nebenbei: `DocumentDesk`, `CounterShift` und `CounterClickable` haben nur Sound-Aufrufe bekommen. Die Clownsschuh-Sounds liegen bereit und sind nicht verdrahtet (P63).
 
 ### P62 — Gadget: UV-Lampe
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: M · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: P06, P11 · Folgt auf: P58
 - Assets: `SM_Item_UVLamp` (bestellt am 06.11.)
 - Ziel: Mit der Lampe sieht der Spieler gefälschte Siegel, ohne sie bleiben sie unsichtbar.
@@ -1020,14 +1025,16 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: weitere Gadgets. Reisende mit gefälschtem Siegel kommen über P15, erst ab Verfügbarkeit der Lampe (P58 Punkt 4).
 - Offen: freigeschaltet oder gekauft, und an welchem Tag (`DESIGN.md`, Gadgets). Klären Max und Martin im Call.
 - Abnahme: Ohne Lampe kein Hinweis aufs Siegel, mit Lampe klar sichtbar; Validator prüft die Regel aus P58.
+- Ergebnis (Nachtlauf, 08.11.): UV-Lampe im Kiosk ab Tag 4 (`StockEntry.fromDay`), an: jedes Papier zeigt SEAL VALID oder SEAL FORGED. Gefälschte Siegel an Tag 5, 7, 9 und 11 (Zeth, Varn, Nimi, Sirr). Validator prüft: keine vor dem 2290-11-09.
 
 ### P63 — Clownsschuhe
-- Größe: S · Priorität: Kann · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: S · Priorität: Kann · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: P08, P46, P61 · Folgt auf: —
 - Assets: `SM_Item_ClownShoes`, `SFX_ClownShoe_Squeak_01` bis `_03` (bestellt am 06.11.)
 - Ziel: Beschlagnahmte Clownsschuhe lassen sich anziehen, dann quietscht jeder Schritt, bis man sie auszieht.
 - Enthalten: Gegenstand, Anziehen und Ausziehen im Inventar, Schrittgeräusch wechselt.
 - Abnahme: Mit Schuhen quietscht jeder Schritt, ohne Schuhe normal.
+- Ergebnis (Nachtlauf, 08.11.): Clownsschuhe über die Ladung von Pim Oddo (CLOWN), im Inventar PUT ON / TAKE OFF, Schritte quietschen. Icon ist ein selbst gezeichneter Platzhalter, bestellt.
 
 ### P64 — Schwarzmarkt kauft nur Schmuggelware
 - Größe: XS · Priorität: Soll · Status: fertig (martin, 06.11.)
@@ -1162,7 +1169,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     Fresh fruit fehlt, Zettel und Durchsage, verdorbene Frucht im Brief; Tag 3 Spice 42 ×5, Ankauf 44, Wärme am Bett 22. Konsole 0 Fehler.
 
 ### P69 — Familienschicksal: was „kritisch“ bedeutet
-- Größe: S · Priorität: Muss (Vorschlag) · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: S · Priorität: Muss (Vorschlag) · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: P10 · Folgt auf: P10 · Gehört zu den Bedingungen von P12, Texte in P15, sichtbar in P29
 - Ziel: Der Zustand der Familie hat eine Grenze: Wer zu lange kritisch ist, bleibt nicht folgenlos.
 - Enthalten (Vorschlag): Regel, was nach einer oder mehreren Nächten auf „critical“ passiert (z. B. Person geht ins Krankenhaus und
@@ -1171,6 +1178,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Offen für Max: Wie hart darf es sein (Tod ja/nein)? Ab wann ist die Familie „zerbrochen“?
 - Nicht enthalten: Endbildschirme (P12), Brieftexte (P15), Stadtlichter/Foto (P29).
 - Abnahme: Drei Nächte ohne Versorgung führen sichtbar zur angekündigten Folge; mit Versorgung erholt sich die Familie.
+- Ergebnis (Nachtlauf, 08.11.): Regel (Max): nach 2 weiteren Nächten auf kritisch stirbt die Person, am Morgen davor Warnung im Brief. Bedarf schrumpft, Briefe wechseln; sterben alle oder Lena → Ende FAMILY LOST. `HouseholdTuning.criticalNightsToDeath`, `FamilyFateTests`.
 
 ### P70 — Preisliste & Sortiment
 - Größe: S–M · Priorität: Muss · Status: fertig (martin, 06.11.)
@@ -1379,7 +1387,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Offen in P85–P87: Geschenke/Lohn/Briefe/Bedingungen, Korr-Tutorial, Shifter-Bitte und Ende „Airlocked“; Verwahrung P77.
 
 ### P77 — Verwahrung: Figuren geben dir Dinge zur Aufbewahrung
-- Größe: S–M · Priorität: Soll (Vorschlag) · Status: offen (im Call 07.11. bestätigt) · Zuständig: martin
+- Größe: S–M · Priorität: Soll (Vorschlag) · Status: fertig (max, 08.11., Nachtlauf)· Zuständig: martin
 - Braucht: P75 (Gedächtnis, Auftritte), P46 (Inventar), P11 (Händler) · Folgt auf: P75 · Inhalte in P76
 - Ziel: Vertrauen wird greifbar: Eine Figur lässt dir etwas da, und du entscheidest, ob du es hütest oder zu Geld machst.
 - Enthalten (Vorschlag):
@@ -1396,6 +1404,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: Beschlagnahme (P08), neue Händler.
 - Abnahme: Eine Figur gibt einen Gegenstand ab; Verkaufen bringt Geld und die Figur reagiert verraten; Verwahren bringt beim nächsten
   Auftritt den Pfand und die Figur reagiert geholfen.
+- Ergebnis (Nachtlauf, 08.11.): Senn, Quill, Nell, Oddo lassen beim Durchlassen etwas da; beim nächsten Auftritt Pfand gezahlt, oder verkauft → zählt als verraten. Annahmen (offene Punkte des Pakets): Rückgabe automatisch am Schalter, vorhandene Waren statt eigener Gegenstände.
 
 ### P78 — Bugreport-Knopf im Pausenmenü
 - Größe: S · Priorität: Soll · Status: fertig (max, 07.11.; live seit 3177208) · Zuständig: max (Call 07.11.)
@@ -1416,12 +1425,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 07.11.): `DeliveryIntegrator` überspringt `Art/UI/Icons` (UI-Regel) und `Art/Textures/Documents` (Welt-Regel; die setzte Point, `DocumentPrefabBuilder` wieder Bilinear – die beiden haben sich gegenseitig umgestellt). Zwei Batch-Läufe: „nothing to do“, keine geänderten `.meta`. Regel in `ASSETS.md`.
 
 ### P80 — Umschlag-Modell beim Bestechungszettel
-- Größe: XS · Priorität: Kann · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: XS · Priorität: Kann · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: P66 · Folgt auf: P66
 - Ziel: Der Bestechungszettel liegt sichtbar in `SM_Prop_BribeEnvelope` (geliefert und eingebaut am 07.11., Material `M_Prop_BribeEnvelope`).
 - Enthalten: Modell am `NoteSpot` des `BribeNote` (EconomyBuilder), nur sichtbar, solange der Zettel liegt.
 - Nicht enthalten: neue Mechanik.
 - Abnahme: Tag 3 → Umschlag liegt links neben den Papieren, verschwindet mit dem Zettel.
+- Ergebnis (Nachtlauf, 08.11.): Umschlag `SM_Prop_BribeEnvelope` unter dem Zettel, nur solange er liegt.
 
 ### P81 — Schicht-Inventar
 - Größe: S–M · Priorität: Muss · Status: fertig (martin, 07.11.) · Zuständig: martin (Call 07.11.)
@@ -1498,7 +1508,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 07.11.): Backend `deploy/reports` (Python ohne Pakete, 12 Tests) läuft auf Geoffrey als `kestrel9-reports`; Spiel-nginx leitet `/api/report` weiter, Host-nginx setzt `X-Forwarded-For`. Begrenzung 5/10 min pro Client (IPv6 /64), 60/h gesamt, nur erfolgreiche zählen; CORS nur Kestrel + itch; `@` wird entschärft. Formular `BugReportForm` im Pausenmenü (P tippt, Esc/BACK zurück und bricht Senden ab). GitHub-Link aus P78 entfernt. Token: Max mit `python deploy/set-report-token.py`. Datenschutz auf maxlworks.com (EN/DE) ergänzt. Geprüft: Formular im WebGL-Build (Tippen inkl. „p“, Fehlermeldung ohne Backend), `curl` live.
 
 ### P85 — Figuren-Folgen ohne Begegnung und neue Bedingungen
-- Größe: M · Priorität: Soll (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) · Zuständig: martin
+- Größe: M · Priorität: Soll (Vorschlag) · Status: teilweise (max, 08.11., Nachtlauf)· Zuständig: martin
 - Braucht: P75, P76 · Folgt auf: P75
 - Ziel: Was `docs/FIGUREN.md` (Punkte 5 und 6) verlangt und P75 noch nicht kann.
 - Enthalten: Geschenke an die Familie (Mira bringt Essen = FOOD heute Nacht gedeckt, Senn Medizin), Lohnbonus/Rüge per Durchsage (Korr),
@@ -1506,6 +1516,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   („jemand krank“) und über andere (Nells Sohn = wen du verhaftet hast, sonst ein fester Reisender aus P15).
 - Nicht enthalten: Tutorial (P86), Shifter-Ende (P87), Verwahrung (P77).
 - Abnahme: Jede dieser Folgen ist mit der Testfigur oder einer echten Figur einmal spielbar; Tests für die neuen Bedingungen.
+- Ergebnis (Nachtlauf, 08.11.): Mira bringt Essen, Senn Medizin wenn jemand krank ist, Korr Bonus/Rüge per Durchsage zwei Tage später, Shifter-Paket im Brief (`Consequence`). Offen: Nells Sohn, Zusammenfassung Tag 11, Verhör-Durchsage.
 
 ### P86 — Korr-Tutorial an Tag 1
 - Größe: M · Priorität: Soll (Vorschlag) · Status: fertig (max, 08.11.) · Zuständig: max (umgetragen 08.11.)
@@ -1566,7 +1577,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Die klaren Fehler aus den Issues sind weg.
 - Enthalten: #27 Airlock-Deckel klappt nicht mehr in den Tisch (Winkel +110, gemessen; schon mit P86 gebaut). #15 Sperr-Ton nur auf [E] an der gesperrten Tür, nicht beim Vorbeigehen. #17 Flackern an den Hangar-Wänden finden und beheben. #18 grüne Kisten im Hangar stecken nicht mehr ineinander. #21 Ladengitter füllt die ganze Front und ist entweder offen oder zu. #23 Figur sitzt auf dem Barhocker statt darin.
 - Abnahme: Jeder Punkt ist im Spiel nachgeprüft; danach die Issues schließen (Max).
-- Stand (max, 08.11.): #27 Deckel bleibt über dem Tisch (Winkel +110, gemessen). #15 gesperrte Türen: Ton nur auf [E] (`SlidingDoor`). #18 Kiste verschoben. #23 Dealer 13 cm höher; **reicht beim Anspielen noch nicht → P99**. #17 Mipmaps für alle Hangar-Texturen: 26–43 % weniger Flimmern bei 3 cm Bewegung (gemessen), **nicht ganz weg, Max prüft, ob es das gemeldete Flackern war**. #21 braucht ein neues Modell: `SM_Kiosk_Counter` auf rework, `SM_Kiosk_Shutter` bestellt; offen, bis geliefert. Geprüft: 155/155 EditMode-Tests, Validate Travelers ok, Occlusion wie bisher 1 Ansicht (105 px). #15 im Spiel nicht automatisiert geprüft.
+- Stand (max, 08.11.): #27 Deckel bleibt über dem Tisch (Winkel +110, gemessen). #15 gesperrte Türen: Ton nur auf [E] (`SlidingDoor`). #18 Kiste verschoben. #23 Dealer 13 cm höher; **reicht beim Anspielen noch nicht → P99**. Kiosk-Gitter (#21) eingebaut, Nachtlauf 08.11. #17 Mipmaps für alle Hangar-Texturen: 26–43 % weniger Flimmern bei 3 cm Bewegung (gemessen), **nicht ganz weg, Max prüft, ob es das gemeldete Flackern war**. #21 braucht ein neues Modell: `SM_Kiosk_Counter` auf rework, `SM_Kiosk_Shutter` bestellt; offen, bis geliefert. Geprüft: 155/155 EditMode-Tests, Validate Travelers ok, Occlusion wie bisher 1 Ansicht (105 px). #15 im Spiel nicht automatisiert geprüft.
 
 ### P91 — Reisende gehen wirklich, Verhaftung hinter dem Gitter
 - Größe: L · Priorität: Soll · Status: fertig (max, 08.11.) · Zuständig: max
@@ -1600,11 +1611,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Keine zwei Äußerungen klingen gleich; Download-Zuwachs gemessen.
 
 ### P95 — Menüs im Terminal-Stil
-- Größe: L · Priorität: Soll · Status: offen · Zuständig: max
+- Größe: L · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)· Zuständig: max
 - Braucht: — · Folgt auf: P02, P43, P46
 - Ziel: Alle Menüs und Fenster sehen nach dem Spiel aus statt nach Standard (#20).
 - Enthalten: Gemeinsamer Stil im Builder: dunkle Metallrahmen, CRT-Grün/Bernstein, Warnstreifen. Hauptmenü, Optionen, Pause, Inventar, Handel, Abrechnung. Berührt Martins Fenster, also vorher absprechen und claimen.
 - Abnahme: Alle Fenster teilen denselben Stil und bleiben bedienbar.
+- Ergebnis (Nachtlauf, 08.11.): Gelieferte Terminal-Grafiken in allen Fenstern, Knöpfen, Optionen und Credits über `TerminalStyle`; Listenzeilen bleiben flach. Scanlines und Warnstreifen noch nicht benutzt.
 
 ### P96 — Lebendige Händler
 - Größe: S · Priorität: Soll · Status: fertig (max, 08.11.) · Zuständig: max
@@ -1615,68 +1627,77 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 08.11.): `Shops/IdleBreathing` + `Data/Economy/IdleBreathingTuning.asset`: Atmen, leichtes Schwanken und ab und zu eine kleine Drehung der ganzen Figur (die Modelle haben kein Skelett, einzelne Köpfe drehen sich also nicht). Geprüft: Validate Travelers, EditMode-Tests, Bilder aus Main.
 
 ### P97 — Eine gemeinsame Spieluhr
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: S · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P09, P31
 - Ziel: Alle Uhren zeigen dieselbe Spielzeit und laufen weiter (#19).
 - Enthalten: Spielzeit aus der Phase: Morgen 06:00, Schicht 08:00–18:00 nach Fortschritt der Reisenden, Abend bis 23:00. Kein Einfluss auf Geld oder Regeln.
 - Abnahme: Alle Uhren der Station stimmen überein und bewegen sich.
+- Ergebnis (Nachtlauf, 08.11.): Eine `GameClock` aus der Phase (06:00, 08:00–18:00 nach Reisenden, Abend bis 23:00), Wanduhren in Halle und Schalter zeigen sie. Martin hatte das Paket nicht genommen.
 
 ### P98 — Eigene Feld-Antworten für die Figuren an Tag 1–4
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: S · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: P76 · Folgt auf: P15
 - Ziel: Korr, Quill, Shifter, Mira und Senn antworten an Tag 1–4 auf Feld-Klicks persönlich statt mit der allgemeinen Zeile („It says ...“); die normalen Reisenden daneben tun das schon.
 - Enthalten: 2–3 Antworten je Auftritt im `StoryCharacterBuilder` (`FieldAnswer`, wie `StoryDayContent`). Die Antworten dürfen nicht zum falschen Papier passen: Ein Feldschlüssel gilt für alle Papiere des Reisenden.
 - Nicht enthalten: Tage 5–12, neue Mechanik.
 - Abnahme: Validate Travelers und EditMode-Tests grün; keine Figur an Tag 1–4 antwortet mit der allgemeinen Zeile.
+- Ergebnis (Nachtlauf, 08.11.): Korr, Quill, Shifter, Mira, Senn antworten an Tag 1–4 auf Feld-Klicks (`Talker` im `StoryCharacterBuilder`).
 
 ### P99 — Dealer sitzt richtig auf dem Hocker
-- Größe: S · Priorität: Muss · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: S · Priorität: Muss · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P90
 - Ziel: Der Dealer in der Bar sitzt sichtbar auf dem Hocker (#23, wieder geöffnet).
 - Enthalten: Nach dem Anspielen 08.11.: Mit y 0,58 steckt der Sitz noch in seinem Schoß, er muss noch etwas höher (`VendorSpot` Dealer im `EconomyBuilder`). Danach im Bild von der Seite prüfen.
 - Abnahme: Kein Hocker ragt durch die Figur, die Füße schweben nicht sichtbar.
+- Ergebnis (Nachtlauf, 08.11.): Dealer bei y 0,74, im Bild von der Seite geprüft: sitzt auf dem Hocker.
 
 ### P100 — Reisende reagieren auf die Entscheidung
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: M · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P40, P91
 - Ziel: Wer abgewiesen wird, regt sich auf; wer durchkommt, ist erleichtert. Bisher sagt niemand etwas (Anspielen 08.11.).
 - Enthalten: Eine Zeile nach dem Stempel in der Sprechblase, bevor die Figur geht: je Reisendem optional eigene Zeilen (`StoryDayContent`, Figuren je Auftritt), sonst ein Pool je Spezies für abgewiesen und durchgelassen. Darf das Tempo nicht bremsen.
 - Abnahme: Abgewiesene beschweren sich hörbar lesbar, mit Abwechslung; die Schicht wird nicht spürbar länger.
+- Ergebnis (Nachtlauf, 08.11.): Zeile nach dem Stempel beim Weggehen: eigene (`StoryDayContent.Reactions`) oder Pool je Spezies (`DialogueTuning.speciesLines`). Kostet keine Zeit.
 
 ### P101 — Durchgelassene sind wirklich in der Station
-- Größe: L · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: L · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P91, P96
 - Ziel: Wen man durchlässt, trifft man abends in der Station wieder (Anspielen 08.11., wichtig für die Immersion). Bisher nicht geplant.
 - Enthalten (Max, 08.11.): Wer durchkam, sitzt oder steht ab Feierabend an festen Plätzen in Bar und Halle oder schläft in einem Zimmer des Wohnmoduls; am nächsten Tag sind sie weg. Idle und eine Zeile beim Ansprechen. Höchstens rund 6 Figuren je Abend (WebGL). Sie laufen nicht dorthin.
 - Abnahme: Mindestens ein am selben Tag Durchgelassener steht abends sichtbar in der Station.
+- Ergebnis (Nachtlauf, 08.11.): Bis zu 6 Durchgelassene stehen abends an festen Plätzen (1 Bar, 5 Halle), E = eine Zeile, am Morgen weg (`EveningCrowd`). Niemand schläft im Wohnmodul (Abweichung).
 
 ### P102 — Dokument-Geräusche: leiser und abwechslungsreicher
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: S · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P61, P89
 - Ziel: Die Papier-Geräusche nerven nicht mehr (Anspielen 08.11.).
 - Enthalten: Lautstärke von `paperPickup` und `paperSlide` senken, Varianten bestellen und zufällig mit leichter Tonhöhe abspielen. Ton nach Gehör: Max.
 - Abnahme: Viele Papiere nacheinander klingen unaufdringlich.
+- Ergebnis (Nachtlauf, 08.11.): Lautstärke 0,32, 4+4 Varianten per Zufall mit leichter Tonhöhe (`AudioManager.PlayVaried`). Ton nach Gehör: Max.
 
 ### P103 — Lena und Korr deuten den Weg über die Drohne an
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: S · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P13, P86, P15
 - Ziel: Der Spieler kommt selbst darauf, dass Kiosk + Drohne rund ein Viertel billiger ist als das [X] in der Abrechnung.
 - Enthalten: Nur angedeutet (Max, 08.11.): eine vage Frage von Lena in einem frühen Brief (etwa, ob man Sachen nicht auch per Drohne schicken kann) und ein Tipp von Korr im Tutorial oder bei einem späteren Auftritt. Keine Erklärung im Menü, Mechanik bleibt unverändert.
 - Abnahme: Beide Hinweise stehen im Spiel, ohne die Rechnung vorzurechnen.
+- Ergebnis (Nachtlauf, 08.11.): Frage in Lenas Brief an Tag 2 (Frau Orens Sohn und die Frachtdrohne), Korrs Tipp folgt nach seinem Ende an Tag 1, nur wenn richtig entschieden wurde.
 
 ### P104 — Wachmann bei der Verhaftung
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: M · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P91
 - Ziel: Eine Verhaftung ist glaubhaft: Eine Wache kommt wirklich dazu.
 - Enthalten: Wache (`SK_NPC_Guard`) kommt durch die Hallentür und packt die Person, dann fällt das Gitter und der Rest ist zu hören (Max, 08.11.). Baut auf `TravelerPresenter.BehindShutter` auf; `LeaveSeconds` anpassen.
 - Abnahme: Bei jeder Verhaftung ist die Wache sichtbar, bevor das Gitter fällt.
+- Ergebnis (Nachtlauf, 08.11.): Wache kommt durch die Hallentür, packt die Person (Animation Grab), dann fällt das Gitter. `SK_NPC_Guard` geliefert und eingebaut.
 
 ### P105 — Luftschleuse: Ragdoll und Sog
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
+- Größe: M · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P91
 - Ziel: Die Schleuse sieht man: Die Person wird heftig ins All gerissen.
 - Enthalten: Kein Gitter mehr bei der Schleuse (P91 ändern). Innenschott zu, Außenschott klappt auf, Figur wird zum Ragdoll (Skelett der `SK_NPC_*`) und von einer Kraft hinausgerissen, dazu Alarmlicht und zitternde Scheibe. Je Spezies abstimmen; im Browser nur eine Figur gleichzeitig. Außenschott braucht Animation.
 - Abnahme: Bei allen fünf Spezies fliegt die Figur sichtbar hinaus, ohne im Schott zu hängen; keine Konsolenfehler.
+- Ergebnis (Nachtlauf, 08.11.): Kein Gitter mehr: Außenschott schwingt auf, Figur wird Ragdoll ohne Colliders und fliegt hinaus, Warnlampe blinkt, Sicht wackelt, Schott zu (`Ragdoll`, `AirlockHatch`). Im Browser mit Sorvak geprüft; die anderen vier Spezies nur per Code, gleiche Logik.
 
 ### P106 — Heim-Shuttle dockt außen am Hangar an, begehbar
 - Größe: L · Priorität: Soll · Status: offen · Zuständig: offen

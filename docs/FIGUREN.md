@@ -107,3 +107,8 @@ Tag 3 kommt, wird nach diesem Plan und den neuen Figuren gemacht (Martin, 07.11.
 - **Schlüsselentscheidung Tag 6:** Der Shifter („CASS ODEN“) fragt am Schalter: „JOIN THE RESISTANCE?“ (JOIN / REFUSE).
   JOIN → Tag 7 kommt er als Erster, enthüllt sich als Spion, die Sicherheit kommt → Ende **AIRLOCKED**. REFUSE → Tag 7 nur die Wendung.
 - Tag 6/7 sieht nur, wer ihn an Tag 3 nicht terminiert hat.
+
+## Umgesetzt (P85, P77, Nachtlauf 08.11.)
+- `Consequence`: Geschenke an die Familie (`giftItem`, Mira: Eintopf, Senn: Antibiotika wenn jemand krank ist), Lohn (`wageChange`, Korr: +25 oder −20, zwei Tage nach seiner verdeckten Prüfung), Durchsage, Briefzeile (Shifter).
+- Verwahrung: Senn (Antibiotika, 20 CR), Quill (Spice, 30), Nell (Datenchip, 15), Oddo (Silberring, 20). Beim nächsten Auftritt: noch da → Pfand; weg → zählt als verraten.
+- Noch offen: wer Nells Sohn ist, Zusammenfassung an Tag 11, Verhör-Durchsage.

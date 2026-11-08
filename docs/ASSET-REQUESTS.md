@@ -1271,7 +1271,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Counter.fbx
 package: P11
 scene: Kiosk
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.8, 2.8, 2.4]
@@ -2620,7 +2620,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Home_Albedo.png
 package: P24
 scene: Himmel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2648,7 +2648,7 @@ feedback:
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Home_Emission.png
 package: P24
 scene: Himmel
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -6726,7 +6726,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Shutter.fbx
 package: P90
 scene: Kiosk
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.08, 2.6, 1.3]
@@ -6781,7 +6781,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_SecurityShutter.fbx
 package: P91
 scene: Schalter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.08, 4.4, 2.2]
@@ -6808,7 +6808,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Arrest_Scuffle.ogg
 package: P91
 scene: Counter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6834,7 +6834,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Shutter_Drop.ogg
 package: P91
 scene: Counter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6860,7 +6860,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Shutter_Rise.ogg
 package: P91
 scene: Counter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6886,7 +6886,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SK_NPC_Guard.fbx
 package: P104
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-20
 size_m: [0.6, 0.4, 1.85]
@@ -7235,7 +7235,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Telescope_Coin.ogg
 package: P29
 scene: Plattform
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8071,7 +8071,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Panel.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8098,7 +8098,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_PanelInset.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8125,7 +8125,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Button_Normal.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8152,7 +8152,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Button_Hover.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8179,7 +8179,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Button_Pressed.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8206,7 +8206,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Divider.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8233,7 +8233,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_WarnStripe.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8260,7 +8260,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Scanlines.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8287,7 +8287,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup_01.ogg
 package: P102
 scene: Counter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8313,7 +8313,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup_02.ogg
 package: P102
 scene: Counter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8339,7 +8339,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup_03.ogg
 package: P102
 scene: Counter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8365,7 +8365,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup_04.ogg
 package: P102
 scene: Counter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8391,7 +8391,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Slide_01.ogg
 package: P102
 scene: Counter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8417,7 +8417,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Slide_02.ogg
 package: P102
 scene: Counter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8443,7 +8443,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Slide_03.ogg
 package: P102
 scene: Counter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8469,7 +8469,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Slide_04.ogg
 package: P102
 scene: Counter
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]

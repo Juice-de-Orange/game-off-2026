@@ -39,8 +39,8 @@ danach geht es **endlos** weiter mit Tagen aus Pools (Reisende, Regeln, Marktere
 |---|---|---|
 | Durchlassen | Reisender betritt die Station | Falsch durchgelassen → Abzug |
 | Abweisen | Reisender fliegt zurück | Falsch abgewiesen → Abzug |
-| Verhaften (Knopf) | Ein Gitter fällt vor die Scheibe, man hört die Festnahme (geplant: Wache kommt sichtbar dazu, P104); beschlagnahmte Gegenstände landen bei dir | Unschuldig verhaftet → größerer Abzug |
-| Luftschleuse (Knopf) | Sofortige Eliminierung (geplant: sichtbar als Ragdoll ins All gerissen, P105), kein Zeitverlust | Unschuldige: hoher Abzug. Jede Nutzung senkt einen versteckten Moral-Wert → färbt Familienbriefe und Ende |
+| Verhaften (Knopf) | Eine Wache kommt und packt die Person, dann fällt ein Gitter vor die Scheibe und man hört die Festnahme; beschlagnahmte Gegenstände landen bei dir | Unschuldig verhaftet → größerer Abzug |
+| Luftschleuse (Knopf) | Sofortige Eliminierung: Das Außenschott öffnet sich und die Person wird sichtbar ins All gerissen, kein Zeitverlust | Unschuldige: hoher Abzug. Jede Nutzung senkt einen versteckten Moral-Wert → färbt Familienbriefe und Ende |
 
 ## Regeln am Schalter (festgelegt 04.11., Max)
 **Fehlerarten:** Papiere widersprechen sich (Name/ID) · Papier abgelaufen oder fehlt · Tagesregeln aus dem Bulletin (wechseln täglich:
@@ -94,7 +94,8 @@ flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit di
   zu schicken kann auffliegen.
 - Briefe der Familie am Morgen erzählen die Story und zeigen die Folgen deiner Entscheidungen.
 - Kiosk + Drohne ist rund ein Viertel billiger als Geld über die Abrechnung; das wird nur angedeutet (P103).
-- Wen man durchlässt, ist abends in der Station zu sehen und am nächsten Tag weg (geplant, P101).
+- Wen man durchlässt, steht abends in Halle und Bar und ist am nächsten Tag weg (P101).
+- Bleibt jemand kritisch, stirbt die Person nach zwei weiteren Nächten; davor warnt der Brief (P69). Sterben alle oder Lena, ist das Spiel vorbei.
 
 ## Steuerung
 - Ego-Perspektive, **WASD + Maus**, **E** = interagieren.

@@ -51,6 +51,15 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Verkehr & Atmo | P47, P55, P67 | Schiffe vor den Fenstern, Stations-Loop | – (Stimmung) | `ShipTraffic_*.asset`, `SFX_Amb_Station_Loop` |
 | Ticket nach Hause & Abflug | P72 | Ticketautomat im Hangar neben der Rampe (nur abends, zeigt den Fehlbetrag), Kauf zieht den Ticketpreis ab; an der Rampe „Leave Kestrel-9 for good?“ → selbst gesteuerter Flug (W/S, Maus oder A/D, Shift) durch die Barriere; 320 m weg oder 45 s → Ende | Wallet → `PlayerEconomy.HasTicket` → `ShuttleFlight` → `DayManager.FinishRun` | `HouseholdTuning.ticketPrice` (350), `Data/Departure/DepartureTuning.asset` (Flug, Endtexte) |
 | Ticket-Enden | P72 (P12 hängt weitere an) | Der schlechteste Familienzustand beim Abflug entscheidet: well/weak → HOME, sick → HOME, BARELY, critical → TOO LATE? (mit Namen) | `Household` → `TicketEnding.Pick` → Endbildschirm | Texte in `DepartureTuning` |
+| Familienschicksal | P69 | Nach 2 weiteren Nächten auf kritisch stirbt die Person; Warnung am Morgen davor; Tote brauchen nichts, Briefe wechseln; alle oder Lena tot → FAMILY LOST | `Household.Settle` → `PlayerEconomy.LossLetter`, `FamilyBroken` → `DayManager.GameOver` | `HouseholdTuning.criticalNightsToDeath`, Brieftexte im selben Asset |
+| Enden | P12, P72, P87 | Ticket (HOME, HOME BARELY, TOO LATE?, HOME WITHOUT THEM) + Schlusssatz nach Moral; FAMILY LOST; DISCHARGED; STRANDED; AIRLOCKED | `TicketEnding`, `Conduct.Morale` | `DepartureTuning` (`moraleBloodyBelow`) |
+| Gadgets | P16, P62 | Gekauft liegen sie links hinten auf dem Tisch; Klick schaltet. UV: zeigt Siegel, gefälschte rot. Scanner: NAME und ID, die sich widersprechen, rot | Inventar → `PaperGadgets` → `DocumentView` | Kiosk `fromDay`: UV 4, Scanner 6 |
+| Spieluhr | P97 | Eine Uhrzeit für alle Wanduhren | `DayManager.Update` → `GameClock` → `ClockDisplay` | `eveningClockSeconds` |
+| Reaktionen, Abendgäste | P100, P101 | Zeile nach dem Stempel; bis zu 6 Durchgelassene stehen abends in Bar und Halle | `DecisionMade` → `TravelerDialogue`, `EveningCrowd` | `DialogueTuning.speciesLines` |
+| Wache, Schleuse | P104, P105 | Wache packt die Person, dann Gitter; Schleuse: Außenschott auf, Ragdoll fliegt hinaus | `TravelerPresenter` | `DialogueTuning` (`guard*`, `hatchSeconds`, `airlock*`) |
+| Figuren-Folgen, Verwahrung | P85, P77 | Geschenke an die Familie, Bonus/Rüge per Durchsage, Briefzeilen; zurückgelassene Dinge bringen beim nächsten Auftritt Pfand oder Verrat | `CharacterDirector` | `Consequence`, `Appearance.entrust*` (`StoryCharacterBuilder`) |
+| Terminal-Stil | P95 | Einheitliche Rahmen und Knöpfe | `TerminalStyle` (Editor) | Grafiken in `Art/UI/Terminal` |
+| Kiosk-Gitter | P90 | Gitter unten, solange der Kiosk zu ist | `Vendor.Update` → `SecurityShutter` | – |
 | Bugreport im Spiel | P84 (ersetzt P78) | Pausenmenü → REPORT BUG → Text tippen → SEND; das Backend auf Geoffrey legt ein GitHub-Issue an (Labels `bug`, `player-report`) | Version, Tag, Phase, Szene, Browser → `/api/report` | `Data/Menu/BugReportSettings.asset`, `deploy/reports` |
 | Dev-Werkzeuge | P09, P56, P10 | Dev_end_Day, Hitboxen, TRAFFIC_LINE_DEV, CREDITS ±100 | – | **vor der Abgabe ausschalten** (DEV-Reiter weg) |
 
@@ -59,33 +68,20 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Mechanik | Paket | Hängt an | Stand |
 |---|---|---|---|
 | Asservatenschrank aufbrechen | P83 (Kann) | P08, P32 | offen |
-| Familienschicksal: Folgen von „kritisch“ | P69 (Entwurf) | Familie → P12 | mit max abstimmen |
-| Enden (Familie, Moral, gefeuert) | P12 | Familie, P08, P69 | offen |
-| Gadgets: Scanner, UV-Lampe | P16, P62 | Schalter, Kiosk | Scanner-Funktion unklar (siehe Lücken) |
 | Familie in der Welt (Stadtlichter, Foto) | P29 | Familie | Assets bestellt |
-| Eine gemeinsame Spieluhr | P97 (martin) | Tagesablauf, Anzeigesäule | offen |
 | Stimmen: 10 Laute je Spezies | P94 (martin) | Händler, Reisende | offen |
-| Menüs im Terminal-Stil | P95 | alle Fenster | offen |
-| Reisende reagieren, Durchgelassene abends in der Station | P100, P101 | Schalter, Händler | offen |
-| Wachmann, Ragdoll an der Schleuse | P104, P105 | P91 | offen |
 | Heim-Shuttle angedockt, Schiffe landen im Hangar | P106, P107 | P72, P25 | offen, Assets bestellt |
 | Jeder Reisende sieht anders aus, Passfoto je Variante | P108 | Schalter, Dokumente | Assets bestellt |
-| Kiosk-Gitter ganz offen oder zu | P90 | Händler | wartet auf `SM_Kiosk_Shutter` |
 
 ## Lücken / passt noch nicht
-- **Moral ohne Wirkung:** P08 zählt sie, aber erst P12 (Enden) liest sie.
 - **Beschlagnahme vs. Simulator:** Der Economy Report rechnet Beschlagnahme und Strafen nicht mit – Mengen (`maxPerItem`) mit P15 abstimmen.
-- **P11 nur halb:** Schwarzmarkt-Einkauf und Beschlagnahmtes verkaufen warten auf P08.
-- **Scanner (P16):** In den Daten gibt es nur „gefälschtes Siegel“, und das deckt laut P58 die UV-Lampe auf. Was der Scanner zeigt, ist offen.
 - **Schmuggel nach Hause:** geht ohne Wirkung und ohne Risiko → später mit P08.
-- **Niederlage:** Bisher nur „Miete nicht bezahlbar“ (Platzhalter). Familie kann dauerhaft „critical“ sein, ohne Folge → P69, P12.
+- **Tod im Simulator:** Der Economy Report rechnet ohne P69 (Grenze 0), der Tod spielt also für die Balance-Ziele keine Rolle.
+- **Figuren-Geschenke und Bonus** (P85, P77) rechnet der Economy Report nicht mit; es sind wenige Credits.
 - **Jede Geldänderung braucht ein neues Rebalancing** (GameOff → Economy Report bis alle Ziele ✓; `EconomyBalanceTests` bricht sonst).
-- **Vernachlässigen lohnt sich noch halb:** Das Ticket-Ende wertet die Familie jetzt (TOO LATE?), aber ohne Folgen von „critical“ (P69) bleibt „nichts versorgen“ der schnellste Weg zum Ticket.
 - **Während des Flugs gibt es kein Pausenmenü** (Steuerung gehört dem Flug, höchstens 45 s).
 - **Ende AIRLOCKED nur abseits des richtigen Wegs:** Wer den Shifter an Tag 3 wie befohlen terminiert, sieht seine Frage (Tag 6) nie. Gewollt (Test der Behörde), aber die meisten Spieler werden das Ende so nicht finden.
 - **Endlose Tage ohne Geschichte:** Ab Tag 13 nur gezogene Reisende ohne Figuren, Briefe aus einem kleinen Pool (10) – das Geld wächst nach dem Ticket weiter (Report: Tag 30 ≈ 1900 CR), es gibt nur das Ticket als Ziel. Reisende ab Tag 13 haben keine Antworten auf Nachfragen (P40) und keine Fracht-Geschichten.
 - **Waren ohne Quelle bis P08:** Pistol, Waffenteile, Wertsachen, Alien-Zeug, Liquor kommen nur über die Fracht (Beschlagnahme, P08) – bis dahin gibt es sie im Spiel nicht.
-- **Gefälschte Siegel in den Story-Tagen fehlen:** Erst mit UV-Lampe oder Scanner (P58 Punkt 4). In den endlosen Tagen gibt es sie schon.
 - **Figuren an festen Plätzen (Korr an Tag 1) stehen exakt dort**, freie Figuren irgendwo davor oder dahinter (`CharacterPlanner.Queue`).
 - **Icons nur in den Daten:** Inventar und Handelsfenster zeigen noch keine Icons (Listen nur mit Namen) – eigenes Paket.
-- **Gadgets ohne Laden:** Scanner (P16) und UV-Lampe (P62) haben noch keinen Verkäufer. Scanner erst mit P16.

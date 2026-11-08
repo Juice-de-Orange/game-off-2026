@@ -63,6 +63,8 @@ ArtSource/                 Arbeitsdateien (.blend, .psd, Rohaufnahmen) — auße
 - **Texel-Dichte:** 64 px/m für Welt-Props, 128 px/m für Nahsicht am Schalter.
 - Filter, Palette und Stil: siehe `docs/STYLE.md`.
 - UI-Grafiken und Dokumente: voll aufgelöst, Filter Bilinear (müssen lesbar sein).
+- Terminal-Grafiken (`Art/UI/Terminal`, P95): Point, Sprite, Ränder in `TerminalStyle.BorderOf`, `DeliveryIntegrator` setzt die Import-Werte.
+- Papier-Geräusche: `SFX_Paper_*_01–04` zusätzlich zu den alten Einzeltönen, `SoundSetBuilder` verteilt sie.
 - Favicon: `Assets/WebGLTemplates/Kestrel9/favicon.png`, eingebunden in der `index.html` der Vorlage.
 - Hangar-Texturen (`Art/Textures/Hangar`): Point **mit** Mipmaps, sonst flimmern die weiten Wände beim Gehen (P90); setzt `Integrate Asset Deliveries`.
 - Ausnahmen, die `Integrate Asset Deliveries` nicht anfasst (P79): Waren-Icons `Art/UI/Icons` (Pixel-Art: Point, Sprite Multiple, von Hand gesetzt) und Dokument-Texturen `Art/Textures/Documents` (Bilinear + Mipmaps, setzt `Build Documents`).
