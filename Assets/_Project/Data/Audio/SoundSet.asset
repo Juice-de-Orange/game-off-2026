@@ -60,8 +60,24 @@ MonoBehaviour:
   tradeBuy:
     clip: {fileID: 8300000, guid: 8b6b70a878a30ca488468b64a59db9df, type: 3}
     volume: 1
-  paperPickups: []
-  paperSlides: []
+  paperPickups:
+  - clip: {fileID: 8300000, guid: 2077b81fc82fa9345aeb2625e6ee40e8, type: 3}
+    volume: 0.32
+  - clip: {fileID: 8300000, guid: beb395579289c224491a49a57dd36fb2, type: 3}
+    volume: 0.32
+  - clip: {fileID: 8300000, guid: fa9c6c79864fce0449353de6ad240a72, type: 3}
+    volume: 0.32
+  - clip: {fileID: 8300000, guid: 44f76cb99748a9f49aa5b2802185be9a, type: 3}
+    volume: 0.32
+  paperSlides:
+  - clip: {fileID: 8300000, guid: 088c0aad401696e41b50dae7080443af, type: 3}
+    volume: 0.32
+  - clip: {fileID: 8300000, guid: abfe6ef413742da48ae5be8e375816de, type: 3}
+    volume: 0.32
+  - clip: {fileID: 8300000, guid: 3ead89a43055b8745890f791b5f067a8, type: 3}
+    volume: 0.32
+  - clip: {fileID: 8300000, guid: 48b4285b7c76b4c4487e705a62abe822, type: 3}
+    volume: 0.32
   footsteps:
   - clip: {fileID: 8300000, guid: 2a103e33802aebc44823a323169d815d, type: 3}
     volume: 0.5
