@@ -6724,7 +6724,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Shutter.fbx
 package: P90
 scene: Kiosk
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.08, 2.6, 1.3]
