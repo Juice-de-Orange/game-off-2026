@@ -93,9 +93,14 @@ Tag 3 kommt, wird nach diesem Plan und den neuen Figuren gemacht (Martin, 07.11.
 - **Schmuggler-Razzia** löst Quill aus (Verrat an Tag 3 → Tag 4), nicht mehr fest an Tag 3 → Rebalancing.
 
 ## Offen
-- An welchem Tag liegt die Schlüsselentscheidung des Shifters, und was genau verlangt er?
+- (keine; Shifter-Bitte entschieden 08.11., siehe unten)
 
 ## Umgesetzt (P76, martin, 07.11.)
 - Alle acht Figuren gebaut (`GameOff/Build Story Characters`), Ablauf wie oben. Änderungen: Razzia an Tag 6 statt 4; Korr an Tag 4 verdeckt als
   „ODAN VREL“; Quill kommt an Tag 6 zur Rache (auf der Fahndungsliste), wenn er verraten oder beschlagnahmt wurde, an Tag 4 und 9 nur, wenn
   geholfen. Geschenke, Lohn, Briefe, Nells Sohn → P85; Korr-Tutorial → P86; Shifter-Bitte und „Airlocked“ → P87; Verwahrung → P77.
+
+## Umgesetzt (P87, martin, 08.11.)
+- **Schlüsselentscheidung Tag 6:** Der Shifter („CASS ODEN“) fragt am Schalter: „JOIN THE RESISTANCE?“ (JOIN / REFUSE).
+  JOIN → Tag 7 kommt er als Erster, enthüllt sich als Spion, die Sicherheit kommt → Ende **AIRLOCKED**. REFUSE → Tag 7 nur die Wendung.
+- Tag 6/7 sieht nur, wer ihn an Tag 3 nicht terminiert hat.

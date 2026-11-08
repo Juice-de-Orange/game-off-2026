@@ -44,6 +44,7 @@ namespace GameOff.Day
         private Action _onDialogDev;
         private Action _onDialogCancel;
         private Coroutine _hintRoutine;
+        private string _cancelDefault;
 
         public event Action EndMenuRequested;
 
@@ -76,8 +77,11 @@ namespace GameOff.Day
         /// Bed dialog. confirm == null hides the confirm button (e.g. travelers still waiting); dev == null hides the red dev button.
         /// </summary>
         public void ShowDialog(string title, string body, string confirmLabel, Action confirm, Action dev, Action cancel,
-            string devLabel = "Dev_end_Day")
+            string devLabel = "Dev_end_Day", string cancelLabel = null)
         {
+            var cancelText = dialogCancel.GetComponentInChildren<TMP_Text>();
+            _cancelDefault ??= cancelText.text;
+            cancelText.text = string.IsNullOrWhiteSpace(cancelLabel) ? _cancelDefault : cancelLabel;
             dialogTitle.text = title;
             dialogBody.text = body;
             _onDialogConfirm = confirm;

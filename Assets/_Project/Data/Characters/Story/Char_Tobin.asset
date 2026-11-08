@@ -21,6 +21,7 @@ MonoBehaviour:
     dayTo: 5
     slot: 0
     condition: 1
+    flag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -32,11 +33,21 @@ MonoBehaviour:
     - marketEvent: {fileID: 11400000, guid: abfbcbfc6fc68c944a3fe2c61ac7e1c3, type: 2}
       line: And now the clinic is out of medicine too.
     consequences: []
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
   - traveler: {fileID: 11400000, guid: 84f5cfacf908f094caac4cfcd16d16b8, type: 2}
     dayFrom: 7
     dayTo: 7
     slot: 0
     condition: 2
+    flag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -54,11 +65,21 @@ MonoBehaviour:
       wantedInDays: 1
       wantedForDays: 1
       wantedNote: 
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
   - traveler: {fileID: 11400000, guid: 28113c732e54ed546873fccd23f1ead3, type: 2}
     dayFrom: 10
     dayTo: 10
     slot: 0
     condition: 3
+    flag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -69,3 +90,12 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 

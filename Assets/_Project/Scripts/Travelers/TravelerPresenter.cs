@@ -79,6 +79,15 @@ namespace GameOff.Travelers
             Say(traveler, TravelerDialogue.Answer(traveler, document, fieldKey));
         }
 
+        /// <summary>P87: the traveler at the counter says a line (e.g. the answer to the player's choice).</summary>
+        public void SayLine(string line)
+        {
+            var traveler = shift.Current;
+            if (traveler == null || string.IsNullOrWhiteSpace(line)) return;
+            StopRoutine();
+            Say(traveler, line);
+        }
+
         private static bool Carries(TravelerData traveler, DocumentData document)
         {
             foreach (var paper in traveler.Documents)

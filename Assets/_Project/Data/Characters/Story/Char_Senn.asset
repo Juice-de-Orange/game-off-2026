@@ -21,6 +21,7 @@ MonoBehaviour:
     dayTo: 3
     slot: 0
     condition: 1
+    flag: 
     onAdmit: 1
     onDeny: 3
     onArrest: 4
@@ -40,11 +41,21 @@ MonoBehaviour:
       wantedInDays: 1
       wantedForDays: 1
       wantedNote: 
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
   - traveler: {fileID: 11400000, guid: 624972ad3631f6b4e821845d8a0551c3, type: 2}
     dayFrom: 5
     dayTo: 5
     slot: 0
     condition: 3
+    flag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -55,11 +66,21 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
   - traveler: {fileID: 11400000, guid: 1ba38b71115446844970875002fa517e, type: 2}
     dayFrom: 9
     dayTo: 9
     slot: 0
     condition: 3
+    flag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -70,3 +91,12 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 

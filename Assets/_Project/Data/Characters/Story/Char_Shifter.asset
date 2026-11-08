@@ -21,6 +21,7 @@ MonoBehaviour:
     dayTo: 1
     slot: 0
     condition: 1
+    flag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -30,11 +31,21 @@ MonoBehaviour:
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
   - traveler: {fileID: 11400000, guid: 9a0c7aa7e88a2004096c6139f8e18c40, type: 2}
     dayFrom: 2
     dayTo: 2
     slot: 0
     condition: 2
+    flag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -46,11 +57,21 @@ MonoBehaviour:
     - marketEvent: {fileID: 11400000, guid: f43d7922bcf28184f9e158056a4dd645, type: 2}
       line: They closed the border right behind me. Lucky, eh?
     consequences: []
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
   - traveler: {fileID: 11400000, guid: 7664271fc131a8a4b8687a6ae753bedf, type: 2}
     dayFrom: 3
     dayTo: 3
     slot: 0
     condition: 2
+    flag: 
     onAdmit: 1
     onDeny: 3
     onArrest: 3
@@ -68,19 +89,95 @@ MonoBehaviour:
       wantedInDays: 1
       wantedForDays: 1
       wantedNote: 
-  - traveler: {fileID: 11400000, guid: 6517981b47dc4cf42bc6bd5795ee16b4, type: 2}
-    dayFrom: 7
-    dayTo: 7
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
+  - traveler: {fileID: 11400000, guid: b495b9b984bad3a4f912eebc5af6e7aa, type: 2}
+    dayFrom: 6
+    dayTo: 6
     slot: 0
     condition: 2
+    flag: joined_resistance
+    onAdmit: 1
+    onDeny: 3
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []
+    questionTitle: JOIN THE RESISTANCE?
+    questionBody: '"We need someone at this counter. Nobody has to know. Say yes,
+      and when this is over, you and your family go free."'
+    acceptLabel: JOIN
+    declineLabel: REFUSE
+    acceptLine: Welcome, comrade. We'll be in touch. Now stamp me through, as if
+      nothing happened.
+    declineLine: A pity. Forget we ever talked, officer.
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
+  - traveler: {fileID: 11400000, guid: b741313280e1703408e2b9ad6f649e42, type: 2}
+    dayFrom: 7
+    dayTo: 7
+    slot: 1
+    condition: 7
+    flag: joined_resistance
     onAdmit: 1
     onDeny: 2
     onArrest: 2
     onAirlock: 5
-    greetingAfterHelped: You let me through when they wanted me dead. Now I need
-      one more favour.
-    greetingAfterBetrayed: You had me locked up. And still I'm here. Listen to me
-      anyway.
+    greetingAfterHelped: Officer. Thank you, truly. There is no resistance. There
+      never was. Only a list of names... and yours is on it now.
+    greetingAfterBetrayed: Officer. Thank you, truly. There is no resistance. There
+      never was. Only a list of names... and yours is on it now.
+    greetingAfterConfiscated: Officer. Thank you, truly. There is no resistance.
+      There never was. Only a list of names... and yours is on it now.
+    eventLines: []
+    consequences: []
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: AIRLOCKED
+    endingBody: 'You joined a resistance that never existed. The man with a hundred
+      faces worked for the Directorate, and the list he carried had your name on
+      it.
+
+
+      The outer door of Kestrel-9 opens at 07:42. Nobody at home is told
+      why the money stopped.'
+    endingWarning: SECURITY TO CUSTOMS. OFFICER, STEP AWAY FROM THE COUNTER.
+  - traveler: {fileID: 11400000, guid: 6517981b47dc4cf42bc6bd5795ee16b4, type: 2}
+    dayFrom: 7
+    dayTo: 7
+    slot: 0
+    condition: 8
+    flag: joined_resistance
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
     greetingAfterConfiscated: 
     eventLines: []
     consequences: []
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 

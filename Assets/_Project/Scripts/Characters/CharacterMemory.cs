@@ -28,6 +28,15 @@ namespace GameOff.Characters
         private readonly List<Record> _records = new List<Record>();
         private readonly List<PendingWanted> _wanted = new List<PendingWanted>();
         private readonly Dictionary<int, List<MarketEvent>> _events = new Dictionary<int, List<MarketEvent>>();
+        private readonly HashSet<string> _flags = new HashSet<string>();
+
+        /// <summary>P87: a choice the player made (e.g. joined the resistance).</summary>
+        public void SetFlag(string flag)
+        {
+            if (!string.IsNullOrWhiteSpace(flag)) _flags.Add(flag);
+        }
+
+        public bool HasFlag(string flag) => !string.IsNullOrWhiteSpace(flag) && _flags.Contains(flag);
 
         public IReadOnlyList<Record> Records => _records;
 
@@ -47,7 +56,7 @@ namespace GameOff.Characters
             return Outcome.None;
         }
 
-        public bool Meets(RecurringCharacter c, AppearanceCondition condition)
+        public bool Meets(RecurringCharacter c, AppearanceCondition condition, string flag = null)
         {
             if (!Alive(c)) return false; // the dead never come back
             var last = Last(c);
@@ -59,6 +68,8 @@ namespace GameOff.Characters
                 AppearanceCondition.LastBetrayed => last == Outcome.Betrayed,
                 AppearanceCondition.LastConfiscated => last == Outcome.Confiscated,
                 AppearanceCondition.LastWronged => last == Outcome.Betrayed || last == Outcome.Confiscated,
+                AppearanceCondition.FlagSet => Met(c) && HasFlag(flag),
+                AppearanceCondition.FlagNotSet => Met(c) && !HasFlag(flag),
                 _ => true,
             };
         }

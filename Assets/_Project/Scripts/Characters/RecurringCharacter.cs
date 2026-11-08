@@ -32,6 +32,10 @@ namespace GameOff.Characters
         LastConfiscated = 5,
         /// <summary>Last outcome was betrayed or confiscated (comes back for revenge).</summary>
         LastWronged = 6,
+        /// <summary>P87: met, alive, and the appearance's flag is set (e.g. joined the resistance).</summary>
+        FlagSet = 7,
+        /// <summary>P87: met, alive, and the appearance's flag is not set.</summary>
+        FlagNotSet = 8,
     }
 
     /// <summary>What an outcome sets in motion: a market event and/or a wanted entry on a later day.</summary>
@@ -71,6 +75,8 @@ namespace GameOff.Characters
         [Tooltip("Place in the queue, 1 = first. 0 = anywhere.")]
         [Min(0)] public int slot;
         public AppearanceCondition condition = AppearanceCondition.Always;
+        [Tooltip("P87: the flag FlagSet/FlagNotSet look at, and the flag the question sets when the player accepts.")]
+        public string flag;
 
         [Header("What each decision means")]
         public Outcome onAdmit = Outcome.Helped;
@@ -86,6 +92,23 @@ namespace GameOff.Characters
         public List<EventLine> eventLines = new List<EventLine>();
 
         public List<Consequence> consequences = new List<Consequence>();
+
+        [Header("A question at the counter (P87): accepting sets the flag")]
+        public string questionTitle;
+        [TextArea] public string questionBody;
+        public string acceptLabel = "YES";
+        public string declineLabel = "NO";
+        [TextArea] public string acceptLine;
+        [TextArea] public string declineLine;
+
+        [Header("The run ends at this encounter (P87)")]
+        public string endingTitle;
+        [TextArea] public string endingBody;
+        [Tooltip("Shown as a hint a moment before the end screen.")]
+        public string endingWarning;
+
+        public bool HasQuestion => !string.IsNullOrWhiteSpace(questionTitle);
+        public bool EndsRun => !string.IsNullOrWhiteSpace(endingTitle);
 
         public bool InWindow(int day) => day >= dayFrom && day <= Mathf.Max(dayFrom, dayTo);
 

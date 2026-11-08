@@ -29,7 +29,7 @@ namespace GameOff.Characters
                 for (int i = 0; i < c.Appearances.Count; i++)
                 {
                     var a = c.Appearances[i];
-                    if (a.traveler == null || !a.InWindow(day) || memory.Done(c, i) || !memory.Meets(c, a.condition)) continue;
+                    if (a.traveler == null || !a.InWindow(day) || memory.Done(c, i) || !memory.Meets(c, a.condition, a.flag)) continue;
                     int lastDay = Math.Max(a.dayFrom, a.dayTo);
                     int daysLeft = lastDay - day + 1;
                     if (daysLeft > 1 && random() >= 1f / daysLeft) break; // not today; the window goes on

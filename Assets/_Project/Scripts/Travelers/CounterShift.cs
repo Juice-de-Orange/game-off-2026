@@ -35,6 +35,8 @@ namespace GameOff.Travelers
         /// <summary>The traveler at the window, the decision taken, and how it was judged.</summary>
         public event Action<TravelerData, Verdict, Judgement> DecisionMade;
         public event Action<TravelerData> TravelerArrived;
+        /// <summary>The counter seat (P87: block it while a character asks a question).</summary>
+        public CounterStation Station => station;
         public event Action ShiftEnded;
         /// <summary>A new day's rules are in force (the pinboard changes its notes).</summary>
         public event Action DayBegun;

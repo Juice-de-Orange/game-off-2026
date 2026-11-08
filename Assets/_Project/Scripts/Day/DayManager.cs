@@ -69,6 +69,8 @@ namespace GameOff.Day
         /// <summary>The schedule entry of day n (1-based), e.g. tomorrow's market events for the barkeeper's rumour (P65).</summary>
         public DayEntry Entry(int day) => schedule.Get(day, _runSeed);
         public Phase CurrentPhase => _phase;
+        /// <summary>Dialogs and hints (P87: a character's question at the counter).</summary>
+        public DayFlowUI UI => ui;
 
         private void OnEnable()
         {

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Story_Shifter_6
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: CASS ODEN
+  species: Human
+  model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 1148448ec142bc741a130490e060e9bd, type: 2}
+  - {fileID: 11400000, guid: 8b110997edb8a9844aabf1ed32e00dc3, type: 2}
+  intendedVerdict: 0
+  intendedReason: 'The Shifter, day 6: papers clean (the question is the decision)'
+  trickIntended: 0
+  storyTag: P76 character, day 6
+  greeting: 'No games today, officer. There are people on this station who want what
+    you want: a fair wage, a way home, an end to all this.'
+  answers: []

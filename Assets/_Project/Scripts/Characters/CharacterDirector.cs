@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using GameOff.Day;
@@ -24,6 +25,10 @@ namespace GameOff.Characters
         [SerializeField] private List<RecurringCharacter> devCharacters = new List<RecurringCharacter>();
         [Tooltip("At most this many character encounters a day (docs/FIGUREN.md: 3).")]
         [SerializeField] private int maxPerDay = 3;
+        [Tooltip("P87: seconds after a character arrives before their question opens (time for the greeting).")]
+        [SerializeField] private float questionDelay = 4f;
+        [Tooltip("P87: seconds after a character arrives before the run ends at them (time for the reveal).")]
+        [SerializeField] private float endingDelay = 7f;
 
         private readonly Dictionary<TravelerData, CharacterPlanner.Planned> _today = new Dictionary<TravelerData, CharacterPlanner.Planned>();
 
@@ -45,6 +50,7 @@ namespace GameOff.Characters
             {
                 shift.PlanDay = Plan;
                 shift.DecisionMade += OnDecision;
+                shift.TravelerArrived += OnArrived;
             }
             if (presenter != null) presenter.GreetingFor = Greeting;
         }
@@ -55,6 +61,7 @@ namespace GameOff.Characters
             {
                 if (shift.PlanDay == Plan) shift.PlanDay = null;
                 shift.DecisionMade -= OnDecision;
+                shift.TravelerArrived -= OnArrived;
             }
             if (presenter != null && presenter.GreetingFor == Greeting) presenter.GreetingFor = null;
         }
@@ -97,6 +104,44 @@ namespace GameOff.Characters
                     Memory.ScheduleWanted(p.character, new WantedEntry(p.character.DisplayName, "", c.wantedOrder, c.wantedNote),
                         day + c.wantedInDays, c.wantedForDays);
             }
+        }
+
+        // ---------- P87: questions and endings at the counter ----------
+
+        private void OnArrived(TravelerData traveler)
+        {
+            if (traveler == null || !_today.TryGetValue(traveler, out var p)) return;
+            var a = p.character.Appearances[p.appearance];
+            if (a.EndsRun) StartCoroutine(EndRun(traveler, a));
+            else if (a.HasQuestion) StartCoroutine(Ask(traveler, a));
+        }
+
+        private IEnumerator Ask(TravelerData traveler, Appearance a)
+        {
+            yield return new WaitForSeconds(questionDelay);
+            if (shift.Current != traveler || dayManager == null || dayManager.UI == null) yield break; // already decided
+            var station = shift.Station;
+            if (station != null) station.SetInputBlocked(true);
+            void Answer(bool accepted)
+            {
+                if (station != null) station.SetInputBlocked(false);
+                if (accepted) Memory.SetFlag(a.flag);
+                Debug.Log($"[Characters] {traveler.DisplayName}: \"{a.questionTitle}\" → {(accepted ? "accepted" : "declined")}");
+                if (presenter != null) presenter.SayLine(accepted ? a.acceptLine : a.declineLine);
+            }
+            dayManager.UI.ShowDialog(a.questionTitle, a.questionBody, a.acceptLabel, () => Answer(true), null, () => Answer(false),
+                cancelLabel: a.declineLabel);
+        }
+
+        private IEnumerator EndRun(TravelerData traveler, Appearance a)
+        {
+            var station = shift.Station;
+            yield return new WaitForSeconds(endingDelay);
+            if (station != null) station.SetInputBlocked(true);
+            if (dayManager != null && dayManager.UI != null && !string.IsNullOrWhiteSpace(a.endingWarning)) dayManager.UI.ShowHint(a.endingWarning, 6f);
+            yield return new WaitForSeconds(3f);
+            Debug.Log($"[Characters] the run ends at {traveler.DisplayName}: {a.endingTitle}");
+            if (dayManager != null) dayManager.FinishRun(a.endingTitle, a.endingBody);
         }
 
         /// <summary>TravelerPresenter: the greeting of a character by the last outcome, plus a line about today's events.</summary>

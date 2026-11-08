@@ -1512,7 +1512,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Neuer Spieler kommt ohne Vorwissen durch Korrs Prüfung.
 
 ### P87 — Shifter: Schlüsselentscheidung und Ende „Airlocked“
-- Größe: S–M · Priorität: Muss (Vorschlag) · Status: in Arbeit (martin, 08.11.) · Zuständig: martin
+- Größe: S–M · Priorität: Muss (Vorschlag) · Status: fertig (martin, 08.11.) · Zuständig: martin
 - Zuschnitt (Martin, 08.11.): Bitte an **Tag 6**: Der Shifter fragt am Schalter, ob du **dem Widerstand beitrittst** (Frage mit JOIN/REFUSE).
   Beigetreten → an Tag 7 kommt er als Erster, enthüllt sich als Spion, Sicherheit kommt, Ende **AIRLOCKED** am Schalter. Abgelehnt → Tag 7 Wendung ohne Ende.
 - Braucht: P75, P76, P12 · Folgt auf: —
@@ -1520,6 +1520,16 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Schleuse (Ende „Airlocked“).
 - Enthalten: Tag und Inhalt der Bitte (offen in `docs/FIGUREN.md`), die Wendung an Tag 7, das Ende.
 - Abnahme: Mit Hilfe bei der Bitte endet Tag 7 mit „Airlocked“, sonst geht das Spiel weiter.
+- Ergebnis (martin, 08.11.):
+  - Figuren-System kann jetzt **Fragen am Schalter** (Auftritt: `questionTitle/Body`, JOIN/REFUSE-Knöpfe im Dialog, Antwortzeile in der
+    Sprechblase; Zustimmen setzt ein **Flag**) und **Enden am Schalter** (`endingTitle/Body/Warning` → Hinweis, dann `DayManager.FinishRun`).
+    Neue Bedingungen `FlagSet` / `FlagNotSet`.
+  - Shifter Tag 6 („CASS ODEN“, saubere Papiere): „JOIN THE RESISTANCE?“. JOIN → Tag 7 kommt er als Erster („TOMAS REY“), enthüllt sich,
+    „SECURITY TO CUSTOMS…“, Ende **AIRLOCKED**. REFUSE → Tag 7 Wendung ohne Ende („Es gibt keinen Widerstand … du hast bestanden.“).
+  - Nur wer ihn an Tag 3 **nicht** terminiert, sieht Tag 6/7 (der Steckbrief bleibt der Test der Behörde) – der richtige Weg lässt ihn
+    sterben, darum ändert sich am Economy Report nichts (alle ✓, unverändert).
+  - Geprüft: 147/147 Tests (neu `ShifterTests`), Validate Travelers ok; Play-Modus Tag 6 → Frage → JOIN → Tag 7 → Hinweis → AIRLOCKED, 0 Fehler.
+    Main/PF_DayFlow nicht neu gebaut (nur Daten + Skripte).
 
 ### P88 — Wegweiser zeigen zu den richtigen Räumen
 - Größe: S · Priorität: Soll · Status: in Arbeit (max, 07.11.) · Zuständig: max

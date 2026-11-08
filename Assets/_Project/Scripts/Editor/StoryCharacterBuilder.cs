@@ -28,6 +28,8 @@ namespace GameOff.EditorTools
         private const string TestTravelers = "Assets/_Project/Data/Travelers/Test/";
         public const int StoryDays = 12;
         private const string Valid = "2290-11-30";
+        /// <summary>P87: set when the player joins the Shifter's resistance on day 6.</summary>
+        public const string ResistanceFlag = "joined_resistance";
 
         public static string Date(int day) => $"2290-11-{4 + day:00}";
         private static string Yesterday(int day) => $"2290-11-{3 + day:00}";
@@ -237,8 +239,16 @@ namespace GameOff.EditorTools
                 shifter3 = Person("Shifter_3", "PELL MARROW", sp, Verdict.Airlock, "On the wanted list: terminate on sight", 3,
                     "Officer. You and I want the same thing, you know. A station that serves its people.",
                     IdCard(sp, "PELL MARROW", "ASKA-3", "AB-3377-77"), PermitDoc(sp, "PELL MARROW", "AB-3377-77", "TRANSIT", Valid, "ASKA-3 CONSULATE", "ASKA-3 > KESTREL-9"));
+                // P87: day 6 the big ask - join the resistance. Day 7 the twist: joined → he reveals himself and the run ends (AIRLOCKED).
+                var s6 = Person("Shifter_6", "CASS ODEN", sp, Verdict.Admit, "The Shifter, day 6: papers clean (the question is the decision)", 6,
+                    "No games today, officer. There are people on this station who want what you want: a fair wage, a way home, an end to all this.",
+                    IdCard(sp, "CASS ODEN", "TORVIK COLONY", "AB-6177-77"), PermitDoc(sp, "CASS ODEN", "AB-6177-77", "WORK", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
+                const string Reveal = "Officer. Thank you, truly. There is no resistance. There never was. Only a list of names... and yours is on it now.";
+                var s7joined = Person("Shifter_7_Joined", "TOMAS REY", sp, Verdict.Admit, "The Shifter, day 7: the reveal (the run ends before a decision)", 7,
+                    Reveal,
+                    IdCard(sp, "TOMAS REY", "VELL PRIME", "AB-7077-77"), PermitDoc(sp, "TOMAS REY", "AB-7077-77", "TRANSIT", Valid, "VELL PRIME CONSULATE", "VELL PRIME > KESTREL-9"));
                 var s4 = Person("Shifter_4", "TOMAS REY", sp, Verdict.Admit, "The Shifter, day 7: papers clean", 7,
-                    "Different face, same friend. Today I need to ask you something.",
+                    "You turned me down. Good instinct. There is no resistance, officer. Only the Directorate, and people like me who test people like you. You passed.",
                     IdCard(sp, "TOMAS REY", "VELL PRIME", "AB-7077-77"), PermitDoc(sp, "TOMAS REY", "AB-7077-77", "TRANSIT", Valid, "VELL PRIME CONSULATE", "VELL PRIME > KESTREL-9"));
                 chars.Add(Character("Shifter", "shifter", "THE SHIFTER", sp,
                     new Appearance { traveler = s1, dayFrom = 1, dayTo = 1, condition = AppearanceCondition.NeverMet },
@@ -249,9 +259,23 @@ namespace GameOff.EditorTools
                     new Appearance { traveler = shifter3, dayFrom = 3, dayTo = 3, condition = AppearanceCondition.Alive,
                         onAdmit = Outcome.Helped, onDeny = Outcome.Neutral, onArrest = Outcome.Neutral,
                         consequences = new List<Consequence> { new Consequence { when = Outcome.Helped, marketEvent = ev["SecurityLockdown"], eventInDays = 1 } } },
-                    new Appearance { traveler = s4, dayFrom = 7, dayTo = 7, condition = AppearanceCondition.Alive,
-                        greetingAfterHelped = "You let me through when they wanted me dead. Now I need one more favour.",
-                        greetingAfterBetrayed = "You had me locked up. And still I'm here. Listen to me anyway." }));
+                    new Appearance { traveler = s6, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.Alive,
+                        onAdmit = Outcome.Helped, onDeny = Outcome.Neutral, onArrest = Outcome.Betrayed,
+                        flag = ResistanceFlag,
+                        questionTitle = "JOIN THE RESISTANCE?",
+                        questionBody = "\"We need someone at this counter. Nobody has to know. Say yes, and when this is over, you and your family go free.\"",
+                        acceptLabel = "JOIN", declineLabel = "REFUSE",
+                        acceptLine = "Welcome, comrade. We'll be in touch. Now stamp me through, as if nothing happened.",
+                        declineLine = "A pity. Forget we ever talked, officer." },
+                    // joined: first in the queue, the reveal, the end (no decision at the counter)
+                    new Appearance { traveler = s7joined, dayFrom = 7, dayTo = 7, slot = 1, condition = AppearanceCondition.FlagSet, flag = ResistanceFlag,
+                        greetingAfterHelped = Reveal, greetingAfterBetrayed = Reveal, greetingAfterConfiscated = Reveal,
+                        endingTitle = "AIRLOCKED",
+                        endingBody = "You joined a resistance that never existed. The man with a hundred faces worked for the Directorate, " +
+                                     "and the list he carried had your name on it.\n\nThe outer door of Kestrel-9 opens at 07:42. " +
+                                     "Nobody at home is told why the money stopped.",
+                        endingWarning = "SECURITY TO CUSTOMS. OFFICER, STEP AWAY FROM THE COUNTER." },
+                    new Appearance { traveler = s4, dayFrom = 7, dayTo = 7, condition = AppearanceCondition.FlagNotSet, flag = ResistanceFlag }));
             }
 
             // 4 Mira Talsk (Quobb): a mother on the way to her children – the player's mirror. Day 2 her permit is one day late.
