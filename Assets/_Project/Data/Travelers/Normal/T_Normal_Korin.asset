@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Korin
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: KORIN DAHL
+  species: Sorvak
+  model: {fileID: 2456880688624481046, guid: 1e6468b746c5f0e47b03509118fc1380, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 0fd4282b42fecdb469894cf5edbecccd, type: 2}
+  - {fileID: 11400000, guid: e9d92cc07b498984dbf9d8e6747b2959, type: 2}
+  intendedVerdict: 3
+  intendedReason: 'Route via quarantined KETRA STATION: airlock is mandatory'
+  trickIntended: 0
+  storyTag: P15, day 12
+  greeting: We do not fall ill. Your rule is for weaker species.
+  answers:
+  - key: route
+    line: Ketra. A stop like any other.
+  - key: purpose
+    line: Contract work.

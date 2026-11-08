@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Odin
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: ODIN FERRO
+  species: Human
+  model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
+  documents:
+  - {fileID: 11400000, guid: eec74f346e4c35e4592a9e6c69665859, type: 2}
+  - {fileID: 11400000, guid: 43c85b0803e77c847a9b3bbec837a491, type: 2}
+  intendedVerdict: 3
+  intendedReason: 'Route via quarantined KETRA STATION: airlock is mandatory'
+  trickIntended: 0
+  storyTag: P15, day 7
+  greeting: Ten hours in that shuttle. I feel fine, I promise.
+  answers:
+  - key: route
+    line: Ketra was just a stop. I never left the seat.
+  - key: purpose
+    line: Work. They said it couldn't wait.

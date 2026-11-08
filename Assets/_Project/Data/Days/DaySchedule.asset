@@ -85,9 +85,13 @@ MonoBehaviour:
       note: 
   - rules: {fileID: 11400000, guid: 9b0c3536f2c09a340b819fa261d5df06, type: 2}
     letterTitle: A letter from home
-    letter: '(Placeholder: the letter for day 5 comes with P15.)'
-    letterIfTrouble: 
-    newToday: 
+    letter: "Dad,\nA man from the housing office wrote down how many of us live here.
+      Mom told him not to worry about it.\nPip learned to whistle. It is all Pip
+      does now.\n\u2014 Lena"
+    letterIfTrouble: "Dad,\nThe clinic has a list now and we are not near the top
+      of it. Mom says the list is how they say no politely.\nDid the last parcel
+      go out?\n\u2014 Lena"
+    newToday: 'New today: spice is forbidden. ORVAN stays closed.'
     marketEvents: []
     barWish:
       tag: {fileID: 11400000, guid: df73a66dd95c513448baced3fe575726, type: 2}
@@ -99,9 +103,12 @@ MonoBehaviour:
       note: 
   - rules: {fileID: 11400000, guid: 61d33bbba5a59064fafffd79e45018a2, type: 2}
     letterTitle: A letter from home
-    letter: '(Placeholder: the letter for day 6 comes with P15.)'
-    letterIfTrouble: 
-    newToday: 
+    letter: "Dad,\nThey showed the station on the news. Mom turned it off, then turned
+      it back on to look for you.\nPip says hello. Well, Pip whistled.\n\u2014 Lena"
+    letterIfTrouble: "Dad,\nWe traded the good chairs for what we needed. We sit
+      on crates now, it is fine.\nIf you can send anything this week, please do.\n\u2014
+      Lena"
+    newToday: 'New today: Xirrik travelers need a cargo manifest. No stimulants.'
     marketEvents: []
     barWish:
       tag: {fileID: 11400000, guid: 9e56bc2f97936a943a97d66ea4954de2, type: 2}
@@ -113,9 +120,13 @@ MonoBehaviour:
       note: 
   - rules: {fileID: 11400000, guid: 2099058142868124894c082d1b45bc78, type: 2}
     letterTitle: A letter from home
-    letter: '(Placeholder: the letter for day 7 comes with P15.)'
-    letterIfTrouble: 
-    newToday: 
+    letter: "Dad,\nI counted the money in the jar twice and it came out different,
+      so I counted it a third time.\nMom says you will have enough for the ticket
+      soon. Will you?\n\u2014 Lena"
+    letterIfTrouble: "Dad,\nMom sold her coat. She says it was too warm anyway.\nPlease
+      come home soon. I am not asking for anything else.\n\u2014 Lena"
+    newToday: 'New today: Quobb travelers need a cargo manifest. Quarantine at KETRA
+      STATION.'
     marketEvents: []
     barWish:
       tag: {fileID: 11400000, guid: b383f9fa0014ed44c9c87250378ff26d, type: 2}
@@ -127,9 +138,14 @@ MonoBehaviour:
       note: 
   - rules: {fileID: 11400000, guid: ed1738225c8198049bf1c7ccf109b4ed, type: 2}
     letterTitle: A letter from home
-    letter: '(Placeholder: the letter for day 8 comes with P15.)'
-    letterIfTrouble: 
-    newToday: 
+    letter: "Dad,\nThere was a fight at the water line. Nobody we know. Mom keeps
+      us in after dark now.\nPip drew the station again, with you in the window.\n\u2014
+      Lena"
+    letterIfTrouble: "Dad,\nThere was a fight at the water line and the shops are
+      nearly empty. Everything takes longer now and nothing gets better.\nWrite to
+      us, even a short one.\n\u2014 Lena"
+    newToday: 'New today: no entry from HALDER, fusion cells are forbidden, Sorvak
+      travelers need a cargo manifest.'
     marketEvents: []
     barWish:
       tag: {fileID: 11400000, guid: df73a66dd95c513448baced3fe575726, type: 2}
@@ -141,9 +157,12 @@ MonoBehaviour:
       note: 
   - rules: {fileID: 11400000, guid: 9e5c136bff2f39b419d6a5bf39482907, type: 2}
     letterTitle: A letter from home
-    letter: '(Placeholder: the letter for day 9 comes with P15.)'
-    letterIfTrouble: 
-    newToday: 
+    letter: "Dad,\nThey say inspectors are at your station. Mom says that means you
+      must be good at your job or in trouble.\nI said both.\n\u2014 Lena"
+    letterIfTrouble: "Dad,\nThe inspectors were on the news and all I could think
+      about was the rent. Mom doesn't sleep. I do the counting now.\nPlease don't
+      lose this job.\n\u2014 Lena"
+    newToday: 'Inspection week: every rule applies at once. Read the bulletin.'
     marketEvents:
     - {fileID: 11400000, guid: 5abb6d2dd34a7184e83d89c7b9389401, type: 2}
     barWish:
@@ -156,9 +175,11 @@ MonoBehaviour:
       note: 
   - rules: {fileID: 11400000, guid: 1b8831e4c33bca243bddc6a5cedf255b, type: 2}
     letterTitle: A letter from home
-    letter: '(Placeholder: the letter for day 10 comes with P15.)'
-    letterIfTrouble: 
-    newToday: 
+    letter: "Dad,\nI am taller than Mom now. She measured us on the door frame and
+      then went quiet.\nThere is a mark there for you too, from before.\n\u2014 Lena"
+    letterIfTrouble: "Dad,\nI stopped going to school so I can queue for things.
+      Don't be angry. Somebody has to.\nHow many more days?\n\u2014 Lena"
+    newToday: 'New today: weapons are forbidden. Xirrik travelers need a cargo manifest.'
     marketEvents: []
     barWish:
       tag: {fileID: 11400000, guid: 9e56bc2f97936a943a97d66ea4954de2, type: 2}
@@ -170,9 +191,12 @@ MonoBehaviour:
       note: 
   - rules: {fileID: 11400000, guid: f5668e3901dea3840b7868abff493fcb, type: 2}
     letterTitle: A letter from home
-    letter: '(Placeholder: the letter for day 11 comes with P15.)'
-    letterIfTrouble: 
-    newToday: 
+    letter: "Dad,\nThe heater stopped making the funny noise. It also stopped working,
+      but Mom fixed it with a spoon.\nWe saved you the good bowl.\n\u2014 Lena"
+    letterIfTrouble: "Dad,\nIt is very quiet here now. Mom says we should not count
+      the days, so I count them where she can't see.\nPlease be careful up there.\n\u2014
+      Lena"
+    newToday: 'New today: quarantine at MERIDIAN GATE. ORVAN stays closed.'
     marketEvents: []
     barWish:
       tag: {fileID: 11400000, guid: df73a66dd95c513448baced3fe575726, type: 2}
@@ -184,9 +208,12 @@ MonoBehaviour:
       note: 
   - rules: {fileID: 11400000, guid: e925253f1cab37941b49914be448475e, type: 2}
     letterTitle: A letter from home
-    letter: '(Placeholder: the letter for day 12 comes with P15.)'
-    letterIfTrouble: 
-    newToday: 
+    letter: "Dad,\nMom says the shuttle home leaves whenever you are ready. I told
+      Pip it could be any day now.\nPip stopped whistling and sat by the window.\n\u2014
+      Lena"
+    letterIfTrouble: "Dad,\nI don't know how to write this one. Please just come
+      home.\n\u2014 Lena"
+    newToday: 'New today: human travelers need a cargo manifest. No cash shipments.'
     marketEvents: []
     barWish:
       tag: {fileID: 0}

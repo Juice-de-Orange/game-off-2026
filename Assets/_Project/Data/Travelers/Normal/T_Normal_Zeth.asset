@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Zeth
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: ZETH ORRIK
+  species: Xirrik
+  model: {fileID: 8372028664995244572, guid: 6fc5658331bc5e8408dc013c0086e1be, type: 3}
+  documents:
+  - {fileID: 11400000, guid: a225efe7976a63744adf782be6442d1a, type: 2}
+  - {fileID: 11400000, guid: 695ffc8f853d98d49b5460be491e5a81, type: 2}
+  intendedVerdict: 1
+  intendedReason: Entry permit expired yesterday
+  trickIntended: 0
+  storyTag: P15, day 5
+  greeting: Kss. The office was closed. Everyone knows it was closed.
+  answers:
+  - key: expires
+    line: Kss. Dates. The office was closed.
+  - key: route
+    line: Lumen Reach, as always.

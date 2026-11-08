@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Yuna
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: YUNA PRESS
+  species: Vellani
+  model: {fileID: 7545026988212257677, guid: 5d6ec526c1583de48a952ef7a4217cbc, type: 3}
+  documents:
+  - {fileID: 11400000, guid: e741222fd85db9644bc7e06143730ecd, type: 2}
+  - {fileID: 11400000, guid: 190d58c31b6ab5a4c98b706dbd1a5185, type: 2}
+  - {fileID: 11400000, guid: 137769c01fce843409a8ada4b62d889f, type: 2}
+  intendedVerdict: 2
+  intendedReason: Declares fusion cells, forbidden today
+  trickIntended: 0
+  storyTag: P15, day 8
+  greeting: The strikers need power too, officer. Somebody has to bring it.
+  answers:
+  - key: cargo
+    line: Cells. For the families in the lower docks.
+  - key: name
+    line: Yuna Press. You'll hear it again.

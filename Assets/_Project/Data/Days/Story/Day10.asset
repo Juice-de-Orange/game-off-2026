@@ -14,31 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.DayRules
   date: 2290-11-14
   rules:
-  - rid: 1231853440248840208
-  - rid: 1231853440248840209
-  - rid: 1231853440248840210
+  - rid: 1231853443302031369
+  - rid: 1231853443302031370
+  - rid: 1231853443302031371
   wanted:
-  - name: KAEL DROSS
-    id: DX-0013-44
+  - name: GRAL OTHEN
+    id: GO-2810-44
     order: 0
-    note: Armed robbery, Aska-3
+    note: Armed assault, Halder
   travelers:
-  - {fileID: 11400000, guid: 0d582a4922a849542b77c348599c062d, type: 2}
-  - {fileID: 11400000, guid: 52e2f491a27e71c40b5f672a36f72e43, type: 2}
-  - {fileID: 11400000, guid: 0e176fa670824dc429cc2bc43f4adac3, type: 2}
-  - {fileID: 11400000, guid: 18d5a6f21e28d294bbe1e979760374b0, type: 2}
+  - {fileID: 11400000, guid: ff379da14af57664ca7ae23c794942c7, type: 2}
+  - {fileID: 11400000, guid: 974957139be4e7f428e55b230b0ca4ff, type: 2}
+  - {fileID: 11400000, guid: f1f49aad903fa0542bd4081aebe1b071, type: 2}
+  - {fileID: 11400000, guid: 8b747b998a12c0e4fbed6e8375836848, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 1231853440248840208
-      type: {class: BannedOriginRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
-      data:
-        origin: ORVAN
-    - rid: 1231853440248840209
+    - rid: 1231853443302031369
       type: {class: ForbiddenGoodsRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
-        keyword: STIMULANT
-    - rid: 1231853440248840210
-      type: {class: QuarantineRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
+        keyword: PISTOL
+    - rid: 1231853443302031370
+      type: {class: ForbiddenGoodsRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
-        station: KETRA STATION
+        keyword: WEAPON
+    - rid: 1231853443302031371
+      type: {class: RequireDocumentRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
+      data:
+        document: 2
+        onlyForSpecies: Xirrik

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Hasz
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: HASZ URR
+  species: Sorvak
+  model: {fileID: 2456880688624481046, guid: 1e6468b746c5f0e47b03509118fc1380, type: 3}
+  documents:
+  - {fileID: 11400000, guid: dda33c0e350e8244c84a5afd6ca361f9, type: 2}
+  - {fileID: 11400000, guid: 9bb03c82ecc8d8b449924d2ea650ce10, type: 2}
+  intendedVerdict: 1
+  intendedReason: Origin ORVAN is banned
+  trickIntended: 0
+  storyTag: P15, day 9
+  greeting: Orvan is my birth clan. I have never set foot there.
+  answers:
+  - key: origin
+    line: Clan record. Nothing more.
+  - key: purpose
+    line: Work. As ordered.

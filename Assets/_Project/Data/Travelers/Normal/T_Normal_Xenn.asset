@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Xenn
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: XENN IMRA
+  species: Xirrik
+  model: {fileID: 8372028664995244572, guid: 6fc5658331bc5e8408dc013c0086e1be, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 7eb9af2e14fccf64286c1646ce8c6ef8, type: 2}
+  - {fileID: 11400000, guid: 225a25a68e9ab2e47a4df868e8ff5a75, type: 2}
+  intendedVerdict: 1
+  intendedReason: Name on the entry permit doesn't match the ID card
+  trickIntended: 0
+  storyTag: P15, day 12
+  greeting: Kss. Your letters are difficult. It is nearly the same.
+  answers:
+  - key: name
+    line: Kss. Imra, Imrah. A sound is a sound.
+  - key: purpose
+    line: Kss. To trade, and to leave.

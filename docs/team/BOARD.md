@@ -62,7 +62,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
-| max | P15 Etappe 2 (Tage 5–12) | `Scripts/Editor/StoryDayContent.cs`, `Data/Days/Story/Day05–12`, `Data/Days/DaySchedule.asset` | 08.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -93,6 +92,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P15 Inhalte: alle 12 Story-Tage mit normalen Reisenden, Regeln und Briefen (max, 08.11.; Anspielen steht aus)
 - [x] P92 Diner außer Betrieb, P93 Barkeeper sagt seinen Wunsch, P96 Händler atmen (max, 08.11.)
 - [x] P86 Korr-Tutorial an Tag 1, Korr steht fest vorn (max, 08.11.)
 - [x] P89 Schaltertisch: Papiere nebeneinander lesen, Lade und Knöpfe richtig herum, Beschriftung ARREST/AIRLOCK (max, 08.11.)

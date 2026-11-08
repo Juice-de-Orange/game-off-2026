@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Gral
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: GRAL OTHEN
+  species: Human
+  model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 87002ac138f21a74abf570c711a40f25, type: 2}
+  - {fileID: 11400000, guid: 6479d8bcac95d9a4d95471240f26f997, type: 2}
+  intendedVerdict: 2
+  intendedReason: On the wanted list (arrest)
+  trickIntended: 0
+  storyTag: P15, day 10
+  greeting: Let's not make this hard for either of us.
+  answers:
+  - key: name
+    line: You read it fine. Move on.
+  - key: purpose
+    line: None of yours.

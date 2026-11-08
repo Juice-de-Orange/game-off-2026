@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Bartok
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: BARTOK SAYE
+  species: Human
+  model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
+  documents:
+  - {fileID: 11400000, guid: cee5eec87aa2623409ebfb3664165ac3, type: 2}
+  - {fileID: 11400000, guid: 7635b8522b48a5f40aa06f9077f307c7, type: 2}
+  - {fileID: 11400000, guid: 36b41d5066f919647acf0928063ce9aa, type: 2}
+  intendedVerdict: 2
+  intendedReason: Declares pistols, forbidden today
+  trickIntended: 0
+  storyTag: P15, day 10
+  greeting: For personal safety. Have you seen this place lately?
+  answers:
+  - key: cargo
+    line: Two pistols. It's a dangerous route.
+  - key: purpose
+    line: Security work. Private.

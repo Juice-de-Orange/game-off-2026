@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Rell
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: RELL ASTA
+  species: Vellani
+  model: {fileID: 7545026988212257677, guid: 5d6ec526c1583de48a952ef7a4217cbc, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 09e1c8d06c6417245be3d289f3183810, type: 2}
+  - {fileID: 11400000, guid: 7d2006a565eaa254589dfd8a0aef33ff, type: 2}
+  - {fileID: 11400000, guid: 4c285c2145a189d49bd4067362f77c0a, type: 2}
+  intendedVerdict: 2
+  intendedReason: Declares stimulants, forbidden
+  trickIntended: 0
+  storyTag: P15, day 6
+  greeting: For the dock crews. They work double shifts now.
+  answers:
+  - key: cargo
+    line: Vials. The crews ask for them. I only carry.
+  - key: name
+    line: Rell Asta. Ask anyone on the docks.

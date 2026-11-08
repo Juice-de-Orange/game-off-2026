@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Irin
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: IRIN CALDE
+  species: Human
+  model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 94a7b6d3cec822544b32cf96876805dc, type: 2}
+  - {fileID: 11400000, guid: ff91f6a7ddc16d04b9e38a5798d21440, type: 2}
+  intendedVerdict: 1
+  intendedReason: Origin ORVAN is banned
+  trickIntended: 0
+  storyTag: P15, day 5
+  greeting: I left Orvan years ago. It only says so on the card.
+  answers:
+  - key: origin
+    line: A place on a card. I haven't been back in years.
+  - key: purpose
+    line: Work. Any work.

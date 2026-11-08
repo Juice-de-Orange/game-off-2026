@@ -321,13 +321,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Eine Schicht läuft mit sichtbar ankommenden Reisenden.
 
 ### P15 — Inhalte: Fälle für 3 Tage
-- Größe: M · Priorität: Muss · Status: in Arbeit (max, 08.11.; Etappe 1: Tage 1–4) · Zuständig: max (Call 07.11.)
+- Größe: M · Priorität: Muss · Status: fertig (max, 08.11.; Anspielen durch Max steht aus) · Zuständig: max (Call 07.11.)
 - Hinweis (Call 07.11.): Umfang jetzt **12 Story-Tage** (von hinten kürzbar), normale Reisende neben den Figuren aus P76 (max. 3 Begegnungen/Tag, mit Martin pro Tag abgleichen). Ein fester Reisender wird Nells Sohn, falls der Spieler niemanden verhaftet hat.
 - Braucht: P07
 - Ziel: Alle Reisenden, Regeln, Briefe und Texte für 3 Tage (~15 Fälle, Englisch).
 - Regel (Max, 06.11., P58): Reisende mit gefälschtem Siegel erst an Tagen, an denen die UV-Lampe verfügbar ist; der Validator soll das prüfen.
 - Abnahme: Kompletter Durchlauf 10–15 Minuten ohne Platzhaltertexte.
 - Stand Etappe 1 (max, 08.11.): Tage 1–4 gefüllt (`Scripts/Editor/StoryDayContent.cs`, Reisende in `Data/Travelers/Normal/`; `Build Story Characters` baut sie). Regeln wachsen von Tag zu Tag, Tag 1 nur ORVAN. Briefe mit zweiter Fassung bei kranker Familie. Geprüft: Validate Travelers ok, 150/150 EditMode-Tests, Economy Report unverändert (alle ✓), WebGL Tag 1 gestartet. **Offen:** Max spielt 1–4 an; Tage 5–12 (Etappe 2, dort auch Kael Dross von der Liste nehmen); Figuren an Tag 1–4 haben noch keine eigenen Feld-Antworten (Martin baut die Figuren).
+- Stand Etappe 2 (max, 08.11.): Tage 5–12 gefüllt, 37 weitere Reisende, alle Briefe in zwei Fassungen, Regeln je Tag; Tag 9 Inspection week mit allen Regeln. Fahndungen sind jetzt je Tag eigene (Kael Dross nur Tag 3). Geprüft: Validate Travelers, 155/155 Tests, Economy Report unverändert (alle ✓), je Tag 6 Begegnungen auf dem vorgesehenen Pfad. Nicht enthalten: gefälschte Siegel (P16/P62 fehlen), eigene Figuren-Antworten (P98). Die Platzhalter `Filler_*` in `StoryCharacterBuilder` sind jetzt unbenutzt.
 - Ergänzung (martin, 06.11.): **Briefe reagieren auf den Familienzustand**, statt ihn vorzugeben (der Platzhalter von Tag 3 sagt fest
   „Pip is sick now“, auch wenn Pip gesund ist). Je Tag Brieftext pro Zustand oder Bausteine je Person; Haken ist
   `DayManager.LetterAddendum` bzw. `PlayerEconomy.FamilyReport()` (heute eine Zeile pro Person unter dem Brief).

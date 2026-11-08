@@ -8,7 +8,7 @@ namespace GameOff.Tests
     /// <summary>P15: the authored story days are free of placeholders, and the morning letter follows the family's state.</summary>
     public class StoryDayContentTests
     {
-        private const int AuthoredDays = 4;
+        private const int AuthoredDays = 12;
 
         private static DaySchedule Schedule()
         {

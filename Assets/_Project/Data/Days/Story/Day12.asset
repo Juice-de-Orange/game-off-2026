@@ -14,32 +14,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.DayRules
   date: 2290-11-16
   rules:
-  - rid: 1231853440248840205
-  - rid: 1231853440248840206
-  - rid: 1231853440248840207
-  wanted:
-  - name: KAEL DROSS
-    id: DX-0013-44
-    order: 0
-    note: Armed robbery, Aska-3
+  - rid: 1231853443302031378
+  - rid: 1231853443302031379
+  - rid: 1231853443302031380
+  - rid: 1231853443302031381
+  - rid: 1231853443302031382
+  wanted: []
   travelers:
-  - {fileID: 11400000, guid: 0d582a4922a849542b77c348599c062d, type: 2}
-  - {fileID: 11400000, guid: 52e2f491a27e71c40b5f672a36f72e43, type: 2}
-  - {fileID: 11400000, guid: 0e176fa670824dc429cc2bc43f4adac3, type: 2}
-  - {fileID: 11400000, guid: 18d5a6f21e28d294bbe1e979760374b0, type: 2}
-  - {fileID: 11400000, guid: 2edb188b86bd57c46bebf8cad80ab846, type: 2}
+  - {fileID: 11400000, guid: 20891c8c74385f94caf37401a39ca12f, type: 2}
+  - {fileID: 11400000, guid: 027e2dca16aba354693c7110ef327215, type: 2}
+  - {fileID: 11400000, guid: bbb54251ffe55d94f9db13790b8560ec, type: 2}
+  - {fileID: 11400000, guid: aa9f9a14755ccda4c9840a95b19089d4, type: 2}
+  - {fileID: 11400000, guid: fde2d341d298e934d9b13ea3dcfdd443, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 1231853440248840205
+    - rid: 1231853443302031378
       type: {class: BannedOriginRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         origin: ORVAN
-    - rid: 1231853440248840206
+    - rid: 1231853443302031379
       type: {class: ForbiddenGoodsRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         keyword: STIMULANT
-    - rid: 1231853440248840207
+    - rid: 1231853443302031380
+      type: {class: ForbiddenGoodsRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
+      data:
+        keyword: CASH
+    - rid: 1231853443302031381
       type: {class: QuarantineRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         station: KETRA STATION
+    - rid: 1231853443302031382
+      type: {class: RequireDocumentRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
+      data:
+        document: 2
+        onlyForSpecies: Human

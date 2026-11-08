@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Sirr
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: SIRR TAAL
+  species: Xirrik
+  model: {fileID: 8372028664995244572, guid: 6fc5658331bc5e8408dc013c0086e1be, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 78ff1210aca3d6f43929135eaa07ecbb, type: 2}
+  - {fileID: 11400000, guid: 78b1964315ba8fe4aba664d56aca0a1a, type: 2}
+  intendedVerdict: 0
+  intendedReason: Papers in order
+  trickIntended: 0
+  storyTag: P15, day 11
+  greeting: Kss. You look tired, officer. Your kind sleeps, yes?
+  answers:
+  - key: purpose
+    line: Kss. A small errand.
+  - key: origin
+    line: Kss. Lumen Reach. Warm there.

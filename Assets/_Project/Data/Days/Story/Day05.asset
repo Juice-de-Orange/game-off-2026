@@ -14,32 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.DayRules
   date: 2290-11-09
   rules:
-  - rid: 1231853440248840223
-  - rid: 1231853440248840224
-  - rid: 1231853440248840225
+  - rid: 1231853443302031376
+  - rid: 1231853443302031377
   wanted:
-  - name: KAEL DROSS
-    id: DX-0013-44
+  - name: NESTOR KAI
+    id: NK-4102-77
     order: 0
-    note: Armed robbery, Aska-3
+    note: Fraud, Lumen Reach
   travelers:
-  - {fileID: 11400000, guid: 0d582a4922a849542b77c348599c062d, type: 2}
-  - {fileID: 11400000, guid: 52e2f491a27e71c40b5f672a36f72e43, type: 2}
-  - {fileID: 11400000, guid: 0e176fa670824dc429cc2bc43f4adac3, type: 2}
-  - {fileID: 11400000, guid: 18d5a6f21e28d294bbe1e979760374b0, type: 2}
-  - {fileID: 11400000, guid: 2edb188b86bd57c46bebf8cad80ab846, type: 2}
+  - {fileID: 11400000, guid: d3f643abf99728040bb2108b8c1a31a8, type: 2}
+  - {fileID: 11400000, guid: 4aef2dceb28c0ca4f9aaa9321beba592, type: 2}
+  - {fileID: 11400000, guid: c3317e642886b0d4397f6274ec906625, type: 2}
+  - {fileID: 11400000, guid: 8e392dee86028aa44830edc189b6150a, type: 2}
+  - {fileID: 11400000, guid: 9af5f229d15a7854ea5b6608613f2911, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 1231853440248840223
+    - rid: 1231853443302031376
       type: {class: BannedOriginRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         origin: ORVAN
-    - rid: 1231853440248840224
+    - rid: 1231853443302031377
       type: {class: ForbiddenGoodsRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
-        keyword: STIMULANT
-    - rid: 1231853440248840225
-      type: {class: QuarantineRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
-      data:
-        station: KETRA STATION
+        keyword: SPICE

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Normal_Wren
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: WREN ALDER
+  species: Human
+  model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 1c6f81cb264791a43a2a610807476942, type: 2}
+  - {fileID: 11400000, guid: ad5aadb934024ce46ae9caca123270da, type: 2}
+  - {fileID: 11400000, guid: a222b700a4f0c924e8108b0eaef9de61, type: 2}
+  intendedVerdict: 0
+  intendedReason: Papers in order, manifest present
+  trickIntended: 0
+  storyTag: P15, day 12
+  greeting: One more delivery and I retire. I've said that for ten years.
+  answers:
+  - key: cargo
+    line: Rations. Always rations.
+  - key: purpose
+    line: Business, one last time.
