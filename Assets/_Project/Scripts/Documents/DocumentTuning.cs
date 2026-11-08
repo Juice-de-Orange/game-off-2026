@@ -12,6 +12,12 @@ namespace GameOff.Documents
         public float dragThresholdPixels = 6f;
         [Tooltip("Part of the screen height a document fills when held up for reading.")]
         public float inspectScreenFill = 0.8f;
+        [Tooltip("Part of the screen width all papers held up side by side share (P89).")]
+        public float readingWidthFill = 0.94f;
+        [Tooltip("How many papers and notes can be held up side by side (P89).")]
+        public int maxPapersRead = 4;
+        [Tooltip("Places in the reading row, even with fewer papers held: a single paper must leave the rest of the desk clickable (P89).")]
+        public int minReadingSlots = 3;
         [Tooltip("Duration of picking up / laying down a document for reading (s).")]
         public float inspectDuration = 0.2f;
         [Tooltip("How far the drawer slides toward the traveler (m).")]

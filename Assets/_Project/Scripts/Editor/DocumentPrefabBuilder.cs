@@ -276,6 +276,45 @@ namespace GameOff.EditorTools
         }
 
         /// <summary>
+        /// P89: both buttons are turned round (the model's front with its tab faces the officer, the cover's hinge the window),
+        /// the airlock cover opens upward over that hinge, and both buttons get a label on the desk in front of them.
+        /// </summary>
+        private static void WireButtons(GameObject root, Transform controls, TMP_FontAsset font)
+        {
+            foreach (var clickable in root.GetComponentsInChildren<CounterClickable>(true))
+            {
+                if (clickable.Action != CounterAction.Airlock && clickable.Action != CounterAction.Arrest) continue;
+                clickable.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+                if (clickable.Action != CounterAction.Airlock) continue;
+                var so = new SerializedObject(clickable);
+                so.FindProperty("coverOpenAngle").floatValue = -110f;
+                so.ApplyModifiedPropertiesWithoutUndo();
+            }
+            DeskLabel(controls, "Label_Arrest", "ARREST", new Vector3(0.8f, 0.002f, -0.55f), new Color(0.05f, 0.05f, 0.07f), font);
+            DeskLabel(controls, "Label_Airlock", "AIRLOCK", new Vector3(0.8f, 0.002f, -0.83f), new Color(0.72f, 0.04f, 0.03f), font);
+        }
+
+        private static void DeskLabel(Transform controls, string name, string text, Vector3 position, Color color, TMP_FontAsset font)
+        {
+            var label = controls.Find(name);
+            if (label == null)
+            {
+                label = new GameObject(name).AddComponent<TextMeshPro>().transform;
+                label.SetParent(controls, false);
+            }
+            label.localPosition = position;
+            label.localRotation = Quaternion.LookRotation(Vector3.down, Vector3.right); // flat on the desk, its top away from the officer
+            var tmp = label.GetComponent<TextMeshPro>();
+            tmp.rectTransform.sizeDelta = new Vector2(0.3f, 0.06f);
+            tmp.font = font;
+            tmp.text = text;
+            tmp.color = color;
+            tmp.fontStyle = FontStyles.Bold;
+            tmp.fontSize = 0.042f / _unitsPerFontSize;
+            tmp.alignment = TextAlignmentOptions.Center;
+        }
+
+        /// <summary>
         /// PF_CounterStation: the drawer (moved here from the station builder, same spot), the paper spots on the desk and the
         /// DocumentDesk with its references. Removes the P38 placeholder sheet.
         /// </summary>
@@ -298,14 +337,15 @@ namespace GameOff.EditorTools
                     drawer.SetParent(controls, false);
                     model.AddComponent<BoxCollider>();
                 }
-                // Same place as the old builder prop: world (-0.3, 0.85, -9), yaw 90 → slides along +X toward the traveler
+                // Same place as the old builder prop: world (-0.3, 0.85, -9). No yaw: the front with "DOCUMENTS" (model -X) faces the officer,
+                // the drawer slides along its local +X toward the traveler (DocumentDesk.MoveDrawer).
                 drawer.localPosition = new Vector3(1.7f, 0f, 0f);
-                drawer.localRotation = Quaternion.Euler(0f, 90f, 0f);
+                drawer.localRotation = Quaternion.identity;
                 var tray = drawer.Find("Tray");
                 if (tray == null) tray = new GameObject("Tray").transform;
                 tray.SetParent(drawer, false);
                 tray.localPosition = new Vector3(0f, 0.03f, 0f);
-                tray.localRotation = Quaternion.identity;
+                tray.localRotation = Quaternion.Euler(0f, 90f, 0f); // papers lie with their top toward the traveler
 
                 var spotsRoot = controls.Find("PaperSpots");
                 if (spotsRoot == null) spotsRoot = new GameObject("PaperSpots").transform;
@@ -330,6 +370,8 @@ namespace GameOff.EditorTools
                 area.SetParent(controls, false);
                 area.localPosition = new Vector3(1.3f, 0.001f, 0f);
                 area.localRotation = Quaternion.identity;
+
+                WireButtons(root, controls, font);
 
                 // Citation printer on the desk, slot toward the officer (yaw 90: model front -Z → world -X)
                 var printer = controls.Find("Printer");
@@ -407,7 +449,7 @@ namespace GameOff.EditorTools
                 var hintT = root.transform.Find("SeatedHUD/Hint");
                 if (hintT == null) throw new System.InvalidOperationException("PF_CounterStation has no SeatedHUD/Hint");
                 var hint = hintT.GetComponent<TextMeshProUGUI>();
-                hint.text = "Stamp, then hand all papers back through the drawer  ·  or ARREST / AIRLOCK  ·  click a paper or note to read it, a field to ask about it  ·  [A]/[D] look around  ·  [Q]/[Esc]: back / leave";
+                hint.text = "Stamp, hand papers back through the drawer  ·  or ARREST / AIRLOCK  ·  click papers or notes to read side by side, [R] all, a field to ask  ·  [A]/[D] look  ·  [Q]/[Esc] back / leave";
                 // Notice line above the hint (\"Stamp the papers first\" and the like), hidden until used
                 var noticeT = root.transform.Find("SeatedHUD/Notice");
                 if (noticeT == null)

@@ -1548,9 +1548,10 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 08.11.): Über Rebuild All After Deliveries eingebaut, Licht und Occlusion neu gebacken. Bilder aus Main: alle acht Schilder zeigen den richtigen Raum, alle Pfeile zur richtigen Tür. Validate Travelers ok, 147/147 EditMode-Tests. **Occlusion-Check nicht ganz grün:** 1 von 3768 Ansichten weicht ab (103 von 36864 px, (-9 | 1,6 | 1), Blick nach oben), dieselbe Ansicht wie am 07.11.; on/off-Bild sehen gleich aus.
 
 ### P89 — Schaltertisch: Papiere nebeneinander, Lade, Deckel, Beschriftung
-- Größe: M · Priorität: Muss · Status: in Arbeit (max, 08.11.) · Zuständig: max
+- Größe: M · Priorität: Muss · Status: fertig (max, 08.11.) · Zuständig: max
 - Braucht: P06, P38 · Folgt auf: P06
 - Ziel: Papiere lassen sich vergleichen, ohne eins wegzulegen; der Tisch ist auf einen Blick verständlich.
 - Enthalten: mehrere Papiere und Pinnwand-Zettel gleichzeitig lesen (bis zu 4 in einer Reihe, [R] alle, Umschauen beim Lesen); Lade dreht die Front „DOCUMENTS“ zum Beamten; Deckel des Schleusenknopfs klappt zur richtigen Seite; Beschriftung ARREST und AIRLOCK.
 - Nicht enthalten: neue Modelle, Tutorial (P86).
 - Abnahme: Ausweis und Erlaubnis lassen sich nebeneinander lesen und per Feld-Klick befragen; Lade und Deckel sehen richtig aus; beide Knöpfe sind vom Stuhl aus lesbar beschriftet.
+- Ergebnis (max, 08.11.): `DocumentDesk` hält bis zu 4 Papiere/Zettel in einer Reihe (Klick holt dazu, Klick aufs Papier legt es zurück, [R] alle, Esc alle zurück; mindestens 3 Plätze, damit ein einzelnes Papier den Tisch frei lässt). Umschauen beim Lesen geht, die Papiere folgen. Lade: Front zum Beamten, fährt entlang lokal +X. Beide Knöpfe um 180° gedreht, Deckel klappt Richtung Fenster auf, Beschriftung ARREST/AIRLOCK auf dem Tisch (`GameOff/Build Documents`). Geprüft: Validate Travelers ok, 150/150 EditMode-Tests, WebGL-Build mit Bildern von Lade, Deckel, Reihe, Umschauen.

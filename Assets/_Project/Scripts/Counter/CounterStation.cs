@@ -154,6 +154,12 @@ namespace GameOff.Counter
                 return;
             }
 
+            if (_held == null && documents != null && !documents.IsMovingPaper && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
+            {
+                documents.ToggleReadAll();
+                return;
+            }
+
             var screenPos = pointAction.action.ReadValue<Vector2>();
             bool clicked = clickAction.action.WasPressedThisFrame();
             if (_held != null)

@@ -62,7 +62,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
-| max | P89 Schaltertisch (Papiere nebeneinander, Lade, Deckel, Beschriftung) | `Prefabs/Counter/PF_CounterStation.prefab`, `Prefabs/Documents/*`, `Scripts/Documents/DocumentDesk.cs`, `Scripts/Documents/DocumentTuning.cs`, `Scripts/Counter/CounterStation.cs`, `Scripts/Counter/SeatedLook.cs`, `Scripts/Editor/DocumentPrefabBuilder.cs` | 08.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -93,6 +92,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P89 Schaltertisch: Papiere nebeneinander lesen, Lade und Knöpfe richtig herum, Beschriftung ARREST/AIRLOCK (max, 08.11.)
 - [x] P88 Wegweiser eingebaut; Lieferungen Ticketautomat, Triebwerkssound, 12 Waren-Icons gemergt und eingebaut (max, 08.11.)
 - [x] P72 Ticket nach Hause: Ticketautomat im Hangar, selbst gesteuerter Abflug, Enden HOME / HOME, BARELY / TOO LATE? (max, 07.11.)
 - [x] P84 Bugreport im Spiel: Formular im Pausenmenü, Backend auf Geoffrey legt GitHub-Issues an (max, 07.11.; Token setzt Max)

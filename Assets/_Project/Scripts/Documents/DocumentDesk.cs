@@ -10,8 +10,9 @@ namespace GameOff.Documents
 {
     /// <summary>
     /// Documents on the counter desk (P06). Deliver() → the drawer slides out to the traveler, comes back with the papers,
-    /// and they glide onto the desk. Press + move = drag over the desk; click without moving = hold the paper up for reading
-    /// (click / Esc / right click puts it back). Drag a paper onto the drawer to put it in; click the drawer to hand
+    /// and they glide onto the desk. Press + move = drag over the desk; click without moving = hold the paper up for reading.
+    /// Clicking more papers or notes holds them up beside it (P89); [R] holds up all papers. Clicking a held paper puts it back,
+    /// a click elsewhere / Esc / right click puts all back. Drag a paper onto the drawer to put it in; click the drawer to hand
     /// everything in it back (DocumentsReturned). CounterStation forwards the pointer while the officer is seated.
     /// Pinned notes (P41) hang elsewhere and can only be read: they are never moved and don't count as papers on the desk.
     /// </summary>
@@ -19,7 +20,7 @@ namespace GameOff.Documents
     {
         [SerializeField] private CounterStation station;
         [SerializeField] private DocumentTuning tuning;
-        [Tooltip("The drawer (SM_Counter_DocSlot); slides along its local +Z toward the traveler. Needs a Collider.")]
+        [Tooltip("The drawer (SM_Counter_DocSlot); slides along its local +X toward the traveler (its front, local -X, faces the officer). Needs a Collider.")]
         [SerializeField] private Transform drawer;
         [Tooltip("Where papers lie inside the drawer (child of the drawer).")]
         [SerializeField] private Transform drawerTray;
@@ -42,13 +43,15 @@ namespace GameOff.Documents
         private readonly List<DocumentView> _pinned = new List<DocumentView>();
         private Vector3 _drawerRest;
         private bool _busy;
-        private DocumentView _pressed, _inspected;
+        private DocumentView _pressed;
+        private readonly List<DocumentView> _reading = new List<DocumentView>();
+        private readonly Dictionary<DocumentView, Pose> _readingReturn = new Dictionary<DocumentView, Pose>();
+        private Quaternion _readingCameraRotation;
         private const float DrawerHearingMeters = 12f;
 
         private bool _dragging, _drawerPress;
         private Vector2 _pressScreen;
         private Vector3 _dragOffset;
-        private Pose _inspectReturn;
         private readonly Dictionary<Transform, (Coroutine routine, Vector3 position, Quaternion rotation)> _glides =
             new Dictionary<Transform, (Coroutine, Vector3, Quaternion)>();
         private readonly HashSet<Transform> _gliding = new HashSet<Transform>();
@@ -70,8 +73,8 @@ namespace GameOff.Documents
         public Func<IReadOnlyList<DocumentView>, IReadOnlyList<DocumentView>, string> ReturnCheck;
 
         public bool IsBusy => _busy;
-        /// <summary>A paper is being read or moved, or the drawer is pressed.</summary>
-        public bool IsHandlingPaper => _inspected != null || _pressed != null || _drawerPress;
+        /// <summary>A paper is being moved or the drawer is pressed. (Reading doesn't count: the officer may look around meanwhile.)</summary>
+        public bool IsMovingPaper => _pressed != null || _drawerPress;
         public IReadOnlyList<DocumentView> OnDesk => _onDesk;
         private float DeskTop => deskSpots.Length > 0 ? deskSpots[0].position.y : transform.position.y;
 
@@ -84,12 +87,18 @@ namespace GameOff.Documents
         private void OnEnable() => station.SeatedChanged += OnSeatedChanged;
         private void OnDisable() => station.SeatedChanged -= OnSeatedChanged;
 
+        private void Update()
+        {
+            // Held papers follow the officer's look (SeatedLook), so the pinboard can be read beside them.
+            if (_reading.Count > 0 && Quaternion.Angle(station.ViewCamera.transform.rotation, _readingCameraRotation) > 0.01f) LayOutReading(instant: true);
+        }
+
         private void OnSeatedChanged(bool seated)
         {
             if (!seated)
             {
                 // Leaving the counter: whatever is in the hand goes down on the desk.
-                if (_inspected != null) PutDownInspected(instant: true);
+                PutDownAll(instant: true);
                 if (_pressed != null)
                 {
                     Drop(_pressed, onDrawer: false);
@@ -113,7 +122,8 @@ namespace GameOff.Documents
             StopAllCoroutines();
             _glides.Clear();
             _gliding.Clear();
-            _inspected = null;
+            _reading.Clear();
+            _readingReturn.Clear();
             _pressed = null;
             _dragging = false;
             _drawerPress = false;
@@ -156,10 +166,11 @@ namespace GameOff.Documents
         public void Unpin(DocumentView view)
         {
             if (view == null || !_pinned.Remove(view)) return;
-            if (_inspected == view) _inspected = null;
+            bool wasRead = Forget(view);
             StopGlide(view.transform);
             if (view.Data != null && view.Data.IsRuntime) Destroy(view.Data);
             Destroy(view.gameObject);
+            if (wasRead && _reading.Count > 0) LayOutReading();
         }
 
         /// <summary>Hands papers in through the drawer; if the drawer is busy, they come as soon as it is free.</summary>
@@ -169,12 +180,36 @@ namespace GameOff.Documents
             StartCoroutine(DeliverRoutine(documents));
         }
 
-        /// <summary>Esc / right click: puts a paper held up for reading back. True if it did something.</summary>
+        /// <summary>Esc / right click: puts the papers held up for reading back. True if it did something.</summary>
         public bool Cancel()
         {
-            if (_inspected == null) return false;
-            PutDownInspected(instant: false);
+            if (_reading.Count == 0) return false;
+            PutDownAll(instant: false);
             return true;
+        }
+
+        /// <summary>[R] (P89): holds up all traveler papers on the desk side by side, or puts everything held back.</summary>
+        public void ToggleReadAll()
+        {
+            if (IsMovingPaper) return;
+            if (_reading.Count > 0)
+            {
+                PutDownAll(instant: false);
+                return;
+            }
+            if (_busy) return; // no new paper in hand while the drawer moves
+            var papers = new List<DocumentView>();
+            foreach (var view in _onDesk)
+                if (view.Type != DocumentType.Citation) papers.Add(view);
+            if (papers.Count == 0) return;
+            papers.Sort((a, b) => a.Type.CompareTo(b.Type)); // always ID, permit, manifest from left to right
+            AudioManager.Play(s => s.paperPickup);
+            foreach (var view in papers)
+            {
+                if (_reading.Count >= tuning.maxPapersRead) break;
+                FinishGlide(view.transform);
+                Read(view, quiet: true);
+            }
         }
 
         /// <summary>
@@ -183,15 +218,7 @@ namespace GameOff.Documents
         /// </summary>
         public bool HandlePointer(Vector2 screenPos, bool pressed, bool released)
         {
-            if (_inspected != null)
-            {
-                string field = _inspected.AcceptsQuestions ? _inspected.FieldAt(station.PointerRay(screenPos)) : null;
-                _inspected.HighlightField(field);
-                if (!pressed) return false;
-                if (field != null) FieldClicked?.Invoke(_inspected.Data, field);
-                else PutDownInspected(instant: false);
-                return true;
-            }
+            if (_reading.Count > 0) return HandlePointerWhileReading(screenPos, pressed);
             if (_drawerPress)
             {
                 bool moved = (screenPos - _pressScreen).sqrMagnitude > tuning.dragThresholdPixels * tuning.dragThresholdPixels;
@@ -231,7 +258,7 @@ namespace GameOff.Documents
                     if (_dragging) FinishDrag(screenPos);
                     else
                     {
-                        Inspect(_pressed);
+                        Read(_pressed);
                         _pressed = null;
                     }
                 }
@@ -243,9 +270,7 @@ namespace GameOff.Documents
             var doc = hitSomething ? hit.collider.GetComponentInParent<DocumentView>() : null;
             if (doc != null && _pinned.Contains(doc)) // also while the drawer moves: the rules are needed most when papers come in
             {
-                StopGlide(doc.transform);
-                Inspect(doc);
-                _inspectReturn = new Pose(doc.transform.parent.position, doc.transform.parent.rotation); // even if it was still gliding back
+                ReadNote(doc);
                 return true;
             }
             if (_busy) return true; // no other new presses while the drawer moves
@@ -256,7 +281,7 @@ namespace GameOff.Documents
                 BringToFront(doc);
                 if (released)
                 {
-                    Inspect(doc); // pressed and released in the same frame: a click
+                    Read(doc); // pressed and released in the same frame: a click
                     return true;
                 }
                 _pressed = doc;
@@ -273,6 +298,43 @@ namespace GameOff.Documents
                 return true;
             }
             return false;
+        }
+
+        private bool HandlePointerWhileReading(Vector2 screenPos, bool pressed)
+        {
+            var ray = station.PointerRay(screenPos);
+            DocumentView asked = null;
+            string field = null;
+            foreach (var view in _reading)
+            {
+                field = view.AcceptsQuestions ? view.FieldAt(ray) : null;
+                if (field == null) continue;
+                asked = view;
+                break;
+            }
+            foreach (var view in _reading) view.HighlightField(view == asked ? field : null);
+            if (!pressed) return false;
+            if (field != null)
+            {
+                FieldClicked?.Invoke(asked.Data, field);
+                return true;
+            }
+            var under = station.RaycastPointer(screenPos, out var hit) ? hit.collider.GetComponentInParent<DocumentView>() : null;
+            if (under != null && _reading.Contains(under))
+            {
+                PutDown(under, instant: false);
+                if (_reading.Count > 0) LayOutReading();
+            }
+            else if (under != null && _pinned.Contains(under)) ReadNote(under);
+            else if (under != null && _onDesk.Contains(under))
+            {
+                if (_busy) return true; // no new paper in hand while the drawer moves
+                FinishGlide(under.transform);
+                BringToFront(under);
+                Read(under);
+            }
+            else PutDownAll(instant: false);
+            return true;
         }
 
         private IEnumerator DeliverRoutine(IReadOnlyList<DocumentData> documents)
@@ -331,7 +393,9 @@ namespace GameOff.Documents
         /// <summary>Takes away every traveler paper on the desk and in the drawer (arrest / airlock); printed slips stay.</summary>
         public void Confiscate()
         {
-            if (_inspected != null && _inspected.Type != DocumentType.Citation && !_pinned.Contains(_inspected)) _inspected = null;
+            foreach (var view in new List<DocumentView>(_reading))
+                if (view.Type != DocumentType.Citation && !_pinned.Contains(view)) Forget(view);
+            if (_reading.Count > 0) LayOutReading();
             if (_pressed != null && _pressed.Type != DocumentType.Citation)
             {
                 _pressed = null;
@@ -384,7 +448,7 @@ namespace GameOff.Documents
             // A short shake: the drawer is locked
             _busy = true;
             var rest = drawer.localPosition;
-            var side = drawer.localRotation * Vector3.forward * 0.006f;
+            var side = drawer.localRotation * Vector3.right * 0.006f; // along its travel
             for (int i = 0; i < 6; i++)
             {
                 drawer.localPosition = rest + (i % 2 == 0 ? side : -side);
@@ -488,7 +552,7 @@ namespace GameOff.Documents
             for (int i = 0; i < _onDesk.Count; i++)
             {
                 var t = _onDesk[i].transform;
-                if (_onDesk[i] == _inspected) continue;
+                if (_reading.Contains(_onDesk[i])) continue;
                 FinishGlide(t); // a running glide would land it on its old height, level with another paper
                 var pos = t.position;
                 pos.y = DeskTop + (i + 1) * tuning.stackStep;
@@ -496,33 +560,87 @@ namespace GameOff.Documents
             }
         }
 
-        /// <summary>Holds the paper up in front of the desk camera, upright and filling most of the screen.</summary>
-        private void Inspect(DocumentView doc)
+        /// <summary>A pinned note joins the papers held up; it goes back to its pin, even if it was still gliding there.</summary>
+        private void ReadNote(DocumentView note)
         {
-            var cam = station.ViewCamera;
-            AudioManager.Play(s => s.paperPickup);
-            _inspected = doc;
-            _inspectReturn = new Pose(doc.transform.position, doc.transform.rotation);
-            float height = Mathf.Max(doc.PageSize.y, doc.PageSize.x * 9f / 16f);
-            float distance = height / tuning.inspectScreenFill * 0.5f / Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
-            var target = cam.transform.position + cam.transform.forward * distance;
-            // Page top (local +Z) points to the camera's up, the page face (local +Y) toward the camera.
-            var rotation = Quaternion.LookRotation(cam.transform.up, -cam.transform.forward);
-            StartGlide(doc.transform, target, rotation, tuning.inspectDuration);
+            if (_reading.Contains(note)) return;
+            StopGlide(note.transform);
+            Read(note, new Pose(note.transform.parent.position, note.transform.parent.rotation));
         }
 
-        private void PutDownInspected(bool instant)
+        /// <summary>Holds the paper up in front of the desk camera, beside the ones already held (the oldest goes back when all places are taken).</summary>
+        private void Read(DocumentView doc, Pose? returnPose = null, bool quiet = false)
         {
-            var doc = _inspected;
-            _inspected = null;
+            if (_reading.Contains(doc)) return;
+            if (_reading.Count >= tuning.maxPapersRead) PutDown(_reading[0], instant: false);
+            if (!quiet) AudioManager.Play(s => s.paperPickup);
+            _readingReturn[doc] = returnPose ?? new Pose(doc.transform.position, doc.transform.rotation);
+            _reading.Add(doc);
+            LayOutReading();
+        }
+
+        /// <summary>
+        /// Upright in a row across the screen from the left, each paper as large as its place and the height allow. There are always
+        /// at least minReadingSlots places, so a single paper leaves the desk visible and the next one can be clicked.
+        /// Every paper has its own distance from the camera, so papers of different sizes still fill their places.
+        /// </summary>
+        private void LayOutReading(bool instant = false)
+        {
+            var cam = station.ViewCamera;
+            _readingCameraRotation = cam.transform.rotation;
+            float halfTan = Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+            // Page top (local +Z) points to the camera's up, the page face (local +Y) toward the camera.
+            var rotation = Quaternion.LookRotation(cam.transform.up, -cam.transform.forward);
+            int count = _reading.Count;
+            int places = Mathf.Max(count, tuning.minReadingSlots);
+            for (int i = 0; i < count; i++)
+            {
+                var size = _reading[i].PageSize;
+                float visibleHeight = Mathf.Max(size.y / tuning.inspectScreenFill, size.x / (tuning.readingWidthFill / places * cam.aspect));
+                float distance = visibleHeight * 0.5f / halfTan;
+                float across = ((i + 0.5f) / places - 0.5f) * tuning.readingWidthFill * visibleHeight * cam.aspect;
+                var target = cam.transform.position + cam.transform.forward * distance + cam.transform.right * across;
+                var paper = _reading[i].transform;
+                if (instant)
+                {
+                    // Following the look: every frame anew, so a glide would never get past its first step (and no garbage per frame).
+                    StopGlide(paper);
+                    paper.SetPositionAndRotation(target, rotation);
+                }
+                else StartGlide(paper, target, rotation, tuning.inspectDuration);
+            }
+        }
+
+        private void PutDownAll(bool instant)
+        {
+            if (_reading.Count == 0) return;
+            if (!instant) AudioManager.Play(s => s.paperSlide);
+            foreach (var view in new List<DocumentView>(_reading)) PutDown(view, instant, quiet: true);
+        }
+
+        private void PutDown(DocumentView doc, bool instant, bool quiet = false)
+        {
+            var pose = _readingReturn[doc];
+            // Papers were restacked while this one was in the air: it returns to its own height, not one that is now taken.
+            int stackIndex = _onDesk.IndexOf(doc);
+            if (stackIndex >= 0) pose.position.y = DeskTop + (stackIndex + 1) * tuning.stackStep;
+            Forget(doc);
             doc.HighlightField(null);
             StopGlide(doc.transform);
-            if (instant) doc.transform.SetPositionAndRotation(_inspectReturn.position, _inspectReturn.rotation);
-            else
+            if (instant)
             {
-                AudioManager.Play(s => s.paperSlide);
-                StartGlide(doc.transform, _inspectReturn.position, _inspectReturn.rotation, tuning.inspectDuration);
+                doc.transform.SetPositionAndRotation(pose.position, pose.rotation);
+                return;
             }
+            if (!quiet) AudioManager.Play(s => s.paperSlide);
+            StartGlide(doc.transform, pose.position, pose.rotation, tuning.inspectDuration);
+        }
+
+        /// <summary>Takes a paper out of the reading row without moving it. True if it was being read.</summary>
+        private bool Forget(DocumentView doc)
+        {
+            _readingReturn.Remove(doc);
+            return _reading.Remove(doc);
         }
 
         private IEnumerator MoveDrawer(bool out_)
@@ -531,8 +649,8 @@ namespace GameOff.Documents
             if (out_) AudioManager.PlayAt(s => s.drawerOpen, drawer.position, DrawerHearingMeters);
             else AudioManager.PlayAt(s => s.drawerClose, drawer.position, DrawerHearingMeters);
             Vector3 from = drawer.localPosition;
-            // Along the drawer's own forward (local +Z), expressed in its parent's space like localPosition
-            Vector3 to = out_ ? _drawerRest + drawer.localRotation * Vector3.forward * tuning.drawerTravel : _drawerRest;
+            // Along the drawer's own local +X (its front, local -X, faces the officer), expressed in its parent's space like localPosition
+            Vector3 to = out_ ? _drawerRest + drawer.localRotation * Vector3.right * tuning.drawerTravel : _drawerRest;
             for (float t = 0f; t < tuning.drawerDuration; t += Time.deltaTime)
             {
                 drawer.localPosition = Vector3.Lerp(from, to, Mathf.SmoothStep(0f, 1f, t / tuning.drawerDuration));

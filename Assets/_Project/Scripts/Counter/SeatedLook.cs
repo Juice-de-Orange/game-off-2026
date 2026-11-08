@@ -6,7 +6,7 @@ namespace GameOff.Counter
 {
     /// <summary>
     /// Looking around while seated (P41): A/D or the arrow keys turn the desk camera. It levels out while turning, because the
-    /// desk view looks down and the pinboard hangs at eye height. Held still while a paper is read or moved or a stamp is held.
+    /// desk view looks down and the pinboard hangs at eye height. Held still while a paper is moved or a stamp is held; papers being read follow the look (P89).
     /// Back to the desk view on the next sit-down, not on standing up, so the camera blend doesn't jump.
     /// </summary>
     public class SeatedLook : MonoBehaviour
@@ -40,7 +40,7 @@ namespace GameOff.Counter
 
         private void Update()
         {
-            if (!station.IsSeated || station.IsHoldingStamp || desk.IsHandlingPaper || station.InputBlocked) return;
+            if (!station.IsSeated || station.IsHoldingStamp || desk.IsMovingPaper || station.InputBlocked) return;
             float input = moveAction.action.ReadValue<Vector2>().x;
             if (Mathf.Approximately(input, 0f)) return;
             _yaw = Mathf.Clamp(_yaw + input * tuning.turnSpeed * Time.deltaTime, -tuning.yawLimit, tuning.yawLimit);
