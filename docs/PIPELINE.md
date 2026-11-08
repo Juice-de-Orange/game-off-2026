@@ -415,3 +415,12 @@ in `docs/ASSET-REQUESTS.md`.
 - status: offen
 - meldung: Max will, dass die Reisenden verschieden aussehen. Die Texturen müssen exakt das UV-Layout der vorhandenen `T_NPC_<Spezies>_Albedo` behalten, gern alle auf einem Branch mit Lineup je Spezies. Bitte jede fertige Lieferung wie in M016 melden.
 - antwort:
+
+### M025 — Neue Aufträge: UI im Terminal-Stil (P95), Papier-Varianten (P102), Laute je Spezies (P94)
+- datum: 2026-11-08
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`: `UI_Terminal_*` (8), `SFX_Paper_Pickup_01–04`, `SFX_Paper_Slide_01–04`, `SFX_Voice_<Spezies>_01–10` (50)
+- status: offen
+- meldung: Die Laute je Spezies sind **keine Voicelines**: Das sind kurze synthetische Murmel-Laute ohne Wörter, damit gilt die Regel „keine Stimmen“ aus M018 hier nicht. Falls das so nicht machbar ist, bitte hier melden, statt Sprache zu erzeugen. Die Auswahl nach Gehör macht das Team. Bitte jede fertige Lieferung wie in M016 melden.
+- antwort:

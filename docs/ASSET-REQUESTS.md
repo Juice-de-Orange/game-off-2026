@@ -8065,3 +8065,1727 @@ refs: [Assets/_Project/Art/Models/Characters/SK_NPC_Human.fbx]
 placeholder: Keiner, bis zur Lieferung ohne Frisur.
 feedback: []
 ```
+
+### UI_Terminal_Panel.png
+```yaml
+path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Panel.png
+package: P95
+scene: UI (alle Menüs und Fenster)
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Terminal/UI_Terminal_Panel.png   # 96x96, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Rahmen für Fenster als 9-Slice: Metallkante mit Nieten, innen dunkel, die Ecken dürfen beim Strecken nicht verzerren (mindestens 24 px Rand). Terminal-Stil der Station: dunkles Metall, CRT-Grün und Bernstein, Pixel-Art, Farben aus der Palette.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/STYLE.md]
+placeholder: Bis zur Lieferung einfache Farbflächen.
+feedback: []
+```
+
+### UI_Terminal_PanelInset.png
+```yaml
+path: Assets/_Project/Art/UI/Terminal/UI_Terminal_PanelInset.png
+package: P95
+scene: UI (alle Menüs und Fenster)
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Terminal/UI_Terminal_PanelInset.png   # 64x64, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Vertieftes Feld für Listen als 9-Slice, dunkler als der Rahmen, feine Innenlinie. Terminal-Stil der Station: dunkles Metall, CRT-Grün und Bernstein, Pixel-Art, Farben aus der Palette.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/STYLE.md]
+placeholder: Bis zur Lieferung einfache Farbflächen.
+feedback: []
+```
+
+### UI_Terminal_Button_Normal.png
+```yaml
+path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Button_Normal.png
+package: P95
+scene: UI (alle Menüs und Fenster)
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Terminal/UI_Terminal_Button_Normal.png   # 96x32, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Knopf im Ruhezustand als 9-Slice, Metall mit bernsteinfarbener Kante. Terminal-Stil der Station: dunkles Metall, CRT-Grün und Bernstein, Pixel-Art, Farben aus der Palette.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/STYLE.md]
+placeholder: Bis zur Lieferung einfache Farbflächen.
+feedback: []
+```
+
+### UI_Terminal_Button_Hover.png
+```yaml
+path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Button_Hover.png
+package: P95
+scene: UI (alle Menüs und Fenster)
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Terminal/UI_Terminal_Button_Hover.png   # 96x32, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Derselbe Knopf, Maus darüber: Kante leuchtet CRT-Grün. Terminal-Stil der Station: dunkles Metall, CRT-Grün und Bernstein, Pixel-Art, Farben aus der Palette.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/STYLE.md]
+placeholder: Bis zur Lieferung einfache Farbflächen.
+feedback: []
+```
+
+### UI_Terminal_Button_Pressed.png
+```yaml
+path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Button_Pressed.png
+package: P95
+scene: UI (alle Menüs und Fenster)
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Terminal/UI_Terminal_Button_Pressed.png   # 96x32, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Derselbe Knopf gedrückt: eingedrückt, dunkler. Terminal-Stil der Station: dunkles Metall, CRT-Grün und Bernstein, Pixel-Art, Farben aus der Palette.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/STYLE.md]
+placeholder: Bis zur Lieferung einfache Farbflächen.
+feedback: []
+```
+
+### UI_Terminal_Divider.png
+```yaml
+path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Divider.png
+package: P95
+scene: UI (alle Menüs und Fenster)
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Terminal/UI_Terminal_Divider.png   # 128x8, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Trennlinie, kachelbar in der Breite. Terminal-Stil der Station: dunkles Metall, CRT-Grün und Bernstein, Pixel-Art, Farben aus der Palette.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/STYLE.md]
+placeholder: Bis zur Lieferung einfache Farbflächen.
+feedback: []
+```
+
+### UI_Terminal_WarnStripe.png
+```yaml
+path: Assets/_Project/Art/UI/Terminal/UI_Terminal_WarnStripe.png
+package: P95
+scene: UI (alle Menüs und Fenster)
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Terminal/UI_Terminal_WarnStripe.png   # 64x16, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Gelb-schwarzer Warnstreifen, kachelbar in der Breite. Terminal-Stil der Station: dunkles Metall, CRT-Grün und Bernstein, Pixel-Art, Farben aus der Palette.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/STYLE.md]
+placeholder: Bis zur Lieferung einfache Farbflächen.
+feedback: []
+```
+
+### UI_Terminal_Scanlines.png
+```yaml
+path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Scanlines.png
+package: P95
+scene: UI (alle Menüs und Fenster)
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Terminal/UI_Terminal_Scanlines.png   # 64x64, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Sehr dezente CRT-Zeilen als transparente Überlagerung, kachelbar. Terminal-Stil der Station: dunkles Metall, CRT-Grün und Bernstein, Pixel-Art, Farben aus der Palette.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [docs/STYLE.md]
+placeholder: Bis zur Lieferung einfache Farbflächen.
+feedback: []
+```
+
+### SFX_Paper_Pickup_01.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup_01.ogg
+package: P102
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Blatt Papier wird leise vom Tisch genommen, Variante 1, sehr leise und weich, nicht raschelig-scharf, ca. 0,2 bis 0,3 s. Darf auch bei vielen Wiederholungen nicht nerven.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Paper_Pickup_02.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup_02.ogg
+package: P102
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Blatt Papier wird leise vom Tisch genommen, Variante 2, sehr leise und weich, nicht raschelig-scharf, ca. 0,2 bis 0,3 s. Darf auch bei vielen Wiederholungen nicht nerven.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Paper_Pickup_03.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup_03.ogg
+package: P102
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Blatt Papier wird leise vom Tisch genommen, Variante 3, sehr leise und weich, nicht raschelig-scharf, ca. 0,2 bis 0,3 s. Darf auch bei vielen Wiederholungen nicht nerven.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Paper_Pickup_04.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup_04.ogg
+package: P102
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Blatt Papier wird leise vom Tisch genommen, Variante 4, sehr leise und weich, nicht raschelig-scharf, ca. 0,2 bis 0,3 s. Darf auch bei vielen Wiederholungen nicht nerven.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Paper_Slide_01.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Paper_Slide_01.ogg
+package: P102
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Blatt Papier wird sanft abgelegt, Variante 1, sehr leise und weich, nicht raschelig-scharf, ca. 0,2 bis 0,3 s. Darf auch bei vielen Wiederholungen nicht nerven.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Paper_Slide_02.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Paper_Slide_02.ogg
+package: P102
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Blatt Papier wird sanft abgelegt, Variante 2, sehr leise und weich, nicht raschelig-scharf, ca. 0,2 bis 0,3 s. Darf auch bei vielen Wiederholungen nicht nerven.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Paper_Slide_03.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Paper_Slide_03.ogg
+package: P102
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Blatt Papier wird sanft abgelegt, Variante 3, sehr leise und weich, nicht raschelig-scharf, ca. 0,2 bis 0,3 s. Darf auch bei vielen Wiederholungen nicht nerven.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Paper_Slide_04.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Paper_Slide_04.ogg
+package: P102
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Blatt Papier wird sanft abgelegt, Variante 4, sehr leise und weich, nicht raschelig-scharf, ca. 0,2 bis 0,3 s. Darf auch bei vielen Wiederholungen nicht nerven.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Human_01.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Human_01.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Menschliches unverständliches Murmeln, wie Gesprächsfetzen hinter einer Wand, Variante 1 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Human_02.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Human_02.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Menschliches unverständliches Murmeln, wie Gesprächsfetzen hinter einer Wand, Variante 2 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Human_03.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Human_03.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Menschliches unverständliches Murmeln, wie Gesprächsfetzen hinter einer Wand, Variante 3 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Human_04.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Human_04.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Menschliches unverständliches Murmeln, wie Gesprächsfetzen hinter einer Wand, Variante 4 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Human_05.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Human_05.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Menschliches unverständliches Murmeln, wie Gesprächsfetzen hinter einer Wand, Variante 5 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Human_06.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Human_06.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Menschliches unverständliches Murmeln, wie Gesprächsfetzen hinter einer Wand, Variante 6 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Human_07.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Human_07.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Menschliches unverständliches Murmeln, wie Gesprächsfetzen hinter einer Wand, Variante 7 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Human_08.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Human_08.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Menschliches unverständliches Murmeln, wie Gesprächsfetzen hinter einer Wand, Variante 8 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Human_09.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Human_09.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Menschliches unverständliches Murmeln, wie Gesprächsfetzen hinter einer Wand, Variante 9 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Human_10.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Human_10.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Menschliches unverständliches Murmeln, wie Gesprächsfetzen hinter einer Wand, Variante 10 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Vellani_01.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Vellani_01.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Weiches, fiepsendes Trällern, Variante 1 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Vellani_02.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Vellani_02.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Weiches, fiepsendes Trällern, Variante 2 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Vellani_03.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Vellani_03.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Weiches, fiepsendes Trällern, Variante 3 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Vellani_04.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Vellani_04.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Weiches, fiepsendes Trällern, Variante 4 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Vellani_05.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Vellani_05.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Weiches, fiepsendes Trällern, Variante 5 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Vellani_06.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Vellani_06.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Weiches, fiepsendes Trällern, Variante 6 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Vellani_07.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Vellani_07.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Weiches, fiepsendes Trällern, Variante 7 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Vellani_08.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Vellani_08.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Weiches, fiepsendes Trällern, Variante 8 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Vellani_09.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Vellani_09.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Weiches, fiepsendes Trällern, Variante 9 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Vellani_10.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Vellani_10.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Weiches, fiepsendes Trällern, Variante 10 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Quobb_01.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Quobb_01.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Gluckernd, blubbernd, freundlich, Variante 1 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Quobb_02.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Quobb_02.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Gluckernd, blubbernd, freundlich, Variante 2 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Quobb_03.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Quobb_03.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Gluckernd, blubbernd, freundlich, Variante 3 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Quobb_04.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Quobb_04.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Gluckernd, blubbernd, freundlich, Variante 4 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Quobb_05.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Quobb_05.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Gluckernd, blubbernd, freundlich, Variante 5 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Quobb_06.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Quobb_06.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Gluckernd, blubbernd, freundlich, Variante 6 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Quobb_07.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Quobb_07.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Gluckernd, blubbernd, freundlich, Variante 7 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Quobb_08.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Quobb_08.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Gluckernd, blubbernd, freundlich, Variante 8 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Quobb_09.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Quobb_09.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Gluckernd, blubbernd, freundlich, Variante 9 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Quobb_10.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Quobb_10.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Gluckernd, blubbernd, freundlich, Variante 10 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Sorvak_01.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Sorvak_01.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Tiefes, kehliges Grollen, Variante 1 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Sorvak_02.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Sorvak_02.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Tiefes, kehliges Grollen, Variante 2 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Sorvak_03.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Sorvak_03.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Tiefes, kehliges Grollen, Variante 3 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Sorvak_04.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Sorvak_04.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Tiefes, kehliges Grollen, Variante 4 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Sorvak_05.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Sorvak_05.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Tiefes, kehliges Grollen, Variante 5 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Sorvak_06.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Sorvak_06.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Tiefes, kehliges Grollen, Variante 6 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Sorvak_07.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Sorvak_07.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Tiefes, kehliges Grollen, Variante 7 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Sorvak_08.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Sorvak_08.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Tiefes, kehliges Grollen, Variante 8 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Sorvak_09.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Sorvak_09.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Tiefes, kehliges Grollen, Variante 9 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Sorvak_10.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Sorvak_10.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Tiefes, kehliges Grollen, Variante 10 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Xirrik_01.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Xirrik_01.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Trockenes Klicken und Zischen, Variante 1 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Xirrik_02.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Xirrik_02.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Trockenes Klicken und Zischen, Variante 2 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Xirrik_03.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Xirrik_03.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Trockenes Klicken und Zischen, Variante 3 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Xirrik_04.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Xirrik_04.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Trockenes Klicken und Zischen, Variante 4 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Xirrik_05.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Xirrik_05.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Trockenes Klicken und Zischen, Variante 5 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Xirrik_06.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Xirrik_06.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Trockenes Klicken und Zischen, Variante 6 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Xirrik_07.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Xirrik_07.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Trockenes Klicken und Zischen, Variante 7 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Xirrik_08.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Xirrik_08.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Trockenes Klicken und Zischen, Variante 8 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Xirrik_09.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Xirrik_09.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Trockenes Klicken und Zischen, Variante 9 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Voice_Xirrik_10.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Voice_Xirrik_10.ogg
+package: P94
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Trockenes Klicken und Zischen, Variante 10 von 10, ca. 0,4 bis 0,9 s. Synthetisch erzeugter Laut ohne verständliche Wörter und ohne echte Stimmaufnahme, wirkt wie Sprache im Vorbeigehen.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```

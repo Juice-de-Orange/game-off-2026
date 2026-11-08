@@ -1596,7 +1596,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Größe: M · Priorität: Soll · Status: offen · Zuständig: martin (08.11., im Urlaub per Claude; Abnahme durch Max)
 - Braucht: — · Folgt auf: P61
 - Ziel: Figuren reden abwechslungsreich statt mit einem einzigen Ton (#16).
-- Enthalten: Bei der Pipeline bestellen: je Spezies 10 kurze Murmel-Laute; zufällig abspielen, Tonhöhe leicht variieren.
+- Enthalten: Laute bestellt (`SFX_Voice_<Spezies>_01–10`, M025, 08.11.): je Spezies 10 kurze Murmel-Laute; zufällig abspielen, Tonhöhe leicht variieren.
 - Abnahme: Keine zwei Äußerungen klingen gleich; Download-Zuwachs gemessen.
 
 ### P95 — Menüs im Terminal-Stil
