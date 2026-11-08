@@ -6886,7 +6886,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SK_NPC_Guard.fbx
 package: P104
 scene: Prüfkammer
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-20
 size_m: [0.6, 0.4, 1.85]
