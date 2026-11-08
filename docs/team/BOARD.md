@@ -62,6 +62,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
+| max | P86 Korr-Tutorial | `Prefabs/Counter/PF_CounterStation.prefab`, `Scripts/Documents/DocumentDesk.cs`, `Scripts/Characters/CharacterPlanner.cs`, `Scripts/Editor/DocumentPrefabBuilder.cs` | 08.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,

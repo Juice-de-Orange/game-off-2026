@@ -1505,7 +1505,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Jede dieser Folgen ist mit der Testfigur oder einer echten Figur einmal spielbar; Tests für die neuen Bedingungen.
 
 ### P86 — Korr-Tutorial an Tag 1
-- Größe: M · Priorität: Soll (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) · Zuständig: max (umgetragen 08.11., Max baut es direkt nach P15 Etappe 1; Martin bitte nicht anfangen)
+- Größe: M · Priorität: Soll (Vorschlag) · Status: in Arbeit (max, 08.11.) · Zuständig: max (umgetragen 08.11.)
 - Braucht: P75, P76 · Folgt auf: —
 - Ziel: Inspector Vaal Korr kommt an Tag 1 als Erster und erklärt den Schalter Schritt für Schritt (Papiere ziehen, Feld anklicken, Regeln an
   der Pinnwand, stempeln, Schublade); er lässt sich selbst prüfen.
