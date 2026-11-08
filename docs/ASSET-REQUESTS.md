@@ -1271,7 +1271,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Counter.fbx
 package: P11
 scene: Kiosk
-status: rework
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.8, 2.8, 2.4]
