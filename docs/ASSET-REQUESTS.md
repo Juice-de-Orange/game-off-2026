@@ -2620,7 +2620,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Home_Albedo.png
 package: P24
 scene: Himmel
-status: rework
+status: Vorschau
 priority: P1
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
@@ -2648,7 +2648,7 @@ feedback:
 path: Assets/_Project/Art/Textures/Sky/T_Planet_Home_Emission.png
 package: P24
 scene: Himmel
-status: rework
+status: Vorschau
 priority: P1
 needed_by: 2026-11-13
 size_m: [0, 0, 0]
