@@ -587,7 +587,7 @@ namespace GameOff.EditorTools
         private static void TileRoom(GameObject parent, Room room, string tile, float y, float cell = KitCell)
         {
             // Every third 2 m ceiling tile is the light variant (if delivered) for a less uniform ceiling.
-            bool lightTiles = tile == KitCeiling && Kit(KitCeilingLight) != null;
+            bool lightTiles = tile == KitCeiling && Kit(KitCeilingLight) != null && room.Area != Area.Diner; // P92: lights off
             int i = 0;
             for (float x = room.X0 + cell * 0.5f; x < room.X1; x += cell)
             for (float z = room.Z0 + cell * 0.5f; z < room.Z1; z += cell, i++)
@@ -1517,6 +1517,13 @@ namespace GameOff.EditorTools
             int nz = Mathf.Max(1, Mathf.RoundToInt(d / spacing));
             bool alongX = w >= d; // strips run along the longer side
 
+            if (room.Area == Area.Diner)
+            {
+                // P92: out of service, lights off. One dim lamp so the room isn't a black hole.
+                BakedLight(lights, "Diner_Dim", new Vector3(-12f, 2.6f, -3f), new Color(0.55f, 0.6f, 0.7f), 7f, 0.35f);
+                return;
+            }
+
             for (int ix = 0; ix < nx; ix++)
             for (int iz = 0; iz < nz; iz++)
             {
@@ -1683,8 +1690,8 @@ namespace GameOff.EditorTools
             KitProp(p, "Diner/SM_Diner_Counter.fbx", "SM_Diner_Counter", -12, -0.6f, 6.0f, 0.7f, 1.1f);
             KitProp(p, "Diner/SM_Diner_Booth.fbx", "SM_Diner_Booth_A", -14, -5.2f, 2.2f, 1.4f, 1.2f, 0, 180f);
             KitProp(p, "Diner/SM_Diner_Booth.fbx", "SM_Diner_Booth_B", -10.5f, -5.2f, 2.2f, 1.4f, 1.2f, 0, 180f);
-            WallProp(p, "Diner/SM_Diner_MenuBoard.fbx", "SM_Diner_MenuBoard", false, 0, -1, -12f, 2.3f, 2.0f, 0.8f); // pivot center
             for (int i = 0; i < 4; i++) KitProp(p, "Bar/SM_Bar_Stool.fbx", $"SM_Diner_Stool_{i + 1}", -14.2f + i * 1.5f, -1.4f, 0.4f, 0.4f, 0.75f);
+            SwitchOffDinerCounter(p);
             // Motel
             // Motel: reception against the corridor's south wall, facing guests (north); room 103 furniture against its walls
             KitProp(p, "Motel/SM_Motel_Reception.fbx", "SM_Motel_Reception", -9, 0.45f, 1.2f, 0.5f, 1.2f, 0, 180f);
@@ -1775,7 +1782,7 @@ namespace GameOff.EditorTools
             PlaceDecor(p, KitFan, "Fan_Bar", new Vector3(10.5f, 4f, 4f), 0f);
             PlaceDecor(p, KitFan, "Fan_Diner", new Vector3(-12f, 3f, -3f), 0f);
             WallDecor(p, KitNeon, "Neon_Bar", true, 8, -1, 3f, 2.55f);
-            WallDecor(p, KitNeon, "Neon_Diner", true, -8, 1, -3f, 2.55f);
+            BuildDinerOutOfService(p);
             WallDecor(p, KitNeon, "Neon_Kiosk", true, 8, -1, -2.1f, 1.7f);
             FloorDecor(p, KitBin, "Bin_Bar", 8.6f, 0.6f, 0.5f, 0.5f, 0.9f);
             FloorDecor(p, KitBin, "Bin_Diner", -15.5f, -2.4f, 0.5f, 0.5f, 0.9f);
@@ -1806,6 +1813,100 @@ namespace GameOff.EditorTools
             var go = PlaceKit(parent, kitPath, position, yaw);
             if (go != null) go.name = name;
             return go;
+        }
+
+        /// <summary>P92: the counter's strip light is emission in its material, so the closed diner's counter gets a copy without it.</summary>
+        private static void SwitchOffDinerCounter(GameObject p)
+        {
+            var counter = p.transform.Find("SM_Diner_Counter");
+            if (counter == null) return;
+            foreach (var r in counter.GetComponentsInChildren<Renderer>(true))
+            {
+                var materials = r.sharedMaterials;
+                for (int i = 0; i < materials.Length; i++)
+                {
+                    if (materials[i] == null || !materials[i].IsKeywordEnabled("_EMISSION")) continue;
+                    string path = $"Assets/_Project/Art/Materials/Diner/{materials[i].name}_Off.mat";
+                    var off = AssetDatabase.LoadAssetAtPath<Material>(path);
+                    if (off == null)
+                    {
+                        off = new Material(materials[i]);
+                        AssetDatabase.CreateAsset(off, path);
+                    }
+                    off.CopyPropertiesFromMaterial(materials[i]);
+                    off.SetTexture("_EmissionMap", null);
+                    off.SetColor("_EmissionColor", Color.black);
+                    off.DisableKeyword("_EMISSION");
+                    off.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
+                    EditorUtility.SetDirty(off);
+                    materials[i] = off;
+                }
+                r.sharedMaterials = materials;
+            }
+        }
+
+        private const string DinerCobwebTexture = "Assets/_Project/Art/Textures/Diner/T_Diner_Cobweb_Albedo.png";
+        private const string DinerCobwebMaterial = "Assets/_Project/Art/Materials/Diner/M_Diner_Cobweb.mat";
+        private const string SignFont = "Assets/_Project/Fonts/Orbitron SDF.asset";
+
+        /// <summary>P92: the diner is out of service. A sign over its door in the hall (where the neon was), cobwebs in the dark room. The door stays open.</summary>
+        private static void BuildDinerOutOfService(GameObject p)
+        {
+            var sign = new GameObject("Diner_OutOfService");
+            sign.transform.SetParent(p.transform, false);
+            sign.transform.localPosition = new Vector3(-7.76f, 2.55f, -3f);
+            sign.transform.localRotation = Quaternion.Euler(0f, -90f, 0f); // text toward the hall (+X)
+            var plate = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            plate.name = "Plate";
+            Object.DestroyImmediate(plate.GetComponent<Collider>());
+            plate.transform.SetParent(sign.transform, false);
+            plate.transform.localScale = new Vector3(1.5f, 0.32f, 0.03f);
+            plate.GetComponent<MeshRenderer>().sharedMaterial = GetOrCreateMaterial("M_Diner_OutOfService", new Color(0.07f, 0.08f, 0.1f), false);
+            GameObjectUtility.SetStaticEditorFlags(plate, StaticEditorFlags.BatchingStatic | StaticEditorFlags.ContributeGI);
+            var text = new GameObject("Text", typeof(RectTransform), typeof(TMPro.TextMeshPro));
+            text.transform.SetParent(sign.transform, false);
+            text.transform.localPosition = new Vector3(0f, 0f, -0.03f);
+            ((RectTransform)text.transform).sizeDelta = new Vector2(1.4f, 0.28f);
+            var tmp = text.GetComponent<TMPro.TextMeshPro>();
+            tmp.font = AssetDatabase.LoadAssetAtPath<TMPro.TMP_FontAsset>(SignFont);
+            tmp.text = "OUT OF SERVICE";
+            tmp.fontSize = 1.1f;
+            tmp.color = new Color(0.85f, 0.25f, 0.15f);
+            tmp.alignment = TMPro.TextAlignmentOptions.Center;
+
+            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(DinerCobwebTexture);
+            if (texture == null) return;
+            var material = AssetDatabase.LoadAssetAtPath<Material>(DinerCobwebMaterial);
+            if (material == null)
+            {
+                material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+                AssetDatabase.CreateAsset(material, DinerCobwebMaterial);
+            }
+            material.SetTexture("_BaseMap", texture);
+            material.SetColor("_BaseColor", new Color(0.24f, 0.24f, 0.26f)); // unlit, so it must stay dim in the dark room
+            material.SetFloat("_AlphaClip", 1f);
+            material.SetFloat("_Cutoff", 0.5f);
+            material.SetFloat("_Cull", 0f);
+            material.EnableKeyword("_ALPHATEST_ON");
+            material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.AlphaTest;
+            EditorUtility.SetDirty(material);
+            (Vector3 at, float yaw, float size)[] webs =
+            {
+                (new Vector3(-15.45f, 2.45f, -0.55f), 135f, 1f), (new Vector3(-15.45f, 2.45f, -5.45f), 45f, 1f), // room corners under the ceiling
+                (new Vector3(-8.55f, 2.45f, -0.55f), 45f, 1f), (new Vector3(-8.55f, 2.45f, -5.45f), 135f, 1f),
+            };
+            for (int i = 0; i < webs.Length; i++)
+            {
+                var web = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                web.name = "Diner_Cobweb_" + i;
+                Object.DestroyImmediate(web.GetComponent<Collider>());
+                web.transform.SetParent(p.transform, false);
+                web.transform.localPosition = webs[i].at;
+                web.transform.localRotation = Quaternion.Euler(0f, webs[i].yaw, 0f);
+                web.transform.localScale = Vector3.one * webs[i].size;
+                web.GetComponent<MeshRenderer>().sharedMaterial = material;
+                GameObjectUtility.SetStaticEditorFlags(web, StaticEditorFlags.BatchingStatic);
+            }
         }
 
         // ---------- Wayfinding (P88) ----------

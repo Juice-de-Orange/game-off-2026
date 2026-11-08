@@ -1573,18 +1573,20 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Niemand erscheint oder verschwindet sichtbar aus dem Nichts; Verhaftung ist nur über Gitter und Ton erzählt.
 
 ### P92 — Diner außer Betrieb
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 08.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P26
 - Ziel: Das Diner wirkt glaubwürdig geschlossen (#26) und lässt sich später wieder nutzen.
-- Enthalten: Preise weg, Schild „geschlossen“, Spinnweben, Licht aus, Tür gesperrt.
+- Enthalten: Preise weg, Schild „OUT OF SERVICE“, Spinnweben, Licht aus. Die Tür bleibt offen, damit man die Stimmung sehen kann (Änderung beim Bau, 08.11.; Sperren ist `DoorAccess.Locked` in `Doors`).
 - Abnahme: Das Diner verspricht nichts mehr, was es nicht hält.
+- Ergebnis (max, 08.11.): Schild „OUT OF SERVICE“ über der Tür, Preistafel und Neon weg, Deckenröhren aus, Tresen ohne Leuchtstreifen, eine schwache Lampe, Spinnweben in den Ecken (`T_Diner_Cobweb_Albedo`, per Skript gezeichnet). `BuildDinerOutOfService` im `StationGrayboxBuilder`. Geprüft: Validate Travelers, EditMode-Tests, Bilder aus Main.
 
 ### P93 — Barkeeper sagt seinen Wunsch
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 08.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P65
 - Ziel: Der Wunsch des Barkeepers kommt im Gespräch statt vom Schild (#22).
 - Enthalten: Schild `BarWishSign` entfernt, Barkeeper nennt den Wunsch beim Ansprechen. Martin im Handover informieren (sein P65).
 - Abnahme: Kein Schild mehr vor der Bar; der Wunsch ist beim Barkeeper zu erfahren.
+- Ergebnis (max, 08.11.): `BarWishSign` entfernt, der Barkeeper nennt den Wunsch im Gespräch, auch tagsüber vor dem Öffnen. `SM_Bar_WishBoard` ist damit unbenutzt (Vermerk in `ASSET-REQUESTS.md`). Geprüft: Validate Travelers, EditMode-Tests, Bilder aus Main.
 
 ### P94 — Stimmen: 10 Laute je Spezies
 - Größe: M · Priorität: Soll · Status: offen · Zuständig: martin (08.11., im Urlaub per Claude; Abnahme durch Max)
@@ -1601,11 +1603,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Alle Fenster teilen denselben Stil und bleiben bedienbar.
 
 ### P96 — Lebendige Händler
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 08.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P52
 - Ziel: Barkeeper, Holly und Dealer stehen nicht mehr starr da (#24).
 - Enthalten: Kleines Skript: leichtes Atmen, Schwanken, ab und zu Kopfdrehung für die statischen Modelle.
 - Abnahme: Figuren wirken in Ruhe lebendig, ohne neue Assets.
+- Ergebnis (max, 08.11.): `Shops/IdleBreathing` + `Data/Economy/IdleBreathingTuning.asset`: Atmen, leichtes Schwanken und ab und zu eine kleine Drehung der ganzen Figur (die Modelle haben kein Skelett, einzelne Köpfe drehen sich also nicht). Geprüft: Validate Travelers, EditMode-Tests, Bilder aus Main.
 
 ### P97 — Eine gemeinsame Spieluhr
 - Größe: S · Priorität: Soll · Status: offen · Zuständig: martin (08.11., im Urlaub per Claude; Abnahme durch Max)

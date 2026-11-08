@@ -9,7 +9,7 @@ using UnityEngine;
 namespace GameOff.Shops
 {
     /// <summary>
-    /// The barkeeper (P65): buys nothing for money. Each day he wants items with one label (the sign at the bar, DayEntry.barWish);
+    /// The barkeeper (P65): buys nothing for money. Each day he wants items with one label and says so when spoken to (DayEntry.barWish, P93);
     /// who brings them gets a rumour about tomorrow – the rumour texts of tomorrow's market events, so it is always true.
     /// The rumour then stays readable under TODAY in the inventory until the morning. Like every trade, only after the shift.
     /// </summary>
@@ -55,7 +55,8 @@ namespace GameOff.Shops
             player.SetControlEnabled(false);
             if (!IsOpen)
             {
-                dialogs.ShowDialog("The bar is still closed", "Come back after your shift.", null, null,
+                var wish = Wish;
+                dialogs.ShowDialog("The bar is still closed", "Come back after your shift." + (wish != null && wish.Active ? $"\nToday I'd like: {wish.Text}." : ""), null, null,
                     day.DevTools ? Talk : null, Resume, "Dev_force_Bar");
                 return;
             }

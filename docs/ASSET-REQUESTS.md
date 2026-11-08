@@ -5930,7 +5930,8 @@ animations: []
 collision: none
 refs: []
 placeholder: Dunkler Quader 0.9 x 0.6 x 0.04 m, Pivot center (EconomyBuilder, P65)
-feedback: []
+feedback:
+  - "2026-11-08 max: (P93) Wird nicht mehr verwendet: Das Schild vor der Bar ist entfallen, der Barkeeper nennt den Wunsch selbst. Nichts weiter zu tun."
 ```
 
 ### SM_Prop_BribeEnvelope.fbx
