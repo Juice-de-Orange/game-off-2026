@@ -6781,7 +6781,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_SecurityShutter.fbx
 package: P91
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.08, 4.4, 2.2]
