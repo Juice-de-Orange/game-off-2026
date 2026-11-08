@@ -1691,3 +1691,11 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Man versteht, wie die Reisenden des Tages auf die Station kommen.
 - Enthalten: Morgens fliegen wechselnde Schiffe durch die Barriere und landen; tagsüber stehen je Tag 2–4 kleine Schiffe auf festen Plätzen, passend zu den Frachtbriefen (`ship`-Feld). Reisende erscheinen hinter der Tür zur Prüfkammer, kein Laufweg durch den Hangar. Modelle bestellt.
 - Abnahme: An jedem Tag stehen andere Schiffe im Hangar; morgens landet sichtbar mindestens eines.
+
+### P108 — Jeder Reisende sieht anders aus
+- Größe: M · Priorität: Soll · Status: offen, Assets bestellt (max, 08.11.) · Zuständig: offen
+- Braucht: Lieferung der Varianten · Folgt auf: P40, P91
+- Ziel: Die Reisenden sehen nicht mehr gleich aus (Max, 08.11.).
+- Enthalten: Je Spezies 6 Texturen (Original + 5 Varianten: Haut/Schuppen, Haarfarbe, Kleidung); für Menschen aufsteckbare Frisuren und Hüte am Kopfknochen. Jeder Reisende bekommt fest eine Kombination (Figuren in den Daten, normale per Namens-Hash, auch in den endlosen Tagen). **Passfoto je Kombination automatisch aus der echten Figur gerendert**, damit Foto und Person immer zusammenpassen. Betrifft `TravelerData`, `TravelerPrefabBuilder`, `DayGenerator`, `StoryCharacterBuilder`, Dokument-Fotos.
+- Nicht enthalten: neue Fehlerart „Foto passt nicht“ (bewusst weggelassen), eigene Modelle je Figur.
+- Abnahme: Auf einem Tag sehen keine zwei Reisenden derselben Spezies gleich aus, und jedes Passfoto zeigt genau die Person am Fenster.

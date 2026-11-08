@@ -69,6 +69,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Reisende reagieren, Durchgelassene abends in der Station | P100, P101 | Schalter, Händler | offen |
 | Wachmann, Ragdoll an der Schleuse | P104, P105 | P91 | offen |
 | Heim-Shuttle angedockt, Schiffe landen im Hangar | P106, P107 | P72, P25 | offen, Assets bestellt |
+| Jeder Reisende sieht anders aus, Passfoto je Variante | P108 | Schalter, Dokumente | Assets bestellt |
 | Kiosk-Gitter ganz offen oder zu | P90 | Händler | wartet auf `SM_Kiosk_Shutter` |
 
 ## Lücken / passt noch nicht

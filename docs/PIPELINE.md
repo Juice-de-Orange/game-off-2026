@@ -406,3 +406,12 @@ in `docs/ASSET-REQUESTS.md`.
 - status: offen
 - meldung: Max bestellt das bewusst in dieser Größe. Zuerst die P1-Einträge (Wache muss wie die `SK_NPC_*` geriggt sein, damit sie im selben Skelett läuft; außerdem Shuttle außen und Kabine innen). Bei den Planetenkarten bitte auf die im Feedback genannte Lage der Heimatstadt achten. Bitte jede fertige Lieferung wie in M016 melden.
 - antwort:
+
+### M024 — Neue Aufträge P108: Varianten der Reisenden
+- datum: 2026-11-08
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`: `T_NPC_*_Albedo_V1` bis `V5` (25 Texturen), `SM_NPC_Hair_*`, `SM_NPC_Hat_*` (5 Modelle)
+- status: offen
+- meldung: Max will, dass die Reisenden verschieden aussehen. Die Texturen müssen exakt das UV-Layout der vorhandenen `T_NPC_<Spezies>_Albedo` behalten, gern alle auf einem Branch mit Lineup je Spezies. Bitte jede fertige Lieferung wie in M016 melden.
+- antwort:

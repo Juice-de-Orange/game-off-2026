@@ -7255,3 +7255,813 @@ refs: []
 placeholder: Kein Ton, bis die Lieferung da ist.
 feedback: []
 ```
+
+### T_NPC_Human_Albedo_V1.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V1.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V1.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 1 von T_NPC_Human_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Human passt: dunkle Haut, graues Haar, Mechaniker-Overall in Oliv. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo.png]
+placeholder: Kopie von T_NPC_Human_Albedo
+feedback: []
+```
+
+### T_NPC_Human_Albedo_V2.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V2.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V2.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 2 von T_NPC_Human_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Human passt: helle Haut, rotes Haar, Reisemantel in Dunkelblau. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo.png]
+placeholder: Kopie von T_NPC_Human_Albedo
+feedback: []
+```
+
+### T_NPC_Human_Albedo_V3.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V3.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V3.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 3 von T_NPC_Human_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Human passt: mittlere Haut, schwarzes Haar, Arbeitsjacke in Senf. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo.png]
+placeholder: Kopie von T_NPC_Human_Albedo
+feedback: []
+```
+
+### T_NPC_Human_Albedo_V4.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V4.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V4.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 4 von T_NPC_Human_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Human passt: gebräunte Haut, blondes Haar, abgetragener Anzug in Braun. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo.png]
+placeholder: Kopie von T_NPC_Human_Albedo
+feedback: []
+```
+
+### T_NPC_Human_Albedo_V5.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V5.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V5.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 5 von T_NPC_Human_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Human passt: blasse Haut, weißes Haar, Pullover in Dunkelrot. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo.png]
+placeholder: Kopie von T_NPC_Human_Albedo
+feedback: []
+```
+
+### T_NPC_Vellani_Albedo_V1.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V1.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V1.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 1 von T_NPC_Vellani_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Vellani passt: blaugrau mit dunklem Kamm, Kleidung Ocker. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo.png]
+placeholder: Kopie von T_NPC_Vellani_Albedo
+feedback: []
+```
+
+### T_NPC_Vellani_Albedo_V2.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V2.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V2.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 2 von T_NPC_Vellani_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Vellani passt: violett, heller Kamm, Kleidung Dunkelgrün. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo.png]
+placeholder: Kopie von T_NPC_Vellani_Albedo
+feedback: []
+```
+
+### T_NPC_Vellani_Albedo_V3.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V3.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V3.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 3 von T_NPC_Vellani_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Vellani passt: türkis, Kleidung Rost. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo.png]
+placeholder: Kopie von T_NPC_Vellani_Albedo
+feedback: []
+```
+
+### T_NPC_Vellani_Albedo_V4.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V4.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V4.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 4 von T_NPC_Vellani_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Vellani passt: grau mit rötlichen Flecken, Kleidung Schwarz. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo.png]
+placeholder: Kopie von T_NPC_Vellani_Albedo
+feedback: []
+```
+
+### T_NPC_Vellani_Albedo_V5.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V5.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V5.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 5 von T_NPC_Vellani_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Vellani passt: hellblau, Kleidung Senf. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo.png]
+placeholder: Kopie von T_NPC_Vellani_Albedo
+feedback: []
+```
+
+### T_NPC_Quobb_Albedo_V1.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V1.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V1.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 1 von T_NPC_Quobb_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Quobb passt: moosgrün, Kleidung Violett. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo.png]
+placeholder: Kopie von T_NPC_Quobb_Albedo
+feedback: []
+```
+
+### T_NPC_Quobb_Albedo_V2.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V2.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V2.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 2 von T_NPC_Quobb_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Quobb passt: orange, Kleidung Teal. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo.png]
+placeholder: Kopie von T_NPC_Quobb_Albedo
+feedback: []
+```
+
+### T_NPC_Quobb_Albedo_V3.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V3.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V3.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 3 von T_NPC_Quobb_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Quobb passt: lila gefleckt, Kleidung Ocker. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo.png]
+placeholder: Kopie von T_NPC_Quobb_Albedo
+feedback: []
+```
+
+### T_NPC_Quobb_Albedo_V4.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V4.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V4.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 4 von T_NPC_Quobb_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Quobb passt: blass-rosa, Kleidung Dunkelblau. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo.png]
+placeholder: Kopie von T_NPC_Quobb_Albedo
+feedback: []
+```
+
+### T_NPC_Quobb_Albedo_V5.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V5.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V5.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 5 von T_NPC_Quobb_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Quobb passt: dunkelbraun, Kleidung Rot. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo.png]
+placeholder: Kopie von T_NPC_Quobb_Albedo
+feedback: []
+```
+
+### T_NPC_Sorvak_Albedo_V1.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V1.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V1.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 1 von T_NPC_Sorvak_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Sorvak passt: dunkelgrün, Rüstung Rost. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo.png]
+placeholder: Kopie von T_NPC_Sorvak_Albedo
+feedback: []
+```
+
+### T_NPC_Sorvak_Albedo_V2.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V2.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V2.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 2 von T_NPC_Sorvak_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Sorvak passt: sandfarben, Rüstung Dunkelgrau. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo.png]
+placeholder: Kopie von T_NPC_Sorvak_Albedo
+feedback: []
+```
+
+### T_NPC_Sorvak_Albedo_V3.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V3.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V3.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 3 von T_NPC_Sorvak_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Sorvak passt: rotbraun, Rüstung Schwarz. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo.png]
+placeholder: Kopie von T_NPC_Sorvak_Albedo
+feedback: []
+```
+
+### T_NPC_Sorvak_Albedo_V4.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V4.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V4.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 4 von T_NPC_Sorvak_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Sorvak passt: graublau, Rüstung Bronze. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo.png]
+placeholder: Kopie von T_NPC_Sorvak_Albedo
+feedback: []
+```
+
+### T_NPC_Sorvak_Albedo_V5.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V5.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V5.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 5 von T_NPC_Sorvak_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Sorvak passt: fast schwarz, Rüstung Olive. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo.png]
+placeholder: Kopie von T_NPC_Sorvak_Albedo
+feedback: []
+```
+
+### T_NPC_Xirrik_Albedo_V1.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V1.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V1.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 1 von T_NPC_Xirrik_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Xirrik passt: goldgelb, Panzer dunkel. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo.png]
+placeholder: Kopie von T_NPC_Xirrik_Albedo
+feedback: []
+```
+
+### T_NPC_Xirrik_Albedo_V2.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V2.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V2.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 2 von T_NPC_Xirrik_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Xirrik passt: tiefblau, Panzer Türkis. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo.png]
+placeholder: Kopie von T_NPC_Xirrik_Albedo
+feedback: []
+```
+
+### T_NPC_Xirrik_Albedo_V3.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V3.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V3.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 3 von T_NPC_Xirrik_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Xirrik passt: grün-schwarz gestreift. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo.png]
+placeholder: Kopie von T_NPC_Xirrik_Albedo
+feedback: []
+```
+
+### T_NPC_Xirrik_Albedo_V4.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V4.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V4.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 4 von T_NPC_Xirrik_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Xirrik passt: blutrot, Panzer Grau. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo.png]
+placeholder: Kopie von T_NPC_Xirrik_Albedo
+feedback: []
+```
+
+### T_NPC_Xirrik_Albedo_V5.png
+```yaml
+path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V5.png
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V5.png   # 128x128, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Variante 5 von T_NPC_Xirrik_Albedo mit exakt gleichem UV-Layout, damit sie auf SK_NPC_Xirrik passt: beige, Panzer Violett. Nur Farben ändern, gleiches Pixel-Niveau wie das Original.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo.png]
+placeholder: Kopie von T_NPC_Xirrik_Albedo
+feedback: []
+```
+
+### SM_NPC_Hair_Short.fbx
+```yaml
+path: Assets/_Project/Art/Models/Characters/SM_NPC_Hair_Short.fbx
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0.28, 0.3, 0.25]
+pivot: bottom_center
+tris_max: 300
+materials: [Hair]
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Hair_Albedo.png   # 64x64, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  Kurze Haare für den Kopf von SK_NPC_Human, sitzt aufgesteckt am Kopfknochen und passt auf den vorhandenen Kopf, ohne ihn zu durchstoßen. Textur möglichst neutral, die Haarfarbe wird im Spiel eingefärbt.
+interaction: "wird am Kopfknochen befestigt"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Models/Characters/SK_NPC_Human.fbx]
+placeholder: Keiner, bis zur Lieferung ohne Frisur.
+feedback: []
+```
+
+### SM_NPC_Hair_Long.fbx
+```yaml
+path: Assets/_Project/Art/Models/Characters/SM_NPC_Hair_Long.fbx
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0.28, 0.3, 0.25]
+pivot: bottom_center
+tris_max: 300
+materials: [Hair]
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Hair_Albedo.png   # 64x64, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  Lange Haare bis zur Schulter für den Kopf von SK_NPC_Human, sitzt aufgesteckt am Kopfknochen und passt auf den vorhandenen Kopf, ohne ihn zu durchstoßen. Textur möglichst neutral, die Haarfarbe wird im Spiel eingefärbt.
+interaction: "wird am Kopfknochen befestigt"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Models/Characters/SK_NPC_Human.fbx]
+placeholder: Keiner, bis zur Lieferung ohne Frisur.
+feedback: []
+```
+
+### SM_NPC_Hair_Bun.fbx
+```yaml
+path: Assets/_Project/Art/Models/Characters/SM_NPC_Hair_Bun.fbx
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0.28, 0.3, 0.25]
+pivot: bottom_center
+tris_max: 300
+materials: [Hair]
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Hair_Albedo.png   # 64x64, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  Haarknoten für den Kopf von SK_NPC_Human, sitzt aufgesteckt am Kopfknochen und passt auf den vorhandenen Kopf, ohne ihn zu durchstoßen. Textur möglichst neutral, die Haarfarbe wird im Spiel eingefärbt.
+interaction: "wird am Kopfknochen befestigt"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Models/Characters/SK_NPC_Human.fbx]
+placeholder: Keiner, bis zur Lieferung ohne Frisur.
+feedback: []
+```
+
+### SM_NPC_Hat_Cap.fbx
+```yaml
+path: Assets/_Project/Art/Models/Characters/SM_NPC_Hat_Cap.fbx
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0.28, 0.3, 0.25]
+pivot: bottom_center
+tris_max: 300
+materials: [Hair]
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Hair_Albedo.png   # 64x64, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  Abgewetzte Schirmmütze für den Kopf von SK_NPC_Human, sitzt aufgesteckt am Kopfknochen und passt auf den vorhandenen Kopf, ohne ihn zu durchstoßen. Textur möglichst neutral, die Haarfarbe wird im Spiel eingefärbt.
+interaction: "wird am Kopfknochen befestigt"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Models/Characters/SK_NPC_Human.fbx]
+placeholder: Keiner, bis zur Lieferung ohne Frisur.
+feedback: []
+```
+
+### SM_NPC_Hat_Beanie.fbx
+```yaml
+path: Assets/_Project/Art/Models/Characters/SM_NPC_Hat_Beanie.fbx
+package: P108
+scene: Prüfkammer
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0.28, 0.3, 0.25]
+pivot: bottom_center
+tris_max: 300
+materials: [Hair]
+textures:
+  - Assets/_Project/Art/Textures/Characters/T_NPC_Hair_Albedo.png   # 64x64, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  Wollmütze für den Kopf von SK_NPC_Human, sitzt aufgesteckt am Kopfknochen und passt auf den vorhandenen Kopf, ohne ihn zu durchstoßen. Textur möglichst neutral, die Haarfarbe wird im Spiel eingefärbt.
+interaction: "wird am Kopfknochen befestigt"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/Models/Characters/SK_NPC_Human.fbx]
+placeholder: Keiner, bis zur Lieferung ohne Frisur.
+feedback: []
+```
