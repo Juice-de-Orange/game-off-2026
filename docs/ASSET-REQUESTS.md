@@ -1271,7 +1271,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Counter.fbx
 package: P11
 scene: Kiosk
-status: final
+status: rework
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.8, 2.8, 2.4]
@@ -1293,6 +1293,7 @@ refs: [docs/style/refs/ai_workshop_bench_01.webp, docs/style/refs/ai_counter_con
 placeholder: Box 0.8 x 2.8 x 1.0 m, Pivot bottom_center, Material-Slots [Counter, Glass]
 feedback:
   - "2026-11-03 max: (M008/5) Tresen bleibt 1,0 m hoch; Rollgitter schliesst die Oeffnung darueber, violettes Schild haengt oben - Gesamthoehe 2,4 m."
+  - "2026-11-08 max: (P90, Issue #21) Rollgitter aus dem Modell nehmen: Die Öffnung über der Theke bleibt frei, oben nur Blende und Schild. Das Gitter kommt als eigenes Modell SM_Kiosk_Shutter und ist entweder ganz offen oder ganz zu."
 ```
 
 ### SM_Kiosk_Shelf.fbx
@@ -6714,5 +6715,60 @@ animations: []
 collision: none
 refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
 placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### SM_Kiosk_Shutter.fbx
+```yaml
+path: Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Shutter.fbx
+package: P90
+scene: Kiosk
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.08, 2.6, 1.3]
+pivot: top_center
+tris_max: 200
+materials: [Shutter]
+textures:
+  - Assets/_Project/Art/Textures/Kiosk/T_Kiosk_Shutter_Albedo.png   # 128x128, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Rollgitter für die Kiosk-Durchreiche als eigenes Teil: füllt die ganze Öffnung über der Theke von Blende bis Tresen, Metalllamellen mit Rost wie am bisherigen Gitter von SM_Kiosk_Counter. Muss zu SM_Kiosk_Counter passen.
+interaction: "wird per Skript ganz geöffnet (nach oben eingefahren) oder ganz geschlossen"
+variants: []
+animations: []
+collision: prefab
+refs: [Assets/_Project/Art/Models/Kiosk/SM_Kiosk_Counter.fbx]
+placeholder: Box 0.08 x 2.6 x 1.3 m, Pivot top_center, Material-Slot [Shutter]
+feedback: []
+```
+
+### favicon.png
+```yaml
+path: Assets/WebGLTemplates/Kestrel9/favicon.png
+package: P49
+scene: Browser-Tab (Web-Vorlage)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/WebGLTemplates/Kestrel9/favicon.png   # 64x64, transparent
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Favicon für den Browser-Tab von Kestrel-9: Pixel-Art, Farben aus der Palette, transparenter Hintergrund. Motiv: stilisierte Raumstation oder Kestrel-Silhouette
+  mit einer "9", klare Form mit kräftiger Kontur. Muss bei 16x16 Pixeln noch erkennbar sein, also wenige große Formen und keine feine Schrift.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
+placeholder: PNG 64x64, Magenta/Grau-Raster
 feedback: []
 ```
