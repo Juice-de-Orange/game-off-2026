@@ -1512,7 +1512,9 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Neuer Spieler kommt ohne Vorwissen durch Korrs Prüfung.
 
 ### P87 — Shifter: Schlüsselentscheidung und Ende „Airlocked“
-- Größe: S–M · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 07.11.) · Zuständig: offen
+- Größe: S–M · Priorität: Muss (Vorschlag) · Status: in Arbeit (martin, 08.11.) · Zuständig: martin
+- Zuschnitt (Martin, 08.11.): Bitte an **Tag 6**: Der Shifter fragt am Schalter, ob du **dem Widerstand beitrittst** (Frage mit JOIN/REFUSE).
+  Beigetreten → an Tag 7 kommt er als Erster, enthüllt sich als Spion, Sicherheit kommt, Ende **AIRLOCKED** am Schalter. Abgelehnt → Tag 7 Wendung ohne Ende.
 - Braucht: P75, P76, P12 · Folgt auf: —
 - Ziel: Call 07.11.: Der Shifter gibt sich als Widerstandskämpfer aus; wer ihm bei **einer** großen Bitte hilft, fliegt an Tag 7 durch die
   Schleuse (Ende „Airlocked“).
