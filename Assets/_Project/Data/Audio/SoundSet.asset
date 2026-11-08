@@ -42,6 +42,15 @@ MonoBehaviour:
   airlockFire:
     clip: {fileID: 8300000, guid: 17ee282a3ac452c44b57ccb863d45c15, type: 3}
     volume: 1
+  shutterDrop:
+    clip: {fileID: 8300000, guid: 3aa1e3c3077540842bbf101df48a54bf, type: 3}
+    volume: 1
+  shutterRise:
+    clip: {fileID: 8300000, guid: 99c0936a240107b45ae017443aaf9516, type: 3}
+    volume: 1
+  arrestScuffle:
+    clip: {fileID: 8300000, guid: 7c88cce92c2c4b7469e1c67376cb4c6d, type: 3}
+    volume: 1
   paChime:
     clip: {fileID: 8300000, guid: 361f0241b2a35de4ea129aaba4f41d33, type: 3}
     volume: 1

@@ -17,5 +17,4 @@ MonoBehaviour:
   translateEdge: 3
   minHoldSeconds: 2.5
   holdSecondsPerCharacter: 0.04
-  leaveSeconds: 1.2
-  walkSpeed: 0.85
+  walkSpeed: 1.4

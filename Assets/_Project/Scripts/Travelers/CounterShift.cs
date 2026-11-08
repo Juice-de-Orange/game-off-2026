@@ -19,8 +19,8 @@ namespace GameOff.Travelers
         [SerializeField] private CounterStation station;
         [SerializeField] private DocumentDesk desk;
         [SerializeField] private DayRules day;
-        [Tooltip("Pause between one traveler leaving and the next one's papers coming in (s).")]
-        [SerializeField] private float nextTravelerDelay = 1.5f;
+        [Tooltip("Pause with the lock empty, between one traveler being gone and the next one walking in (s).")]
+        [SerializeField] private float nextTravelerDelay = 0.5f;
         [Tooltip("Citations per day that are only warnings; from the next one on they carry a penalty (P08).")]
         [SerializeField] private int freeWarnings = 2;
 
@@ -31,6 +31,7 @@ namespace GameOff.Travelers
         private Verdict? _returnedStamp;
         private int _citations;
         private bool _nextPending;
+        private bool _arriving, _deliverPending;
 
         /// <summary>The traveler at the window, the decision taken, and how it was judged.</summary>
         public event Action<TravelerData, Verdict, Judgement> DecisionMade;
@@ -64,6 +65,11 @@ namespace GameOff.Travelers
                 _nextPending = false;
                 NextTraveler();
             }
+            if (_deliverPending)
+            {
+                _deliverPending = false;
+                if (_current != null) desk.Deliver(_current.Documents);
+            }
         }
 
         private void OnDisable()
@@ -80,11 +86,21 @@ namespace GameOff.Travelers
                 _deciding = false;
                 _nextPending = true;
             }
+            if (_arriving)
+            {
+                StopAllCoroutines();
+                _arriving = false;
+                _deliverPending = true;
+            }
         }
 
         /// <summary>Starts a day (P09 will call this each morning); sitting down starts the first traveler.</summary>
         /// <summary>P75: may change the day before it starts (recurring characters in the queue, their wanted entries).</summary>
         public Func<DayRules, DayRules> PlanDay;
+        /// <summary>P91: how long the traveler needs to reach the window; the papers come after that.</summary>
+        public Func<float> ArrivalDelay;
+        /// <summary>P91: how long the last traveler needs to be gone after this decision; the next one comes after that.</summary>
+        public Func<Verdict, float> NextDelay;
 
         public void BeginDay(DayRules newDay, string newToday = "")
         {
@@ -95,6 +111,8 @@ namespace GameOff.Travelers
             _started = false;
             _deciding = false;
             _nextPending = false;
+            _arriving = false;
+            _deliverPending = false;
             _current = null;
             _evaluation = null;
             _returnedStamp = null;
@@ -130,13 +148,23 @@ namespace GameOff.Travelers
             }
             _current = day.Travelers[_index];
             _evaluation = RuleEvaluator.Evaluate(_current, day);
-            desk.Deliver(_current.Documents);
             TravelerArrived?.Invoke(_current);
+            float walk = ArrivalDelay != null ? ArrivalDelay() : 0f;
+            if (walk > 0f) StartCoroutine(DeliverAfter(walk));
+            else desk.Deliver(_current.Documents);
+        }
+
+        private IEnumerator DeliverAfter(float seconds)
+        {
+            _arriving = true;
+            yield return new WaitForSeconds(seconds);
+            _arriving = false;
+            desk.Deliver(_current.Documents);
         }
 
         private void OnAction(CounterAction action)
         {
-            if (_current == null || _deciding) return;
+            if (_current == null || _deciding || _arriving) return;
             // Stamps are read from the traveler's papers when they are handed back (a stamp on a citation slip doesn't count)
             if (action != CounterAction.Arrest && action != CounterAction.Airlock) return;
             if (desk.IsBusy) return; // papers still on their way in
@@ -177,12 +205,12 @@ namespace GameOff.Travelers
             if (!judgement.Correct) PrintCitation(judgement);
             _current = null;
             DecisionMade?.Invoke(traveler, chosen, judgement);
-            StartCoroutine(Next());
+            StartCoroutine(Next(chosen));
         }
 
-        private IEnumerator Next()
+        private IEnumerator Next(Verdict chosen)
         {
-            yield return new WaitForSeconds(nextTravelerDelay);
+            yield return new WaitForSeconds((NextDelay != null ? NextDelay(chosen) : 0f) + nextTravelerDelay);
             _deciding = false;
             NextTraveler();
         }

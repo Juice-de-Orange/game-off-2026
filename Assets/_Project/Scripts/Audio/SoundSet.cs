@@ -20,6 +20,9 @@ namespace GameOff.Audio
         public Sound buttonArrest = new Sound();
         public Sound coverFlip = new Sound();
         public Sound airlockFire = new Sound();
+        public Sound shutterDrop = new Sound();
+        public Sound shutterRise = new Sound();
+        public Sound arrestScuffle = new Sound();
 
         [Header("Station")]
         public Sound paChime = new Sound();

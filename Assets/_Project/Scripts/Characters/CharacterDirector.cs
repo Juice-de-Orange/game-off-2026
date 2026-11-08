@@ -30,6 +30,8 @@ namespace GameOff.Characters
         [Tooltip("P87: seconds after a character arrives before the run ends at them (time for the reveal).")]
         [SerializeField] private float endingDelay = 7f;
 
+        private float WalkInSeconds => shift.ArrivalDelay != null ? shift.ArrivalDelay() : 0f;
+
         private readonly Dictionary<TravelerData, CharacterPlanner.Planned> _today = new Dictionary<TravelerData, CharacterPlanner.Planned>();
 
         public CharacterMemory Memory { get; private set; } = new CharacterMemory();
@@ -118,7 +120,7 @@ namespace GameOff.Characters
 
         private IEnumerator Ask(TravelerData traveler, Appearance a)
         {
-            yield return new WaitForSeconds(questionDelay);
+            yield return new WaitForSeconds(questionDelay + WalkInSeconds); // P91: counted from when they stand at the window
             if (shift.Current != traveler || dayManager == null || dayManager.UI == null) yield break; // already decided
             var station = shift.Station;
             if (station != null) station.SetInputBlocked(true);
@@ -136,7 +138,7 @@ namespace GameOff.Characters
         private IEnumerator EndRun(TravelerData traveler, Appearance a)
         {
             var station = shift.Station;
-            yield return new WaitForSeconds(endingDelay);
+            yield return new WaitForSeconds(endingDelay + WalkInSeconds);
             if (station != null) station.SetInputBlocked(true);
             if (dayManager != null && dayManager.UI != null && !string.IsNullOrWhiteSpace(a.endingWarning)) dayManager.UI.ShowHint(a.endingWarning, 6f);
             yield return new WaitForSeconds(3f);

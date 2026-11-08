@@ -437,6 +437,7 @@ namespace GameOff.EditorTools
                 var shift = root.GetComponent<CounterShift>();
                 if (shift == null) shift = root.AddComponent<CounterShift>();
                 var sso = new SerializedObject(shift);
+                sso.FindProperty("nextTravelerDelay").floatValue = 0.5f; // P91: on top of the time the last traveler needs to leave
                 sso.FindProperty("station").objectReferenceValue = root.GetComponent<CounterStation>();
                 sso.FindProperty("desk").objectReferenceValue = desk;
                 var testDay = AssetDatabase.LoadAssetAtPath<DayRules>(TestDayPath);
@@ -475,6 +476,9 @@ namespace GameOff.EditorTools
                 WireBoard(root, desk, shift, hint, log);
                 WireTraveler(root, desk, shift, hint, log);
                 WireTutorial(root, desk, shift, hint, log);
+                WireShutter(root, log);
+                var unusedOuter = root.transform.Find("Traveler_DoorOuter"); // P91: nobody walks to the outer hatch any more
+                if (unusedOuter != null) Object.DestroyImmediate(unusedOuter.gameObject);
                 foreach (var text in root.GetComponentsInChildren<TMP_Text>(true)) text.font = font; // hint, notice, subtitle, labels (P54)
                 PrefabUtility.SaveAsPrefabAsset(root, CounterPrefab);
                 log.Add("counter wired: drawer, 3 spots, DocumentDesk, pinboard, look-around, announcements");
@@ -566,6 +570,48 @@ namespace GameOff.EditorTools
             log.Add("pinboard spots, SeatedLook, Announcer");
         }
 
+        private const string ShutterModel = "Assets/_Project/Art/Models/Counter/SM_Counter_SecurityShutter.fbx";
+
+        /// <summary>
+        /// P91: the shutter behind the counter window on the lock side (chair = origin, glass at x 2, window 4 m wide). The delivered model
+        /// if it exists (pivot top_center), otherwise grey slats.
+        /// </summary>
+        private static void WireShutter(GameObject root, List<string> log)
+        {
+            var shutterT = root.transform.Find("SecurityShutter");
+            if (shutterT != null) Object.DestroyImmediate(shutterT.gameObject);
+            shutterT = new GameObject("SecurityShutter").transform;
+            shutterT.SetParent(root.transform, false);
+            shutterT.localPosition = new Vector3(2.12f, 0f, 0f);
+            var slats = new GameObject("Slats").transform;
+            slats.SetParent(shutterT, false);
+            // Its height is set by SecurityShutter at runtime.
+            var model = AssetDatabase.LoadAssetAtPath<GameObject>(ShutterModel);
+            if (model != null) ((GameObject)PrefabUtility.InstantiatePrefab(model)).transform.SetParent(slats, false);
+            else
+            {
+                var material = UnlitMaterial("M_Counter_Shutter_Placeholder", null, new Color(0.15f, 0.16f, 0.19f));
+                for (int i = 0; i < 12; i++)
+                {
+                    var slat = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    slat.name = "Slat_" + i;
+                    Object.DestroyImmediate(slat.GetComponent<Collider>());
+                    slat.transform.SetParent(slats, false);
+                    slat.transform.localPosition = new Vector3(0f, -0.09f - i * 0.185f, 0f);
+                    slat.transform.localScale = new Vector3(0.03f, 0.17f, 4.4f);
+                    slat.GetComponent<MeshRenderer>().sharedMaterial = material;
+                }
+            }
+            var shutter = shutterT.gameObject.AddComponent<SecurityShutter>();
+            var so = new SerializedObject(shutter);
+            so.FindProperty("slats").objectReferenceValue = slats;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            var pso = new SerializedObject(root.GetComponent<TravelerPresenter>());
+            pso.FindProperty("shutter").objectReferenceValue = shutter;
+            pso.ApplyModifiedPropertiesWithoutUndo();
+            log.Add("security shutter");
+        }
+
         /// <summary>P86: Inspector Korr's board, a strip along the top of the seated HUD, right of the day label and above the papers held up (they end at 90 %).</summary>
         private static void WireTutorial(GameObject root, DocumentDesk desk, CounterShift shift, TextMeshProUGUI hint, List<string> log)
         {
@@ -624,7 +670,6 @@ namespace GameOff.EditorTools
             var stand = LockPoint(root.transform, "Traveler_Stand", new Vector3(4f, 0f, 0f), Quaternion.Euler(0f, -90f, 0f));
             var hallDoor = LockPoint(root.transform, "Traveler_DoorHall", new Vector3(4f, 0f, 3f), Quaternion.identity);
             var hangarDoor = LockPoint(root.transform, "Traveler_DoorHangar", new Vector3(4f, 0f, -3f), Quaternion.identity);
-            var outerDoor = LockPoint(root.transform, "Traveler_DoorOuter", new Vector3(6f, 0f, 0f), Quaternion.identity);
 
             // The desk view must reach over the tallest traveler (Vellani, 2.2 m); the desk itself stays in view
             var deskCamera = (Component)new SerializedObject(station).FindProperty("deskCamera").objectReferenceValue;
@@ -680,7 +725,6 @@ namespace GameOff.EditorTools
             pso.FindProperty("standSpot").objectReferenceValue = stand;
             pso.FindProperty("hallDoor").objectReferenceValue = hallDoor;
             pso.FindProperty("hangarDoor").objectReferenceValue = hangarDoor;
-            pso.FindProperty("outerDoor").objectReferenceValue = outerDoor;
             pso.ApplyModifiedPropertiesWithoutUndo();
             log.Add("TravelerPresenter, SpeechBubble, desk view 20 degrees");
         }

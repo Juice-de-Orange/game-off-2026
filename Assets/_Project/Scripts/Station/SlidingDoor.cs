@@ -14,7 +14,17 @@ namespace GameOff.Station
     [RequireComponent(typeof(Collider))]
     public class SlidingDoor : MonoBehaviour
     {
+        /// <summary>The doors of the inspection lock that the counter opens for travelers (P91).</summary>
+        public enum Role { None, LockHall, LockHangar }
+
+        private static readonly Dictionary<Role, SlidingDoor> ByRole = new Dictionary<Role, SlidingDoor>();
+
+        /// <summary>The door with this role, or null.</summary>
+        public static SlidingDoor ForRole(Role wanted) => ByRole.TryGetValue(wanted, out var door) ? door : null;
+
         [SerializeField] private DoorAccess access = DoorAccess.Public;
+        [Tooltip("Set on the two doors of the inspection lock, so the counter can open them without a scene reference.")]
+        [SerializeField] private Role role;
         [Tooltip("The moving door leaf (model or placeholder).")]
         [SerializeField] private Transform panel;
         [Tooltip("How far the leaf slides (normally its width), along its local X axis.")]
@@ -39,6 +49,8 @@ namespace GameOff.Station
         private Interactable _lockedPrompt;
 
         public DoorAccess Access => access;
+        /// <summary>From Close() until the leaf has shut (s).</summary>
+        public float CloseSeconds => closeDelay + openSeconds;
         public bool IsOpen => _open > 0.99f;
 
         private void Awake()
@@ -46,6 +58,16 @@ namespace GameOff.Station
             if (panel != null) _closedLocalPos = panel.localPosition;
             GetComponent<Collider>().isTrigger = true;
             UpdateLocked();
+        }
+
+        private void OnEnable()
+        {
+            if (role != Role.None) ByRole[role] = this;
+        }
+
+        private void OnDisable()
+        {
+            if (role != Role.None && ForRole(role) == this) ByRole.Remove(role);
         }
 
         /// <summary>Change who may pass (e.g. unlock a room later).</summary>

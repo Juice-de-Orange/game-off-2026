@@ -62,7 +62,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
-| max | P91 Reisende gehen, Gitter bei Verhaftung | `Scripts/Travelers/TravelerPresenter.cs`, `Scripts/Travelers/CounterShift.cs`, `Scripts/Station/SlidingDoor.cs`, `Scripts/Counter/DialogueTuning.cs`, `Scripts/Audio/SoundSet.cs`, `Scripts/Editor/DocumentPrefabBuilder.cs`, `Scripts/Editor/StationGrayboxBuilder.cs`, `Scripts/Editor/SoundSetBuilder.cs`, `Main.unity`, `Menu.unity`, `Boot.unity`, alle generierten Prefabs, `Data/Audio/SoundSet.asset` | 08.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
@@ -93,6 +92,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P91 Reisende gehen durch die Türen, Gitter bei Verhaftung und Schleuse (max, 08.11.)
 - [x] P15 Inhalte: alle 12 Story-Tage mit normalen Reisenden, Regeln und Briefen (max, 08.11.; Anspielen steht aus)
 - [x] P92 Diner außer Betrieb, P93 Barkeeper sagt seinen Wunsch, P96 Händler atmen (max, 08.11.)
 - [x] P86 Korr-Tutorial an Tag 1, Korr steht fest vorn (max, 08.11.)

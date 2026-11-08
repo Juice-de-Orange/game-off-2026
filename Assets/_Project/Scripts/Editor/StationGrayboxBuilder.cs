@@ -602,9 +602,11 @@ namespace GameOff.EditorTools
         {
             public readonly string Name; public readonly bool OnXLine; public readonly float Line, Center, Width;
             public readonly GameOff.Station.DoorAccess Access;
-            public DoorSpec(string name, bool onXLine, float line, float center, float width, GameOff.Station.DoorAccess access)
+            public readonly GameOff.Station.SlidingDoor.Role Role;
+            public DoorSpec(string name, bool onXLine, float line, float center, float width, GameOff.Station.DoorAccess access,
+                GameOff.Station.SlidingDoor.Role role = GameOff.Station.SlidingDoor.Role.None)
             {
-                Name = name; OnXLine = onXLine; Line = line; Center = center; Width = width; Access = access;
+                Name = name; OnXLine = onXLine; Line = line; Center = center; Width = width; Access = access; Role = role;
             }
         }
 
@@ -620,8 +622,8 @@ namespace GameOff.EditorTools
             new DoorSpec("Door_Service_Hall",   false,  -6,  -7,   1.2f, GameOff.Station.DoorAccess.PlayerOnly),
             new DoorSpec("Door_Service_Hangar", false, -12,  -7,   1.2f, GameOff.Station.DoorAccess.PlayerOnly),
             new DoorSpec("Door_Service_Counter",true,   -6,  -9,   1.2f, GameOff.Station.DoorAccess.PlayerOnly),
-            new DoorSpec("Door_Lock_Hall",      false,  -6,   2,   1.6f, GameOff.Station.DoorAccess.Scripted),
-            new DoorSpec("Door_Lock_Hangar",    false, -12,   2,   1.6f, GameOff.Station.DoorAccess.Scripted),
+            new DoorSpec("Door_Lock_Hall",      false,  -6,   2,   1.6f, GameOff.Station.DoorAccess.Scripted, GameOff.Station.SlidingDoor.Role.LockHall),
+            new DoorSpec("Door_Lock_Hangar",    false, -12,   2,   1.6f, GameOff.Station.DoorAccess.Scripted, GameOff.Station.SlidingDoor.Role.LockHangar),
         };
 
         private static void BuildDoors(GameObject root)
@@ -703,9 +705,19 @@ namespace GameOff.EditorTools
             audio.spatialBlend = 1f;
             audio.maxDistance = 15f;
 
+            if (d.Access == GameOff.Station.DoorAccess.Scripted)
+            {
+                // P91: "The player never enters the lock" (STATION.md). Travelers walk without colliders, so this only stops the player.
+                var blocker = door.AddComponent<BoxCollider>();
+                blocker.isTrigger = false;
+                blocker.center = new Vector3(0f, 1.1f, 0f);
+                blocker.size = new Vector3(d.Width, 2.2f, 0.2f);
+            }
+
             var sliding = door.AddComponent<GameOff.Station.SlidingDoor>();
             var so = new SerializedObject(sliding);
             so.FindProperty("access").enumValueIndex = (int)d.Access;
+            so.FindProperty("role").enumValueIndex = (int)d.Role;
             so.FindProperty("panel").objectReferenceValue = leaf;
             so.FindProperty("slideDistance").floatValue = d.Width;
             so.FindProperty("audioSource").objectReferenceValue = audio;

@@ -16,11 +16,21 @@ namespace GameOff.Counter
         public float minHoldSeconds = 2.5f;
         [Tooltip("Extra time per character of text (s).")]
         public float holdSecondsPerCharacter = 0.04f;
-        [Tooltip("How long the traveler walks toward the door after a decision before disappearing (s). Keep below CounterShift's pause before the next traveler.")]
-        public float leaveSeconds = 1.2f;
+        [Tooltip("P91: the door opens this long before someone walks through it (s).")]
+        public float doorLeadSeconds = 0.4f;
+        [Tooltip("P91: how far behind the lock doors a traveler starts and ends, out of sight (m).")]
+        public float offstageMeters = 0.9f;
+        [Tooltip("P91: time to turn toward the counter after arriving (s).")]
+        public float turnSeconds = 0.3f;
+        [Tooltip("P91: how long the shutter takes to fall (s).")]
+        public float shutterDropSeconds = 0.25f;
+        [Tooltip("P91: how long the shutter takes to rise again (s).")]
+        public float shutterRiseSeconds = 1.1f;
+        [Tooltip("P91: arrest and airlock: how long the shutter stays down (s).")]
+        public float shutterHoldSeconds = 3f;
         [Tooltip("Crossfade between Idle, Talk and Walk (s).")]
         public float animationBlendSeconds = 0.2f;
-        [Tooltip("Walking speed while leaving (m/s).")]
-        public float walkSpeed = 0.85f;
+        [Tooltip("Walking speed through the lock (m/s).")]
+        public float walkSpeed = 1.4f;
     }
 }

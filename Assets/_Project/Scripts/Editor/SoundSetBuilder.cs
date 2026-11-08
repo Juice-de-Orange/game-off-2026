@@ -38,6 +38,9 @@ namespace GameOff.EditorTools
             Assign(set.printerCitation, "SFX_Printer_Citation");
             Assign(set.buttonArrest, "SFX_Button_Arrest");
             Assign(set.coverFlip, "SFX_Cover_Flip");
+            AssignOr(set.shutterDrop, "SFX_Shutter_Drop", "SFX_Door_Close"); // P91: until the delivery
+            AssignOr(set.shutterRise, "SFX_Shutter_Rise", "SFX_Door_Open");
+            AssignOr(set.arrestScuffle, "SFX_Arrest_Scuffle", "SFX_Button_Arrest");
             Assign(set.airlockFire, "SFX_Airlock_Fire");
             Assign(set.paChime, "SFX_PA_Chime");
             Assign(set.vendorGreet, "SFX_Vendor_Greet");
@@ -53,6 +56,12 @@ namespace GameOff.EditorTools
             EditorUtility.SetDirty(set);
             AssetDatabase.SaveAssets();
             return set;
+        }
+
+        private static void AssignOr(Sound sound, string clipName, string placeholder)
+        {
+            bool delivered = AssetDatabase.LoadAssetAtPath<AudioClip>($"{ClipFolder}{clipName}.ogg") != null;
+            Assign(sound, delivered ? clipName : placeholder);
         }
 
         private static void Assign(Sound sound, string clipName)

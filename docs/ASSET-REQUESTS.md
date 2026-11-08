@@ -6773,3 +6773,108 @@ refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
 placeholder: PNG 64x64, Magenta/Grau-Raster
 feedback: []
 ```
+
+### SM_Counter_SecurityShutter.fbx
+```yaml
+path: Assets/_Project/Art/Models/Counter/SM_Counter_SecurityShutter.fbx
+package: P91
+scene: Schalter
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0.08, 4.4, 2.2]
+pivot: top_center
+tris_max: 300
+materials: [Shutter]
+textures:
+  - Assets/_Project/Art/Textures/Counter/T_Counter_SecurityShutter_Albedo.png   # 256x128, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Schweres Stahl-Sichtgitter vor der Schalterscheibe, breite Lamellen ohne Durchblick, abgenutzt, gelb-schwarzer Warnstreifen an der Unterkante. Fällt bei Verhaftungen und bei der Schleuse herab und verdeckt die Prüfkammer ganz.
+interaction: "fällt per Skript von oben herab und fährt wieder hoch"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: 12 graue Lamellen aus dem Builder, 4.4 x 2.2 m
+feedback: []
+```
+
+### SFX_Arrest_Scuffle.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Arrest_Scuffle.ogg
+package: P91
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Hinter einem Stahlgitter gedämpft: schwere Stiefel, kurzes Gerangel, Handschellen klicken, jemand wird weggezerrt, ca. 3 s. Keine verständlichen Wörter. Freier Sound (CC0 bevorzugt, sonst CC-BY mit Eintrag in CREDITS.md) oder synthetisch.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Bis zur Lieferung ein vorhandener Ton.
+feedback: []
+```
+
+### SFX_Shutter_Drop.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Shutter_Drop.ogg
+package: P91
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Schweres Stahlgitter fällt und schlägt hart auf, ca. 0,5 s.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Bis zur Lieferung ein vorhandener Ton.
+feedback: []
+```
+
+### SFX_Shutter_Rise.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Shutter_Rise.ogg
+package: P91
+scene: Counter
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Schweres Stahlgitter fährt ratternd nach oben, ca. 1 s.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Bis zur Lieferung ein vorhandener Ton.
+feedback: []
+```

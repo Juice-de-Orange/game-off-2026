@@ -315,7 +315,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Geprüft: 84/84 EditMode-Tests; Play-Modus: Drohne in der Schicht zu, abends Ration abgeliefert → FOOD in der Abrechnung abgehakt.
 
 ### P14 — Reisende laufen
-- Größe: M · Priorität: Soll · Status: offen
+- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11.): in der Prüfkammer durch P91 erledigt, Wege durch den Hangar offen
 - Braucht: P04, P07
 - Ziel: Reisende kommen aus dem Hangar zum Schalter und gehen danach weg (NavMesh).
 - Abnahme: Eine Schicht läuft mit sichtbar ankommenden Reisenden.
@@ -1567,11 +1567,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Stand (max, 08.11.): #27 Deckel bleibt über dem Tisch (Winkel +110, gemessen). #15 gesperrte Türen: Ton nur auf [E] (`SlidingDoor`). #18 Kiste verschoben. #23 Dealer 13 cm höher, sitzt auf dem Hocker. #17 Mipmaps für alle Hangar-Texturen: 26–43 % weniger Flimmern bei 3 cm Bewegung (gemessen), **nicht ganz weg, Max prüft, ob es das gemeldete Flackern war**. #21 braucht ein neues Modell: `SM_Kiosk_Counter` auf rework, `SM_Kiosk_Shutter` bestellt; offen, bis geliefert. Geprüft: 155/155 EditMode-Tests, Validate Travelers ok, Occlusion wie bisher 1 Ansicht (105 px). #15 im Spiel nicht automatisiert geprüft.
 
 ### P91 — Reisende gehen wirklich, Verhaftung hinter dem Gitter
-- Größe: L · Priorität: Soll · Status: in Arbeit (max, 08.11.) · Zuständig: max
+- Größe: L · Priorität: Soll · Status: fertig (max, 08.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P14, P40
 - Ziel: Reisende kommen und gehen sichtbar durch die Türen; eine Verhaftung ist spürbar, ohne dass eine Wache zu sehen ist (#28).
 - Enthalten: Reisende betreten die Kammer zu Fuß von außerhalb der Sicht und gehen nach der Entscheidung durch die passende Tür. Nur bei Verhaftung fällt ein Sichtgitter vor die Scheibe, dazu Schritte, Handschellen, Gerangel. Kein Gitter beim normalen Wechsel (Max, 08.11.). Sounds bestellen.
 - Abnahme: Niemand erscheint oder verschwindet sichtbar aus dem Nichts; Verhaftung ist nur über Gitter und Ton erzählt.
+- Ergebnis (max, 08.11.): Reisende kommen durch die Hangar-Tür, gehen nach dem Durchlassen durch die Hallentür, nach dem Abweisen zurück. Verhaftung und Schleuse hinter dem `SecurityShutter` (auch die Schleuse, sonst verschwände die Figur am Außenschott). Papiere kommen erst, wenn die Figur steht. Unsichtbare Sperre in den Kammertüren: Der Spieler kommt nicht hinein. Noch Platzhalter: graue Lamellen und vorhandene Töne, bestellt sind `SM_Counter_SecurityShutter`, `SFX_Arrest_Scuffle`, `SFX_Shutter_Drop`, `SFX_Shutter_Rise`. Geprüft: 155/155 Tests, Validate Travelers, Occlusion, WebGL (Hereinlaufen, ARREST + Gitter). Hinausgehen nach dem Stempeln nicht automatisiert geprüft.
 
 ### P92 — Diner außer Betrieb
 - Größe: S · Priorität: Soll · Status: fertig (max, 08.11.) · Zuständig: max

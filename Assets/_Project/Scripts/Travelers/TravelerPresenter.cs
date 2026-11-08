@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using GameOff.Counter;
+using GameOff.Audio;
 using GameOff.Documents;
+using GameOff.Station;
 using UnityEngine;
 
 namespace GameOff.Travelers
 {
     /// <summary>
-    /// The traveler in the inspection lock (P40): stands at the marking behind the glass, greets the officer, answers questions
-    /// about the fields on their papers, and walks a few steps toward the matching door after the decision before disappearing
-    /// (real walking comes with P14). Figures are reused per model. Idle, Talk and Walk are states of the model's Animator.
+    /// The traveler in the inspection lock (P40, P91): comes in through the hangar door, stands at the marking behind the glass, greets
+    /// the officer and answers questions about the fields on their papers. Admitted: leaves through the hall door; denied: back through
+    /// the hangar door; arrest and airlock happen behind the shutter. Figures are reused per model. Idle, Talk and Walk are states of the
+    /// model's Animator.
     /// </summary>
     public class TravelerPresenter : MonoBehaviour
     {
@@ -25,7 +28,7 @@ namespace GameOff.Travelers
         [SerializeField] private Transform standSpot;
         [SerializeField] private Transform hallDoor;
         [SerializeField] private Transform hangarDoor;
-        [SerializeField] private Transform outerDoor;
+        [SerializeField] private SecurityShutter shutter;
 
         private readonly Dictionary<GameObject, GameObject> _figures = new Dictionary<GameObject, GameObject>();
         private GameObject _figure;
@@ -40,6 +43,8 @@ namespace GameOff.Travelers
             shift.DayBegun += Clear;
             desk.FieldClicked += OnFieldClicked;
             bubble.Finished += OnBubbleFinished;
+            shift.ArrivalDelay = ArrivalSeconds;
+            shift.NextDelay = LeaveSeconds;
         }
 
         private void OnDisable()
@@ -49,26 +54,93 @@ namespace GameOff.Travelers
             shift.DayBegun -= Clear;
             desk.FieldClicked -= OnFieldClicked;
             bubble.Finished -= OnBubbleFinished;
+            shift.ArrivalDelay = null;
+            shift.NextDelay = null;
             _routine = null; // the coroutine stops with the component
+            CloseDoors();
         }
 
         private void OnArrived(TravelerData traveler)
         {
             StopRoutine();
+            CloseDoors(); // in case the last traveler's walk was cut short
             bubble.Hide();
             Show(traveler);
             string greeting = GreetingFor != null ? GreetingFor(traveler) : traveler.Greeting;
-            if (!string.IsNullOrWhiteSpace(greeting)) _routine = StartCoroutine(Greet(traveler, greeting));
+            _routine = StartCoroutine(Arrive(traveler, greeting));
         }
 
         /// <summary>P75: recurring characters greet by what happened last time; null = the traveler's own greeting.</summary>
         public System.Func<TravelerData, string> GreetingFor;
 
-        private IEnumerator Greet(TravelerData traveler, string greeting)
+        private IEnumerator Arrive(TravelerData traveler, string greeting)
         {
-            yield return new WaitForSeconds(tuning.greetingDelay);
+            if (_figure != null) yield return WalkIn(); // a traveler without a model still greets
+            if (!string.IsNullOrWhiteSpace(greeting))
+            {
+                yield return new WaitForSeconds(tuning.greetingDelay);
+                Say(traveler, greeting);
+            }
             _routine = null;
-            Say(traveler, greeting);
+        }
+
+        private IEnumerator WalkIn()
+        {
+            var door = SlidingDoor.ForRole(SlidingDoor.Role.LockHangar);
+            if (door != null) door.Open();
+            yield return new WaitForSeconds(tuning.doorLeadSeconds);
+            yield return WalkTo(standSpot.position);
+            if (door != null) door.Close();
+            var figure = _figure.transform;
+            var from = figure.rotation;
+            for (float t = 0f; t < tuning.turnSeconds; t += Time.deltaTime)
+            {
+                figure.rotation = Quaternion.Slerp(from, standSpot.rotation, t / tuning.turnSeconds);
+                yield return null;
+            }
+            figure.rotation = standSpot.rotation;
+            Play(Idle);
+        }
+
+        private IEnumerator WalkTo(Vector3 target)
+        {
+            var figure = _figure.transform;
+            var heading = Vector3.ProjectOnPlane(target - figure.position, Vector3.up);
+            if (heading.sqrMagnitude > 0.001f) figure.rotation = Quaternion.LookRotation(heading);
+            Play(Walk);
+            while ((figure.position - target).sqrMagnitude > 0.0001f)
+            {
+                figure.position = Vector3.MoveTowards(figure.position, target, tuning.walkSpeed * Time.deltaTime);
+                yield return null;
+            }
+        }
+
+        /// <summary>A spot out of sight behind a lock door, seen from the marking.</summary>
+        private Vector3 Offstage(Transform door) => door.position + (door.position - standSpot.position).normalized * tuning.offstageMeters;
+
+        private float WalkSeconds(Transform door) => Vector3.Distance(standSpot.position, Offstage(door)) / tuning.walkSpeed;
+
+        /// <summary>P91: from the door opening until the traveler stands at the window, when the papers can come.</summary>
+        private float ArrivalSeconds() => tuning.doorLeadSeconds + WalkSeconds(hangarDoor) + tuning.turnSeconds;
+
+        /// <summary>P91: how long the lock is occupied after a decision.</summary>
+        private float LeaveSeconds(Verdict chosen) => chosen == Verdict.Arrest || chosen == Verdict.Airlock
+            ? tuning.shutterDropSeconds + tuning.shutterHoldSeconds + tuning.shutterRiseSeconds
+            : tuning.doorLeadSeconds + WalkSeconds(chosen == Verdict.Admit ? hallDoor : hangarDoor) + DoorCloseSeconds(chosen);
+
+        private static float DoorCloseSeconds(Verdict chosen)
+        {
+            var door = SlidingDoor.ForRole(chosen == Verdict.Admit ? SlidingDoor.Role.LockHall : SlidingDoor.Role.LockHangar);
+            return door != null ? door.CloseSeconds : 0f;
+        }
+
+        private static void CloseDoors()
+        {
+            foreach (var role in new[] { SlidingDoor.Role.LockHall, SlidingDoor.Role.LockHangar })
+            {
+                var door = SlidingDoor.ForRole(role);
+                if (door != null) door.Close();
+            }
         }
 
         private void OnFieldClicked(DocumentData document, string fieldKey)
@@ -107,30 +179,39 @@ namespace GameOff.Travelers
         {
             StopRoutine();
             bubble.Hide();
-            if (_figure != null) _routine = StartCoroutine(WalkOff(DoorFor(chosen)));
+            CloseDoors();
+            if (chosen == Verdict.Arrest || chosen == Verdict.Airlock) _routine = StartCoroutine(BehindShutter(chosen));
+            else if (_figure != null) _routine = StartCoroutine(WalkOff(chosen == Verdict.Admit ? SlidingDoor.Role.LockHall : SlidingDoor.Role.LockHangar,
+                chosen == Verdict.Admit ? hallDoor : hangarDoor));
         }
 
-        private Transform DoorFor(Verdict verdict) => verdict switch
+        private IEnumerator WalkOff(SlidingDoor.Role role, Transform marker)
         {
-            Verdict.Admit => hallDoor,
-            Verdict.Arrest => hallDoor, // the guard comes through the hall (STATION.md)
-            Verdict.Airlock => outerDoor,
-            _ => hangarDoor,
-        };
-
-        private IEnumerator WalkOff(Transform door)
-        {
-            var figure = _figure.transform;
-            var toDoor = Vector3.ProjectOnPlane(door.position - figure.position, Vector3.up);
-            if (toDoor.sqrMagnitude > 0.001f) figure.rotation = Quaternion.LookRotation(toDoor);
-            Play(Walk);
-            for (float t = 0f; t < tuning.leaveSeconds; t += Time.deltaTime)
+            var door = SlidingDoor.ForRole(role);
+            if (door != null) door.Open();
+            yield return new WaitForSeconds(tuning.doorLeadSeconds);
+            yield return WalkTo(Offstage(marker));
+            if (door != null)
             {
-                figure.position = Vector3.MoveTowards(figure.position, door.position, tuning.walkSpeed * Time.deltaTime);
-                yield return null;
+                door.Close();
+                yield return new WaitForSeconds(door.CloseSeconds); // gone only once nobody can see it
             }
             _routine = null;
             HideFigure();
+        }
+
+        /// <summary>P91: the shutter falls, the figure is gone when it rises. What happened is only heard.</summary>
+        private IEnumerator BehindShutter(Verdict chosen)
+        {
+            AudioManager.Play(s => s.shutterDrop);
+            shutter.Drop(tuning.shutterDropSeconds);
+            yield return new WaitForSeconds(tuning.shutterDropSeconds);
+            HideFigure();
+            if (chosen == Verdict.Arrest) AudioManager.Play(s => s.arrestScuffle); // the airlock's own sound already plays
+            yield return new WaitForSeconds(tuning.shutterHoldSeconds);
+            AudioManager.Play(s => s.shutterRise);
+            shutter.Raise(tuning.shutterRiseSeconds);
+            _routine = null;
         }
 
         private void Show(TravelerData traveler)
@@ -143,7 +224,7 @@ namespace GameOff.Travelers
                 _figure = Instantiate(model, transform);
                 _figures[model] = _figure;
             }
-            _figure.transform.SetPositionAndRotation(standSpot.position, standSpot.rotation);
+            _figure.transform.SetPositionAndRotation(Offstage(hangarDoor), standSpot.rotation);
             _animator = _figure.GetComponent<Animator>();
             _head = _animator != null && _animator.isHuman ? _animator.GetBoneTransform(HumanBodyBones.Head) : null;
             _figure.SetActive(true);
@@ -156,6 +237,8 @@ namespace GameOff.Travelers
             StopRoutine();
             bubble.Hide();
             HideFigure();
+            CloseDoors();
+            shutter.ResetOpen();
         }
 
         private void HideFigure()
