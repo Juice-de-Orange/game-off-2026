@@ -1615,14 +1615,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 08.11.): `Shops/IdleBreathing` + `Data/Economy/IdleBreathingTuning.asset`: Atmen, leichtes Schwanken und ab und zu eine kleine Drehung der ganzen Figur (die Modelle haben kein Skelett, einzelne Köpfe drehen sich also nicht). Geprüft: Validate Travelers, EditMode-Tests, Bilder aus Main.
 
 ### P97 — Eine gemeinsame Spieluhr
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: martin (08.11., im Urlaub per Claude; Abnahme durch Max)
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P09, P31
 - Ziel: Alle Uhren zeigen dieselbe Spielzeit und laufen weiter (#19).
 - Enthalten: Spielzeit aus der Phase: Morgen 06:00, Schicht 08:00–18:00 nach Fortschritt der Reisenden, Abend bis 23:00. Kein Einfluss auf Geld oder Regeln.
 - Abnahme: Alle Uhren der Station stimmen überein und bewegen sich.
 
 ### P98 — Eigene Feld-Antworten für die Figuren an Tag 1–4
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: martin (08.11., im Urlaub per Claude)
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: P76 · Folgt auf: P15
 - Ziel: Korr, Quill, Shifter, Mira und Senn antworten an Tag 1–4 auf Feld-Klicks persönlich statt mit der allgemeinen Zeile („It says ...“); die normalen Reisenden daneben tun das schon.
 - Enthalten: 2–3 Antworten je Auftritt im `StoryCharacterBuilder` (`FieldAnswer`, wie `StoryDayContent`). Die Antworten dürfen nicht zum falschen Papier passen: Ein Feldschlüssel gilt für alle Papiere des Reisenden.
@@ -1637,21 +1637,21 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Kein Hocker ragt durch die Figur, die Füße schweben nicht sichtbar.
 
 ### P100 — Reisende reagieren auf die Entscheidung
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: offen
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P40, P91
 - Ziel: Wer abgewiesen wird, regt sich auf; wer durchkommt, ist erleichtert. Bisher sagt niemand etwas (Anspielen 08.11.).
 - Enthalten: Eine Zeile nach dem Stempel in der Sprechblase, bevor die Figur geht: je Reisendem optional eigene Zeilen (`StoryDayContent`, Figuren je Auftritt), sonst ein Pool je Spezies für abgewiesen und durchgelassen. Darf das Tempo nicht bremsen.
 - Abnahme: Abgewiesene beschweren sich hörbar lesbar, mit Abwechslung; die Schicht wird nicht spürbar länger.
 
 ### P101 — Durchgelassene sind wirklich in der Station
-- Größe: L · Priorität: Soll · Status: offen · Zuständig: offen
+- Größe: L · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P91, P96
 - Ziel: Wen man durchlässt, trifft man abends in der Station wieder (Anspielen 08.11., wichtig für die Immersion). Bisher nicht geplant.
 - Enthalten (Max, 08.11.): Wer durchkam, sitzt oder steht ab Feierabend an festen Plätzen in Bar und Halle oder schläft in einem Zimmer des Wohnmoduls; am nächsten Tag sind sie weg. Idle und eine Zeile beim Ansprechen. Höchstens rund 6 Figuren je Abend (WebGL). Sie laufen nicht dorthin.
 - Abnahme: Mindestens ein am selben Tag Durchgelassener steht abends sichtbar in der Station.
 
 ### P102 — Dokument-Geräusche: leiser und abwechslungsreicher
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P61, P89
 - Ziel: Die Papier-Geräusche nerven nicht mehr (Anspielen 08.11.).
 - Enthalten: Lautstärke von `paperPickup` und `paperSlide` senken, Varianten bestellen und zufällig mit leichter Tonhöhe abspielen. Ton nach Gehör: Max.
@@ -1665,14 +1665,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Beide Hinweise stehen im Spiel, ohne die Rechnung vorzurechnen.
 
 ### P104 — Wachmann bei der Verhaftung
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: offen
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P91
 - Ziel: Eine Verhaftung ist glaubhaft: Eine Wache kommt wirklich dazu.
 - Enthalten: Wache (`SK_NPC_Guard`) kommt durch die Hallentür und packt die Person, dann fällt das Gitter und der Rest ist zu hören (Max, 08.11.). Baut auf `TravelerPresenter.BehindShutter` auf; `LeaveSeconds` anpassen.
 - Abnahme: Bei jeder Verhaftung ist die Wache sichtbar, bevor das Gitter fällt.
 
 ### P105 — Luftschleuse: Ragdoll und Sog
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: offen
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P91
 - Ziel: Die Schleuse sieht man: Die Person wird heftig ins All gerissen.
 - Enthalten: Kein Gitter mehr bei der Schleuse (P91 ändern). Innenschott zu, Außenschott klappt auf, Figur wird zum Ragdoll (Skelett der `SK_NPC_*`) und von einer Kraft hinausgerissen, dazu Alarmlicht und zitternde Scheibe. Je Spezies abstimmen; im Browser nur eine Figur gleichzeitig. Außenschott braucht Animation.

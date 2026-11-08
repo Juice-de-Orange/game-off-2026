@@ -69,6 +69,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
+| max | Nachtlauf Block 2: P97, P98, P100, P101, P102, P104, P105 | PF_CounterStation, PF_Station_Graybox, PF_Economy, Main.unity, DialogueTuning, SoundSet, TravelerPresenter, DayManager, CounterShift, StoryCharacterBuilder | 08.11. 21:55 |
 | max | Nachtlauf Block 1: P99, P103, P69, P12, P11, P16, P62, P80, P63 | Main.unity, PF_Economy, Document-Prefabs, Data/Economy, Data/Days/Story, Household*, PlayerEconomy, SettlementWindow, DayManager, TicketEnding, ShuttleFlight, DepartureTuning, VendorSupply, EconomyBuilder, DocumentPrefabBuilder, StoryDayContent, TravelerValidator, CounterTutorial | 08.11. 21:05 |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
