@@ -7235,7 +7235,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Telescope_Coin.ogg
 package: P29
 scene: Plattform
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8287,7 +8287,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup_01.ogg
 package: P102
 scene: Counter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8313,7 +8313,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup_02.ogg
 package: P102
 scene: Counter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8339,7 +8339,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup_03.ogg
 package: P102
 scene: Counter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8365,7 +8365,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Pickup_04.ogg
 package: P102
 scene: Counter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8391,7 +8391,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Slide_01.ogg
 package: P102
 scene: Counter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8417,7 +8417,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Slide_02.ogg
 package: P102
 scene: Counter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8443,7 +8443,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Slide_03.ogg
 package: P102
 scene: Counter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8469,7 +8469,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Paper_Slide_04.ogg
 package: P102
 scene: Counter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
