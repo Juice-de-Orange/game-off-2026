@@ -6346,7 +6346,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Shuttle_Engine_Loop.ogg
 package: P72
 scene: Hangar / Flug nach Hause
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
