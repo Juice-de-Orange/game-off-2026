@@ -6808,7 +6808,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Arrest_Scuffle.ogg
 package: P91
 scene: Counter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6834,7 +6834,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Shutter_Drop.ogg
 package: P91
 scene: Counter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
@@ -6860,7 +6860,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Shutter_Rise.ogg
 package: P91
 scene: Counter
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [0, 0, 0]
