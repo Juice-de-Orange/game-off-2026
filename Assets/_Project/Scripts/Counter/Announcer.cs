@@ -18,6 +18,8 @@ namespace GameOff.Counter
         [SerializeField] private CounterShift shift;
         [SerializeField] private CounterStation station;
         [SerializeField] private Announcements lines;
+        [Tooltip("P33: lights up on the speaker while something is announced.")]
+        [SerializeField] private GameObject speakerLamp;
         [Tooltip("Shown while a line is spoken (bar behind the text).")]
         [SerializeField] private GameObject subtitleRoot;
         [SerializeField] private TMP_Text subtitle;
@@ -65,6 +67,9 @@ namespace GameOff.Counter
             if (!judgement.Correct) Say(lines.warning, lines.warningClip);
         }
 
+        /// <summary>P85: an announcement from elsewhere (a character's consequence).</summary>
+        public void Announce(string text) => Say(text, null);
+
         private void Say(string text, AudioClip clip)
         {
             foreach (var queued in _queue)
@@ -81,6 +86,7 @@ namespace GameOff.Counter
                 var (text, clip) = _queue.Dequeue();
                 subtitle.text = text;
                 subtitleRoot.SetActive(true);
+                if (speakerLamp != null) speakerLamp.SetActive(true);
                 if (clip != null) AudioManager.PlayVoice(clip);
                 else AudioManager.PlayOnVoice(s => s.paChime); // until the lines are recorded
                 float left = Mathf.Max(lines.secondsPerLine, clip != null ? clip.length : 0f);
@@ -91,6 +97,7 @@ namespace GameOff.Counter
                 }
             }
             subtitleRoot.SetActive(false);
+            if (speakerLamp != null) speakerLamp.SetActive(false);
             _speaking = null;
         }
     }

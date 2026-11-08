@@ -65,7 +65,7 @@ namespace GameOff.EditorTools
             }
             var clips = AssetDatabase.LoadAllAssetsAtPath(fbx).OfType<AnimationClip>().Where(c => !c.name.StartsWith("__preview__")).ToList();
             var machine = controller.layers[0].stateMachine;
-            foreach (string name in States)
+            foreach (string name in species == "Guard" ? new[] { "Idle", "Walk", "Grab" } : States)
             {
                 var clip = clips.FirstOrDefault(c => c.name == name);
                 if (clip == null) log.Add($"WARNING {fbx} has no clip {name}");

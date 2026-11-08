@@ -199,7 +199,14 @@ namespace GameOff.EditorTools
                         onAdmit = Outcome.Helped, onDeny = Outcome.Betrayed, onArrest = Outcome.Betrayed },
                     // Undercover: "helping" here means deciding by the book
                     new Appearance { traveler = k2, dayFrom = 4, dayTo = 4, slot = 0, condition = AppearanceCondition.Alive,
-                        onAdmit = Outcome.Betrayed, onDeny = Outcome.Helped, onArrest = Outcome.Neutral },
+                        onAdmit = Outcome.Betrayed, onDeny = Outcome.Helped, onArrest = Outcome.Neutral,
+                        consequences = new List<Consequence> // P85: his report arrives by loudspeaker
+                        {
+                            new Consequence { when = Outcome.Helped, afterDays = 2, wageChange = 25, wageNote = "Bonus · Inspector Korr",
+                                announcement = "Inspector Korr commends the officer at lane two for correct conduct. A bonus has been paid." },
+                            new Consequence { when = Outcome.Betrayed, afterDays = 2, wageChange = -20, wageNote = "Reprimand · Inspector Korr",
+                                announcement = "Inspector Korr reports irregularities at lane two. The officer's wage has been docked." },
+                        } },
                     new Appearance { traveler = k3, dayFrom = 10, dayTo = 10, slot = 0, condition = AppearanceCondition.Alive,
                         onAdmit = Outcome.Helped, onDeny = Outcome.Betrayed, onArrest = Outcome.Betrayed,
                         greetingAfterHelped = "Inspector Korr. That 'late traveler' on day four was me. You did it by the book - good.",
@@ -240,6 +247,7 @@ namespace GameOff.EditorTools
                             new Consequence { when = Outcome.Confiscated, wanted = true, wantedInDays = 3, wantedNote = "Smuggling, threats against an officer" },
                         } },
                     new Appearance { traveler = q3, dayFrom = 4, dayTo = 4, condition = AppearanceCondition.LastHelped,
+                        entrustItem = Goods("Spice"), entrustDeposit = 30,
                         greetingAfterHelped = "You looked the other way. Quill doesn't forget a favour. Bigger job today." },
                     new Appearance { traveler = q4, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.LastWronged,
                         onAdmit = Outcome.Neutral, onDeny = Outcome.Betrayed, onArrest = Outcome.Betrayed,
@@ -281,7 +289,11 @@ namespace GameOff.EditorTools
                     // Arrest = the order refused (he lives); admit = helped → security lockdown tomorrow
                     new Appearance { traveler = shifter3, dayFrom = 3, dayTo = 3, condition = AppearanceCondition.Alive,
                         onAdmit = Outcome.Helped, onDeny = Outcome.Neutral, onArrest = Outcome.Neutral,
-                        consequences = new List<Consequence> { new Consequence { when = Outcome.Helped, marketEvent = ev["SecurityLockdown"], eventInDays = 1 } } },
+                        consequences = new List<Consequence>
+                        {
+                            new Consequence { when = Outcome.Helped, marketEvent = ev["SecurityLockdown"], eventInDays = 1 },
+                            new Consequence { when = Outcome.Helped, letterLine = "A parcel came with no sender. Inside was a note: \"Thank you, officer.\" Mom burned it." },
+                        } },
                     new Appearance { traveler = s6, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.Alive,
                         onAdmit = Outcome.Helped, onDeny = Outcome.Neutral, onArrest = Outcome.Betrayed,
                         flag = ResistanceFlag,
@@ -320,7 +332,9 @@ namespace GameOff.EditorTools
                     new Appearance { traveler = m1, dayFrom = 2, dayTo = 2, slot = 2, condition = AppearanceCondition.NeverMet,
                         eventLines = new List<EventLine> { new EventLine { marketEvent = ev["BorderClosed"], line = "And now they've closed the border behind me." } } },
                     new Appearance { traveler = m2, dayFrom = 4, dayTo = 4, condition = AppearanceCondition.LastHelped,
-                        greetingAfterHelped = "You let me through. My children ate tonight. This is for yours." },
+                        greetingAfterHelped = "You let me through. My children ate tonight. This is for yours.",
+                        consequences = new List<Consequence> { new Consequence { when = Outcome.Helped, giftItem = Goods("CannedStew"),
+                            letterLine = "A woman called Mira left a tin of stew at our door. She said you would know why." } } },
                     new Appearance { traveler = m3, dayFrom = 4, dayTo = 4, condition = AppearanceCondition.LastBetrayed,
                         greetingAfterBetrayed = "You sent me back. So I bought new papers. Please." },
                     new Appearance { traveler = m4, dayFrom = 8, dayTo = 8, condition = AppearanceCondition.Alive,
@@ -345,9 +359,12 @@ namespace GameOff.EditorTools
                     new Appearance { traveler = s1, dayFrom = 3, dayTo = 3, condition = AppearanceCondition.NeverMet,
                         onAdmit = Outcome.Helped, onDeny = Outcome.Neutral, onArrest = Outcome.Confiscated,
                         eventLines = new List<EventLine> { new EventLine { marketEvent = ev["ColdSnap"], line = "And the cold is making everyone sick." } },
-                        consequences = new List<Consequence> { new Consequence { when = Outcome.Confiscated, marketEvent = ev["ClinicShortage"], eventInDays = 2 } } },
+                        consequences = new List<Consequence> { new Consequence { when = Outcome.Confiscated, marketEvent = ev["ClinicShortage"], eventInDays = 2 } },
+                        entrustItem = Goods("Antibiotics"), entrustDeposit = 20 },
                     new Appearance { traveler = s2, dayFrom = 5, dayTo = 5, condition = AppearanceCondition.LastHelped,
-                        greetingAfterHelped = "You let my medicine through. Three children walked out of the clinic today." },
+                        greetingAfterHelped = "You let my medicine through. Three children walked out of the clinic today.",
+                        consequences = new List<Consequence> { new Consequence { when = Outcome.Helped, giftItem = Goods("Antibiotics"), giftOnlyIfFamilySick = true,
+                            letterLine = "Dr. Senn sent medicine on the drone. He says you earned it." } } },
                     new Appearance { traveler = s3, dayFrom = 9, dayTo = 9, condition = AppearanceCondition.LastHelped,
                         greetingAfterHelped = "I'm leaving Kestrel. Thank you for trusting a stranger with a case of pills." }));
             }
@@ -387,7 +404,8 @@ namespace GameOff.EditorTools
                     "Nell. They're letting him go home with me.",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "FAMILY VISIT", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
                 chars.Add(Character("Nell", "nell", n, sp,
-                    new Appearance { traveler = l1, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.NeverMet },
+                    new Appearance { traveler = l1, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.NeverMet,
+                        entrustItem = Goods("DataChip"), entrustDeposit = 15 },
                     new Appearance { traveler = l2, dayFrom = 8, dayTo = 8, condition = AppearanceCondition.Alive,
                         greetingAfterHelped = "You were kind to an old woman. Did my letter reach him?",
                         greetingAfterBetrayed = "You sent me away last time. I came back anyway. Mothers do." },
@@ -411,6 +429,7 @@ namespace GameOff.EditorTools
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "TRADE", Valid, "QUOB ATOLL CONSULATE", "QUOB ATOLL > KESTREL-9"));
                 chars.Add(Character("Oddo", "oddo", n, sp,
                     new Appearance { traveler = o1, dayFrom = 8, dayTo = 8, condition = AppearanceCondition.NeverMet,
+                        entrustItem = Goods("SilverRing"), entrustDeposit = 20,
                         onAdmit = Outcome.Helped, onDeny = Outcome.Betrayed, onArrest = Outcome.Confiscated,
                         eventLines = new List<EventLine> { new EventLine { marketEvent = ev["DockStrike"], line = "The docks are dead today - more business for Oddo!" } },
                         consequences = new List<Consequence> { new Consequence { when = Outcome.Helped, marketEvent = ev["OddosCaravan"], eventInDays = 2 } } },
@@ -435,6 +454,8 @@ namespace GameOff.EditorTools
         private static TravelerData Person(string file, string name, string species, Verdict verdict, string reason, int day, string greeting,
             params DocumentData[] docs) =>
             Make(TravelerFolder + $"T_Story_{file}.asset", DocFolder + $"Doc_{file}_", name, species, verdict, reason, $"P76 character, day {day}", greeting, null, docs);
+
+        private static ItemData Goods(string file) => AssetDatabase.LoadAssetAtPath<ItemData>($"Assets/_Project/Data/Items/Item_{file}.asset");
 
         /// <summary>P98: a recurring character with own answers to questions about their papers.</summary>
         private static TravelerData Talker(FieldAnswer[] answers, string file, string name, string species, Verdict verdict, string reason, int day, string greeting,

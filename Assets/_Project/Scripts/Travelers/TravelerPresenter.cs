@@ -19,6 +19,7 @@ namespace GameOff.Travelers
         private static readonly int Idle = Animator.StringToHash("Idle");
         private static readonly int Talk = Animator.StringToHash("Talk");
         private static readonly int Walk = Animator.StringToHash("Walk");
+        private static readonly int Grab = Animator.StringToHash("Grab");
 
         [SerializeField] private CounterShift shift;
         [SerializeField] private DocumentDesk desk;
@@ -37,12 +38,14 @@ namespace GameOff.Travelers
         private readonly Dictionary<GameObject, GameObject> _figures = new Dictionary<GameObject, GameObject>();
         private GameObject _figure;
         private GameObject _figureModel;
+        private bool _figureIsRagdoll;
         private GameObject _guard;
         private Animator _guardAnimator;
         private Animator _animator;
         private Transform _head;
         private Coroutine _routine;
         private bool _walking;
+        private Coroutine _lamp;
 
         private void OnEnable()
         {
@@ -68,8 +71,29 @@ namespace GameOff.Travelers
             CloseDoors();
         }
 
+        /// <summary>P33: the lock's warning lamp: yellow when someone walks in, red for an arrest and the airlock.</summary>
+        private void FlashLamp(Color color, float seconds)
+        {
+            if (alarmLight == null) return;
+            if (_lamp != null) StopCoroutine(_lamp);
+            _lamp = StartCoroutine(Flash(color, seconds));
+        }
+
+        private IEnumerator Flash(Color color, float seconds)
+        {
+            alarmLight.color = color;
+            for (float t = 0f; t < seconds; t += Time.deltaTime)
+            {
+                alarmLight.enabled = Mathf.Repeat(t * 4f, 1f) < 0.5f;
+                yield return null;
+            }
+            alarmLight.enabled = false;
+            _lamp = null;
+        }
+
         private void OnArrived(TravelerData traveler)
         {
+            FlashLamp(new Color(1f, 0.75f, 0.2f), 1.2f);
             StopRoutine();
             CloseDoors(); // in case the last traveler's walk was cut short
             bubble.Hide();
@@ -230,6 +254,7 @@ namespace GameOff.Travelers
         /// <summary>P104: a guard walks in and takes the traveler; then the shutter falls and the rest is only heard (P91).</summary>
         private IEnumerator Arrest()
         {
+            FlashLamp(new Color(1f, 0.12f, 0.08f), GuardSeconds() + tuning.shutterDropSeconds);
             var door = SlidingDoor.ForRole(SlidingDoor.Role.LockHall);
             if (guardModel != null)
             {
@@ -250,7 +275,8 @@ namespace GameOff.Travelers
                     guard.position = Vector3.MoveTowards(guard.position, spot, tuning.guardWalkSpeed * Time.deltaTime);
                     yield return null;
                 }
-                if (_guardAnimator != null) _guardAnimator.CrossFade(Idle, tuning.animationBlendSeconds);
+                if (_guardAnimator != null)
+                    _guardAnimator.CrossFade(_guardAnimator.HasState(0, Grab) ? Grab : Idle, tuning.animationBlendSeconds); // a stand-in has no Grab
             }
             yield return BehindShutter();
         }
@@ -261,19 +287,19 @@ namespace GameOff.Travelers
             var hatch = AirlockHatch.Instance;
             if (hatch != null) hatch.Open(tuning.hatchSeconds);
             shift.Station.Shake(tuning.hatchSeconds + tuning.airlockBlowSeconds, 0.02f);
+            FlashLamp(new Color(1f, 0.12f, 0.08f), tuning.hatchSeconds + tuning.airlockBlowSeconds);
             bubble.Hide();
             yield return new WaitForSeconds(tuning.hatchSeconds * 0.5f);
             var outward = Vector3.ProjectOnPlane(-standSpot.forward, Vector3.up).normalized;
             var bodies = _figure != null ? Ragdoll.Build(_figure) : null;
+            _figureIsRagdoll = bodies != null;
             for (float t = 0f; t < tuning.airlockBlowSeconds; t += Time.fixedDeltaTime)
             {
-                if (alarmLight != null) alarmLight.enabled = Mathf.Repeat(t * 4f, 1f) < 0.5f;
                 if (bodies != null)
                     foreach (var body in bodies)
                         body.AddForce(outward * tuning.airlockSuction, ForceMode.Acceleration);
                 yield return new WaitForFixedUpdate();
             }
-            if (alarmLight != null) alarmLight.enabled = false;
             DestroyFigure(); // its bones have joints now: the next one of this model is a fresh copy
             if (hatch != null) hatch.Close(tuning.hatchSeconds);
             yield return new WaitForSeconds(tuning.hatchSeconds);
@@ -282,6 +308,7 @@ namespace GameOff.Travelers
 
         private void DestroyFigure()
         {
+            _figureIsRagdoll = false;
             if (_figure != null)
             {
                 _figures.Remove(_figureModel);
@@ -321,8 +348,8 @@ namespace GameOff.Travelers
             }
             _figure.transform.SetPositionAndRotation(Offstage(hangarDoor), standSpot.rotation);
             _animator = _figure.GetComponent<Animator>();
-            _head = _animator != null && _animator.isHuman ? _animator.GetBoneTransform(HumanBodyBones.Head) : null;
             _figure.SetActive(true);
+            _head = _animator != null && _animator.isHuman ? _animator.GetBoneTransform(HumanBodyBones.Head) : null;
             Play(Idle);
         }
 
@@ -333,6 +360,8 @@ namespace GameOff.Travelers
             bubble.Hide();
             HideFigure();
             HideGuard();
+            if (_lamp != null) StopCoroutine(_lamp);
+            _lamp = null;
             if (alarmLight != null) alarmLight.enabled = false;
             if (AirlockHatch.Instance != null) AirlockHatch.Instance.Close(0.01f);
             CloseDoors();
@@ -346,6 +375,11 @@ namespace GameOff.Travelers
 
         private void HideFigure()
         {
+            if (_figureIsRagdoll)
+            {
+                DestroyFigure(); // never back into the cache
+                return;
+            }
             if (_figure != null) _figure.SetActive(false);
             _figure = null;
             _animator = null;

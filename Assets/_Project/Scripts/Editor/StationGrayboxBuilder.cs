@@ -1764,6 +1764,7 @@ namespace GameOff.EditorTools
             FloorDecor(p, KitPlant, "Plant_Hall", 5.6f, -5.4f, 0.5f, 0.5f, 1f);
             FloorDecor(p, KitBin, "Bin_Hall", -7.55f, 2.7f, 0.5f, 0.5f, 0.9f);
             FloorDecor(p, KitBot, "CleaningBot", 7.4f, 0.6f, 0.6f, 0.6f, 0.4f, 0f, -90f);
+            StartBot(p.transform.Find("CleaningBot"), new Vector3(7.4f, 0f, -3f), new Vector3(7.4f, 0f, 3f));
 
             // Counter: west door z -9, south window x -6..-2, north board and speaker x -1.5, -2.5
             AddClockDisplay(WallDecor(p, KitClock, "Clock_Counter", false, -12, 1, -1f, 2.2f));
@@ -1797,7 +1798,7 @@ namespace GameOff.EditorTools
             FloorDecor(p, KitPlant, "Plant_Room103", -16.5f, 3.4f, 0.5f, 0.5f, 1f);
 
             // Bar and diner: fans between the ceiling strips
-            PlaceDecor(p, KitFan, "Fan_Bar", new Vector3(10.5f, 4f, 4f), 0f);
+            Spin(PlaceDecor(p, KitFan, "Fan_Bar", new Vector3(10.5f, 4f, 4f), 0f));
             PlaceDecor(p, KitFan, "Fan_Diner", new Vector3(-12f, 3f, -3f), 0f);
             WallDecor(p, KitNeon, "Neon_Bar", true, 8, -1, 3f, 2.55f);
             BuildDinerOutOfService(p);
@@ -1831,6 +1832,25 @@ namespace GameOff.EditorTools
             var go = PlaceKit(parent, kitPath, position, yaw);
             if (go != null) go.name = name;
             return go;
+        }
+
+        /// <summary>P26: what moves must not be static (and is left out of the light bake).</summary>
+        private static void Spin(GameObject fan)
+        {
+            if (fan == null) return;
+            foreach (var t in fan.GetComponentsInChildren<Transform>()) GameObjectUtility.SetStaticEditorFlags(t.gameObject, 0);
+            fan.AddComponent<GameOff.Station.Spinner>();
+        }
+
+        private static void StartBot(Transform bot, Vector3 a, Vector3 b)
+        {
+            if (bot == null) return;
+            foreach (var t in bot.GetComponentsInChildren<Transform>()) GameObjectUtility.SetStaticEditorFlags(t.gameObject, 0);
+            var patrol = bot.gameObject.AddComponent<GameOff.Station.PatrolBot>();
+            var so = new SerializedObject(patrol);
+            so.FindProperty("pointA").vector3Value = a;
+            so.FindProperty("pointB").vector3Value = b;
+            so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         /// <summary>P92: the counter's strip light is emission in its material, so the closed diner's counter gets a copy without it.</summary>
@@ -2031,7 +2051,8 @@ namespace GameOff.EditorTools
             var tmp = text.GetComponent<TMPro.TextMeshPro>();
             tmp.font = AssetDatabase.LoadAssetAtPath<TMPro.TMP_FontAsset>("Assets/_Project/Fonts/ShareTechMono SDF.asset");
             tmp.text = "08:00";
-            tmp.fontSize = 1.2f;
+            tmp.fontSize = 1.1f;
+            tmp.textWrappingMode = TMPro.TextWrappingModes.NoWrap;
             tmp.color = new Color(0.9f, 0.16f, 0.12f);
             tmp.alignment = TMPro.TextAlignmentOptions.Center;
             var display = clock.AddComponent<GameOff.Day.ClockDisplay>();

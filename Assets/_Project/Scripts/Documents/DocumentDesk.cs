@@ -38,6 +38,9 @@ namespace GameOff.Documents
         [SerializeField] private Transform printerOut;
         [SerializeField] private Transform printerSpot;
 
+        [Tooltip("P16/P62: things on the desk that catch the mouse; a paper dropped onto one lands on the first spot.")]
+        [SerializeField] private Collider[] keepClear = new Collider[0];
+
         private readonly List<DocumentView> _onDesk = new List<DocumentView>();
         private readonly List<DocumentView> _inDrawer = new List<DocumentView>();
         private readonly List<DocumentView> _pinned = new List<DocumentView>();
@@ -512,6 +515,13 @@ namespace GameOff.Documents
                 box.center += rest - drawer.position;
                 if (box.Contains(new Vector3(pos.x, box.center.y, pos.z))) pos = deskSpots[0].position;
             }
+            // P16/P62: the same for what lies on the desk and catches the mouse first.
+            foreach (var clear in keepClear)
+                if (clear != null && clear.gameObject.activeInHierarchy && deskSpots.Length > 0)
+                {
+                    var box = clear.bounds;
+                    if (box.Contains(new Vector3(pos.x, box.center.y, pos.z))) pos = deskSpots[0].position;
+                }
             pos.y = DeskTop + _onDesk.Count * tuning.stackStep;
             doc.transform.position = pos;
         }

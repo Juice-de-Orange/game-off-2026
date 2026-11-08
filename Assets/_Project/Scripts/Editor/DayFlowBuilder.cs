@@ -330,6 +330,7 @@ namespace GameOff.EditorTools
             {
                 Set(director, "shift", shift);
                 Set(director, "presenter", Object.FindFirstObjectByType<TravelerPresenter>());
+                Set(director, "announcer", Object.FindFirstObjectByType<GameOff.Counter.Announcer>());
                 PrefabUtility.RecordPrefabInstancePropertyModifications(director);
             }
             string mood = WireStationMood(scene, instance);

@@ -128,12 +128,21 @@ namespace GameOff.Economy
         /// <summary>What went bad overnight (P68), e.g. "Spoiled overnight: Fresh fruit ×1." – empty if nothing.</summary>
         public string SpoiledReport { get; private set; } = "";
 
-        /// <summary>Under the morning letter: the family's lines, then what spoiled.</summary>
+        /// <summary>P85: one more line under the next morning letter (something a character did).</summary>
+        public void AddLetterLine(string line) => _letterLines.Add(line);
+
+        private readonly List<string> _letterLines = new List<string>();
+
+        /// <summary>Under the morning letter: what characters did, the family's lines, then what spoiled.</summary>
         public string MorningReport()
         {
+            var parts = new List<string>();
+            if (_letterLines.Count > 0) parts.Add(string.Join("\n", _letterLines));
+            _letterLines.Clear();
             string family = FamilyReport();
-            if (string.IsNullOrEmpty(SpoiledReport)) return family;
-            return string.IsNullOrEmpty(family) ? SpoiledReport : family + "\n\n" + SpoiledReport;
+            if (!string.IsNullOrEmpty(family)) parts.Add(family);
+            if (!string.IsNullOrEmpty(SpoiledReport)) parts.Add(SpoiledReport);
+            return string.Join("\n\n", parts);
         }
 
         /// <summary>P68: perishable items in the inventory go bad overnight (what went home by drone before the night still counted).</summary>

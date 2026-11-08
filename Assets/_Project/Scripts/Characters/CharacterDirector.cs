@@ -19,6 +19,8 @@ namespace GameOff.Characters
         [SerializeField] private CounterShift shift;
         [SerializeField] private TravelerPresenter presenter;
         [SerializeField] private DayManager dayManager;
+        [Tooltip("P85: says the announcements of consequences.")]
+        [SerializeField] private GameOff.Counter.Announcer announcer;
         [Tooltip("The recurring characters of the story (P76).")]
         [SerializeField] private List<RecurringCharacter> characters = new List<RecurringCharacter>();
         [Tooltip("Only while the dev tools are on (e.g. the P75 test character).")]
@@ -74,6 +76,8 @@ namespace GameOff.Characters
             int day = Market.Day; // DayManager runs Market.Begin(day) right before the counter's BeginDay
             if (day <= 1) Memory = new CharacterMemory(); // a new run
             _today.Clear();
+            _returned.Clear();
+            foreach (var effect in Memory.TakeEffects(day)) Apply(effect);
             if (rules == null) return null;
             var due = CharacterPlanner.Due(day, Active, Memory, maxPerDay, () => Random.value);
             var wanted = Memory.WantedOn(day);
@@ -81,6 +85,7 @@ namespace GameOff.Characters
             foreach (var p in due)
             {
                 _today[p.traveler] = p;
+                Collect(p);
                 Debug.Log($"[Characters] day {day}: {p.character.DisplayName} (appearance {p.appearance + 1})");
             }
             return rules.RuntimeCopy(CharacterPlanner.Queue(rules.Travelers, due, () => Random.value), wanted);
@@ -105,8 +110,45 @@ namespace GameOff.Characters
                 if (c.wanted)
                     Memory.ScheduleWanted(p.character, new WantedEntry(p.character.DisplayName, "", c.wantedOrder, c.wantedNote),
                         day + c.wantedInDays, c.wantedForDays);
+                if (c.afterDays > 0) Memory.ScheduleEffect(day + c.afterDays, c);
+                else Apply(c);
+            }
+            var economy = PlayerEconomy.Instance;
+            if (outcome == Outcome.Helped && a.entrustItem != null && economy != null && economy.Inventory.CanAdd(a.entrustItem))
+            {
+                economy.Inventory.Add(a.entrustItem);
+                Memory.Entrust(p.character, a.entrustItem, a.entrustDeposit);
+                if (dayManager != null && dayManager.UI != null)
+                    dayManager.UI.ShowHint($"{p.character.DisplayName} left {a.entrustItem.DisplayName} with you. Keep it until they are back.", 5f);
             }
         }
+
+        // ---------- P85 and P77 ----------
+
+        private void Apply(Consequence c)
+        {
+            var economy = PlayerEconomy.Instance;
+            if (economy == null) return;
+            if (c.giftItem != null && (!c.giftOnlyIfFamilySick || economy.Household.AnySick)) economy.Delivery.Add(c.giftItem);
+            if (c.wageChange > 0) economy.Wallet.Add(c.wageChange, c.wageNote);
+            else if (c.wageChange < 0) economy.Wallet.Charge(-c.wageChange, c.wageNote);
+            if (!string.IsNullOrWhiteSpace(c.letterLine)) economy.AddLetterLine(c.letterLine);
+            if (!string.IsNullOrWhiteSpace(c.announcement) && announcer != null) announcer.Announce(c.announcement);
+        }
+
+        /// <summary>P77: a returning character collects what they left: kept → deposit paid, gone → they count as betrayed.</summary>
+        private void Collect(CharacterPlanner.Planned p)
+        {
+            var economy = PlayerEconomy.Instance;
+            if (economy == null || !Memory.TakeEntrusted(p.character, out var item, out int deposit)) return;
+            bool kept = economy.Inventory.Remove(item);
+            _returned[p.traveler] = kept;
+            if (kept) economy.Wallet.Add(deposit, $"Deposit · {p.character.DisplayName}");
+            else Memory.Remember(p.character, p.appearance, Market.Day, Outcome.Betrayed);
+            Debug.Log($"[Characters] {p.character.DisplayName} collects {item.DisplayName}: {(kept ? "kept, paid " + deposit : "gone")}");
+        }
+
+        private readonly Dictionary<TravelerData, bool> _returned = new Dictionary<TravelerData, bool>();
 
         // ---------- P87: questions and endings at the counter ----------
 
@@ -159,6 +201,8 @@ namespace GameOff.Characters
                 _ => null,
             };
             var sb = new StringBuilder(string.IsNullOrWhiteSpace(text) ? traveler.Greeting : text);
+            if (_returned.TryGetValue(traveler, out bool kept))
+                sb.Insert(0, kept ? "You kept it safe. Here is what I promised. " : "What I left with you is gone, isn't it. I won't forget that. ");
             foreach (var line in a.eventLines)
             {
                 if (line.marketEvent == null || string.IsNullOrWhiteSpace(line.line)) continue;

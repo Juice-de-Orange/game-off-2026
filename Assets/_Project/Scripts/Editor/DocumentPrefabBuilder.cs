@@ -301,12 +301,12 @@ namespace GameOff.EditorTools
             DeskLabel(controls, "Label_Airlock", "AIRLOCK", new Vector3(0.8f, 0.002f, -0.83f), new Color(0.72f, 0.04f, 0.03f), font);
         }
 
-        /// <summary>P16/P62: scanner and UV lamp lie toward the officer, outside the paper area so they never catch a paper, hidden until bought (PaperGadgets).</summary>
+        /// <summary>P16/P62: scanner and UV lamp lie at the back left of the desk, away from where papers land; hidden until bought (PaperGadgets).</summary>
         private static void WireGadgets(GameObject root, Transform controls, TMP_FontAsset font, List<string> log)
         {
             var layer = controls.Find("Stamp_Approve (SM_Counter_Stamp)");
-            var uv = Gadget(controls, "Gadget_UvLamp", "Assets/_Project/Art/Models/Items/SM_Item_UVLamp.fbx", new Vector3(0.6f, 0f, -0.2f), CounterAction.UvLamp, "UV", font, layer);
-            var scan = Gadget(controls, "Gadget_Scanner", "Assets/_Project/Art/Models/Items/SM_Item_DocScanner.fbx", new Vector3(0.6f, 0f, 0.2f), CounterAction.Scanner, "SCAN", font, layer);
+            var uv = Gadget(controls, "Gadget_UvLamp", "Assets/_Project/Art/Models/Items/SM_Item_UVLamp.fbx", new Vector3(1.62f, 0f, 1.2f), CounterAction.UvLamp, "UV", font, layer);
+            var scan = Gadget(controls, "Gadget_Scanner", "Assets/_Project/Art/Models/Items/SM_Item_DocScanner.fbx", new Vector3(1.62f, 0f, 1.5f), CounterAction.Scanner, "SCAN", font, layer);
             var gadgets = root.GetComponent<PaperGadgets>();
             if (gadgets == null) gadgets = root.AddComponent<PaperGadgets>();
             var so = new SerializedObject(gadgets);
@@ -318,6 +318,12 @@ namespace GameOff.EditorTools
             so.FindProperty("uvLamp").objectReferenceValue = uv;
             so.FindProperty("scanner").objectReferenceValue = scan;
             so.ApplyModifiedPropertiesWithoutUndo();
+            var dso = new SerializedObject(root.GetComponent<DocumentDesk>()); // a paper dropped under a gadget could not be picked up again
+            var clear = dso.FindProperty("keepClear");
+            clear.arraySize = 2;
+            clear.GetArrayElementAtIndex(0).objectReferenceValue = uv.GetComponent<BoxCollider>();
+            clear.GetArrayElementAtIndex(1).objectReferenceValue = scan.GetComponent<BoxCollider>();
+            dso.ApplyModifiedPropertiesWithoutUndo();
             log.Add("PaperGadgets wired");
         }
 
@@ -337,7 +343,7 @@ namespace GameOff.EditorTools
             var so = new SerializedObject(clickable);
             so.FindProperty("action").enumValueIndex = (int)action;
             so.ApplyModifiedPropertiesWithoutUndo();
-            DeskLabel(go.transform, "Label", label, new Vector3(0.13f, 0.002f, 0f), new Color(0.05f, 0.05f, 0.07f), font);
+            DeskLabel(go.transform, "Label", label, new Vector3(-0.14f, 0.002f, 0f), new Color(0.05f, 0.05f, 0.07f), font);
             if (layerFrom != null)
                 foreach (var t in go.GetComponentsInChildren<Transform>(true)) t.gameObject.layer = layerFrom.gameObject.layer;
             go.SetActive(false);
@@ -613,11 +619,29 @@ namespace GameOff.EditorTools
             var aso = new SerializedObject(announcer);
             aso.FindProperty("shift").objectReferenceValue = shift;
             aso.FindProperty("station").objectReferenceValue = station;
+            aso.FindProperty("speakerLamp").objectReferenceValue = SpeakerLamp(root);
             aso.FindProperty("lines").objectReferenceValue = Asset<Announcements>(CounterDataFolder + "Announcements.asset");
             aso.FindProperty("subtitleRoot").objectReferenceValue = barT.gameObject;
             aso.FindProperty("subtitle").objectReferenceValue = subtitle;
             aso.ApplyModifiedPropertiesWithoutUndo();
             log.Add("pinboard spots, SeatedLook, Announcer");
+        }
+
+        /// <summary>P33: a small lamp under SM_Counter_Speaker (world -2.5, 2.3 on the north wall; chair = origin), off until an announcement.</summary>
+        private static GameObject SpeakerLamp(GameObject root)
+        {
+            var old = root.transform.Find("SpeakerLamp");
+            if (old != null) Object.DestroyImmediate(old.gameObject);
+            var lamp = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            lamp.name = "SpeakerLamp";
+            Object.DestroyImmediate(lamp.GetComponent<Collider>());
+            lamp.transform.SetParent(root.transform, false);
+            lamp.transform.localPosition = new Vector3(-0.5f, 2.1f, 2.93f);
+            lamp.transform.localScale = new Vector3(0.05f, 0.05f, 0.02f);
+            var material = UnlitMaterial("M_Counter_SpeakerLamp", null, new Color(1f, 0.72f, 0.25f));
+            lamp.GetComponent<MeshRenderer>().sharedMaterial = material;
+            lamp.SetActive(false);
+            return lamp;
         }
 
         private const string ShutterModel = "Assets/_Project/Art/Models/Counter/SM_Counter_SecurityShutter.fbx";

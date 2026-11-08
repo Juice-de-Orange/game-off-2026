@@ -53,6 +53,19 @@ namespace GameOff.Characters
         [Tooltip("How many days the wanted entry stays on the list.")]
         [Min(1)] public int wantedForDays = 1;
         public string wantedNote = "";
+
+        [Header("Without another encounter (P85)")]
+        [Tooltip("Days after the decision (0 = at once; letters arrive the next morning at the earliest).")]
+        [Min(0)] public int afterDays;
+        [Tooltip("Arrives at the family: covers its need tonight, like a drone delivery.")]
+        public ItemData giftItem;
+        public bool giftOnlyIfFamilySick;
+        [Tooltip("Credits added (or, if negative, taken) in the player's wallet.")]
+        public int wageChange;
+        public string wageNote = "";
+        [TextArea] public string announcement;
+        [Tooltip("A line under the next morning letter.")]
+        [TextArea] public string letterLine;
     }
 
     /// <summary>A line the character adds to the greeting on a day with this market event (they talk about what happens).</summary>
@@ -92,6 +105,10 @@ namespace GameOff.Characters
         public List<EventLine> eventLines = new List<EventLine>();
 
         public List<Consequence> consequences = new List<Consequence>();
+
+        [Header("Left in the player's keeping (P77): given when let through, paid for at the next encounter")]
+        public ItemData entrustItem;
+        public int entrustDeposit;
 
         [Header("A question at the counter (P87): accepting sets the flag")]
         public string questionTitle;
