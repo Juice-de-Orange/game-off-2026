@@ -376,11 +376,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Getestet im Editor (Mixer-Werte, Routing aller 10 Türen) und im WebGL-Build mit Ton in Chrome. Echte Sounds fehlen noch (Max/Pipeline).
 
 ### P19 — WebGL-Build & itch-Upload
-- Größe: S · Priorität: Muss · Status: offen, auf später verschoben (martin, 06.11.)
+- Größe: S · Priorität: Muss · Status: vorbereitet (max, 08.11., Nachtlauf); Upload braucht Max
 - Braucht: P01
 - Ziel: Erster Build auf itch.io (Entwurf) bis 05.11., danach wiederholbarer Ablauf.
 - Hinweis (max, 05.11.): `GameOff.EditorTools.WebBuild.Build` ist der Build-Einstieg. Die Vorlage für itch muss abgelehnte Maussperren abfangen und 16:9 halten wie `Assets/WebGLTemplates/Kestrel9/index.html` (Ausnahme: Impressum-Fußzeile nur für die Live-Version), siehe P49.
 - Abnahme: Build läuft auf itch.io in Chrome und Firefox, Ablauf ist in `docs/` beschrieben.
+- Ergebnis (Nachtlauf, 08.11.): Vorlage `Kestrel9Itch` ohne Impressum, Build mit `-itch`, Ablauf in `DEPLOY.md`.
 
 ### P20 — Licht & Stimmung der Station
 - Größe: M · Priorität: Soll · Status: fertig (max, 02.11.)
@@ -500,7 +501,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Alle drei Sitz-/Blickpunkte funktionieren, Q/ESC beendet sie sauber.
 
 ### P29 — Münzfernrohr & sichtbares Familienschicksal
-- Größe: M · Priorität: Soll · Status: offen
+- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf)
 - Braucht: P24, P10 (Familienzustand) · Assets: `SM_Prop_CoinTelescope`, `UI_Telescope_Overlay`, `UI_Family_Photo` (bestellt)
 - Ziel: Die Familie ist in der Welt sichtbar, nicht nur in Briefen.
 - Festgelegt (Max, 08.11.): Fernrohr auf der Plattform wirklich nutzbar: [E] zieht 1 Credit ab, 30 s Blick mit Zoom und Schwenken. Heimatplanet mit erkennbaren Kontinenten und Städten (Karten neu bestellt).
@@ -509,6 +510,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Morgenbrief liegt physisch auf dem Tisch in 103, Handschrift wird zittriger
 - Abnahme: Familienzustand ändert sichtbar Stadtlichter, Foto und Brief.
 - Hinweis (martin, 06.11.): Der Familienzustand existiert seit P10: `PlayerEconomy.Household` (Stufe je Person), Event `Household.Changed`.
+- Ergebnis (Nachtlauf, 08.11.): Fernrohr: 1 Credit, 30 s, Maus oder Tasten schwenken, Mausrad zoomt, [Q] raus (`CoinTelescope`, nur im Editor-Bild und per Testaufruf geprüft). Stadtlichter folgen der Familie (`HomeLights`). Offen: Familienfoto im Spind, Brief auf dem Tisch.
 
 ### P30 — Getränkeautomat
 - Größe: S · Priorität: Soll · Status: fertig (martin, 07.11.)
@@ -791,12 +793,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - **Für P19 (itch):** Die dortige Web-Vorlage muss abgelehnte Maussperren genauso abfangen wie `Assets/WebGLTemplates/Kestrel9/index.html` (`errorHandler`), sonst stoppt Unitys `alert` das Spiel. Ein 16:9-Bild ist dort ebenfalls nötig: Das Menü ist für 960×540 gebaut und wird in schmalen Fenstern links abgeschnitten.
 
 ### P50 — Türen zeigen, wohin sie führen
-- Größe: M · Priorität: Soll · Status: offen (Idee max, 05.11.)
+- Größe: M · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P27
 - Ziel: Man findet sich zurecht, weil jede Tür zeigt, wohin sie führt, und das Station-typisch abwechslungsreich statt immer gleich.
 - Enthalten: Hinweis an jeder Tür, zum Raum passend und unterschiedlich (Schilder, Wandschablonen, Leuchtschrift, Bodenmarkierung, Plakat …); Durchgang über die Builder (`StationGrayboxBuilder`), vorhandene Modelle zuerst nutzen (`SM_Hall_Sign`, `SM_Motel_DoorSign`, `T_Decal_Signs`, `SM_Bar_NeonSign`), fehlende Varianten über `ASSET-REQUESTS.md`
 - Nicht enthalten: Türlogik und Zugangsstufen (P27), Wegweiser-Karte oder HUD
 - Abnahme: Von jeder Tür aus erkennt man im Spiel ohne Karte das Ziel; nicht alle Hinweise sehen gleich aus; lesbar im WebGL-Build.
+- Ergebnis (Nachtlauf, 08.11.): Schilder über den Türen in drei Arten: Neon, Schablone, Rot für STAFF ONLY und CUSTOMS (`BuildDoorSigns`). Diner und Bar haben schon eigene.
 
 ### P51 — Zimmer 103 wohnlicher
 - Größe: S · Priorität: Kann · Status: offen, Bilder hängen (max, 06.11.), größeres Bullauge fehlt
@@ -1487,13 +1490,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     Wertsachen kommen mit den Tagesplänen (P15/P73).
 
 ### P83 — Asservatenschrank aufbrechen
-- Größe: S · Priorität: Kann · Status: offen · Zuständig: martin (Call 07.11.)
+- Größe: S · Priorität: Kann · Status: fertig (max, 08.11., Nachtlauf)· Zuständig: martin (Call 07.11.)
 - Braucht: P08, P32 · Folgt auf: —
 - Ziel: Was mit „As ordered“ an den Schrank ging, ist nicht ganz verloren – mit Risiko kommt man wieder dran.
 - Enthalten: Der Schrank bekommt ein eigenes Inventar (statt Löschen in P08); abends [E] am Schrank → aufbrechen (Chance, erwischt zu werden →
   Disziplinarstrafe, Werte im Tuning-Asset aus P08); Entnommenes bekommt die CONFISCATED-Variante (P82).
 - Nicht enthalten: Minispiel zum Schlossknacken.
 - Abnahme: „As ordered“ → Ware liegt im Schrank; Aufbrechen gibt sie (als CONFISCATED) ins Inventar oder bringt eine Disziplinarstrafe.
+- Ergebnis (Nachtlauf, 08.11.): „As ordered“ legt die Ware in den Schrank (`Confiscation.Locker`). Abends [E] am Schrank, einmal pro Nacht: 35 % erwischt (Disziplinarstrafe), sonst alles als CONFISCATED. `ConfiscationTuning.lockerCaughtChance`.
 
 ### P84 — Bugreport direkt im Spiel (Backend auf Geoffrey)
 - Größe: M · Priorität: Soll · Status: fertig (max, 07.11.; live geprüft: Test-Issue #14 mit Labels angelegt und geschlossen) · Zuständig: max
@@ -1707,16 +1711,19 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Man geht durchs Schott ins Shuttle, setzt sich und fliegt los; das Shuttle ist von innen aus dem Hangar zu sehen.
 
 ### P107 — Hangar: Schiffe landen morgens, Reisende kommen glaubhaft an
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: offen
+- Größe: M · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)· Zuständig: offen
 - Braucht: — · Folgt auf: P25, P106
 - Ziel: Man versteht, wie die Reisenden des Tages auf die Station kommen.
 - Enthalten: Morgens fliegen wechselnde Schiffe durch die Barriere und landen; tagsüber stehen je Tag 2–4 kleine Schiffe auf festen Plätzen, passend zu den Frachtbriefen (`ship`-Feld). Reisende erscheinen hinter der Tür zur Prüfkammer, kein Laufweg durch den Hangar. Modelle bestellt.
 - Abnahme: An jedem Tag stehen andere Schiffe im Hangar; morgens landet sichtbar mindestens eines.
+- Ergebnis (Nachtlauf, 08.11.): Je Tag 2–4 Schiffe auf vier freien Plätzen, eines landet morgens durch die Barriere (`HangarShips`, Auswahl nach Tag). Keine Kollision mit den Schiffen, Plätze abseits der Wege.
 
 ### P108 — Jeder Reisende sieht anders aus
-- Größe: M · Priorität: Soll · Status: offen, Assets bestellt (max, 08.11.) · Zuständig: offen
+- Größe: M · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)· Zuständig: offen
 - Braucht: Lieferung der Varianten · Folgt auf: P40, P91
 - Ziel: Die Reisenden sehen nicht mehr gleich aus (Max, 08.11.).
 - Enthalten: Je Spezies 6 Texturen (Original + 5 Varianten: Haut/Schuppen, Haarfarbe, Kleidung); für Menschen aufsteckbare Frisuren und Hüte am Kopfknochen. Jeder Reisende bekommt fest eine Kombination (Figuren in den Daten, normale per Namens-Hash, auch in den endlosen Tagen). **Passfoto je Kombination automatisch aus der echten Figur gerendert**, damit Foto und Person immer zusammenpassen. Betrifft `TravelerData`, `TravelerPrefabBuilder`, `DayGenerator`, `StoryCharacterBuilder`, Dokument-Fotos.
 - Nicht enthalten: neue Fehlerart „Foto passt nicht“ (bewusst weggelassen), eigene Modelle je Figur.
 - Abnahme: Auf einem Tag sehen keine zwei Reisenden derselben Spezies gleich aus, und jedes Passfoto zeigt genau die Person am Fenster.
+- Ergebnis (Nachtlauf, 08.11.): Jeder Name bekommt fest eine von sechs Texturen, Menschen dazu Frisur oder Mütze (`TravelerLooks`); 60 Passfotos aus den echten Figuren gerendert (GameOff/Build Traveler Photos), auch für die endlosen Tage.
+

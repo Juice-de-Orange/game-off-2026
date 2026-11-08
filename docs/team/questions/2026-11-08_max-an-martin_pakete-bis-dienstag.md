@@ -1,7 +1,7 @@
 ---
 von: max
 an: martin
-status: offen
+status: beantwortet
 erstellt: 2026-11-08 18:30
 blockiert: nein
 ---
@@ -39,3 +39,6 @@ A. Die Pakete stehen in `PAKETE.md` bei dir; nimm sie wie gewohnt mit „Take“
 
 ## Antwort
 
+
+## Nachtrag Nachtlauf 08.11. (max, von Claude)
+Max hat erlaubt, deine noch nicht genommenen Pakete mitzubauen. **P97, P98, P77 und ein Teil von P85 sind erledigt** (siehe `PAKETE.md`). **P94** wartet auf die bestellten Laute, die Liste ist damit also leer. Bleibt für dich nur, was du selbst noch willst, gern erst nach dem Urlaub. Die Frage ist damit aus Max' Sicht erledigt.

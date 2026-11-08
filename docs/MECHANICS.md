@@ -60,6 +60,10 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Figuren-Folgen, Verwahrung | P85, P77 | Geschenke an die Familie, Bonus/Rüge per Durchsage, Briefzeilen; zurückgelassene Dinge bringen beim nächsten Auftritt Pfand oder Verrat | `CharacterDirector` | `Consequence`, `Appearance.entrust*` (`StoryCharacterBuilder`) |
 | Terminal-Stil | P95 | Einheitliche Rahmen und Knöpfe | `TerminalStyle` (Editor) | Grafiken in `Art/UI/Terminal` |
 | Kiosk-Gitter | P90 | Gitter unten, solange der Kiosk zu ist | `Vendor.Update` → `SecurityShutter` | – |
+| Aussehen der Reisenden | P108 | Name → feste Textur, Frisur/Mütze; Passfoto gerendert | `TravelerLooks`, `TravelerPhotoBuilder` | `Data/Travelers/TravelerLooks.asset`, Fotos in `Art/Textures/Documents/Photos` |
+| Schiffe im Hangar | P107 | 2–4 je Tag, eines landet morgens | `HangarShips` ← `DayStarted` | Plätze im `EconomyBuilder` |
+| Münzfernrohr, Stadtlichter | P29 | 1 Credit, 30 s Blick auf den Heimatplaneten; dessen Lichter werden mit der Familie dunkler und flackern, wenn jemand kritisch ist | `CoinTelescope`, `HomeLights` ← `Household` | im Prefab `CoinTelescope`, 1 CR, 30 s |
+| Asservatenschrank | P83 | „As ordered“ landet im Schrank, abends einmal aufbrechen: Ware (CONFISCATED) oder Disziplinarstrafe | `Confiscation.Locker`, `EvidenceLocker` | `ConfiscationTuning.lockerCaughtChance` |
 | Bugreport im Spiel | P84 (ersetzt P78) | Pausenmenü → REPORT BUG → Text tippen → SEND; das Backend auf Geoffrey legt ein GitHub-Issue an (Labels `bug`, `player-report`) | Version, Tag, Phase, Szene, Browser → `/api/report` | `Data/Menu/BugReportSettings.asset`, `deploy/reports` |
 | Dev-Werkzeuge | P09, P56, P10 | Dev_end_Day, Hitboxen, TRAFFIC_LINE_DEV, CREDITS ±100 | – | **vor der Abgabe ausschalten** (DEV-Reiter weg) |
 
@@ -67,11 +71,9 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 
 | Mechanik | Paket | Hängt an | Stand |
 |---|---|---|---|
-| Asservatenschrank aufbrechen | P83 (Kann) | P08, P32 | offen |
-| Familie in der Welt (Stadtlichter, Foto) | P29 | Familie | Assets bestellt |
+| Familie in der Welt: Foto, Brief auf dem Tisch | P29 Rest | Familie | Fernrohr und Stadtlichter gebaut |
 | Stimmen: 10 Laute je Spezies | P94 (martin) | Händler, Reisende | offen |
-| Heim-Shuttle angedockt, Schiffe landen im Hangar | P106, P107 | P72, P25 | offen, Assets bestellt |
-| Jeder Reisende sieht anders aus, Passfoto je Variante | P108 | Schalter, Dokumente | Assets bestellt |
+| Heim-Shuttle angedockt, begehbar | P106 | P72 | Lieferung liegt bereit |
 
 ## Lücken / passt noch nicht
 - **Beschlagnahme vs. Simulator:** Der Economy Report rechnet Beschlagnahme und Strafen nicht mit – Mengen (`maxPerItem`) mit P15 abstimmen.

@@ -47,12 +47,12 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - **Live-Version:** https://kestrel9.maxlworks.com (`docs/DEPLOY.md`). Automatische Updates warten noch auf Unity-Lizenz + Secrets (P49), bis dahin spielt max von Hand ein
 - Bestellt: Holly, Barkeeper, Dealer (P52). Neue Ideen als Pakete: P50 Türschilder, P51 Zimmer 103, P53 Wohnmodul begehbar. Assets bestellen geht jetzt ohne Rückfrage (`docs/ASSETS.md`)
 - 71/71 EditMode-Tests grün, WebGL-Build 20 MB
-- **Als Nächstes:** Kern-Loop-Call (vor dem Checkpoint 09.11.), martin nimmt P09 ab, dann P08 → P10 → P15 → P12 (`PAKETE.md`)
+- **Als Nächstes:** Max liest den Bericht und spielt an. Offen: P106 (Lieferung liegt bereit, Branch nicht gemergt), P94 (wartet auf Laute), P28, P32, P48, P51
   - Nachtrag 06.11. (martin): Kern-Loop-Call hat stattgefunden. P19 itch-Upload ist auf später verschoben. P58 Punkt 2 entschieden → P64
 
 ### Stand 08.11. abends (max)
 - Fertig: **P15** alle 12 Story-Tage, **P86** Korr-Tutorial, **P89** Papiere nebeneinander, **P91** Reisende gehen + Gitter, P88, P92, P93, P96; P90 bis auf #21 und #17
-- Live: `4975772` (mit Favicon). GitHub-Issues #15–#28 sortiert, offen: #16, #17, #19, #20, #21, #23 (Hocker, wieder geöffnet → P99), #25
+- Live: 4f65648 nach dem Nachtlauf; GitHub-Issues offen: #16 (wartet auf Laute), #17 (Max), #25 (vorerst nicht). Bericht: `docs/team/reports/2026-11-09_nachtlauf_max.md`
 - Martin im Urlaub bis Dienstag, sein Claude übernimmt P98, P97, P85, P77, P94 (Frage liegt bei ihm)
 - Nach Max' erstem Anspielen neu: P99–P102 (Hocker, Reaktionen, Leute in der Station, Papier-Geräusche), P103–P107 (Essen andeuten, Wachmann, Schleuse mit Ragdoll, Shuttle angedockt, Hangar-Schiffe), P29 geschärft; Assets dafür bestellt (M023)
 - Feature-Freeze 22.11. wird eng: Muss-Pakete P12, P16, P69 nicht aus den Augen verlieren

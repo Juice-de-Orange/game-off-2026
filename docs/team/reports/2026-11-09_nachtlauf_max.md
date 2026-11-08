@@ -92,12 +92,12 @@ Alle Vorschauen angesehen, Dateien gegen die Bestellung geprüft.
 - **Zeth, Tag 5:** Aus „Erlaubnis abgelaufen“ wurde ein gefälschtes Siegel, damit Tag 5 das erste Beispiel hat. Varn, Nimi und Sirr sind jetzt ebenfalls Verhaftungen. An Tag 9 gibt es dadurch keinen echten Durchlass mehr, das passt zur Inspektionswoche.
 
 ## Live und Prüfung
-LIVE_LINE
-- **Automatisch geprüft:** EditMode-Tests alle grün, Validate Travelers ohne Fehler, Economy Report alle Ziele ✓, WebGL startet.
+- **Live:** `4f65648` auf kestrel9.maxlworks.com (Version und Dateien nach dem Deploy geprüft). Alles auf `main` gepusht.
+- **Automatisch geprüft:** 186 EditMode-Tests alle grün, Validate Travelers ohne Fehler, Economy Report alle Ziele ✓, WebGL startet.
 - **Im Browser gesehen:** Menü, Tag 1, Inventar, Pause, Verhaftung mit Wache, Schleuse mit einer Figur (Sorvak), Terminal-Stil.
 - **Im Editor-Bild gesehen:** Dealer, Kiosk-Gitter, Gadgets auf dem Tisch, Wanduhr.
-- **Nicht von Hand geprüft:** Spätere Story-Tage durchgespielt, Tod und Briefe im Spiel, UV/Scanner auf echten Papieren, Abendgäste, Fernrohr, Aufbrechen, Reaktionen. Die Regeln dahinter decken Tests ab, das Zusammenspiel nicht.
-- **Occlusion:** Ohne Sonne bleibt 1 Blick (bei (6, 1,6, −5), 32 von 36864 Pixeln) mit kleiner Abweichung, nicht wie geplant 0; mit Sonne 38 Blicke, Ursache die neuen beweglichen Objekte (Ventilator, Roboter). Sichtbar war nichts Falsches.
+- **Nicht von Hand geprüft:** Spätere Story-Tage, Tod und Briefe im Spiel, UV/Scanner auf echten Papieren, Abendgäste, Aufbrechen, Reaktionen nach dem Stempel, Schiffe (nur Plätze im Editor geprüft), Hangar morgens. Die Regeln dahinter decken Tests ab, das Zusammenspiel nicht. Das Fernrohr im Browser nur mit Tastatur: echtes Schwenken mit der Maus konnte die Automatisierung nicht testen.
+- **Occlusion:** Ohne Sonne bleibt 1 Blick (bei (6; 1,6; −5), rund 30 von 36864 Pixeln) mit kleiner Abweichung, nicht wie geplant 0; mit Sonne 2 Blicke, der bekannte (rund 100 Pixel) und dieser. Sichtbar war nichts Falsches.
 - **Geldänderungen:** Wurden gemessen, Report grün. Pfand und Bonus aus P77/P85 rechnet der Simulator nicht mit (wenige Credits).
 
 ## GitHub-Issues
