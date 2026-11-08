@@ -1546,3 +1546,11 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Jedes Schild zeigt den richtigen Raum, und sein Pfeil zeigt zur richtigen Tür (Bilder aus Main); Occlusion-Check grün.
 - Stand (max, 07.11.): Code im `StationGrayboxBuilder` (`BuildWayfinding`, `HangSigns`, `HallSignMaterial`) und fünf Materialien `M_Hall_Sign_<Zeile>` sind gepusht. Geprüft in einer Sandbox-Kopie von Main (Bilder): Motel-Eingang CUSTOMS →, DINER →, KIOSK →, ← BAR (Rückseite gleiche Richtung); vor der Dienst-Tür ← MOTEL, ← DINER, BAR →, KIOSK →; Dienstgang CUSTOMS zur Schalter-Tür, HANGAR – STAFF ONLY zur Hangar-Tür. **Offen:** Build Station + Build Day Flow + Setup Main Lighting + Bake + Check Occlusion Bake, sobald Martin Main freigibt (P76). `PF_Station_Graybox` und Main sind bis dahin unverändert.
 - Ergebnis (max, 08.11.): Über Rebuild All After Deliveries eingebaut, Licht und Occlusion neu gebacken. Bilder aus Main: alle acht Schilder zeigen den richtigen Raum, alle Pfeile zur richtigen Tür. Validate Travelers ok, 147/147 EditMode-Tests. **Occlusion-Check nicht ganz grün:** 1 von 3768 Ansichten weicht ab (103 von 36864 px, (-9 | 1,6 | 1), Blick nach oben), dieselbe Ansicht wie am 07.11.; on/off-Bild sehen gleich aus.
+
+### P89 — Schaltertisch: Papiere nebeneinander, Lade, Deckel, Beschriftung
+- Größe: M · Priorität: Muss · Status: in Arbeit (max, 08.11.) · Zuständig: max
+- Braucht: P06, P38 · Folgt auf: P06
+- Ziel: Papiere lassen sich vergleichen, ohne eins wegzulegen; der Tisch ist auf einen Blick verständlich.
+- Enthalten: mehrere Papiere und Pinnwand-Zettel gleichzeitig lesen (bis zu 4 in einer Reihe, [R] alle, Umschauen beim Lesen); Lade dreht die Front „DOCUMENTS“ zum Beamten; Deckel des Schleusenknopfs klappt zur richtigen Seite; Beschriftung ARREST und AIRLOCK.
+- Nicht enthalten: neue Modelle, Tutorial (P86).
+- Abnahme: Ausweis und Erlaubnis lassen sich nebeneinander lesen und per Feld-Klick befragen; Lade und Deckel sehen richtig aus; beide Knöpfe sind vom Stuhl aus lesbar beschriftet.
