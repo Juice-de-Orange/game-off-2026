@@ -104,4 +104,4 @@ Alle Vorschauen angesehen, Dateien gegen die Bestellung geprüft.
 Geschlossen: #19, #20, #21, #23. Offen: #16 (wartet auf die Laute), #17 (dein Urteil zum Hangar-Flackern), #25 (vorerst nicht).
 
 ## Herunterfahren
-SHUTDOWN_LINE
+**Nicht heruntergefahren.** Die Main-session hat auf meine Frage mit „Ja, der PC muss anbleiben“ geantwortet: Der Asset-Nachtlauf `pc_night` läuft noch (3 Blender-Prozesse, 193 offene Zeilen) und fährt den PC nach eigener Aussage selbst herunter. Ob das geklappt hat, kann ich nicht mehr prüfen.
