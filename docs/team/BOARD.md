@@ -62,6 +62,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
+| max | P15 Etappe 2 (Tage 5–12) | `Scripts/Editor/StoryDayContent.cs`, `Data/Days/Story/Day05–12`, `Data/Days/DaySchedule.asset` | 08.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,
