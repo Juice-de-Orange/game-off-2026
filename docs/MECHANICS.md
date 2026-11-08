@@ -4,7 +4,7 @@ Wofür: Auf einen Blick sehen, welche Spielmechaniken es gibt, wie sie ineinande
 Pflege: Wer ein Paket fertigstellt, das eine Mechanik neu baut oder ändert, zieht diese Datei im selben Push nach (siehe `CLAUDE.md`).
 Wer ein Paket plant, prüft hier zuerst auf Konflikte. Details stehen in `PAKETE.md`, Entscheidungen in `DECISIONS.md`.
 
-Stand: 07.11.2026 (martin)
+Stand: 08.11.2026 (max)
 
 ## Der Kreislauf eines Tages
 ```
@@ -24,7 +24,8 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Mechanik | Paket | Was sie tut | Eingänge → Ausgänge | Daten / Einstellwerte |
 |---|---|---|---|---|
 | Tagesablauf | P09 (abgenommen, 07.11.); P73 | Morgen → Schicht → Abend → Nacht → nächster Tag; 12 Story-Tage, danach endlos | `CounterShift.ShiftEnded` → Abend; Bett → `NightStep` (Abrechnung) → nächster Tag; `LetterAddendum` → Brief | `Data/Days/DaySchedule.asset` |
-| Schalter & Dokumente | P05, P06, P38, P40, P86, P89 | Papiere ziehen, stempeln, Schublade, Nachfragen per Klick auf ein Feld, Reisende in der Prüfkammer; lesen: bis zu 4 Papiere und Pinnwand-Zettel nebeneinander (Klick holt dazu, [R] alle), Umschauen beim Lesen; Tag 1: Korr-Tutorial mit Schritt-Tafel, [N] überspringt | Reisender → Entscheidung (`DecisionMade`) | `Data/Travelers/…`, Dokument-Prefabs |
+| Schalter & Dokumente | P05, P06, P38, P40, P86, P89, P91 | Papiere ziehen, stempeln, Schublade, Nachfragen per Klick auf ein Feld, Reisende kommen durch die Hangar-Tür und gehen durch die passende Tür wieder hinaus; Verhaftung und Schleuse geschehen hinter einem fallenden Gitter, nur zu hören; lesen: bis zu 4 Papiere und Pinnwand-Zettel nebeneinander (Klick holt dazu, [R] alle), Umschauen beim Lesen; Tag 1: Korr-Tutorial mit Schritt-Tafel, [N] überspringt | Reisender → Entscheidung (`DecisionMade`) | `Data/Travelers/…`, Dokument-Prefabs |
+| Briefe nach Familienzustand | P15 | Jeder Story-Tag ab Tag 2 hat zwei Fassungen; die zweite, wenn jemand mindestens krank ist | `DayManager.FamilyInTrouble` → `DayEntry.LetterFor` | `DaySchedule`, Texte in `Scripts/Editor/StoryDayContent.cs` |
 | Regeln & Urteil | P07, P41 | Regeln des Tages, Pinnwand, Durchsagen; jede Entscheidung wird geprüft | Entscheidung → `Judgement` (richtig/falsch, Moral-Kosten) → bei Fehler Verwarnzettel | `DayRules`, `freeWarnings` (2) in `CounterShift` |
 | Geld & Inventar | P46 | Kontostand mit Tagesbuchungen (TODAY), Inventar (I), Gegenstände mit Labels | alle Käufe/Verkäufe/Abrechnung → `Wallet` | `EconomyTuning` (Start 40 CR), `Data/Items/*` |
 | Warenliste 2: Icon, Modell, Fracht-Stichwort je Ware | P82 | 24 Waren (neu: Liquor, Weapon parts, Cash bundle, Alien specimen, UV lamp; Stim injector heißt jetzt Stimulant vials). Waren wirken nicht stärker als andere, sie sind **eine andere Quelle** (z. B. beschlagnahmte Medizin statt Laden). Jede Ware mit Fracht-Stichwort (`cargoWord`) hat eine **CONFISCATED-Variante** (`Data/Items/Confiscated/`, gleiche Labels + CONFISCATED → hilft der Familie, nur der Schwarzmarkt kauft sie) | Fracht der Reisenden (P15) → Beschlagnahme (P08); Familie, Händler | `Data/Items/*`, gebaut von `Update Economy Data` |
@@ -60,10 +61,12 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Asservatenschrank aufbrechen | P83 (Kann) | P08, P32 | offen |
 | Familienschicksal: Folgen von „kritisch“ | P69 (Entwurf) | Familie → P12 | mit max abstimmen |
 | Enden (Familie, Moral, gefeuert) | P12 | Familie, P08, P69 | offen |
-| Briefe reagieren auf den Zustand | P15 | Familie | Tage 1–4 gebaut (`DayEntry.letterIfTrouble`, wenn jemand mindestens krank ist; Hook `DayManager.FamilyInTrouble`), Tage 5–12 offen |
-| Balancing über 3 Tage (Economy Report) | P71 (geplant) | alles Geld | nach P68 |
 | Gadgets: Scanner, UV-Lampe | P16, P62 | Schalter, Kiosk | Scanner-Funktion unklar (siehe Lücken) |
 | Familie in der Welt (Stadtlichter, Foto) | P29 | Familie | Assets bestellt |
+| Eine gemeinsame Spieluhr | P97 (martin) | Tagesablauf, Anzeigesäule | offen |
+| Stimmen: 10 Laute je Spezies | P94 (martin) | Händler, Reisende | offen |
+| Menüs im Terminal-Stil | P95 | alle Fenster | offen |
+| Kiosk-Gitter ganz offen oder zu | P90 | Händler | wartet auf `SM_Kiosk_Shutter` |
 
 ## Lücken / passt noch nicht
 - **Moral ohne Wirkung:** P08 zählt sie, aber erst P12 (Enden) liest sie.
@@ -78,5 +81,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 - **Ende AIRLOCKED nur abseits des richtigen Wegs:** Wer den Shifter an Tag 3 wie befohlen terminiert, sieht seine Frage (Tag 6) nie. Gewollt (Test der Behörde), aber die meisten Spieler werden das Ende so nicht finden.
 - **Endlose Tage ohne Geschichte:** Ab Tag 13 nur gezogene Reisende ohne Figuren, Briefe aus einem kleinen Pool (10) – das Geld wächst nach dem Ticket weiter (Report: Tag 30 ≈ 1900 CR), es gibt nur das Ticket als Ziel. Reisende ab Tag 13 haben keine Antworten auf Nachfragen (P40) und keine Fracht-Geschichten.
 - **Waren ohne Quelle bis P08:** Pistol, Waffenteile, Wertsachen, Alien-Zeug, Liquor kommen nur über die Fracht (Beschlagnahme, P08) – bis dahin gibt es sie im Spiel nicht.
+- **Gefälschte Siegel in den Story-Tagen fehlen:** Erst mit UV-Lampe oder Scanner (P58 Punkt 4). In den endlosen Tagen gibt es sie schon.
+- **Figuren an festen Plätzen (Korr an Tag 1) stehen exakt dort**, freie Figuren irgendwo davor oder dahinter (`CharacterPlanner.Queue`).
 - **Icons nur in den Daten:** Inventar und Handelsfenster zeigen noch keine Icons (Listen nur mit Namen) – eigenes Paket.
 - **Gadgets ohne Laden:** Scanner (P16) und UV-Lampe (P62) haben noch keinen Verkäufer. Scanner erst mit P16.

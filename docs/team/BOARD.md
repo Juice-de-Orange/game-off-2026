@@ -50,6 +50,12 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - **Als Nächstes:** Kern-Loop-Call (vor dem Checkpoint 09.11.), martin nimmt P09 ab, dann P08 → P10 → P15 → P12 (`PAKETE.md`)
   - Nachtrag 06.11. (martin): Kern-Loop-Call hat stattgefunden. P19 itch-Upload ist auf später verschoben. P58 Punkt 2 entschieden → P64
 
+### Stand 08.11. abends (max)
+- Fertig: **P15** alle 12 Story-Tage, **P86** Korr-Tutorial, **P89** Papiere nebeneinander, **P91** Reisende gehen + Gitter, P88, P92, P93, P96; P90 bis auf #21 und #17
+- Live: `c96d596`. GitHub-Issues #15–#28 sortiert, offen: #16, #17, #19, #20, #21, #25
+- Martin im Urlaub bis Dienstag, sein Claude übernimmt P98, P97, P85, P77, P94 (Frage liegt bei ihm)
+- **Als Nächstes:** Max spielt alles an, Lieferungen Kiosk + Favicon freigeben, P95 Menüs
+
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
 - **martin**: Startbildschirm — alles vom Spielstart bis zum Menü. Baut mit Platzhalter-Assets, Max ersetzt sie.

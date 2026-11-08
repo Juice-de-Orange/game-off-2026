@@ -24,7 +24,7 @@
 | Motelzimmer 101 (verschlossen) | −12..−8 | 2..6 | 3 | Giftgrün | Muss |
 | Motelzimmer 102 (verschlossen) | −16..−12 | 2..6 | 3 | Giftgrün | Muss |
 | Motelzimmer 103 = Spielerzimmer | −20..−16 | 2..6 | 3 | Giftgrün | Muss |
-| Diner | −16..−8 | −6..0 | 3 | Bernstein | Soll |
+| Diner (außer Betrieb, P92) | −16..−8 | −6..0 | 3 | dunkel | Soll |
 | Bar | 8..18 | 0..8 | 4 | Orange / Violett | Muss |
 | Kiosk (Gadget-Shop) | 8..12 | −6..−2 | 3 | Violett | Muss |
 
@@ -57,7 +57,7 @@
 ## Am Schalter im Sitzen (Stand P40/P41)
 - **Blick:** Kamera 1,55 m hoch, 20° geneigt, mit A/D ±70° drehbar (`SeatedLookTuning`), die Neigung geht dabei auf waagerecht.
 - **Pinnwand:** `SM_Counter_Board` an der Nordwand des Schalterraums, Mitte (−1,5 / 1,75 / −6,23), etwa 80° links vom Tisch; zwei Zettel, Position in `DocumentPrefabBuilder.WireBoard` (Kopie, bei Verschieben mit anpassen).
-- **Reisender:** auf der Standmarkierung (2, −9), Blick zum Schalter. Abgang etwa 1 m Richtung Tür: durchlassen und verhaften Nordtür, abweisen Hangartür, Schleuse Außenschott.
+- **Reisender:** auf der Standmarkierung (2, −9), Blick zum Schalter. Kommt durch die Hangartür (Süd). Abgang durchlassen: Nordtür, abweisen: Hangartür; Verhaftung und Schleuse hinter dem Gitter vor der Scheibe (P91). Die beiden Kammertüren haben eine unsichtbare Sperre gegen den Spieler.
 
 ## Wichtige Positionen (für Spawnpunkte, NavMesh, Interaktion)
 | Punkt | Position (X, Z) |
@@ -77,7 +77,7 @@
 ## Abläufe
 - **Reisende:** Shuttle → Warteschlange → Prüfkammer (Standmarkierung) → Durchlassen: Nordtür → Halle → Motel/Bar.
   Abweisen: zurück in den Hangar. Verhaften: Wache kommt über die Halle durch die Nordtür.
-  Luftschleuse: Innentüren verriegeln, Außenschott Ost öffnet (sichtbar durch die Scheibe).
+  Luftschleuse: hinter dem heruntergefallenen Gitter, nur zu hören (P91).
 - **Spieler:** Zimmer 103 → Motelgang → Halle → Servicegang → Schalter. Hangar (Frachtdrohne) über den Servicegang.
   Der Spieler betritt die Prüfkammer nie.
 - Laufwege bei 4 m/s: Zimmer → Schalter 6 s, Halle → Plattform 3 s, Schalter → Hangar-Südende 11 s (gemessen, Stand 2.0).

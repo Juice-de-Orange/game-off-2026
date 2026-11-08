@@ -1,6 +1,6 @@
 # Game Design
 
-> **Status: in Arbeit (Stand 05.11.)** — Konzept von Max & Martin, von Claude ausgearbeitet. Punkte mit ❓ sind noch offen,
+> **Status: in Arbeit (Stand 08.11.)** — Konzept von Max & Martin, von Claude ausgearbeitet. Punkte mit ❓ sind noch offen,
 > viele davon klärt der Kern-Loop-Call (`docs/team/questions/2026-11-05_martin-an-max_kern-loop.md`).
 > Änderungen am Kern nur nach Absprache (Entscheidung zusätzlich in `DECISIONS.md` loggen).
 
@@ -39,7 +39,7 @@ danach geht es **endlos** weiter mit Tagen aus Pools (Reisende, Regeln, Marktere
 |---|---|---|
 | Durchlassen | Reisender betritt die Station | Falsch durchgelassen → Abzug |
 | Abweisen | Reisender fliegt zurück | Falsch abgewiesen → Abzug |
-| Verhaften (Knopf) | Wache führt ab, beschlagnahmte Gegenstände landen bei dir | Unschuldig verhaftet → größerer Abzug |
+| Verhaften (Knopf) | Ein Gitter fällt vor die Scheibe, man hört die Festnahme; beschlagnahmte Gegenstände landen bei dir | Unschuldig verhaftet → größerer Abzug |
 | Luftschleuse (Knopf) | Sofortige Eliminierung, kein Zeitverlust | Unschuldige: hoher Abzug. Jede Nutzung senkt einen versteckten Moral-Wert → färbt Familienbriefe und Ende |
 
 ## Regeln am Schalter (festgelegt 04.11., Max)
@@ -73,7 +73,7 @@ geholfen, steckt er dir etwas für die Familie zu. Gehorchen (Schleuse), verhaft
 | **Transithalle** | Knotenpunkt mit Anzeigesäule (Live-Ankunftsplan), Bänken, Getränkeautomat |
 | **Aussichtsplattform** | Halbrunde Glasfront: Blick auf den Heimatplaneten (Stadtlichter = Zustand der Familie), Sonne, Gasriese; Münzfernrohr |
 | **Bar "The Last Orbit"** | Barkeeper (Hocker = Gespräch; kauft nichts, tauscht Wünsche gegen Gerüchte, P65; Bestechungszettel, P66), Schwarzmarkt unter der Theke, Fensterband |
-| **Diner** | Essen, Gerüchte (Soll) |
+| **Diner** | Außer Betrieb (P92): dunkel, Spinnweben, kann später wieder belebt werden |
 | **Kiosk** | Gadgets kaufen (Dokumentenscanner) |
 | **Motel** | Dein Zimmer 103 (Bett, Brief, Spind mit Familienfoto, Bullauge = Abendblick nach Hause); 101/102 verriegelt |
 
@@ -97,6 +97,7 @@ flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit di
 ## Steuerung
 - Ego-Perspektive, **WASD + Maus**, **E** = interagieren.
 - Am Schalter: E → Kamera fährt auf den Tisch. Dokumente sind 3D-Papiere: ziehen, per Klick hochhalten und lesen, stempeln. **A/D** oder Pfeile schauen sich um (Pinnwand links). Klick auf ein Feld eines hochgehaltenen Papiers = Nachfrage an den Reisenden. **Q / Esc / Rechtsklick** = zurück, aufstehen.
+- Beim Lesen lassen sich bis zu 4 Papiere und Pinnwand-Zettel nebeneinander halten: weitere anklicken oder **R** für alle.
 - Nur Tastatur & Maus (Browser). Kein Gamepad, kein Mobile.
 
 ## Umfang
