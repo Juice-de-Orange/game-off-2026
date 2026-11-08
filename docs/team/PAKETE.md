@@ -1512,7 +1512,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 07.11.): Backend `deploy/reports` (Python ohne Pakete, 12 Tests) läuft auf Geoffrey als `kestrel9-reports`; Spiel-nginx leitet `/api/report` weiter, Host-nginx setzt `X-Forwarded-For`. Begrenzung 5/10 min pro Client (IPv6 /64), 60/h gesamt, nur erfolgreiche zählen; CORS nur Kestrel + itch; `@` wird entschärft. Formular `BugReportForm` im Pausenmenü (P tippt, Esc/BACK zurück und bricht Senden ab). GitHub-Link aus P78 entfernt. Token: Max mit `python deploy/set-report-token.py`. Datenschutz auf maxlworks.com (EN/DE) ergänzt. Geprüft: Formular im WebGL-Build (Tippen inkl. „p“, Fehlermeldung ohne Backend), `curl` live.
 
 ### P85 — Figuren-Folgen ohne Begegnung und neue Bedingungen
-- Größe: M · Priorität: Soll (Vorschlag) · Status: teilweise (max, 08.11., Nachtlauf)· Zuständig: martin
+- Größe: M · Priorität: Soll (Vorschlag) · Status: in Arbeit (martin, 09.11.), Rest: Nells Sohn, Verhör-Durchsage, Zusammenfassung Tag 11 · Zuständig: martin
 - Braucht: P75, P76 · Folgt auf: P75
 - Ziel: Was `docs/FIGUREN.md` (Punkte 5 und 6) verlangt und P75 noch nicht kann.
 - Enthalten: Geschenke an die Familie (Mira bringt Essen = FOOD heute Nacht gedeckt, Senn Medizin), Lohnbonus/Rüge per Durchsage (Korr),
