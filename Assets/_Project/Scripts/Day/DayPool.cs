@@ -13,6 +13,8 @@ namespace GameOff.Day
     [CreateAssetMenu(menuName = "GameOff/Day Pool", fileName = "DayPool")]
     public class DayPool : ScriptableObject
     {
+        [Tooltip("P108: the passport photos of generated travelers (set by Build Traveler Photos).")]
+        public Travelers.TravelerLooks looks;
         [Serializable]
         public class SpeciesEntry
         {

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Ivo_IdCard
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 0
-  photo: {fileID: 2800000, guid: c8ac425c6a1d8ab43ab10da17ec65ca4, type: 3}
+  photo: {fileID: 2800000, guid: d3a9fe00b19347344a00fc7f016140d2, type: 3}
   fields:
   - key: name
     value: IVO TARSH

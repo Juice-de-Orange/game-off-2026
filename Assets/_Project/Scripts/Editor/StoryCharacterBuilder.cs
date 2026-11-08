@@ -472,6 +472,11 @@ namespace GameOff.EditorTools
         {
             var t = Asset<TravelerData>(travelerPath);
             var model = AssetDatabase.LoadAssetAtPath<GameObject>(TravelerPrefabBuilder.PrefabFolder + $"PF_NPC_{species}.prefab");
+            var looks = AssetDatabase.LoadAssetAtPath<TravelerLooks>("Assets/_Project/Data/Travelers/TravelerLooks.asset");
+            var photo = looks != null ? looks.PhotoFor(name, species) : null;
+            if (photo != null)
+                foreach (var doc in docs)
+                    if (doc.Photo != null) doc.EditorSet(doc.Type, photo, new List<DocumentField>(doc.Fields), doc.ForgedSeal);
             for (int i = 0; i < docs.Length; i++)
             {
                 var path = docPrefix + $"{docs[i].Type}.asset";

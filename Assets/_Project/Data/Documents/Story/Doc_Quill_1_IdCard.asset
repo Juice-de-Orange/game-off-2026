@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Quill_1_IdCard
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 0
-  photo: {fileID: 2800000, guid: c8ac425c6a1d8ab43ab10da17ec65ca4, type: 3}
+  photo: {fileID: 2800000, guid: 7a61cf2ae5172bb48a5a6a66db14ea60, type: 3}
   fields:
   - key: name
     value: QUILL BARRAGH

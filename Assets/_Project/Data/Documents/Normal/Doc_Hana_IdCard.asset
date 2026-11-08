@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Hana_IdCard
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 0
-  photo: {fileID: 2800000, guid: c8ac425c6a1d8ab43ab10da17ec65ca4, type: 3}
+  photo: {fileID: 2800000, guid: 67117747029ace34ba6b3316ec25896a, type: 3}
   fields:
   - key: name
     value: HANA ROEK

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Mabu_EntryPermit
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 1
-  photo: {fileID: 2800000, guid: 301aa66d9296d8b41bbac774cce3a10d, type: 3}
+  photo: {fileID: 2800000, guid: 53fdca27c84941443a44a11632ec7cb0, type: 3}
   fields:
   - key: name
     value: MABU SOOL

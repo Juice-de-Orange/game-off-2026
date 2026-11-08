@@ -683,6 +683,7 @@ namespace GameOff.EditorTools
             slats.gameObject.SetActive(false); // shown when it falls; at height 0 it would hang below the floor
             var pso = new SerializedObject(root.GetComponent<TravelerPresenter>());
             pso.FindProperty("shutter").objectReferenceValue = shutter;
+            pso.FindProperty("looks").objectReferenceValue = AssetDatabase.LoadAssetAtPath<TravelerLooks>("Assets/_Project/Data/Travelers/TravelerLooks.asset");
             // P104: the guard's own model when delivered, until then a human traveler
             var guard = AssetDatabase.LoadAssetAtPath<GameObject>(TravelerPrefabBuilder.PrefabFolder + "PF_NPC_Guard.prefab");
             if (guard == null) guard = AssetDatabase.LoadAssetAtPath<GameObject>(TravelerPrefabBuilder.PrefabFolder + "PF_NPC_Human.prefab");

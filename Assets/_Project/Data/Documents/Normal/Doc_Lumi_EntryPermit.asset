@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Lumi_EntryPermit
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 1
-  photo: {fileID: 2800000, guid: 301aa66d9296d8b41bbac774cce3a10d, type: 3}
+  photo: {fileID: 2800000, guid: 9d59bed5d93760949ada511ce8b45f29, type: 3}
   fields:
   - key: name
     value: LUMI VASK

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Oren_IdCard
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 0
-  photo: {fileID: 2800000, guid: c32b5c37ada19aa41b24a8c4257ffcb3, type: 3}
+  photo: {fileID: 2800000, guid: 4cbd906569c2b724aa0136e88e209a27, type: 3}
   fields:
   - key: name
     value: OREN PADD

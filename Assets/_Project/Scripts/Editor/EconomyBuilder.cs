@@ -815,6 +815,7 @@ namespace GameOff.EditorTools
             }
 
             BuildTelescope(root.transform, canvas);
+            BuildHangarShips(root.transform);
             var lockerGo = new GameObject("EvidenceLocker");
             lockerGo.transform.SetParent(root.transform, false);
             var (lockerUse, lockerView) = Trigger(lockerGo.transform, "Trigger", new Vector3(-4f, 0.9f, -6.45f), new Vector3(1.2f, 1.9f, 0.7f), "Evidence locker");
@@ -826,6 +827,7 @@ namespace GameOff.EditorTools
             crowdGo.transform.SetParent(root.transform, false);
             var crowd = crowdGo.AddComponent<EveningCrowd>();
             Set(crowd, "tuning", AssetDatabase.LoadAssetAtPath<GameOff.Counter.DialogueTuning>("Assets/_Project/Data/Counter/DialogueTuning.asset"));
+            Set(crowd, "looks", AssetDatabase.LoadAssetAtPath<TravelerLooks>("Assets/_Project/Data/Travelers/TravelerLooks.asset"));
             var crowdSpots = new List<Object>();
             for (int i = 0; i < CrowdSpots.Length; i++)
             {
@@ -875,6 +877,32 @@ namespace GameOff.EditorTools
             slats.gameObject.SetActive(false); // SecurityShutter shows it when it falls
         }
 
+        /// <summary>P107: the ships that can stand in the hangar and their pads, away from the shuttle ramp and the walkways.</summary>
+        private static void BuildHangarShips(Transform parent)
+        {
+            var go = new GameObject("HangarShips");
+            go.transform.SetParent(parent, false);
+            var models = new[] { "Courier", "Hauler", "Skiff", "Family" }
+                .Select(n => AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_{n}.fbx")).Where(m => m != null).ToArray();
+            var pads = new List<Object>();
+            foreach (var (position, yaw) in new[] { (new Vector3(-13f, 0f, -20f), 90f), (new Vector3(13f, 0f, -20f), -90f), (new Vector3(-13f, 0f, -33f), 90f), (new Vector3(13f, 0f, -33f), -90f) })
+            {
+                var pad = new GameObject("Pad").transform;
+                pad.SetParent(go.transform, false);
+                pad.SetPositionAndRotation(position, Quaternion.Euler(0f, yaw, 0f));
+                pads.Add(pad);
+            }
+            var ships = go.AddComponent<GameOff.Station.HangarShips>();
+            var so = new SerializedObject(ships);
+            var shipList = so.FindProperty("ships");
+            shipList.arraySize = models.Length;
+            for (int i = 0; i < models.Length; i++) shipList.GetArrayElementAtIndex(i).objectReferenceValue = models[i];
+            var padList = so.FindProperty("pads");
+            padList.arraySize = pads.Count;
+            for (int i = 0; i < pads.Count; i++) padList.GetArrayElementAtIndex(i).objectReferenceValue = pads[i];
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
         /// <summary>P29: trigger at the coin telescope on the deck, eye behind the eyepiece, overlay over the HUD.</summary>
         private static void BuildTelescope(Transform parent, Transform canvas)
         {
@@ -884,7 +912,7 @@ namespace GameOff.EditorTools
             Object.DestroyImmediate(debugView);
             var eye = new GameObject("Eye").transform;
             eye.SetParent(go.transform, false);
-            eye.position = new Vector3(0f, 1.3f, 9.2f);
+            eye.position = new Vector3(0f, 1.3f, 11.6f); // outside the glass, so no window frames in the view
             var overlay = new GameObject("TelescopeOverlay", typeof(RectTransform), typeof(Image));
             overlay.transform.SetParent(canvas, false);
             Stretch(overlay.GetComponent<RectTransform>());
@@ -892,7 +920,9 @@ namespace GameOff.EditorTools
             image.sprite = AssetDatabase.LoadAllAssetsAtPath("Assets/_Project/Art/UI/UI_Telescope_Overlay.png").OfType<Sprite>().FirstOrDefault();
             image.color = Color.white;
             image.raycastTarget = false;
-            var count = Text(overlay.transform, "Countdown", "30", 26, Amber, new Vector2(0f, -240f), new Vector2(200f, 40f), TextAlignmentOptions.Center);
+            // The overlay's time panel has fixed digits painted in: a black box hides them.
+            var digits = Box(overlay.transform, "Digits", new Vector2(56f, -229f), new Vector2(104f, 42f), Color.black);
+            var count = Text(digits, "Countdown", "30", 30, Amber, Vector2.zero, new Vector2(100f, 40f), TextAlignmentOptions.Center);
             Text(overlay.transform, "Hint", "Mouse pans  ·  Wheel zooms  ·  [Q] leave", 16, TextDim, new Vector2(0f, -280f), new Vector2(600f, 30f), TextAlignmentOptions.Center);
             var telescope = go.AddComponent<CoinTelescope>();
             Set(telescope, "interactable", interactable);
@@ -1301,6 +1331,11 @@ namespace GameOff.EditorTools
                 Set(l, "dialogs", dialogs);
                 Set(l, "player", player);
                 Record(l);
+            }
+            foreach (var h in instance.GetComponentsInChildren<GameOff.Station.HangarShips>(true))
+            {
+                Set(h, "day", day);
+                Record(h);
             }
             foreach (var c in instance.GetComponentsInChildren<EveningCrowd>(true))
             {

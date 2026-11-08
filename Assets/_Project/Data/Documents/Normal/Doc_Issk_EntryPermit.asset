@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Issk_EntryPermit
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 1
-  photo: {fileID: 2800000, guid: 2e230d1b640c8624bbd8580a387ab918, type: 3}
+  photo: {fileID: 2800000, guid: 8bca20e61b640de4fb73dc3b58f87d2d, type: 3}
   fields:
   - key: name
     value: ISSK DORR

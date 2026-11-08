@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7cb6cd52bde6844b9a0ea05cfebad31, type: 3}
   m_Name: DayPool
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Day.DayPool
+  looks: {fileID: 11400000, guid: 16ab19a5e98fb0d41b9082837d716f65, type: 2}
   species:
   - name: Human
     idPrefix: HM

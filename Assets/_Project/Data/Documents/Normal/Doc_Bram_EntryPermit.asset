@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Bram_EntryPermit
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 1
-  photo: {fileID: 2800000, guid: c8ac425c6a1d8ab43ab10da17ec65ca4, type: 3}
+  photo: {fileID: 2800000, guid: fa0717ec29b37ac4b9d19db445c0f7be, type: 3}
   fields:
   - key: name
     value: BRAM OSTER

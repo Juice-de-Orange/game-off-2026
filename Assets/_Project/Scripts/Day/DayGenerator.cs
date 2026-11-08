@@ -248,6 +248,7 @@ namespace GameOff.Day
                 : stops.Count > 0 && rng.NextDouble() < 0.6 ? $"{origin} > {Pick(rng, stops)} > {Destination}"
                 : $"{origin} > {Destination}";
 
+            var photo = pool.looks != null && pool.looks.PhotoFor(name, sp.name) != null ? pool.looks.PhotoFor(name, sp.name) : sp.photo; // P108
             string idExpires = Day(c.date.AddDays(rng.Next(200, 1100)));
             string permitExpires = Day(c.date.AddDays(rng.Next(2, 40)));
             string permitName = name, permitId = id;
@@ -307,11 +308,11 @@ namespace GameOff.Day
 
             var docs = new List<DocumentData>
             {
-                DocumentData.CreateGenerated(DocumentType.IdCard, sp.photo, Fields(("name", name), ("species", sp.name.ToUpperInvariant()),
+                DocumentData.CreateGenerated(DocumentType.IdCard, photo, Fields(("name", name), ("species", sp.name.ToUpperInvariant()),
                     ("origin", origin), ("id", id), ("expires", idExpires))),
             };
             if (permit)
-                docs.Add(DocumentData.CreateGenerated(DocumentType.EntryPermit, sp.photo, Fields(("name", permitName), ("id", permitId),
+                docs.Add(DocumentData.CreateGenerated(DocumentType.EntryPermit, photo, Fields(("name", permitName), ("id", permitId),
                     ("purpose", pool.purposes.Count > 0 ? Pick(rng, pool.purposes) : "TRANSIT"), ("duration", $"{rng.Next(1, 6)} CYCLES"),
                     ("expires", permitExpires), ("issued", origin + " CONSULATE"), ("route", route)), forged));
             if (manifest)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Filler_Corin_IdCard
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 0
-  photo: {fileID: 2800000, guid: 2e230d1b640c8624bbd8580a387ab918, type: 3}
+  photo: {fileID: 2800000, guid: c2be7d53699434a4cb13d7cf15fabbbd, type: 3}
   fields:
   - key: name
     value: CORIN HASK

@@ -30,6 +30,8 @@ namespace GameOff.Travelers
         [SerializeField] private Transform hallDoor;
         [SerializeField] private Transform hangarDoor;
         [SerializeField] private SecurityShutter shutter;
+        [Tooltip("P108: dresses each traveler by name.")]
+        [SerializeField] private TravelerLooks looks;
         [Tooltip("P104: comes through the hall door when someone is arrested. Prefab with Idle and Walk.")]
         [SerializeField] private GameObject guardModel;
         [Tooltip("P105: flashes while the airlock is open; off otherwise.")]
@@ -258,6 +260,7 @@ namespace GameOff.Travelers
             var door = SlidingDoor.ForRole(SlidingDoor.Role.LockHall);
             if (guardModel != null)
             {
+                AudioManager.Play(s => s.guardBoots);
                 if (_guard == null)
                 {
                     _guard = Instantiate(guardModel, transform);
@@ -286,6 +289,8 @@ namespace GameOff.Travelers
         {
             var hatch = AirlockHatch.Instance;
             if (hatch != null) hatch.Open(tuning.hatchSeconds);
+            AudioManager.Play(s => s.airlockAlarm);
+            AudioManager.Play(s => s.airlockDecompress);
             shift.Station.Shake(tuning.hatchSeconds + tuning.airlockBlowSeconds, 0.02f);
             FlashLamp(new Color(1f, 0.12f, 0.08f), tuning.hatchSeconds + tuning.airlockBlowSeconds);
             bubble.Hide();
@@ -349,6 +354,7 @@ namespace GameOff.Travelers
             _figure.transform.SetPositionAndRotation(Offstage(hangarDoor), standSpot.rotation);
             _animator = _figure.GetComponent<Animator>();
             _figure.SetActive(true);
+            if (looks != null) looks.Apply(_figure, traveler.DisplayName, traveler.Species);
             _head = _animator != null && _animator.isHuman ? _animator.GetBoneTransform(HumanBodyBones.Head) : null;
             Play(Idle);
         }

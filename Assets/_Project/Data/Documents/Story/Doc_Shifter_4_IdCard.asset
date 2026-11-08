@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Shifter_4_IdCard
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 0
-  photo: {fileID: 2800000, guid: c8ac425c6a1d8ab43ab10da17ec65ca4, type: 3}
+  photo: {fileID: 2800000, guid: 20132a50936cb2440a2a9e6247db80d4, type: 3}
   fields:
   - key: name
     value: TOMAS REY

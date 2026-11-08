@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Mira_2_IdCard
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 0
-  photo: {fileID: 2800000, guid: 301aa66d9296d8b41bbac774cce3a10d, type: 3}
+  photo: {fileID: 2800000, guid: 5fccc9eb75679fb47b941d049888586e, type: 3}
   fields:
   - key: name
     value: MIRA TALSK

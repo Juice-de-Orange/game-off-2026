@@ -48,6 +48,10 @@ namespace GameOff.EditorTools
             Assign(set.paChime, "SFX_PA_Chime");
             Assign(set.vendorGreet, "SFX_Vendor_Greet");
             Assign(set.telescopeCoin, "SFX_Telescope_Coin");
+            Assign(set.guardBoots, "SFX_Guard_Boots");
+            Assign(set.airlockAlarm, "SFX_Airlock_Alarm");
+            Assign(set.airlockDecompress, "SFX_Airlock_Decompress");
+            Assign(set.shipLand, "SFX_Ship_Land");
             Assign(set.tradeBuy, "SFX_Trade_Buy");
             Assign(set.uiClick, "SFX_UI_Click");
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Sirr_EntryPermit
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 1
-  photo: {fileID: 2800000, guid: 2e230d1b640c8624bbd8580a387ab918, type: 3}
+  photo: {fileID: 2800000, guid: e64d7901fb0729f45bf226fe37d38ca2, type: 3}
   fields:
   - key: name
     value: SIRR TAAL

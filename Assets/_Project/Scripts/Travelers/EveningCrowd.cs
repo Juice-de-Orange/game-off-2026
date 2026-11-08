@@ -18,6 +18,7 @@ namespace GameOff.Travelers
         [SerializeField] private DayManager day;
         [SerializeField] private CounterShift shift;
         [SerializeField] private DialogueTuning tuning;
+        [SerializeField] private TravelerLooks looks;
         [SerializeField] private Transform[] spots;
 
         private readonly List<TravelerData> _admitted = new List<TravelerData>();
@@ -52,6 +53,7 @@ namespace GameOff.Travelers
         private GameObject Place(TravelerData traveler, Transform spot)
         {
             var figure = Instantiate(traveler.Model, spot.position, spot.rotation, transform);
+            if (looks != null) looks.Apply(figure, traveler.DisplayName, traveler.Species);
             var animator = figure.GetComponent<Animator>();
             if (animator != null)
             {

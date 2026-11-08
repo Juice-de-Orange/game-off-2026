@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Hedda_EntryPermit
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 1
-  photo: {fileID: 2800000, guid: c8ac425c6a1d8ab43ab10da17ec65ca4, type: 3}
+  photo: {fileID: 2800000, guid: 94002ce702761744182915e57d96771c, type: 3}
   fields:
   - key: name
     value: HEDDA MARSH

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Roen_EntryPermit
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 1
-  photo: {fileID: 2800000, guid: 22a8011810e1f044c95058dd848837e0, type: 3}
+  photo: {fileID: 2800000, guid: e0db50c35b8d27f4990225ecc8bfd752, type: 3}
   fields:
   - key: name
     value: ROEN HADDIX

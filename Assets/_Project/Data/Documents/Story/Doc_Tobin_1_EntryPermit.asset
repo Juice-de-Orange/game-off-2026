@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Tobin_1_EntryPermit
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 1
-  photo: {fileID: 2800000, guid: c32b5c37ada19aa41b24a8c4257ffcb3, type: 3}
+  photo: {fileID: 2800000, guid: 92e12c64ca1306a49844c49c97bbd25d, type: 3}
   fields:
   - key: name
     value: TOBIN RASK

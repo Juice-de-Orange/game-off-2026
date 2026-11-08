@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Vosh_IdCard
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 0
-  photo: {fileID: 2800000, guid: c32b5c37ada19aa41b24a8c4257ffcb3, type: 3}
+  photo: {fileID: 2800000, guid: 5f7bef18dde90ce4abe8c8f9e5a77b87, type: 3}
   fields:
   - key: name
     value: VOSH ADEL

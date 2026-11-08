@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Doc_Nell_1_EntryPermit
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
   type: 1
-  photo: {fileID: 2800000, guid: c8ac425c6a1d8ab43ab10da17ec65ca4, type: 3}
+  photo: {fileID: 2800000, guid: 5505e5caeb54a7e499d54daffed30b77, type: 3}
   fields:
   - key: name
     value: NELL VARGA
