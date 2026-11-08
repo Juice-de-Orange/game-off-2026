@@ -248,7 +248,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     alle „weak“ im Brief von Tag 2, Kontostand 85; Tag 2 → 3 läuft. Kein WebGL-Build.
 
 ### P11 — Läden: Gadget-Shop & Bar-Schwarzmarkt
-- Größe: M · Priorität: Muss · Status: teilweise (martin, 06.11.): Händlervorrat (B04) fertig, Rest wartet auf das P08-Gespräch
+- Größe: M · Priorität: Muss · Status: in Arbeit (max, 08.11., Nachtlauf: Rest)
 - Braucht: P03, P08, P46 · **erst bauen, wenn P46 fertig ist** (Grundstruktur für Geld und Inventar)
 - Ziel: Kaufen und Verkaufen über ein gemeinsames Shop-System.
 - Enthalten: Shop-UI, Bar (illegale Gegenstände kaufen, Beschlagnahmtes verkaufen), Dokumentenscanner kaufbar
@@ -271,7 +271,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - **Nachtrag (martin, 06.11.):** Schmuggelware kauft nur der Schwarzmarkt (P64). Der Barkeeper soll nichts kaufen, sondern Wünsche gegen Gerüchte tauschen (P65, Entwurf) und manchmal Bestechungszettel schicken (P66, Entwurf).
 
 ### P12 — Enden
-- Größe: S · Priorität: Muss · Status: offen
+- Größe: S · Priorität: Muss · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Hinweis (Call 07.11.): neue Enden: **Game Over nach 3 Disziplinarstrafen** (P08) und **„Airlocked“** – wer dem Shifter bei seiner Schlüsselentscheidung hilft, fliegt an Tag 7 durch die Schleuse (`docs/FIGUREN.md`). Hauptende ist das Ticket (P72).
 - Braucht: P10, P08
 - Ziel: Nach Tag 3 oder bei Niederlage ein Endbildschirm.
@@ -334,7 +334,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   `DayManager.LetterAddendum` bzw. `PlayerEconomy.FamilyReport()` (heute eine Zeile pro Person unter dem Brief).
 
 ### P16 — Gadget: Dokumentenscanner
-- Größe: S · Priorität: Muss · Status: offen
+- Größe: S · Priorität: Muss · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: P06, P11
 - Ziel: Gekaufter Scanner markiert gefälschte Felder auf Dokumenten.
 - Assets: `SM_Item_DocScanner` (bestellt am 06.11.)
@@ -1012,7 +1012,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Nebenbei: `DocumentDesk`, `CounterShift` und `CounterClickable` haben nur Sound-Aufrufe bekommen. Die Clownsschuh-Sounds liegen bereit und sind nicht verdrahtet (P63).
 
 ### P62 — Gadget: UV-Lampe
-- Größe: M · Priorität: Soll · Status: offen, Modell bestellt (max, 06.11.)
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: P06, P11 · Folgt auf: P58
 - Assets: `SM_Item_UVLamp` (bestellt am 06.11.)
 - Ziel: Mit der Lampe sieht der Spieler gefälschte Siegel, ohne sie bleiben sie unsichtbar.
@@ -1022,7 +1022,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Ohne Lampe kein Hinweis aufs Siegel, mit Lampe klar sichtbar; Validator prüft die Regel aus P58.
 
 ### P63 — Clownsschuhe
-- Größe: S · Priorität: Kann · Status: offen, Assets bestellt (max, 06.11.)
+- Größe: S · Priorität: Kann · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: P08, P46, P61 · Folgt auf: —
 - Assets: `SM_Item_ClownShoes`, `SFX_ClownShoe_Squeak_01` bis `_03` (bestellt am 06.11.)
 - Ziel: Beschlagnahmte Clownsschuhe lassen sich anziehen, dann quietscht jeder Schritt, bis man sie auszieht.
@@ -1162,7 +1162,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
     Fresh fruit fehlt, Zettel und Durchsage, verdorbene Frucht im Brief; Tag 3 Spice 42 ×5, Ankauf 44, Wärme am Bett 22. Konsole 0 Fehler.
 
 ### P69 — Familienschicksal: was „kritisch“ bedeutet
-- Größe: S · Priorität: Muss (Vorschlag) · Status: offen, Entwurf (martin, 06.11.) – mit Max abstimmen
+- Größe: S · Priorität: Muss (Vorschlag) · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: P10 · Folgt auf: P10 · Gehört zu den Bedingungen von P12, Texte in P15, sichtbar in P29
 - Ziel: Der Zustand der Familie hat eine Grenze: Wer zu lange kritisch ist, bleibt nicht folgenlos.
 - Enthalten (Vorschlag): Regel, was nach einer oder mehreren Nächten auf „critical“ passiert (z. B. Person geht ins Krankenhaus und
@@ -1416,7 +1416,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 07.11.): `DeliveryIntegrator` überspringt `Art/UI/Icons` (UI-Regel) und `Art/Textures/Documents` (Welt-Regel; die setzte Point, `DocumentPrefabBuilder` wieder Bilinear – die beiden haben sich gegenseitig umgestellt). Zwei Batch-Läufe: „nothing to do“, keine geänderten `.meta`. Regel in `ASSETS.md`.
 
 ### P80 — Umschlag-Modell beim Bestechungszettel
-- Größe: XS · Priorität: Kann · Status: offen · Zuständig: martin (Call 07.11.)
+- Größe: XS · Priorität: Kann · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: P66 · Folgt auf: P66
 - Ziel: Der Bestechungszettel liegt sichtbar in `SM_Prop_BribeEnvelope` (geliefert und eingebaut am 07.11., Material `M_Prop_BribeEnvelope`).
 - Enthalten: Modell am `NoteSpot` des `BribeNote` (EconomyBuilder), nur sichtbar, solange der Zettel liegt.
@@ -1630,7 +1630,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Validate Travelers und EditMode-Tests grün; keine Figur an Tag 1–4 antwortet mit der allgemeinen Zeile.
 
 ### P99 — Dealer sitzt richtig auf dem Hocker
-- Größe: S · Priorität: Muss · Status: offen · Zuständig: offen
+- Größe: S · Priorität: Muss · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P90
 - Ziel: Der Dealer in der Bar sitzt sichtbar auf dem Hocker (#23, wieder geöffnet).
 - Enthalten: Nach dem Anspielen 08.11.: Mit y 0,58 steckt der Sitz noch in seinem Schoß, er muss noch etwas höher (`VendorSpot` Dealer im `EconomyBuilder`). Danach im Bild von der Seite prüfen.
@@ -1658,7 +1658,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Viele Papiere nacheinander klingen unaufdringlich.
 
 ### P103 — Lena und Korr deuten den Weg über die Drohne an
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 08.11., Nachtlauf)
 - Braucht: — · Folgt auf: P13, P86, P15
 - Ziel: Der Spieler kommt selbst darauf, dass Kiosk + Drohne rund ein Viertel billiger ist als das [X] in der Abrechnung.
 - Enthalten: Nur angedeutet (Max, 08.11.): eine vage Frage von Lena in einem frühen Brief (etwa, ob man Sachen nicht auch per Drohne schicken kann) und ein Tipp von Korr im Tutorial oder bei einem späteren Auftritt. Keine Erklärung im Menü, Mechanik bleibt unverändert.
