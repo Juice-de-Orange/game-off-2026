@@ -59,8 +59,8 @@ Fehlen Secrets, baut der Workflow nicht und zeigt nur eine Warnung. Setzen in ei
 
 ## Bugreport-Backend (P84)
 Das Pausenmenü schickt Berichte an `https://kestrel9.maxlworks.com/api/report`. Der nginx im Spiel-Container leitet nur diese Adresse an den
-Container `kestrel9-reports` weiter; der legt mit einem Bot-Token ein GitHub-Issue an (Labels `bug`, `player-report`). Begrenzung: 5 Berichte
-pro Client (IPv6: pro /64) in 10 Minuten, 60 pro Stunde insgesamt; nur erfolgreiche zählen. CORS nur für diese Seite und `*.itch.zone`/`*.itch.io`.
+Container `kestrel9-reports` weiter; der legt mit einem Bot-Token ein GitHub-Issue an (Labels `bug`, `player-report`). Keine Begrenzung der Anzahl
+(entfernt am 08.11. auf Max' Wunsch; bei Spam `docker stop kestrel9-reports`). CORS nur für diese Seite und `*.itch.zone`/`*.itch.io`.
 - **Reihenfolge:** Das Image `kestrel9-reports:latest` muss auf Geoffrey existieren, bevor `compose.yml` mit dem Dienst `reports` liegt – sonst
   scheitert jeder Spiel-Deploy (`deploy.sh` startet alle Dienste). Ändern: `deploy/reports` nach `/opt/kestrel9/reports` kopieren,
   `docker build -t kestrel9-reports:latest /opt/kestrel9/reports`, `docker compose -f /opt/kestrel9/compose.yml up -d --no-build --pull never reports`.
@@ -68,7 +68,7 @@ pro Client (IPv6: pro /64) in 10 Minuten, 60 pro Stunde insgesamt; nur erfolgrei
 - **Prüfen:** `docker exec kestrel9-reports wget -qO- http://127.0.0.1:8000/api/health` → `"configured": true`; Tests lokal
   `python -B -m unittest discover -s deploy/reports`.
 - **Abschalten:** `docker stop kestrel9-reports`. Das Spiel lädt weiter, nur der Bericht scheitert (502, das Formular sagt „try again later“).
-- Host-nginx (`sites-available/kestrel9`) setzt `X-Forwarded-For $remote_addr` für die Begrenzung (Sicherung: `/opt/kestrel9/nginx-site.before-p84`).
+- Host-nginx (`sites-available/kestrel9`) setzt `X-Forwarded-For $remote_addr`, das Backend wertet es seit dem 08.11. nicht mehr aus (Sicherung: `/opt/kestrel9/nginx-site.before-p84`).
 
 ## Dev-Werkzeuge
 Im Build standardmäßig aus, Besucher schalten sie unter Options → DEV ein. **Vor der Abgabe:** Reiter im `MenuSceneBuilder` entfernen und
@@ -88,5 +88,5 @@ Die Vorlage `Kestrel9` fängt das über `errorHandler` ab. **Für den itch-Build
 Die Datenschutzerklärung von maxlworks.com verspricht wenig Logging. Deshalb haben Container und nginx-Site kein Access-Log; nur das Log
 des SNI-Routers erfasst die Subdomain (14 Rotationen). Das Spiel speichert Einstellungen lokal im Browser (IndexedDB). Gesendet wird nur, was ein Spieler selbst als Bugreport abschickt (P84):
 sein Text plus Version, Tag, Phase, Szene und Browserkennung; daraus wird ein GitHub-Issue (GitHub Inc., USA; ab der Abgabe öffentlich).
-Die IP dient nur der Begrenzung, bleibt höchstens 10 Minuten im Speicher und wird weder gespeichert noch geloggt.
+Die IP wird seit dem 08.11. nicht mehr ausgewertet (vorher nur für die Begrenzung) und weder gespeichert noch geloggt.
 **Die Datenschutzerklärung auf maxlworks.com muss das erwähnen (Absatz von Claude, 07.11., in Max' Handover).**

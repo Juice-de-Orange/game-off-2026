@@ -4,27 +4,21 @@
 POST /api/report with JSON {text, version, day, phase, scene, browser} creates a GitHub issue with the labels "bug" and
 "player-report" through a bot token, so testers need no GitHub account. Standard library only.
 
-Privacy: the client IP (X-Real-IP, set by the game's nginx) is only used for the rate limit and kept in memory for at most
-ten minutes. Nothing is written to disk and the log lines carry no IP and no report text.
+Privacy: the client IP is not used or kept. Nothing is written to disk and the log lines carry no IP and no report text.
 
 Environment: GITHUB_TOKEN (fine-grained, Issues read/write), GITHUB_REPO, GITHUB_API (tests), PORT.
 """
-import ipaddress
 import json
 import os
 import sys
 import threading
-import time
 import urllib.error
 import urllib.request
-from collections import deque
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 MAX_BODY = 8 * 1024
 TEXT_MIN, TEXT_MAX = 3, 1000
 FIELD_MAX = 200
-PER_IP = (5, 600)       # reports per client per 10 minutes
-OVERALL = (60, 3600)    # reports in total per hour
 LABELS = ["bug", "player-report"]
 MAX_PARALLEL = 8        # GitHub calls at the same time; more → 503 (keeps threads well below the container's pids_limit)
 # Browsers may only post from the live site and the itch.io build; the game in the editor sends no Origin at all.
@@ -38,56 +32,6 @@ def origin_allowed(origin):
     if origin in ALLOWED_ORIGINS:
         return True
     return origin.startswith("https://") and origin.endswith(ALLOWED_ORIGIN_SUFFIXES)
-
-
-def client_key(ip):
-    """IPv6 clients usually own a whole /64, so they count as one; IPv4 as the address. Empty for unknown."""
-    try:
-        address = ipaddress.ip_address(ip)
-    except ValueError:
-        return ""
-    if address.version == 4:
-        return str(address)
-    if address.ipv4_mapped:
-        return str(address.ipv4_mapped)
-    return str(ipaddress.ip_network(f"{address}/64", strict=False))
-
-
-class Limiter:
-    """Sliding windows: per client and in total. Clients without an IP only count toward the total."""
-
-    def __init__(self, per_ip=PER_IP, overall=OVERALL, clock=time.monotonic):
-        self._per_ip, self._overall, self._clock = per_ip, overall, clock
-        self._lock = threading.Lock()
-        self._ips = {}
-        self._all = deque()
-
-    def allow(self, ip):
-        """Whether one more report fits; doesn't count it (record() does, after it went through)."""
-        now = self._clock()
-        with self._lock:
-            self._prune(now)
-            if len(self._all) >= self._overall[0]:
-                return False
-            hits = self._ips.get(ip) if ip else None
-            return hits is None or len(hits) < self._per_ip[0]
-
-    def record(self, ip):
-        now = self._clock()
-        with self._lock:
-            self._all.append(now)
-            if ip:
-                self._ips.setdefault(ip, deque()).append(now)
-
-    def _prune(self, now):
-        while self._all and now - self._all[0] > self._overall[1]:
-            self._all.popleft()
-        for ip in list(self._ips):
-            hits = self._ips[ip]
-            while hits and now - hits[0] > self._per_ip[1]:
-                hits.popleft()
-            if not hits:
-                del self._ips[ip]
 
 
 def one_line(value, limit):
@@ -165,7 +109,7 @@ def create_issue(api, repo, token, title, body):
         return json.load(response)["number"]
 
 
-def make_handler(config, limiter):
+def make_handler(config):
     slots = threading.BoundedSemaphore(MAX_PARALLEL)
 
     class Handler(BaseHTTPRequestHandler):
@@ -223,9 +167,6 @@ def make_handler(config, limiter):
                 return self._send(400, {"ok": False, "error": error})
             if not config["token"]:
                 return self._send(503, {"ok": False, "error": "not configured"})
-            ip = client_key((self.headers.get("X-Real-IP") or "").split(",")[0].strip())
-            if not limiter.allow(ip):
-                return self._send(429, {"ok": False, "error": "too many reports"})
             if not slots.acquire(blocking=False):
                 return self._send(503, {"ok": False, "error": "busy"})
             try:
@@ -237,19 +178,18 @@ def make_handler(config, limiter):
                 return self._send(502, {"ok": False, "error": "github unreachable"})
             finally:
                 slots.release()
-            limiter.record(ip)  # only reports that became issues count
             self._send(201, {"ok": True, "issue": number})
 
     return Handler
 
 
-def make_server(port=8000, config=None, limiter=None):
+def make_server(port=8000, config=None):
     config = config or {
         "token": os.environ.get("GITHUB_TOKEN", "").strip(),
         "repo": os.environ.get("GITHUB_REPO", "Juice-de-Orange/game-off-2026").strip(),
         "api": os.environ.get("GITHUB_API", "https://api.github.com").rstrip("/"),
     }
-    return ThreadingHTTPServer(("0.0.0.0", port), make_handler(config, limiter or Limiter()))
+    return ThreadingHTTPServer(("0.0.0.0", port), make_handler(config))
 
 
 if __name__ == "__main__":

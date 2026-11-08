@@ -39,20 +39,11 @@ class FakeGitHub:
         self.httpd.server_close()
 
 
-class Clock:
-    def __init__(self):
-        self.now = 1000.0
-
-    def __call__(self):
-        return self.now
-
-
 class ReportServerTests(unittest.TestCase):
     def setUp(self):
         self.github = FakeGitHub()
-        self.clock = Clock()
         self.config = {"token": "secret", "repo": "owner/repo", "api": self.github.url}
-        self.httpd = server.make_server(0, self.config, server.Limiter(clock=self.clock))
+        self.httpd = server.make_server(0, self.config)
         self.httpd.server_address = ("127.0.0.1", self.httpd.server_address[1])
         threading.Thread(target=self.httpd.serve_forever, daemon=True).start()
         self.url = f"http://127.0.0.1:{self.httpd.server_address[1]}"
@@ -117,38 +108,15 @@ class ReportServerTests(unittest.TestCase):
         self.assertEqual(201, status)
         self.assertIn("Day: -", self.github.issues[0][1]["body"])
 
-    def test_failed_issue_does_not_use_up_the_limit(self):
-        self.github.status = 500
-        for _ in range(6):
-            self.assertEqual(502, self.post(self.report())[0])
-        self.github.status = 201
-        self.assertEqual(201, self.post(self.report())[0])
-
-    def test_ipv6_counts_per_64_network(self):
-        for i in range(5):
-            self.assertEqual(201, self.post(self.report(), ip=f"2001:db8:1:2::{i + 1}")[0])
-        self.assertEqual(429, self.post(self.report(), ip="2001:db8:1:2:ffff::9")[0])
-        self.assertEqual(201, self.post(self.report(), ip="2001:db8:1:3::1")[0])
+    def test_no_limit_on_reports(self):
+        for _ in range(70):
+            self.assertEqual(201, self.post(self.report())[0])
+        self.assertEqual(70, len(self.github.issues))
 
     def test_origins(self):
         self.assertEqual(201, self.post(self.report(), origin="https://html-classic.itch.zone")[0])
         self.assertEqual(201, self.post(self.report(), origin=None)[0], "the editor sends no Origin")
         self.assertEqual(403, self.post(self.report(), origin="https://evil.example")[0])
-
-    def test_rate_limit_per_client_and_window(self):
-        for _ in range(5):
-            self.assertEqual(201, self.post(self.report())[0])
-        self.assertEqual(429, self.post(self.report())[0])
-        self.assertEqual(201, self.post(self.report(), ip="198.51.100.1")[0], "another client is not blocked")
-        self.clock.now += 601
-        self.assertEqual(201, self.post(self.report())[0], "the window moves on")
-
-    def test_overall_limit_without_client_ip(self):
-        limiter = server.Limiter(per_ip=(5, 600), overall=(3, 3600), clock=self.clock)
-        for _ in range(3):
-            self.assertTrue(limiter.allow(""), "no IP: only the overall limit counts")
-            limiter.record("")
-        self.assertFalse(limiter.allow("192.0.2.1"))
 
     def test_github_failure_is_502(self):
         self.github.status = 401
