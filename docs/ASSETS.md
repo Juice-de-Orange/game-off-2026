@@ -65,6 +65,7 @@ ArtSource/                 Arbeitsdateien (.blend, .psd, Rohaufnahmen) — auße
 - UI-Grafiken und Dokumente: voll aufgelöst, Filter Bilinear (müssen lesbar sein).
 - Terminal-Grafiken (`Art/UI/Terminal`, P95): Point, Sprite, Ränder in `TerminalStyle.BorderOf`, `DeliveryIntegrator` setzt die Import-Werte.
 - Papier-Geräusche: `SFX_Paper_*_01–04` zusätzlich zu den alten Einzeltönen, `SoundSetBuilder` verteilt sie.
+- Reisende (P108): Texturen `T_NPC_<Spezies>_Albedo_V1–V5`, Frisuren/Hüte `SM_NPC_Hair_*`, `SM_NPC_Hat_*`. **Passfotos werden nicht geliefert, sondern gerendert** (`Art/Textures/Documents/Photos`, GameOff/Build Traveler Photos). Kommen neue Frisuren, in `TravelerPhotoBuilder.HairHeights` die Höhe eintragen: Die Modelle haben unterschiedliche Pivots.
 - Favicon: `Assets/WebGLTemplates/Kestrel9/favicon.png`, eingebunden in der `index.html` der Vorlage.
 - Hangar-Texturen (`Art/Textures/Hangar`): Point **mit** Mipmaps, sonst flimmern die weiten Wände beim Gehen (P90); setzt `Integrate Asset Deliveries`.
 - Ausnahmen, die `Integrate Asset Deliveries` nicht anfasst (P79): Waren-Icons `Art/UI/Icons` (Pixel-Art: Point, Sprite Multiple, von Hand gesetzt) und Dokument-Texturen `Art/Textures/Documents` (Bilinear + Mipmaps, setzt `Build Documents`).

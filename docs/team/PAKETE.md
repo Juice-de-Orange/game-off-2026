@@ -476,7 +476,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 > **P27–P36: Mechaniken aus dem Asset-Durchgang** (max, 02.11.). Max hat jedes gelieferte Asset durchgesehen und festgelegt,
 > was man damit tun kann. Alle Soll; Reihenfolge und Verteilung im Call.
-- Ergebnis (Nachtlauf, 08.11.): Bar-Ventilator dreht sich, Putzroboter fährt in der Halle hin und her. Rest siehe Stand.
+- Ergebnis (Nachtlauf, 08.11.): Bar-Ventilator dreht sich, Putzroboter fährt in der Halle hin und her, Fernrohr funktioniert (P29). Offen bleiben Poster und Schmutz-Decals; der Diner-Ventilator steht absichtlich still (außer Betrieb).
 
 ### P27 — Automatische Türen mit Zugangsstufen
 - Größe: S · Priorität: Soll · Status: fertig (max, 02.11.)
@@ -1042,7 +1042,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Beschlagnahmte Clownsschuhe lassen sich anziehen, dann quietscht jeder Schritt, bis man sie auszieht.
 - Enthalten: Gegenstand, Anziehen und Ausziehen im Inventar, Schrittgeräusch wechselt.
 - Abnahme: Mit Schuhen quietscht jeder Schritt, ohne Schuhe normal.
-- Ergebnis (Nachtlauf, 08.11.): Clownsschuhe über die Ladung von Pim Oddo (CLOWN), im Inventar PUT ON / TAKE OFF, Schritte quietschen. Icon ist ein selbst gezeichneter Platzhalter, bestellt.
+- Ergebnis (Nachtlauf, 08.11.): Clownsschuhe über die Ladung von Pim Oddo (CLOWN), im Inventar PUT ON / TAKE OFF, Schritte quietschen. Icon geliefert und eingebaut.
 
 ### P64 — Schwarzmarkt kauft nur Schmuggelware
 - Größe: XS · Priorität: Soll · Status: fertig (martin, 06.11.)
@@ -1582,7 +1582,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 08.11.): `DocumentDesk` hält bis zu 4 Papiere/Zettel in einer Reihe (Klick holt dazu, Klick aufs Papier legt es zurück, [R] alle, Esc alle zurück; mindestens 3 Plätze, damit ein einzelnes Papier den Tisch frei lässt). Umschauen beim Lesen geht, die Papiere folgen. Lade: Front zum Beamten, fährt entlang lokal +X. Beide Knöpfe um 180° gedreht, Deckel klappt Richtung Fenster auf, Beschriftung ARREST/AIRLOCK auf dem Tisch (`GameOff/Build Documents`). Geprüft: Validate Travelers ok, 150/150 EditMode-Tests, WebGL-Build mit Bildern von Lade, Deckel, Reihe, Umschauen.
 
 ### P90 — Fehler aus den GitHub-Issues, Runde 1
-- Größe: M · Priorität: Muss · Status: teilweise (max, 08.11.): nur #21 wartet auf die Lieferung · Zuständig: max
+- Größe: M · Priorität: Muss · Status: fertig bis auf #17 (max, 09.11.): #21 im Nachtlauf eingebaut, #17 wartet auf Max' Urteil · Zuständig: max
 - Braucht: — · Folgt auf: P89
 - Ziel: Die klaren Fehler aus den Issues sind weg.
 - Enthalten: #27 Airlock-Deckel klappt nicht mehr in den Tisch (Winkel +110, gemessen; schon mit P86 gebaut). #15 Sperr-Ton nur auf [E] an der gesperrten Tür, nicht beim Vorbeigehen. #17 Flackern an den Hangar-Wänden finden und beheben. #18 grüne Kisten im Hangar stecken nicht mehr ineinander. #21 Ladengitter füllt die ganze Front und ist entweder offen oder zu. #23 Figur sitzt auf dem Barhocker statt darin.
@@ -1595,7 +1595,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Reisende kommen und gehen sichtbar durch die Türen; eine Verhaftung ist spürbar, ohne dass eine Wache zu sehen ist (#28).
 - Enthalten: Reisende betreten die Kammer zu Fuß von außerhalb der Sicht und gehen nach der Entscheidung durch die passende Tür. Nur bei Verhaftung fällt ein Sichtgitter vor die Scheibe, dazu Schritte, Handschellen, Gerangel. Kein Gitter beim normalen Wechsel (Max, 08.11.). Sounds bestellen.
 - Abnahme: Niemand erscheint oder verschwindet sichtbar aus dem Nichts; Verhaftung ist nur über Gitter und Ton erzählt.
-- Ergebnis (max, 08.11.): Reisende kommen durch die Hangar-Tür, gehen nach dem Durchlassen durch die Hallentür, nach dem Abweisen zurück. Verhaftung und Schleuse hinter dem `SecurityShutter` (auch die Schleuse, sonst verschwände die Figur am Außenschott). Papiere kommen erst, wenn die Figur steht. Unsichtbare Sperre in den Kammertüren: Der Spieler kommt nicht hinein. Noch Platzhalter: graue Lamellen und vorhandene Töne, bestellt sind `SM_Counter_SecurityShutter`, `SFX_Arrest_Scuffle`, `SFX_Shutter_Drop`, `SFX_Shutter_Rise`. Geprüft: 155/155 Tests, Validate Travelers, Occlusion, WebGL (Hereinlaufen, ARREST + Gitter). Hinausgehen nach dem Stempeln nicht automatisiert geprüft.
+- Ergebnis (max, 08.11.): Reisende kommen durch die Hangar-Tür, gehen nach dem Durchlassen durch die Hallentür, nach dem Abweisen zurück. Verhaftung und Schleuse hinter dem `SecurityShutter` (auch die Schleuse, sonst verschwände die Figur am Außenschott). Papiere kommen erst, wenn die Figur steht. Unsichtbare Sperre in den Kammertüren: Der Spieler kommt nicht hinein. Platzhalter seit dem Nachtlauf (08.11.) ersetzt: `SM_Counter_SecurityShutter`, `SFX_Arrest_Scuffle`, `SFX_Shutter_Drop`, `SFX_Shutter_Rise` sind eingebaut. Geprüft: 155/155 Tests, Validate Travelers, Occlusion, WebGL (Hereinlaufen, ARREST + Gitter). Hinausgehen nach dem Stempeln nicht automatisiert geprüft.
 
 ### P92 — Diner außer Betrieb
 - Größe: S · Priorität: Soll · Status: fertig (max, 08.11.) · Zuständig: max
@@ -1614,7 +1614,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 08.11.): `BarWishSign` entfernt, der Barkeeper nennt den Wunsch im Gespräch, auch tagsüber vor dem Öffnen. `SM_Bar_WishBoard` ist damit unbenutzt (Vermerk in `ASSET-REQUESTS.md`). Geprüft: Validate Travelers, EditMode-Tests, Bilder aus Main.
 
 ### P94 — Stimmen: 10 Laute je Spezies
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: martin (08.11., im Urlaub per Claude; Abnahme durch Max)
+- Größe: M · Priorität: Soll · Status: offen, wartet auf die bestellten Laute (M025)
 - Braucht: — · Folgt auf: P61
 - Ziel: Figuren reden abwechslungsreich statt mit einem einzigen Ton (#16).
 - Enthalten: Laute bestellt (`SFX_Voice_<Spezies>_01–10`, M025, 08.11.): je Spezies 10 kurze Murmel-Laute; zufällig abspielen, Tonhöhe leicht variieren.
@@ -1710,7 +1710,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (Nachtlauf, 08.11.): Kein Gitter mehr: Außenschott schwingt auf, Figur wird Ragdoll ohne Colliders und fliegt hinaus, Warnlampe blinkt, Sicht wackelt, Schott zu (`Ragdoll`, `AirlockHatch`). Im Browser mit Sorvak geprüft; die anderen vier Spezies nur per Code, gleiche Logik.
 
 ### P106 — Heim-Shuttle dockt außen am Hangar an, begehbar
-- Größe: L · Priorität: Soll · Status: offen · Zuständig: offen
+- Größe: L · Priorität: Soll · Status: offen, Lieferung liegt auf `assets/P106-au-en-hangar` (nicht gemergt)
 - Braucht: — · Folgt auf: P72
 - Ziel: Es ist klar, wie das Personal hergekommen ist und womit man heimfliegt.
 - Enthalten: Shuttle hängt außen am Hangar an einem Andockring, Zugang über ein Schott in der Hangarwand, innen begehbar mit Sitzreihen; dort startet der Abflug (P72). **Sichtbar machen (Max, 08.11.):** Fenster oder eigene Nische im Hangar mit Blick aufs Shuttle. `SM_Hangar_Shuttle` verschwindet vom Landefeld. Betrifft `DepartureBuilder`, Hülle (`StationGrayboxBuilder`), Bake.

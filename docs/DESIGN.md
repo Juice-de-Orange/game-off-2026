@@ -69,23 +69,23 @@ geholfen, steckt er dir etwas für die Familie zu. Gehorchen (Schleuse), verhaft
 | Ort | Funktion im Spiel |
 |---|---|
 | **Zollschalter + Prüfkammer** | Arbeitsplatz; Reisende stehen in der Kammer, die zugleich Luftschleuse ist (Außenschott klappt ins All). Kein sichtbarer Vorgesetzter: Lautsprecher-Durchsagen, Memos, Pinnwand |
-| **Hangar** (36 × 28 × 16 m) | Geplant: Morgens landen wechselnde Schiffe durch die Energiebarriere, tagsüber parken 2–4 (P107); das Heim-Shuttle dockt außen am Hangar an und ist begehbar (P106); Frachtdrohne für Pakete nach Hause; durchsuchbare Kisten |
+| **Hangar** (36 × 28 × 16 m) | Morgens landet ein Schiff durch die Energiebarriere, tagsüber stehen 2–4 auf festen Plätzen, jeden Tag andere (P107); geplant: das Heim-Shuttle dockt außen am Hangar an und ist begehbar (P106); Frachtdrohne für Pakete nach Hause; durchsuchbare Kisten |
 | **Transithalle** | Knotenpunkt mit Anzeigesäule (Live-Ankunftsplan), Bänken, Getränkeautomat |
 | **Aussichtsplattform** | Halbrunde Glasfront: Blick auf den Heimatplaneten (Stadtlichter = Zustand der Familie), Sonne, Gasriese; Münzfernrohr |
 | **Bar "The Last Orbit"** | Barkeeper (Hocker = Gespräch; kauft nichts, tauscht Wünsche gegen Gerüchte, P65; Bestechungszettel, P66), Schwarzmarkt unter der Theke, Fensterband |
 | **Diner** | Außer Betrieb (P92): dunkel, Spinnweben, kann später wieder belebt werden |
-| **Kiosk** | Gadgets kaufen (Dokumentenscanner) |
+| **Kiosk** | Waren und Gadgets (UV-Lampe, Scanner); das Rollgitter ist unten, solange geschlossen |
 | **Motel** | Dein Zimmer 103 (Bett, Brief, Spind mit Familienfoto, Bullauge = Abendblick nach Hause); 101/102 verriegelt |
 
 Theme-Bezug in der Welt (Vorschlag für den Call): die Sonne steht jeden Tag anders (die Station dreht sich), und an Tag 3
 flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit dir.
 
 ## Gadgets (freischalten über die Tage oder kaufen)
-- Dokumentenscanner — prüft Dokumente auf Fälschung (kaufbar)
-- UV-Lampe — macht versteckte Siegel sichtbar
-- Gepäckscanner — zeigt Schmuggelware
-- Bioscanner — prüft Spezies/Identität
-❓ Welche werden freigeschaltet, welche gekauft, welche gibt es nur am Schwarzmarkt?
+- UV-Lampe — im Kiosk ab Tag 4, zeigt auf jedem Papier das Siegel, gefälschte rot (P62). Gefälschte Siegel gibt es ab Tag 5
+- Dokumentenscanner — im Kiosk ab Tag 6, markiert NAME und ID, die sich zwischen den Papieren widersprechen; reiner Komfort (P16)
+- Beide liegen gekauft auf dem Schaltertisch, Klick schaltet sie
+- Ideen, nicht gebaut: Gepäckscanner (Schmuggelware), Bioscanner (Spezies/Identität)
+- Offen (Frage an Max, 09.11.): Das Terminal (P34) zeigt Widersprüche gratis und entwertet damit den Scanner
 
 ## Familie
 - Lebt auf dem Heimatplaneten, braucht täglich Geld (Essen, Wärme, Medizin).
@@ -111,7 +111,7 @@ flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit di
 - Ticket nach Hause als Hauptziel: abends im Hangar kaufen, Abflug mit dem Schiff (P72)
 - Geld + Familie mit Bedarfen und Folgen
 - Begehbare Station: Schalter, Unterkunft, Bar (Schwarzmarkt), Hangar (Pakete)
-- 1 Gadget (Dokumentenscanner) kaufbar
+- Gadgets (UV-Lampe, Dokumentenscanner) kaufbar
 - Startbildschirm, Menü, Sieg/Niederlage-Ende
 ### Soll (macht es gut)
 - Diner mit Gerüchten/Hinweisen, weitere Gadgets

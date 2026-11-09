@@ -57,7 +57,7 @@
 ## Am Schalter im Sitzen (Stand P40/P41)
 - **Blick:** Kamera 1,55 m hoch, 20° geneigt, mit A/D ±70° drehbar (`SeatedLookTuning`), die Neigung geht dabei auf waagerecht.
 - **Pinnwand:** `SM_Counter_Board` an der Nordwand des Schalterraums, Mitte (−1,5 / 1,75 / −6,23), etwa 80° links vom Tisch; zwei Zettel, Position in `DocumentPrefabBuilder.WireBoard` (Kopie, bei Verschieben mit anpassen).
-- **Reisender:** auf der Standmarkierung (2, −9), Blick zum Schalter. Kommt durch die Hangartür (Süd). Abgang durchlassen: Nordtür, abweisen: Hangartür; Verhaftung und Schleuse hinter dem Gitter vor der Scheibe (P91). Die beiden Kammertüren haben eine unsichtbare Sperre gegen den Spieler.
+- **Reisender:** auf der Standmarkierung (2, −9), Blick zum Schalter. Kommt durch die Hangartür (Süd). Abgang durchlassen: Nordtür, abweisen: Hangartür; Verhaftung: Wache durch die Nordtür, dann Gitter vor der Scheibe (P91, P104); Schleuse: durchs Außenschott (P105). Die beiden Kammertüren haben eine unsichtbare Sperre gegen den Spieler.
 
 ## Wichtige Positionen (für Spawnpunkte, NavMesh, Interaktion)
 | Punkt | Position (X, Z) |
@@ -78,7 +78,9 @@
 - **Reisende:** Shuttle → Warteschlange → Prüfkammer (Standmarkierung) → Durchlassen: Nordtür → Halle → Motel/Bar.
   Abweisen: zurück in den Hangar. Verhaften: Wache kommt über die Halle durch die Nordtür.
   Verhaftung: Wache durch die Nordtür, dann Gitter (P104). Luftschleuse: Außenschott (X = 4) schwingt nach außen auf, Figur fliegt hinaus (P105).
-- **Geplant (08.11.):** Heim-Shuttle außen am Hangar angedockt, Schott und Sichtfenster in der Hangarwand (P106); Schiffe auf Landeplätzen im Hangar (P107); Durchgelassene abends in Bar, Halle und Wohnmodul (P101).
+- **Geplant:** Heim-Shuttle außen am Hangar angedockt, Schott und Sichtfenster in der Hangarwand (P106).
+- **Schiffe im Hangar (P107):** `HangarShips` in `PF_Economy`, Plätze (−10, −23), (10, −23), (−8, −33), (10, −35), geprüft frei von Möbeln; keine Kollision.
+- **Türschilder (P50):** `BuildDoorSigns`; Diner und Bar haben eigene.
 - **Bewegt sich (nicht statisch):** Außenschott `AirlockHatch`, Bar-Ventilator, Putzroboter (Halle x 7,4, z −3..3).
 - **Abendgäste (P101):** `CrowdSpot_*` in `PF_Economy`, im `EconomyBuilder`, geprüft frei von Möbeln.
 - **Wanduhren** in Halle und Schalter zeigen `GameClock` (P97).

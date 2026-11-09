@@ -47,7 +47,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - **Live-Version:** https://kestrel9.maxlworks.com (`docs/DEPLOY.md`). Automatische Updates warten noch auf Unity-Lizenz + Secrets (P49), bis dahin spielt max von Hand ein
 - Bestellt: Holly, Barkeeper, Dealer (P52). Neue Ideen als Pakete: P50 Türschilder, P51 Zimmer 103, P53 Wohnmodul begehbar. Assets bestellen geht jetzt ohne Rückfrage (`docs/ASSETS.md`)
 - 71/71 EditMode-Tests grün, WebGL-Build 20 MB
-- **Als Nächstes:** Max liest den Bericht und spielt an. Offen: P106 (Lieferung liegt bereit, Branch nicht gemergt), P94 (wartet auf Laute), P28, P32, P48, P51
+- **Als Nächstes:** Kern-Loop-Call (vor dem Checkpoint 09.11.), martin nimmt P09 ab, dann P08 → P10 → P15 → P12 (`PAKETE.md`)
   - Nachtrag 06.11. (martin): Kern-Loop-Call hat stattgefunden. P19 itch-Upload ist auf später verschoben. P58 Punkt 2 entschieden → P64
 
 ### Stand 08.11. abends (max)
@@ -57,6 +57,15 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - Nach Max' erstem Anspielen neu: P99–P102 (Hocker, Reaktionen, Leute in der Station, Papier-Geräusche), P103–P107 (Essen andeuten, Wachmann, Schleuse mit Ragdoll, Shuttle angedockt, Hangar-Schiffe), P29 geschärft; Assets dafür bestellt (M023)
 - Feature-Freeze 22.11. wird eng: Muss-Pakete P12, P16, P69 nicht aus den Augen verlieren
 - **Als Nächstes:** Reihenfolge festlegen, Kiosk-Gitter wartet auf die überarbeitete Theke
+
+### Stand 09.11. (max)
+- **Nachtlauf (Claude für max, 08./09.11.):** P69, P12, P16, P62, P11, P99, P63, P77, P80, P83, P50, P95, P97, P98, P100–P105, P107, P108 und das Kiosk-Gitter fertig; P19 vorbereitet. Bericht: `docs/team/reports/2026-11-09_nachtlauf_max.md`
+- **Martin, Nacht auf 09.11.:** P85 ganz, P87, Welle 1 (P28, P29-Rest, P32, P33-Rest, P34), Welle 2 (P109 Sperrstunde, P110 Zoll, P111 Fernrohr-Diorama). Nur mit Tests geprüft, noch nicht angespielt
+- **Live:** `4f65648` (Stand Nachtlauf). `main` ist weiter: P85-Rest, P87, Welle 1 und 2 sind **noch nicht live**
+- **Fragen an max offen:** Terminal und Moral, Welle 1 anspielen, Welle 2 anspielen (`docs/team/questions/2026-11-09_martin-an-max_*`)
+- **Lieferungen noch nicht auf `main`:** `assets/P106-au-en-hangar` (Shuttle, Paket noch offen), `assets/P111-home-street` (Straße fürs Fernrohr, ersetzt die Platzhalter-Boxen)
+- GitHub-Issues offen: #16 (wartet auf die Laute, P94), #17 (Max prüft das Hangar-Flackern), #25 (vorerst nicht)
+- **Als Nächstes:** Max spielt an und beantwortet die Fragen; danach Live-Deploy. Noch offen: P94 (wartet auf Laute), P106, P48, P51, P26-Rest, P25, P35
 
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
