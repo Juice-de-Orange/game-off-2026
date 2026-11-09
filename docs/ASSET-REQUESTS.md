@@ -6913,7 +6913,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_Shuttle_Docked.fbx
 package: P106
 scene: Außen, Hangar
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-20
 size_m: [6.0, 11.0, 4.0]
@@ -6968,7 +6968,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Shuttle_Cabin_Interior.fbx
 package: P106
 scene: Shuttle innen
-status: offen
+status: Vorschau
 priority: P1
 needed_by: 2026-11-20
 size_m: [3.2, 8.0, 2.5]
@@ -6996,7 +6996,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Wall_Viewport.fbx
 package: P106
 scene: Hangar
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [4.0, 0.3, 4.0]
