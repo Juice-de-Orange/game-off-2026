@@ -32,6 +32,7 @@ MonoBehaviour:
     eventLines: []
     consequences:
     - when: 2
+      onlyIfArrested: 0
       marketEvent: {fileID: 11400000, guid: 185c66fd5f1f3db4b9efbde0cf898138, type: 2}
       eventInDays: 1
       wanted: 0
@@ -47,6 +48,7 @@ MonoBehaviour:
       announcement: 
       letterLine: 
     - when: 2
+      onlyIfArrested: 0
       marketEvent: {fileID: 0}
       eventInDays: 1
       wanted: 1
@@ -126,3 +128,11 @@ MonoBehaviour:
     endingTitle: 
     endingBody: 
     endingWarning: 
+  kinName: 
+  kinSpecies: Human
+  kinFateByYou: 
+  kinFateByOthers: 
+  summaryHelped: 
+  summaryBetrayed: 
+  summaryNeutral: 
+  summaryDead: 

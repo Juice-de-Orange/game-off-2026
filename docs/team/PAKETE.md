@@ -492,16 +492,17 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Getestet: Zimmer 103 raus, 101 bleibt zu, Bar rein, Prüfkammertür bleibt zu bis `Open()`. Schmale Türen noch in Graybox-Wand.
 
 ### P28 — Sitzplätze & Ruhemomente
-- Größe: M · Priorität: Soll · Status: in Arbeit (martin, 09.11., Agent B, zusammen mit P29-Rest)
+- Größe: M · Priorität: Soll · Status: fertig (martin, 09.11.)
 - Braucht: P05 (Sitz-Logik), P09 (Zeit vorspulen)
 - Ziel: Man kann sich hinsetzen und die Station auf sich wirken lassen.
 - Enthalten: Wartebänke in der Halle: [E] hinsetzen (Kamera tiefer, Blick zur Plattform), Durchsagen hören, im Feierabend Zeit bis zum
   Schlafen vorspulen; Barhocker: hinsetzen öffnet das Barkeeper-Gespräch (Drink kaufen, Gerüchte, Schwarzmarkt-Einstieg → P11);
   Bullauge Zimmer 103: [E] vor dem Schlafen Kamerafahrt ans Fenster, Blick auf den Heimatplaneten, kurzer Gedanke je nach Familienzustand
 - Abnahme: Alle drei Sitz-/Blickpunkte funktionieren, Q/ESC beendet sie sauber.
+- Ergebnis (martin, 09.11., Agent): Bänke A–C in der Halle (sitzen, Durchsage alle 14 s, abends [F] bis 23 Uhr warten – wirkt erst mit P109), Barhocker 1–3 öffnen das Barkeeper-Gespräch (Hocker 4 hat der Dealer), Bullauge in 103 mit Kamerafahrt zum Heimatplaneten und Gedanken je Familienzustand; Q/Esc steht auf. `Scripts/Rest/`, GameOff/Build Rest Spots into Main (in Rebuild All), Texte in `Data/Rest/RestSpotTuning.asset`, 10 Tests. Nur Tests + Builder geprüft, nicht angespielt.
 
 ### P29 — Münzfernrohr & sichtbares Familienschicksal
-- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf); Rest (Foto, Brief) in Arbeit (martin, 09.11., Agent B)
+- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf); Rest (Foto, Brief) fertig (martin, 09.11.)
 - Braucht: P24, P10 (Familienzustand) · Assets: `SM_Prop_CoinTelescope`, `UI_Telescope_Overlay`, `UI_Family_Photo` (bestellt)
 - Ziel: Die Familie ist in der Welt sichtbar, nicht nur in Briefen.
 - Festgelegt (Max, 08.11.): Fernrohr auf der Plattform wirklich nutzbar: [E] zieht 1 Credit ab, 30 s Blick mit Zoom und Schwenken. Heimatplanet mit erkennbaren Kontinenten und Städten (Karten neu bestellt).
@@ -511,6 +512,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Familienzustand ändert sichtbar Stadtlichter, Foto und Brief.
 - Hinweis (martin, 06.11.): Der Familienzustand existiert seit P10: `PlayerEconomy.Household` (Stufe je Person), Event `Household.Changed`.
 - Ergebnis (Nachtlauf, 08.11.): Fernrohr: 1 Credit, 30 s, Maus oder Tasten schwenken, Mausrad zoomt, [Q] raus (`CoinTelescope`, nur im Editor-Bild und per Testaufruf geprüft). Stadtlichter folgen der Familie (`HomeLights`). Offen: Familienfoto im Spind, Brief auf dem Tisch.
+- Ergebnis Rest (martin, 09.11., Agent, mit P28): Foto am Spind in 103 intakt/verblasst/zerrissen, Morgenbrief liegt auf dem Tisch, Schrift zittert stärker je schlechter es der Familie geht (`FamilyPhoto`, `TableLetter`). Nicht angespielt.
 
 ### P30 — Getränkeautomat
 - Größe: S · Priorität: Soll · Status: fertig (martin, 07.11.)
@@ -535,16 +537,17 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Kopfzeile des Modells bleibt frei. Warteschlangen-Länge und Sicherheitswarnungen nicht enthalten (gibt es noch nicht als Daten).
 
 ### P32 — Asservatenschrank mit echten Gegenständen
-- Größe: M · Priorität: Soll · Status: in Arbeit (martin, 09.11., Agent C, zusammen mit P33-Rest)
+- Größe: M · Priorität: Soll · Status: fertig (martin, 09.11.)
 - Braucht: P08 · Assets: `SM_Counter_Locker` (da), `SM_Item_*` (6, bestellt)
 - Ziel: Beschlagnahmtes ist greifbar.
 - Enthalten: [E] Türen schwingen auf, Gegenstände liegen sichtbar in den Fächern, Rausnehmen = Inventar (Bar verkaufen / nach Hause schicken)
 - Abnahme: Verhaftung legt Gegenstände in den Schrank, man kann sie entnehmen.
 - Hinweis (martin, 07.11., nach dem Call): Seit dem Call landet Beschlagnahmtes erst im Schicht-Inventar (P81); in den Schrank kommt es nur mit
   „As ordered“ (P08). Frei entnehmen widerspricht dem – P32 zeigt die Gegenstände, **herausholen nur durch Aufbrechen (P83)**.
+- Ergebnis (martin, 09.11., Agent): [E] öffnet die Türen, „As ordered“-Waren liegen als Modelle in 6 Fächern (eigenes Modell → nach Label → Beweisbeutel), schließen ab 3 m/neuer Tag; Aufbrechen (P83) erst bei offenen Türen. `EvidenceLockerDisplay`, `LockerBoardBuilder`, `Data/Economy/EvidenceLockerTuning.asset`, Tests. Nicht angespielt.
 
 ### P33 — Pinnwand, Lautsprecher & Warnlampe
-- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf); Rest (Pinnwand-Nahansicht) in Arbeit (martin, 09.11., Agent C)
+- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf); Rest (Pinnwand-Nahansicht) fertig (martin, 09.11.)
 - Braucht: P07, P09 · Assets: `SM_Counter_Board`, `SM_Counter_Speaker`, `SM_Counter_WarningLamp` (da)
 - Ziel: Der unsichtbare Vorgesetzte und die Regeln sind im Raum präsent.
 - Hinweis (max, 05.11.): Zettel im Sitzen und Durchsagen macht schon P41; hier bleiben Nahansicht im Stehen, Fotos/Memos und die Lampen.
@@ -553,14 +556,16 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Verhaftung/Luftschleuse, gelb wenn ein Reisender eintritt
 - Abnahme: Alle drei reagieren auf das Spielgeschehen.
 - Ergebnis (Nachtlauf, 08.11.): Warnlampe in der Prüfkammer: gelb bei Ankunft, rot bei Verhaftung und Schleuse. Lämpchen am Lautsprecher bei Durchsagen. Offen: Nahansicht der Pinnwand im Stehen.
+- Ergebnis Rest (martin, 09.11., Agent, mit P32): Pinnwand [E] im Stehen → Vollbild mit Aushang, Fahndungsfotos, Markt, Memo; ältere Morgen bleiben (A/D blättern), an der Wand lugen ältere Zettel hervor. `PinBoardCloseUp`, `PinBoardNotes`, Tests. Nicht angespielt.
 
 ### P34 — Terminal-Datenbank am Schalter
-- Größe: M · Priorität: Soll · Status: in Arbeit (martin, 09.11., Agent A)
+- Größe: M · Priorität: Soll · Status: fertig (martin, 09.11.)
 - Braucht: P07 · Assets: CRT im `SM_Counter_Desk`, `SM_Counter_CRTTerminal` (da)
 - Ziel: Zweites Prüfwerkzeug neben den Dokumenten.
 - Enthalten: Klick aufs Terminal → Name/ID anklicken → Abgleich mit Fahndungsliste und Einreiseakte (grüne Schrift); Statusanzeige zeigt
   Lane-Status und Uhr; später durch Gadgets erweiterbar
 - Abnahme: Ein gesuchter Reisender lässt sich über das Terminal entlarven.
+- Ergebnis (martin, 09.11., Agent): Klick auf den CRT am Tisch → grünes Terminal; jeder Name/jede ID der Papiere ist ein Knopf → Fahndungsabgleich (gleiche Prüfung wie `RuleEvaluator`) und Einreiseakte, abgelaufene Papiere markiert; Statuszeile Lane/Zähler/Uhr auch auf dem CRT. `CounterTerminal`, `TerminalLookup`, `CounterTerminalBuilder` (in Build Documents), 7 Tests inkl. Abgleich über alle Tage. Offene Designfrage an Max (Terminal vs. Scanner), siehe `questions/2026-11-09_martin-an-max_terminal-und-moral.md`.
 
 ### P35 — Durchsuchbare Fracht im Hangar
 - Größe: M · Priorität: Soll · Status: offen
@@ -1728,3 +1733,24 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Auf einem Tag sehen keine zwei Reisenden derselben Spezies gleich aus, und jedes Passfoto zeigt genau die Person am Fenster.
 - Ergebnis (Nachtlauf, 08.11.): Jeder Name bekommt fest eine von sechs Texturen, Menschen dazu Frisur oder Mütze (`TravelerLooks`); 60 Passfotos aus den echten Figuren gerendert (GameOff/Build Traveler Photos), auch für die endlosen Tage.
 
+### P109 — Sperrstunde um 23 Uhr
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: offen
+- Braucht: — · Folgt auf: P28, P97
+- Ziel: Der Feierabend hat ein Ende; Zeit am Abend wird knapp, das Warten auf der Bank (P28) bekommt einen Sinn (Mechanik-Prüfung, martin, 09.11.).
+- Enthalten: Ab 23:00 (`DayManager.EveningSecondsLeft` = 0) schließen Kiosk, Bar/Schwarzmarkt, Drohne und Getränkeautomat (wie tagsüber „closed“, Gitter runter); Durchsage „Curfew. All shops are closed. Return to your quarters.“; Hinweis ins Bett. Bank-[F] spult bis dahin vor.
+- Nicht enthalten: Zwangsschlaf, Strafe fürs Wachbleiben.
+- Abnahme: Um 23 Uhr lässt sich nichts mehr kaufen/verkaufen/schicken; die Durchsage kommt einmal; ins Bett gehen klappt weiter. Keine Geldwerte geändert.
+
+### P110 — Schmuggel per Drohne mit Risiko
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: offen
+- Braucht: — · Folgt auf: P08, P13
+- Ziel: Schmuggelware nach Hause zu schicken ist eine Abwägung statt gratis (Lücke aus MECHANICS, Mechanik-Prüfung 09.11.).
+- Enthalten: Waren mit CONTRABAND oder CONFISCATED in der Drohne → beim Abflug Chance auf Zollkontrolle → Ware weg + 1 Disziplinarstrafe (+ Briefzeile am Morgen); Chance und Folgen in `ConfiscationTuning`. Hinweis beim Beladen („Customs may inspect this.“).
+- Abnahme: Eine erwischte Lieferung kommt nicht an und zählt als Disziplinarstrafe; eine nicht erwischte deckt den Bedarf wie bisher. **Geldänderung → Economy Report** bis alle Ziele ✓.
+
+### P111 — Fernrohr zeigt das Zuhause
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: offen
+- Braucht: evtl. Asset (Nahansicht Heimatstadt/Haus) · Folgt auf: P29, P28
+- Ziel: Das Fernrohr (1 CR) zeigt mehr als das kostenlose Bullauge in 103 (Mechanik-Prüfung 09.11.).
+- Enthalten: Zoom bis zur eigenen Straße/zum eigenen Haus; ein Fenster je Familienmitglied: hell (well/weak), dunkel (sick), flackernd (critical), schwarz (tot). Bullauge bleibt der Fernblick auf den Planeten.
+- Abnahme: Im Fernrohr erkennt man den Zustand jedes Familienmitglieds an seinem Fenster; Download-Zuwachs gemessen.

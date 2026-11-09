@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c793d2f08959c44eb266349fc49d2b8, type: 3}
+  m_Name: RestSpotTuning
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Rest.RestSpotTuning
+  moveSeconds: 0.6
+  lookYaw: 70
+  lookPitch: 30
+  mouseDegrees: 0.08
+  keyDegreesPerSecond: 60
+  announcementSeconds: 14
+  firstAnnouncementSeconds: 2.5
+  subtitleSeconds: 6
+  fastForwardSeconds: 4
+  hallAnnouncements:
+  - Attention, please. The observation deck closes at twenty-three hundred. Mind
+    the step.
+  - 'Passengers for the Aska shuttle: have your papers ready. Officers will not wait
+    for you.'
+  - Unattended luggage will be confiscated and inspected. Thank you for your cooperation.
+  - KESTREL-9 thanks you for your patience. Your patience has been noted.
+  - 'The diner serves reconstituted noodles until twenty-two hundred. Today: noodles.'
+  - 'Lost and found: one ration card, one glove, one prosthetic finger. Ask at the
+    motel reception.'
+  eveningOver: It's late. The hall is empty. Time to sleep.
+  portholeFov: 40
+  thoughtDelay: 1
+  thoughtsWell:
+  - The lights over home are bright tonight. Somewhere under them Lena is doing her
+    homework.
+  - Pip asked if I can see them from up here. I can see the city. That's almost the
+    same.
+  - Everyone is fine. One more day, and then another.
+  thoughtsWorried:
+  - '{0} sounded tired in the letter. A little more food and it will pass.'
+  - The city looks dimmer than yesterday. Probably just the glass.
+  thoughtsSick:
+  - '{0} needs medicine. It costs what a day at the counter pays.'
+  - I count the lights down there and lose track. I keep thinking of {0}.
+  thoughtsCritical:
+  - Half the lights are out down there. {0} is somewhere under them.
+  - If {0} doesn't get medicine soon, there won't be another letter about it.
+  thoughtsGrieving:
+  - I used to find our block by its window. I don't look for it anymore.
+  - '{0} is not down there anymore. The planet turns anyway.'
+  letterJitter: 0.12
+  letterTilt: 14

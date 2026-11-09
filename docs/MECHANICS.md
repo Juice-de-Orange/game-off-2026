@@ -4,7 +4,7 @@ Wofür: Auf einen Blick sehen, welche Spielmechaniken es gibt, wie sie ineinande
 Pflege: Wer ein Paket fertigstellt, das eine Mechanik neu baut oder ändert, zieht diese Datei im selben Push nach (siehe `CLAUDE.md`).
 Wer ein Paket plant, prüft hier zuerst auf Konflikte. Details stehen in `PAKETE.md`, Entscheidungen in `DECISIONS.md`.
 
-Stand: 08.11.2026 (max)
+Stand: 09.11.2026 (martin)
 
 ## Der Kreislauf eines Tages
 ```
@@ -63,7 +63,11 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Aussehen der Reisenden | P108 | Name → feste Textur, Frisur/Mütze; Passfoto gerendert | `TravelerLooks`, `TravelerPhotoBuilder` | `Data/Travelers/TravelerLooks.asset`, Fotos in `Art/Textures/Documents/Photos` |
 | Schiffe im Hangar | P107 | 2–4 je Tag, eines landet morgens | `HangarShips` ← `DayStarted` | Plätze im `EconomyBuilder` |
 | Münzfernrohr, Stadtlichter | P29 | 1 Credit, 30 s Blick auf den Heimatplaneten; dessen Lichter werden mit der Familie dunkler und flackern, wenn jemand kritisch ist | `CoinTelescope`, `HomeLights` ← `Household` | im Prefab `CoinTelescope`, 1 CR, 30 s |
-| Asservatenschrank | P83 | „As ordered“ landet im Schrank, abends einmal aufbrechen: Ware (CONFISCATED) oder Disziplinarstrafe | `Confiscation.Locker`, `EvidenceLocker` | `ConfiscationTuning.lockerCaughtChance` |
+| Asservatenschrank | P83, P32 | „As ordered“ landet im Schrank; [E] öffnet die Türen, die Waren liegen als Modelle in 6 Fächern (eigenes Modell, sonst nach Label, sonst Beweisbeutel; Türen schließen ab 3 m oder am neuen Tag); abends bei offenen Türen einmal aufbrechen: Ware (CONFISCATED) oder Disziplinarstrafe | `Confiscation.Locker`, `EvidenceLocker`, `EvidenceLockerDisplay` | `ConfiscationTuning.lockerCaughtChance`, `Data/Economy/EvidenceLockerTuning.asset` (Label → Modell) |
+| Terminal-Datenbank | P34 | Klick auf den Röhrenbildschirm am Schalter → jeder Name und jede ID der Papiere ist ein Knopf → Abgleich mit der Fahndungsliste des Tages (gleiche Prüfung wie `RuleEvaluator`) und Einreiseakte, abgelaufene Papiere markiert; Statuszeile Lane, Zähler, Uhr | `CounterTerminal`, `TerminalLookup` ← `DayRules.Wanted`, Papiere | `Data/Counter/TerminalTuning.asset` |
+| Pinnwand im Stehen | P33, P41 | [E] an der Pinnwand → Vollbild mit Aushang, Fahndungsfotos, Markt-Notiz, Memo; ältere Morgen bleiben (bis 30 Tage, A/D blättern), an der Wand lugen ältere Zettel hervor | `PinBoardCloseUp`, `PinBoardNotes` ← dieselben Texte wie `PinBoard` | im `PF_Economy` |
+| Sitzplätze & Ruhemomente | P28 | Hallenbänke: sitzen, Durchsagen, abends [F] bis 23 Uhr warten; Barhocker 1–3 öffnen das Barkeeper-Gespräch; Bullauge in 103: Blick auf den Heimatplaneten mit einem Gedanken je Familienzustand; Q/Esc steht auf | `SeatView`, `HallBench`, `BarStool`, `PortholeView` ← `Household`; `DayManager.SkipEvening` | `Data/Rest/RestSpotTuning.asset` (Texte, Zeiten) |
+| Familie in der Welt: Foto, Brief | P29 | Foto am Spind in 103 intakt/verblasst/zerrissen; der Morgenbrief liegt auf dem Tisch, die Schrift zittert stärker, je schlechter es der Familie geht | `FamilyPhoto`, `TableLetter` ← `Household.Changed`, `DayManager.LetterWritten` | `RestSpotTuning` |
 | Bugreport im Spiel | P84 (ersetzt P78) | Pausenmenü → REPORT BUG → Text tippen → SEND; das Backend auf Geoffrey legt ein GitHub-Issue an (Labels `bug`, `player-report`) | Version, Tag, Phase, Szene, Browser → `/api/report` | `Data/Menu/BugReportSettings.asset`, `deploy/reports` |
 | Dev-Werkzeuge | P09, P56, P10 | Dev_end_Day, Hitboxen, TRAFFIC_LINE_DEV, CREDITS ±100 | – | **vor der Abgabe ausschalten** (DEV-Reiter weg) |
 
@@ -71,13 +75,15 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 
 | Mechanik | Paket | Hängt an | Stand |
 |---|---|---|---|
-| Familie in der Welt: Foto, Brief auf dem Tisch | P29 Rest | Familie | Fernrohr und Stadtlichter gebaut |
 | Stimmen: 10 Laute je Spezies | P94 (martin) | Händler, Reisende | offen |
+| Sperrstunde um 23 Uhr | P109 | Abenduhr (P97), Händler, Bank (P28) | offen |
+| Schmuggel per Drohne mit Risiko | P110 | Drohne (P13), Beschlagnahme (P08) | offen, Geld → Economy Report |
+| Fernrohr zeigt das Zuhause | P111 | Fernrohr (P29), Familie | offen |
 | Heim-Shuttle angedockt, begehbar | P106 | P72 | Lieferung liegt bereit |
 
 ## Lücken / passt noch nicht
 - **Beschlagnahme vs. Simulator:** Der Economy Report rechnet Beschlagnahme und Strafen nicht mit – Mengen (`maxPerItem`) mit P15 abstimmen.
-- **Schmuggel nach Hause:** geht ohne Wirkung und ohne Risiko → später mit P08.
+- **Schmuggel nach Hause:** geht weiter ohne Risiko, auch nach P08 → **P110** (Kontrolle der Drohne).
 - **Tod im Simulator:** Der Economy Report rechnet ohne P69 (Grenze 0), der Tod spielt also für die Balance-Ziele keine Rolle.
 - **Figuren-Geschenke und Bonus** (P85, P77) rechnet der Economy Report nicht mit; es sind wenige Credits.
 - **Nells Sohn** wird beim ersten Nachfragen festgelegt (Tag 6) und zählt nur Verhaftungen bis zum Vortag. Gezogene Reisende ab Tag 13 zählen mit, spielen aber keine Rolle mehr. Das Ende (P12) wertet die Figuren noch nicht aus, nur die Zusammenfassung an Tag 11.
@@ -85,6 +91,12 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 - **Während des Flugs gibt es kein Pausenmenü** (Steuerung gehört dem Flug, höchstens 45 s).
 - **Ende AIRLOCKED nur abseits des richtigen Wegs:** Wer den Shifter an Tag 3 wie befohlen terminiert, sieht seine Frage (Tag 6) nie. Gewollt (Test der Behörde), aber die meisten Spieler werden das Ende so nicht finden.
 - **Endlose Tage ohne Geschichte:** Ab Tag 13 nur gezogene Reisende ohne Figuren, Briefe aus einem kleinen Pool (10) – das Geld wächst nach dem Ticket weiter (Report: Tag 30 ≈ 1900 CR), es gibt nur das Ticket als Ziel. Reisende ab Tag 13 haben keine Antworten auf Nachfragen (P40) und keine Fracht-Geschichten.
-- **Waren ohne Quelle bis P08:** Pistol, Waffenteile, Wertsachen, Alien-Zeug, Liquor kommen nur über die Fracht (Beschlagnahme, P08) – bis dahin gibt es sie im Spiel nicht.
 - **Figuren an festen Plätzen (Korr an Tag 1) stehen exakt dort**, freie Figuren irgendwo davor oder dahinter (`CharacterPlanner.Queue`).
+- **Welle 1 (P28, P32, P34, P33-Rest) ist nur mit EditMode-Tests geprüft**, nicht angespielt: Kamerapositionen, Klickflächen und Lesbarkeit beim Anspielen prüfen.
+- **Terminal kennt die Tischposition als Konstante** (Tisch 1,3 m neben dem Schalter): wird der Tisch im Stations-Builder verschoben, `CounterTerminalBuilder` mitziehen.
+- **Abend ohne Ende:** Die Abenduhr läuft bis 23 Uhr, aber nichts reagiert darauf – Läden bleiben offen, das Warten auf der Bank (P28) wirkt nicht → **P109** Sperrstunde.
+- **Terminal gegen Scanner:** Das Terminal (P34) zeigt alle Namen/IDs der Papiere nebeneinander – Widersprüche sieht man ohne den Scanner (P16), die Fahndung ist ein Klick ab Tag 1 → Frage an Max (`questions/2026-11-09_martin-an-max_terminal-und-moral.md`).
+- **Moral nur im Ende:** Moral (P08) wirkt nur auf den Schlusssatz, im Spiel spürt man sie nicht → gleiche Frage an Max.
+- **Fernrohr gegen Bullauge:** Das kostenlose Bullauge in 103 (P28) zeigt denselben Planeten wie das Fernrohr (1 CR) → **P111** Fernrohr zeigt das Zuhause.
+- **Pinnwand-Verlauf nur im Speicher:** ohne Spielstand beginnt er bei jedem Spielstart neu.
 - **Icons nur in den Daten:** Inventar und Handelsfenster zeigen noch keine Icons (Listen nur mit Namen) – eigenes Paket.
