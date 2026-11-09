@@ -229,6 +229,11 @@ namespace GameOff.EditorTools
                         () => BoxGo(hull, new Vector3(12f, 8f, 0.4f)), modelRot: Quaternion.Euler(0f, 90f, 0f));
             ExtProp(root, "Exterior/SM_Ext_DeckDome.fbx", "DeckDome", new Vector3(0f, -0.5f, 6f), Quaternion.identity, () => null);
 
+            // P106: the staff shuttle at the hangar's west wall. Yaw 180: its hatch (left side, 1.3 m ahead of the centre) faces the station.
+            ExtProp(root, "Exterior/SM_Ext_Shuttle_Docked.fbx", "Shuttle_Docked", new Vector3(-23.2f, 2.3f, -27.3f), Quaternion.Euler(0f, 180f, 0f), () => null);
+            var dockCollar = ExtProp(root, "Exterior/SM_Ext_ShuttleDockingCollar.fbx", "Collar_Shuttle", new Vector3(-19.975f, 1.5f, -26f), Quaternion.Euler(0f, 0f, 90f), () => null);
+            if (dockCollar != null) dockCollar.transform.localScale = new Vector3(1f, 1.22f, 1f); // from the hull plates (x -18.45) to the shuttle's side
+
             // Frame around the hangar mouth, seen from inside the hangar through the barrier
             ExtProp(root, "Exterior/SM_Ext_HangarMouth.fbx", "HangarMouth", new Vector3(0f, -2f, -42f), Quaternion.identity, () =>
             {

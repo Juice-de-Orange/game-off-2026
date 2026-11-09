@@ -7,7 +7,7 @@ using UnityEngine;
 namespace GameOff.Departure
 {
     /// <summary>
-    /// P72: the ticket machine next to the shuttle ramp. E shows the price and what is missing; with enough money BUY takes
+    /// P72: the ticket machine next to the shuttle hatch. E shows the price and what is missing; with enough money BUY takes
     /// HouseholdTuning.ticketPrice and the player keeps the ticket (PlayerEconomy.HasTicket) until they board.
     /// Like every trade it only sells after the shift; with the dev tools a red button hands out a free ticket.
     /// </summary>
@@ -31,7 +31,7 @@ namespace GameOff.Departure
             Func<int, string> format, bool curfew = false, string curfewText = null)
         {
             string title = "TICKET HOME · " + format(price);
-            if (hasTicket) return ("YOUR TICKET HOME", "You have your ticket. The shuttle at the ramp is waiting for you.", false);
+            if (hasTicket) return ("YOUR TICKET HOME", "You have your ticket. The shuttle behind the hatch is waiting for you.", false);
             if (curfew) return (title, "One way to the colonies.\n" + (string.IsNullOrWhiteSpace(curfewText) ? "Closed for the night." : curfewText), false);
             if (!open) return (title, "One way to the colonies.\nTicket sales open after your shift.", false);
             if (balance < price)
@@ -74,7 +74,7 @@ namespace GameOff.Departure
         private void GetTicket()
         {
             Economy.HasTicket = true;
-            dialogs.ShowHint("Ticket bought. Board the shuttle at the ramp when you are ready.", 6f);
+            dialogs.ShowHint("Ticket bought. The shuttle is behind the hatch, take the seat when you are ready.", 6f);
         }
 
         private void Resume() => player.SetControlEnabled(true);

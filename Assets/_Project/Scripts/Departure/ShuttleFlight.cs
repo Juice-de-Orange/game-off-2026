@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 namespace GameOff.Departure
 {
     /// <summary>
-    /// P72: the flight home. The static hangar shuttle is hidden and a movable copy of its model lifts off; the player's camera
+    /// P72/P106: the flight home. The docked shuttle and its cabin are hidden and a movable copy of its model lifts off; the player's camera
     /// becomes a chase camera. W/S thrust, mouse (or A/D) steers, Shift boosts. No collisions. Far enough from the take-off point,
     /// or after maxSeconds, the run ends with a ticket ending that depends on the family (TicketEnding).
     /// </summary>
@@ -21,9 +21,11 @@ namespace GameOff.Departure
         [SerializeField] private FirstPersonController player;
         [SerializeField] private Camera playerCamera;
         [SerializeField] private DayFlowUI ui;
-        [Tooltip("The static shuttle in the hangar (station prefab); hidden when the copy takes off.")]
-        [SerializeField] private Transform hangarShuttle;
-        [Tooltip("The shuttle model asset (SM_Hangar_Shuttle.fbx); copied for the flight.")]
+        [Tooltip("The shuttle docked outside the hangar (PF_Exterior); hidden when the copy takes off.")]
+        [SerializeField] private Transform dockedShuttle;
+        [Tooltip("The cabin inside it (station prefab): its seats would hang in space once the hull has gone.")]
+        [SerializeField] private Transform cabin;
+        [Tooltip("The shuttle model asset (SM_Ext_Shuttle_Docked.fbx); copied for the flight.")]
         [SerializeField] private GameObject shuttleModel;
         [Tooltip("Optional engine loop, pitch follows the speed.")]
         [SerializeField] private AudioSource engine;
@@ -59,22 +61,23 @@ namespace GameOff.Departure
         public void Launch()
         {
             if (IsFlying) return;
-            if (tuning == null || hangarShuttle == null || shuttleModel == null || playerCamera == null || day == null)
+            if (tuning == null || dockedShuttle == null || shuttleModel == null || playerCamera == null || day == null)
             {
                 Debug.LogError("[Departure] ShuttleFlight is not wired (run GameOff/Build Departure into Main) - no flight.");
                 if (player != null) player.SetControlEnabled(true);
                 return;
             }
             IsFlying = true;
-            foreach (var r in hangarShuttle.GetComponentsInChildren<Renderer>()) r.enabled = false;
+            foreach (var r in dockedShuttle.GetComponentsInChildren<Renderer>()) r.enabled = false;
+            if (cabin != null) foreach (var r in cabin.GetComponentsInChildren<Renderer>()) r.enabled = false;
 
-            // The model's ramp faces +Z (north, toward the queue); its nose points the other way, out of the hangar mouth.
-            _start = hangarShuttle.position;
+            // The model's nose points along its local -Z.
+            _start = dockedShuttle.position;
             _body = new GameObject("FlightShuttle").transform;
-            _body.SetPositionAndRotation(_start, Quaternion.LookRotation(-hangarShuttle.forward, Vector3.up));
+            _body.SetPositionAndRotation(_start, Quaternion.LookRotation(-dockedShuttle.forward, Vector3.up));
             _visual = Instantiate(shuttleModel, _body).transform;
-            _visual.SetPositionAndRotation(hangarShuttle.position, hangarShuttle.rotation);
-            _visual.localScale = hangarShuttle.lossyScale;
+            _visual.SetPositionAndRotation(dockedShuttle.position, dockedShuttle.rotation);
+            _visual.localScale = dockedShuttle.lossyScale;
             _visualRest = _visual.localRotation; // keeps any import rotation of the model; the lean goes on top
             _yaw = _body.eulerAngles.y;
 

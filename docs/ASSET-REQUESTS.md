@@ -6913,7 +6913,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_Shuttle_Docked.fbx
 package: P106
 scene: Außen, Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-20
 size_m: [6.0, 11.0, 4.0]
@@ -6936,12 +6936,12 @@ placeholder: Box 6 x 11 x 4 m
 feedback: []
 ```
 
-### SM_Ext_DockingCollar.fbx
+### SM_Ext_ShuttleDockingCollar.fbx
 ```yaml
-path: Assets/_Project/Art/Models/Exterior/SM_Ext_DockingCollar.fbx
+path: Assets/_Project/Art/Models/Exterior/SM_Ext_ShuttleDockingCollar.fbx
 package: P106
 scene: Außen, Hangar
-status: offen
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [3.0, 3.0, 2.5]
@@ -6949,7 +6949,7 @@ pivot: center
 tris_max: 800
 materials: [Collar]
 textures:
-  - Assets/_Project/Art/Textures/Exterior/T_Ext_DockingCollar_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Exterior/T_Ext_ShuttleDockingCollar_Albedo.png   # 256x256, Point
 texel_px_per_m: 64
 palette: docs/style/palette.png
 look: >
@@ -6968,7 +6968,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Shuttle_Cabin_Interior.fbx
 package: P106
 scene: Shuttle innen
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-20
 size_m: [3.2, 8.0, 2.5]
@@ -6996,7 +6996,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Wall_Viewport.fbx
 package: P106
 scene: Hangar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [4.0, 0.3, 4.0]

@@ -1714,12 +1714,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (Nachtlauf, 08.11.): Kein Gitter mehr: Außenschott schwingt auf, Figur wird Ragdoll ohne Colliders und fliegt hinaus, Warnlampe blinkt, Sicht wackelt, Schott zu (`Ragdoll`, `AirlockHatch`). Im Browser mit Sorvak geprüft; die anderen vier Spezies nur per Code, gleiche Logik.
 
 ### P106 — Heim-Shuttle dockt außen am Hangar an, begehbar
-- Größe: L · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: L · Priorität: Soll · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P72
 - Ziel: Es ist klar, wie das Personal hergekommen ist und womit man heimfliegt.
 - Enthalten: Shuttle hängt außen am Hangar an einem Andockring, Zugang über ein Schott in der Hangarwand, innen begehbar mit Sitzreihen; dort startet der Abflug (P72). **Sichtbar machen (Max, 08.11.):** Fenster oder eigene Nische im Hangar mit Blick aufs Shuttle. `SM_Hangar_Shuttle` verschwindet vom Landefeld. Betrifft `DepartureBuilder`, Hülle (`StationGrayboxBuilder`), Bake.
 - Abnahme: Man geht durchs Schott ins Shuttle, setzt sich und fliegt los; das Shuttle ist von innen aus dem Hangar zu sehen.
 - Entscheidung (Max, 09.11.): Jetzt einbauen; die Lieferung `assets/P106-au-en-hangar` wird gemergt.
+- Ergebnis (09.11.): Shuttle hängt außen an der Westwand des Hangars, Andockring bei z −26, Fenster in der Wand daneben (z −22). Schott: E und kurze Blende (`ShuttleHatch`), kein durchgehender Gang, weil die gelieferte Kabine ihren Ausgang an der Stirnseite hat. In der Kabine ist nur der Mittelgang begehbar, am Sitz vorne startet der Abflug. Ticketautomat steht neben dem Schott, `SM_Hangar_Shuttle` ist vom Landefeld weg. Abweichung von der Abnahme: Man geht nicht zu Fuß durchs Schott, sondern per Blende.
 
 ### P107 — Hangar: Schiffe landen morgens, Reisende kommen glaubhaft an
 - Größe: M · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)· Zuständig: offen

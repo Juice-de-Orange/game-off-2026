@@ -69,7 +69,7 @@ geholfen, steckt er dir etwas für die Familie zu. Gehorchen (Schleuse), verhaft
 | Ort | Funktion im Spiel |
 |---|---|
 | **Zollschalter + Prüfkammer** | Arbeitsplatz; Reisende stehen in der Kammer, die zugleich Luftschleuse ist (Außenschott klappt ins All). Kein sichtbarer Vorgesetzter: Lautsprecher-Durchsagen, Memos, Pinnwand |
-| **Hangar** (36 × 28 × 16 m) | Morgens landet ein Schiff durch die Energiebarriere, tagsüber stehen 2–4 auf festen Plätzen, jeden Tag andere (P107); geplant: das Heim-Shuttle dockt außen am Hangar an und ist begehbar (P106); Frachtdrohne für Pakete nach Hause; durchsuchbare Kisten |
+| **Hangar** (36 × 28 × 16 m) | Morgens landet ein Schiff durch die Energiebarriere, tagsüber stehen 2–4 auf festen Plätzen, jeden Tag andere (P107); das Heim-Shuttle dockt außen am Hangar an und ist innen begehbar (P106); Frachtdrohne für Pakete nach Hause; durchsuchbare Kisten |
 | **Transithalle** | Knotenpunkt mit Anzeigesäule (Live-Ankunftsplan), Bänken, Getränkeautomat |
 | **Aussichtsplattform** | Halbrunde Glasfront: Blick auf den Heimatplaneten (Stadtlichter = Zustand der Familie), Sonne, Gasriese; Münzfernrohr |
 | **Bar "The Last Orbit"** | Barkeeper (Hocker = Gespräch; kauft nichts, tauscht Wünsche gegen Gerüchte, P65; Bestechungszettel, P66), Schwarzmarkt unter der Theke, Fensterband |

@@ -212,6 +212,7 @@ namespace GameOff.EditorTools
 
             BuildProps(props);
             BuildDecor(Child(props, "Decor"));
+            BuildShuttleDock(props, lights);
             BuildMarkers(markers);
 
             // Walkable surface for travelers (P14) and reachability checks. Roofs and glass are not walkable.
@@ -552,8 +553,6 @@ namespace GameOff.EditorTools
         }
         // Counter furniture orientation (officer sits at x = -2 looking +X; checked visually).
         private const float DeskYaw = 0f, ChairYaw = 90f;
-        // Shuttle: rear ramp must face north toward the queue lanes and the inspection lock (checked visually).
-        private const float ShuttleYaw = 0f;
 
         private static AudioClip DoorClip(string name) => AssetDatabase.LoadAssetAtPath<AudioClip>($"Assets/_Project/Audio/SFX/SFX_Door_{name}.ogg");
 
@@ -855,6 +854,7 @@ namespace GameOff.EditorTools
             for (float v = bottom; v < top - 0.01f; v += HullCell)
             {
                 float u1 = Mathf.Min(u + HullCell, b), v1 = Mathf.Min(v + HullCell, top);
+                if ((v + v1) * 0.5f < 4f && IsDockViewportCell(room, onXLine, line, (u + u1) * 0.5f)) continue; // P106: open behind the window
                 bool cut = false;
                 foreach (var o in Openings)
                     if (o.OnXLine == onXLine && Mathf.Approximately(o.Line, line) && o.Center - o.Width * 0.5f < u1 && o.Center + o.Width * 0.5f > u
@@ -959,6 +959,7 @@ namespace GameOff.EditorTools
             {
                 foreach (int side in new[] { -1, 1 })
                 {
+                    if (side < 0 && Mathf.Approximately(z, DockViewportZ)) continue; // P106: would stand right in front of the window
                     float x = side < 0 ? hangar.X0 - 0.75f : hangar.X1 + 0.75f;
                     if (Kit(KitHangarRibOuter) != null)
                     {
@@ -1307,7 +1308,9 @@ namespace GameOff.EditorTools
                         continue;
                     }
                     bool full = Mathf.Approximately(cellEnd - cell, set.Cell) && Mathf.Approximately(top - bottom, set.Height);
-                    if (full && ops.Count == 0 && Kit(set.Wall) != null) PlaceKit(parent, set.Wall, w.At((cell + cellEnd) * 0.5f, bottom), yaw);
+                    bool viewport = bottom == 0f && IsDockViewportCell(room, onXLine, line, (cell + cellEnd) * 0.5f) && Kit(KitHangarViewport) != null;
+                    if (full && ops.Count == 0 && viewport) PlaceKit(parent, KitHangarViewport, w.At((cell + cellEnd) * 0.5f, bottom), yaw);
+                    else if (full && ops.Count == 0 && Kit(set.Wall) != null) PlaceKit(parent, set.Wall, w.At((cell + cellEnd) * 0.5f, bottom), yaw);
                     else BuildWall(parent, room, onXLine, line, offsetLine, Mathf.Max(cell, w.FillFrom), Mathf.Min(cellEnd, w.FillTo), bottom, top, mat, true, false);
                 }
             }
@@ -1672,6 +1675,41 @@ namespace GameOff.EditorTools
         }
 
         /// <summary>Placeholder blocks named after the requested assets (docs/ASSET-REQUESTS.md). Replaced by real prefabs later.</summary>
+        // --- P106: the staff shuttle, docked outside the west wall (hull and collar: SkyExteriorBuilder, hatch and seat: DepartureBuilder) ---
+        private const string KitHangarViewport = "Hangar/SM_Hangar_Wall_Viewport.fbx";
+        private const string KitShuttleCabin = "Hangar/SM_Shuttle_Cabin_Interior.fbx";
+        private const float DockViewportZ = -22f, DockHatchZ = -26f;
+        // Inside the hull, raised so that the cabin's underside doesn't show below the belly; the hatch fades, so its floor need not match the hangar's.
+        public static readonly Vector3 ShuttleCabinCentre = new Vector3(-23.2f, 0.6f, -28f);
+        private const float ShuttleCabinYaw = 180f; // the pilot's seat points to the nose (north); checked visually
+        private const float CabinAisleHalfWidth = 0.5f, CabinHalfLength = 4f;
+
+        /// <summary>The hangar wall cell with the window onto the shuttle.</summary>
+        private static bool IsDockViewportCell(Room room, bool onXLine, float line, float mid) =>
+            room.Name == "Hangar" && onXLine && Mathf.Approximately(line, room.X0) && Mathf.Abs(mid - DockViewportZ) < 2f;
+
+        /// <summary>The closed hatch in the hangar wall and the cabin: only its aisle is walkable (the seats are in the model).</summary>
+        private static void BuildShuttleDock(GameObject props, GameObject lights)
+        {
+            // A closed sliding door (the airlock hatch model says VACUUM BEYOND); it opens by fade, ShuttleHatch.
+            PlaceKit(props, KitDoor, new Vector3(-17.84f, 0f, DockHatchZ), 90f);
+            var cabin = PlaceKit(props, KitShuttleCabin, ShuttleCabinCentre, ShuttleCabinYaw);
+            if (cabin == null) return;
+            cabin.name = "SM_Shuttle_Cabin_Interior";
+            var c = ShuttleCabinCentre;
+            float wall = CabinAisleHalfWidth + 0.1f;
+            foreach (var (name, centre, size) in new[]
+            {
+                ("Floor", c + new Vector3(0f, -0.1f, 0f), new Vector3(3.2f, 0.2f, 2f * CabinHalfLength)),
+                ("AisleWest", c + new Vector3(-wall, 1.25f, 0f), new Vector3(0.2f, 2.5f, 2f * CabinHalfLength)),
+                ("AisleEast", c + new Vector3(wall, 1.25f, 0f), new Vector3(0.2f, 2.5f, 2f * CabinHalfLength)),
+                ("EndSouth", c + new Vector3(0f, 1.25f, -CabinHalfLength), new Vector3(1.4f, 2.5f, 0.2f)),
+                ("EndNorth", c + new Vector3(0f, 1.25f, CabinHalfLength - 1.2f), new Vector3(1.4f, 2.5f, 0.2f)), // in front of the pilot's seat
+            })
+                Block(props, "ShuttleCabin_" + name, centre, size, _hatch).GetComponent<MeshRenderer>().enabled = false;
+            BakedLight(lights, "ShuttleCabin_Light", c + new Vector3(0f, 2.2f, 0f), new Color(0.85f, 0.9f, 1f), 7f, 1.2f);
+        }
+
         private static void BuildProps(GameObject p)
         {
             // Counter
@@ -1722,8 +1760,7 @@ namespace GameOff.EditorTools
             // Elo, Max's dog, beside the cat with 20 cm between the frames, same center height
             WallProp(p, "Motel/SM_Motel_DogPainting.fbx", "SM_Motel_DogPainting", false, 6, -1, -17.645f, 1.5f, 0.63f, 0.53f);
             // Hangar
-            // Hangar (36 x 28 m): shuttle in the middle, queue lane from its ramp to the inspection lock door (x 1..3)
-            KitProp(p, "Hangar/SM_Hangar_Shuttle.fbx", "SM_Hangar_Shuttle", 0, -28, 6, 9, 3.5f, 0, ShuttleYaw);
+            // Hangar (36 x 28 m): queue lane to the inspection lock door (x 1..3); the staff shuttle docks outside the west wall (P106)
             // Drone pad west of the service door (door at x -7, z -12), so the way into the hangar stays free
             KitProp(p, "Hangar/SM_Hangar_DronePad.fbx", "SM_Hangar_DronePad", -13f, -16.5f, 3, 3, 0.2f);
             KitProp(p, "Hangar/SM_Hangar_CargoDrone.fbx", "SM_Hangar_CargoDrone", -13f, -16.5f, 1.6f, 1.6f, 0.8f, 0.2f); // on the pad top (M011)
@@ -1734,11 +1771,11 @@ namespace GameOff.EditorTools
                 KitProp(p, "Hangar/SM_Hangar_Barrier.fbx", $"SM_Hangar_Barrier_W{i}", 1, z, 0.3f, 2f, 1, 0, 90f);
                 KitProp(p, "Hangar/SM_Hangar_Barrier.fbx", $"SM_Hangar_Barrier_E{i}", 3, z, 0.3f, 2f, 1, 0, 90f);
             }
-            KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_A", -16.5f, -26, 1.2f, 1.2f, 1);
-            KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_B", -16.5f, -27.4f, 1.2f, 1.2f, 1, 0, 90f);
-            KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_C", -16.5f, -26.7f, 1.2f, 1.2f, 1, 1, 15f);
+            KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_A", -16.5f, -31, 1.2f, 1.2f, 1); // kept clear of the shuttle hatch at z -26
+            KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_B", -16.5f, -32.4f, 1.2f, 1.2f, 1, 0, 90f);
+            KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_C", -16.5f, -31.7f, 1.2f, 1.2f, 1, 1, 15f);
             KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_D", -15.2f, -33, 1.2f, 1.2f, 1, 0, -10f);
-            KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_A", -15.4f, -26.2f, 0.6f, 0.6f, 0.5f);
+            KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_A", -15.4f, -31.2f, 0.6f, 0.6f, 0.5f);
             KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_B", -13.9f, -33.4f, 0.6f, 0.6f, 0.5f, 0, 30f);
             KitProp(p, "Hangar/SM_Hangar_Crate_Small.fbx", "SM_Hangar_Crate_Small_C", -11.2f, -14.6f, 0.6f, 0.6f, 0.5f); // next to the drone pad
             KitProp(p, "Hangar/SM_Hangar_Tank.fbx", "SM_Hangar_Tank_A", 16.3f, -16, 1.4f, 1.4f, 3.5f);
