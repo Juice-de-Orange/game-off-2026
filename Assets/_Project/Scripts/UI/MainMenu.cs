@@ -1,13 +1,11 @@
-using GameOff.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace GameOff.UI
 {
     /// <summary>
-    /// Main menu: Start loads Main, Options and Credits swap panels (Esc / Back returns), Quit is hidden in WebGL
+    /// Main menu: Start hands over to FrontEnd (P48: the menu is in Main), Options and Credits swap panels (Esc / Back returns), Quit is hidden in WebGL
     /// (a browser tab can't be closed by the game).
     /// </summary>
     public class MainMenu : MonoBehaviour
@@ -52,6 +50,9 @@ namespace GameOff.UI
             creditsPanel.SetActive(panel == creditsPanel);
         }
 
-        private static void StartGame() => SceneManager.LoadScene(SceneNames.Main);
+        private static void StartGame()
+        {
+            if (FrontEnd.Instance != null) FrontEnd.Instance.Begin();
+        }
     }
 }

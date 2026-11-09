@@ -138,7 +138,7 @@ namespace GameOff.UI
         private void BackToMenu()
         {
             SetTime(false);
-            SceneManager.LoadScene(SceneNames.Menu);
+            SceneManager.LoadScene(SceneNames.Main); // P48: Main starts with the menu
         }
 
         private void OpenReport()

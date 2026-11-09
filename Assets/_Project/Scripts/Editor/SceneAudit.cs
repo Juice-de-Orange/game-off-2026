@@ -26,7 +26,7 @@ namespace GameOff.EditorTools
             if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
             var report = new StringBuilder();
             report.AppendLine("[Placeholders]");
-            foreach (string path in new[] { "Assets/_Project/Scenes/Main.unity", "Assets/_Project/Scenes/Menu.unity", "Assets/_Project/Scenes/Boot.unity" })
+            foreach (string path in new[] { "Assets/_Project/Scenes/Main.unity", "Assets/_Project/Scenes/Boot.unity" })
             {
                 var scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
                 report.AppendLine(path);

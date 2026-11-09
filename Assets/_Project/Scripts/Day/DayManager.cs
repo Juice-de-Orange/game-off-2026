@@ -125,6 +125,13 @@ namespace GameOff.Day
             ApplyDevTools();
             _runSeed = UnityEngine.Random.Range(1, int.MaxValue);
             Debug.Log($"[Day] Run seed {_runSeed} (endless days after day {schedule.Count}: {schedule.Endless})");
+            // P48: the menu is in this scene; the run begins when its flight is over.
+            if (GameOff.UI.FrontEnd.Instance != null) GameOff.UI.FrontEnd.Instance.Started += BeginRun;
+            else BeginRun();
+        }
+
+        private void BeginRun()
+        {
             ui.SetBlack(true);
             StartCoroutine(BeginDay(1));
         }
@@ -310,7 +317,7 @@ namespace GameOff.Day
         private static void BackToMenu()
         {
             Time.timeScale = 1f;
-            SceneManager.LoadScene(SceneNames.Menu);
+            SceneManager.LoadScene(SceneNames.Main);
         }
     }
 }

@@ -28,7 +28,6 @@ namespace GameOff.EditorTools
     public static class MenuSceneBuilder
     {
         private const string BootScene = "Assets/_Project/Scenes/Boot.unity";
-        private const string MenuScene = "Assets/_Project/Scenes/Menu.unity";
         private const string MainScene = "Assets/_Project/Scenes/Main.unity";
         private const string PauseMenuPrefab = "Assets/_Project/Prefabs/UI/PF_PauseMenu.prefab";
         private const string AudioManagerPrefab = "Assets/_Project/Prefabs/Audio/PF_AudioManager.prefab";
@@ -38,18 +37,6 @@ namespace GameOff.EditorTools
         private const string TitleFontPath = "Assets/_Project/Fonts/Orbitron-Regular.ttf";
         private const string TitleFontAssetPath = "Assets/_Project/Fonts/Orbitron SDF.asset";
         private const string CreditsFile = "CREDITS.md";
-        private const string SkyboxPath = "Assets/_Project/Art/Materials/Station/M_Sky_Space.mat";
-        private const string TrafficTuningPath = "Assets/_Project/Data/Menu/ShipTraffic_Menu.asset"; // P47, created once, tune in the inspector
-        private const string ShipFolder = "Assets/_Project/Art/Models/Ships/";
-        private static readonly string[] BackdropPrefabs =
-        {
-            "Assets/_Project/Prefabs/Environment/PF_SkyRig.prefab",
-            "Assets/_Project/Prefabs/Environment/PF_Exterior.prefab",
-            "Assets/_Project/Prefabs/Station/PF_Station_Graybox.prefab",
-        };
-        // Station + exterior together span about x -45..48, y 0..26, z -50..76 (measured in Main).
-        private static readonly Vector3 BackdropTarget = new Vector3(2f, 9f, 5f);
-        private static readonly Vector3 BackdropLookOffset = new Vector3(-28f, 0f, 0f); // keeps the station right of the menu
         private const float MenuStripWidth = 400f;
 
         private const string GameTitle = "KESTREL-9";
@@ -132,11 +119,13 @@ namespace GameOff.EditorTools
 
         private static void BuildMenu(List<string> log)
         {
-            var scene = OpenCleared(MenuScene);
-            PlaceAudioManager(scene);
-            BuildStationBackdrop(scene, log);
-            CreateEventSystem(null);
-            var canvas = CreateCanvas("MenuCanvas", 0);
+            // P48: the menu lives in Main, over the real station, on its own canvas above everything else.
+            var scene = EditorSceneManager.OpenScene(MainScene, OpenSceneMode.Single);
+            foreach (var old in scene.GetRootGameObjects().Where(g => g.name == "FrontEnd")) Object.DestroyImmediate(old);
+            if (Object.FindFirstObjectByType<EventSystem>() == null) CreateEventSystem(null);
+            var root = new GameObject("FrontEnd");
+            var canvas = CreateCanvas("MenuCanvas", 200);
+            canvas.SetParent(root.transform, false);
 
             // Main panel on the left over a dark strip, so the station stays visible on the right.
             var mainPanel = PanelRoot(canvas, "MainPanel", false);
@@ -165,7 +154,7 @@ namespace GameOff.EditorTools
             creditsPanel.GetComponent<Image>().color = new Color(Backdrop.r, Backdrop.g, Backdrop.b, SubPageDim);
             FullscreenCorner(canvas); // last child: on top of every menu page
 
-            var menu = new GameObject("MainMenu").AddComponent<MainMenu>();
+            var menu = root.AddComponent<MainMenu>();
             Set(menu, "mainPanel", mainPanel.gameObject);
             Set(menu, "optionsPanel", optionsPanel.gameObject);
             Set(menu, "creditsPanel", creditsPanel.gameObject);
@@ -177,9 +166,16 @@ namespace GameOff.EditorTools
             optionsPanel.gameObject.SetActive(false);
             creditsPanel.gameObject.SetActive(false);
 
-            OcclusionSetup.BakeOpenScene();
+            var frontEnd = root.AddComponent<FrontEnd>();
+            var player = Object.FindFirstObjectByType<FirstPersonController>();
+            var dayUi = Object.FindFirstObjectByType<DayFlowUI>(FindObjectsInactive.Include);
+            Set(frontEnd, "player", player);
+            Set(frontEnd, "playerCamera", player != null ? player.GetComponentInChildren<Camera>(true) : null);
+            Set(frontEnd, "dayUi", dayUi);
+            Set(frontEnd, "menuCanvas", canvas.gameObject);
+            EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
-            log.Add("Menu built");
+            log.Add($"menu built in Main (player {(player != null ? "ok" : "MISSING")}, day UI {(dayUi != null ? "ok" : "MISSING")})");
         }
 
         /// <summary>
@@ -418,105 +414,6 @@ namespace GameOff.EditorTools
         /// unchanged, plus the space look of Main (skybox, ambient, thin fog) and a slowly drifting camera.
         /// Main's baked light stays in Main, so here only the realtime sun and a realtime copy of the planet fill light shine.
         /// </summary>
-        private static void BuildStationBackdrop(Scene scene, List<string> log)
-        {
-            int placed = 0;
-            foreach (string path in BackdropPrefabs)
-            {
-                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-                if (prefab == null) { log.Add($"backdrop prefab missing: {path}"); continue; }
-                var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, scene);
-                // Inside the station dozens of realtime lamps would cast shadows (Main bakes them); from space nobody sees
-                // that, and in WebGL it costs a lot. Instance override in Menu only, the prefab stays untouched.
-                foreach (var lamp in instance.GetComponentsInChildren<Light>(true))
-                {
-                    if (lamp.type == LightType.Directional || lamp.shadows == LightShadows.None) continue;
-                    lamp.shadows = LightShadows.None;
-                    PrefabUtility.RecordPrefabInstancePropertyModifications(lamp);
-                }
-                placed++;
-            }
-
-            var fill = new GameObject("PlanetFillLight").AddComponent<Light>();
-            fill.type = LightType.Directional;
-            fill.color = new Color(0.55f, 0.68f, 0.95f);
-            fill.intensity = 0.5f;
-            fill.shadows = LightShadows.None;
-            fill.lightmapBakeType = LightmapBakeType.Realtime;
-            fill.transform.rotation = Quaternion.Euler(19f, 171.5f, 0f); // like Main's PlanetLight
-
-            var skybox = AssetDatabase.LoadAssetAtPath<Material>(SkyboxPath);
-            if (skybox != null) RenderSettings.skybox = skybox;
-            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
-            RenderSettings.ambientLight = new Color(0.06f, 0.07f, 0.10f);
-            RenderSettings.fog = true;
-            RenderSettings.fogMode = FogMode.ExponentialSquared;
-            RenderSettings.fogDensity = 0.002f; // Main uses 0.012 indoors; from ~120 m away that would swallow the station
-            RenderSettings.fogColor = new Color(0.05f, 0.06f, 0.09f);
-
-            var cam = new GameObject("Main Camera", typeof(Camera), typeof(AudioListener), typeof(MenuCameraDrift)).GetComponent<Camera>();
-            cam.tag = "MainCamera";
-            cam.clearFlags = CameraClearFlags.Skybox;
-            cam.farClipPlane = 5000f;
-            cam.fieldOfView = 50f;
-            var drift = cam.GetComponent<MenuCameraDrift>();
-            SetVector(drift, "target", BackdropTarget);
-            SetVector(drift, "lookOffset", BackdropLookOffset);
-
-            // Occlusion only works while the camera is inside a baked view volume, and without an area that volume ends at the station.
-            var so = new SerializedObject(drift);
-            float radius = so.FindProperty("radius").floatValue, height = so.FindProperty("height").floatValue, bob = so.FindProperty("bobHeight").floatValue;
-            float center = so.FindProperty("centerAngle").floatValue, swing = so.FindProperty("swingAngle").floatValue;
-            var bounds = new Bounds(BackdropTarget + new Vector3(0f, height, 0f), Vector3.zero);
-            for (float a = center - swing; a <= center + swing; a += 2f)
-                bounds.Encapsulate(BackdropTarget + new Vector3(Mathf.Sin(a * Mathf.Deg2Rad) * radius, height, Mathf.Cos(a * Mathf.Deg2Rad) * radius));
-            bounds.Expand(new Vector3(4f, bob * 2f + 4f, 4f));
-            var area = new GameObject("MenuCameraOcclusionArea").AddComponent<OcclusionArea>();
-            area.center = bounds.center;
-            area.size = bounds.size;
-            log.Add($"station backdrop ({placed}/{BackdropPrefabs.Length} prefabs)");
-
-            var traffic = new GameObject("ShipTraffic").AddComponent<ShipTraffic>();
-            Set(traffic, "tuning", TrafficTuning(log));
-        }
-
-        /// <summary>
-        /// P47 lanes around the station (target ~(2, 9, 5); the menu camera swings around x -40, z -108 looking north-east).
-        /// Far: freighters/tankers in front of the planet · middle: customs patrol · near: small commuters. Created only if missing.
-        /// </summary>
-        private static ShipTrafficTuning TrafficTuning(List<string> log)
-        {
-            var tuning = AssetDatabase.LoadAssetAtPath<ShipTrafficTuning>(TrafficTuningPath);
-            if (tuning != null) return tuning;
-            GameObject Ship(string name) => AssetDatabase.LoadAssetAtPath<GameObject>(ShipFolder + name + ".fbx");
-            tuning = ScriptableObject.CreateInstance<ShipTrafficTuning>();
-            tuning.maxActive = 4;
-            tuning.modelYaw = 180f; // the ship FBX noses point to -Z
-            tuning.lanes.Add(new TrafficLane
-            {
-                name = "Far · freighters", from = new Vector3(-450f, 60f, 260f), to = new Vector3(450f, 40f, 260f),
-                randomOffset = new Vector3(0f, 25f, 60f), ships = { Ship("SM_Ship_Freighter"), Ship("SM_Ship_Tanker") },
-                scale = 0.6f, speed = new Vector2(12f, 20f), interval = new Vector2(20f, 40f), firstDelay = new Vector2(0f, 3f),
-            });
-            tuning.lanes.Add(new TrafficLane
-            {
-                name = "Middle · patrol", from = new Vector3(-220f, 55f, 45f), to = new Vector3(260f, 45f, 45f),
-                randomOffset = new Vector3(0f, 8f, 15f), ships = { Ship("SM_Ship_Patrol") },
-                scale = 1f, speed = new Vector2(35f, 50f), interval = new Vector2(30f, 60f), firstDelay = new Vector2(8f, 15f),
-            });
-            tuning.lanes.Add(new TrafficLane
-            {
-                name = "Near · commuters", from = new Vector3(-110f, 30f, -82f), to = new Vector3(70f, 20f, -70f),
-                randomOffset = new Vector3(0f, 5f, 8f), ships = { Ship("SM_Ship_TrafficSmall") },
-                scale = 1.5f, speed = new Vector2(18f, 26f), interval = new Vector2(10f, 20f), firstDelay = new Vector2(3f, 8f),
-            });
-            Directory.CreateDirectory(Path.GetDirectoryName(TrafficTuningPath));
-            AssetDatabase.CreateAsset(tuning, TrafficTuningPath);
-            AssetDatabase.SaveAssets();
-            log.Add("ShipTraffic_Menu created");
-            return tuning;
-        }
-
         // ---------- Pause menu ----------
 
         private static GameObject BuildPausePrefab(List<string> log)
@@ -715,12 +612,12 @@ namespace GameOff.EditorTools
 
         private static void CheckBuildSettings(List<string> log)
         {
-            var wanted = new[] { BootScene, MenuScene, MainScene };
+            var wanted = new[] { BootScene, MainScene };
             var current = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
-            if (current.Take(3).SequenceEqual(wanted)) return;
-            var rest = EditorBuildSettings.scenes.Where(s => !wanted.Contains(s.path));
+            if (current.SequenceEqual(wanted)) return;
+            var rest = EditorBuildSettings.scenes.Where(s => !wanted.Contains(s.path) && !s.path.EndsWith("/Menu.unity"));
             EditorBuildSettings.scenes = wanted.Select(p => new EditorBuildSettingsScene(p, true)).Concat(rest).ToArray();
-            log.Add("build settings reordered (Boot, Menu, Main)");
+            log.Add("build settings reordered (Boot, Main)");
         }
 
         // ---------- UI helpers ----------

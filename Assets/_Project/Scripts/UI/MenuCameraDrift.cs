@@ -21,6 +21,13 @@ namespace GameOff.UI
         [SerializeField] private float swingPeriod = 90f;
         [SerializeField] private float bobHeight = 3f;
 
+        /// <summary>P48: set on the player's camera at runtime.</summary>
+        public void Configure(Vector3 orbitTarget, Vector3 look)
+        {
+            target = orbitTarget;
+            lookOffset = look;
+        }
+
         private void LateUpdate() => Apply(Time.unscaledTime);
 
         private void OnValidate() => Apply(0f);

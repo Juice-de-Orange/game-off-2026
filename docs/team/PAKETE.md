@@ -782,7 +782,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Getestet im Editor und im WebGL-Build (Chrome), 0 Fehler/Warnungen.
 
 ### P48 — Menü direkt in Main mit Kameraflug
-- Größe: M · Priorität: Kann · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: M · Priorität: Kann · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: P09 · Folgt auf: P02
 - Ziel: Das Menü sieht aus wie das Spiel, und „Start Shift“ geht nahtlos ins Spiel über.
 - Enthalten: Spielstart direkt in `Main.unity` mit Außenkamera (echtes gebackenes Licht), Menü darüber, bei „Start Shift“ Kameraflug in
@@ -790,6 +790,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: neue Menüpunkte, Änderungen am Tagesablauf
 - Abnahme: Menü zeigt die Station mit gebackenem Licht; „Start Shift“ landet ohne Szenenwechsel beim Spieler in Zimmer 103; läuft im WebGL-Build. Nur in der Polish-Woche, nur wenn alle Muss-Pakete fertig sind.
 - Entscheidung (Max, 09.11.): Bleibt zurückgestellt, in der Polish-Woche prüfen.
+- Ergebnis (09.11.): Boot lädt direkt Main, das Menü liegt darüber (`FrontEnd`, Canvas in Main), `Menu.unity` ist gelöscht. Das Menü führt die Kamera des Spielers (wie der Abflug), Nebel und HUD sind solange aus. START fliegt auf einer Kurve westlich der Station zum Bullauge von 103, dann Blende und der normale Tagesstart. Zurück ins Menü lädt Main neu. Im Browser geprüft: Menü, Optionen, Flug, Tag 1, Pause → Hauptmenü und zweiter Start.
 
 ### P49 — Live-Version auf kestrel9.maxlworks.com + Dev-Schalter im Menü
 - Größe: M · Priorität: Soll · Status: wartet auf Unity-Lizenz + Secrets (max)

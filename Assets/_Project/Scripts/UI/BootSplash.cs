@@ -22,7 +22,7 @@ namespace GameOff.UI
             yield return Fade(0f, 1f, fadeIn);
             for (float t = 0f; t < hold && !_skip; t += Time.unscaledDeltaTime) yield return null;
             yield return Fade(splash.alpha, 0f, _skip ? 0.15f : fadeOut);
-            SceneManager.LoadScene(SceneNames.Menu);
+            SceneManager.LoadScene(SceneNames.Main);
         }
 
         private void Update()
