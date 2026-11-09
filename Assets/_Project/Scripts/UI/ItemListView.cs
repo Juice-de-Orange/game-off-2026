@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace GameOff.UI
 {
     /// <summary>
-    /// A simple list of rows (label left, value right) for the trade and inventory windows (P46). Rows are copies of an
+    /// A simple list of rows (icon and label left, value right) for the trade and inventory windows (P46). Rows are copies of an
     /// inactive template; the selected row is highlighted. Clipped by a RectMask2D, no scrolling yet (enough for a jam).
     /// </summary>
     public class ItemListView : MonoBehaviour
@@ -23,6 +23,7 @@ namespace GameOff.UI
 
         public struct Row
         {
+            public Sprite Icon;
             public string Label;
             public string Value;
             public Color? ValueColor;
@@ -50,6 +51,9 @@ namespace GameOff.UI
                 labels[0].color = row.Selected ? selectedText : text;
                 labels[1].text = row.Value;
                 labels[1].color = row.ValueColor ?? (row.Selected ? selectedText : text);
+                var icon = _rows[i].transform.Find("Icon").GetComponent<Image>();
+                icon.sprite = row.Icon;
+                icon.enabled = row.Icon != null;
                 var colors = _rows[i].colors;
                 colors.normalColor = row.Selected ? selected : idle;
                 colors.selectedColor = colors.normalColor;

@@ -142,7 +142,7 @@ namespace GameOff.UI
                     int onShelf = Economy.Supply(_stock).Count(item);
                     left.Add(new ItemListView.Row
                     {
-                        Label = $"{item.DisplayName}  ×{onShelf}", Value = _stock.PriceFor(item).ToString(),
+                        Icon = item.Icon, Label = $"{item.DisplayName}  ×{onShelf}", Value = _stock.PriceFor(item).ToString(),
                         Selected = _side == Side.Vendor && _selected == item, OnClick = () => Select(it, Side.Vendor),
                     });
                 }
@@ -156,7 +156,7 @@ namespace GameOff.UI
                 var it = item;
                 right.Add(new ItemListView.Row
                 {
-                    Label = item.DisplayName, Value = "×" + economy.Inventory.Count(item),
+                    Icon = item.Icon, Label = item.DisplayName, Value = "×" + economy.Inventory.Count(item),
                     Selected = _side == Side.Player && _selected == item, OnClick = () => Select(it, Side.Player),
                 });
             }

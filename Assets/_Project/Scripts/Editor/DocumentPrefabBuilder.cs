@@ -96,7 +96,7 @@ namespace GameOff.EditorTools
             var citation = BuildPrefab(DocumentType.Citation, new Vector2(0.08f, 0.14f), 1f, font, null, default,
                 new List<Text>
                 {
-                    new Text("Title", "CITATION", -0.034f, 0.066f, 0.07f, TitleSize * 1.2f, Color.white),
+                    new Text("Field_title", "", -0.034f, 0.066f, 0.07f, TitleSize * 1.2f, Color.white), // CITATION, or EVIDENCE (P35)
                     new Text("Subtitle", "KESTREL-9 TRANSIT AUTHORITY", -0.034f, 0.046f, 0.07f, LabelSize * 0.9f, LabelInk),
                     Label("NO.", -0.034f, 0.034f), Value("id", -0.034f, 0.03f, 0.03f),
                     Label("DATE", 0.002f, 0.034f), Value("date", 0.002f, 0.03f, 0.034f),

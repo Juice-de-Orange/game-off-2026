@@ -154,7 +154,7 @@ namespace GameOff.UI
                 var it = item;
                 rows.Add(new ItemListView.Row
                 {
-                    Label = item.DisplayName, Value = "×" + shown.Count(item),
+                    Icon = item.Icon, Label = item.DisplayName, Value = "×" + shown.Count(item),
                     Selected = _selected == item, OnClick = () => { _selected = it; Refresh(); },
                 });
             }

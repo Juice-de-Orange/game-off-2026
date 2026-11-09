@@ -223,6 +223,7 @@ namespace GameOff.Travelers
         public void PrintSlip(string id, string reason, string note) =>
             desk.Print(DocumentData.CreateRuntime(DocumentType.Citation, new List<DocumentField>
             {
+                new DocumentField("title", "EVIDENCE"),
                 new DocumentField("id", id),
                 new DocumentField("date", day.Date),
                 new DocumentField("reason", reason),
@@ -235,6 +236,7 @@ namespace GameOff.Travelers
             string penalty = _citations <= freeWarnings ? $"WARNING {_citations} OF {freeWarnings}" : "PENALTY - DEDUCTED FROM WAGE";
             desk.Print(DocumentData.CreateRuntime(DocumentType.Citation, new List<DocumentField>
             {
+                new DocumentField("title", "CITATION"),
                 new DocumentField("id", $"C-{_citations:00}"),
                 new DocumentField("date", day.Date),
                 new DocumentField("reason", judgement.Reason.ToUpperInvariant()),
