@@ -73,6 +73,10 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - Neu aus Max' Antwort: **P112** Terminal nur Pass, **P113** Moral spürbar (beide offen)
 - **Als Nächstes:** Anspielen (Max), dann P112/P113; Hangar-Welle nach Entscheidung zu P106
 
+### Stand 09.11. vormittags (max)
+- **P112, P113 und Status-Display-Fix** fertig und auf `main`; nur mit Tests und Tag 1 im Browser geprüft, die Moral-Zeilen hat noch niemand gespielt
+- Offen bleiben: Anspielen von Welle 1 und 2 (Max), P106 (danach P35, P14-Rest), P94 (wartet auf Laute), P48, P51, P26-Rest, P25
+
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
 - **martin**: Startbildschirm — alles vom Spielstart bis zum Menü. Baut mit Platzhalter-Assets, Max ersetzt sie.
@@ -84,7 +88,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| max | P112, P113, Status-Display-Fix: Rebuild All und Bake | Main.unity, Menu.unity, Boot.unity, PF_Station_Graybox, PF_Exterior, PF_SkyRig, PF_DayFlow, PF_Economy, PF_Departure, PF_PauseMenu, PF_RestSpots, Dokument-Prefabs, Traffic- und Ambience-Prefabs, Data/Economy, Data/Counter | 09.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog

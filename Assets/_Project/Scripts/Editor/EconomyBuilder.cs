@@ -790,6 +790,8 @@ namespace GameOff.EditorTools
             var report = BuildShiftReportWindow(canvas);
             var confiscation = root.AddComponent<Confiscation>();
             Set(confiscation, "tuning", data.Confiscation);
+            int moraleCreated = 0;
+            Set(confiscation, "morale", LoadOrCreate<MoraleTuning>(EconomyFolder + "MoraleTuning.asset", _ => { }, ref moraleCreated));
             Set(confiscation, "window", report);
 
             var vendors = new GameObject("Vendors").transform;

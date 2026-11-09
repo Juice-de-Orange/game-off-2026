@@ -20,6 +20,8 @@ namespace GameOff.Economy
         [SerializeField] private CounterShift shift;
         [SerializeField] private ShiftReportWindow window;
         [SerializeField] private DayManager dayManager;
+        [Tooltip("P113: the mood lines after the airlock.")]
+        [SerializeField] private MoraleTuning morale;
 
         public Conduct Conduct { get; } = new Conduct();
         /// <summary>P83: what was handed in "as ordered"; the player can try to break in for it in the evening.</summary>
@@ -29,11 +31,23 @@ namespace GameOff.Economy
         public ConfiscationTuning Tuning => tuning;
 
         private static PlayerEconomy Economy => PlayerEconomy.Instance;
+        private int CurrentDay => dayManager != null ? dayManager.Day : 1;
+
+        /// <summary>P113: tonight's thought about the airlock; null if there is none.</summary>
+        public string MoraleThought() => morale != null ? morale.Thought(Conduct, CurrentDay) : null;
+
+        /// <summary>P113: what an evening guest says about today's airlock; null if there is nothing to say.</summary>
+        public string MoraleCrowdLine(float random01) => morale != null ? morale.CrowdLine(Conduct, random01) : null;
 
         private void OnEnable()
         {
             Instance = this;
-            if (shift != null) shift.DecisionMade += OnDecision;
+            if (shift != null)
+            {
+                shift.DecisionMade += OnDecision;
+                shift.DayBegun += Conduct.BeginDay;
+                shift.ShiftEnded += OnShiftEnded;
+            }
             if (Economy != null) Economy.ShiftClosing += OnShiftClosing;
         }
 
@@ -46,14 +60,26 @@ namespace GameOff.Economy
         private void OnDisable()
         {
             if (Instance == this) Instance = null;
-            if (shift != null) shift.DecisionMade -= OnDecision;
+            if (shift != null)
+            {
+                shift.DecisionMade -= OnDecision;
+                shift.DayBegun -= Conduct.BeginDay;
+                shift.ShiftEnded -= OnShiftEnded;
+            }
             if (Economy != null) Economy.ShiftClosing -= OnShiftClosing;
+        }
+
+        /// <summary>P113: a bad night follows the airlock; the line goes under the next morning's letter.</summary>
+        private void OnShiftEnded()
+        {
+            string line = morale != null ? morale.Nightmare(Conduct, CurrentDay) : null;
+            if (!string.IsNullOrEmpty(line) && Economy != null) Economy.AddLetterLine(line);
         }
 
         private void OnDecision(TravelerData traveler, Verdict chosen, Judgement judgement)
         {
-            int morale = Conduct.Judge(chosen, judgement, tuning);
-            if (morale != 0) Debug.Log($"[Conduct] airlock on {traveler.DisplayName}: morale {morale:+0;-0} → {Conduct.Morale}");
+            int change = Conduct.Judge(chosen, judgement, tuning, traveler.DisplayName);
+            if (change != 0) Debug.Log($"[Conduct] airlock on {traveler.DisplayName}: morale {change:+0;-0} → {Conduct.Morale}");
             if (chosen == Verdict.Arrest) Confiscate(traveler);
         }
 

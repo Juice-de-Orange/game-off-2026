@@ -19,10 +19,13 @@ namespace GameOff.EditorTools
         private const string DeskModel = "Assets/_Project/Art/Models/Counter/SM_Counter_Desk.fbx";
         private const string MonoFont = "Assets/_Project/Fonts/ShareTechMono SDF.asset";
         private const string TuningPath = "Assets/_Project/Data/Counter/TerminalTuning.asset";
+        private const string GlassMaterialPath = "Assets/_Project/Art/Materials/Counter/M_Counter_TerminalGlass.mat";
         // Mirrors StationGrayboxBuilder.BuildProps: SM_Counter_Desk at world (-0.7, 0, -9), yaw 0; the counter stands at (-2, 0, -9), unrotated.
         private static readonly Vector3 DeskInCounter = new Vector3(1.3f, 0f, 0f);
         // The desk's Screen slot as delivered (counter space), if the model can't be read: left of the papers, sunk into the desk top.
         private static readonly Bounds FallbackScreen = new Bounds(new Vector3(1.7f, 0.79f, 0.89f), new Vector3(0.087f, 0.064f, 0.517f));
+        // The delivered Screen slot also holds three LED squares beside the CRT, so its bounds are off-centre; the CRT itself is here (desk space).
+        private const float CrtCenterZ = 1f, CrtTextWidth = 0.27f;
         private static readonly Color Green = new Color(0.61f, 0.88f, 0.35f), Phosphor = new Color(0.02f, 0.06f, 0.03f, 0.96f);
 
         internal static void Wire(GameObject root, TextMeshProUGUI hint, List<string> log)
@@ -31,6 +34,7 @@ namespace GameOff.EditorTools
             var screen = ScreenBounds(log);
             var normal = ScreenNormal(screen);
             var crt = ClickArea(root.transform, screen, normal);
+            ScreenGlass(crt, screen);
             var screenStatus = ScreenText(crt, screen, font);
 
             var hud = hint.transform.parent;
@@ -164,15 +168,42 @@ namespace GameOff.EditorTools
             return go;
         }
 
+        /// <summary>An opaque dark pane over the glass: the delivered desk texture has "LANE 2 OPEN" baked in, which would show through the live status line.</summary>
+        private static void ScreenGlass(GameObject crt, Bounds screen)
+        {
+            var glass = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            glass.name = "Glass";
+            Object.DestroyImmediate(glass.GetComponent<Collider>());
+            glass.transform.SetParent(crt.transform, false);
+            glass.transform.localPosition = new Vector3(0f, 0f, -0.003f);
+            glass.transform.localScale = new Vector3(screen.size.z, new Vector2(screen.size.x, screen.size.y).magnitude, 1f);
+            var renderer = glass.GetComponent<MeshRenderer>();
+            renderer.sharedMaterial = GlassMaterial();
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            renderer.receiveShadows = false;
+        }
+
+        private static Material GlassMaterial()
+        {
+            var material = AssetDatabase.LoadAssetAtPath<Material>(GlassMaterialPath);
+            if (material != null) return material;
+            AssetFolders.EnsureForAsset(GlassMaterialPath);
+            material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+            material.SetColor("_BaseColor", new Color(Phosphor.r, Phosphor.g, Phosphor.b, 1f));
+            AssetDatabase.CreateAsset(material, GlassMaterialPath);
+            return material;
+        }
+
         /// <summary>The status line in green on the CRT itself (lane and clock), a few millimetres in front of the glass.</summary>
         private static TMP_Text ScreenText(GameObject crt, Bounds screen, TMP_FontAsset font)
         {
             var go = new GameObject("Status", typeof(TextMeshPro));
             go.transform.SetParent(crt.transform, false);
-            go.transform.localPosition = new Vector3(0f, 0f, -0.004f);
+            // Local +X is the desk's -Z (ClickArea): centred on the CRT, or the right end of the line runs into the desk.
+            go.transform.localPosition = new Vector3(screen.center.z - CrtCenterZ, 0f, -0.006f);
             var text = go.GetComponent<TextMeshPro>();
             float slant = new Vector2(screen.size.x, screen.size.y).magnitude;
-            text.rectTransform.sizeDelta = new Vector2(screen.size.z * 0.92f, slant * 0.8f);
+            text.rectTransform.sizeDelta = new Vector2(CrtTextWidth, slant * 0.8f);
             if (font != null) text.font = font;
             text.text = "LANE 1 CLOSED";
             text.color = Green;

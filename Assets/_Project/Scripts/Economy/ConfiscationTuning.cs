@@ -44,7 +44,7 @@ namespace GameOff.Economy
         [Tooltip("This many over the run and the officer is discharged (game over, ending in P12).")]
         public int disciplinaryLimit = 3;
 
-        [Header("Morale (hidden, read by the endings P12)")]
+        [Header("Morale (hidden: read by the endings P12 and the mood lines P113, no numbers shown)")]
         [Tooltip("Airlock on someone who had it coming (ordered or deserved).")]
         public int airlockGuilty = -1;
         [Tooltip("Airlock on someone who should have been admitted, denied or arrested.")]

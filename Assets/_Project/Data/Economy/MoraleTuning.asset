@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d56f2533fdfff4d94ed044f80c0238, type: 3}
+  m_Name: MoraleTuning
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.MoraleTuning
+  lingeringAtOrBelow: -3
+  thoughtsOrdered:
+  - The report will say procedure. The report doesn't have to remember {name}'s face.
+  - It took four seconds. I keep counting to four.
+  - They had it coming. I've said it three times now and it sounds the same every time.
+  thoughtsInnocent:
+  - '{name} was on no list. I checked afterwards. I shouldn''t have checked afterwards.'
+  - Nobody ordered that. There was nobody at that button but me.
+  - In my head {name}'s papers are still on the desk. A stamp would have done.
+  thoughtsLingering:
+  - My thumb knows where the airlock button is without looking. It shouldn't know
+    that.
+  - I stopped counting the hatch cycles. That is not the same as forgetting them.
+  - The room smells of cold metal. It doesn't, I asked.
+  nightmaresOrdered:
+  - You woke before the alarm. In the dream the hatch was open and {name} was still
+    standing there, waiting for a stamp.
+  - You slept badly. Something kept knocking on the outer hatch. It stopped when
+    you got up.
+  nightmaresInnocent:
+  - You woke up shouting. In the dream {name} passed you their papers through the hatch and asked what was wrong with them.
+  - You didn't sleep. Whenever you closed your eyes, the airlock lamp came on.
+  crowdOrdered:
+  - Heard the hatch from the hall. The whole floor hums when it goes. ...Evening,
+    officer.
+  - Long shift? You don't have to answer that. Please don't.
+  - They say it's quick, out there. They say a lot of things.
+  - I'll move, officer. No, I insist.
+  crowdInnocent:
+  - That one in the hatch today. People are saying they didn't have it coming.
+  - Someone at the bar said they knew {name}. Then you came in and they stopped talking.
+  - Don't look at me like that, officer. I got my stamp. I got it.
+  - You're the one from the window. ...Nothing. Good night.

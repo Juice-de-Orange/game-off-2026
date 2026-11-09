@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8757321250763590156}
+  - {fileID: 3216953539511935733}
   m_Father: {fileID: 1706301444695474430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6286367055518745486
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 938c9b0b17734b742aa7c4307937cccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Departure.ShuttleBoarding
-  interactable: {fileID: 5497422494168582414}
+  interactable: {fileID: 6514385372143018888}
   day: {fileID: 0}
   player: {fileID: 0}
   dialogs: {fileID: 0}
@@ -100,7 +100,7 @@ MonoBehaviour:
   day: {fileID: 0}
   player: {fileID: 0}
   dialogs: {fileID: 0}
---- !u!1 &3256774308201755501
+--- !u!1 &4630545986506702168
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,9 +108,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8757321250763590156}
-  - component: {fileID: 4694389854857015649}
-  - component: {fileID: 5497422494168582414}
+  - component: {fileID: 3216953539511935733}
+  - component: {fileID: 7897200619572245385}
+  - component: {fileID: 6514385372143018888}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -118,13 +118,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8757321250763590156
+--- !u!4 &3216953539511935733
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3256774308201755501}
+  m_GameObject: {fileID: 4630545986506702168}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.2, z: -22.6}
@@ -133,13 +133,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9014989735783628610}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4694389854857015649
+--- !u!65 &7897200619572245385
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3256774308201755501}
+  m_GameObject: {fileID: 4630545986506702168}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -154,13 +154,13 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 2.4, z: 1.6}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5497422494168582414
+--- !u!114 &6514385372143018888
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3256774308201755501}
+  m_GameObject: {fileID: 4630545986506702168}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27e9fdcbb8108a2448191ba9a6627719, type: 3}

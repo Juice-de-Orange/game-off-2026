@@ -1,6 +1,7 @@
 using System.Collections;
 using GameOff.Audio;
 using GameOff.Day;
+using GameOff.Economy;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,8 @@ namespace GameOff.Rest
 {
     /// <summary>
     /// P28: a waiting bench in the hall. Sitting there the loudspeakers can be heard (a chime and a subtitle every few seconds);
-    /// after the shift [F] lets the evening pass: the clock runs on to 23:00 within a few real seconds.
+    /// after the shift [F] lets the evening pass: the clock runs on to 23:00 within a few real seconds. P113: after the airlock a thought
+    /// comes before the first announcement.
     /// </summary>
     public class HallBench : MonoBehaviour
     {
@@ -80,6 +82,12 @@ namespace GameOff.Rest
             if (lines == null || lines.Length == 0) yield break;
             if (_next < 0) _next = Random.Range(0, lines.Length);
             yield return new WaitForSeconds(Tuning.firstAnnouncementSeconds);
+            string haunting = Confiscation.Instance != null ? Confiscation.Instance.MoraleThought() : null;
+            if (!string.IsNullOrEmpty(haunting) && !_fastForward)
+            {
+                seat.Hud.ShowLine(haunting, Tuning.subtitleSeconds);
+                yield return new WaitForSeconds(Tuning.announcementSeconds);
+            }
             while (true)
             {
                 if (!_fastForward)

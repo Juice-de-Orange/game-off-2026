@@ -8,7 +8,9 @@ namespace GameOff.Travelers
     /// <summary>
     /// P34: the counter terminal's checks, kept apart from the screen so the tests can run them. No truth of its own: the wanted list is the
     /// day's (DayRules.Wanted, incl. the recurring characters' entries) matched exactly like RuleEvaluator does it (WantedEntry.MatchesName /
-    /// MatchesId); the entry record is what the traveler's papers say, expiry against the day's date like the standing orders.
+    /// MatchesId); the entry record is what the ID card says, expiry against the day's date like the standing orders.
+    /// P112: only the ID card's name and number can be looked up, and only the card shows in the record: comparing the papers with each
+    /// other stays the player's job, or the scanner's (P16).
     /// A later check (a gadget) is one more method here plus a row on the screen.
     /// </summary>
     public static class TerminalLookup
@@ -17,27 +19,20 @@ namespace GameOff.Travelers
 
         public const string Green = "#9BE05A", Red = "#E5484D";
 
-        /// <summary>Every distinct name and ID number on the traveler's papers (names first), as the terminal offers them to click.</summary>
+        /// <summary>The name and ID number on the traveler's ID card, as the terminal offers them to click; empty without a card.</summary>
         public static List<TerminalQuery> Queries(TravelerData traveler)
         {
             var list = new List<TerminalQuery>();
-            if (traveler == null) return list;
-            Collect(traveler, TerminalQuery.Kind.Name, "name", list);
-            Collect(traveler, TerminalQuery.Kind.Id, "id", list);
+            var card = traveler != null ? traveler.Document(DocumentType.IdCard) : null;
+            if (card == null) return list;
+            Add(card.Get("name"), TerminalQuery.Kind.Name, list);
+            Add(card.Get("id"), TerminalQuery.Kind.Id, list);
             return list;
         }
 
-        private static void Collect(TravelerData traveler, TerminalQuery.Kind kind, string key, List<TerminalQuery> list)
+        private static void Add(string value, TerminalQuery.Kind kind, List<TerminalQuery> list)
         {
-            foreach (var doc in traveler.Documents)
-            {
-                string value = doc != null ? doc.Get(key) : null;
-                if (string.IsNullOrWhiteSpace(value)) continue;
-                bool known = false;
-                foreach (var q in list)
-                    if (q.Field == kind && TextMatch.Same(q.Value, value)) known = true;
-                if (!known) list.Add(new TerminalQuery(kind, value.Trim()));
-            }
+            if (!string.IsNullOrWhiteSpace(value)) list.Add(new TerminalQuery(kind, value.Trim()));
         }
 
         /// <summary>Looks one value up in today's wanted list and in the traveler's entry record.</summary>
@@ -49,13 +44,12 @@ namespace GameOff.Travelers
                     if (query.Field == TerminalQuery.Kind.Name ? w.MatchesName(query.Value) : w.MatchesId(query.Value)) wanted.Add(w);
 
             var record = new List<string>();
-            if (traveler != null)
+            var card = traveler != null ? traveler.Document(DocumentType.IdCard) : null;
+            if (card != null && TextMatch.Same(card.Get(query.Field == TerminalQuery.Kind.Name ? "name" : "id"), query.Value))
             {
                 DateTime today = default;
                 bool hasToday = day != null && DayRules.TryParseDate(day.Date, out today);
-                string key = query.Field == TerminalQuery.Kind.Name ? "name" : "id";
-                foreach (var doc in traveler.Documents)
-                    if (doc != null && TextMatch.Same(doc.Get(key), query.Value)) record.Add(RecordLine(doc, hasToday, today));
+                record.Add(RecordLine(card, hasToday, today));
             }
             return new TerminalResult(query, wanted, record);
         }

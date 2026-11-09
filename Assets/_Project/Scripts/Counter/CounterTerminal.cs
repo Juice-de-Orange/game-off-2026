@@ -12,7 +12,7 @@ namespace GameOff.Counter
 {
     /// <summary>
     /// P34: the CRT terminal in the counter desk, a second inspection tool next to the papers. Clicking the CRT (a CounterClickable with the
-    /// Terminal action) opens a green terminal window over the desk; it lists every name and ID number on the current traveler's papers,
+    /// Terminal action) opens a green terminal window over the desk; it lists the name and ID number on the current traveler's ID card (P112),
     /// and clicking one checks it against today's wanted list and the entry record (TerminalLookup). The desk ignores keys and mouse
     /// while it is open; Esc / Q / right click / CLOSE close it. A status line (lane and clock) runs on the CRT itself and in the window.
     /// </summary>
@@ -24,7 +24,7 @@ namespace GameOff.Counter
         [SerializeField] private GameObject window;
         [SerializeField] private TMP_Text output;
         [SerializeField] private TMP_Text status;
-        [Tooltip("Holds one button per name / ID number of the current traveler.")]
+        [Tooltip("Holds one button each for the name and ID number on the current traveler's ID card.")]
         [SerializeField] private RectTransform queryList;
         [Tooltip("Inactive template for those buttons (with a TMP_Text child).")]
         [SerializeField] private Button queryTemplate;
@@ -148,7 +148,7 @@ namespace GameOff.Counter
             if (screenStatus != null) screenStatus.text = text;
         }
 
-        /// <summary>One button per name / ID number on the current traveler's papers.</summary>
+        /// <summary>One button each for the name and ID number on the current traveler's ID card.</summary>
         private void ShowQueries()
         {
             StopQuery();
@@ -160,7 +160,8 @@ namespace GameOff.Counter
                 SetOutput(_lane == TerminalLookup.Lane.Over ? "SHIFT OVER. NO MORE TRAVELERS TODAY." : "NO TRAVELER AT THE WINDOW.");
                 return;
             }
-            foreach (var query in TerminalLookup.Queries(traveler))
+            var queries = TerminalLookup.Queries(traveler);
+            foreach (var query in queries)
             {
                 var row = Instantiate(queryTemplate, queryList);
                 row.gameObject.SetActive(true);
@@ -169,7 +170,7 @@ namespace GameOff.Counter
                 row.onClick.AddListener(() => RunQuery(q));
                 _rows.Add(row);
             }
-            SetOutput(Prompt);
+            SetOutput(queries.Count > 0 ? Prompt : "NO ID CARD PRESENTED. NOTHING TO QUERY.");
         }
 
         private void RunQuery(TerminalQuery query)

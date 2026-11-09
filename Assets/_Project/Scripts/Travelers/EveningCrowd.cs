@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using GameOff.Counter;
 using GameOff.Day;
+using GameOff.Economy;
 using GameOff.Player;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace GameOff.Travelers
     /// <summary>
     /// P101: whoever the player let through today stands around the station after the shift, at fixed spots, and says a line when spoken
     /// to. They do not walk there, and they are gone in the morning. At most six at a time (skinned figures are expensive in the browser).
+    /// P113: after an airlock that day they talk about that instead.
     /// </summary>
     public class EveningCrowd : MonoBehaviour
     {
@@ -66,7 +68,8 @@ namespace GameOff.Travelers
             body.radius = 0.32f;
             var talk = figure.AddComponent<Interactable>();
             talk.SetPrompt("Talk to " + traveler.DisplayName);
-            string line = TravelerDialogue.EveningLine(traveler.Species, tuning, Random.value);
+            string line = Confiscation.Instance != null ? Confiscation.Instance.MoraleCrowdLine(Random.value) : null;
+            if (string.IsNullOrEmpty(line)) line = TravelerDialogue.EveningLine(traveler.Species, tuning, Random.value);
             talk.OnInteract.AddListener(() => day.UI.ShowHint($"{traveler.DisplayName}: \"{line}\"", 5f));
             return figure;
         }
