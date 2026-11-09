@@ -61,7 +61,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 ### Stand 09.11. (max)
 - **Nachtlauf (Claude für max, 08./09.11.):** P69, P12, P16, P62, P11, P99, P63, P77, P80, P83, P50, P95, P97, P98, P100–P105, P107, P108 und das Kiosk-Gitter fertig; P19 vorbereitet. Bericht: `docs/team/reports/2026-11-09_nachtlauf_max.md`
 - **Martin, Nacht auf 09.11.:** P85 ganz, P87, Welle 1 (P28, P29-Rest, P32, P33-Rest, P34), Welle 2 (P109 Sperrstunde, P110 Zoll, P111 Fernrohr-Diorama). Nur mit Tests geprüft, noch nicht angespielt
-- **Live:** `4f65648` (Stand Nachtlauf). `main` ist weiter: P85-Rest, P87, Welle 1 und 2 sind **noch nicht live**
+- **Live:** `f7a90ca` mit P85-Rest, P87, Welle 1 und 2 und der Fernrohr-Straße (09.11.). Im Browser nur Tag 1 geprüft, Rest wartet aufs Anspielen
 - **Fragen an max offen:** Terminal und Moral, Welle 1 anspielen, Welle 2 anspielen (`docs/team/questions/2026-11-09_martin-an-max_*`)
 - **Lieferungen noch nicht auf `main`:** `assets/P106-au-en-hangar` (Shuttle, Paket noch offen). Die Straße fürs Fernrohr (P111) ist eingebaut.
 - GitHub-Issues offen: #16 (wartet auf die Laute, P94), #17 (Max prüft das Hangar-Flackern), #25 (vorerst nicht)

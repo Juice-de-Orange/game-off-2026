@@ -2,7 +2,7 @@
 
 Stand am Ende des Laufs: siehe Abschnitt „Live und Prüfung“. Alles ist auf `main`, die Docs sind aktuell.
 
-> **Nachtrag 09.11.:** Martin hat nach dem Nachtlauf P85-Rest, P87, P28, P29-Rest, P32, P33-Rest, P34, P109, P110 und P111 gebaut. Was unten als offen steht, ist damit teilweise erledigt; `PAKETE.md` und `BOARD.md` zeigen den aktuellen Stand. Live ist weiterhin `4f65648`, seine Pakete sind noch nicht eingespielt.
+> **Nachtrag 09.11.:** Martin hat nach dem Nachtlauf P85-Rest, P87, P28, P29-Rest, P32, P33-Rest, P34, P109, P110 und P111 gebaut. Was unten als offen steht, ist damit teilweise erledigt; `PAKETE.md` und `BOARD.md` zeigen den aktuellen Stand. Seit dem 09.11. früh ist `f7a90ca` live, inklusive seiner Pakete.
 
 ## Das Wichtigste in Kürze
 - **Fertig:** Muss-Pakete P69, P12, P16, P11, P99. Dazu P62, P63, P80, P77, P85 (zum Teil), P97, P98, P100, P101, P102, P103, P104, P105, P95, P107, P108, P29 (zum Teil), P33 (zum Teil), P26 (zum Teil), P50, P83, P19-Vorbereitung, Kiosk-Gitter (#21).
