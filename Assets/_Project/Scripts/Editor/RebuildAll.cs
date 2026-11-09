@@ -31,6 +31,7 @@ namespace GameOff.EditorTools
             DayFlowBuilder.BuildIntoMainFromMenu();
             EconomyBuilder.BuildIntoMainFromMenu();
             DepartureBuilder.BuildIntoMainFromMenu();
+            RestSpotBuilder.BuildIntoMainFromMenu(); // P28: needs the station, sky, day flow and economy
             TrafficBuilder.BuildIntoMainFromMenu();
             AmbienceBuilder.BuildIntoMainFromMenu();
             MenuSceneBuilder.BuildFromMenu();

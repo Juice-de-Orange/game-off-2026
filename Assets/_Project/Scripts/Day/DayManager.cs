@@ -56,6 +56,8 @@ namespace GameOff.Day
         public event Action<int> DayEnded;
         /// <summary>After the last day.</summary>
         public event Action RunFinished;
+        /// <summary>P29: the morning letter as shown (title, body incl. the family lines), for the copy lying on the table in 103.</summary>
+        public event Action<string, string> LetterWritten;
 
         /// <summary>Runs after the player chose to sleep, before the fade (P10 settlement). Gets the day that ends.</summary>
         public Func<int, IEnumerator> NightStep { get; set; }
@@ -78,6 +80,8 @@ namespace GameOff.Day
         public Phase CurrentPhase => _phase;
         /// <summary>Dialogs and hints (P87: a character's question at the counter).</summary>
         public DayFlowUI UI => ui;
+        /// <summary>P28: real seconds until the evening clock reaches 23:00 (0 outside the evening).</summary>
+        public float EveningSecondsLeft => _phase == Phase.Evening ? Mathf.Max(0f, eveningClockSeconds - (Time.time - _eveningSince)) : 0f;
 
         private void OnEnable()
         {
@@ -110,6 +114,13 @@ namespace GameOff.Day
             GameClock.Set(GameClock.Compute(_phase, shift.Progress, evening));
         }
 
+        /// <summary>P28: waiting on a bench in the evening runs the clock on by this many seconds (never past 23:00).</summary>
+        public void SkipEvening(float seconds)
+        {
+            if (_phase != Phase.Evening || seconds <= 0f) return;
+            _eveningSince = Mathf.Max(_eveningSince - seconds, Time.time - eveningClockSeconds);
+        }
+
         private void ApplyDevTools()
         {
             if (bedDebugView != null) bedDebugView.SetActive(DevTools);
@@ -134,6 +145,7 @@ namespace GameOff.Day
             if (string.IsNullOrEmpty(letter)) letter = entry.LetterFor(FamilyInTrouble != null && FamilyInTrouble());
             string home = day > 1 && LetterAddendum != null ? LetterAddendum() : "";
             if (!string.IsNullOrWhiteSpace(home)) letter += "\n\n" + home;
+            LetterWritten?.Invoke(entry.letterTitle, letter);
             ui.ShowLetter(entry.letterTitle, letter, entry.newToday, OnLetterClosed);
         }
 
