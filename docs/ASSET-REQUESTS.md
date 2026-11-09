@@ -9874,3 +9874,159 @@ refs: []
 placeholder: Box 2.0 x 0.2 x 3.0 m, Pivot bottom_center, Material-Slots [Wall, Glass]
 feedback: []
 ```
+
+### SFX_PA_Murmur_01.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_01.ogg
+package: P115
+scene: Counter
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Stationslautsprecher: kurzes, verrauschtes synthetisches Murmeln ohne verständliche Wörter, 1,5 bis 2,5 s, gedämpfter Bandpass, Variante 1 von 6. Keine Stimme, keine Wörter.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_PA_Murmur_02.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_02.ogg
+package: P115
+scene: Counter
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Stationslautsprecher: kurzes, verrauschtes synthetisches Murmeln ohne verständliche Wörter, 1,5 bis 2,5 s, gedämpfter Bandpass, Variante 2 von 6. Keine Stimme, keine Wörter.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_PA_Murmur_03.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_03.ogg
+package: P115
+scene: Counter
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Stationslautsprecher: kurzes, verrauschtes synthetisches Murmeln ohne verständliche Wörter, 1,5 bis 2,5 s, gedämpfter Bandpass, Variante 3 von 6. Keine Stimme, keine Wörter.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_PA_Murmur_04.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_04.ogg
+package: P115
+scene: Counter
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Stationslautsprecher: kurzes, verrauschtes synthetisches Murmeln ohne verständliche Wörter, 1,5 bis 2,5 s, gedämpfter Bandpass, Variante 4 von 6. Keine Stimme, keine Wörter.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_PA_Murmur_05.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_05.ogg
+package: P115
+scene: Counter
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Stationslautsprecher: kurzes, verrauschtes synthetisches Murmeln ohne verständliche Wörter, 1,5 bis 2,5 s, gedämpfter Bandpass, Variante 5 von 6. Keine Stimme, keine Wörter.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_PA_Murmur_06.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_06.ogg
+package: P115
+scene: Counter
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Stationslautsprecher: kurzes, verrauschtes synthetisches Murmeln ohne verständliche Wörter, 1,5 bis 2,5 s, gedämpfter Bandpass, Variante 6 von 6. Keine Stimme, keine Wörter.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```

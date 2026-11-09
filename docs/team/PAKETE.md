@@ -506,7 +506,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (martin, 09.11., Agent): Bänke A–C in der Halle (sitzen, Durchsage alle 14 s, abends [F] bis 23 Uhr warten – wirkt erst mit P109), Barhocker 1–3 öffnen das Barkeeper-Gespräch (Hocker 4 hat der Dealer), Bullauge in 103 mit Kamerafahrt zum Heimatplaneten und Gedanken je Familienzustand; Q/Esc steht auf. `Scripts/Rest/`, GameOff/Build Rest Spots into Main (in Rebuild All), Texte in `Data/Rest/RestSpotTuning.asset`, 10 Tests. Nur Tests + Builder geprüft, nicht angespielt.
 
 ### P29 — Münzfernrohr & sichtbares Familienschicksal
-- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf); Rest (Foto, Brief) fertig (martin, 09.11.)
+- Größe: M · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf; Rest martin, 09.11.)
 - Braucht: P24, P10 (Familienzustand) · Assets: `SM_Prop_CoinTelescope`, `UI_Telescope_Overlay`, `UI_Family_Photo` (bestellt)
 - Ziel: Die Familie ist in der Welt sichtbar, nicht nur in Briefen.
 - Festgelegt (Max, 08.11.): Fernrohr auf der Plattform wirklich nutzbar: [E] zieht 1 Credit ab, 30 s Blick mit Zoom und Schwenken. Heimatplanet mit erkennbaren Kontinenten und Städten (Karten neu bestellt).
@@ -551,7 +551,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (martin, 09.11., Agent): [E] öffnet die Türen, „As ordered“-Waren liegen als Modelle in 6 Fächern (eigenes Modell → nach Label → Beweisbeutel), schließen ab 3 m/neuer Tag; Aufbrechen (P83) erst bei offenen Türen. `EvidenceLockerDisplay`, `LockerBoardBuilder`, `Data/Economy/EvidenceLockerTuning.asset`, Tests. Nicht angespielt.
 
 ### P33 — Pinnwand, Lautsprecher & Warnlampe
-- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf); Rest (Pinnwand-Nahansicht) fertig (martin, 09.11.)
+- Größe: M · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf; Rest martin, 09.11.)
 - Braucht: P07, P09 · Assets: `SM_Counter_Board`, `SM_Counter_Speaker`, `SM_Counter_WarningLamp` (da)
 - Ziel: Der unsichtbare Vorgesetzte und die Regeln sind im Raum präsent.
 - Hinweis (max, 05.11.): Zettel im Sitzen und Durchsagen macht schon P41; hier bleiben Nahansicht im Stehen, Fotos/Memos und die Lampen.
@@ -793,7 +793,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Boot lädt direkt Main, das Menü liegt darüber (`FrontEnd`, Canvas in Main), `Menu.unity` ist gelöscht. Das Menü führt die Kamera des Spielers (wie der Abflug), Nebel und HUD sind solange aus. START fliegt auf einer Kurve westlich der Station zum Bullauge von 103, dann Blende und der normale Tagesstart. Zurück ins Menü lädt Main neu. Im Browser geprüft: Menü, Optionen, Flug, Tag 1, Pause → Hauptmenü und zweiter Start.
 
 ### P49 — Live-Version auf kestrel9.maxlworks.com + Dev-Schalter im Menü
-- Größe: M · Priorität: Soll · Status: wartet auf Unity-Lizenz + Secrets (max)
+- Größe: M · Priorität: Soll · Status: fertig (max, 09.11.): Hand-Deploy bleibt, der automatische Nacht-Deploy entfällt (Entscheidung Max)
 - Braucht: P02, P43 · Folgt auf: P43
 - Ziel: Der aktuelle Stand ist jederzeit öffentlich spielbar und aktualisiert sich nachts von selbst; Dev-Werkzeuge lassen sich im Menü schalten.
 - Enthalten: Reiter DEV im Optionsmenü (`GameSettings.DevTools`, Standard: Editor an, Build aus); Build-Skript `WebBuild`, eigene Web-Vorlage; Docker-Container auf Geoffrey hinter nginx; GitHub-Actions-Workflow (nachts + per Knopf, baut nur bei geänderten Spieldateien), Rollback; `docs/DEPLOY.md`
@@ -814,7 +814,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (Nachtlauf, 08.11.): Schilder über den Türen in drei Arten: Neon, Schablone, Rot für STAFF ONLY und CUSTOMS (`BuildDoorSigns`). Diner und Bar haben schon eigene.
 
 ### P51 — Zimmer 103 wohnlicher
-- Größe: S · Priorität: Kann · Status: wartet auf Lieferung `SM_Station_Wall_Porthole_Large_2x3` (bestellt 09.11.) · Zuständig: max
+- Größe: S · Priorität: Kann · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: M014 (Katzenbild)
 - Ziel: Das Zimmer des Spielers fühlt sich persönlich an.
 - Enthalten: Bullauge größer (heute Ø 0,6 m, `SM_Station_Wall_Porthole_2x3`, Zimmer 103); Katzenbild etwas höher (`SM_Motel_CatPainting`, heute y 1,3 m, `StationGrayboxBuilder.BuildProps`); neues Gemälde vom Hund **Elo** (Bestellung erst, wenn das Paket dran ist; dann fragt Claude Max nach einem Foto als Vorlage, wie beim Katzenbild)
@@ -1788,9 +1788,17 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Nach einer Schleuse am selben Abend: Gedanke am Bullauge (vor dem Familiengedanken) und auf der Bank (vor der ersten Durchsage), Abendgäste reden darüber. Am nächsten Morgen eine Albtraum-Zeile unter dem Brief. Bei Unschuldigen härtere Zeilen, mit dem Namen der Person. An späteren Tagen nur noch Gedanken, solange `Conduct.Morale` ≤ −3. Ohne Schleuse nichts davon. Texte: `Data/Economy/MoraleTuning.asset`. Nur mit Tests geprüft, angespielt noch nicht.
 
 ### P114 — Menü-Bildrate
-- Größe: S · Priorität: Kann · Status: offen · Zuständig: —
+- Größe: S · Priorität: Kann · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P48
 - Ziel: Das Menü läuft auf schwachen Geräten wieder so flüssig wie vor P48 (CPU ×4: 24 fps, seit P48: 15 fps).
 - Enthalten (Vorschlag): Innenräume, die von außen nicht zu sehen sind, im Menü abschalten (der Hangar bleibt), beim Start zurücknehmen.
 - Nicht enthalten: Änderungen am Flug oder am Spiel selbst.
 - Abnahme: `tools/measure-webgl.mjs` mit `K9_CPU=4`: Menü mindestens 24 fps; Tag 1 unverändert.
+
+### P115 — Durchsagen mit Murmel-Lauten
+- Größe: S · Priorität: Soll · Status: wartet auf Lieferung `SFX_PA_Murmur_01–06` (bestellt 09.11.) · Zuständig: —
+- Braucht: — · Folgt auf: P41, P94
+- Ziel: Durchsagen klingen nach Lautsprecher, ohne echte Stimmen (Max, 09.11.).
+- Enthalten: Zufälliger Murmel-Laut statt des Platzhalter-Tons in `Announcer` und auf den Bänken (`HallBench`), Untertitel bleiben.
+- Nicht enthalten: eingesprochene Sätze.
+- Abnahme: Keine zwei Durchsagen hintereinander klingen gleich; Download-Zuwachs gemessen.

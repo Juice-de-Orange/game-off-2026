@@ -89,6 +89,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
+| max | P51, P114, #17: Rebuild All und Bake | Main.unity, Boot.unity, generierte Prefabs, Station | 09.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog
@@ -96,10 +97,10 @@ Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freig
 die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 
 ### Muss (ohne das kein Spiel)
-- [ ] **Vor der Abgabe:** `showDevTools` am DayManager (`PF_DayFlow` in Main) ausschalten und den Reiter DEV im `MenuSceneBuilder` entfernen (P49) – sonst rote Hitboxen und Dev-Knöpfe im Spiel
+- [x] Dev-Werkzeuge: bleiben als Schalter in den Optionen, im Build standardmäßig aus (Max, 09.11.)
 
 ### Soll (macht es gut)
-- [ ] Durchsagen einsprechen (P41 spielt bisher einen Platzhalter-Ton; Clips in `Data/Counter/Announcements.asset`, Texte dort). Die Pipeline macht keine Voicelines, ElevenLabs-Lizenz noch offen
+- [ ] Durchsagen: synthetische Murmel-Laute statt echter Stimmen (Max, 09.11.), bestellt als `SFX_PA_Murmur_01–06`; Einbau, wenn geliefert (P115)
 - [ ] 
 
 ### Kann (wenn Zeit bleibt)
