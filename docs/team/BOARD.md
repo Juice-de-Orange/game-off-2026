@@ -79,7 +79,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - **P19:** Entwurf auf itch.io (`juice-de-orange.itch.io/game-off-2026`) mit Cover und ZIP, läuft in Chrome. Es fehlen Firefox-Test, Genre und Tags, Public und die Jam-Einreichung.
 - **Pipeline (M026, 09.11.):** Offen bestellt sind Laute (P94), Floppy-Player mit Song (P117), Spind ohne Nummer, Schrank-Innenleben (P118). P115 und die Hangarwand sind eingebaut.
 - **#17 Hangar-Streifen (09.11.):** Ursache war nicht die Mittelrippe, sondern die Außenhülle: Die Rückseiten-Rippen von `SM_Ext_HullPanel_4x4_Ribbed` lagen exakt in der Ebene der Innenwand. Die Hangar-Hülle steht jetzt 0,1 m weiter außen (`HullOffsetOf`). Im Testbild sind die Streifen weg, Max bestätigt im Spiel. **Live: `e22b022`** mit P115 und der neuen Hangarwand (09.11. abends).
-- **Pakete P119–P127 (09.11. abends):** Alles Offene hat jetzt ein Paket, auch die Issues #17, #25, #29. Bestellt sind noch Laute (P94), Spind (P120) und Floppy-Laute (P127, M027). Fertig: P117, P118, P122, P124–P126; P119 wartet auf Max' Blick in den Hangar, P121 auf seine Entscheidung. **itch.io wird erst am Ende wieder hochgeladen** (Max).
+- **Pakete P119–P127 (09.11. abends):** Alles Offene hat jetzt ein Paket, auch die Issues #17, #25, #29. Bestellt sind noch Laute (P94) und Floppy-Laute (P127, M027); der Spind (P120) ist eingebaut. Fertig: P117, P118, P122, P124–P126; P119 wartet auf Max' Blick in den Hangar, P121 auf seine Entscheidung. **itch.io wird erst am Ende wieder hochgeladen** (Max).
 - **Als Nächstes:** Max spielt Welle 1, 2 und die Hangar-Welle an; Rückmeldungen werden Fixes. Martins zwei Testfragen sind noch offen.
 - **P48** fertig: Das Menü liegt in Main (`FrontEnd`), `Menu.unity` gibt es nicht mehr; Start fliegt zum Bullauge von Zimmer 103.
 - **P106, P14-Rest, P35, P26-Rest** fertig und **live: `c9d6da7`** (09.11. nachmittags). Im Browser gesehen: Schott, Kabine, Abflug, Morgen-Gruppe, Schalter. Dazu mit einer lokalen Testversion: Kiste melden, Verhaften, Bank-Gedanke, Albtraum-Zeile, Icons im Kiosk. Nicht im Browser gesehen: Abendgäste (brauchen Durchgelassene), Titel des Zettels. Neu: Icons in Inventar, Handel und Schichtbericht; die Kiste hat ein Dialogfeld mit drei Knöpfen. Offen bleiben: Anspielen von Welle 1, 2 und der Hangar-Welle (Max), P94 (wartet auf Laute), P51 (Bullauge bestellt), P48 (Polish-Woche), #17 prüfen
@@ -97,7 +97,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| max | P120 Spind: Lieferung einbauen, Rebuild All und Bake | Main.unity, Boot.unity, generierte Prefabs | 09.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog

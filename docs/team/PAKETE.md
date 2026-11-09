@@ -1807,7 +1807,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Schalter, Sperrstunde und Bänke spielen über `AudioManager.PlayAnnouncement` einen von sechs Murmel-Lauten, nie denselben zweimal hintereinander; ohne Lieferung bleibt der Gong. Der Download wächst um 0,26 MB (19,26 auf 19,53 MB, inklusive der neuen Hangarwand). Im Browser spielen alle sechs Clips, auch beim ersten Mal. Untertitel bleiben.
 
 ### P116 — Bugs aus dem Anspielen, Runde 2
-- Größe: S · Priorität: Soll · Status: fertig (max, 09.11.); Spind-Nummer weiter in P120 · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P26, P66, P28
 - Ziel: Die Reports #29 bis #32 beheben (Max, 09.11.).
 - Enthalten: Bestechungszettel nicht mehr unter den Stempeln (#32), Putzroboter fährt eine Runde durch die Halle (#31), Pflanze vor dem Spind weg, Nummer aus der Spind-Textur per Rework (#29), Zettel im Zimmer liegt auf dem Tisch (#30).
@@ -1842,11 +1842,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Fenster-Wand und Boden aus der Lieferung eingebaut. Nur noch offen, dass Max durch den Hangar läuft.
 
 ### P120 — Spinde ohne eingebackene Nummer
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P116
 - Ziel: Nicht jeder Spind trägt die Nummer 103 (#29).
 - Enthalten: Rework einbauen (Rebuild All, Bake). Das Foto am Spind in 103 bleibt.
 - Abnahme: Kein Spind außerhalb von 103 zeigt die 103; #29 ist geschlossen.
+- Ergebnis (09.11.): Rework eingebaut: Die Textur trägt keine Nummer mehr, das Foto am Spind in 103 ist noch da.
 
 ### P121 — Bugreport mit Bild
 - Größe: M · Priorität: Kann · Status: offen, Max muss entscheiden, wo die Bilder liegen · Zuständig: —
