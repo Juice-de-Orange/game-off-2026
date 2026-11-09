@@ -97,6 +97,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
+| max | P117, P118, P119, P122: Lieferungen einbauen, Rebuild All und Bake | Main.unity, Boot.unity, generierte Prefabs, Data/Audio | 09.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog

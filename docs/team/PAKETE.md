@@ -1815,7 +1815,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Bestechungszettel und Umschlag liegen hinter den Stempeln (#32). Putzroboter fährt eine Runde durch die Halle, abseits von Bänken und Abendgästen (#31). Pflanze in 103 steht nicht mehr vor dem Spind, die Nummer 103 geht per `rework` an `SM_Motel_Locker` (#29). Zettel liegt jetzt auf der Tischplatte (#30). OcclusionCheck: ignoriert Trigger und steigt nicht mehr auf Möbel; prüft deshalb 139 statt 167 Punkte.
 
 ### P117 — Floppy-Player
-- Größe: M · Priorität: Soll · Status: gebaut, wartet auf Lieferung `SM_Motel_FloppyPlayer`, `SM_Item_FloppyDisk`, `MUS_Floppy_01` (max, 09.11.) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 09.11.): Lieferung wird eingebaut · Zuständig: max
 - Braucht: Lieferungen `SM_Motel_FloppyPlayer`, `SM_Item_FloppyDisk`, `MUS_Floppy_01` · Folgt auf: P28
 - Ziel: Musik im Spiel kommt über Disketten; der Fernseher in 103 wird zum Floppy-Player (#30, Max 09.11.).
 - Enthalten: Spieler anstelle des TVs, eine Start-Diskette, [E] legt sie ein oder nimmt sie heraus, Musik nur im Zimmer hörbar.
@@ -1824,14 +1824,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): `FloppyPlayer` in `RestSpotBuilder`: [E] an der Stelle des Fernsehers legt die Diskette ein oder nimmt sie heraus, Musik 3D im Zimmer über die Music-Gruppe. Bis zur Lieferung steht der Fernseher, und es erscheint „nothing on this disk yet“. Nach der Lieferung: Delivery-Integrator und Rebuild All, dann ist es automatisch drin.
 
 ### P118 — Asservatenschrank: echtes Innenleben
-- Größe: S · Priorität: Kann · Status: wartet auf Lieferung `SM_Counter_LockerInterior`, `SM_Item_EvidenceBag` (bestellt 09.11.) · Zuständig: —
+- Größe: S · Priorität: Kann · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P32
 - Ziel: Die letzten grauen Platzhalter im Spiel ablösen (GameOff/List Placeholders).
 - Enthalten: Innenleben des Schranks und Beweisbeutel statt der Graybox-Formen in `LockerBoardBuilder`.
 - Abnahme: `GameOff/List Placeholders` listet den Schrank nicht mehr.
 
 ### P119 — Hangar: Nachlieferung und Abnahme von #17
-- Größe: S · Priorität: Muss · Status: offen, wartet auf Max' Freigabe von `assets/P22-hangar-viewport-floor-rework` · Zuständig: —
+- Größe: S · Priorität: Muss · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P22, P90
 - Ziel: Den Hangar-Fehler #17 endgültig abschließen.
 - Enthalten: Lieferung `SM_Hangar_Wall_Viewport` und `SM_Hangar_Floor_4x4` einbauen (Rebuild All, Bake). Max läuft durch den Hangar und bestätigt, dass Streifen und Flackern weg sind (Ursache war die Außenhülle, Fix in `e22b022`).
@@ -1854,7 +1854,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Report mit Haken erzeugt ein Issue mit sichtbarem Bild, ohne Haken wird kein Bild übertragen; Backend-Tests grün; #25 ist geschlossen.
 
 ### P122 — Letzte Graybox-Reste
-- Größe: S · Priorität: Kann · Status: offen · Zuständig: —
+- Größe: S · Priorität: Kann · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: P118 · Folgt auf: P60
 - Ziel: `GameOff/List Placeholders` ist leer.
 - Enthalten: Türgriffe des Asservatenschranks und die Aufhängungen der Wegweiser (`Wayfinding_*/Hanger`) bekommen ein vorhandenes Metall-Material im Builder. Keine neuen Assets.
