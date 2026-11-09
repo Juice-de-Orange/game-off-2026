@@ -10119,7 +10119,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_LockerInterior.fbx
 package: P118
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [1.0, 0.48, 1.8]
@@ -10146,7 +10146,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Item_EvidenceBag.fbx
 package: P118
 scene: Schalter
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0.16, 0.05, 0.22]
