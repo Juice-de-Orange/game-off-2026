@@ -129,13 +129,18 @@ namespace GameOff.Day
                 devRect.sizeDelta = _confirmSize;
                 devRect.anchoredPosition = new Vector2(-140f, y);
                 backRect.anchoredPosition = new Vector2(140f, backRect.anchoredPosition.y);
-                return;
             }
-            var narrow = new Vector2(170f, _confirmSize.y);
-            confirmRect.sizeDelta = devRect.sizeDelta = backRect.sizeDelta = narrow;
-            confirmRect.anchoredPosition = new Vector2(-190f, y);
-            devRect.anchoredPosition = new Vector2(0f, y);
-            backRect.anchoredPosition = new Vector2(190f, backRect.anchoredPosition.y);
+            else
+            {
+                var narrow = new Vector2(150f, _confirmSize.y);
+                confirmRect.sizeDelta = devRect.sizeDelta = backRect.sizeDelta = narrow;
+                confirmRect.anchoredPosition = new Vector2(-165f, y);
+                devRect.anchoredPosition = new Vector2(0f, y);
+                backRect.anchoredPosition = new Vector2(165f, backRect.anchoredPosition.y);
+            }
+            // The button keeps the tint of its old colours until its state changes; switching it off and on applies the new ones.
+            dialogDev.gameObject.SetActive(false);
+            dialogDev.gameObject.SetActive(true);
         }
 
         public void ShowDialog(string title, string body, string confirmLabel, Action confirm, Action dev, Action cancel,
