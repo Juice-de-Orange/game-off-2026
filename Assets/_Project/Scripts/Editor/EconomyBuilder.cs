@@ -916,6 +916,14 @@ namespace GameOff.EditorTools
             var eye = new GameObject("Eye").transform;
             eye.SetParent(go.transform, false);
             eye.position = new Vector3(0f, 1.3f, 11.6f); // outside the glass, so no window frames in the view
+            // P111: black under the eyepiece frame for the focus blink between planet and home street.
+            var blink = new GameObject("TelescopeBlink", typeof(RectTransform), typeof(Image));
+            blink.transform.SetParent(canvas, false);
+            Stretch(blink.GetComponent<RectTransform>());
+            var blinkImage = blink.GetComponent<Image>();
+            blinkImage.color = new Color(0f, 0f, 0f, 0f);
+            blinkImage.raycastTarget = false;
+            blink.SetActive(false);
             var overlay = new GameObject("TelescopeOverlay", typeof(RectTransform), typeof(Image));
             overlay.transform.SetParent(canvas, false);
             Stretch(overlay.GetComponent<RectTransform>());
@@ -932,6 +940,13 @@ namespace GameOff.EditorTools
             Set(telescope, "eye", eye);
             Set(telescope, "overlay", overlay);
             Set(telescope, "countdown", count);
+            var homeTuning = HomeDioramaBuilder.EnsureTuning(); // P111: the home street at full zoom
+            var home = HomeDioramaBuilder.Build(go.transform, homeTuning);
+            Debug.Log("[EconomyBuilder] " + home.Log);
+            Set(telescope, "homeTuning", homeTuning);
+            Set(telescope, "homeDiorama", home.Root);
+            Set(telescope, "homeEye", home.Eye);
+            Set(telescope, "blink", blinkImage);
             go.AddComponent<HomeLights>();
         }
 
@@ -1321,6 +1336,7 @@ namespace GameOff.EditorTools
                 Set(t, "playerCamera", player != null ? player.GetComponentInChildren<Camera>(true) : null);
                 Set(t, "homePlanet", planetT);
                 Record(t);
+                foreach (var w in t.GetComponentsInChildren<HomeWindows>(true)) { Set(w, "day", day); Record(w); } // P111
             }
             foreach (var h in instance.GetComponentsInChildren<HomeLights>(true))
             {
