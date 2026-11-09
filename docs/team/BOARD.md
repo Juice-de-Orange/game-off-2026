@@ -74,7 +74,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - **Als Nächstes:** Anspielen (Max), dann P112/P113; Hangar-Welle nach Entscheidung zu P106
 
 ### Stand 09.11. vormittags (max)
-- **P112, P113 und Status-Display-Fix** fertig und auf `main`; nur mit Tests und Tag 1 im Browser geprüft, die Moral-Zeilen hat noch niemand gespielt
+- **P112, P113 und Status-Display-Fix** fertig, **live: `602d9dc`**. Im Browser gesehen: Statusanzeige lesbar, Terminal mit nur zwei Knöpfen, Abfrage, sechs Schleusen, Gedanke am Bullauge. Nicht im Browser gesehen: Bank, Abendgäste, Albtraum-Zeile am Morgen (nur durch Tests und Code-Prüfung gedeckt)
 - Offen bleiben: Anspielen von Welle 1 und 2 (Max), P106 (danach P35, P14-Rest), P94 (wartet auf Laute), P48, P51, P26-Rest, P25
 
 ## Aufgabenteilung
