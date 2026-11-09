@@ -9822,7 +9822,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Home/SM_Home_Street.fbx
 package: P111
 scene: Fernrohr (Diorama der Heimatstadt, nur durchs Münzfernrohr sichtbar)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-16
 size_m: [12.0, 6.0, 8.0]
