@@ -46,6 +46,7 @@ namespace GameOff.Shops
             if (debugView != null) debugView.SetActive(day == null || day.DevTools);
         }
 
+        // P109: after 23:00 (DayManager.IsCurfew) he still talks and repeats a rumour; only GIVE is closed (see Talk).
         private bool IsOpen => day == null || day.CurrentPhase == DayManager.Phase.Evening;
 
         private void OnInteract()
@@ -81,6 +82,13 @@ namespace GameOff.Shops
             }
             int have = BarWishRules.Matching(Economy.Inventory, wish.tag);
             bool enough = have >= wish.amount;
+            if (day.IsCurfew)
+            {
+                // P109: after 23:00 he still talks, but takes nothing any more
+                dialogs.ShowDialog("THE LAST ORBIT", $"{day.CurfewClosedText}\nToday I wanted: {wish.Text}. Too late now.", null, null,
+                    day.DevTools && enough ? Give : null, Resume, "Dev_force_Give");
+                return;
+            }
             string body = $"Today I'd like: {wish.Text}.\nYou have: {have}.\n\n" +
                           (enough ? "Hand them over and I'll tell you what I heard." : "Bring me what I asked for, and I'll tell you something worth knowing.");
             dialogs.ShowDialog("THE LAST ORBIT", body, enough ? "GIVE" : null, enough ? Give : null, null, Resume);

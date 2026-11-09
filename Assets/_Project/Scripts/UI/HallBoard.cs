@@ -78,7 +78,7 @@ namespace GameOff.UI
             {
                 case DayManager.Phase.Morning: status.AppendLine("COUNTER OPENS SOON"); break;
                 case DayManager.Phase.Shift: status.AppendLine("SHIFT IN PROGRESS"); break;
-                case DayManager.Phase.Evening: status.AppendLine("EVENING · SHOPS OPEN"); break;
+                case DayManager.Phase.Evening: status.AppendLine(day.IsCurfew ? "NIGHT · CURFEW" : "EVENING · SHOPS OPEN"); break; // P109
                 default: status.AppendLine("NIGHT"); break;
             }
             if (day.CurrentPhase == DayManager.Phase.Morning || day.CurrentPhase == DayManager.Phase.Shift)

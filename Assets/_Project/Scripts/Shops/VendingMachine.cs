@@ -24,7 +24,7 @@ namespace GameOff.Shops
 
         private static PlayerEconomy Economy => PlayerEconomy.Instance;
         private ItemData Item => stock != null && stock.Entries.Count > 0 ? stock.Entries[0].item : null;
-        private bool IsOpen => day == null || day.CurrentPhase == DayManager.Phase.Evening;
+        private bool IsOpen => day == null || day.TradingOpen;
 
         private void OnEnable()
         {
@@ -61,7 +61,8 @@ namespace GameOff.Shops
             if (!IsOpen && dialogs != null && player != null)
             {
                 player.SetControlEnabled(false);
-                dialogs.ShowDialog("Out of order", "Out of order until the evening.", null, null,
+                bool curfew = day != null && day.IsCurfew;
+                dialogs.ShowDialog(curfew ? "Closed" : "Out of order", curfew ? day.CurfewClosedText : "Out of order until the evening.", null, null,
                     day.DevTools ? Buy : null, () => player.SetControlEnabled(true), "Dev_force_Buy");
                 return;
             }

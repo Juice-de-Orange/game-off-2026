@@ -43,7 +43,7 @@ namespace GameOff.Shops
             if (debugView != null) debugView.SetActive(day == null || day.DevTools);
         }
 
-        private bool IsOpen => day == null || day.CurrentPhase == DayManager.Phase.Evening;
+        private bool IsOpen => day == null || day.TradingOpen;
 
         private void OnInteract()
         {
@@ -53,7 +53,9 @@ namespace GameOff.Shops
                 return;
             }
             player.SetControlEnabled(false);
-            dialogs.ShowDialog("The drone is loading", "The next drone leaves after your shift.", null, null,
+            bool curfew = day.IsCurfew; // P109
+            dialogs.ShowDialog(curfew ? "No more drones tonight" : "The drone is loading",
+                curfew ? day.CurfewClosedText : "The next drone leaves after your shift.", null, null,
                 day.DevTools ? OpenWindow : null, () => player.SetControlEnabled(true), "Dev_force_Send");
         }
 
