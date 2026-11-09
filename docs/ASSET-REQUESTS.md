@@ -1050,7 +1050,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx
 package: P04
 scene: Motel
-status: rework
+status: Vorschau
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.6, 0.5, 1.9]
