@@ -8,6 +8,8 @@ namespace GameOff.Counter
         Arrest,
         Airlock,
         UvLamp,
-        Scanner
+        Scanner,
+        /// <summary>P34: the CRT terminal in the desk (wanted list and entry record).</summary>
+        Terminal
     }
 }

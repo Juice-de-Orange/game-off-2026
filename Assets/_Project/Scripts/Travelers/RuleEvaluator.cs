@@ -72,7 +72,7 @@ namespace GameOff.Travelers
                 foreach (var doc in traveler.Documents)
                 {
                     if (doc == null) continue;
-                    if (TextMatch.Same(doc.Get("name"), w.name) || TextMatch.Same(doc.Get("id"), w.id)) match = true;
+                    if (w.MatchesName(doc.Get("name")) || w.MatchesId(doc.Get("id"))) match = true;
                 }
                 if (!match) continue;
                 violations.Add(w.order == WantedOrder.Terminate

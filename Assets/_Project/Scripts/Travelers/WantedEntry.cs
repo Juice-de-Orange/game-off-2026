@@ -18,5 +18,11 @@ namespace GameOff.Travelers
             this.order = order;
             this.note = note;
         }
+
+        /// <summary>The wanted list's matching (RuleEvaluator and the counter terminal, P34): same name, case and spaces ignored.</summary>
+        public bool MatchesName(string value) => TextMatch.Same(value, name);
+
+        /// <summary>Same ID number, case and spaces ignored.</summary>
+        public bool MatchesId(string value) => TextMatch.Same(value, id);
     }
 }
