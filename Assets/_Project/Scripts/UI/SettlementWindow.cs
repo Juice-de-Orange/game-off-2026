@@ -41,6 +41,7 @@ namespace GameOff.UI
         private int _correctToday;
         private bool _open;
         private bool _returned;
+        private readonly System.Collections.Generic.List<string> _customsLines = new System.Collections.Generic.List<string>();
 
         private static PlayerEconomy Economy => PlayerEconomy.Instance;
         private HouseholdTuning Tuning => Economy != null ? Economy.HouseholdTuning : null;
@@ -150,12 +151,19 @@ namespace GameOff.UI
             title.text = $"DAY {day}  ·  SETTLEMENT";
             // Nothing is preselected: the player decides what the family gets (Martin, 06.11.). Drone deliveries are already ticked.
             for (int i = 0; i < 3; i++) _paid[i] = false;
+            InspectDrone(); // P110: before the needs are read, so kept items no longer cover one
             _open = true;
             _returned = false;
             root.SetActive(true);
             Refresh();
             while (_open) yield return null;
             root.SetActive(false);
+            if (Discharged)
+            {
+                // P110: drone customs reached the disciplinary limit; the night ends with the discharge, nothing is booked.
+                dayManager.GameOver(Confiscation.DischargedTitle, Confiscation.Instance.DischargedBody);
+                yield break;
+            }
             if (_returned)
             {
                 dayManager.CancelNight(); // nothing booked, the evening goes on
@@ -194,6 +202,33 @@ namespace GameOff.UI
             Debug.Log($"[Settlement] day {day}: wage {Wage}, penalty {Penalty}, rent {Tuning.rent}, " +
                       $"food {Met(Food)}, heat {Met(Heat)}, medicine {Met(Medicine)} (drone: {Economy.Delivery.Items.Count} items) → balance {wallet.Balance}");
             Economy.Delivery.Clear();
+            _customsLines.Clear();
+        }
+
+        // ---------- P110: customs on the drone ----------
+
+        private static bool Discharged =>
+            Confiscation.Instance != null && Confiscation.Instance.Tuning != null &&
+            Confiscation.Instance.Conduct.Discharged(Confiscation.Instance.Tuning);
+
+        /// <summary>
+        /// Inspects what the player sent since the last inspection. Reopening after RETURN inspects only what was sent since,
+        /// so the same shipment is never rolled twice.
+        /// </summary>
+        private void InspectDrone()
+        {
+            var confiscation = Confiscation.Instance;
+            if (confiscation == null || confiscation.Tuning == null) return;
+            var t = confiscation.Tuning;
+            var result = DroneCustoms.Inspect(Economy.Delivery, confiscation.Conduct, t, Random.value);
+            if (!result.Caught) return;
+            string items = DroneCustoms.ItemList(result.Lost);
+            string line = t.droneCaughtLine.Replace("{items}", items) +
+                          $"\nDISCIPLINARY PENALTY {confiscation.Conduct.Disciplinary} OF {t.disciplinaryLimit}.";
+            if (Discharged) line += "\nYou are discharged from service.";
+            _customsLines.Add(line);
+            Economy.AddLetterLine(t.droneLetterLine.Replace("{items}", items));
+            Debug.Log($"[Customs] drone inspected: kept {items}, disciplinary {confiscation.Conduct.Disciplinary}");
         }
 
         private void Refresh()
@@ -207,6 +242,7 @@ namespace GameOff.UI
             if (penalized > 0) sb.AppendLine(Line("Penalty  ·  " + ExtraCitations(penalized), -Penalty));
             if (Bribe > 0) sb.AppendLine(Line("Envelope from the bar", Bribe));
             sb.AppendLine(Line("Rent  ·  room 103", -t.rent));
+            foreach (var line in _customsLines) sb.AppendLine($"\n<color=#E2463F>{line}</color>");
             if (!CanPayRent)
                 sb.AppendLine("\n<color=#E2463F>You can't pay the rent.</color>\n<color=#8B9096>RETURN and sell something – or CONFIRM and lose your room.</color>");
             income.text = sb.ToString();

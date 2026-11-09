@@ -68,6 +68,8 @@ namespace GameOff.Shops
                 if (economy != null) economy.Delivery.Add(item);
                 Debug.Log($"[Drone] Sent home: {item.DisplayName}.");
                 Sent?.Invoke(item);
-            });
+            },
+            // P110: contraband may be kept by customs tonight.
+            item => DroneCustoms.LoadingHint(item, Confiscation.Instance != null ? Confiscation.Instance.Tuning : null));
     }
 }

@@ -84,9 +84,13 @@ namespace GameOff.Economy
         public void DischargeIfDue()
         {
             if (!Conduct.Discharged(tuning) || dayManager == null) return;
-            dayManager.FinishRun("DISCHARGED",
-                $"{tuning.disciplinaryLimit} disciplinary penalties. Station security walks you to the next shuttle - without pay.");
+            dayManager.FinishRun(DischargedTitle, DischargedBody);
         }
+
+        public const string DischargedTitle = "DISCHARGED";
+        /// <summary>P110: the settlement ends the night with this when drone customs reached the limit.</summary>
+        public string DischargedBody =>
+            $"{tuning.disciplinaryLimit} disciplinary penalties. Station security walks you to the next shuttle - without pay.";
 
         /// <summary>P83: the break-in. Caught = a disciplinary penalty, the goods stay; otherwise all of it, as CONFISCATED goods.</summary>
         public string BreakIn(float roll)

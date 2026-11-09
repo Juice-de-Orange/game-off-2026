@@ -139,7 +139,7 @@ namespace GameOff.Characters
         {
             var economy = PlayerEconomy.Instance;
             if (economy == null) return;
-            if (c.giftItem != null && (!c.giftOnlyIfFamilySick || economy.Household.AnySick)) economy.Delivery.Add(c.giftItem);
+            if (c.giftItem != null && (!c.giftOnlyIfFamilySick || economy.Household.AnySick)) economy.Delivery.AddGift(c.giftItem);
             if (c.wageChange > 0) economy.Wallet.Add(c.wageChange, c.wageNote);
             else if (c.wageChange < 0) economy.Wallet.Charge(-c.wageChange, c.wageNote);
             if (!string.IsNullOrWhiteSpace(c.letterLine)) economy.AddLetterLine(c.letterLine);
