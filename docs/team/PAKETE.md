@@ -1759,7 +1759,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (martin, 09.11., Agent): Ganz hineingezoomt (FOV ≤ 4°, auf den Planeten gerichtet) blendet das Fernrohr auf das Diorama `HomeDiorama` (y −400, nur dann aktiv, unlit, ohne Bake): drei Fenster Mom/Lena/Pip hell, gedimmt (sick), flackernd (critical), dunkel (tot) nach `Household.Changed`/`DayStarted`; herauszoomen → zurück zum Planeten. Bis `SM_Home_Street.fbx` geliefert ist: Platzhalter aus Boxen, der Builder tauscht beim nächsten Lauf automatisch. `HomeLights` folgt jetzt auch `Household.Changed`. Werte in `Data/Economy/HomeViewTuning.asset`, 7 Tests. Nicht angespielt.
 
 ### P112 — Terminal fragt nur den Pass ab
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P34
 - Ziel: Der Scanner (P16) behält seinen Wert; das Terminal ersetzt nicht den Vergleich der Papiere (Max, 09.11., Frage `terminal-und-moral`: A).
 - Enthalten: Im Terminal sind nur Name und ID **vom Pass** Knöpfe (Fahndung, Einreiseakte); Namen/IDs anderer Papiere erscheinen nicht mehr nebeneinander. `TerminalLookup` + Tests anpassen.
@@ -1767,7 +1767,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Ein Gesuchter mit Pass-Name/-ID wird erkannt; Widersprüche zwischen Papieren zeigt nur noch der Scanner. Validate Travelers + EditMode-Tests grün.
 
 ### P113 — Moral im Spiel spürbar
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P08, P12, P28
 - Ziel: Schleusen-Entscheidungen haben schon während des Spiels Folgen, nicht erst im Schlusssatz (Max, 09.11., Frage `terminal-und-moral`: D).
 - Enthalten (Vorschlag, beim Take festlegen): Gedanken am Bullauge/auf der Bank nach `Conduct.Morale`, Albtraum-Zeile im Morgenbrief nach einer Schleuse, Abendgäste reagieren. Texte in einem Tuning-Asset.
