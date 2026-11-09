@@ -28,3 +28,5 @@ Bitte einmal durchspielen und hier notieren, was nicht stimmt:
 Alles gilt als fertig; Fehler werden Fixes oder Folge-Pakete.
 
 ## Antwort
+
+**Max, 09.11., vorläufig:** Abend bleibt bei 5 echten Minuten. Angespielt ist noch nicht, die Frage bleibt offen.

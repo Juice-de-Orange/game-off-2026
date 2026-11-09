@@ -317,10 +317,11 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Geprüft: 84/84 EditMode-Tests; Play-Modus: Drohne in der Schicht zu, abends Ration abgeliefert → FOOD in der Abrechnung abgehakt.
 
 ### P14 — Reisende laufen
-- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11.): in der Prüfkammer durch P91 erledigt, Wege durch den Hangar offen
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: P04, P07
 - Ziel: Reisende kommen aus dem Hangar zum Schalter und gehen danach weg (NavMesh).
 - Abnahme: Eine Schicht läuft mit sichtbar ankommenden Reisenden.
+- Entscheidung (Max, 09.11.): Rest vereinfacht: eine sichtbare kleine Gruppe kommt morgens aus dem gelandeten Schiff (P107) zur Prüfkammer, feste Wege, kein NavMesh für die ganze Station.
 
 ### P15 — Inhalte: Fälle für 3 Tage
 - Größe: M · Priorität: Muss · Status: fertig (max, 08.11.; Anspielen durch Max steht aus) · Zuständig: max (Call 07.11.)
@@ -449,7 +450,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   (Plattform Tag 1 + 3, Hangar); im WebGL-Build noch nicht angesehen.
 
 ### P25 — Verkehr: vorbeifliegende Schiffe & Shuttle-Ankunft
-- Größe: M · Priorität: Soll · Status: offen
+- Größe: M · Priorität: Soll · Status: überholt (Max, 09.11.): Ankunft regelt P107, Shuttle wandert nach außen (P106), Reste bei P14
 - Braucht: P23, P24
 - Ziel: Sichtbarer Schichtbeginn: das Shuttle mit den Reisenden.
 - Enthalten: ~~Großschiffe auf festen Bahnen~~ → übernimmt **P55** (martin, 05.11.); Shuttle fliegt durch die
@@ -462,7 +463,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Festgelegt im Asset-Durchgang (max, 02.11.): Shuttle mit **Rampe** (Rework bestellt): landen → Rampe klappt zischend herunter → Reisende steigen nacheinander aus und stellen sich an; abends Rampe hoch und Abflug.
 
 ### P26 — Details & Ausstattung
-- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf)
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: P22 und Lieferungen
 - Ziel: Station wirkt bewohnt und heruntergekommen.
 - Enthalten: Rohre, Kabel, Lüftungen, Verteilerkästen, Feuerlöscher, Müll, Pflanzen, Schilder/Poster/Schmutz-Decals, Putzroboter (fährt per
@@ -477,6 +478,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 > **P27–P36: Mechaniken aus dem Asset-Durchgang** (max, 02.11.). Max hat jedes gelieferte Asset durchgesehen und festgelegt,
 > was man damit tun kann. Alle Soll; Reihenfolge und Verteilung im Call.
 - Ergebnis (Nachtlauf, 08.11.): Bar-Ventilator dreht sich, Putzroboter fährt in der Halle hin und her, Fernrohr funktioniert (P29). Offen bleiben Poster und Schmutz-Decals; der Diner-Ventilator steht absichtlich still (außer Betrieb).
+- Entscheidung (Max, 09.11.): Poster und Schmutz-Decals bestellen und einbauen.
 
 ### P27 — Automatische Türen mit Zugangsstufen
 - Größe: S · Priorität: Soll · Status: fertig (max, 02.11.)
@@ -568,12 +570,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (martin, 09.11., Agent): Klick auf den CRT am Tisch → grünes Terminal; jeder Name/jede ID der Papiere ist ein Knopf → Fahndungsabgleich (gleiche Prüfung wie `RuleEvaluator`) und Einreiseakte, abgelaufene Papiere markiert; Statuszeile Lane/Zähler/Uhr auch auf dem CRT. `CounterTerminal`, `TerminalLookup`, `CounterTerminalBuilder` (in Build Documents), 7 Tests inkl. Abgleich über alle Tage. Offene Designfrage an Max (Terminal vs. Scanner), siehe `questions/2026-11-09_martin-an-max_terminal-und-moral.md`.
 
 ### P35 — Durchsuchbare Fracht im Hangar
-- Größe: M · Priorität: Soll · Status: offen
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: P07, P08 · Assets: `SM_Hangar_Crate`, `_Small` (da), `SM_Item_*`
 - Ziel: Gameplay im Hangar über die Drohne hinaus.
 - Enthalten: markierte Kisten gehören zu Reisenden; [E] durchsuchen findet Beweise (Schmuggelware zu einem Fall) — oder man steckt etwas
   ein (Risiko, Moral-Wert)
 - Abnahme: Ein Fall lässt sich über einen Kistenfund lösen; Einstecken verändert Moral.
+- Entscheidung (Max, 09.11.): Bauen wie beschrieben: Beweise und Einstecken. Einstecken ist eine neue Geldquelle, also Economy Report.
 
 ### P36 — Lebendige Station: Flackern & Stromausfälle
 - Größe: S · Priorität: Soll · Status: fertig (martin, 07.11.)
@@ -783,6 +786,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Zimmer 103 zum Spieler
 - Nicht enthalten: neue Menüpunkte, Änderungen am Tagesablauf
 - Abnahme: Menü zeigt die Station mit gebackenem Licht; „Start Shift“ landet ohne Szenenwechsel beim Spieler in Zimmer 103; läuft im WebGL-Build. Nur in der Polish-Woche, nur wenn alle Muss-Pakete fertig sind.
+- Entscheidung (Max, 09.11.): Bleibt zurückgestellt, in der Polish-Woche prüfen.
 
 ### P49 — Live-Version auf kestrel9.maxlworks.com + Dev-Schalter im Menü
 - Größe: M · Priorität: Soll · Status: wartet auf Unity-Lizenz + Secrets (max)
@@ -806,13 +810,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (Nachtlauf, 08.11.): Schilder über den Türen in drei Arten: Neon, Schablone, Rot für STAFF ONLY und CUSTOMS (`BuildDoorSigns`). Diner und Bar haben schon eigene.
 
 ### P51 — Zimmer 103 wohnlicher
-- Größe: S · Priorität: Kann · Status: offen, Bilder hängen (max, 06.11.), größeres Bullauge fehlt
+- Größe: S · Priorität: Kann · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: M014 (Katzenbild)
 - Ziel: Das Zimmer des Spielers fühlt sich persönlich an.
 - Enthalten: Bullauge größer (heute Ø 0,6 m, `SM_Station_Wall_Porthole_2x3`, Zimmer 103); Katzenbild etwas höher (`SM_Motel_CatPainting`, heute y 1,3 m, `StationGrayboxBuilder.BuildProps`); neues Gemälde vom Hund **Elo** (Bestellung erst, wenn das Paket dran ist; dann fragt Claude Max nach einem Foto als Vorlage, wie beim Katzenbild)
 - Nicht enthalten: weitere Möbel, andere Zimmer
 - Abnahme: Alle drei Punkte im Zimmer zu sehen; Licht neu gebacken; das Bullauge passt zum Außenmodell.
 - Hinweis: Größeres Bullauge heißt neues Wandmodul über die Pipeline und neuer Lichtbake. Wird das Wohnmodul (P53) gebaut, zuerst dort klären, wo Zimmer 103 am Ende liegt.
+- Entscheidung (Max, 09.11.): Nur das größere Bullauge. Das Gemälde von Elo entfällt.
 
 ### P52 — Mehr Figuren: Händler an Kiosk und Bar
 - Größe: M · Priorität: Soll · Status: fertig (max, 06.11.)
@@ -1709,11 +1714,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (Nachtlauf, 08.11.): Kein Gitter mehr: Außenschott schwingt auf, Figur wird Ragdoll ohne Colliders und fliegt hinaus, Warnlampe blinkt, Sicht wackelt, Schott zu (`Ragdoll`, `AirlockHatch`). Im Browser mit Sorvak geprüft; die anderen vier Spezies nur per Code, gleiche Logik.
 
 ### P106 — Heim-Shuttle dockt außen am Hangar an, begehbar
-- Größe: L · Priorität: Soll · Status: offen, Lieferung liegt auf `assets/P106-au-en-hangar` (nicht gemergt)
+- Größe: L · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P72
 - Ziel: Es ist klar, wie das Personal hergekommen ist und womit man heimfliegt.
 - Enthalten: Shuttle hängt außen am Hangar an einem Andockring, Zugang über ein Schott in der Hangarwand, innen begehbar mit Sitzreihen; dort startet der Abflug (P72). **Sichtbar machen (Max, 08.11.):** Fenster oder eigene Nische im Hangar mit Blick aufs Shuttle. `SM_Hangar_Shuttle` verschwindet vom Landefeld. Betrifft `DepartureBuilder`, Hülle (`StationGrayboxBuilder`), Bake.
 - Abnahme: Man geht durchs Schott ins Shuttle, setzt sich und fliegt los; das Shuttle ist von innen aus dem Hangar zu sehen.
+- Entscheidung (Max, 09.11.): Jetzt einbauen; die Lieferung `assets/P106-au-en-hangar` wird gemergt.
 
 ### P107 — Hangar: Schiffe landen morgens, Reisende kommen glaubhaft an
 - Größe: M · Priorität: Soll · Status: fertig (max, 08.11., Nachtlauf)· Zuständig: offen
