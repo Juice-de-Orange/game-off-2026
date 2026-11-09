@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using GameOff.Documents;
 using GameOff.Economy;
+using GameOff.Travelers;
 using UnityEngine;
 
 namespace GameOff.Hangar
@@ -29,6 +31,13 @@ namespace GameOff.Hangar
         [Tooltip("Morale change for pocketing, caught or not.")]
         public int moraleCost = -1;
 
+        [Header("Days after the story (P126)")]
+        [Min(0), Tooltip("A crate is flagged every this many days after the story (0 = never).")]
+        public int loopEvery = 3;
+        [Tooltip("What can be hidden in those crates.")]
+        public List<ItemData> loopGoods = new List<ItemData>();
+        [Min(1)] public int loopCount = 2;
+
         [TextArea(1, 3)] public string letterNotice = "Customs notice: a crate for {name} is flagged in the hangar today. Inspection at the officer's discretion.";
         public string dialogTitle = "CARGO: {name}";
         [TextArea(1, 3)] public string dialogBody = "Under the packing foam: {item}.\nNothing on the manifest says so.";
@@ -40,6 +49,20 @@ namespace GameOff.Hangar
         [TextArea(1, 2)] public string caughtLetter = "Disciplinary notice: tampering with flagged cargo.";
         public string slipReason = "CARGO OF {name}: {item} NOT DECLARED";
         public string slipPenalty = "ARREST AUTHORIZED";
+
+        /// <summary>P126: the crate of a drawn day: its owner is someone whose papers are in order. Always the same for the same day.</summary>
+        public CargoCase ForLoopDay(int day, IReadOnlyList<TravelerData> travelers)
+        {
+            if (loopEvery <= 0 || day % loopEvery != 0 || loopGoods.Count == 0 || travelers == null) return null;
+            var clean = new List<TravelerData>();
+            foreach (var t in travelers)
+                if (t != null && t.IntendedVerdict == Verdict.Admit) clean.Add(t);
+            if (clean.Count == 0) return null;
+            // The notices speak of the manifest: someone who carries one if there is such a traveler.
+            var withManifest = clean.FindAll(t => t.Document(DocumentType.CargoManifest) != null);
+            if (withManifest.Count > 0) clean = withManifest;
+            return new CargoCase { day = day, traveler = clean[day % clean.Count].DisplayName, item = loopGoods[day % loopGoods.Count], count = loopCount };
+        }
 
         public CargoCase ForDay(int day)
         {

@@ -71,9 +71,10 @@ namespace GameOff.Travelers
 
         /// <summary>P73: a traveler made by the day generator (endless days), not a project asset.</summary>
         public static TravelerData CreateGenerated(string name, string species, List<DocumentData> documents, Verdict verdict, string reason,
-            string greeting, GameObject model, bool trick)
+            string greeting, GameObject model, bool trick, List<FieldAnswer> fieldAnswers = null)
         {
             var t = CreateInstance<TravelerData>();
+            if (fieldAnswers != null) t.answers = fieldAnswers;
             t.name = "T_Gen_" + name.Replace(' ', '_');
             t.displayName = name;
             t.species = species;

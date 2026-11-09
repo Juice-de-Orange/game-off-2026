@@ -81,6 +81,9 @@ namespace GameOff.Day
         public bool DevTools => showDevTools && GameSettings.DevTools;
         /// <summary>Days of this run: the written ones, or no end with the endless loop (P73).</summary>
         public int DayCount => schedule.Endless ? int.MaxValue : schedule.Count;
+
+        /// <summary>P126: the written days; after them come the drawn ones.</summary>
+        public int StoryDays => schedule.Count;
         /// <summary>The seed the endless days of this run are drawn with (P73); new every run.</summary>
         public int RunSeed => _runSeed;
         /// <summary>The schedule entry of day n (1-based), e.g. tomorrow's market events for the barkeeper's rumour (P65).</summary>

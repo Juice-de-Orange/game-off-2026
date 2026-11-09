@@ -62,6 +62,9 @@ namespace GameOff.Departure
         [TextArea(3, 8)] public string lostBody =
             "The shuttle sets down in the rain. Lena is at the dock, taller than you remember, and she doesn't run.\n\n" +
             "{names} never got to see you come back.\nThe ticket cost everything you had. It came too late to matter.";
+        [Tooltip("P124: heading above the lines about the characters the player met.")]
+        public string figuresHeader = "What became of the others:";
+
         [Header("Closing sentence by morale (P12)")]
         [Tooltip("P35: closing sentence when crates were pocketed but nobody went through the airlock.")]
         [TextArea(1, 2)] public string moraleThief = "You never touched the airlock. The crates were another matter.";

@@ -227,6 +227,9 @@ namespace GameOff.Characters
             economy.AddLetterLine(summaryHeader + "\n" + string.Join("\n", lines));
         }
 
+        /// <summary>P124: what became of the characters met so far, for the ticket ending.</summary>
+        public List<string> EndingLines() => SummaryLines(Active, Memory, Market.Day);
+
         /// <summary>P85: the summary lines (also for tests): characters met, by their last outcome, placeholders filled.</summary>
         public static List<string> SummaryLines(IEnumerable<RecurringCharacter> chars, CharacterMemory memory, int day)
         {

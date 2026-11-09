@@ -25,6 +25,8 @@ namespace GameOff.EditorTools
             Rumour,
             /// <summary>Like Rumour, but takes every bribe (one wrong decision more, the envelope on top, no sulking).</summary>
             Corrupt,
+            /// <summary>P125: Clever plus pocketing one piece per shift ("Missed that"); sends it home if it covers a need (customs), else sells it.</summary>
+            Pilferer,
         }
 
         public class Evening
@@ -44,6 +46,9 @@ namespace GameOff.EditorTools
             public bool SkippedAnyNeed => Evenings.Any(e => e.SkippedNeed);
             public int WorstCondition => Evenings.Count == 0 ? 0 : Evenings.Max(e => e.Family.Max());
             public int SpeculationProfit, SpeculatedUnits, WishCost, Bribes;
+            /// <summary>P125: characters' bonuses minus reprimands; fines, goods sold, customs hits and penalties of the Pilferer.</summary>
+            public int Bonus, Fines, LootSold, CustomsCaught, Disciplinary;
+            public bool Discharged;
             public bool GameOver => Evenings.Any(e => e.GameOver);
         }
 
@@ -52,9 +57,10 @@ namespace GameOff.EditorTools
         private readonly DaySchedule _schedule;
         private readonly VendorStock _kiosk, _dealer;
         private readonly int _freeWarnings;
+        private readonly ConfiscationTuning _confiscation;
 
         public EconomySimulator(EconomyTuning economy, HouseholdTuning household, DaySchedule schedule, VendorStock kiosk, VendorStock dealer,
-            int freeWarnings = 2)
+            int freeWarnings = 2, ConfiscationTuning confiscation = null)
         {
             _economy = economy;
             _household = household;
@@ -62,6 +68,7 @@ namespace GameOff.EditorTools
             _kiosk = kiosk;
             _dealer = dealer;
             _freeWarnings = freeWarnings;
+            _confiscation = confiscation;
         }
 
         private static List<GameOff.Characters.RecurringCharacter> _story;
@@ -82,7 +89,8 @@ namespace GameOff.EditorTools
         /// P76: the story characters met on that day when every one is decided as intended; books their outcomes and schedules the
         /// market events they set off (Market.Schedule). Returns how many came.
         /// </summary>
-        public static int MeetCharacters(int day, GameOff.Characters.CharacterMemory memory)
+        public static int MeetCharacters(int day, GameOff.Characters.CharacterMemory memory,
+            List<(int day, GameOff.Characters.Consequence effect)> later = null)
         {
             var due = GameOff.Characters.CharacterPlanner.Due(day, Story, memory, 3, () => 0f);
             foreach (var p in due)
@@ -91,7 +99,11 @@ namespace GameOff.EditorTools
                 var outcome = a.OutcomeOf(p.traveler.IntendedVerdict);
                 memory.Remember(p.character, p.appearance, day, outcome);
                 foreach (var c in a.consequences)
-                    if (c.when == outcome && c.marketEvent != null) Market.Schedule(day + c.eventInDays, c.marketEvent);
+                {
+                    if (c.when != outcome) continue;
+                    if (c.marketEvent != null) Market.Schedule(day + c.eventInDays, c.marketEvent);
+                    if (!c.onlyIfArrested || p.traveler.IntendedVerdict == GameOff.Travelers.Verdict.Arrest) later?.Add((day + c.afterDays, c)); // P125
+                }
             }
             return due.Count;
         }
@@ -107,6 +119,48 @@ namespace GameOff.EditorTools
         private DayEntry Entry(int day) => _schedule.Endless ? _schedule.Get(day, Seed) : _schedule.Get((day - 1) % _schedule.Count + 1);
         private int ScheduleDay(int day) => _schedule.Endless ? day : (day - 1) % _schedule.Count + 1;
 
+        /// <summary>P125: one shift's confiscated goods for the Pilferer. False = discharged (too many penalties).</summary>
+        private bool Pilfer(DayEntry entry, ref int balance, HashSet<FamilyNeed> covered, System.Func<FamilyNeed, bool> needed, Run run, System.Random rolls)
+        {
+            var goods = new List<(ItemData item, int count)>();
+            if (entry.rules != null)
+                foreach (var t in entry.rules.Travelers)
+                {
+                    if (t.IntendedVerdict != GameOff.Travelers.Verdict.Arrest) continue;
+                    var manifest = t.Document(GameOff.Documents.DocumentType.CargoManifest);
+                    if (manifest != null) goods.AddRange(CargoReader.Read(manifest.Get("cargo"), _confiscation.goods, _confiscation.maxPerItem));
+                }
+            if (goods.Count == 0) return true;
+
+            var picked = goods.OrderByDescending(g => _dealer.OfferFor(g.item)).First().item;
+            var outcome = ShiftReport.Resolve(ShiftChoice.MissedThat, goods, picked, _confiscation, (float)rolls.NextDouble());
+            run.Fines += outcome.Fine;
+            balance = Mathf.Max(0, balance - outcome.Fine);
+            run.Disciplinary += outcome.Disciplinary;
+            foreach (var (item, count) in outcome.Kept)
+                for (int i = 0; i < count; i++)
+                {
+                    var open = System.Enum.GetValues(typeof(FamilyNeed)).Cast<FamilyNeed>()
+                        .Where(n => needed(n) && !covered.Contains(n) && item.HasTag(_household.TagOf(n))).ToList();
+                    if (open.Count > 0)
+                    {
+                        if (DroneCustoms.Resolve(new[] { item }, _confiscation, (float)rolls.NextDouble()).Caught)
+                        {
+                            run.CustomsCaught++;
+                            run.Disciplinary++;
+                        }
+                        else covered.Add(open[0]);
+                    }
+                    else if (_dealer.Buys(item))
+                    {
+                        int offer = _dealer.OfferFor(item);
+                        balance += offer;
+                        run.LootSold += offer;
+                    }
+                }
+            return run.Disciplinary < _confiscation.disciplinaryLimit;
+        }
+
         /// <summary>Plays `days` days. `wrongPerDay` travelers each day are decided wrongly.</summary>
         public Run Play(Style style, int wrongPerDay, int days)
         {
@@ -115,6 +169,8 @@ namespace GameOff.EditorTools
             var family = new Household(_household.members.Select(m => m.feelsCold).ToList());
             var held = new Dictionary<ItemData, int>(); // speculation stock carried to the next evening
             int sulksFrom = 0; // P66: the barkeeper sulks the day a bribe is turned down and the next
+            var later = new List<(int day, GameOff.Characters.Consequence effect)>(); // P125: bonuses and gifts still to come
+            var rolls = new System.Random(Seed); // P125: the Pilferer's luck, the same in every report
             var memory = new GameOff.Characters.CharacterMemory(); // P76: who was met and how it went
             try
             {
@@ -124,7 +180,7 @@ namespace GameOff.EditorTools
                     Market.Begin(ScheduleDay(day), entry.marketEvents);
                     // P76: the recurring characters come on top of the day's own travelers – on the path of an officer who
                     // decides every one of them right (their outcomes set off tomorrow's events, e.g. Quill arrested → smuggler raid).
-                    int travelers = (entry.rules != null ? entry.rules.Travelers.Count : 0) + MeetCharacters(ScheduleDay(day), memory);
+                    int travelers = (entry.rules != null ? entry.rules.Travelers.Count : 0) + MeetCharacters(ScheduleDay(day), memory, later);
                     int correct = Mathf.Max(0, travelers - wrongPerDay);
                     int bribeMoney = 0;
                     var bribe = entry.bribe;
@@ -162,10 +218,31 @@ namespace GameOff.EditorTools
                     var covered = new HashSet<FamilyNeed>();
                     bool Needed(FamilyNeed n) => n != FamilyNeed.Medicine || family.AnySick;
 
-                    if (style == Style.Clever || style == Style.Rumour || style == Style.Corrupt)
+                    // P125: what the characters' outcomes bring today: a bonus or reprimand, a gift for the family.
+                    int dueDay = ScheduleDay(day);
+                    foreach (var (_, effect) in later.Where(l => l.day == dueDay))
+                    {
+                        balance = Mathf.Max(0, balance + effect.wageChange);
+                        run.Bonus += effect.wageChange;
+                        if (effect.giftItem == null || (effect.giftOnlyIfFamilySick && !family.AnySick)) continue;
+                        foreach (FamilyNeed need in System.Enum.GetValues(typeof(FamilyNeed)))
+                            if (effect.giftItem.HasTag(_household.TagOf(need))) covered.Add(need);
+                    }
+                    later.RemoveAll(l => l.day == dueDay);
+
+                    if (style == Style.Pilferer && _confiscation != null && !Pilfer(entry, ref balance, covered, Needed, run, rolls))
+                    {
+                        run.Discharged = evening.GameOver = true;
+                        evening.Balance = balance;
+                        evening.Family = Enumerable.Range(0, family.Count).Select(family.Condition).ToArray();
+                        run.Evenings.Add(evening);
+                        break;
+                    }
+
+                    if (style == Style.Clever || style == Style.Rumour || style == Style.Corrupt || style == Style.Pilferer)
                         foreach (FamilyNeed need in System.Enum.GetValues(typeof(FamilyNeed)))
                         {
-                            if (!Needed(need)) continue;
+                            if (!Needed(need) || covered.Contains(need)) continue;
                             var tag = _household.TagOf(need);
                             var cheapest = kiosk.Items.Where(i => i.HasTag(tag) && kiosk.Count(i) > 0)
                                 .OrderBy(i => _kiosk.PriceFor(i)).FirstOrDefault();

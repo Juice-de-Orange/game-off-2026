@@ -61,7 +61,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2207139981529831596}
+  - {fileID: 124217035629256118}
   m_Father: {fileID: 1706301444695474430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6286367055518745486
@@ -76,11 +76,153 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 938c9b0b17734b742aa7c4307937cccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Departure.ShuttleBoarding
-  interactable: {fileID: 6306993836367295390}
+  interactable: {fileID: 8347380310258024331}
   day: {fileID: 0}
   player: {fileID: 0}
   dialogs: {fileID: 0}
   flight: {fileID: 7166281020276770999}
+--- !u!1 &1126827983758754898
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 124217035629256118}
+  - component: {fileID: 5651447133720588082}
+  - component: {fileID: 8347380310258024331}
+  m_Layer: 0
+  m_Name: Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &124217035629256118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126827983758754898}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -23.2, y: 1.8000001, z: -25.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9014989735783628610}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5651447133720588082
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126827983758754898}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4, y: 2.4, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8347380310258024331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126827983758754898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e9fdcbb8108a2448191ba9a6627719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Player.Interactable
+  prompt: Take the seat
+  interactionEnabled: 1
+  onInteract:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &1805677810056999564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7906749989241961095}
+  - component: {fileID: 6127849114037412530}
+  - component: {fileID: 5852761711164486758}
+  m_Layer: 0
+  m_Name: Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7906749989241961095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805677810056999564}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -23.2, y: 1.8000001, z: -31.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2076678053129375848}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6127849114037412530
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805677810056999564}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4, y: 2.4, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5852761711164486758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805677810056999564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e9fdcbb8108a2448191ba9a6627719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Player.Interactable
+  prompt: Leave the shuttle
+  interactionEnabled: 1
+  onInteract:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1825151755559630839
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,77 +304,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1706301444695474430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4540202331284641771
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2207139981529831596}
-  - component: {fileID: 2830290259143777970}
-  - component: {fileID: 6306993836367295390}
-  m_Layer: 0
-  m_Name: Trigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2207139981529831596
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4540202331284641771}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.2, y: 1.8000001, z: -25.4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9014989735783628610}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2830290259143777970
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4540202331284641771}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.4, y: 2.4, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6306993836367295390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4540202331284641771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27e9fdcbb8108a2448191ba9a6627719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Player.Interactable
-  prompt: Take the seat
-  interactionEnabled: 1
-  onInteract:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4589969775098348476
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,7 +334,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6265808487471155740}
+  - {fileID: 2873007719109337755}
   m_Father: {fileID: 1706301444695474430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &184845845617544732
@@ -278,83 +349,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4528850ab9fbfe349a5b038e2ec13fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Departure.ShuttleHatch
-  interactable: {fileID: 8071866881783325791}
+  interactable: {fileID: 4313672995004817441}
   player: {fileID: 0}
   dialogs: {fileID: 0}
   flight: {fileID: 7166281020276770999}
   destination: {fileID: 6948519847826727336}
   fadeSeconds: 0.3
---- !u!1 &4984419312347802328
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7208707413731325041}
-  - component: {fileID: 2959208787285559270}
-  - component: {fileID: 1237067127028695575}
-  m_Layer: 0
-  m_Name: Trigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7208707413731325041
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4984419312347802328}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.2, y: 1.8000001, z: -31.8}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2076678053129375848}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2959208787285559270
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4984419312347802328}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.4, y: 2.4, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1237067127028695575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4984419312347802328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27e9fdcbb8108a2448191ba9a6627719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Player.Interactable
-  prompt: Leave the shuttle
-  interactionEnabled: 1
-  onInteract:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &5831433316603240543
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,7 +393,7 @@ Transform:
   - {fileID: 2076678053129375848}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8049639584802907399
+--- !u!1 &6305431194009172158
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -401,9 +401,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6265808487471155740}
-  - component: {fileID: 8770131501879621518}
-  - component: {fileID: 8071866881783325791}
+  - component: {fileID: 2873007719109337755}
+  - component: {fileID: 3064826449473678861}
+  - component: {fileID: 4313672995004817441}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -411,13 +411,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6265808487471155740
+--- !u!4 &2873007719109337755
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8049639584802907399}
+  m_GameObject: {fileID: 6305431194009172158}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -17.75, y: 1.2, z: -26}
@@ -426,13 +426,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2680331509956774745}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8770131501879621518
+--- !u!65 &3064826449473678861
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8049639584802907399}
+  m_GameObject: {fileID: 6305431194009172158}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -447,13 +447,13 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2, y: 2.4, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8071866881783325791
+--- !u!114 &4313672995004817441
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8049639584802907399}
+  m_GameObject: {fileID: 6305431194009172158}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27e9fdcbb8108a2448191ba9a6627719, type: 3}
@@ -716,7 +716,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7208707413731325041}
+  - {fileID: 7906749989241961095}
   m_Father: {fileID: 1706301444695474430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5670193806570074221
@@ -731,7 +731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4528850ab9fbfe349a5b038e2ec13fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Departure.ShuttleHatch
-  interactable: {fileID: 1237067127028695575}
+  interactable: {fileID: 5852761711164486758}
   player: {fileID: 0}
   dialogs: {fileID: 0}
   flight: {fileID: 7166281020276770999}

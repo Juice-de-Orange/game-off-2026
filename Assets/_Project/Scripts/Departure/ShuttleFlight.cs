@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameOff.Characters;
 using GameOff.Core;
 using GameOff.Day;
 using GameOff.Economy;
@@ -180,6 +181,8 @@ namespace GameOff.Departure
                 }
             var (title, body) = TicketEnding.Pick(conditions, names, tuning);
             var conduct = Confiscation.Instance != null ? Confiscation.Instance.Conduct : new Conduct();
+            var director = day.GetComponent<CharacterDirector>();
+            body = TicketEnding.WithFigures(body, director != null ? director.EndingLines() : null, tuning);
             return (title, body + "\n\n" + TicketEnding.ConductLine(conduct, tuning));
         }
     }

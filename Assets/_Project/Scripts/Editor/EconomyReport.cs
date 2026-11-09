@@ -36,7 +36,8 @@ namespace GameOff.EditorTools
                 Load<HouseholdTuning>("Assets/_Project/Data/Economy/Household.asset"),
                 Load<DaySchedule>("Assets/_Project/Data/Days/DaySchedule.asset"),
                 Load<VendorStock>("Assets/_Project/Data/Economy/Stock_Kiosk_Test.asset"),
-                Load<VendorStock>("Assets/_Project/Data/Economy/Stock_BlackMarket_Test.asset"));
+                Load<VendorStock>("Assets/_Project/Data/Economy/Stock_BlackMarket_Test.asset"),
+                confiscation: Load<ConfiscationTuning>("Assets/_Project/Data/Economy/ConfiscationTuning.asset"));
         }
 
         /// <summary>Martin's goals (07.11.): ticket after ~7 days of good, clever work; slower at the bed; mistakes hurt; neglect breaks the family.</summary>
@@ -48,6 +49,7 @@ namespace GameOff.EditorTools
             var skip = sim.Play(EconomySimulator.Style.Skip, 0, 3);
             var rumour = sim.Play(EconomySimulator.Style.Rumour, 0, Days);
             var corrupt = sim.Play(EconomySimulator.Style.Corrupt, 0, Days);
+            var pilferer = sim.Play(EconomySimulator.Style.Pilferer, 0, Days);
             var endless = sim.Play(EconomySimulator.Style.Clever, 0, EndlessDays);
             var endlessSloppy = sim.Play(EconomySimulator.Style.Clever, 1, EndlessDays);
             float perUnit = rumour.SpeculatedUnits > 0 ? (float)(rumour.SpeculationProfit - rumour.WishCost) / rumour.SpeculatedUnits : 0f;
@@ -59,6 +61,7 @@ namespace GameOff.EditorTools
                 new Goal { Name = "Bed, no mistakes: ticket on day 9–11", Ok = bed.TicketDay >= 9 && bed.TicketDay <= 11 && !bed.GameOver, Detail = Day(bed) },
                 new Goal { Name = "2 mistakes a day: no ticket by day 12, or a need skipped", Ok = sloppy.TicketDay < 0 || sloppy.SkippedAnyNeed, Detail = Day(sloppy) + (sloppy.SkippedAnyNeed ? ", skipped a need" : "") },
                 new Goal { Name = "Nothing for the family: someone critical by day 3", Ok = skip.WorstCondition >= Household.Critical, Detail = "worst " + skip.WorstCondition },
+                new Goal { Name = "Pilfering helps, but the ticket not before day 6", Ok = pilferer.TicketDay >= 6 || pilferer.TicketDay < 0, Detail = Day(pilferer) + $", sold {pilferer.LootSold} CR, fines {pilferer.Fines} CR, customs {pilferer.CustomsCaught}x, penalties {pilferer.Disciplinary}{(pilferer.Discharged ? ", discharged" : "")}" },
                 new Goal { Name = "Bribes help, but the ticket not before day 6", Ok = corrupt.TicketDay >= 6 || corrupt.TicketDay < 0, Detail = Day(corrupt) + $", {corrupt.Bribes} CR in envelopes" },
                 new Goal { Name = $"Endless days: clever without mistakes lasts {EndlessDays} days, family never sick", Ok = !endless.GameOver && endless.WorstCondition < Household.Sick, Detail = endless.GameOver ? "out" : $"balance {endless.Evenings.Last().Balance}, worst {endless.WorstCondition}" },
                 new Goal { Name = $"Endless days: 1 mistake a day still lasts {EndlessDays} days", Ok = !endlessSloppy.GameOver, Detail = endlessSloppy.GameOver ? "out on day " + endlessSloppy.Evenings.Last().Day : $"balance {endlessSloppy.Evenings.Last().Balance}" },
@@ -98,6 +101,7 @@ namespace GameOff.EditorTools
                 ("Clever 6/6", sim.Play(EconomySimulator.Style.Clever, 0, Days)),
                 ("Rumour 6/6", sim.Play(EconomySimulator.Style.Rumour, 0, Days)),
                 ("Corrupt 6/6", sim.Play(EconomySimulator.Style.Corrupt, 0, Days)),
+                ("Pilferer 6/6", sim.Play(EconomySimulator.Style.Pilferer, 0, Days)),
                 ("Bed 6/6", sim.Play(EconomySimulator.Style.Bed, 0, Days)),
                 ("Clever 4/6", sim.Play(EconomySimulator.Style.Clever, 2, Days)),
                 ("Bed 4/6", sim.Play(EconomySimulator.Style.Bed, 2, Days)),
@@ -122,6 +126,7 @@ namespace GameOff.EditorTools
                 sb.AppendLine();
             }
             sb.AppendLine();
+            sb.AppendLine($"Character bonuses and reprimands on the clever path: {runs[0].Item2.Bonus:+0;-0;0} CR.");
             sb.AppendLine("`!` = a need was left out that evening. OUT = the rent could not be paid (game over).");
             return sb.ToString();
         }

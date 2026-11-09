@@ -322,7 +322,18 @@ namespace GameOff.Day
 
             string greeting = pool.greetings.Count > 0 ? Pick(rng, pool.greetings) : "";
             bool trickIntended = trick && (flaw == Flaw.NameMismatch || flaw == Flaw.IdMismatch || flaw == Flaw.ExpiredPermit || flaw == Flaw.ExpiredId);
-            return TravelerData.CreateGenerated(name, sp.name, docs, verdict, reason, greeting, sp.model, trickIntended);
+            return TravelerData.CreateGenerated(name, sp.name, docs, verdict, reason, greeting, sp.model, trickIntended, Answers(pool, flaw, name));
+        }
+
+        /// <summary>P126: one line about the flaw, chosen by the name: no extra random draw, so the days stay what they were.</summary>
+        private static List<FieldAnswer> Answers(DayPool pool, Flaw flaw, string name)
+        {
+            var lines = pool.flawLines.Where(l => l.flaw == flaw).ToList();
+            var answers = new List<FieldAnswer>();
+            if (lines.Count == 0) return answers;
+            var line = lines[name.Sum(ch => ch) % lines.Count];
+            answers.Add(new FieldAnswer(line.key, line.line));
+            return answers;
         }
 
         private static string Cargo(Random rng, Context c, bool contraband)

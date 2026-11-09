@@ -908,6 +908,12 @@ namespace GameOff.EditorTools
                 EditorUtility.SetDirty(tuning);
             }
 
+            if (tuning.loopGoods.Count == 0) // P126
+            {
+                foreach (string item in new[] { "stim", "spice", "chip", "trinket" }) tuning.loopGoods.Add(data.Items[item]);
+                EditorUtility.SetDirty(tuning);
+            }
+
             var go = new GameObject("CargoCrate");
             go.transform.SetParent(parent, false);
             var visual = new GameObject("Visual");

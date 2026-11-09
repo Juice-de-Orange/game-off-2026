@@ -24,6 +24,13 @@ namespace GameOff.Departure
             return (title, body.Replace("{names}", JoinNames(who)));
         }
 
+        /// <summary>P124: the ending's text with what became of the characters; unchanged if nobody was met.</summary>
+        public static string WithFigures(string body, IReadOnlyList<string> lines, DepartureTuning texts)
+        {
+            if (lines == null || lines.Count == 0) return body;
+            return body + "\n\n" + texts.figuresHeader + "\n" + string.Join("\n", lines);
+        }
+
         /// <summary>P35: the closing sentence for the whole run: about the airlock if it was used, about the crates if only those were opened.</summary>
         public static string ConductLine(Conduct conduct, DepartureTuning texts) =>
             conduct.AirlockMorale == 0 && conduct.Morale < 0 ? texts.moraleThief : MoraleLine(conduct.AirlockMorale, texts);

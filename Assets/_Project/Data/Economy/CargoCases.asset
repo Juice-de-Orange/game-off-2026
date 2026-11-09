@@ -31,6 +31,13 @@ MonoBehaviour:
     count: 2
   caughtChance: 0.3
   moraleCost: -1
+  loopEvery: 3
+  loopGoods:
+  - {fileID: 11400000, guid: df59c3f9bd707eb4db4315f3127fb1bb, type: 2}
+  - {fileID: 11400000, guid: 95ed42a555ca29c44adb1a7a87f3c5aa, type: 2}
+  - {fileID: 11400000, guid: e0d6da73f80ef0b4bbca1641d443c69c, type: 2}
+  - {fileID: 11400000, guid: e1b4d6a84c3e1dd4ca380cf7c310f187, type: 2}
+  loopCount: 2
   letterNotice: 'Customs notice: a crate for {name} is flagged in the hangar today.
     Inspection at the officer''s discretion.'
   dialogTitle: 'CARGO: {name}'

@@ -45,6 +45,15 @@ namespace GameOff.Day
         }
 
         [Serializable]
+        public class FlawLine
+        {
+            public DayGenerator.Flaw flaw;
+            [Tooltip("The document field the line answers, e.g. expires.")]
+            public string key;
+            [TextArea(1, 2)] public string line;
+        }
+
+        [Serializable]
         public class WeightedEvent
         {
             public MarketEvent marketEvent;
@@ -62,6 +71,9 @@ namespace GameOff.Day
         public List<CargoLine> cargo = new List<CargoLine>();
         [TextArea(1, 2)] public List<string> greetings = new List<string>();
         public List<string> crimes = new List<string>();
+
+        [Header("P126: what flawed travelers say when asked; authored answers before the generic ones")]
+        public List<FlawLine> flawLines = new List<FlawLine>();
 
         [Header("Always on the wanted list")]
         public List<WantedEntry> standingWanted = new List<WantedEntry>();

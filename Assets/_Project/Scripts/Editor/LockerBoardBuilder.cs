@@ -31,6 +31,9 @@ namespace GameOff.EditorTools
         private const string GrayboxMaterials = "Assets/_Project/Art/Materials/Graybox/";
         private const string BodyFontPath = "Assets/_Project/Fonts/ShareTechMono SDF.asset";
         private const string ClosedLockerName = "SM_Counter_Locker";
+        private const string InteriorModel = "Assets/_Project/Art/Models/Counter/SM_Counter_LockerInterior.fbx";
+        private const string BagModel = "Assets/_Project/Art/Models/Counter/SM_Item_EvidenceBag.fbx";
+        private const string HandleMaterial = "Assets/_Project/Art/Materials/Hangar/M_Hangar_CraneRail.mat";
 
         private static readonly Vector3 LockerPivot = new Vector3(-4f, 0f, -6.45f);
         private const float LockerWidth = 1.0f, LockerDepth = 0.5f, LockerHeight = 1.8f, Wall = 0.03f;
@@ -87,17 +90,13 @@ namespace GameOff.EditorTools
             openRoot.SetParent(go.transform, false);
 
             var outside = AssetDatabase.LoadAssetAtPath<Material>(LockerMaterial) ?? Graybox("M_Graybox_Prop");
-            var inside = Graybox("M_Graybox_Dark") ?? outside;
             float w = LockerWidth, d = LockerDepth, h = LockerHeight, halfW = w / 2f, halfD = d / 2f;
 
-            Block(openRoot, "Back", new Vector3(0f, h / 2f, halfD - Wall / 2f), new Vector3(w, h, Wall), inside);
+            Model(openRoot, InteriorModel); // P118: back wall, divider and shelves; pivot bottom centre, floors at ShelfTops
             Block(openRoot, "SideL", new Vector3(-halfW + Wall / 2f, h / 2f, 0f), new Vector3(Wall, h, d), outside);
             Block(openRoot, "SideR", new Vector3(halfW - Wall / 2f, h / 2f, 0f), new Vector3(Wall, h, d), outside);
             Block(openRoot, "Top", new Vector3(0f, h - Wall / 2f, 0f), new Vector3(w, Wall, d), outside);
             Block(openRoot, "Plinth", new Vector3(0f, ShelfTops[0] / 2f, 0f), new Vector3(w, ShelfTops[0], d), outside);
-            Block(openRoot, "Divider", new Vector3(0f, (ShelfTops[0] + h) / 2f, 0.01f), new Vector3(0.02f, h - ShelfTops[0] - Wall, d - 0.02f), inside);
-            for (int i = 1; i < ShelfTops.Length; i++)
-                Block(openRoot, "Shelf" + i, new Vector3(0f, ShelfTops[i] - 0.0125f, 0.01f), new Vector3(w - 2f * Wall, 0.025f, d - 0.02f), inside);
 
             // Doors: hinged at the front corners, the leaf a little in front of the shell so it never cuts into the sides.
             var leftDoor = Hinge(openRoot, "DoorL", new Vector3(-halfW, 0f, -halfD - 0.015f), +1f, outside);
@@ -114,6 +113,16 @@ namespace GameOff.EditorTools
                     slot.localPosition = new Vector3(side * column, ShelfTops[row], 0.0f);
                     slots.Add(slot);
                 }
+
+            // P118: the compartments are not baked (the open locker is inactive then); without a lamp they stay black.
+            var lamp = new GameObject("Lamp").AddComponent<Light>();
+            lamp.transform.SetParent(openRoot, false);
+            lamp.transform.localPosition = new Vector3(0f, h * 0.55f, -halfD - 0.35f);
+            lamp.type = LightType.Point;
+            lamp.range = 2f;
+            lamp.intensity = 1f;
+            lamp.color = new Color(1f, 0.93f, 0.8f);
+            lamp.shadows = LightShadows.None;
 
             var bag = EvidenceBag(go.transform);
 
@@ -138,20 +147,24 @@ namespace GameOff.EditorTools
             hinge.localPosition = position;
             float leaf = LockerWidth / 2f - 0.005f;
             Block(hinge, "Leaf", new Vector3(side * leaf / 2f, LockerHeight / 2f, 0f), new Vector3(leaf, LockerHeight - 0.02f, 0.025f), material);
-            Block(hinge, "Handle", new Vector3(side * (leaf - 0.05f), 1.0f, -0.025f), new Vector3(0.02f, 0.16f, 0.025f), Graybox("M_Graybox_Neutral") ?? material);
+            Block(hinge, "Handle", new Vector3(side * (leaf - 0.05f), 1.0f, -0.025f), new Vector3(0.02f, 0.16f, 0.025f), AssetDatabase.LoadAssetAtPath<Material>(HandleMaterial) ?? material);
             return hinge;
         }
 
-        /// <summary>Goods without a model: a clear bag with a grey bundle inside and a red seal across the top (inactive template).</summary>
+        /// <summary>Goods without a model: the delivered sealed bag (inactive template).</summary>
         private static GameObject EvidenceBag(Transform parent)
         {
-            var bag = new GameObject("EvidenceBag");
-            bag.transform.SetParent(parent, false);
-            Block(bag.transform, "Contents", new Vector3(0f, 0.08f, 0f), new Vector3(0.11f, 0.13f, 0.035f), Graybox("M_Graybox_Prop"));
-            Block(bag.transform, "Bag", new Vector3(0f, 0.11f, 0f), new Vector3(0.16f, 0.22f, 0.05f), Graybox("M_Graybox_Glass"));
-            Block(bag.transform, "Seal", new Vector3(0f, 0.2f, 0f), new Vector3(0.165f, 0.025f, 0.055f), Graybox("M_Graybox_Red"));
+            var bag = Model(parent, BagModel);
+            bag.name = "EvidenceBag";
             bag.SetActive(false);
             return bag;
+        }
+
+        private static GameObject Model(Transform parent, string path)
+        {
+            var model = (GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(path));
+            model.transform.SetParent(parent, false);
+            return model;
         }
 
         private static void Block(Transform parent, string name, Vector3 center, Vector3 size, Material material)

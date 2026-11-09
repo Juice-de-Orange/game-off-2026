@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GameOff.Departure;
 using NUnit.Framework;
 using UnityEngine;
@@ -12,6 +13,20 @@ namespace GameOff.Tests
 
         [SetUp]
         public void Create() => _texts = ScriptableObject.CreateInstance<DepartureTuning>();
+
+        [Test]
+        public void WithFigures_LeavesTheBodyAloneIfNobodyWasMet()
+        {
+            Assert.AreEqual("body", TicketEnding.WithFigures("body", new List<string>(), _texts));
+            Assert.AreEqual("body", TicketEnding.WithFigures("body", null, _texts));
+        }
+
+        [Test]
+        public void WithFigures_ListsTheLinesUnderTheHeader()
+        {
+            string text = TicketEnding.WithFigures("body", new List<string> { "· a", "· b" }, _texts);
+            Assert.AreEqual("body\n\n" + _texts.figuresHeader + "\n· a\n· b", text);
+        }
 
         [TearDown]
         public void CleanUp() => Object.DestroyImmediate(_texts);

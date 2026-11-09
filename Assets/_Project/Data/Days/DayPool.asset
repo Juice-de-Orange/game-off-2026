@@ -216,6 +216,61 @@ MonoBehaviour:
   - Sabotage at a fuel depot.
   - Fraud, Meridian Hub.
   - Assault on an officer.
+  flawLines:
+  - flaw: 1
+    key: expires
+    line: It ran out? They told me I had until the end of the cycle.
+  - flaw: 1
+    key: expires
+    line: It's only a little late, officer. The queue for renewals is months long.
+  - flaw: 2
+    key: expires
+    line: I've been meaning to renew it. The office has been shut for weeks.
+  - flaw: 2
+    key: expires
+    line: It still looks like me, doesn't it?
+  - flaw: 3
+    key: name
+    line: A clerk's mistake. Everybody spells it differently.
+  - flaw: 3
+    key: name
+    line: That's my name. More or less. They rushed the form.
+  - flaw: 4
+    key: id
+    line: The numbers? I never look at the numbers.
+  - flaw: 4
+    key: id
+    line: They must have typed it wrong at the consulate.
+  - flaw: 6
+    key: issued
+    line: The consulate gave me that. Who else would have?
+  - flaw: 6
+    key: issued
+    line: I paid good money for that stamp. I mean, the fee.
+  - flaw: 7
+    key: cargo
+    line: It's only for personal use. All of it.
+  - flaw: 7
+    key: cargo
+    line: Yesterday that was perfectly legal, officer.
+  - flaw: 8
+    key: origin
+    line: I only lived there. I've nothing to do with what's going on.
+  - flaw: 8
+    key: origin
+    line: That's where I'm from. I can't change it.
+  - flaw: 9
+    key: route
+    line: We didn't even leave the ship there. I feel fine.
+  - flaw: 9
+    key: route
+    line: A short stop for fuel. Nobody was sick. Nobody I saw.
+  - flaw: 11
+    key: name
+    line: There must be plenty of people with that name.
+  - flaw: 11
+    key: name
+    line: You've got the wrong one. I get that a lot.
   standingWanted:
   - name: KAEL DROSS
     id: DX-0013-44
@@ -276,6 +331,66 @@ MonoBehaviour:
 
       And
       be careful who you don''t.'
+  - title: A letter from home
+    body: 'The depot has started rationing soap. We smell like everybody else now,
+      so nobody minds.
+
+
+      Write when you can.'
+  - title: A letter from home
+    body: 'The stairwell light has been out for a month. We count the steps now.
+      Nineteen.
+
+
+      Come home before we forget the number.'
+  - title: A letter from home
+    body: 'Somebody painted over the old mural by the depot. You can still see the
+      sun if you know where to look.
+
+
+      We know where to look.'
+  - title: A letter from home
+    body: 'The little one lost a tooth and wants to send it to you. I said the drone
+      costs too much.
+
+
+      It is in a matchbox, waiting.'
+  - title: A letter from home
+    body: 'They moved the clinic to the other side of the river. It''s a long walk,
+      but we are all still walking.
+
+
+      Don''t worry.'
+  - title: A letter from home
+    body: 'It snowed indoors at the school, through the roof. The children thought
+      it was wonderful.
+
+
+      The teachers did not.'
+  - title: A letter from home
+    body: 'I saw your name on an old list at the depot and stood there like a fool
+      for a while.
+
+
+      That''s all. I just wanted to say.'
+  - title: A letter from home
+    body: 'The neighbour''s dog has decided it lives with us. We can''t feed it.
+      We feed it.
+
+
+      How are the people up there?'
+  - title: A letter from home
+    body: 'We put your chair back at the table. It was in the way, but it looked
+      wrong by the wall.
+
+
+      Save what you can.'
+  - title: A letter from home
+    body: 'The radio played that song you hate. We all sang it, badly, on purpose.
+
+
+      You
+      would have left the room.'
   - title: A letter from home
     body: 'We had soup three days in a row. Good soup, though.
 

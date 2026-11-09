@@ -2217,6 +2217,7 @@ namespace GameOff.EditorTools
             float length = ceiling - top.y;
             if (length <= 0.01f) return;
             var along = Quaternion.Euler(0f, yaw, 0f) * Vector3.right;
+            var rodMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/_Project/Art/Materials/Hangar/M_Hangar_CraneRail.mat") ?? _prop; // P122
             foreach (float side in new[] { -0.45f, 0.45f })
             {
                 var rod = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -2225,7 +2226,7 @@ namespace GameOff.EditorTools
                 rod.transform.SetParent(group.transform, false);
                 rod.transform.SetPositionAndRotation(top + along * side + Vector3.up * (length * 0.5f), Quaternion.Euler(0f, yaw, 0f));
                 rod.transform.localScale = new Vector3(0.02f, length, 0.02f);
-                rod.GetComponent<MeshRenderer>().sharedMaterial = _prop;
+                rod.GetComponent<MeshRenderer>().sharedMaterial = rodMaterial;
                 GameObjectUtility.SetStaticEditorFlags(rod, StaticEditorFlags.BatchingStatic | StaticEditorFlags.ContributeGI);
             }
         }

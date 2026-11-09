@@ -1815,28 +1815,31 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Bestechungszettel und Umschlag liegen hinter den Stempeln (#32). Putzroboter fährt eine Runde durch die Halle, abseits von Bänken und Abendgästen (#31). Pflanze in 103 steht nicht mehr vor dem Spind, die Nummer 103 geht per `rework` an `SM_Motel_Locker` (#29). Zettel liegt jetzt auf der Tischplatte (#30). OcclusionCheck: ignoriert Trigger und steigt nicht mehr auf Möbel; prüft deshalb 139 statt 167 Punkte.
 
 ### P117 — Floppy-Player
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 09.11.): Lieferung wird eingebaut · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: Lieferungen `SM_Motel_FloppyPlayer`, `SM_Item_FloppyDisk`, `MUS_Floppy_01` · Folgt auf: P28
 - Ziel: Musik im Spiel kommt über Disketten; der Fernseher in 103 wird zum Floppy-Player (#30, Max 09.11.).
 - Enthalten: Spieler anstelle des TVs, eine Start-Diskette, [E] legt sie ein oder nimmt sie heraus, Musik nur im Zimmer hörbar.
 - Nicht enthalten: weitere Disketten, Kauf im Kiosk.
 - Abnahme: Diskette einlegen startet den Song, herausnehmen stoppt ihn; Regler MUSIC wirkt.
 - Ergebnis (09.11.): `FloppyPlayer` in `RestSpotBuilder`: [E] an der Stelle des Fernsehers legt die Diskette ein oder nimmt sie heraus, Musik 3D im Zimmer über die Music-Gruppe. Bis zur Lieferung steht der Fernseher, und es erscheint „nothing on this disk yet“. Nach der Lieferung: Delivery-Integrator und Rebuild All, dann ist es automatisch drin.
+- Ergebnis (09.11.): Modelle und Song eingebaut, der Fernseher ist weg. Im Testbild steht der Player auf dem Tisch, die Diskette daneben. Wie der Song klingt, muss Max hören. Eigene Laute kommen mit P127.
 
 ### P118 — Asservatenschrank: echtes Innenleben
-- Größe: S · Priorität: Kann · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: S · Priorität: Kann · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P32
 - Ziel: Die letzten grauen Platzhalter im Spiel ablösen (GameOff/List Placeholders).
 - Enthalten: Innenleben des Schranks und Beweisbeutel statt der Graybox-Formen in `LockerBoardBuilder`.
 - Abnahme: `GameOff/List Placeholders` listet den Schrank nicht mehr.
+- Ergebnis (09.11.): Innenleben und Beweisbeutel aus der Lieferung statt der Graybox-Formen. Der offene Schrank bekommt eine kleine Lampe, weil er nicht mitgebacken wird und sonst schwarz bleibt.
 
 ### P119 — Hangar: Nachlieferung und Abnahme von #17
-- Größe: S · Priorität: Muss · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: S · Priorität: Muss · Status: gebaut, wartet auf Max' Abnahme von #17 im Spiel (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P22, P90
 - Ziel: Den Hangar-Fehler #17 endgültig abschließen.
 - Enthalten: Lieferung `SM_Hangar_Wall_Viewport` und `SM_Hangar_Floor_4x4` einbauen (Rebuild All, Bake). Max läuft durch den Hangar und bestätigt, dass Streifen und Flackern weg sind (Ursache war die Außenhülle, Fix in `e22b022`).
 - Nicht enthalten: weitere Änderungen an den Wandmodellen.
 - Abnahme: Max sieht im Spiel keine Streifen mehr; #17 ist geschlossen; P90 steht auf `fertig`.
+- Ergebnis (09.11.): Fenster-Wand und Boden aus der Lieferung eingebaut. Nur noch offen, dass Max durch den Hangar läuft.
 
 ### P120 — Spinde ohne eingebackene Nummer
 - Größe: S · Priorität: Soll · Status: wartet auf Lieferung `SM_Motel_Locker` (rework, M026) · Zuständig: —
@@ -1846,7 +1849,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Kein Spind außerhalb von 103 zeigt die 103; #29 ist geschlossen.
 
 ### P121 — Bugreport mit Bild
-- Größe: M · Priorität: Kann · Status: offen · Zuständig: —
+- Größe: M · Priorität: Kann · Status: offen, Max muss entscheiden, wo die Bilder liegen · Zuständig: —
 - Braucht: — · Folgt auf: P84
 - Ziel: Spieler können beim Bugreport einen Screenshot mitschicken (#25).
 - Enthalten: Haken „Bild mitsenden“ im Bugreport, standardmäßig aus. Aufnahme des Spielbilds ohne Pausenmenü, verkleinert als JPEG. `deploy/reports/server.py` nimmt das Bild an (Limit heute 8 KB je Anfrage) und legt es so ab, dass das GitHub-Issue es verlinken kann, weil GitHub keine Bilder über die Issue-API annimmt.
@@ -1854,11 +1857,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Report mit Haken erzeugt ein Issue mit sichtbarem Bild, ohne Haken wird kein Bild übertragen; Backend-Tests grün; #25 ist geschlossen.
 
 ### P122 — Letzte Graybox-Reste
-- Größe: S · Priorität: Kann · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: S · Priorität: Kann · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: P118 · Folgt auf: P60
 - Ziel: `GameOff/List Placeholders` ist leer.
 - Enthalten: Türgriffe des Asservatenschranks und die Aufhängungen der Wegweiser (`Wayfinding_*/Hanger`) bekommen ein vorhandenes Metall-Material im Builder. Keine neuen Assets.
 - Abnahme: `GameOff/List Placeholders` listet nichts mehr.
+- Ergebnis (09.11.): Türgriffe und Schild-Aufhängungen nutzen das Material der Kranschiene. `GameOff/List Placeholders` ist leer.
 
 ### P123 — Anspielen: Welle 1, Welle 2, Hangar-Welle
 - Größe: S · Priorität: Muss · Status: offen · Zuständig: max
@@ -1868,27 +1872,30 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Beide Fragen stehen auf `beantwortet`; alle Funde haben ein Paket.
 
 ### P124 — Enden werten die Figuren aus
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: M · Priorität: Soll · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P12, P87
 - Ziel: Das Ticket-Ende erzählt, was aus den Figuren geworden ist; heute tut das nur die Zusammenfassung an Tag 11 (`MECHANICS.md`, Lücken).
 - Enthalten: Zeilen je Figur nach Gedächtnis und Flags in `TicketEnding`, Texte in `DepartureTuning`.
 - Nicht enthalten: neue Enden, Änderungen am Geld.
 - Abnahme: Zwei Läufe mit verschiedenen Entscheidungen zeigen verschiedene Zeilen; EditMode-Test deckt die Auswahl ab.
+- Ergebnis (09.11.): Das Ticket-Ende listet nach dem Text, was aus den getroffenen Figuren wurde (dieselben Zeilen wie die Zusammenfassung an Tag 11), der Schlusssatz zur Moral bleibt zuletzt. Der Endbildschirm passt Titel und Knopf an die Textlänge an.
 
 ### P125 — Economy Report rechnet alles mit
-- Größe: M · Priorität: Kann · Status: offen · Zuständig: —
+- Größe: M · Priorität: Kann · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P15
 - Ziel: Die Balance-Ziele stimmen auch mit allem, was der Simulator heute auslässt (`MECHANICS.md`, Lücken).
 - Enthalten: Beschlagnahme samt Strafen, Zoll bei der Drohne, Figuren-Geschenke und Bonus im `EconomySimulator`; `maxPerItem` danach abstimmen.
 - Abnahme: `GameOff/Economy Report` zeigt alle Ziele ✓ und weist die neuen Posten aus; `EconomyBalanceTests` grün.
+- Ergebnis (09.11.): Neuer Stil `Pilferer` (steckt je Schicht ein Stück ein, schickt es bei Bedarf per Drohne heim oder verkauft es) mit Bußgeld, Zoll und Strafpunkten; Boni, Rügen und Geschenke der Figuren zählen auf allen Wegen. Alle Ziele ✓: Pilferer Ticket Tag 7, Bett jetzt Tag 9 statt 10. `maxPerItem` bleibt bei 3.
 
 ### P126 — Tage ab 13 mit mehr Inhalt
-- Größe: M · Priorität: Kann · Status: offen · Zuständig: —
+- Größe: M · Priorität: Kann · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P40, P35
 - Ziel: Das endlose Spiel nach der Geschichte bleibt interessant (`MECHANICS.md`, Lücken).
 - Enthalten: Antworten auf Nachfragen auch für gezogene Reisende, Fracht-Fälle an späteren Tagen, größerer Brief-Pool.
 - Nicht enthalten: neue Figuren, Geschichte nach Tag 12.
 - Abnahme: An Tag 13 und später funktionieren Nachfragen und Fracht; `GameOff/Validate Travelers` ohne Fehler.
+- Ergebnis (09.11.): Reisende mit Fehler haben ab Tag 13 eine eigene Antwort auf die Nachfrage zum fehlerhaften Feld, jeder dritte Tag hat eine markierte Kiste, der Brief-Pool ist von 10 auf 20 gewachsen. `Build Day Pool` läuft nicht mit Rebuild All.
 
 ### P127 — Floppy-Player: eigene Laute
 - Größe: S · Priorität: Kann · Status: wartet auf Lieferung `SFX_Floppy_Insert`, `SFX_Floppy_Eject` (bestellt 09.11.) · Zuständig: —

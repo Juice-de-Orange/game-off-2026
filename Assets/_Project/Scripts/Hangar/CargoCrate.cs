@@ -55,9 +55,17 @@ namespace GameOff.Hangar
         /// <summary>Reporting only helps before the counter opens. Phase is Shift from the moment the letter closes (Morning is the letter itself).</summary>
         public static bool CanReport(DayManager.Phase phase, bool shiftStarted) => phase == DayManager.Phase.Shift && !shiftStarted;
 
+        private CargoCase CaseOn(int number)
+        {
+            var story = tuning.ForDay(number);
+            if (story != null || number <= day.StoryDays || number > day.DayCount) return story;
+            var rules = day.Entry(number).rules; // P126
+            return rules != null ? tuning.ForLoopDay(number, rules.Travelers) : null;
+        }
+
         private void OnDayStarted(int number)
         {
-            _case = tuning.ForDay(number);
+            _case = CaseOn(number);
             _searched = _reported = _shiftStarted = false;
             visual.SetActive(_case != null);
             if (_case != null) label.text = CargoCaseTuning.Fill("HOLD FOR INSPECTION\n{name}", _case);
@@ -65,7 +73,7 @@ namespace GameOff.Hangar
 
         private void AnnounceTomorrow()
         {
-            var next = tuning.ForDay(day.Day + 1);
+            var next = CaseOn(day.Day + 1);
             if (next != null && PlayerEconomy.Instance != null)
                 PlayerEconomy.Instance.AddLetterLine(CargoCaseTuning.Fill(tuning.letterNotice, next));
         }

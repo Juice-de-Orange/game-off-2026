@@ -223,7 +223,23 @@ namespace GameOff.Day
             if (endTitle != null) endTitle.text = title;
             if (endBody != null) endBody.text = body;
             if (endMenuLabel != null) endMenuLabel.text = buttonLabel;
+            LayoutEnd();
             ShowEnd();
+        }
+
+        private const float EndBodyWidth = 880f, EndMargin = 100f;
+
+        /// <summary>P124: title and button stand as far apart as the text needs; endings with the characters run to many lines.</summary>
+        private void LayoutEnd()
+        {
+            if (endTitle == null || endBody == null) return;
+            var rect = endBody.rectTransform;
+            rect.sizeDelta = new Vector2(EndBodyWidth, rect.sizeDelta.y);
+            float room = ((RectTransform)endPanel.transform).rect.height - EndMargin * 2f;
+            float height = Mathf.Min(endBody.GetPreferredValues(endBody.text, EndBodyWidth, Mathf.Infinity).y + 8f, room); // auto size shrinks what is too long
+            rect.sizeDelta = new Vector2(EndBodyWidth, height);
+            endTitle.rectTransform.anchoredPosition = new Vector2(0f, rect.anchoredPosition.y + height / 2f + 40f);
+            ((RectTransform)endMenuButton.transform).anchoredPosition = new Vector2(0f, rect.anchoredPosition.y - height / 2f - 40f);
         }
 
         private void CloseLetter()

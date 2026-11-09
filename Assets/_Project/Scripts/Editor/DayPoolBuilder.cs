@@ -88,6 +88,29 @@ namespace GameOff.EditorTools
             "Sabotage at a fuel depot.", "Fraud, Meridian Hub.", "Assault on an officer.",
         };
 
+        // P126: what a traveler with a flaw says when asked about that field.
+        private static readonly (DayGenerator.Flaw flaw, string key, string line)[] FlawLines =
+        {
+            (DayGenerator.Flaw.ExpiredPermit, "expires", "It ran out? They told me I had until the end of the cycle."),
+            (DayGenerator.Flaw.ExpiredPermit, "expires", "It's only a little late, officer. The queue for renewals is months long."),
+            (DayGenerator.Flaw.ExpiredId, "expires", "I've been meaning to renew it. The office has been shut for weeks."),
+            (DayGenerator.Flaw.ExpiredId, "expires", "It still looks like me, doesn't it?"),
+            (DayGenerator.Flaw.NameMismatch, "name", "A clerk's mistake. Everybody spells it differently."),
+            (DayGenerator.Flaw.NameMismatch, "name", "That's my name. More or less. They rushed the form."),
+            (DayGenerator.Flaw.IdMismatch, "id", "The numbers? I never look at the numbers."),
+            (DayGenerator.Flaw.IdMismatch, "id", "They must have typed it wrong at the consulate."),
+            (DayGenerator.Flaw.ForgedSeal, "issued", "The consulate gave me that. Who else would have?"),
+            (DayGenerator.Flaw.ForgedSeal, "issued", "I paid good money for that stamp. I mean, the fee."),
+            (DayGenerator.Flaw.Contraband, "cargo", "It's only for personal use. All of it."),
+            (DayGenerator.Flaw.Contraband, "cargo", "Yesterday that was perfectly legal, officer."),
+            (DayGenerator.Flaw.BannedOrigin, "origin", "I only lived there. I've nothing to do with what's going on."),
+            (DayGenerator.Flaw.BannedOrigin, "origin", "That's where I'm from. I can't change it."),
+            (DayGenerator.Flaw.Quarantine, "route", "We didn't even leave the ship there. I feel fine."),
+            (DayGenerator.Flaw.Quarantine, "route", "A short stop for fuel. Nobody was sick. Nobody I saw."),
+            (DayGenerator.Flaw.Wanted, "name", "There must be plenty of people with that name."),
+            (DayGenerator.Flaw.Wanted, "name", "You've got the wrong one. I get that a lot."),
+        };
+
         private static readonly (string title, string body)[] Letters =
         {
             ("A letter from home", "The heater rattles again, but it still works if you hit it twice. We hit it a lot.\n\nWe count the days. Don't work too hard."),
@@ -99,6 +122,16 @@ namespace GameOff.EditorTools
             ("A letter from home", "The school wants new shoes for the winter term. I said we'll see.\n\nDon't worry about it. Just come home."),
             ("A letter from home", "I found your old jacket in the cupboard. It still smells like you, a little.\n\nHow long now?"),
             ("A letter from home", "The radio says the routes are getting worse. Be careful who you let through.\n\nAnd be careful who you don't."),
+            ("A letter from home", "The depot has started rationing soap. We smell like everybody else now, so nobody minds.\n\nWrite when you can."),
+            ("A letter from home", "The stairwell light has been out for a month. We count the steps now. Nineteen.\n\nCome home before we forget the number."),
+            ("A letter from home", "Somebody painted over the old mural by the depot. You can still see the sun if you know where to look.\n\nWe know where to look."),
+            ("A letter from home", "The little one lost a tooth and wants to send it to you. I said the drone costs too much.\n\nIt is in a matchbox, waiting."),
+            ("A letter from home", "They moved the clinic to the other side of the river. It's a long walk, but we are all still walking.\n\nDon't worry."),
+            ("A letter from home", "It snowed indoors at the school, through the roof. The children thought it was wonderful.\n\nThe teachers did not."),
+            ("A letter from home", "I saw your name on an old list at the depot and stood there like a fool for a while.\n\nThat's all. I just wanted to say."),
+            ("A letter from home", "The neighbour's dog has decided it lives with us. We can't feed it. We feed it.\n\nHow are the people up there?"),
+            ("A letter from home", "We put your chair back at the table. It was in the way, but it looked wrong by the wall.\n\nSave what you can."),
+            ("A letter from home", "The radio played that song you hate. We all sang it, badly, on purpose.\n\nYou would have left the room."),
             ("A letter from home", "We had soup three days in a row. Good soup, though.\n\nSave what you can. We can wait a bit longer."),
         };
 
@@ -154,6 +187,8 @@ namespace GameOff.EditorTools
 
             pool.standingWanted = new List<WantedEntry> { new WantedEntry("KAEL DROSS", "DX-0013-44", WantedOrder.Arrest, "Armed robbery, Aska-3") };
 
+            pool.flawLines = new List<DayPool.FlawLine>();
+            foreach (var (flaw, key, line) in FlawLines) pool.flawLines.Add(new DayPool.FlawLine { flaw = flaw, key = key, line = line });
             pool.letters = new List<DayPool.Letter>();
             foreach (var (title, body) in Letters) pool.letters.Add(new DayPool.Letter { title = title, body = body });
 

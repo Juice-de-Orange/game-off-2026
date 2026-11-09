@@ -1607,7 +1607,7 @@ feedback:
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Floor_4x4.fbx
 package: P22
 scene: Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 4.0, 0.15]
@@ -6998,7 +6998,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Wall_Viewport.fbx
 package: P106
 scene: Hangar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [4.0, 0.3, 4.0]
@@ -10038,7 +10038,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_FloppyPlayer.fbx
 package: P117
 scene: Motel
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.45, 0.3, 0.25]
@@ -10066,7 +10066,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_FloppyDisk.fbx
 package: P117
 scene: Motel
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.09, 0.09, 0.01]
@@ -10093,7 +10093,7 @@ feedback: []
 path: Assets/_Project/Audio/Music/MUS_Floppy_01.ogg
 package: P117
 scene: Motel
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -10119,7 +10119,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_LockerInterior.fbx
 package: P118
 scene: Schalter
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [1.0, 0.48, 1.8]
@@ -10146,7 +10146,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Item_EvidenceBag.fbx
 package: P118
 scene: Schalter
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0.16, 0.05, 0.22]
