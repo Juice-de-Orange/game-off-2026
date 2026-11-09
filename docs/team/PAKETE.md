@@ -1734,7 +1734,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (Nachtlauf, 08.11.): Jeder Name bekommt fest eine von sechs Texturen, Menschen dazu Frisur oder Mütze (`TravelerLooks`); 60 Passfotos aus den echten Figuren gerendert (GameOff/Build Traveler Photos), auch für die endlosen Tage.
 
 ### P109 — Sperrstunde um 23 Uhr
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 09.11., Agent A) · Zuständig: martin
 - Braucht: — · Folgt auf: P28, P97
 - Ziel: Der Feierabend hat ein Ende; Zeit am Abend wird knapp, das Warten auf der Bank (P28) bekommt einen Sinn (Mechanik-Prüfung, martin, 09.11.).
 - Enthalten: Ab 23:00 (`DayManager.EveningSecondsLeft` = 0) schließen Kiosk, Bar/Schwarzmarkt, Drohne und Getränkeautomat (wie tagsüber „closed“, Gitter runter); Durchsage „Curfew. All shops are closed. Return to your quarters.“; Hinweis ins Bett. Bank-[F] spult bis dahin vor.
@@ -1742,15 +1742,16 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Um 23 Uhr lässt sich nichts mehr kaufen/verkaufen/schicken; die Durchsage kommt einmal; ins Bett gehen klappt weiter. Keine Geldwerte geändert.
 
 ### P110 — Schmuggel per Drohne mit Risiko
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: offen
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 09.11., Agent B) · Zuständig: martin
 - Braucht: — · Folgt auf: P08, P13
 - Ziel: Schmuggelware nach Hause zu schicken ist eine Abwägung statt gratis (Lücke aus MECHANICS, Mechanik-Prüfung 09.11.).
 - Enthalten: Waren mit CONTRABAND oder CONFISCATED in der Drohne → beim Abflug Chance auf Zollkontrolle → Ware weg + 1 Disziplinarstrafe (+ Briefzeile am Morgen); Chance und Folgen in `ConfiscationTuning`. Hinweis beim Beladen („Customs may inspect this.“).
 - Abnahme: Eine erwischte Lieferung kommt nicht an und zählt als Disziplinarstrafe; eine nicht erwischte deckt den Bedarf wie bisher. **Geldänderung → Economy Report** bis alle Ziele ✓.
 
 ### P111 — Fernrohr zeigt das Zuhause
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: offen
-- Braucht: evtl. Asset (Nahansicht Heimatstadt/Haus) · Folgt auf: P29, P28
+- Größe: M · Priorität: Soll · Status: in Arbeit (martin, 09.11., Agent C) · Zuständig: martin
+- Braucht: `SM_Home_Street.fbx` (bestellt 09.11., Platzhalter bis zur Lieferung) · Folgt auf: P29, P28
 - Ziel: Das Fernrohr (1 CR) zeigt mehr als das kostenlose Bullauge in 103 (Mechanik-Prüfung 09.11.).
+- Festgelegt (martin, 09.11.): **3D-Diorama** einer Straße bei Nacht, nur im Fernrohr sichtbar; bei vollem Zoom springt der Blick vom Planeten dorthin.
 - Enthalten: Zoom bis zur eigenen Straße/zum eigenen Haus; ein Fenster je Familienmitglied: hell (well/weak), dunkel (sick), flackernd (critical), schwarz (tot). Bullauge bleibt der Fernblick auf den Planeten.
 - Abnahme: Im Fernrohr erkennt man den Zustand jedes Familienmitglieds an seinem Fenster; Download-Zuwachs gemessen.

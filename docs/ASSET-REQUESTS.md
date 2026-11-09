@@ -9816,3 +9816,34 @@ refs: [Assets/_Project/Art/UI/Icons/UI_Icon_Item_NovaCola.png]
 placeholder: Selbst gezeichneter roter Schuh (32x32 hochskaliert), bis die Lieferung da ist.
 feedback: []
 ```
+
+### SM_Home_Street.fbx
+```yaml
+path: Assets/_Project/Art/Models/Home/SM_Home_Street.fbx
+package: P111
+scene: Fernrohr (Diorama der Heimatstadt, nur durchs Münzfernrohr sichtbar)
+status: offen
+priority: P2
+needed_by: 2026-11-16
+size_m: [12.0, 6.0, 8.0]
+pivot: bottom_center
+tris_max: 1500
+materials: [Street, Windows]
+textures:
+  - Assets/_Project/Art/Textures/Home/T_Home_Street_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Kleine Straße in der Heimatstadt auf dem Heimatplaneten, bei Nacht, von schräg oben gesehen (wie durch ein Fernrohr aus großer Höhe):
+  eine Zeile aus 3 einfachen, etwas heruntergekommenen Wohnhäusern (Arbeiterviertel, gleicher Retro-Stil wie die Station), davor Straße
+  mit einer Laterne. Das Familienhaus steht in der Mitte und ist leicht hervorgehoben (Tür, Briefkasten, Wäscheleine). Es hat genau
+  **drei Fensteröffnungen zur Kamera** (Mom, Lena, Pip), als dunkle, flache Rechtecke im Material-Slot "Windows" (ca. 0,8 x 1,0 m),
+  gut voneinander getrennt; das Leuchten setzt der Code. Übrige Fenster der Nachbarhäuser im Slot "Street", teils schwach gelb gemalt.
+interaction: "Ansehen durchs Münzfernrohr (P111): die drei Fenster leuchten je nach Zustand des Familienmitglieds"
+variants: []
+animations: []
+collision: none
+refs: []
+placeholder: Drei graue Boxen 3 x 5 x 6 m nebeneinander auf einer flachen Platte, mittlere Box mit drei Quads als Fenster; Pivot bottom_center, Material-Slots [Street, Windows].
+feedback: []
+```
