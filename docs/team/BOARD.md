@@ -67,6 +67,12 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - GitHub-Issues offen: #16 (wartet auf die Laute, P94), #17 (Max prüft das Hangar-Flackern), #25 (vorerst nicht)
 - **Als Nächstes:** Max spielt an und beantwortet die Fragen; danach Live-Deploy. Noch offen: P94 (wartet auf Laute), P106, P48, P51, P26-Rest, P25, P35
 
+### Stand 09.11. morgens (martin)
+- Fertig mit Agents in zwei Wellen: **P34** Terminal, **P28** + P29-Rest, **P32** + P33-Rest, **P109** Sperrstunde, **P110** Zoll bei der Drohne, **P111** Fernrohr-Diorama
+- 249/249 EditMode-Tests, Validate Travelers 0 – **noch nicht angespielt** (Testlisten `welle1-testen`, `welle2-testen` bei Max)
+- Neu aus Max' Antwort: **P112** Terminal nur Pass, **P113** Moral spürbar (beide offen)
+- **Als Nächstes:** Anspielen (Max), dann P112/P113; Hangar-Welle nach Entscheidung zu P106
+
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
 - **martin**: Startbildschirm — alles vom Spielstart bis zum Menü. Baut mit Platzhalter-Assets, Max ersetzt sie.

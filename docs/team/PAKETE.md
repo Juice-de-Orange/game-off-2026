@@ -680,7 +680,6 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Rundflug außen und Blick auf den Schaltertisch ohne graue Platzhalter; Konsole sauber; Tests grün.
 - Ergebnis (max, 05.11.): Lieferungen P39, P06, P07, P38 von max freigegeben und gemergt; alle Einträge `final`. Station hat die Außenhülle, Tisch hat Drucker, echte Papiere, Stempel-Abdrücke. Licht neu gebacken (39 s). **Neu: GameOff → Rebuild All After Deliveries** führt alle Builder in der richtigen Reihenfolge aus, danach `Setup Main Lighting + Bake`. Geprüft im WebGL-Build: Menü mit Hülle von außen, Tisch, Frachtliste, Verwarnzettel, Stempel; Rundflug außen nur aus dem Menü-Blickwinkel. Wellenmuster von Zettel und Frachtliste stört beim Lesen nicht, kein Rework nötig. 71/71 EditMode-Tests.
 
-
 ### P43 — Optionsmenü mit Kategorien
 - Größe: S · Priorität: Soll · Status: fertig (martin, 05.11.)
 - Braucht: P02 · Folgt auf: P02
@@ -1758,3 +1757,19 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: Zoom bis zur eigenen Straße/zum eigenen Haus; ein Fenster je Familienmitglied: hell (well/weak), dunkel (sick), flackernd (critical), schwarz (tot). Bullauge bleibt der Fernblick auf den Planeten.
 - Abnahme: Im Fernrohr erkennt man den Zustand jedes Familienmitglieds an seinem Fenster; Download-Zuwachs gemessen.
 - Ergebnis (martin, 09.11., Agent): Ganz hineingezoomt (FOV ≤ 4°, auf den Planeten gerichtet) blendet das Fernrohr auf das Diorama `HomeDiorama` (y −400, nur dann aktiv, unlit, ohne Bake): drei Fenster Mom/Lena/Pip hell, gedimmt (sick), flackernd (critical), dunkel (tot) nach `Household.Changed`/`DayStarted`; herauszoomen → zurück zum Planeten. Bis `SM_Home_Street.fbx` geliefert ist: Platzhalter aus Boxen, der Builder tauscht beim nächsten Lauf automatisch. `HomeLights` folgt jetzt auch `Household.Changed`. Werte in `Data/Economy/HomeViewTuning.asset`, 7 Tests. Nicht angespielt.
+
+### P112 — Terminal fragt nur den Pass ab
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P34
+- Ziel: Der Scanner (P16) behält seinen Wert; das Terminal ersetzt nicht den Vergleich der Papiere (Max, 09.11., Frage `terminal-und-moral`: A).
+- Enthalten: Im Terminal sind nur Name und ID **vom Pass** Knöpfe (Fahndung, Einreiseakte); Namen/IDs anderer Papiere erscheinen nicht mehr nebeneinander. `TerminalLookup` + Tests anpassen.
+- Nicht enthalten: Kosten pro Abfrage, Änderungen am Scanner.
+- Abnahme: Ein Gesuchter mit Pass-Name/-ID wird erkannt; Widersprüche zwischen Papieren zeigt nur noch der Scanner. Validate Travelers + EditMode-Tests grün.
+
+### P113 — Moral im Spiel spürbar
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P08, P12, P28
+- Ziel: Schleusen-Entscheidungen haben schon während des Spiels Folgen, nicht erst im Schlusssatz (Max, 09.11., Frage `terminal-und-moral`: D).
+- Enthalten (Vorschlag, beim Take festlegen): Gedanken am Bullauge/auf der Bank nach `Conduct.Morale`, Albtraum-Zeile im Morgenbrief nach einer Schleuse, Abendgäste reagieren. Texte in einem Tuning-Asset.
+- Nicht enthalten: Moral als Spielwert mit Geld- oder Spielfolgen (nur Stimmung).
+- Abnahme: Nach einer Schleuse merkt man es am selben Abend und am nächsten Morgen; ohne Schleuse keine solchen Zeilen.

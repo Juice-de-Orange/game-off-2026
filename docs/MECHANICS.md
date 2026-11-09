@@ -93,8 +93,8 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 - **Figuren an festen Plätzen (Korr an Tag 1) stehen exakt dort**, freie Figuren irgendwo davor oder dahinter (`CharacterPlanner.Queue`).
 - **Welle 1 (P28, P32, P34, P33-Rest) und Welle 2 (P109–P111) sind nur mit EditMode-Tests geprüft**, nicht angespielt: Kamerapositionen, Klickflächen und Lesbarkeit beim Anspielen prüfen.
 - **Terminal kennt die Tischposition als Konstante** (Tisch 1,3 m neben dem Schalter): wird der Tisch im Stations-Builder verschoben, `CounterTerminalBuilder` mitziehen.
-- **Terminal gegen Scanner:** Das Terminal (P34) zeigt alle Namen/IDs der Papiere nebeneinander – Widersprüche sieht man ohne den Scanner (P16), die Fahndung ist ein Klick ab Tag 1 → Frage an Max (`questions/2026-11-09_martin-an-max_terminal-und-moral.md`).
-- **Moral nur im Ende:** Moral (P08) wirkt nur auf den Schlusssatz, im Spiel spürt man sie nicht → gleiche Frage an Max.
+- **Terminal gegen Scanner:** Das Terminal (P34) zeigt alle Namen/IDs der Papiere nebeneinander – Widersprüche sieht man ohne den Scanner (P16). Max 09.11.: nur der Pass wird abgefragt → **P112**.
+- **Moral nur im Ende:** Moral (P08) wirkt nur auf den Schlusssatz, im Spiel spürt man sie nicht. Max 09.11.: spürbar machen → **P113**.
 - **Abend: 5 echte Minuten** bis zur Sperrstunde – ob das zum Handeln, Fernrohr und Barbesuch reicht, beim Anspielen prüfen.
 - **Zoll im Simulator:** Der Economy Report schickt nie Schmuggel per Drohne; P110 ändert kein Geld, aber Strafpunkte aus dem Zoll fehlen im Report.
 - **Pinnwand-Verlauf nur im Speicher:** ohne Spielstand beginnt er bei jedem Spielstart neu.
