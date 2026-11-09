@@ -88,6 +88,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
+| max | P48: Menü in Main, Rebuild All und Bake | Main.unity, Menu.unity, Boot.unity, PF_PauseMenu, PF_FrontEnd, generierte Prefabs, ProjectSettings/EditorBuildSettings.asset | 09.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog

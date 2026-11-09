@@ -782,7 +782,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Getestet im Editor und im WebGL-Build (Chrome), 0 Fehler/Warnungen.
 
 ### P48 — Menü direkt in Main mit Kameraflug
-- Größe: M · Priorität: Kann · Status: offen
+- Größe: M · Priorität: Kann · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: P09 · Folgt auf: P02
 - Ziel: Das Menü sieht aus wie das Spiel, und „Start Shift“ geht nahtlos ins Spiel über.
 - Enthalten: Spielstart direkt in `Main.unity` mit Außenkamera (echtes gebackenes Licht), Menü darüber, bei „Start Shift“ Kameraflug in
