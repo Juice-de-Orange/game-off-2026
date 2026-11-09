@@ -1,7 +1,7 @@
 ---
 von: martin
 an: max
-status: offen
+status: beantwortet
 erstellt: 2026-11-09 03:00
 blockiert: nein
 ---
@@ -31,3 +31,5 @@ Moral:
 Terminal bleibt wie gebaut, Moral bleibt wie sie ist. Nichts blockiert.
 
 ## Antwort
+**Max, 09.11.:** Terminal: **A**, nur Name und ID vom Pass abfragen (Fahndung, Einreiseakte); Widersprüche zwischen Papieren zeigt weiter nur der Scanner. Moral: **D**, im Spiel spürbar machen, als eigenes Paket.
+
