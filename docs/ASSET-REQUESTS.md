@@ -1579,7 +1579,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Wall_4x4.fbx
 package: P22
 scene: Hangar
-status: rework
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 0.3, 4.0]
