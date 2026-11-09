@@ -42,6 +42,12 @@ MonoBehaviour:
   missedSuccessChance: 0.6
   missedFine: 30
   lockerCaughtChance: 0.35
+  contrabandTag: {fileID: 11400000, guid: 2328642233f6251439e1dda0e093266b, type: 2}
+  confiscatedTag: {fileID: 11400000, guid: 987504bd07ab3c14985cc1e8f37c39db, type: 2}
+  droneInspectChance: 0.25
+  droneLoadingHint: Customs may inspect this.
+  droneCaughtLine: Customs opened your parcel and kept the {items}.
+  droneLetterLine: The drone came with a customs note. The {items} never arrived.
   disciplinaryLimit: 3
   airlockGuilty: -1
   airlockInnocent: -3

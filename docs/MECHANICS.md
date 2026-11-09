@@ -68,6 +68,9 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Pinnwand im Stehen | P33, P41 | [E] an der Pinnwand → Vollbild mit Aushang, Fahndungsfotos, Markt-Notiz, Memo; ältere Morgen bleiben (bis 30 Tage, A/D blättern), an der Wand lugen ältere Zettel hervor | `PinBoardCloseUp`, `PinBoardNotes` ← dieselben Texte wie `PinBoard` | im `PF_Economy` |
 | Sitzplätze & Ruhemomente | P28 | Hallenbänke: sitzen, Durchsagen, abends [F] bis 23 Uhr warten; Barhocker 1–3 öffnen das Barkeeper-Gespräch; Bullauge in 103: Blick auf den Heimatplaneten mit einem Gedanken je Familienzustand; Q/Esc steht auf | `SeatView`, `HallBench`, `BarStool`, `PortholeView` ← `Household`; `DayManager.SkipEvening` | `Data/Rest/RestSpotTuning.asset` (Texte, Zeiten) |
 | Familie in der Welt: Foto, Brief | P29 | Foto am Spind in 103 intakt/verblasst/zerrissen; der Morgenbrief liegt auf dem Tisch, die Schrift zittert stärker, je schlechter es der Familie geht | `FamilyPhoto`, `TableLetter` ← `Household.Changed`, `DayManager.LetterWritten` | `RestSpotTuning` |
+| Sperrstunde | P109 | Um 23 Uhr Abenduhr: Gong + Durchsage, Kiosk (Gitter fällt), Automat, Drohne, Ticketautomat, GIVE beim Barkeeper schließen; Reden, Schrank-Einbruch, Shuttle, Bett bleiben; Anzeigesäule NIGHT · CURFEW | `DayManager.TradingOpen`/`IsCurfew`, `CurfewStarted` → alle Händler; Bank [F] spult bis dahin | `Data/Counter/Announcements.asset` (`curfew*`), `eveningClockSeconds` (300) |
+| Zoll bei der Drohne | P110 | Sendung mit CONTRABAND/CONFISCATED: einmal pro Nacht 25 % → nur die Schmuggelware weg, 1 Disziplinarstrafe, Zeile in Abrechnung und Brief; Geschenke nie geprüft | `HomeDelivery` → `DroneCustoms` (in `SettlementWindow.Run`) → `Conduct` | `ConfiscationTuning.droneInspectChance` + Texte |
+| Fernrohr: Blick aufs Zuhause | P111 | Voll gezoomt auf den Planeten → Blende zum Diorama der Heimatstraße; drei Fenster (Mom, Lena, Pip) hell/gedimmt/flackernd/dunkel je Zustand; herauszoomen → zurück | `CoinTelescope`, `TelescopeFocus`, `HomeWindows` ← `Household.Changed`, `DayStarted` | `Data/Economy/HomeViewTuning.asset`, Modell `SM_Home_Street` (bestellt, bis dahin Platzhalter) |
 | Bugreport im Spiel | P84 (ersetzt P78) | Pausenmenü → REPORT BUG → Text tippen → SEND; das Backend auf Geoffrey legt ein GitHub-Issue an (Labels `bug`, `player-report`) | Version, Tag, Phase, Szene, Browser → `/api/report` | `Data/Menu/BugReportSettings.asset`, `deploy/reports` |
 | Dev-Werkzeuge | P09, P56, P10 | Dev_end_Day, Hitboxen, TRAFFIC_LINE_DEV, CREDITS ±100 | – | **vor der Abgabe ausschalten** (DEV-Reiter weg) |
 
@@ -76,14 +79,10 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Mechanik | Paket | Hängt an | Stand |
 |---|---|---|---|
 | Stimmen: 10 Laute je Spezies | P94 (martin) | Händler, Reisende | offen |
-| Sperrstunde um 23 Uhr | P109 | Abenduhr (P97), Händler, Bank (P28) | offen |
-| Schmuggel per Drohne mit Risiko | P110 | Drohne (P13), Beschlagnahme (P08) | offen, Geld → Economy Report |
-| Fernrohr zeigt das Zuhause | P111 | Fernrohr (P29), Familie | offen |
 | Heim-Shuttle angedockt, begehbar | P106 | P72 | Lieferung liegt bereit |
 
 ## Lücken / passt noch nicht
 - **Beschlagnahme vs. Simulator:** Der Economy Report rechnet Beschlagnahme und Strafen nicht mit – Mengen (`maxPerItem`) mit P15 abstimmen.
-- **Schmuggel nach Hause:** geht weiter ohne Risiko, auch nach P08 → **P110** (Kontrolle der Drohne).
 - **Tod im Simulator:** Der Economy Report rechnet ohne P69 (Grenze 0), der Tod spielt also für die Balance-Ziele keine Rolle.
 - **Figuren-Geschenke und Bonus** (P85, P77) rechnet der Economy Report nicht mit; es sind wenige Credits.
 - **Nells Sohn** wird beim ersten Nachfragen festgelegt (Tag 6) und zählt nur Verhaftungen bis zum Vortag. Gezogene Reisende ab Tag 13 zählen mit, spielen aber keine Rolle mehr. Das Ende (P12) wertet die Figuren noch nicht aus, nur die Zusammenfassung an Tag 11.
@@ -92,11 +91,11 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 - **Ende AIRLOCKED nur abseits des richtigen Wegs:** Wer den Shifter an Tag 3 wie befohlen terminiert, sieht seine Frage (Tag 6) nie. Gewollt (Test der Behörde), aber die meisten Spieler werden das Ende so nicht finden.
 - **Endlose Tage ohne Geschichte:** Ab Tag 13 nur gezogene Reisende ohne Figuren, Briefe aus einem kleinen Pool (10) – das Geld wächst nach dem Ticket weiter (Report: Tag 30 ≈ 1900 CR), es gibt nur das Ticket als Ziel. Reisende ab Tag 13 haben keine Antworten auf Nachfragen (P40) und keine Fracht-Geschichten.
 - **Figuren an festen Plätzen (Korr an Tag 1) stehen exakt dort**, freie Figuren irgendwo davor oder dahinter (`CharacterPlanner.Queue`).
-- **Welle 1 (P28, P32, P34, P33-Rest) ist nur mit EditMode-Tests geprüft**, nicht angespielt: Kamerapositionen, Klickflächen und Lesbarkeit beim Anspielen prüfen.
+- **Welle 1 (P28, P32, P34, P33-Rest) und Welle 2 (P109–P111) sind nur mit EditMode-Tests geprüft**, nicht angespielt: Kamerapositionen, Klickflächen und Lesbarkeit beim Anspielen prüfen.
 - **Terminal kennt die Tischposition als Konstante** (Tisch 1,3 m neben dem Schalter): wird der Tisch im Stations-Builder verschoben, `CounterTerminalBuilder` mitziehen.
-- **Abend ohne Ende:** Die Abenduhr läuft bis 23 Uhr, aber nichts reagiert darauf – Läden bleiben offen, das Warten auf der Bank (P28) wirkt nicht → **P109** Sperrstunde.
 - **Terminal gegen Scanner:** Das Terminal (P34) zeigt alle Namen/IDs der Papiere nebeneinander – Widersprüche sieht man ohne den Scanner (P16), die Fahndung ist ein Klick ab Tag 1 → Frage an Max (`questions/2026-11-09_martin-an-max_terminal-und-moral.md`).
 - **Moral nur im Ende:** Moral (P08) wirkt nur auf den Schlusssatz, im Spiel spürt man sie nicht → gleiche Frage an Max.
-- **Fernrohr gegen Bullauge:** Das kostenlose Bullauge in 103 (P28) zeigt denselben Planeten wie das Fernrohr (1 CR) → **P111** Fernrohr zeigt das Zuhause.
+- **Abend: 5 echte Minuten** bis zur Sperrstunde – ob das zum Handeln, Fernrohr und Barbesuch reicht, beim Anspielen prüfen.
+- **Zoll im Simulator:** Der Economy Report schickt nie Schmuggel per Drohne; P110 ändert kein Geld, aber Strafpunkte aus dem Zoll fehlen im Report.
 - **Pinnwand-Verlauf nur im Speicher:** ohne Spielstand beginnt er bei jedem Spielstart neu.
 - **Icons nur in den Daten:** Inventar und Handelsfenster zeigen noch keine Icons (Listen nur mit Namen) – eigenes Paket.

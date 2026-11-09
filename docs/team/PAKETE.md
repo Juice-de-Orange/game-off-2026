@@ -1734,24 +1734,27 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (Nachtlauf, 08.11.): Jeder Name bekommt fest eine von sechs Texturen, Menschen dazu Frisur oder Mütze (`TravelerLooks`); 60 Passfotos aus den echten Figuren gerendert (GameOff/Build Traveler Photos), auch für die endlosen Tage.
 
 ### P109 — Sperrstunde um 23 Uhr
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 09.11., Agent A) · Zuständig: martin
+- Größe: S · Priorität: Soll · Status: fertig (martin, 09.11.) · Zuständig: martin
 - Braucht: — · Folgt auf: P28, P97
 - Ziel: Der Feierabend hat ein Ende; Zeit am Abend wird knapp, das Warten auf der Bank (P28) bekommt einen Sinn (Mechanik-Prüfung, martin, 09.11.).
 - Enthalten: Ab 23:00 (`DayManager.EveningSecondsLeft` = 0) schließen Kiosk, Bar/Schwarzmarkt, Drohne und Getränkeautomat (wie tagsüber „closed“, Gitter runter); Durchsage „Curfew. All shops are closed. Return to your quarters.“; Hinweis ins Bett. Bank-[F] spult bis dahin vor.
 - Nicht enthalten: Zwangsschlaf, Strafe fürs Wachbleiben.
 - Abnahme: Um 23 Uhr lässt sich nichts mehr kaufen/verkaufen/schicken; die Durchsage kommt einmal; ins Bett gehen klappt weiter. Keine Geldwerte geändert.
+- Ergebnis (martin, 09.11., Agent): Um 23 Uhr (`DayManager.IsCurfew`, Event `CurfewStarted`, gemeinsame Prüfung `TradingOpen`) schließen Kiosk (Gitter fällt sichtbar mit Ton), Automat, Drohne, Ticketautomat und GIVE beim Barkeeper; Reden mit dem Barkeeper, Schrank-Einbruch, Shuttle und Bett bleiben. Gong + „Curfew. All shops are closed. Return to your quarters.“, danach Bett-Hinweis; Anzeigesäule „NIGHT · CURFEW“. Texte in `Data/Counter/Announcements.asset`, 11 Tests. Nicht angespielt.
 
 ### P110 — Schmuggel per Drohne mit Risiko
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 09.11., Agent B) · Zuständig: martin
+- Größe: S · Priorität: Soll · Status: fertig (martin, 09.11.) · Zuständig: martin
 - Braucht: — · Folgt auf: P08, P13
 - Ziel: Schmuggelware nach Hause zu schicken ist eine Abwägung statt gratis (Lücke aus MECHANICS, Mechanik-Prüfung 09.11.).
 - Enthalten: Waren mit CONTRABAND oder CONFISCATED in der Drohne → beim Abflug Chance auf Zollkontrolle → Ware weg + 1 Disziplinarstrafe (+ Briefzeile am Morgen); Chance und Folgen in `ConfiscationTuning`. Hinweis beim Beladen („Customs may inspect this.“).
 - Abnahme: Eine erwischte Lieferung kommt nicht an und zählt als Disziplinarstrafe; eine nicht erwischte deckt den Bedarf wie bisher. **Geldänderung → Economy Report** bis alle Ziele ✓.
+- Ergebnis (martin, 09.11., Agent): `DroneCustoms` prüft einmal pro Sendung in der Abrechnung (vor den Bedarfen): mit Schmuggelware zu 25 % → nur die Schmuggelware weg, 1 Strafpunkt (bei 3 → DISCHARGED nach dem Schließen der Abrechnung), rote Zeile in der Abrechnung, Briefzeile am Morgen. Figuren-Geschenke (`HomeDelivery.AddGift`) werden nie geprüft. Hinweis beim Beladen „Customs may inspect this.“ Werte/Texte in `ConfiscationTuning`; kein Geld → kein Rebalancing. 9 Tests. Nicht angespielt.
 
 ### P111 — Fernrohr zeigt das Zuhause
-- Größe: M · Priorität: Soll · Status: in Arbeit (martin, 09.11., Agent C) · Zuständig: martin
+- Größe: M · Priorität: Soll · Status: fertig (martin, 09.11.) · Zuständig: martin
 - Braucht: `SM_Home_Street.fbx` (bestellt 09.11., Platzhalter bis zur Lieferung) · Folgt auf: P29, P28
 - Ziel: Das Fernrohr (1 CR) zeigt mehr als das kostenlose Bullauge in 103 (Mechanik-Prüfung 09.11.).
 - Festgelegt (martin, 09.11.): **3D-Diorama** einer Straße bei Nacht, nur im Fernrohr sichtbar; bei vollem Zoom springt der Blick vom Planeten dorthin.
 - Enthalten: Zoom bis zur eigenen Straße/zum eigenen Haus; ein Fenster je Familienmitglied: hell (well/weak), dunkel (sick), flackernd (critical), schwarz (tot). Bullauge bleibt der Fernblick auf den Planeten.
 - Abnahme: Im Fernrohr erkennt man den Zustand jedes Familienmitglieds an seinem Fenster; Download-Zuwachs gemessen.
+- Ergebnis (martin, 09.11., Agent): Ganz hineingezoomt (FOV ≤ 4°, auf den Planeten gerichtet) blendet das Fernrohr auf das Diorama `HomeDiorama` (y −400, nur dann aktiv, unlit, ohne Bake): drei Fenster Mom/Lena/Pip hell, gedimmt (sick), flackernd (critical), dunkel (tot) nach `Household.Changed`/`DayStarted`; herauszoomen → zurück zum Planeten. Bis `SM_Home_Street.fbx` geliefert ist: Platzhalter aus Boxen, der Builder tauscht beim nächsten Lauf automatisch. `HomeLights` folgt jetzt auch `Household.Changed`. Werte in `Data/Economy/HomeViewTuning.asset`, 7 Tests. Nicht angespielt.

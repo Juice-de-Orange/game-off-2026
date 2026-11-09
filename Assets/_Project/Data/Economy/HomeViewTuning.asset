@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5801ead07911334ebb2d86982c7260d, type: 3}
+  m_Name: HomeViewTuning
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Shops.HomeViewTuning
+  enterFov: 4
+  aimTolerance: 14
+  blinkSeconds: 0.4
+  streetWideFov: 22
+  streetNarrowFov: 7
+  streetPanLimit: 9
+  windowColor: {r: 1, g: 0.78, b: 0.42, a: 1}
+  darkColor: {r: 0.015, g: 0.015, b: 0.02, a: 1}
+  brightLevel: 1
+  dimLevel: 0.28
+  criticalLevel: 0.8
+  flickerFloor: 0.08
+  flickerSpeed: 4
