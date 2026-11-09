@@ -10038,7 +10038,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_FloppyPlayer.fbx
 package: P117
 scene: Motel
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.45, 0.3, 0.25]
@@ -10066,7 +10066,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_FloppyDisk.fbx
 package: P117
 scene: Motel
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.09, 0.09, 0.01]
