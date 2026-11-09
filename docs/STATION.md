@@ -78,6 +78,7 @@
 - **Reisende:** Shuttle → Warteschlange → Prüfkammer (Standmarkierung) → Durchlassen: Nordtür → Halle → Motel/Bar.
   Abweisen: zurück in den Hangar. Verhaften: Wache kommt über die Halle durch die Nordtür.
   Verhaftung: Wache durch die Nordtür, dann Gitter (P104). Luftschleuse: Außenschott (X = 4) schwingt nach außen auf, Figur fliegt hinaus (P105).
+- **Zimmer 103 (P51):** rundes Bullauge Ø 1,2 m, Wandmodul `SM_Station_Wall_Porthole_Large_2x3`.
 - **Morgens (P14):** bis zu drei Reisende vom gelandeten Schiff in die Absperrung, bei Schichtbeginn zur Prüfkammer (`ArrivingGroup`). Fracht-Kiste (P35) bei (5,6; −15,5). Poster und Schmutz (P26) im `BuildDecals`.
 - **Heim-Shuttle (P106):** angedockt an der Westwand (x −18). Schott bei z −26 (per Blende, kein Durchgang), Ticketautomat bei z −28,7, Fenster bei z −22. Außen: `Shuttle_Docked` und `Collar_Shuttle` im `SkyExteriorBuilder`. Kabine bei (−23,2; 0,6; −28) innerhalb des Rumpfs, Boden höher als der Hangar, begehbar nur der Mittelgang. Die Kisten bei z −26 stehen jetzt bei z −31.
 - **Schiffe im Hangar (P107):** `HangarShips` in `PF_Economy`, Plätze (−10, −23), (10, −23), (−8, −33), (10, −35), geprüft frei von Möbeln; je Schiff eine Kollisionsbox, das landende Schiff bekommt sie nach der Landung.

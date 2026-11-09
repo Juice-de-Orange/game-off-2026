@@ -814,7 +814,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (Nachtlauf, 08.11.): Schilder über den Türen in drei Arten: Neon, Schablone, Rot für STAFF ONLY und CUSTOMS (`BuildDoorSigns`). Diner und Bar haben schon eigene.
 
 ### P51 — Zimmer 103 wohnlicher
-- Größe: S · Priorität: Kann · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: S · Priorität: Kann · Status: fertig (max, 09.11.; Elo-Gemälde gestrichen) · Zuständig: max
 - Braucht: — · Folgt auf: M014 (Katzenbild)
 - Ziel: Das Zimmer des Spielers fühlt sich persönlich an.
 - Enthalten: Bullauge größer (heute Ø 0,6 m, `SM_Station_Wall_Porthole_2x3`, Zimmer 103); Katzenbild etwas höher (`SM_Motel_CatPainting`, heute y 1,3 m, `StationGrayboxBuilder.BuildProps`); neues Gemälde vom Hund **Elo** (Bestellung erst, wenn das Paket dran ist; dann fragt Claude Max nach einem Foto als Vorlage, wie beim Katzenbild)
@@ -822,6 +822,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Alle drei Punkte im Zimmer zu sehen; Licht neu gebacken; das Bullauge passt zum Außenmodell.
 - Hinweis: Größeres Bullauge heißt neues Wandmodul über die Pipeline und neuer Lichtbake. Wird das Wohnmodul (P53) gebaut, zuerst dort klären, wo Zimmer 103 am Ende liegt.
 - Entscheidung (Max, 09.11.): Nur das größere Bullauge. Das Gemälde von Elo entfällt.
+- Ergebnis (09.11.): Größeres Bullauge (Ø 1,2 m, `SM_Station_Wall_Porthole_Large_2x3`) in Zimmer 103; im Bild von innen und außen geprüft.
 
 ### P52 — Mehr Figuren: Händler an Kiosk und Bar
 - Größe: M · Priorität: Soll · Status: fertig (max, 06.11.)
@@ -1788,12 +1789,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Nach einer Schleuse am selben Abend: Gedanke am Bullauge (vor dem Familiengedanken) und auf der Bank (vor der ersten Durchsage), Abendgäste reden darüber. Am nächsten Morgen eine Albtraum-Zeile unter dem Brief. Bei Unschuldigen härtere Zeilen, mit dem Namen der Person. An späteren Tagen nur noch Gedanken, solange `Conduct.Morale` ≤ −3. Ohne Schleuse nichts davon. Texte: `Data/Economy/MoraleTuning.asset`. Nur mit Tests geprüft, angespielt noch nicht.
 
 ### P114 — Menü-Bildrate
-- Größe: S · Priorität: Kann · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: S · Priorität: Kann · Status: gebaut, Abnahme offen (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P48
 - Ziel: Das Menü läuft auf schwachen Geräten wieder so flüssig wie vor P48 (CPU ×4: 24 fps, seit P48: 15 fps).
 - Enthalten (Vorschlag): Innenräume, die von außen nicht zu sehen sind, im Menü abschalten (der Hangar bleibt), beim Start zurücknehmen.
 - Nicht enthalten: Änderungen am Flug oder am Spiel selbst.
 - Abnahme: `tools/measure-webgl.mjs` mit `K9_CPU=4`: Menü mindestens 24 fps; Tag 1 unverändert.
+- Ergebnis (09.11.): Im Menü sind die Innenräume außer dem Hangar aus (`FrontEnd.hiddenRooms`), bei START wieder an. Die Messung ist nicht aussagekräftig: Der PC war ausgelastet (Referenz fiel von 24 auf 12 fps), neu gegen alt 15,5 gegen 12 fps. Bei freiem PC neu messen.
 
 ### P115 — Durchsagen mit Murmel-Lauten
 - Größe: S · Priorität: Soll · Status: wartet auf Lieferung `SFX_PA_Murmur_01–06` (bestellt 09.11.) · Zuständig: —
