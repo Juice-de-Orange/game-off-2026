@@ -75,7 +75,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 
 ### Stand 09.11. vormittags (max)
 - **P112, P113 und Status-Display-Fix** fertig, **live: `602d9dc`**. Im Browser gesehen: Statusanzeige lesbar, Terminal mit nur zwei Knöpfen, Abfrage, sechs Schleusen, Gedanke am Bullauge. Nicht im Browser gesehen: Bank, Abendgäste, Albtraum-Zeile am Morgen (nur durch Tests und Code-Prüfung gedeckt)
-- **P106, P14-Rest, P35, P26-Rest** fertig und **live: `a2735fa`** (09.11. nachmittags). Im Browser gesehen: Schott, Kabine, Abflug, Morgen-Gruppe, Schalter. Dazu mit einer lokalen Testversion: Kiste melden, Verhaften, Bank-Gedanke, Albtraum-Zeile, Icons im Kiosk. Nicht im Browser gesehen: Abendgäste (brauchen Durchgelassene), Titel des Zettels. Neu: Icons in Inventar, Handel und Schichtbericht; die Kiste hat ein Dialogfeld mit drei Knöpfen. Offen bleiben: Anspielen von Welle 1, 2 und der Hangar-Welle (Max), P94 (wartet auf Laute), P51 (Bullauge bestellt), P48 (Polish-Woche), #17 prüfen
+- **P106, P14-Rest, P35, P26-Rest** fertig und **live: `f00fab5`** (09.11. nachmittags). Im Browser gesehen: Schott, Kabine, Abflug, Morgen-Gruppe, Schalter. Dazu mit einer lokalen Testversion: Kiste melden, Verhaften, Bank-Gedanke, Albtraum-Zeile, Icons im Kiosk. Nicht im Browser gesehen: Abendgäste (brauchen Durchgelassene), Titel des Zettels. Neu: Icons in Inventar, Handel und Schichtbericht; die Kiste hat ein Dialogfeld mit drei Knöpfen. Offen bleiben: Anspielen von Welle 1, 2 und der Hangar-Welle (Max), P94 (wartet auf Laute), P51 (Bullauge bestellt), P48 (Polish-Woche), #17 prüfen
 
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
