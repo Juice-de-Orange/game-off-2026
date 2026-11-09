@@ -76,8 +76,70 @@ namespace GameOff.Day
         /// <summary>
         /// Bed dialog. confirm == null hides the confirm button (e.g. travelers still waiting); dev == null hides the red dev button.
         /// </summary>
+        private const string DevEndDayLabel = "Dev_end_Day";
+        // The third button's own place and look, while it is the red dev button under the dialog.
+        private Transform _devParent;
+        private Vector2 _devPosition, _devSize, _confirmPosition, _confirmSize, _cancelSize;
+        private Sprite _devSprite;
+        private Image.Type _devImageType;
+        private ColorBlock _devColors;
+        private Color _devTint;
+
+        /// <summary>P35: a real third choice sits in the row with the other two and looks like them; the dev button keeps its place below the dialog.</summary>
+        private void LayoutThirdButton(bool thirdChoice, bool hasConfirm)
+        {
+            var devRect = (RectTransform)dialogDev.transform;
+            var confirmRect = (RectTransform)dialogConfirm.transform;
+            var backRect = (RectTransform)dialogCancel.transform;
+            if (_devParent == null)
+            {
+                _devParent = devRect.parent;
+                _devPosition = devRect.anchoredPosition;
+                _devSize = devRect.sizeDelta;
+                _confirmPosition = confirmRect.anchoredPosition;
+                _confirmSize = confirmRect.sizeDelta;
+                _cancelSize = backRect.sizeDelta;
+                _devSprite = dialogDev.image.sprite;
+                _devImageType = dialogDev.image.type;
+                _devColors = dialogDev.colors;
+                _devTint = dialogDev.image.color;
+            }
+            confirmRect.anchoredPosition = _confirmPosition;
+            confirmRect.sizeDelta = _confirmSize;
+            backRect.sizeDelta = _cancelSize;
+            if (!thirdChoice)
+            {
+                devRect.SetParent(_devParent, false);
+                devRect.anchoredPosition = _devPosition;
+                devRect.sizeDelta = _devSize;
+                dialogDev.image.sprite = _devSprite;
+                dialogDev.image.type = _devImageType;
+                dialogDev.colors = _devColors;
+                dialogDev.image.color = _devTint;
+                return;
+            }
+            devRect.SetParent(confirmRect.parent, false);
+            float y = _confirmPosition.y;
+            dialogDev.image.sprite = dialogCancel.image.sprite;
+            dialogDev.image.type = dialogCancel.image.type;
+            dialogDev.colors = dialogCancel.colors;
+            dialogDev.image.color = dialogCancel.image.color;
+            if (!hasConfirm)
+            {
+                devRect.sizeDelta = _confirmSize;
+                devRect.anchoredPosition = new Vector2(-140f, y);
+                backRect.anchoredPosition = new Vector2(140f, backRect.anchoredPosition.y);
+                return;
+            }
+            var narrow = new Vector2(170f, _confirmSize.y);
+            confirmRect.sizeDelta = devRect.sizeDelta = backRect.sizeDelta = narrow;
+            confirmRect.anchoredPosition = new Vector2(-190f, y);
+            devRect.anchoredPosition = new Vector2(0f, y);
+            backRect.anchoredPosition = new Vector2(190f, backRect.anchoredPosition.y);
+        }
+
         public void ShowDialog(string title, string body, string confirmLabel, Action confirm, Action dev, Action cancel,
-            string devLabel = "Dev_end_Day", string cancelLabel = null)
+            string devLabel = DevEndDayLabel, string cancelLabel = null)
         {
             var cancelText = dialogCancel.GetComponentInChildren<TMP_Text>();
             _cancelDefault ??= cancelText.text;
@@ -94,6 +156,7 @@ namespace GameOff.Day
             // BACK alone sits in the middle, next to SLEEP on the right (positions from DayFlowBuilder).
             var back = (RectTransform)dialogCancel.transform;
             back.anchoredPosition = new Vector2(confirm != null ? 140f : 0f, back.anchoredPosition.y);
+            LayoutThirdButton(dev != null && !devLabel.StartsWith("Dev_"), confirm != null);
             hintBar.SetActive(false);
             dialogPanel.SetActive(true);
         }

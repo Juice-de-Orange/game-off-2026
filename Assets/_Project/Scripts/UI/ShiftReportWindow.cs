@@ -68,7 +68,7 @@ namespace GameOff.UI
                 var it = item;
                 rows.Add(new ItemListView.Row
                 {
-                    Label = item.DisplayName, Value = "×" + count, Selected = _picked == item,
+                    Icon = item.Icon, Label = item.DisplayName, Value = "×" + count, Selected = _picked == item,
                     OnClick = _answered ? (Action)null : () => { _picked = it; Refresh(); },
                 });
             }
