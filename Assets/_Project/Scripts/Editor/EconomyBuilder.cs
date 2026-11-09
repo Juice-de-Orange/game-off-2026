@@ -820,7 +820,10 @@ namespace GameOff.EditorTools
             lockerGo.transform.SetParent(root.transform, false);
             var (lockerUse, lockerView) = Trigger(lockerGo.transform, "Trigger", new Vector3(-4f, 0.9f, -6.45f), new Vector3(1.2f, 1.9f, 0.7f), "Evidence locker");
             Object.DestroyImmediate(lockerView);
-            Set(lockerGo.AddComponent<EvidenceLocker>(), "interactable", lockerUse);
+            var locker = lockerGo.AddComponent<EvidenceLocker>();
+            Set(locker, "interactable", lockerUse);
+            LockerBoardBuilder.BuildLockerDisplay(lockerGo.transform, locker, confiscation, LockerBoardBuilder.EnsureTuning(log)); // P32
+            LockerBoardBuilder.BuildBoardCloseUp(root.transform, canvas); // P33
 
             // P101: those let through today stand around after the shift.
             var crowdGo = new GameObject("EveningCrowd");
@@ -1332,6 +1335,8 @@ namespace GameOff.EditorTools
                 Set(l, "player", player);
                 Record(l);
             }
+            string lockerBoard = LockerBoardBuilder.WireInScene(instance, scene, player); // P32, P33
+            if (lockerBoard.Length > 0) log.Add("locker/pinboard " + lockerBoard);
             foreach (var h in instance.GetComponentsInChildren<GameOff.Station.HangarShips>(true))
             {
                 Set(h, "day", day);
