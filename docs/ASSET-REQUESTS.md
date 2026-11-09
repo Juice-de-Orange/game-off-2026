@@ -9853,7 +9853,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Porthole_Large_2x3.fbx
 package: P51
 scene: Motel
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [2.0, 0.2, 3.0]
