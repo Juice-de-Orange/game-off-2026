@@ -54,6 +54,19 @@ MonoBehaviour:
   paChime:
     clip: {fileID: 8300000, guid: 361f0241b2a35de4ea129aaba4f41d33, type: 3}
     volume: 1
+  paMurmurs:
+  - clip: {fileID: 8300000, guid: cfb1fa210cd3f5f43b4338932d013531, type: 3}
+    volume: 0.7
+  - clip: {fileID: 8300000, guid: 600a92bc7b91d744f953cf57a2f0be8c, type: 3}
+    volume: 0.7
+  - clip: {fileID: 8300000, guid: d74b5a8c96f8c0c40bc17fed490ac2ae, type: 3}
+    volume: 0.7
+  - clip: {fileID: 8300000, guid: 961815c8341a57a47be20f16c01b8d48, type: 3}
+    volume: 0.7
+  - clip: {fileID: 8300000, guid: ef34bb284c4018a4685277f61898e156, type: 3}
+    volume: 0.7
+  - clip: {fileID: 8300000, guid: af9ccb5a6cca2e4488ece729a26d6d07, type: 3}
+    volume: 0.7
   vendorGreet:
     clip: {fileID: 8300000, guid: f34b8a29f09757744a05940ed44ab031, type: 3}
     volume: 1

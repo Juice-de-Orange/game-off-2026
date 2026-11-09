@@ -88,7 +88,7 @@ namespace GameOff.Counter
                 subtitleRoot.SetActive(true);
                 if (speakerLamp != null) speakerLamp.SetActive(true);
                 if (clip != null) AudioManager.PlayVoice(clip);
-                else AudioManager.PlayOnVoice(s => s.paChime); // until the lines are recorded
+                else AudioManager.PlayAnnouncement(); // P115: no recorded lines, a murmur under the subtitle
                 float left = Mathf.Max(lines.secondsPerLine, clip != null ? clip.length : 0f);
                 while (left > 0f)
                 {

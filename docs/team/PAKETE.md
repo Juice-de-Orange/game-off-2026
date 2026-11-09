@@ -1798,12 +1798,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Im Menü sind die Innenräume außer dem Hangar aus (`FrontEnd.hiddenRooms`), bei START wieder an. Die Messung ist nicht aussagekräftig: Der PC war ausgelastet (Referenz fiel von 24 auf 12 fps), neu gegen alt 15,5 gegen 12 fps. Bei freiem PC neu messen.
 
 ### P115 — Durchsagen mit Murmel-Lauten
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P41, P94
 - Ziel: Durchsagen klingen nach Lautsprecher, ohne echte Stimmen (Max, 09.11.).
 - Enthalten: Zufälliger Murmel-Laut statt des Platzhalter-Tons in `Announcer` und auf den Bänken (`HallBench`), Untertitel bleiben.
 - Nicht enthalten: eingesprochene Sätze.
 - Abnahme: Keine zwei Durchsagen hintereinander klingen gleich; Download-Zuwachs gemessen.
+- Ergebnis (09.11.): Schalter, Sperrstunde und Bänke spielen über `AudioManager.PlayAnnouncement` einen von sechs Murmel-Lauten, nie denselben zweimal hintereinander; ohne Lieferung bleibt der Gong. Die Clips sind zusammen 200 KB groß. Untertitel bleiben.
 
 ### P116 — Bugs aus dem Anspielen, Runde 2
 - Größe: S · Priorität: Soll · Status: fertig (max, 09.11.; Spind-Nummer wartet auf Rework) · Zuständig: max

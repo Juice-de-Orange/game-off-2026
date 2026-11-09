@@ -20,6 +20,8 @@ namespace GameOff.Tests
             }
             Assert.AreEqual(3, set.footsteps.Length);
             foreach (var step in set.footsteps) Assert.IsTrue(step.clip != null, "footstep");
+            Assert.AreEqual(6, set.paMurmurs.Length);
+            foreach (var murmur in set.paMurmurs) Assert.IsTrue(murmur.clip != null, "PA murmur");
         }
 
         [Test]

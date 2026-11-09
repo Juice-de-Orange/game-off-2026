@@ -166,6 +166,25 @@ namespace GameOff.Audio
             if (sound != null && sound.clip != null) Instance.voice.PlayOneShot(sound.clip, sound.volume);
         }
 
+        private int _lastAnnouncement = -1;
+
+        /// <summary>P115: a loudspeaker announcement on the Voice group: one of the murmurs, never the same twice in a row; else the chime.</summary>
+        public static void PlayAnnouncement()
+        {
+            if (Instance == null || Instance.sounds == null) return;
+            var murmurs = Instance.sounds.paMurmurs;
+            if (murmurs == null || murmurs.Length == 0)
+            {
+                PlayOnVoice(s => s.paChime);
+                return;
+            }
+            int pick = UnityEngine.Random.Range(0, murmurs.Length);
+            if (murmurs.Length > 1 && pick == Instance._lastAnnouncement) pick = (pick + 1) % murmurs.Length;
+            Instance._lastAnnouncement = pick;
+            if (murmurs[pick].clip == null) PlayOnVoice(s => s.paChime);
+            else Instance.voice.PlayOneShot(murmurs[pick].clip, murmurs[pick].volume);
+        }
+
         /// <summary>The next footstep; steps remembers the last clip.</summary>
         /// <param name="clown">P63: the clown shoes are on.</param>
         public static void PlayFootstep(Footsteps steps, bool clown = false)

@@ -77,7 +77,8 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - **P112, P113 und Status-Display-Fix** fertig, **live: `602d9dc`**. Im Browser gesehen: Statusanzeige lesbar, Terminal mit nur zwei Knöpfen, Abfrage, sechs Schleusen, Gedanke am Bullauge. Nicht im Browser gesehen: Bank, Abendgäste, Albtraum-Zeile am Morgen (nur durch Tests und Code-Prüfung gedeckt)
 - **P51** fertig, **P114** gebaut (Messung offen), **P49** geschlossen (Hand-Deploy bleibt). Offen: P94, P115 (warten auf Laute), #17 (Asset-Rework), P114 (Messung).
 - **P19:** Entwurf auf itch.io (`juice-de-orange.itch.io/game-off-2026`) mit Cover und ZIP, läuft in Chrome. Es fehlen Firefox-Test, Genre und Tags, Public und die Jam-Einreichung.
-- **Pipeline (M026, 09.11.):** Offen bestellt sind Laute (P94), Floppy-Player mit Song (P117), Spind ohne Nummer, Schrank-Innenleben (P118). Bereit zur Freigabe: `assets/P115-pa-murmur`, `assets/P22-hangar-wall-rework`.
+- **Pipeline (M026, 09.11.):** Offen bestellt sind Laute (P94), Floppy-Player mit Song (P117), Spind ohne Nummer, Schrank-Innenleben (P118). P115 und die Hangarwand sind eingebaut.
+- **#17 Hangar-Streifen (09.11.):** Ursache war nicht die Mittelrippe, sondern die Außenhülle: Die Rückseiten-Rippen von `SM_Ext_HullPanel_4x4_Ribbed` lagen exakt in der Ebene der Innenwand. Die Hangar-Hülle steht jetzt 0,1 m weiter außen (`HullOffsetOf`). Im Testbild sind die Streifen weg, Max bestätigt im Spiel.
 - **Als Nächstes:** Max spielt Welle 1, 2 und die Hangar-Welle an; Rückmeldungen werden Fixes. Martins zwei Testfragen sind noch offen.
 - **P48** fertig: Das Menü liegt in Main (`FrontEnd`), `Menu.unity` gibt es nicht mehr; Start fliegt zum Bullauge von Zimmer 103.
 - **P106, P14-Rest, P35, P26-Rest** fertig und **live: `c9d6da7`** (09.11. nachmittags). Im Browser gesehen: Schott, Kabine, Abflug, Morgen-Gruppe, Schalter. Dazu mit einer lokalen Testversion: Kiste melden, Verhaften, Bank-Gedanke, Albtraum-Zeile, Icons im Kiosk. Nicht im Browser gesehen: Abendgäste (brauchen Durchgelassene), Titel des Zettels. Neu: Icons in Inventar, Handel und Schichtbericht; die Kiste hat ein Dialogfeld mit drei Knöpfen. Offen bleiben: Anspielen von Welle 1, 2 und der Hangar-Welle (Max), P94 (wartet auf Laute), P51 (Bullauge bestellt), P48 (Polish-Woche), #17 prüfen
@@ -95,7 +96,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| max | P115 und Hangarwand (P22 Rework): Rebuild All und Bake | Main.unity, Boot.unity, generierte Prefabs, Data/Audio | 09.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog

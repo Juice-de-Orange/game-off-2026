@@ -26,6 +26,8 @@ namespace GameOff.Audio
 
         [Header("Station")]
         public Sound paChime = new Sound();
+        [Tooltip("P115: what the loudspeakers say instead of recorded lines; a different one each time. Empty = paChime.")]
+        public Sound[] paMurmurs = new Sound[0];
         public Sound vendorGreet = new Sound();
         public Sound telescopeCoin = new Sound();
         public Sound guardBoots = new Sound();

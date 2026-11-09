@@ -786,7 +786,7 @@ namespace GameOff.EditorTools
                         // At an outer corner the plates run on past the corner (closing the corner gap), unless another room
                         // sits there (inner corner) or the facade continues in line; above a lower in-line neighbor only a strip.
                         float bottom = coveredTo > 0f ? coveredTo : -FloorThickness - 0.3f;
-                        float ext = HullOffset + HullThickness * 0.5f;
+                        float ext = HullOffsetOf(room) + HullThickness * 0.5f;
                         float a2 = a, b2 = b;
                         foreach (var (atStart, corner) in new[] { (true, from), (false, to) })
                         {
@@ -808,6 +808,12 @@ namespace GameOff.EditorTools
             foreach (var r in hull.GetComponentsInChildren<Renderer>())
                 GameObjectUtility.SetStaticEditorFlags(r.gameObject, StaticEditorFlags.BatchingStatic);
         }
+
+        /// <summary>
+        /// How far a room's hull plates stand outside its wall line. #17: the ribbed plates of the hangar reach 0.25 m behind their pivot,
+        /// exactly into the plane of the inner wall panels (0.1 m in front of the line), which showed as flickering black stripes.
+        /// </summary>
+        private static float HullOffsetOf(Room room) => room.Name == "Hangar" ? HullOffset + 0.1f : HullOffset;
 
         /// <summary>Top of a room's ceiling from outside (tiles, corridor vault or the hangar's 1 m ceiling truss).</summary>
         private static float RoofTop(Room room)
@@ -863,7 +869,7 @@ namespace GameOff.EditorTools
         /// <summary>One exposed wall part as 4 m plates, set just outside the wall line; openings on this line are cut out.</summary>
         private static void HullWall(GameObject hull, Room room, bool onXLine, float line, int outward, float a, float b, float bottom, float top)
         {
-            float across = line + outward * HullOffset;
+            float across = line + outward * HullOffsetOf(room);
             float yaw = onXLine ? (outward > 0 ? -90f : 90f) : (outward > 0 ? 180f : 0f); // panel front (-Z) faces outward
             for (float u = a; u < b - 0.01f; u += HullCell)
             for (float v = bottom; v < top - 0.01f; v += HullCell)
@@ -926,7 +932,7 @@ namespace GameOff.EditorTools
                 if (!Mathf.Approximately(otherLine, line) || o1 <= r0 + 0.01f || o0 >= r1 - 0.01f) continue;
                 if (!roof || RoofTop(other) >= y - 0.01f) return 0f;
             }
-            return HullOffset + HullThickness * 0.5f;
+            return HullOffsetOf(room) + HullThickness * 0.5f;
         }
 
         /// <summary>Roof (or underside) of a room in 4 m plates, reaching over the wall plates on open sides.</summary>
@@ -979,7 +985,8 @@ namespace GameOff.EditorTools
                     if (Kit(KitHangarRibOuter) != null)
                     {
                         // Delivered rib is 2 m deep: its center stands 1 m outside the hull plates
-                        float kx = side < 0 ? hangar.X0 - HullOffset - HullThickness * 0.5f - 1f : hangar.X1 + HullOffset + HullThickness * 0.5f + 1f;
+                        float plates = HullOffsetOf(hangar) + HullThickness * 0.5f;
+                        float kx = side < 0 ? hangar.X0 - plates - 1f : hangar.X1 + plates + 1f;
                         PlaceKit(hull, KitHangarRibOuter, new Vector3(kx, -0.4f, z), side < 0 ? 90f : -90f);
                         continue;
                     }

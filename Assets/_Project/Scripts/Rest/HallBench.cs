@@ -92,7 +92,7 @@ namespace GameOff.Rest
             {
                 if (!_fastForward)
                 {
-                    AudioManager.PlayOnVoice(s => s.paChime); // until the lines are recorded, like the counter's announcer
+                    AudioManager.PlayAnnouncement(); // P115: like the counter's announcer
                     seat.Hud.ShowLine(lines[_next % lines.Length], Tuning.subtitleSeconds);
                     _next = (_next + 1) % lines.Length;
                 }

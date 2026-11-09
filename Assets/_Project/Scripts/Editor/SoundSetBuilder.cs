@@ -46,6 +46,7 @@ namespace GameOff.EditorTools
             AssignOr(set.arrestScuffle, "SFX_Arrest_Scuffle", "SFX_Button_Arrest");
             Assign(set.airlockFire, "SFX_Airlock_Fire");
             Assign(set.paChime, "SFX_PA_Chime");
+            set.paMurmurs = Variants("SFX_PA_Murmur_0{0}", 6, MurmurVolume);
             Assign(set.vendorGreet, "SFX_Vendor_Greet");
             Assign(set.telescopeCoin, "SFX_Telescope_Coin");
             Assign(set.guardBoots, "SFX_Guard_Boots");
@@ -77,6 +78,9 @@ namespace GameOff.EditorTools
         }
 
         private const float PaperVolume = 0.32f;
+
+        /// <summary>P115: set here, not in the asset: Variants rebuilds the array on every run.</summary>
+        private const float MurmurVolume = 0.7f;
 
         /// <summary>P102: the delivered variants; empty as long as there are none.</summary>
         private static Sound[] Variants(string format, int count, float volume)

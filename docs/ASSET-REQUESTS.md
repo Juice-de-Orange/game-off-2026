@@ -1579,7 +1579,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Wall_4x4.fbx
 package: P22
 scene: Hangar
-status: Vorschau
+status: final
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 0.3, 4.0]
@@ -9882,7 +9882,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_01.ogg
 package: P115
 scene: Counter
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -9908,7 +9908,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_02.ogg
 package: P115
 scene: Counter
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -9934,7 +9934,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_03.ogg
 package: P115
 scene: Counter
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -9960,7 +9960,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_04.ogg
 package: P115
 scene: Counter
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -9986,7 +9986,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_05.ogg
 package: P115
 scene: Counter
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10012,7 +10012,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_06.ogg
 package: P115
 scene: Counter
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]

@@ -149,7 +149,7 @@ namespace GameOff.Day
             _curfewAnnounced = true;
             Debug.Log($"[Day] Curfew on day {_day}.");
             CurfewStarted?.Invoke(_day);
-            AudioManager.PlayOnVoice(s => s.paChime); // until the line is recorded, like the counter's announcer
+            AudioManager.PlayAnnouncement(); // P115: like the counter's announcer
             if (_curfewHints != null) StopCoroutine(_curfewHints);
             _curfewHints = StartCoroutine(CurfewHints());
         }
