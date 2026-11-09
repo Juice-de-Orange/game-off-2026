@@ -1804,7 +1804,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: Zufälliger Murmel-Laut statt des Platzhalter-Tons in `Announcer` und auf den Bänken (`HallBench`), Untertitel bleiben.
 - Nicht enthalten: eingesprochene Sätze.
 - Abnahme: Keine zwei Durchsagen hintereinander klingen gleich; Download-Zuwachs gemessen.
-- Ergebnis (09.11.): Schalter, Sperrstunde und Bänke spielen über `AudioManager.PlayAnnouncement` einen von sechs Murmel-Lauten, nie denselben zweimal hintereinander; ohne Lieferung bleibt der Gong. Die Clips sind zusammen 200 KB groß. Untertitel bleiben.
+- Ergebnis (09.11.): Schalter, Sperrstunde und Bänke spielen über `AudioManager.PlayAnnouncement` einen von sechs Murmel-Lauten, nie denselben zweimal hintereinander; ohne Lieferung bleibt der Gong. Der Download wächst um 0,26 MB (19,26 auf 19,53 MB, inklusive der neuen Hangarwand). Im Browser spielen alle sechs Clips, auch beim ersten Mal. Untertitel bleiben.
 
 ### P116 — Bugs aus dem Anspielen, Runde 2
 - Größe: S · Priorität: Soll · Status: fertig (max, 09.11.; Spind-Nummer wartet auf Rework) · Zuständig: max
