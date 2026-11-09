@@ -10173,7 +10173,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Floppy_Insert.ogg
 package: P127
 scene: Zimmer 103
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10199,7 +10199,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Floppy_Eject.ogg
 package: P127
 scene: Zimmer 103
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
