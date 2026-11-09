@@ -424,3 +424,12 @@ in `docs/ASSET-REQUESTS.md`.
 - status: offen
 - meldung: Die Laute je Spezies sind **keine Voicelines**: Das sind kurze synthetische Murmel-Laute ohne Wörter, damit gilt die Regel „keine Stimmen“ aus M018 hier nicht. Falls das so nicht machbar ist, bitte hier melden, statt Sprache zu erzeugen. Die Auswahl nach Gehör macht das Team. Bitte jede fertige Lieferung wie in M016 melden.
 - antwort:
+
+### M026 — Offene Aufträge 09.11.: Floppy-Player mit Song, Laute, Schrank
+- datum: 2026-11-09
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`: `SM_Motel_FloppyPlayer`, `SM_Item_FloppyDisk`, `MUS_Floppy_01` (P117), `SFX_Voice_<Spezies>_01–10` (P94, siehe M025), `SM_Motel_Locker` (rework), `SM_Counter_LockerInterior`, `SM_Item_EvidenceBag` (P118)
+- status: offen
+- meldung: Alle diese Einträge sind offen und von Max beauftragt. `SFX_PA_Murmur_*` (P115) und die Hangarwand (P22) liegen schon auf Branches, danke. **Rückfrage zu `MUS_Floppy_01`:** Kann die Pipeline einen eigenen Musik-Track erzeugen (ruhiger Synth-Loop, 90–150 s, ohne Stimmen)? Falls nicht, bitte hier melden, dann besorgen wir ihn anders. Beim Spind bitte nur die Nummer 103 aus der Textur nehmen, das Foto bleibt.
+- antwort:

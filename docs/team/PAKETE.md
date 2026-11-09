@@ -1821,3 +1821,10 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: weitere Disketten, Kauf im Kiosk.
 - Abnahme: Diskette einlegen startet den Song, herausnehmen stoppt ihn; Regler MUSIC wirkt.
 - Ergebnis (09.11.): `FloppyPlayer` in `RestSpotBuilder`: [E] an der Stelle des Fernsehers legt die Diskette ein oder nimmt sie heraus, Musik 3D im Zimmer über die Music-Gruppe. Bis zur Lieferung steht der Fernseher, und es erscheint „nothing on this disk yet“. Nach der Lieferung: Delivery-Integrator und Rebuild All, dann ist es automatisch drin.
+
+### P118 — Asservatenschrank: echtes Innenleben
+- Größe: S · Priorität: Kann · Status: wartet auf Lieferung `SM_Counter_LockerInterior`, `SM_Item_EvidenceBag` (bestellt 09.11.) · Zuständig: —
+- Braucht: — · Folgt auf: P32
+- Ziel: Die letzten grauen Platzhalter im Spiel ablösen (GameOff/List Placeholders).
+- Enthalten: Innenleben des Schranks und Beweisbeutel statt der Graybox-Formen in `LockerBoardBuilder`.
+- Abnahme: `GameOff/List Placeholders` listet den Schrank nicht mehr.

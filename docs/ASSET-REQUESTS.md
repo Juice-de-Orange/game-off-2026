@@ -7025,7 +7025,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_Courier.fbx
 package: P107
 scene: Hangar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [5.0, 8.0, 3.0]
@@ -7052,7 +7052,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_Hauler.fbx
 package: P107
 scene: Hangar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [5.0, 8.0, 3.0]
@@ -7079,7 +7079,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_Skiff.fbx
 package: P107
 scene: Hangar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [5.0, 8.0, 3.0]
@@ -7106,7 +7106,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_Family.fbx
 package: P107
 scene: Hangar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [5.0, 8.0, 3.0]
@@ -7133,7 +7133,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Guard_Boots.ogg
 package: P104
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7159,7 +7159,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Airlock_Alarm.ogg
 package: P105
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7185,7 +7185,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Airlock_Decompress.ogg
 package: P105
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7211,7 +7211,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Ship_Land.ogg
 package: P107
 scene: Hangar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7263,7 +7263,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V1.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7290,7 +7290,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V2.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7317,7 +7317,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V3.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7344,7 +7344,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V4.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7371,7 +7371,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Human_Albedo_V5.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7398,7 +7398,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V1.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7425,7 +7425,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V2.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7452,7 +7452,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V3.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7479,7 +7479,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V4.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7506,7 +7506,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Vellani_Albedo_V5.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7533,7 +7533,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V1.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7560,7 +7560,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V2.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7587,7 +7587,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V3.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7614,7 +7614,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V4.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7641,7 +7641,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Quobb_Albedo_V5.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7668,7 +7668,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V1.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7695,7 +7695,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V2.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7722,7 +7722,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V3.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7749,7 +7749,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V4.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7776,7 +7776,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Sorvak_Albedo_V5.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7803,7 +7803,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V1.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7830,7 +7830,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V2.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7857,7 +7857,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V3.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7884,7 +7884,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V4.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7911,7 +7911,7 @@ feedback: []
 path: Assets/_Project/Art/Textures/Characters/T_NPC_Xirrik_Albedo_V5.png
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -7938,7 +7938,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Hair_Short.fbx
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.28, 0.3, 0.25]
@@ -7965,7 +7965,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Hair_Long.fbx
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.28, 0.3, 0.25]
@@ -7992,7 +7992,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Hair_Bun.fbx
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.28, 0.3, 0.25]
@@ -8019,7 +8019,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Hat_Cap.fbx
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.28, 0.3, 0.25]
@@ -8046,7 +8046,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Characters/SM_NPC_Hat_Beanie.fbx
 package: P108
 scene: Prüfkammer
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.28, 0.3, 0.25]
@@ -9797,7 +9797,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_ClownShoes.png
 package: P63
 scene: UI (Inventar, Handelsfenster, Abrechnung)
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -10111,5 +10111,59 @@ animations: []
 collision: prefab
 refs: []
 placeholder: Kein Ton, der Spieler meldet nur „nothing on this disk yet“.
+feedback: []
+```
+
+### SM_Counter_LockerInterior.fbx
+```yaml
+path: Assets/_Project/Art/Models/Counter/SM_Counter_LockerInterior.fbx
+package: P118
+scene: Schalter
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [1.0, 0.48, 1.8]
+pivot: bottom_center
+tris_max: 400
+materials: [Interior]
+textures:
+  - Assets/_Project/Art/Textures/Counter/T_Counter_LockerInterior_Albedo.png   # 128x128, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Innenleben des Asservatenschranks: Rückwand, Mitteltrennwand und zwei Metallböden, abgenutztes Stahlblech mit Nummern-Etiketten an den Fächern, passend zum Schrank SM_Counter_Locker. Sechs Fächer.
+interaction: "zeigt beschlagnahmte Waren in den Fächern"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Graue Grundformen aus dem Builder bleiben, bis es geliefert ist.
+feedback: []
+```
+
+### SM_Item_EvidenceBag.fbx
+```yaml
+path: Assets/_Project/Art/Models/Counter/SM_Item_EvidenceBag.fbx
+package: P118
+scene: Schalter
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0.16, 0.05, 0.22]
+pivot: bottom_center
+tris_max: 150
+materials: [Bag]
+textures:
+  - Assets/_Project/Art/Textures/Counter/T_Item_EvidenceBag_Albedo.png   # 128x128, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Durchsichtiger Beweisbeutel aus Plastik mit rotem Siegelstreifen und beschriftetem Etikett, darin ein unscharfer Gegenstand. Für Waren ohne eigenes Modell.
+interaction: "liegt im Asservatenschrank"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Graue Grundformen aus dem Builder bleiben, bis es geliefert ist.
 feedback: []
 ```
