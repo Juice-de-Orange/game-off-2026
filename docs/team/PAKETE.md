@@ -492,7 +492,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Getestet: Zimmer 103 raus, 101 bleibt zu, Bar rein, Prüfkammertür bleibt zu bis `Open()`. Schmale Türen noch in Graybox-Wand.
 
 ### P28 — Sitzplätze & Ruhemomente
-- Größe: M · Priorität: Soll · Status: offen
+- Größe: M · Priorität: Soll · Status: in Arbeit (martin, 09.11., Agent B, zusammen mit P29-Rest)
 - Braucht: P05 (Sitz-Logik), P09 (Zeit vorspulen)
 - Ziel: Man kann sich hinsetzen und die Station auf sich wirken lassen.
 - Enthalten: Wartebänke in der Halle: [E] hinsetzen (Kamera tiefer, Blick zur Plattform), Durchsagen hören, im Feierabend Zeit bis zum
@@ -501,7 +501,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Alle drei Sitz-/Blickpunkte funktionieren, Q/ESC beendet sie sauber.
 
 ### P29 — Münzfernrohr & sichtbares Familienschicksal
-- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf)
+- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf); Rest (Foto, Brief) in Arbeit (martin, 09.11., Agent B)
 - Braucht: P24, P10 (Familienzustand) · Assets: `SM_Prop_CoinTelescope`, `UI_Telescope_Overlay`, `UI_Family_Photo` (bestellt)
 - Ziel: Die Familie ist in der Welt sichtbar, nicht nur in Briefen.
 - Festgelegt (Max, 08.11.): Fernrohr auf der Plattform wirklich nutzbar: [E] zieht 1 Credit ab, 30 s Blick mit Zoom und Schwenken. Heimatplanet mit erkennbaren Kontinenten und Städten (Karten neu bestellt).
@@ -535,7 +535,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   Kopfzeile des Modells bleibt frei. Warteschlangen-Länge und Sicherheitswarnungen nicht enthalten (gibt es noch nicht als Daten).
 
 ### P32 — Asservatenschrank mit echten Gegenständen
-- Größe: M · Priorität: Soll · Status: offen
+- Größe: M · Priorität: Soll · Status: in Arbeit (martin, 09.11., Agent C, zusammen mit P33-Rest)
 - Braucht: P08 · Assets: `SM_Counter_Locker` (da), `SM_Item_*` (6, bestellt)
 - Ziel: Beschlagnahmtes ist greifbar.
 - Enthalten: [E] Türen schwingen auf, Gegenstände liegen sichtbar in den Fächern, Rausnehmen = Inventar (Bar verkaufen / nach Hause schicken)
@@ -544,7 +544,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   „As ordered“ (P08). Frei entnehmen widerspricht dem – P32 zeigt die Gegenstände, **herausholen nur durch Aufbrechen (P83)**.
 
 ### P33 — Pinnwand, Lautsprecher & Warnlampe
-- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf)
+- Größe: M · Priorität: Soll · Status: teilweise (max, 08.11., Nachtlauf); Rest (Pinnwand-Nahansicht) in Arbeit (martin, 09.11., Agent C)
 - Braucht: P07, P09 · Assets: `SM_Counter_Board`, `SM_Counter_Speaker`, `SM_Counter_WarningLamp` (da)
 - Ziel: Der unsichtbare Vorgesetzte und die Regeln sind im Raum präsent.
 - Hinweis (max, 05.11.): Zettel im Sitzen und Durchsagen macht schon P41; hier bleiben Nahansicht im Stehen, Fotos/Memos und die Lampen.
@@ -555,7 +555,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (Nachtlauf, 08.11.): Warnlampe in der Prüfkammer: gelb bei Ankunft, rot bei Verhaftung und Schleuse. Lämpchen am Lautsprecher bei Durchsagen. Offen: Nahansicht der Pinnwand im Stehen.
 
 ### P34 — Terminal-Datenbank am Schalter
-- Größe: M · Priorität: Soll · Status: offen
+- Größe: M · Priorität: Soll · Status: in Arbeit (martin, 09.11., Agent A)
 - Braucht: P07 · Assets: CRT im `SM_Counter_Desk`, `SM_Counter_CRTTerminal` (da)
 - Ziel: Zweites Prüfwerkzeug neben den Dokumenten.
 - Enthalten: Klick aufs Terminal → Name/ID anklicken → Abgleich mit Fahndungsliste und Einreiseakte (grüne Schrift); Statusanzeige zeigt
