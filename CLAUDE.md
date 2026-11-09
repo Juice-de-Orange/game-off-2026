@@ -104,7 +104,7 @@ The Unity project lives at the repo root. All our own content goes under `Assets
 ```
 Assets/
   _Project/
-    Scenes/          Boot.unity, Menu.unity, Main.unity (claim before editing!)
+    Scenes/          Boot.unity, Main.unity (claim before editing!)
     Scenes/Sandbox/  Max_*.unity, Martin_*.unity — personal test scenes, never claimed, never touched by the other
     Scripts/         C# by feature: Core/, Player/, Counter/, Documents/, Travelers/, Day/, Economy/, Shops/, UI/, Audio/ ...
     Prefabs/         Prefabs by feature, same folders as Scripts
@@ -120,7 +120,7 @@ Asset naming, specs and the placeholder → final swap are defined in `docs/ASSE
 - Build features as **prefabs** in your own sandbox scene, then integrate into `Main.unity` with a claim.
   This keeps work on the shared scene short.
 - **Generated content — don't hand-edit:** the station (`PF_Station_Graybox`), the exterior (`PF_Exterior`, `PF_SkyRig`), the
-  document prefabs, the counter wiring and the front end (`Boot.unity`, `Menu.unity`, `PF_PauseMenu`) are built by editor tools
+  document prefabs, the counter wiring and the front end (`Boot.unity`, the `FrontEnd` object in Main, `PF_PauseMenu`) are built by editor tools
   (menu `GameOff/`: Build Station Graybox, Build Hab Module into Main, Build Sky & Exterior, Build Documents, Build Test Day, Integrate Asset Deliveries,
   Setup Main Lighting + Bake, Build Menu Scenes, Build Traffic into Main, Build Ambience into Main, Build Departure into Main, Build Travelers, Build Traveler Photos, Build Sound Set, Build Day Pool, Build Story Characters). Change the builder code in `Scripts/Editor/`, run the menu, rebake; manual edits
   in those prefabs are lost on the next run. **Occlusion:** Build Station clears Main's occlusion data, Setup Main Lighting + Bake bakes it again; afterwards GameOff/Check Occlusion Bake. The menu lives in Main (`FrontEnd`, P48; there is no Menu scene): after running Build Day Flow on its own, run Build Menu Scenes too, it holds the reference to the day UI. After asset deliveries, **GameOff/Rebuild All After Deliveries** runs the station, documents, day flow, economy, departure, traffic, ambience and menu builders in order; bake after it. It does not run Build Sound Set, Build Travelers, Build Traveler Photos or Build Story Characters: run those first, in that order (passport photos come from the traveler prefabs, story papers from the photos). After running Build Station or Build Sky & Exterior on their own, run Build Departure into Main too: it holds the scene references to the docked shuttle and its cabin.

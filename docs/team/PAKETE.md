@@ -1786,3 +1786,11 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: Moral als Spielwert mit Geld- oder Spielfolgen (nur Stimmung).
 - Abnahme: Nach einer Schleuse merkt man es am selben Abend und am nächsten Morgen; ohne Schleuse keine solchen Zeilen.
 - Ergebnis (09.11.): Nach einer Schleuse am selben Abend: Gedanke am Bullauge (vor dem Familiengedanken) und auf der Bank (vor der ersten Durchsage), Abendgäste reden darüber. Am nächsten Morgen eine Albtraum-Zeile unter dem Brief. Bei Unschuldigen härtere Zeilen, mit dem Namen der Person. An späteren Tagen nur noch Gedanken, solange `Conduct.Morale` ≤ −3. Ohne Schleuse nichts davon. Texte: `Data/Economy/MoraleTuning.asset`. Nur mit Tests geprüft, angespielt noch nicht.
+
+### P114 — Menü-Bildrate
+- Größe: S · Priorität: Kann · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P48
+- Ziel: Das Menü läuft auf schwachen Geräten wieder so flüssig wie vor P48 (CPU ×4: 24 fps, seit P48: 15 fps).
+- Enthalten (Vorschlag): Innenräume, die von außen nicht zu sehen sind, im Menü abschalten (der Hangar bleibt), beim Start zurücknehmen.
+- Nicht enthalten: Änderungen am Flug oder am Spiel selbst.
+- Abnahme: `tools/measure-webgl.mjs` mit `K9_CPU=4`: Menü mindestens 24 fps; Tag 1 unverändert.

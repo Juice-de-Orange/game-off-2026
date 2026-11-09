@@ -11,7 +11,7 @@ GitHub Actions (.github/workflows/deploy-web.yml), nachts 03:00 Uhr MEZ oder per
   → docker save | ssh geoffrey → /opt/kestrel9/deploy.sh
        prüft den Image-Namen, startet das Image, prüft die Antwort, bei Fehler zurück auf die vorige Version
 ```
-**Stand 09.11.:** Der Workflow baut noch nicht, weil die Secrets fehlen. Bis dahin wird von Hand eingespielt (unten); Max erlaubt Claude das seit dem 08.11. ausdrücklich. Live: `287978a` (P112, P113, Shuttle P106, Fracht P35, Morgen-Gruppe P14, Poster P26, Icons in den Listen, dazu Welle 1 und 2). Blockt Claudes Auto-Modus den Deploy doch einmal, legt Claude ein Skript bereit und max startet es mit `! bash <skript>`.
+**Stand 09.11.:** Der Workflow baut noch nicht, weil die Secrets fehlen. Bis dahin wird von Hand eingespielt (unten); Max erlaubt Claude das seit dem 08.11. ausdrücklich. Live: `1664ad4` (P48 Menü in Main, Hangar-Welle, P112, P113, Icons, dazu Welle 1 und 2). Blockt Claudes Auto-Modus den Deploy doch einmal, legt Claude ein Skript bereit und max startet es mit `! bash <skript>`.
 
 Wer sofort eine neue Version will: GitHub → Actions → **Deploy web version** → **Run workflow**.
 Schlägt ein Lauf fehl, bleibt die letzte Version online, und GitHub schickt eine Mail.
