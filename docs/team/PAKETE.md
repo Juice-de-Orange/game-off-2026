@@ -1752,7 +1752,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 ### P111 — Fernrohr zeigt das Zuhause
 - Größe: M · Priorität: Soll · Status: fertig (martin, 09.11.) · Zuständig: martin
-- Braucht: `SM_Home_Street.fbx` (bestellt 09.11., Platzhalter bis zur Lieferung) · Folgt auf: P29, P28
+- Braucht: `SM_Home_Street.fbx` (geliefert und eingebaut 09.11.) · Folgt auf: P29, P28
 - Ziel: Das Fernrohr (1 CR) zeigt mehr als das kostenlose Bullauge in 103 (Mechanik-Prüfung 09.11.).
 - Festgelegt (martin, 09.11.): **3D-Diorama** einer Straße bei Nacht, nur im Fernrohr sichtbar; bei vollem Zoom springt der Blick vom Planeten dorthin.
 - Enthalten: Zoom bis zur eigenen Straße/zum eigenen Haus; ein Fenster je Familienmitglied: hell (well/weak), dunkel (sick), flackernd (critical), schwarz (tot). Bullauge bleibt der Fernblick auf den Planeten.

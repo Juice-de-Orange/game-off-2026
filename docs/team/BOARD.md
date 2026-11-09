@@ -63,7 +63,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - **Martin, Nacht auf 09.11.:** P85 ganz, P87, Welle 1 (P28, P29-Rest, P32, P33-Rest, P34), Welle 2 (P109 Sperrstunde, P110 Zoll, P111 Fernrohr-Diorama). Nur mit Tests geprüft, noch nicht angespielt
 - **Live:** `4f65648` (Stand Nachtlauf). `main` ist weiter: P85-Rest, P87, Welle 1 und 2 sind **noch nicht live**
 - **Fragen an max offen:** Terminal und Moral, Welle 1 anspielen, Welle 2 anspielen (`docs/team/questions/2026-11-09_martin-an-max_*`)
-- **Lieferungen noch nicht auf `main`:** `assets/P106-au-en-hangar` (Shuttle, Paket noch offen), `assets/P111-home-street` (Straße fürs Fernrohr, ersetzt die Platzhalter-Boxen)
+- **Lieferungen noch nicht auf `main`:** `assets/P106-au-en-hangar` (Shuttle, Paket noch offen). Die Straße fürs Fernrohr (P111) ist eingebaut.
 - GitHub-Issues offen: #16 (wartet auf die Laute, P94), #17 (Max prüft das Hangar-Flackern), #25 (vorerst nicht)
 - **Als Nächstes:** Max spielt an und beantwortet die Fragen; danach Live-Deploy. Noch offen: P94 (wartet auf Laute), P106, P48, P51, P26-Rest, P25, P35
 
@@ -78,7 +78,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| max | P111 Lieferung SM_Home_Street einbauen | Main.unity, generierte Prefabs | 09.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog
