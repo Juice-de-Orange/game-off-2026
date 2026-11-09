@@ -1,7 +1,7 @@
 ---
 von: max
 an: martin
-status: beantwortet
+status: erledigt
 erstellt: 2026-11-08 18:30
 blockiert: nein
 ---
