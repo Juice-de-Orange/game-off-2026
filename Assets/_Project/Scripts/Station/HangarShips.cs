@@ -42,11 +42,45 @@ namespace GameOff.Station
                 var pad = pads[(firstPad + i) % pads.Length];
                 var ship = Instantiate(ships[rng.Next(ships.Length)], pad.position, pad.rotation, transform);
                 _placed.Add(ship);
-                if (i == 0) StartCoroutine(Land(ship.transform, pad));
+                var body = FitCollider(ship);
+                body.enabled = i != 0; // the one coming in gets solid when it is down
+                if (i == 0) StartCoroutine(Land(ship.transform, pad, body));
             }
         }
 
-        private IEnumerator Land(Transform ship, Transform pad)
+        /// <summary>One box around the whole ship, in its own space.</summary>
+        private static BoxCollider FitCollider(GameObject ship)
+        {
+            var toLocal = ship.transform.worldToLocalMatrix;
+            var bounds = new Bounds();
+            bool any = false;
+            foreach (var filter in ship.GetComponentsInChildren<MeshFilter>())
+            {
+                if (filter.sharedMesh == null) continue;
+                var b = filter.sharedMesh.bounds;
+                var matrix = toLocal * filter.transform.localToWorldMatrix;
+                for (int c = 0; c < 8; c++)
+                {
+                    var corner = matrix.MultiplyPoint3x4(b.center + Vector3.Scale(b.extents, new Vector3((c & 1) == 0 ? -1f : 1f, (c & 2) == 0 ? -1f : 1f, (c & 4) == 0 ? -1f : 1f)));
+                    if (any) bounds.Encapsulate(corner);
+                    else { bounds = new Bounds(corner, Vector3.zero); any = true; }
+                }
+            }
+            var box = ship.AddComponent<BoxCollider>();
+            box.center = bounds.center;
+            box.size = bounds.size;
+            return box;
+        }
+
+        private static bool PlayerInside(BoxCollider box)
+        {
+            var t = box.transform;
+            foreach (var hit in Physics.OverlapBox(t.TransformPoint(box.center), Vector3.Scale(box.size * 0.5f, t.lossyScale), t.rotation, ~0, QueryTriggerInteraction.Ignore))
+                if (hit is CharacterController) return true;
+            return false;
+        }
+
+        private IEnumerator Land(Transform ship, Transform pad, BoxCollider body)
         {
             AudioManager.PlayAt(s => s.shipLand, pad.position, 60f);
             for (float t = 0f; t < landingSeconds; t += Time.deltaTime)
@@ -57,6 +91,9 @@ namespace GameOff.Station
             }
             ship.position = pad.position;
             Landed?.Invoke(pad);
+            // Someone standing on the pad must not end up inside a solid box.
+            while (PlayerInside(body)) yield return new WaitForSeconds(0.5f);
+            body.enabled = true;
         }
     }
 }

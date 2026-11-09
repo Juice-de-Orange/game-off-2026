@@ -68,7 +68,8 @@ namespace GameOff.Station
                 var figure = Instantiate(traveler.Model, start, Quaternion.LookRotation(toLane), transform);
                 if (looks != null) looks.Apply(figure, traveler.DisplayName, traveler.Species);
                 var animator = figure.GetComponent<Animator>();
-                if (animator != null) animator.cullingMode = AnimatorCullingMode.CullCompletely;
+                // Not CullCompletely: a state change made while off-screen would be lost, and they would keep walking on the spot.
+                if (animator != null) animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
                 _figures.Add(figure);
                 StartCoroutine(Route(figure.transform, animator, placed));
                 placed++;
