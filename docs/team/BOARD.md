@@ -69,6 +69,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
+| martin | Welle 1 zusammenführen (P34, P28/P29-Rest, P32/P33-Rest): Rebuild All + Bake | `Main.unity`, `Menu.unity`, alle generierten Prefabs (Station, Exterior, SkyRig, CounterStation, Dokumente, DayFlow, Economy, Departure, Traffic, Ambience), `Data/Counter/`, `Data/Economy/`, Lichtdaten | 09.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog
