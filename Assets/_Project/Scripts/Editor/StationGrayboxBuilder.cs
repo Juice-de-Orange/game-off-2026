@@ -1918,7 +1918,7 @@ namespace GameOff.EditorTools
             KitPipeElbow = "Props/SM_Prop_PipeElbow.fbx", KitJunction = "Props/SM_Prop_JunctionBox.fbx", KitBucket = "Props/SM_Prop_MopBucket.fbx",
             KitTrashPile = "Props/SM_Prop_TrashPile.fbx", KitFan = "Props/SM_Prop_CeilingFan.fbx", KitNeon = "Props/SM_Prop_NeonSign_Open.fbx",
             KitCan = "Props/SM_Prop_SodaCan.fbx", KitDeckBench = "Props/SM_Prop_DeckBench.fbx", KitTelescope = "Props/SM_Prop_CoinTelescope.fbx",
-            KitTv = "Motel/SM_Motel_TV.fbx", KitDoorSign = "Motel/SM_Motel_DoorSign.fbx";
+            KitFloppyPlayer = "Motel/SM_Motel_FloppyPlayer.fbx", KitTv = "Motel/SM_Motel_TV.fbx", KitDoorSign = "Motel/SM_Motel_DoorSign.fbx";
 
         private static void BuildDecor(GameObject p)
         {
@@ -1928,7 +1928,9 @@ namespace GameOff.EditorTools
             FloorDecor(p, KitPlant, "Plant_Hall", 5.6f, -5.4f, 0.5f, 0.5f, 1f);
             FloorDecor(p, KitBin, "Bin_Hall", -7.55f, 2.7f, 0.5f, 0.5f, 0.9f);
             FloorDecor(p, KitBot, "CleaningBot", 7.4f, 0.6f, 0.6f, 0.6f, 0.4f, 0f, -90f);
-            StartBot(p.transform.Find("CleaningBot"), new Vector3(7.4f, 0f, -3f), new Vector3(7.4f, 0f, 3f));
+            // A loop around the hall, clear of the benches, the board, the plants and the evening guests' spots (#31).
+            StartBot(p.transform.Find("CleaningBot"), new Vector3(6.2f, 0f, -1.2f), new Vector3(6.2f, 0f, 4.3f), new Vector3(-6.2f, 0f, 4.8f),
+                new Vector3(-6.2f, 0f, -5.2f), new Vector3(4.6f, 0f, -5.2f));
 
             // Counter: west door z -9, south window x -6..-2, north board and speaker x -1.5, -2.5
             AddClockDisplay(WallDecor(p, KitClock, "Clock_Counter", false, -12, 1, -1f, 2.2f));
@@ -1958,8 +1960,9 @@ namespace GameOff.EditorTools
             }
 
             // Room 103
-            PlaceDecor(p, KitTv, "TV_Room103", new Vector3(-17f, 0.75f, 5.55f), 0f);
-            FloorDecor(p, KitPlant, "Plant_Room103", -16.5f, 3.4f, 0.5f, 0.5f, 1f);
+            // P117: the floppy player replaces the TV as soon as it is delivered; the TV stands in until then.
+            PlaceDecor(p, Kit(KitFloppyPlayer) != null ? KitFloppyPlayer : KitTv, "TV_Room103", new Vector3(-17f, 0.75f, 5.55f), 0f);
+            FloorDecor(p, KitPlant, "Plant_Room103", -16.4f, 4.2f, 0.5f, 0.5f, 1f);
 
             // Bar and diner: fans between the ceiling strips
             Spin(PlaceDecor(p, KitFan, "Fan_Bar", new Vector3(10.5f, 4f, 4f), 0f));
@@ -2055,15 +2058,17 @@ namespace GameOff.EditorTools
             fan.AddComponent<GameOff.Station.Spinner>();
         }
 
-        private static void StartBot(Transform bot, Vector3 a, Vector3 b)
+        private static void StartBot(Transform bot, params Vector3[] route)
         {
             if (bot == null) return;
             foreach (var t in bot.GetComponentsInChildren<Transform>()) GameObjectUtility.SetStaticEditorFlags(t.gameObject, 0);
             var patrol = bot.gameObject.AddComponent<GameOff.Station.PatrolBot>();
             var so = new SerializedObject(patrol);
-            so.FindProperty("pointA").vector3Value = a;
-            so.FindProperty("pointB").vector3Value = b;
+            var points = so.FindProperty("route");
+            points.arraySize = route.Length;
+            for (int i = 0; i < route.Length; i++) points.GetArrayElementAtIndex(i).vector3Value = route[i];
             so.ApplyModifiedPropertiesWithoutUndo();
+            bot.position = route[0];
         }
 
         /// <summary>P92: the counter's strip light is emission in its material, so the closed diner's counter gets a copy without it.</summary>

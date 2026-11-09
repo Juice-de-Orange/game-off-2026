@@ -799,12 +799,12 @@ namespace GameOff.EditorTools
             foreach (var spot in Vendors) BuildVendor(vendors, spot, data.Stocks[spot.Stock], trade);
             BuildDrone(root.transform, trade);
             BuildVendingMachine(root.transform, data.Stocks["Stock_Vending"]);
-            // P66: the bribe note lies on the left front of the counter desk (desk spots are around x -1, z -9; the player sits at x -2).
+            // P66: the bribe note lies behind the stamps on the left of the counter desk, where nothing else sits (#32: it used to lie under them).
             var bribeGo = new GameObject("BribeNote");
             bribeGo.transform.SetParent(root.transform, false);
             var bribeSpot = new GameObject("NoteSpot").transform;
             bribeSpot.SetParent(bribeGo.transform, false);
-            bribeSpot.SetPositionAndRotation(new Vector3(-1.12f, 0.856f, -8.5f), Quaternion.Euler(0f, 84f, 0f));
+            bribeSpot.SetPositionAndRotation(new Vector3(-0.84f, 0.868f, -8.42f), Quaternion.Euler(0f, 84f, 0f)); // above the envelope, which is 1.3 cm high
             var bribe = bribeGo.AddComponent<BribeNote>();
             Set(bribe, "spot", bribeSpot);
             // P80: the envelope the note came in lies under it, only while the note lies there.
@@ -814,7 +814,7 @@ namespace GameOff.EditorTools
                 var envelope = (GameObject)PrefabUtility.InstantiatePrefab(envelopeModel);
                 envelope.name = "Envelope";
                 envelope.transform.SetParent(bribeGo.transform, false);
-                envelope.transform.SetPositionAndRotation(bribeSpot.position + new Vector3(0.05f, -0.002f, 0.12f), Quaternion.Euler(0f, 70f, 0f));
+                envelope.transform.SetPositionAndRotation(bribeSpot.position + new Vector3(0.05f, -0.014f, 0.12f), Quaternion.Euler(0f, 70f, 0f));
                 envelope.SetActive(false);
                 Set(bribe, "envelope", envelope);
             }

@@ -1806,16 +1806,18 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Keine zwei Durchsagen hintereinander klingen gleich; Download-Zuwachs gemessen.
 
 ### P116 — Bugs aus dem Anspielen, Runde 2
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 09.11.; Spind-Nummer wartet auf Rework) · Zuständig: max
 - Braucht: — · Folgt auf: P26, P66, P28
 - Ziel: Die Reports #29 bis #32 beheben (Max, 09.11.).
 - Enthalten: Bestechungszettel nicht mehr unter den Stempeln (#32), Putzroboter fährt eine Runde durch die Halle (#31), Pflanze vor dem Spind weg, Nummer aus der Spind-Textur per Rework (#29), Zettel im Zimmer liegt auf dem Tisch (#30).
 - Abnahme: im Spiel gesehen; Tests grün.
+- Ergebnis (09.11.): Bestechungszettel und Umschlag liegen hinter den Stempeln (#32). Putzroboter fährt eine Runde durch die Halle, abseits von Bänken und Abendgästen (#31). Pflanze in 103 steht nicht mehr vor dem Spind, die Nummer 103 geht per `rework` an `SM_Motel_Locker` (#29). Zettel liegt jetzt auf der Tischplatte (#30). OcclusionCheck: ignoriert Trigger und steigt nicht mehr auf Möbel; prüft deshalb 139 statt 167 Punkte.
 
 ### P117 — Floppy-Player
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: gebaut, wartet auf Lieferung `SM_Motel_FloppyPlayer`, `SM_Item_FloppyDisk`, `MUS_Floppy_01` (max, 09.11.) · Zuständig: max
 - Braucht: Lieferungen `SM_Motel_FloppyPlayer`, `SM_Item_FloppyDisk`, `MUS_Floppy_01` · Folgt auf: P28
 - Ziel: Musik im Spiel kommt über Disketten; der Fernseher in 103 wird zum Floppy-Player (#30, Max 09.11.).
 - Enthalten: Spieler anstelle des TVs, eine Start-Diskette, [E] legt sie ein oder nimmt sie heraus, Musik nur im Zimmer hörbar.
 - Nicht enthalten: weitere Disketten, Kauf im Kiosk.
 - Abnahme: Diskette einlegen startet den Song, herausnehmen stoppt ihn; Regler MUSIC wirkt.
+- Ergebnis (09.11.): `FloppyPlayer` in `RestSpotBuilder`: [E] an der Stelle des Fernsehers legt die Diskette ein oder nimmt sie heraus, Musik 3D im Zimmer über die Music-Gruppe. Bis zur Lieferung steht der Fernseher, und es erscheint „nothing on this disk yet“. Nach der Lieferung: Delivery-Integrator und Rebuild All, dann ist es automatisch drin.

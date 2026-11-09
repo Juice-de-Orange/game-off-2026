@@ -121,7 +121,7 @@ namespace GameOff.EditorTools
             var spots = new List<Vector3>();
             // Flood fill from the player: spots outside the hull or inside a wall would report views nobody ever gets.
             var start = Object.FindFirstObjectByType<GameOff.Player.FirstPersonController>().transform.position;
-            if (!Physics.Raycast(start + Vector3.up, Vector3.down, out var ground, 3f)) return spots;
+            if (!Physics.Raycast(start + Vector3.up, Vector3.down, out var ground, 3f, ~0, QueryTriggerInteraction.Ignore)) return spots;
             var open = new Queue<(Vector2Int cell, Vector3 eye)>();
             var seen = new HashSet<Vector2Int> { Vector2Int.zero };
             open.Enqueue((Vector2Int.zero, ground.point + Vector3.up * EyeHeight));
@@ -135,8 +135,9 @@ namespace GameOff.EditorTools
                     var next = cell + n;
                     if (seen.Contains(next)) continue;
                     var wanted = eye + new Vector3(n.x, 0f, n.y) * GridStep;
-                    if (Physics.Linecast(eye, wanted) || Physics.CheckSphere(wanted, 0.2f)) continue;
-                    if (!Physics.Raycast(wanted, Vector3.down, out var floor, EyeHeight + 0.5f)) continue;
+                    if (Physics.Linecast(eye, wanted, ~0, QueryTriggerInteraction.Ignore) || Physics.CheckSphere(wanted, 0.2f, ~0, QueryTriggerInteraction.Ignore)) continue;
+                    if (!Physics.Raycast(wanted, Vector3.down, out var floor, EyeHeight + 0.5f, ~0, QueryTriggerInteraction.Ignore)) continue;
+                    if (floor.point.y + EyeHeight - eye.y > 0.4f) continue; // a step up onto furniture, nobody walks there
                     seen.Add(next);
                     open.Enqueue((next, floor.point + Vector3.up * EyeHeight));
                 }

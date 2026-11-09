@@ -143,12 +143,13 @@ namespace GameOff.EditorTools
                 Seat(go, trigger, tuning, hud, eye, null, 45f, false, false, false, "[Q] Step back", canvas);
             }
 
-            // The morning letter on the table in 103, near the front right corner (the TV stands in the middle).
+            // The morning letter on the table in 103, left of the TV. #30: the top is only 5.33 to 5.8 deep (the model's bounds include the
+            // fold-out leg), so the letter hung over the front edge.
             {
                 var b = Furniture(scene, "SM_Motel_Table", new Vector3(-17f, 0f, 5.5f), new Vector3(0.8f, 0.75f, 0.6f), ref found);
-                var at = new Vector3(b.max.x - 0.14f, b.max.y + 0.003f, b.min.z + 0.15f);
+                var at = new Vector3(b.min.x + 0.07f, b.max.y + 0.003f, b.min.z + 0.27f); // the top is shallower than the model's bounds
                 var go = Spot(root.transform, "TableLetter", at + Vector3.up * 0.05f, new Vector3(0.26f, 0.1f, 0.3f), "Read the letter", out var trigger);
-                var canvas = WorldCanvas(go.transform, "Letter", at, Quaternion.Euler(90f, -10f, 0f), new Vector2(0.15f, 0.21f));
+                var canvas = WorldCanvas(go.transform, "Letter", at, Quaternion.Euler(90f, 2f, 0f), new Vector2(0.15f, 0.21f));
                 var paper = Graphic<Image>(canvas, "Paper", Paper);
                 Stretch(paper.rectTransform);
                 var text = Label(canvas, "Text", "", 15f, Ink, Vector2.zero, Vector2.zero);
@@ -166,6 +167,29 @@ namespace GameOff.EditorTools
                 Set(letter, "tuning", tuning);
                 var eye = Point(go.transform, "Eye", at + new Vector3(0f, 0.42f, -0.16f), Quaternion.Euler(70f, 0f, 0f));
                 Seat(go, trigger, tuning, hud, eye, null, 45f, false, false, false, "[Q] Put it down", canvas);
+            }
+
+            // P117: the floppy player where the TV stands; the song and the models come from the pipeline.
+            {
+                var go = Spot(root.transform, "FloppyPlayer", new Vector3(-16.94f, 1f, 5.55f), new Vector3(0.48f, 0.5f, 0.5f), "Insert the floppy", out var trigger); // clear of the letter's trigger
+                var source = trigger.gameObject.AddComponent<AudioSource>(); // at the player, not at the group's origin
+                source.minDistance = 1.2f;
+                source.maxDistance = 9f;
+                source.rolloffMode = AudioRolloffMode.Linear;
+                var player = go.AddComponent<FloppyPlayer>();
+                Set(player, "interactable", trigger);
+                Set(player, "source", source);
+                var track = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/_Project/Audio/Music/MUS_Floppy_01.ogg");
+                if (track != null) Set(player, "track", track);
+                var diskModel = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Project/Art/Models/Items/SM_Item_FloppyDisk.fbx");
+                if (diskModel != null)
+                {
+                    var disk = (GameObject)PrefabUtility.InstantiatePrefab(diskModel);
+                    disk.name = "Disk";
+                    disk.transform.SetParent(go.transform, false);
+                    disk.transform.SetPositionAndRotation(new Vector3(-16.68f, 0.753f, 5.5f), Quaternion.Euler(0f, 12f, 0f));
+                    Set(player, "diskOnTable", disk);
+                }
             }
 
             Directory.CreateDirectory(Path.GetDirectoryName(PrefabPath));
