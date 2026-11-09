@@ -126,6 +126,10 @@ namespace GameOff.EditorTools
             Set(manager, "bed", interactable);
             Set(manager, "bedDebugView", debugView);
             Set(manager, "ui", ui);
+            // P109: the curfew lines live with the counter's loudspeaker lines (built by Build Documents)
+            var announcements = AssetDatabase.LoadAssetAtPath<GameOff.Counter.Announcements>("Assets/_Project/Data/Counter/Announcements.asset");
+            if (announcements != null) Set(manager, "announcements", announcements);
+            else log.Add("Announcements.asset missing: curfew uses the default texts (run GameOff/Build Documents)");
             BuildHallBoard(root.transform);
             var mood = root.AddComponent<StationMood>();
             Set(mood, "day", manager);

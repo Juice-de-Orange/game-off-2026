@@ -28,6 +28,8 @@ namespace GameOff.Shops
         [SerializeField] private GameObject debugView;
         [Tooltip("P90: optional shutter, down whenever this vendor is closed.")]
         [SerializeField] private Counter.SecurityShutter shutter;
+        [Tooltip("P109: how fast the shutter falls at the curfew (shutterDropSeconds).")]
+        [SerializeField] private Counter.DialogueTuning shutterTuning;
 
         private bool _shutterOpen = true;
 
@@ -50,7 +52,13 @@ namespace GameOff.Shops
             if (shutter == null || IsOpen == _shutterOpen) return;
             _shutterOpen = IsOpen;
             if (_shutterOpen) shutter.Raise(1.2f);
-            else shutter.Drop(0f); // nobody watches the kiosk close: it happens while the player sleeps
+            else if (day != null && day.IsCurfew)
+            {
+                // P109: at 23:00 the player may stand right in front of it – the shutter slams down audibly
+                shutter.Drop(shutterTuning != null ? shutterTuning.shutterDropSeconds : 0.25f);
+                AudioManager.PlayAt(s => s.shutterDrop, shutter.transform.position, 25f);
+            }
+            else shutter.Drop(0f); // otherwise nobody watches the kiosk close: it happens while the player sleeps
         }
 
         private void ApplyDevTools()
@@ -58,7 +66,7 @@ namespace GameOff.Shops
             if (debugView != null) debugView.SetActive(day == null || day.DevTools);
         }
 
-        private bool IsOpen => !stock.OpenAfterShiftOnly || day == null || day.CurrentPhase == DayManager.Phase.Evening;
+        private bool IsOpen => !stock.OpenAfterShiftOnly || day == null || day.TradingOpen;
 
         private void OnInteract()
         {
@@ -74,7 +82,7 @@ namespace GameOff.Shops
                 return;
             }
             player.SetControlEnabled(false);
-            dialogs.ShowDialog($"{vendorName} is closed", "Come back after your shift.", null, null,
+            dialogs.ShowDialog($"{vendorName} is closed", day.IsCurfew ? day.CurfewClosedText : "Come back after your shift.", null, null,
                 day.DevTools ? () => window.OpenTrade(stock) : null, () => player.SetControlEnabled(true), "Dev_force_Trade");
         }
     }

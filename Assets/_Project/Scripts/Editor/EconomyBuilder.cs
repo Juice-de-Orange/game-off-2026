@@ -877,6 +877,7 @@ namespace GameOff.EditorTools
             Set(shutter, "slats", slats);
             SetFields(shutter, ("closedHeight", 2.34f), ("openHeight", 3.64f));
             Set(vendor, "shutter", shutter);
+            Set(vendor, "shutterTuning", AssetDatabase.LoadAssetAtPath<Counter.DialogueTuning>("Assets/_Project/Data/Counter/DialogueTuning.asset")); // P109
             slats.gameObject.SetActive(false); // SecurityShutter shows it when it falls
         }
 

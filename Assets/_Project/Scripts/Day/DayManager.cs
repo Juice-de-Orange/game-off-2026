@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using GameOff.Audio;
 using GameOff.Core;
+using GameOff.Counter;
 using GameOff.Economy;
 using GameOff.Player;
 using GameOff.Travelers;
@@ -36,6 +38,8 @@ namespace GameOff.Day
         [SerializeField] private float nightSeconds = 1f;
         [Tooltip("P97: real seconds in which the station clocks run from 18:00 to 23:00.")]
         [SerializeField] private float eveningClockSeconds = 300f;
+        [Tooltip("P109: the curfew lines at 23:00 (shared with the counter's loudspeaker).")]
+        [SerializeField] private Announcements announcements;
         [Tooltip("Master switch for the dev tools (red Dev_end_Day button, visible bed hitbox); players switch them in the options (GameSettings.DevTools). TURN OFF for the jam build.")]
         [SerializeField] private bool showDevTools = true;
         [Tooltip("Translucent box showing the bed trigger (only with showDevTools).")]
@@ -46,6 +50,8 @@ namespace GameOff.Day
         private Phase _phase;
         private bool _nightCancelled;
         private float _eveningSince;
+        private bool _curfewAnnounced;
+        private Coroutine _curfewHints;
         private (string title, string body)? _gameOver;
 
         /// <summary>Morning of day n (1-based), before the letter.</summary>
@@ -56,6 +62,8 @@ namespace GameOff.Day
         public event Action<int> DayEnded;
         /// <summary>After the last day.</summary>
         public event Action RunFinished;
+        /// <summary>P109: the evening clock reached 23:00 on day n; raised once per evening.</summary>
+        public event Action<int> CurfewStarted;
         /// <summary>P29: the morning letter as shown (title, body incl. the family lines), for the copy lying on the table in 103.</summary>
         public event Action<string, string> LetterWritten;
 
@@ -82,6 +90,19 @@ namespace GameOff.Day
         public DayFlowUI UI => ui;
         /// <summary>P28: real seconds until the evening clock reaches 23:00 (0 outside the evening).</summary>
         public float EveningSecondsLeft => _phase == Phase.Evening ? Mathf.Max(0f, eveningClockSeconds - (Time.time - _eveningSince)) : 0f;
+        /// <summary>P109: evening and the clock has reached 23:00 – every trade is closed, the bed, the locker and the shuttle stay open.</summary>
+        public bool IsCurfew => CurfewAt(_phase, EveningSecondsLeft);
+        /// <summary>P109: shops, bar, drone, vending machine and ticket machine trade only now (evening before 23:00).</summary>
+        public bool TradingOpen => TradingOpenAt(_phase, EveningSecondsLeft);
+        /// <summary>P109: what a closed shop says after 23:00.</summary>
+        public string CurfewClosedText => announcements != null && !string.IsNullOrWhiteSpace(announcements.curfewClosed)
+            ? announcements.curfewClosed : Announcements.DefaultCurfewClosed;
+
+        /// <summary>P109: is it curfew in this phase with this many real seconds left until 23:00?</summary>
+        public static bool CurfewAt(Phase phase, float eveningSecondsLeft) => phase == Phase.Evening && eveningSecondsLeft <= 0f;
+
+        /// <summary>P109: is trading open in this phase with this many real seconds left until 23:00?</summary>
+        public static bool TradingOpenAt(Phase phase, float eveningSecondsLeft) => phase == Phase.Evening && eveningSecondsLeft > 0f;
 
         private void OnEnable()
         {
@@ -112,6 +133,29 @@ namespace GameOff.Day
         {
             float evening = eveningClockSeconds > 0f ? (Time.time - _eveningSince) / eveningClockSeconds : 1f;
             GameClock.Set(GameClock.Compute(_phase, shift.Progress, evening));
+            if (!_curfewAnnounced && IsCurfew) StartCurfew();
+        }
+
+        /// <summary>P109: 23:00 – the shops close (they ask TradingOpen), the station says so once, then a hint to go to bed.</summary>
+        private void StartCurfew()
+        {
+            _curfewAnnounced = true;
+            Debug.Log($"[Day] Curfew on day {_day}.");
+            CurfewStarted?.Invoke(_day);
+            AudioManager.PlayOnVoice(s => s.paChime); // until the line is recorded, like the counter's announcer
+            if (_curfewHints != null) StopCoroutine(_curfewHints);
+            _curfewHints = StartCoroutine(CurfewHints());
+        }
+
+        private IEnumerator CurfewHints()
+        {
+            string line = announcements != null && !string.IsNullOrWhiteSpace(announcements.curfew) ? announcements.curfew : Announcements.DefaultCurfew;
+            string hint = announcements != null && !string.IsNullOrWhiteSpace(announcements.curfewHint) ? announcements.curfewHint : Announcements.DefaultCurfewHint;
+            float seconds = announcements != null ? Mathf.Max(1f, announcements.secondsPerLine) : 4f;
+            ui.ShowHint(line, seconds + 1f);
+            yield return new WaitForSeconds(seconds + 1f);
+            _curfewHints = null;
+            if (_phase == Phase.Evening) ui.ShowHint(hint, 6f);
         }
 
         /// <summary>P28: waiting on a bench in the evening runs the clock on by this many seconds (never past 23:00).</summary>
@@ -161,6 +205,7 @@ namespace GameOff.Day
             if (_phase != Phase.Shift) return;
             _phase = Phase.Evening;
             _eveningSince = Time.time;
+            _curfewAnnounced = false;
             bed.SetPrompt("Sleep");
             ShiftOver?.Invoke(_day);
             ui.ShowHint("Shift over. Go back to room 103 and get some sleep.", 6f);

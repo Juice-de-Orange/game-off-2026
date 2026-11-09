@@ -23,15 +23,16 @@ namespace GameOff.Departure
         private void OnEnable() => interactable.OnInteract.AddListener(OnInteract);
         private void OnDisable() => interactable.OnInteract.RemoveListener(OnInteract);
 
-        private bool IsOpen => day == null || day.CurrentPhase == DayManager.Phase.Evening;
+        private bool IsOpen => day == null || day.TradingOpen;
         private int Price => Economy != null && Economy.HouseholdTuning != null ? Economy.HouseholdTuning.ticketPrice : 0;
 
-        /// <summary>The dialog for the current state; canBuy shows the BUY button.</summary>
+        /// <summary>The dialog for the current state; canBuy shows the BUY button. P109: curfew = closed after 23:00 with curfewText.</summary>
         public static (string title, string body, bool canBuy) Describe(bool open, bool hasTicket, int balance, int price,
-            Func<int, string> format)
+            Func<int, string> format, bool curfew = false, string curfewText = null)
         {
             string title = "TICKET HOME · " + format(price);
             if (hasTicket) return ("YOUR TICKET HOME", "You have your ticket. The shuttle at the ramp is waiting for you.", false);
+            if (curfew) return (title, "One way to the colonies.\n" + (string.IsNullOrWhiteSpace(curfewText) ? "Closed for the night." : curfewText), false);
             if (!open) return (title, "One way to the colonies.\nTicket sales open after your shift.", false);
             if (balance < price)
                 return (title, $"One way to the colonies.\nYou have {format(balance)}. You need {format(price - balance)} more.", false);
@@ -49,7 +50,9 @@ namespace GameOff.Departure
                 dialogs.ShowDialog("OUT OF ORDER", "The ticket machine flickers and shows nothing.", null, null, null, Resume);
                 return;
             }
-            var (title, body, canBuy) = Describe(IsOpen, Economy.HasTicket, Economy.Wallet.Balance, Price, Economy.Format);
+            bool curfew = day != null && day.IsCurfew;
+            var (title, body, canBuy) = Describe(IsOpen, Economy.HasTicket, Economy.Wallet.Balance, Price, Economy.Format,
+                curfew, curfew ? day.CurfewClosedText : null);
             bool dev = day != null && day.DevTools && !Economy.HasTicket;
             dialogs.ShowDialog(title, body, "BUY", canBuy ? Buy : (Action)null, dev ? GiveFreeTicket : (Action)null, Resume, "Dev_free_Ticket");
         }
