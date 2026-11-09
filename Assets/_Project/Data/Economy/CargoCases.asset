@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e84d52ba23447d42ab12670285d1887, type: 3}
+  m_Name: CargoCases
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Hangar.CargoCaseTuning
+  cases:
+  - day: 3
+    traveler: TOMI LARK
+    item: {fileID: 11400000, guid: df59c3f9bd707eb4db4315f3127fb1bb, type: 2}
+    count: 2
+  - day: 5
+    traveler: MAKO DRENN
+    item: {fileID: 11400000, guid: 95ed42a555ca29c44adb1a7a87f3c5aa, type: 2}
+    count: 3
+  - day: 8
+    traveler: GROM ULLAR
+    item: {fileID: 11400000, guid: e0d6da73f80ef0b4bbca1641d443c69c, type: 2}
+    count: 1
+  - day: 10
+    traveler: ISSK DORR
+    item: {fileID: 11400000, guid: e1b4d6a84c3e1dd4ca380cf7c310f187, type: 2}
+    count: 2
+  caughtChance: 0.3
+  moraleCost: -1
+  letterNotice: 'Customs notice: a crate for {name} is flagged in the hangar today.
+    Inspection at the officer''s discretion.'
+  dialogTitle: 'CARGO: {name}'
+  dialogBody: 'Under the packing foam: {item}.
+
+    Nothing on the manifest says
+    so.'
+  reportLabel: REPORT IT
+  pocketLabel: POCKET IT
+  leaveLabel: LEAVE IT
+  alreadySearched: You have already been through this crate.
+  reported: Reported. The counter will have a slip when {name} comes up.
+  pocketed: 'Into your pockets: {item}.'
+  caught: A loader saw you put it back too late. It's in the report.
+  caughtLetter: 'Disciplinary notice: tampering with flagged cargo.'
+  slipReason: 'CARGO OF {name}: {item} NOT DECLARED'
+  slipPenalty: ARREST AUTHORIZED

@@ -4,12 +4,14 @@ namespace GameOff.Travelers
     /// Judges the officer's decision against the rules (DESIGN.md, "Regeln am Schalter"):
     /// same decision → right; airlock for a criminal (arrest case) → right but costs morale; arrest when the airlock is
     /// ordered → order disobeyed (citation); anything else → wrong, with a reason for the citation.
+    /// P35: with undeclared cargo reported (evidence), arresting someone whose papers are in order is right as well.
     /// </summary>
     public static class DecisionJudge
     {
-        public static Judgement Judge(EvaluationResult result, Verdict chosen)
+        public static Judgement Judge(EvaluationResult result, Verdict chosen, bool evidence = false)
         {
             var correct = result.Correct;
+            if (evidence && chosen == Verdict.Arrest && correct == Verdict.Admit) return new Judgement(true, false, false, "", Verdict.Arrest, chosen);
             bool morale = chosen == Verdict.Airlock;
             if (chosen == correct) return new Judgement(true, morale, false, "", correct, chosen);
             if (correct == Verdict.Arrest && chosen == Verdict.Airlock) return new Judgement(true, true, false, "", correct, chosen);

@@ -213,6 +213,7 @@ namespace GameOff.EditorTools
             BuildProps(props);
             BuildDecor(Child(props, "Decor"));
             BuildShuttleDock(props, lights);
+            BuildDecals(Child(props, "Decals"));
             BuildMarkers(markers);
 
             // Walkable surface for travelers (P14) and reachability checks. Roofs and glass are not walkable.
@@ -1462,6 +1463,9 @@ namespace GameOff.EditorTools
             (true, -20, 3.9f, 0.3f), (true, -20, 5.5f, 0.3f), (false, 6, -17f, 0.4f),             // room 103: bed, table
             (false, 6, -18.42f, 1.5f), (false, 6, -17.645f, 1.5f), (false, 2, -16.5f, 1f),         // room 103: paintings, locker
             (false, 0, -9f, 0.6f),                                                                // motel reception
+            // Posters and stains (BuildDecals) stay on plain wall modules
+            (false, -6, -1f, 1.6f), (true, 8, 0.6f, 1.6f), (true, -8, -9.2f, 1.5f), (false, 0, -14f, 1.6f), (false, 0, 12f, 1.9f),
+            (true, -6, -8f, 2.1f), (false, 2, -12f, 1.4f), (true, -6, -10.6f, 1.2f), (false, -6, -11f, 1.9f),
             // Decor (BuildDecor), long pieces at both ends
             (false, -6, -3f, 3.2f), (false, -6, 4.5f, 4.6f), (false, -12, -1f, 2.2f), (true, -6, -7.2f, 0.8f), (false, -6, -5.2f, 2.3f),
             (true, -8, -10f, 2.3f), (true, -8, -8f, 2.3f), (true, -8, -7.5f, 1.1f), (true, -6, -11.7f, 2.5f), (true, -6, -9.7f, 2.5f), (true, -6, -7.4f, 2.8f),
@@ -1675,6 +1679,114 @@ namespace GameOff.EditorTools
         }
 
         /// <summary>Placeholder blocks named after the requested assets (docs/ASSET-REQUESTS.md). Replaced by real prefabs later.</summary>
+        // --- P26: posters and grime from the delivered atlases. One small mesh per atlas cell and one cut-out material per atlas, so they batch. ---
+        private const string DecalMeshPath = "Assets/_Project/Art/Materials/Decals/DecalQuads.asset";
+
+        private readonly struct WallDecal
+        {
+            public readonly bool Poster, OnXLine;
+            public readonly int Col, Row, Side;
+            public readonly float Line, Along, Y, W, H;
+            public WallDecal(bool poster, int col, int row, bool onXLine, float line, int side, float along, float y, float w, float h)
+            {
+                Poster = poster; Col = col; Row = row; OnXLine = onXLine; Line = line; Side = side; Along = along; Y = y; W = w; H = h;
+            }
+        }
+
+        private static readonly WallDecal[] WallDecals =
+        {
+            new WallDecal(true, 0, 0, false, -6f, 1, -1f, 1.6f, 0.7f, 1f),       // hall: A GOOD OFFICER (the Arrivals door is at x 2)
+            new WallDecal(true, 1, 1, true, 8f, -1, 0.6f, 1.6f, 0.7f, 1f),       // hall: NOVA COLA
+            new WallDecal(true, 0, 1, true, -8f, 1, -9.2f, 1.5f, 0.7f, 1f),      // service corridor: WANTED
+            new WallDecal(true, 1, 0, false, 0f, 1, -14f, 1.6f, 0.7f, 1f),       // motel corridor: VISIT HOME
+            new WallDecal(true, 1, 1, false, 0f, 1, 12f, 1.9f, 0.7f, 1f),        // bar: NOVA COLA
+            new WallDecal(true, 1, 0, true, -18f, 1, -30.5f, 1.7f, 0.7f, 1f),    // hangar, by the ticket machine
+            new WallDecal(false, 2, 1, true, -6f, -1, -8f, 2.1f, 0.9f, 0.9f),    // service corridor: rust runs
+            new WallDecal(false, 2, 3, true, -6f, -1, -10.6f, 1.2f, 0.5f, 0.5f), // service corridor: tally marks
+            new WallDecal(false, 1, 3, false, 2f, -1, -12f, 1.4f, 0.9f, 0.6f),   // motel corridor: WHO WATCHES?
+            new WallDecal(false, 0, 3, false, -6f, 1, -11f, 1.9f, 1f, 1f),       // diner: graffiti
+            new WallDecal(false, 1, 1, true, 18f, -1, -26f, 3f, 1.4f, 1.4f),     // hangar east wall: rust stain
+        };
+
+        private static readonly (int col, int row, float x, float z, float size, float yaw)[] FloorDecals =
+        {
+            (3, 1, -4f, -18f, 1.6f, 20f),   // hangar: oil
+            (1, 2, 7f, -30f, 2f, 70f),      // hangar: scratches
+            (2, 0, -3f, -3f, 1.3f, 0f),     // hall: dried puddle
+            (3, 3, -7f, -9f, 0.9f, 180f),   // service corridor: footprints
+            (3, 0, -15f, 1f, 0.8f, 40f),    // motel corridor: stains
+        };
+
+        private static void BuildDecals(GameObject parent)
+        {
+            var posters = DecalMaterial("Posters");
+            var grime = DecalMaterial("Grime");
+            if (posters == null || grime == null) return;
+            // Fresh on every run; the prefab that references the meshes is rebuilt in the same run. The empty main object keeps the cell names findable.
+            AssetDatabase.DeleteAsset(DecalMeshPath);
+            AssetFolders.EnsureForAsset(DecalMeshPath);
+            AssetDatabase.CreateAsset(new Mesh { name = "DecalQuads" }, DecalMeshPath);
+            foreach (var d in WallDecals)
+            {
+                float across = d.Line + d.Side * (WallFace + 0.02f);
+                float yaw = d.OnXLine ? (d.Side < 0 ? 90f : -90f) : (d.Side < 0 ? 0f : 180f);
+                Decal(parent, d.Poster ? "Posters" : "Grime", d.Poster ? posters : grime, d.Poster ? 2 : 4, d.Col, d.Row,
+                    d.OnXLine ? new Vector3(across, d.Y, d.Along) : new Vector3(d.Along, d.Y, across), Quaternion.Euler(0f, yaw, 0f), d.W, d.H);
+            }
+            foreach (var (col, row, x, z, size, yaw) in FloorDecals)
+                Decal(parent, "Grime", grime, 4, col, row, new Vector3(x, 0.012f, z), Quaternion.Euler(90f, yaw, 0f), size, size);
+        }
+
+        private static void Decal(GameObject parent, string atlas, Material material, int cells, int col, int row, Vector3 position, Quaternion rotation, float w, float h)
+        {
+            var go = new GameObject($"Decal_{atlas}_{col}_{row}", typeof(MeshFilter), typeof(MeshRenderer));
+            go.transform.SetParent(parent.transform, false);
+            go.transform.SetPositionAndRotation(position, rotation);
+            go.transform.localScale = new Vector3(w, h, 1f);
+            go.GetComponent<MeshFilter>().sharedMesh = DecalMesh(atlas, cells, col, row);
+            var renderer = go.GetComponent<MeshRenderer>();
+            renderer.sharedMaterial = material;
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
+
+        private static Material DecalMaterial(string atlas)
+        {
+            string path = $"Assets/_Project/Art/Materials/Decals/M_Decal_{atlas}.mat";
+            var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (material != null) return material;
+            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>($"Assets/_Project/Art/Textures/Decals/T_Decal_{atlas}.png");
+            if (texture == null) return null;
+            AssetFolders.EnsureForAsset(path);
+            material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+            material.SetTexture("_BaseMap", texture);
+            material.SetFloat("_Smoothness", 0f);
+            material.SetFloat("_AlphaClip", 1f);
+            material.SetFloat("_Cutoff", 0.5f);
+            material.EnableKeyword("_ALPHATEST_ON");
+            material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.AlphaTest;
+            AssetDatabase.CreateAsset(material, path);
+            return material;
+        }
+
+        /// <summary>A 1 x 1 m quad facing local -Z showing one atlas cell (row 0 = top), with lightmap UVs; kept as sub-assets of one file.</summary>
+        private static Mesh DecalMesh(string atlas, int cells, int col, int row)
+        {
+            string name = $"Decal_{atlas}_{col}_{row}";
+            foreach (var o in AssetDatabase.LoadAllAssetsAtPath(DecalMeshPath))
+                if (o is Mesh existing && existing.name == name) return existing;
+            float u0 = col / (float)cells, u1 = (col + 1) / (float)cells, v0 = 1f - (row + 1) / (float)cells, v1 = 1f - row / (float)cells;
+            var mesh = new Mesh { name = name };
+            mesh.vertices = new[] { new Vector3(-0.5f, -0.5f, 0f), new Vector3(-0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, -0.5f, 0f) };
+            mesh.uv = new[] { new Vector2(u0, v0), new Vector2(u0, v1), new Vector2(u1, v1), new Vector2(u1, v0) };
+            mesh.uv2 = new[] { Vector2.zero, Vector2.up, Vector2.one, Vector2.right };
+            mesh.triangles = new[] { 0, 1, 2, 0, 2, 3 };
+            mesh.normals = new[] { Vector3.back, Vector3.back, Vector3.back, Vector3.back };
+            mesh.RecalculateBounds();
+            mesh.RecalculateTangents();
+            AssetDatabase.AddObjectToAsset(mesh, DecalMeshPath);
+            return mesh;
+        }
+
         // --- P106: the staff shuttle, docked outside the west wall (hull and collar: SkyExteriorBuilder, hatch and seat: DepartureBuilder) ---
         private const string KitHangarViewport = "Hangar/SM_Hangar_Wall_Viewport.fbx";
         private const string KitShuttleCabin = "Hangar/SM_Shuttle_Cabin_Interior.fbx";

@@ -80,7 +80,11 @@ namespace GameOff.Economy
         {
             int change = Conduct.Judge(chosen, judgement, tuning, traveler.DisplayName);
             if (change != 0) Debug.Log($"[Conduct] airlock on {traveler.DisplayName}: morale {change:+0;-0} → {Conduct.Morale}");
-            if (chosen == Verdict.Arrest) Confiscate(traveler);
+            if (chosen == Verdict.Arrest)
+            {
+                bool onEvidence = Hangar.CargoCrate.Instance != null && Economy != null && Hangar.CargoCrate.Instance.HandIn(traveler, Economy.ShiftItems);
+                if (!onEvidence) Confiscate(traveler);
+            }
         }
 
         /// <summary>The goods on the cargo manifest go into the shift inventory (P81).</summary>

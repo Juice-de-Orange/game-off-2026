@@ -11,6 +11,8 @@ namespace GameOff.Economy
         public int Disciplinary { get; private set; }
         public int Morale { get; private set; }
         public int AirlocksToday { get; private set; }
+        /// <summary>The part of the morale that comes from the airlock: what the airlock lines (P12, P113) may talk about. P35 theft only lowers Morale.</summary>
+        public int AirlockMorale { get; private set; }
         /// <summary>Of today's airlock uses, those on someone who didn't deserve it.</summary>
         public int InnocentToday { get; private set; }
         /// <summary>Today's innocent victim if there was one, else today's last one.</summary>
@@ -19,6 +21,9 @@ namespace GameOff.Economy
         public bool Discharged(ConfiscationTuning tuning) => tuning.disciplinaryLimit > 0 && Disciplinary >= tuning.disciplinaryLimit;
 
         public void AddDisciplinary(int n) => Disciplinary += n;
+
+        /// <summary>P35: morale change without an airlock.</summary>
+        public void AddMorale(int delta) => Morale += delta;
 
         public void BeginDay()
         {
@@ -33,6 +38,7 @@ namespace GameOff.Economy
             bool deserved = judgement.CorrectVerdict == Verdict.Airlock || judgement.CorrectVerdict == Verdict.Arrest;
             int delta = deserved ? tuning.airlockGuilty : tuning.airlockInnocent;
             Morale += delta;
+            AirlockMorale += delta;
             AirlocksToday++;
             if (!deserved) InnocentToday++;
             if (!deserved || InnocentToday == 0) AirlockedName = name;

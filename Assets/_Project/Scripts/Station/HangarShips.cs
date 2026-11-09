@@ -21,6 +21,9 @@ namespace GameOff.Station
 
         private readonly List<GameObject> _placed = new List<GameObject>();
 
+        /// <summary>P14: the morning's ship has touched down on this pad.</summary>
+        public event System.Action<Transform> Landed;
+
         private void OnEnable() => day.DayStarted += OnDayStarted;
 
         private void OnDisable() => day.DayStarted -= OnDayStarted;
@@ -53,6 +56,7 @@ namespace GameOff.Station
                 yield return null;
             }
             ship.position = pad.position;
+            Landed?.Invoke(pad);
         }
     }
 }

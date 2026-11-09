@@ -39,6 +39,8 @@ namespace GameOff.Travelers
         /// <summary>The counter seat (P87: block it while a character asks a question).</summary>
         public CounterStation Station => station;
         public event Action ShiftEnded;
+        /// <summary>P35: true while a reported crate makes arresting this traveler right.</summary>
+        public Func<TravelerData, bool> ArrestAllowed { get; set; }
         /// <summary>A new day's rules are in force (the pinboard changes its notes).</summary>
         public event Action DayBegun;
         /// <summary>The officer sat down for the first time today, just before the first traveler.</summary>
@@ -201,7 +203,7 @@ namespace GameOff.Travelers
         {
             _deciding = true;
             var traveler = _current;
-            var judgement = DecisionJudge.Judge(_evaluation, chosen);
+            var judgement = DecisionJudge.Judge(_evaluation, chosen, ArrestAllowed != null && ArrestAllowed(traveler));
             Debug.Log($"[Shift] {traveler.DisplayName}: chose {chosen}, correct {judgement.CorrectVerdict} → " +
                       (judgement.Correct ? "OK" : judgement.Reason));
             if (!judgement.Correct) PrintCitation(judgement);
@@ -216,6 +218,16 @@ namespace GameOff.Travelers
             _deciding = false;
             NextTraveler();
         }
+
+        /// <summary>P35: a slip out of the counter printer that is not a citation (no warning counted).</summary>
+        public void PrintSlip(string id, string reason, string note) =>
+            desk.Print(DocumentData.CreateRuntime(DocumentType.Citation, new List<DocumentField>
+            {
+                new DocumentField("id", id),
+                new DocumentField("date", day.Date),
+                new DocumentField("reason", reason),
+                new DocumentField("penalty", note),
+            }));
 
         private void PrintCitation(Judgement judgement)
         {

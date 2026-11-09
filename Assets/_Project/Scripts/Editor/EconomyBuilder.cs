@@ -820,7 +820,11 @@ namespace GameOff.EditorTools
             }
 
             BuildTelescope(root.transform, canvas);
-            BuildHangarShips(root.transform);
+            var hangarShips = BuildHangarShips(root.transform);
+            var arrivals = new GameObject("ArrivingGroup").AddComponent<GameOff.Station.ArrivingGroup>();
+            arrivals.transform.SetParent(root.transform, false);
+            Set(arrivals, "ships", hangarShips);
+            Set(arrivals, "looks", AssetDatabase.LoadAssetAtPath<TravelerLooks>("Assets/_Project/Data/Travelers/TravelerLooks.asset"));
             var lockerGo = new GameObject("EvidenceLocker");
             lockerGo.transform.SetParent(root.transform, false);
             var (lockerUse, lockerView) = Trigger(lockerGo.transform, "Trigger", new Vector3(-4f, 0.9f, -6.45f), new Vector3(1.2f, 1.9f, 0.7f), "Evidence locker");
@@ -829,6 +833,8 @@ namespace GameOff.EditorTools
             Set(locker, "interactable", lockerUse);
             LockerBoardBuilder.BuildLockerDisplay(lockerGo.transform, locker, confiscation, LockerBoardBuilder.EnsureTuning(log)); // P32
             LockerBoardBuilder.BuildBoardCloseUp(root.transform, canvas); // P33
+
+            BuildCargoCrate(root.transform, data);
 
             // P101: those let through today stand around after the shift.
             var crowdGo = new GameObject("EveningCrowd");
@@ -887,7 +893,53 @@ namespace GameOff.EditorTools
         }
 
         /// <summary>P107: the ships that can stand in the hangar and their pads, away from the shuttle ramp and the walkways.</summary>
-        private static void BuildHangarShips(Transform parent)
+        /// <summary>P35: the flagged crate east of the queue lane, off unless today has a case.</summary>
+        private static void BuildCargoCrate(Transform parent, Data data)
+        {
+            int made = 0;
+            var tuning = LoadOrCreate<GameOff.Hangar.CargoCaseTuning>(EconomyFolder + "CargoCases.asset", _ => { }, ref made);
+            if (tuning.cases.Count == 0)
+            {
+                foreach (var (day, traveler, item, count) in new[]
+                {
+                    (3, "TOMI LARK", "stim", 2), (5, "MAKO DRENN", "spice", 3), (8, "GROM ULLAR", "chip", 1), (10, "ISSK DORR", "trinket", 2),
+                })
+                    tuning.cases.Add(new GameOff.Hangar.CargoCase { day = day, traveler = traveler, item = data.Items[item], count = count });
+                EditorUtility.SetDirty(tuning);
+            }
+
+            var go = new GameObject("CargoCrate");
+            go.transform.SetParent(parent, false);
+            var visual = new GameObject("Visual");
+            visual.transform.SetParent(go.transform, false);
+            visual.transform.SetPositionAndRotation(new Vector3(5.6f, 0f, -15.5f), Quaternion.Euler(0f, 90f, 0f));
+            var model = (GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Project/Art/Models/Hangar/SM_Hangar_Crate.fbx"));
+            model.transform.SetParent(visual.transform, false);
+
+            var text = new GameObject("Label", typeof(RectTransform), typeof(TMPro.TextMeshPro)).GetComponent<TMPro.TextMeshPro>();
+            text.transform.SetParent(visual.transform, false);
+            text.transform.localPosition = new Vector3(0f, 0.48f, -0.625f); // on the face toward the lane (local -Z, world -X at yaw 90)
+            text.rectTransform.sizeDelta = new Vector2(1.1f, 0.5f);
+            text.font = AssetDatabase.LoadAssetAtPath<TMPro.TMP_FontAsset>("Assets/_Project/Fonts/ShareTechMono SDF.asset");
+            text.fontSize = 1.1f;
+            text.alignment = TMPro.TextAlignmentOptions.Center;
+            text.color = new Color(0.95f, 0.8f, 0.2f);
+
+            var body = visual.AddComponent<BoxCollider>();
+            body.center = new Vector3(0f, 0.5f, 0f);
+            body.size = new Vector3(1.2f, 1f, 1.2f);
+            var interactable = visual.AddComponent<Interactable>();
+            interactable.SetPrompt("Search the crate");
+
+            var crate = go.AddComponent<GameOff.Hangar.CargoCrate>();
+            Set(crate, "tuning", tuning);
+            Set(crate, "interactable", interactable);
+            Set(crate, "visual", visual);
+            Set(crate, "label", text);
+            visual.SetActive(false);
+        }
+
+        private static GameOff.Station.HangarShips BuildHangarShips(Transform parent)
         {
             var go = new GameObject("HangarShips");
             go.transform.SetParent(parent, false);
@@ -910,6 +962,7 @@ namespace GameOff.EditorTools
             padList.arraySize = pads.Count;
             for (int i = 0; i < pads.Count; i++) padList.GetArrayElementAtIndex(i).objectReferenceValue = pads[i];
             so.ApplyModifiedPropertiesWithoutUndo();
+            return ships;
         }
 
         /// <summary>P29: trigger at the coin telescope on the deck, eye behind the eyepiece, overlay over the HUD.</summary>
@@ -1363,6 +1416,18 @@ namespace GameOff.EditorTools
             {
                 Set(h, "day", day);
                 Record(h);
+            }
+            foreach (var a in instance.GetComponentsInChildren<GameOff.Station.ArrivingGroup>(true))
+            {
+                Set(a, "shift", Object.FindFirstObjectByType<CounterShift>());
+                Record(a);
+            }
+            foreach (var c in instance.GetComponentsInChildren<GameOff.Hangar.CargoCrate>(true))
+            {
+                Set(c, "day", day);
+                Set(c, "shift", Object.FindFirstObjectByType<CounterShift>());
+                Set(c, "player", Object.FindFirstObjectByType<GameOff.Player.FirstPersonController>());
+                Record(c);
             }
             foreach (var c in instance.GetComponentsInChildren<EveningCrowd>(true))
             {

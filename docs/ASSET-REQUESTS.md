@@ -9847,3 +9847,30 @@ refs: []
 placeholder: Drei graue Boxen 3 x 5 x 6 m nebeneinander auf einer flachen Platte, mittlere Box mit drei Quads als Fenster; Pivot bottom_center, Material-Slots [Street, Windows].
 feedback: []
 ```
+
+### SM_Station_Wall_Porthole_Large_2x3.fbx
+```yaml
+path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Porthole_Large_2x3.fbx
+package: P51
+scene: Motel
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [2.0, 0.2, 3.0]
+pivot: bottom_center
+tris_max: 400
+materials: [Wall, Glass]
+textures:
+  - Assets/_Project/Art/Textures/Station/T_Station_Wall_Porthole_2x3_Albedo.png   # 256x256, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Wie SM_Station_Wall_Porthole_2x3, gleiche Wandstärke und gleiche Textur, aber mit rundem Bullauge Ø 1,2 m (heute 0,6 m), Mitte auf 1,5 m Höhe. Für Zimmer 103. Glas als eigenes Material "Glass".
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Box 2.0 x 0.2 x 3.0 m, Pivot bottom_center, Material-Slots [Wall, Glass]
+feedback: []
+```

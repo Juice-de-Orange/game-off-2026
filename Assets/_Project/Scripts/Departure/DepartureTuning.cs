@@ -63,6 +63,8 @@ namespace GameOff.Departure
             "The shuttle sets down in the rain. Lena is at the dock, taller than you remember, and she doesn't run.\n\n" +
             "{names} never got to see you come back.\nThe ticket cost everything you had. It came too late to matter.";
         [Header("Closing sentence by morale (P12)")]
+        [Tooltip("P35: closing sentence when crates were pocketed but nobody went through the airlock.")]
+        [TextArea(1, 2)] public string moraleThief = "You never touched the airlock. The crates were another matter.";
         [Tooltip("Conduct.Morale below this value counts as bloody. Orders alone cost up to -4 in the story days, so that is still stained.")]
         public int moraleBloodyBelow = -4;
         public string moraleCleanLine = "You never opened the airlock on anyone. Whatever else you did up there, you did not do that.";

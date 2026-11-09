@@ -24,6 +24,10 @@ namespace GameOff.Departure
             return (title, body.Replace("{names}", JoinNames(who)));
         }
 
+        /// <summary>P35: the closing sentence for the whole run: about the airlock if it was used, about the crates if only those were opened.</summary>
+        public static string ConductLine(Conduct conduct, DepartureTuning texts) =>
+            conduct.AirlockMorale == 0 && conduct.Morale < 0 ? texts.moraleThief : MoraleLine(conduct.AirlockMorale, texts);
+
         /// <summary>P12: closing sentence for the run's morale (Conduct.Morale: 0 or more clean, then stained, then bloody).</summary>
         public static string MoraleLine(int morale, DepartureTuning texts) =>
             morale >= 0 ? texts.moraleCleanLine : morale >= texts.moraleBloodyBelow ? texts.moraleStainedLine : texts.moraleBloodyLine;

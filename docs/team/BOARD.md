@@ -75,7 +75,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 
 ### Stand 09.11. vormittags (max)
 - **P112, P113 und Status-Display-Fix** fertig, **live: `602d9dc`**. Im Browser gesehen: Statusanzeige lesbar, Terminal mit nur zwei Knöpfen, Abfrage, sechs Schleusen, Gedanke am Bullauge. Nicht im Browser gesehen: Bank, Abendgäste, Albtraum-Zeile am Morgen (nur durch Tests und Code-Prüfung gedeckt)
-- Offen bleiben: Anspielen von Welle 1 und 2 (Max), P106 (danach P35, P14-Rest), P94 (wartet auf Laute), P48, P51, P26-Rest, P25
+- **P106, P14-Rest, P35, P26-Rest** fertig (09.11. nachmittags); Bericht unten im Paket. Offen bleiben: Anspielen von Welle 1, 2 und der Hangar-Welle (Max), P94 (wartet auf Laute), P51 (Bullauge bestellt), P48 (Polish-Woche), #17 prüfen
 
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
@@ -88,7 +88,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| max | P106, P14-Rest, P35, P26-Rest: Hangar-Welle, Rebuild All und Bake | Main.unity, Menu.unity, Boot.unity, PF_Station_Graybox, PF_Station_Hab, PF_Exterior, PF_SkyRig, PF_DayFlow, PF_Economy, PF_Departure, PF_PauseMenu, PF_RestSpots, Dokument-Prefabs, Traffic- und Ambience-Prefabs, Data/Economy, Data/Departure, Data/Days/Story | 09.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog

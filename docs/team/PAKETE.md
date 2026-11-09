@@ -317,11 +317,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Geprüft: 84/84 EditMode-Tests; Play-Modus: Drohne in der Schicht zu, abends Ration abgeliefert → FOOD in der Abrechnung abgehakt.
 
 ### P14 — Reisende laufen
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: P04, P07
 - Ziel: Reisende kommen aus dem Hangar zum Schalter und gehen danach weg (NavMesh).
 - Abnahme: Eine Schicht läuft mit sichtbar ankommenden Reisenden.
 - Entscheidung (Max, 09.11.): Rest vereinfacht: eine sichtbare kleine Gruppe kommt morgens aus dem gelandeten Schiff (P107) zur Prüfkammer, feste Wege, kein NavMesh für die ganze Station.
+- Ergebnis (09.11.): Bis zu drei Reisende des Tages steigen morgens aus dem gelandeten Schiff, stellen sich in die Absperrung und gehen bei Schichtbeginn zur Prüfkammer (`ArrivingGroup`, feste Wege, kein NavMesh). Während der Schicht sind sie weg. Nicht im Browser gesehen: wie es zur Spielzeit wirkt.
 
 ### P15 — Inhalte: Fälle für 3 Tage
 - Größe: M · Priorität: Muss · Status: fertig (max, 08.11.; Anspielen durch Max steht aus) · Zuständig: max (Call 07.11.)
@@ -463,7 +464,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Festgelegt im Asset-Durchgang (max, 02.11.): Shuttle mit **Rampe** (Rework bestellt): landen → Rampe klappt zischend herunter → Reisende steigen nacheinander aus und stellen sich an; abends Rampe hoch und Abflug.
 
 ### P26 — Details & Ausstattung
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: P22 und Lieferungen
 - Ziel: Station wirkt bewohnt und heruntergekommen.
 - Enthalten: Rohre, Kabel, Lüftungen, Verteilerkästen, Feuerlöscher, Müll, Pflanzen, Schilder/Poster/Schmutz-Decals, Putzroboter (fährt per
@@ -479,6 +480,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 > was man damit tun kann. Alle Soll; Reihenfolge und Verteilung im Call.
 - Ergebnis (Nachtlauf, 08.11.): Bar-Ventilator dreht sich, Putzroboter fährt in der Halle hin und her, Fernrohr funktioniert (P29). Offen bleiben Poster und Schmutz-Decals; der Diner-Ventilator steht absichtlich still (außer Betrieb).
 - Entscheidung (Max, 09.11.): Poster und Schmutz-Decals bestellen und einbauen.
+- Ergebnis (09.11.): Poster (`T_Decal_Posters`) und Schmutz (`T_Decal_Grime`) in Halle, Gängen, Bar, Diner, Hangar: `BuildDecals`, 11 an den Wänden, 5 am Boden, zwei Materialien, Alpha-Cut. Bestellung war nicht nötig, die Atlanten waren schon geliefert.
 
 ### P27 — Automatische Türen mit Zugangsstufen
 - Größe: S · Priorität: Soll · Status: fertig (max, 02.11.)
@@ -570,13 +572,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (martin, 09.11., Agent): Klick auf den CRT am Tisch → grünes Terminal; jeder Name/jede ID der Papiere ist ein Knopf → Fahndungsabgleich (gleiche Prüfung wie `RuleEvaluator`) und Einreiseakte, abgelaufene Papiere markiert; Statuszeile Lane/Zähler/Uhr auch auf dem CRT. `CounterTerminal`, `TerminalLookup`, `CounterTerminalBuilder` (in Build Documents), 7 Tests inkl. Abgleich über alle Tage. Offene Designfrage an Max (Terminal vs. Scanner), siehe `questions/2026-11-09_martin-an-max_terminal-und-moral.md`.
 
 ### P35 — Durchsuchbare Fracht im Hangar
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig (max, 09.11.) · Zuständig: max
 - Braucht: P07, P08 · Assets: `SM_Hangar_Crate`, `_Small` (da), `SM_Item_*`
 - Ziel: Gameplay im Hangar über die Drohne hinaus.
 - Enthalten: markierte Kisten gehören zu Reisenden; [E] durchsuchen findet Beweise (Schmuggelware zu einem Fall) — oder man steckt etwas
   ein (Risiko, Moral-Wert)
 - Abnahme: Ein Fall lässt sich über einen Kistenfund lösen; Einstecken verändert Moral.
 - Entscheidung (Max, 09.11.): Bauen wie beschrieben: Beweise und Einstecken. Einstecken ist eine neue Geldquelle, also Economy Report.
+- Ergebnis (09.11.): Tag 3, 5, 8, 10: eine markierte Kiste im Hangar (östlich der Absperrung), der Morgenbrief kündigt sie an. Melden geht nur, bevor der Schalter öffnet: Dann druckt der Schalter einen Zettel, wenn die Person kommt, und Verhaften zählt als richtig, nur die Kistenware wird beschlagnahmt; Durchlassen bleibt richtig. Einstecken: Moral −1, 30 % erwischt (keine Ware, Disziplinarstrafe, Briefzeile). Die Papiere bleiben die Wahrheit. Daten: `Data/Economy/CargoCases.asset`. **Economy Report rechnet die Kisten nicht mit** (wie Pfand und Bonus aus P77/P85); wenige Waren an vier Tagen. Offene Stelle: Der Zettel benutzt die Citation-Vorlage. Nicht im Browser gesehen, Tag 3 ist im Test nicht erreichbar.
 
 ### P36 — Lebendige Station: Flackern & Stromausfälle
 - Größe: S · Priorität: Soll · Status: fertig (martin, 07.11.)
@@ -810,7 +813,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (Nachtlauf, 08.11.): Schilder über den Türen in drei Arten: Neon, Schablone, Rot für STAFF ONLY und CUSTOMS (`BuildDoorSigns`). Diner und Bar haben schon eigene.
 
 ### P51 — Zimmer 103 wohnlicher
-- Größe: S · Priorität: Kann · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Größe: S · Priorität: Kann · Status: wartet auf Lieferung `SM_Station_Wall_Porthole_Large_2x3` (bestellt 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: M014 (Katzenbild)
 - Ziel: Das Zimmer des Spielers fühlt sich persönlich an.
 - Enthalten: Bullauge größer (heute Ø 0,6 m, `SM_Station_Wall_Porthole_2x3`, Zimmer 103); Katzenbild etwas höher (`SM_Motel_CatPainting`, heute y 1,3 m, `StationGrayboxBuilder.BuildProps`); neues Gemälde vom Hund **Elo** (Bestellung erst, wenn das Paket dran ist; dann fragt Claude Max nach einem Foto als Vorlage, wie beim Katzenbild)

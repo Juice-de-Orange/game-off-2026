@@ -11,7 +11,7 @@ namespace GameOff.Economy
     [CreateAssetMenu(menuName = "GameOff/Morale Tuning", fileName = "MoraleTuning")]
     public class MoraleTuning : ScriptableObject
     {
-        [Tooltip("On days without the airlock a thought still comes back while Conduct.Morale is at or below this (ordered -1, innocent -3).")]
+        [Tooltip("On days without the airlock a thought still comes back while Conduct.AirlockMorale is at or below this (ordered -1, innocent -3).")]
         public int lingeringAtOrBelow = -3;
 
         [Header("Thoughts at the porthole and on the benches")]
@@ -67,7 +67,7 @@ namespace GameOff.Economy
         {
             if (conduct.AirlocksToday > 0)
                 return ByDay(conduct.InnocentToday > 0 ? thoughtsInnocent : thoughtsOrdered, day, conduct);
-            return conduct.Morale <= lingeringAtOrBelow && conduct.Morale < 0 ? ByDay(thoughtsLingering, day, conduct) : null;
+            return conduct.AirlockMorale <= lingeringAtOrBelow && conduct.AirlockMorale < 0 ? ByDay(thoughtsLingering, day, conduct) : null;
         }
 
         /// <summary>The line under tomorrow's letter; null without an airlock today.</summary>
