@@ -63,7 +63,9 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Terminal-Stil | P95 | Einheitliche Rahmen und Knöpfe | `TerminalStyle` (Editor) | Grafiken in `Art/UI/Terminal` |
 | Kiosk-Gitter | P90 | Gitter unten, solange der Kiosk zu ist | `Vendor.Update` → `SecurityShutter` | – |
 | Aussehen der Reisenden | P108 | Name → feste Textur, Frisur/Mütze; Passfoto gerendert | `TravelerLooks`, `TravelerPhotoBuilder` | `Data/Travelers/TravelerLooks.asset`, Fotos in `Art/Textures/Documents/Photos` |
-| Schiffe im Hangar | P107 | 2–4 je Tag, eines landet morgens | `HangarShips` ← `DayStarted` | Plätze im `EconomyBuilder` |
+| Schiffe im Hangar | P107 | 2–4 je Tag, eines landet morgens; eine Kollisionsbox je Schiff (das landende bekommt sie nach der Landung) | `HangarShips` ← `DayStarted` | Plätze im `EconomyBuilder` |
+| Reisende am Morgen | P14 | Bis zu drei Reisende des Tages gehen vom gelandeten Schiff in die Absperrung und bei Schichtbeginn zur Prüfkammer | `ArrivingGroup` ← `HangarShips.Landed`, `ShiftStarted` | Wege im Component |
+| Menü in Main | P48, P114 | Boot lädt Main, das Menü liegt über der echten Station; START fliegt zum Bullauge von 103, dann Tag 1. Innenräume sind im Menü aus | `FrontEnd` → `DayManager.BeginRun` | Flugweg und Räume am `FrontEnd` |
 | Münzfernrohr, Stadtlichter | P29 | 1 Credit, 30 s Blick auf den Heimatplaneten; dessen Lichter werden mit der Familie dunkler und flackern, wenn jemand kritisch ist | `CoinTelescope`, `HomeLights` ← `Household` | im Prefab `CoinTelescope`, 1 CR, 30 s |
 | Asservatenschrank | P83, P32 | „As ordered“ landet im Schrank; [E] öffnet die Türen, die Waren liegen als Modelle in 6 Fächern (eigenes Modell, sonst nach Label, sonst Beweisbeutel; Türen schließen ab 3 m oder am neuen Tag); abends bei offenen Türen einmal aufbrechen: Ware (CONFISCATED) oder Disziplinarstrafe | `Confiscation.Locker`, `EvidenceLocker`, `EvidenceLockerDisplay` | `ConfiscationTuning.lockerCaughtChance`, `Data/Economy/EvidenceLockerTuning.asset` (Label → Modell) |
 | Terminal-Datenbank | P34 | Klick auf den Röhrenbildschirm am Schalter → Name und ID des Ausweises sind Knöpfe (P112) → Abgleich mit der Fahndungsliste des Tages (gleiche Prüfung wie `RuleEvaluator`) und Einreiseakte (nur der Ausweis), abgelaufener Ausweis markiert; Statuszeile Lane, Zähler, Uhr | `CounterTerminal`, `TerminalLookup` ← `DayRules.Wanted`, Papiere | `Data/Counter/TerminalTuning.asset` |
@@ -97,5 +99,6 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 - **Terminal kennt die Tischposition als Konstante** (Tisch 1,3 m neben dem Schalter): wird der Tisch im Stations-Builder verschoben, `CounterTerminalBuilder` mitziehen.
 - **Abend: 5 echte Minuten** bis zur Sperrstunde – ob das zum Handeln, Fernrohr und Barbesuch reicht, beim Anspielen prüfen.
 - **Zoll im Simulator:** Der Economy Report schickt nie Schmuggel per Drohne; P110 ändert kein Geld, aber Strafpunkte aus dem Zoll fehlen im Report.
-- **Menü zeichnet die ganze Station ohne Occlusion (P48):** CPU ×4 15 statt 24 fps, nur im Menü; Spiel gleich oder besser. Max 09.11.: später optimieren → **P114**.
+- **Menü-Bildrate (P48, P114):** Im Menü läuft keine Occlusion, Innenräume sind deshalb aus; gemessen wurde das noch nicht sauber (PC war ausgelastet), Abnahme von P114 offen.
+- **Hangar-Streifen (#17):** keine Überschneidung, sondern die dunkle Mittelrippe von `SM_Hangar_Wall_4x4`; das Modell steht auf `rework`.
 - **Pinnwand-Verlauf nur im Speicher:** ohne Spielstand beginnt er bei jedem Spielstart neu.

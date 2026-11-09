@@ -3,6 +3,8 @@
 Der aktuelle Stand von `main` läuft öffentlich auf Geoffrey (Contabo, 144.91.89.2) als Docker-Container. Paket: P49.
 itch.io (P19) ist davon getrennt und bleibt der Weg für die Abgabe.
 
+> **Stand 09.11.:** Deploy von Hand, der Nacht-Workflow unten läuft nicht und bleibt aus (P49 geschlossen). itch.io: Entwurf `juice-de-orange.itch.io/game-off-2026`, noch nicht öffentlich.
+
 ## Ablauf
 ```
 GitHub Actions (.github/workflows/deploy-web.yml), nachts 03:00 Uhr MEZ oder per Knopf

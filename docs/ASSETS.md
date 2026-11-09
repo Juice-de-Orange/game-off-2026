@@ -128,7 +128,7 @@ auf `main` pushen. Beispiel: `- "2026-11-10 martin: Tresen 20 cm niedriger, Spie
 Die Pipeline arbeitet den Eintrag erneut ab und liefert wieder per Pull Request.
 
 ## Integration nach dem Merge (Max)
-0. **Der schnelle Weg:** `git pull`, dann **GameOff → Rebuild All After Deliveries** (alle Builder in der richtigen Reihenfolge), dann **GameOff → Setup Main Lighting + Bake**. Danach Tests und ein Blick ins Spiel. `Main.unity`, `Menu.unity`, `Boot.unity` und die generierten Prefabs vorher claimen.
+0. **Der schnelle Weg:** `git pull`, dann **GameOff → Rebuild All After Deliveries** (alle Builder in der richtigen Reihenfolge), dann **GameOff → Setup Main Lighting + Bake**. Danach Tests und ein Blick ins Spiel. `Main.unity`, `Boot.unity` und die generierten Prefabs vorher claimen.
 1. `git pull`, Unity öffnen und den Import abwarten.
 2. Prüfen: Ersetzte Dateien haben **keine neue** `.meta` bekommen. Für neue Dateien ohne Platzhalter erzeugt Unity
    eine `.meta` → **sofort committen und pushen**, damit Martin dieselbe GUID bekommt.
