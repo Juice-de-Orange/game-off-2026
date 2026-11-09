@@ -378,7 +378,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Getestet im Editor (Mixer-Werte, Routing aller 10 Türen) und im WebGL-Build mit Ton in Chrome. Echte Sounds fehlen noch (Max/Pipeline).
 
 ### P19 — WebGL-Build & itch-Upload
-- Größe: S · Priorität: Muss · Status: Entwurf auf itch.io hochgeladen, läuft in Chrome (max, 09.11.); Firefox-Test, Public und Jam-Einreichung stehen aus
+- Größe: S · Priorität: Muss · Status: Entwurf auf itch.io getestet, läuft in Chrome (max, 09.11.). Weitere Uploads erst am Ende (Max, 09.11.): dann neue ZIP, Firefox-Test, Genre/Tags, Public und Jam-Einreichung
 - Braucht: P01
 - Ziel: Erster Build auf itch.io (Entwurf) bis 05.11., danach wiederholbarer Ablauf.
 - Hinweis (max, 05.11.): `GameOff.EditorTools.WebBuild.Build` ist der Build-Einstieg. Die Vorlage für itch muss abgelehnte Maussperren abfangen und 16:9 halten wie `Assets/WebGLTemplates/Kestrel9/index.html` (Ausnahme: Impressum-Fußzeile nur für die Live-Version), siehe P49.
@@ -451,7 +451,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   (Plattform Tag 1 + 3, Hangar); im WebGL-Build noch nicht angesehen.
 
 ### P25 — Verkehr: vorbeifliegende Schiffe & Shuttle-Ankunft
-- Größe: M · Priorität: Soll · Status: überholt (Max, 09.11.): Ankunft regelt P107, Shuttle wandert nach außen (P106), Reste bei P14
+- Größe: M · Priorität: Soll · Status: geschlossen (Max, 09.11.): überholt, Ankunft regelt P107, Shuttle wandert nach außen (P106), Reste bei P14
 - Braucht: P23, P24
 - Ziel: Sichtbarer Schichtbeginn: das Shuttle mit den Reisenden.
 - Enthalten: ~~Großschiffe auf festen Bahnen~~ → übernimmt **P55** (martin, 05.11.); Shuttle fliegt durch die
@@ -1591,7 +1591,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 08.11.): `DocumentDesk` hält bis zu 4 Papiere/Zettel in einer Reihe (Klick holt dazu, Klick aufs Papier legt es zurück, [R] alle, Esc alle zurück; mindestens 3 Plätze, damit ein einzelnes Papier den Tisch frei lässt). Umschauen beim Lesen geht, die Papiere folgen. Lade: Front zum Beamten, fährt entlang lokal +X. Beide Knöpfe um 180° gedreht, Deckel klappt Richtung Fenster auf, Beschriftung ARREST/AIRLOCK auf dem Tisch (`GameOff/Build Documents`). Geprüft: Validate Travelers ok, 150/150 EditMode-Tests, WebGL-Build mit Bildern von Lade, Deckel, Reihe, Umschauen.
 
 ### P90 — Fehler aus den GitHub-Issues, Runde 1
-- Größe: M · Priorität: Muss · Status: fertig bis auf #17 (max, 09.11.): #21 im Nachtlauf eingebaut, #17 wartet auf Max' Urteil · Zuständig: max
+- Größe: M · Priorität: Muss · Status: fertig bis auf #17 (max, 09.11.): #21 im Nachtlauf eingebaut, #17 weiter in P119
 - Braucht: — · Folgt auf: P89
 - Ziel: Die klaren Fehler aus den Issues sind weg.
 - Enthalten: #27 Airlock-Deckel klappt nicht mehr in den Tisch (Winkel +110, gemessen; schon mit P86 gebaut). #15 Sperr-Ton nur auf [E] an der gesperrten Tür, nicht beim Vorbeigehen. #17 Flackern an den Hangar-Wänden finden und beheben. #18 grüne Kisten im Hangar stecken nicht mehr ineinander. #21 Ladengitter füllt die ganze Front und ist entweder offen oder zu. #23 Figur sitzt auf dem Barhocker statt darin.
@@ -1807,7 +1807,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Schalter, Sperrstunde und Bänke spielen über `AudioManager.PlayAnnouncement` einen von sechs Murmel-Lauten, nie denselben zweimal hintereinander; ohne Lieferung bleibt der Gong. Der Download wächst um 0,26 MB (19,26 auf 19,53 MB, inklusive der neuen Hangarwand). Im Browser spielen alle sechs Clips, auch beim ersten Mal. Untertitel bleiben.
 
 ### P116 — Bugs aus dem Anspielen, Runde 2
-- Größe: S · Priorität: Soll · Status: fertig (max, 09.11.; Spind-Nummer wartet auf Rework) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 09.11.); Spind-Nummer weiter in P120 · Zuständig: max
 - Braucht: — · Folgt auf: P26, P66, P28
 - Ziel: Die Reports #29 bis #32 beheben (Max, 09.11.).
 - Enthalten: Bestechungszettel nicht mehr unter den Stempeln (#32), Putzroboter fährt eine Runde durch die Halle (#31), Pflanze vor dem Spind weg, Nummer aus der Spind-Textur per Rework (#29), Zettel im Zimmer liegt auf dem Tisch (#30).
@@ -1829,3 +1829,70 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Die letzten grauen Platzhalter im Spiel ablösen (GameOff/List Placeholders).
 - Enthalten: Innenleben des Schranks und Beweisbeutel statt der Graybox-Formen in `LockerBoardBuilder`.
 - Abnahme: `GameOff/List Placeholders` listet den Schrank nicht mehr.
+
+### P119 — Hangar: Nachlieferung und Abnahme von #17
+- Größe: S · Priorität: Muss · Status: offen, wartet auf Max' Freigabe von `assets/P22-hangar-viewport-floor-rework` · Zuständig: —
+- Braucht: — · Folgt auf: P22, P90
+- Ziel: Den Hangar-Fehler #17 endgültig abschließen.
+- Enthalten: Lieferung `SM_Hangar_Wall_Viewport` und `SM_Hangar_Floor_4x4` einbauen (Rebuild All, Bake). Max läuft durch den Hangar und bestätigt, dass Streifen und Flackern weg sind (Ursache war die Außenhülle, Fix in `e22b022`).
+- Nicht enthalten: weitere Änderungen an den Wandmodellen.
+- Abnahme: Max sieht im Spiel keine Streifen mehr; #17 ist geschlossen; P90 steht auf `fertig`.
+
+### P120 — Spinde ohne eingebackene Nummer
+- Größe: S · Priorität: Soll · Status: wartet auf Lieferung `SM_Motel_Locker` (rework, M026) · Zuständig: —
+- Braucht: — · Folgt auf: P116
+- Ziel: Nicht jeder Spind trägt die Nummer 103 (#29).
+- Enthalten: Rework einbauen (Rebuild All, Bake). Das Foto am Spind in 103 bleibt.
+- Abnahme: Kein Spind außerhalb von 103 zeigt die 103; #29 ist geschlossen.
+
+### P121 — Bugreport mit Bild
+- Größe: M · Priorität: Kann · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P84
+- Ziel: Spieler können beim Bugreport einen Screenshot mitschicken (#25).
+- Enthalten: Haken „Bild mitsenden“ im Bugreport, standardmäßig aus. Aufnahme des Spielbilds ohne Pausenmenü, verkleinert als JPEG. `deploy/reports/server.py` nimmt das Bild an (Limit heute 8 KB je Anfrage) und legt es so ab, dass das GitHub-Issue es verlinken kann, weil GitHub keine Bilder über die Issue-API annimmt.
+- Zu entscheiden vor dem Bau: Wo liegen die Bilder (auf Geoffrey oder im Repo) und wie lange? Heute speichert das Backend nichts; die Datenschutzerklärung der Live-Seite muss dann angepasst werden.
+- Abnahme: Report mit Haken erzeugt ein Issue mit sichtbarem Bild, ohne Haken wird kein Bild übertragen; Backend-Tests grün; #25 ist geschlossen.
+
+### P122 — Letzte Graybox-Reste
+- Größe: S · Priorität: Kann · Status: offen · Zuständig: —
+- Braucht: P118 · Folgt auf: P60
+- Ziel: `GameOff/List Placeholders` ist leer.
+- Enthalten: Türgriffe des Asservatenschranks und die Aufhängungen der Wegweiser (`Wayfinding_*/Hanger`) bekommen ein vorhandenes Metall-Material im Builder. Keine neuen Assets.
+- Abnahme: `GameOff/List Placeholders` listet nichts mehr.
+
+### P123 — Anspielen: Welle 1, Welle 2, Hangar-Welle
+- Größe: S · Priorität: Muss · Status: offen · Zuständig: max
+- Braucht: —
+- Ziel: Was bisher nur Tests gesehen haben, einmal von Hand prüfen.
+- Enthalten: Max spielt die Listen aus den beiden Fragen von Martin (`2026-11-09_martin-an-max_welle1-testen`, `..._welle2-testen`) und die Hangar-Welle durch, auch: Reichen 5 Minuten Abend? Claude schreibt die Antworten in die Fragen, jeder Fund wird ein eigenes Folgepaket.
+- Abnahme: Beide Fragen stehen auf `beantwortet`; alle Funde haben ein Paket.
+
+### P124 — Enden werten die Figuren aus
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P12, P87
+- Ziel: Das Ticket-Ende erzählt, was aus den Figuren geworden ist; heute tut das nur die Zusammenfassung an Tag 11 (`MECHANICS.md`, Lücken).
+- Enthalten: Zeilen je Figur nach Gedächtnis und Flags in `TicketEnding`, Texte in `DepartureTuning`.
+- Nicht enthalten: neue Enden, Änderungen am Geld.
+- Abnahme: Zwei Läufe mit verschiedenen Entscheidungen zeigen verschiedene Zeilen; EditMode-Test deckt die Auswahl ab.
+
+### P125 — Economy Report rechnet alles mit
+- Größe: M · Priorität: Kann · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P15
+- Ziel: Die Balance-Ziele stimmen auch mit allem, was der Simulator heute auslässt (`MECHANICS.md`, Lücken).
+- Enthalten: Beschlagnahme samt Strafen, Zoll bei der Drohne, Figuren-Geschenke und Bonus im `EconomySimulator`; `maxPerItem` danach abstimmen.
+- Abnahme: `GameOff/Economy Report` zeigt alle Ziele ✓ und weist die neuen Posten aus; `EconomyBalanceTests` grün.
+
+### P126 — Tage ab 13 mit mehr Inhalt
+- Größe: M · Priorität: Kann · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P40, P35
+- Ziel: Das endlose Spiel nach der Geschichte bleibt interessant (`MECHANICS.md`, Lücken).
+- Enthalten: Antworten auf Nachfragen auch für gezogene Reisende, Fracht-Fälle an späteren Tagen, größerer Brief-Pool.
+- Nicht enthalten: neue Figuren, Geschichte nach Tag 12.
+- Abnahme: An Tag 13 und später funktionieren Nachfragen und Fracht; `GameOff/Validate Travelers` ohne Fehler.
+
+### P127 — Floppy-Player: eigene Laute
+- Größe: S · Priorität: Kann · Status: wartet auf Lieferung `SFX_Floppy_Insert`, `SFX_Floppy_Eject` (bestellt 09.11.) · Zuständig: —
+- Braucht: P117 · Folgt auf: P117
+- Ziel: Einlegen und Auswerfen klingen nach Diskette statt nach UI-Klick.
+- Enthalten: Beide Laute im `SoundSet`, Aufruf in `FloppyPlayer`.
+- Abnahme: Beide Aktionen spielen ihren eigenen Laut.

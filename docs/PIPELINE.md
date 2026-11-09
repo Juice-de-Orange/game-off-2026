@@ -433,3 +433,12 @@ in `docs/ASSET-REQUESTS.md`.
 - status: offen
 - meldung: Alle diese Einträge sind offen und von Max beauftragt. `SFX_PA_Murmur_*` (P115) und die Hangarwand (P22) liegen schon auf Branches, danke. **Rückfrage zu `MUS_Floppy_01`:** Kann die Pipeline einen eigenen Musik-Track erzeugen (ruhiger Synth-Loop, 90–150 s, ohne Stimmen)? Falls nicht, bitte hier melden, dann besorgen wir ihn anders. Beim Spind bitte nur die Nummer 103 aus der Textur nehmen, das Foto bleibt.
 - antwort:
+
+### M027 — Noch offene Aufträge 09.11. abends
+- datum: 2026-11-09
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`: `SFX_Voice_<Spezies>_01–10` (P94, 50 Stück), `SM_Motel_Locker` (rework, P120), `SFX_Floppy_Insert`, `SFX_Floppy_Eject` (P127, neu)
+- status: offen
+- meldung: Danke für die Lieferungen zu P115, P117, P118 und P22; der Song beantwortet die Rückfrage aus M026. Damit fehlen nur noch die Einträge oben, Max hat sie alle beauftragt. Bei den Lauten gilt M025 (synthetisches Murmeln ohne Wörter), beim Spind M026 (nur die Nummer 103 aus der Textur nehmen, das Foto bleibt). Bitte jede fertige Lieferung wie in M016 melden.
+- antwort:

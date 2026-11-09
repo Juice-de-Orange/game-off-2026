@@ -10167,3 +10167,55 @@ refs: []
 placeholder: Graue Grundformen aus dem Builder bleiben, bis es geliefert ist.
 feedback: []
 ```
+
+### SFX_Floppy_Insert.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Floppy_Insert.ogg
+package: P127
+scene: Zimmer 103
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Diskette wird in ein altes 3,5-Zoll-Laufwerk geschoben: mechanisches Einrasten mit kurzem Motoranlauf, 0,4 bis 0,8 s, trocken, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: UI-Klick bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Floppy_Eject.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Floppy_Eject.ogg
+package: P127
+scene: Zimmer 103
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Auswurf einer 3,5-Zoll-Diskette: Knopfdruck und federndes Herausschnappen, 0,3 bis 0,6 s, trocken, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: UI-Klick bleibt, bis die Lieferung da ist.
+feedback: []
+```

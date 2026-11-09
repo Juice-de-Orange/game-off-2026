@@ -87,19 +87,19 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Heim-Shuttle angedockt, begehbar | P106 | P72 | Lieferung liegt bereit |
 
 ## Lücken / passt noch nicht
-- **Beschlagnahme vs. Simulator:** Der Economy Report rechnet Beschlagnahme und Strafen nicht mit – Mengen (`maxPerItem`) mit P15 abstimmen.
+- **Beschlagnahme vs. Simulator (P125):** Der Economy Report rechnet Beschlagnahme und Strafen nicht mit – Mengen (`maxPerItem`) mit P15 abstimmen.
 - **Tod im Simulator:** Der Economy Report rechnet ohne P69 (Grenze 0), der Tod spielt also für die Balance-Ziele keine Rolle.
-- **Figuren-Geschenke und Bonus** (P85, P77) rechnet der Economy Report nicht mit; es sind wenige Credits.
-- **Nells Sohn** wird beim ersten Nachfragen festgelegt (Tag 6) und zählt nur Verhaftungen bis zum Vortag. Gezogene Reisende ab Tag 13 zählen mit, spielen aber keine Rolle mehr. Das Ende (P12) wertet die Figuren noch nicht aus, nur die Zusammenfassung an Tag 11.
+- **Figuren-Geschenke und Bonus** (P85, P77; P125) rechnet der Economy Report nicht mit; es sind wenige Credits.
+- **Nells Sohn** wird beim ersten Nachfragen festgelegt (Tag 6) und zählt nur Verhaftungen bis zum Vortag. Gezogene Reisende ab Tag 13 zählen mit, spielen aber keine Rolle mehr. Das Ende (P12) wertet die Figuren noch nicht aus (P124), nur die Zusammenfassung an Tag 11.
 - **Jede Geldänderung braucht ein neues Rebalancing** (GameOff → Economy Report bis alle Ziele ✓; `EconomyBalanceTests` bricht sonst).
 - **Während des Flugs gibt es kein Pausenmenü** (Steuerung gehört dem Flug, höchstens 45 s).
 - **Ende AIRLOCKED nur abseits des richtigen Wegs:** Wer den Shifter an Tag 3 wie befohlen terminiert, sieht seine Frage (Tag 6) nie. Gewollt (Test der Behörde), aber die meisten Spieler werden das Ende so nicht finden.
-- **Endlose Tage ohne Geschichte:** Ab Tag 13 nur gezogene Reisende ohne Figuren, Briefe aus einem kleinen Pool (10) – das Geld wächst nach dem Ticket weiter (Report: Tag 30 ≈ 1900 CR), es gibt nur das Ticket als Ziel. Reisende ab Tag 13 haben keine Antworten auf Nachfragen (P40) und keine Fracht-Geschichten.
+- **Endlose Tage ohne Geschichte (P126):** Ab Tag 13 nur gezogene Reisende ohne Figuren, Briefe aus einem kleinen Pool (10) – das Geld wächst nach dem Ticket weiter (Report: Tag 30 ≈ 1900 CR), es gibt nur das Ticket als Ziel. Reisende ab Tag 13 haben keine Antworten auf Nachfragen (P40) und keine Fracht-Geschichten.
 - **Figuren an festen Plätzen (Korr an Tag 1) stehen exakt dort**, freie Figuren irgendwo davor oder dahinter (`CharacterPlanner.Queue`).
-- **Welle 1 (P28, P32, P34, P33-Rest) und Welle 2 (P109–P111) sind nur mit EditMode-Tests geprüft**, nicht angespielt: Kamerapositionen, Klickflächen und Lesbarkeit beim Anspielen prüfen.
+- **Welle 1 (P28, P32, P34, P33-Rest) und Welle 2 (P109–P111) sind nur mit EditMode-Tests geprüft (P123)**, nicht angespielt: Kamerapositionen, Klickflächen und Lesbarkeit beim Anspielen prüfen.
 - **Terminal kennt die Tischposition als Konstante** (Tisch 1,3 m neben dem Schalter): wird der Tisch im Stations-Builder verschoben, `CounterTerminalBuilder` mitziehen.
 - **Abend: 5 echte Minuten** bis zur Sperrstunde – ob das zum Handeln, Fernrohr und Barbesuch reicht, beim Anspielen prüfen.
-- **Zoll im Simulator:** Der Economy Report schickt nie Schmuggel per Drohne; P110 ändert kein Geld, aber Strafpunkte aus dem Zoll fehlen im Report.
+- **Zoll im Simulator (P125):** Der Economy Report schickt nie Schmuggel per Drohne; P110 ändert kein Geld, aber Strafpunkte aus dem Zoll fehlen im Report.
 - **Menü-Bildrate (P48, P114):** Im Menü läuft keine Occlusion, Innenräume sind deshalb aus; gemessen wurde das noch nicht sauber (PC war ausgelastet), Abnahme von P114 offen.
-- **Hangar-Streifen (#17):** keine Überschneidung, sondern die dunkle Mittelrippe von `SM_Hangar_Wall_4x4`; das Modell steht auf `rework`.
+- **Hangar-Streifen (#17):** Die Rippen auf der Rückseite der Außenhülle lagen in der Ebene der Innenwand; die Hangar-Hülle steht seit `e22b022` 0,1 m weiter außen. Max bestätigt im Spiel (P119).
 - **Pinnwand-Verlauf nur im Speicher:** ohne Spielstand beginnt er bei jedem Spielstart neu.
