@@ -7,6 +7,7 @@ namespace GameOff.Shops
     /// <summary>
     /// P29: the lights on the home planet's night side follow the family: bright while everyone is well, dimmer the worse it gets,
     /// and flickering once someone is critical. Each death takes some of them for good.
+    /// P111: also follows Household.Changed (the night's settlement), not only the morning.
     /// </summary>
     public class HomeLights : MonoBehaviour
     {
@@ -19,6 +20,7 @@ namespace GameOff.Shops
         private MaterialPropertyBlock _block;
         private float _level = 1.6f;
         private bool _flicker;
+        private Household _household;
 
         private void OnEnable()
         {
@@ -28,11 +30,26 @@ namespace GameOff.Shops
         private void OnDisable()
         {
             if (day != null) day.DayStarted -= OnDay;
+            Listen(null);
         }
 
         private void OnDay(int _)
         {
-            var family = PlayerEconomy.Instance != null ? PlayerEconomy.Instance.Household : null;
+            Listen(PlayerEconomy.Instance != null ? PlayerEconomy.Instance.Household : null);
+            Refresh();
+        }
+
+        private void Listen(Household household)
+        {
+            if (household == _household) return;
+            if (_household != null) _household.Changed -= Refresh;
+            _household = household;
+            if (_household != null) _household.Changed += Refresh;
+        }
+
+        private void Refresh()
+        {
+            var family = _household;
             if (family == null) return;
             int worst = Household.Well, dead = 0;
             for (int i = 0; i < family.Count; i++)
