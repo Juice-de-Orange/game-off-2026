@@ -1842,7 +1842,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Fenster-Wand und Boden aus der Lieferung eingebaut. Nur noch offen, dass Max durch den Hangar läuft.
 
 ### P120 — Spinde ohne eingebackene Nummer
-- Größe: S · Priorität: Soll · Status: wartet auf Lieferung `SM_Motel_Locker` (rework, M026) · Zuständig: —
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P116
 - Ziel: Nicht jeder Spind trägt die Nummer 103 (#29).
 - Enthalten: Rework einbauen (Rebuild All, Bake). Das Foto am Spind in 103 bleibt.
