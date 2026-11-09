@@ -536,6 +536,7 @@ namespace GameOff.EditorTools
                 var unusedOuter = root.transform.Find("Traveler_DoorOuter"); // P91: nobody walks to the outer hatch any more
                 if (unusedOuter != null) Object.DestroyImmediate(unusedOuter.gameObject);
                 foreach (var text in root.GetComponentsInChildren<TMP_Text>(true)) text.font = font; // hint, notice, subtitle, labels (P54)
+                CounterTerminalBuilder.Wire(root, hint, log); // P34: after the font pass, the terminal keeps its monospace font
                 PrefabUtility.SaveAsPrefabAsset(root, CounterPrefab);
                 log.Add("counter wired: drawer, 3 spots, DocumentDesk, pinboard, look-around, announcements");
             }
