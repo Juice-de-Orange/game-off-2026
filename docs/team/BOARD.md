@@ -84,6 +84,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
+| max | P112, P113, Status-Display-Fix: Rebuild All und Bake | Main.unity, Menu.unity, Boot.unity, PF_Station_Graybox, PF_Exterior, PF_SkyRig, PF_DayFlow, PF_Economy, PF_Departure, PF_PauseMenu, PF_RestSpots, Dokument-Prefabs, Traffic- und Ambience-Prefabs, Data/Economy, Data/Counter | 09.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog
