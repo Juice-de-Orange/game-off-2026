@@ -9882,7 +9882,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_01.ogg
 package: P115
 scene: Counter
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -9908,7 +9908,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_02.ogg
 package: P115
 scene: Counter
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -9934,7 +9934,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_03.ogg
 package: P115
 scene: Counter
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -9960,7 +9960,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_04.ogg
 package: P115
 scene: Counter
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -9986,7 +9986,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_05.ogg
 package: P115
 scene: Counter
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10012,7 +10012,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_PA_Murmur_06.ogg
 package: P115
 scene: Counter
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
