@@ -169,6 +169,9 @@ namespace GameOff.EditorTools
             // P08: numbers for confiscation and the shift-end answer; the goods list follows the cargo words (P82).
             data.Confiscation = LoadOrCreate<ConfiscationTuning>(EconomyFolder + "ConfiscationTuning.asset", _ => { }, ref created);
             data.Confiscation.goods = data.Items.Values.Where(i => i != null && !string.IsNullOrEmpty(i.CargoWord)).OrderBy(i => i.name).ToList();
+            // P110: what drone customs looks for.
+            if (data.Confiscation.contrabandTag == null) data.Confiscation.contrabandTag = contraband;
+            if (data.Confiscation.confiscatedTag == null) data.Confiscation.confiscatedTag = confiscated;
             EditorUtility.SetDirty(data.Confiscation);
 
             AssetDatabase.SaveAssets();

@@ -42,6 +42,7 @@ namespace GameOff.UI
         private Mode _mode;
         private VendorStock _stock;
         private Action<ItemData> _onSend;
+        private Func<ItemData, string> _sendHint;
         private ItemData _selected;
         private Side _side;
 
@@ -73,12 +74,16 @@ namespace GameOff.UI
             Open();
         }
 
-        /// <summary>Drone: pick one of your items and send it home. onSend runs after the item left the inventory.</summary>
-        public void OpenSendHome(string windowTitle, string info, Action<ItemData> onSend)
+        /// <summary>
+        /// Drone: pick one of your items and send it home. onSend runs after the item left the inventory.
+        /// P110: hint (optional) returns a warning for the selected item, e.g. that customs may inspect it ("" = none).
+        /// </summary>
+        public void OpenSendHome(string windowTitle, string info, Action<ItemData> onSend, Func<ItemData, string> hint = null)
         {
             _mode = Mode.SendHome;
             _stock = null;
             _onSend = onSend;
+            _sendHint = hint;
             title.text = windowTitle;
             leftHeader.text = "SEND HOME";
             leftEmpty.text = info;
@@ -170,7 +175,12 @@ namespace GameOff.UI
             actionButton.gameObject.SetActive(any);
             if (!any) return;
 
-            if (_mode == Mode.SendHome) actionLabel.text = "SEND HOME";
+            if (_mode == Mode.SendHome)
+            {
+                actionLabel.text = "SEND HOME";
+                string hint = _sendHint != null ? _sendHint(_selected) : "";
+                if (!string.IsNullOrEmpty(hint)) detailDescription.text += $"\n<color=#E2463F>{hint}</color>";
+            }
             else if (_side == Side.Vendor && !Economy.Inventory.CanAdd(_selected))
             {
                 actionButton.gameObject.SetActive(false);
