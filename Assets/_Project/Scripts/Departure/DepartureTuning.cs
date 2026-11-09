@@ -14,6 +14,8 @@ namespace GameOff.Departure
         public float liftOffSeconds = 2.5f;
         [Tooltip("Metres the shuttle rises during lift-off.")]
         public float liftOffHeight = 4f;
+        [Tooltip("P106: degrees the shuttle turns while it lifts off (negative = to its left, away from the station).")]
+        public float undockTurn = -90f;
         [Tooltip("Speed gained per second while W is held (m/s²).")]
         public float acceleration = 10f;
         [Tooltip("Speed lost per second while S is held (m/s²).")]

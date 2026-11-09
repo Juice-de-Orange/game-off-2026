@@ -34,7 +34,7 @@ namespace GameOff.Departure
         private Transform _body, _visual;
         private Vector3 _start;
         private Quaternion _visualRest;
-        private float _time, _speed, _yaw, _pitch, _bank;
+        private float _time, _speed, _yaw, _startYaw, _pitch, _bank;
         private bool _finished;
 
         public bool IsFlying { get; private set; }
@@ -79,7 +79,7 @@ namespace GameOff.Departure
             _visual.SetPositionAndRotation(dockedShuttle.position, dockedShuttle.rotation);
             _visual.localScale = dockedShuttle.lossyScale;
             _visualRest = _visual.localRotation; // keeps any import rotation of the model; the lean goes on top
-            _yaw = _body.eulerAngles.y;
+            _yaw = _startYaw = _body.eulerAngles.y;
 
             // Cinemachine drives the player's camera every frame (counter view, P03); the flight takes it over for good.
             var brain = playerCamera.GetComponent<CinemachineBrain>();
@@ -109,6 +109,8 @@ namespace GameOff.Departure
             {
                 float k = Mathf.SmoothStep(0f, 1f, _time / tuning.liftOffSeconds);
                 _body.position = _start + Vector3.up * (tuning.liftOffHeight * k);
+                _yaw = _startYaw + tuning.undockTurn * k; // away from the station: straight ahead lie its radiators and truss
+                _body.rotation = Quaternion.Euler(0f, _yaw, 0f);
             }
             else Steer(dt);
 

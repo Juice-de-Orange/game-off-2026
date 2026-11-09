@@ -35,8 +35,9 @@ namespace GameOff.EditorTools
         private static readonly Vector3 TerminalPosition = new Vector3(-17.4f, 0f, -28.7f);
         private const float TerminalYaw = 90f;
         private static readonly Vector3 TerminalSize = new Vector3(0.8f, 1.8f, 0.6f);
-        private static readonly Vector3 HatchTriggerCenter = new Vector3(-17.3f, 1.2f, -26f);
-        private static readonly Vector3 HatchTriggerSize = new Vector3(1f, 2.4f, 2f);
+        // Thin plates against the wall: the interaction ray starts at the camera and doesn't report a collider the camera is inside of.
+        private static readonly Vector3 HatchTriggerCenter = new Vector3(-17.75f, 1.2f, -26f);
+        private static readonly Vector3 HatchTriggerSize = new Vector3(0.2f, 2.4f, 2f);
         private static readonly Vector3 HatchOutside = new Vector3(-16.6f, 0f, -26f);
 
         [MenuItem("GameOff/Build Departure into Main")]
@@ -162,7 +163,7 @@ namespace GameOff.EditorTools
             var cabinCentre = StationGrayboxBuilder.ShuttleCabinCentre;
             var seat = new GameObject("ShuttleBoarding");
             seat.transform.SetParent(root.transform, false);
-            var seatTrigger = Trigger(seat.transform, "Trigger", cabinCentre + new Vector3(0f, 1.2f, 2.2f), new Vector3(1.4f, 2.4f, 1.2f), "Take the seat");
+            var seatTrigger = Trigger(seat.transform, "Trigger", cabinCentre + new Vector3(0f, 1.2f, 2.6f), new Vector3(1.4f, 2.4f, 0.2f), "Take the seat");
             var boarding = seat.AddComponent<ShuttleBoarding>();
             Set(boarding, "interactable", seatTrigger);
             Set(boarding, "flight", flight);
@@ -170,7 +171,7 @@ namespace GameOff.EditorTools
             var inside = Point(root.transform, "Hatch_Inside", cabinCentre + new Vector3(0f, 0f, -3.1f), Quaternion.identity);
             var outside = Point(root.transform, "Hatch_Outside", HatchOutside, Quaternion.Euler(0f, 90f, 0f));
             Hatch(root.transform, "Hatch_Enter", HatchTriggerCenter, HatchTriggerSize, "Enter the shuttle", inside, flight);
-            Hatch(root.transform, "Hatch_Leave", cabinCentre + new Vector3(0f, 1.2f, -3.6f), new Vector3(1.4f, 2.4f, 0.8f), "Leave the shuttle", outside, flight);
+            Hatch(root.transform, "Hatch_Leave", cabinCentre + new Vector3(0f, 1.2f, -3.8f), new Vector3(1.4f, 2.4f, 0.2f), "Leave the shuttle", outside, flight);
 
             Directory.CreateDirectory(Path.GetDirectoryName(PrefabPath));
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
