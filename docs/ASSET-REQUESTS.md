@@ -1050,7 +1050,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_Locker.fbx
 package: P04
 scene: Motel
-status: final
+status: rework
 priority: P1
 needed_by: 2026-11-16
 size_m: [0.6, 0.5, 1.9]
@@ -1069,7 +1069,8 @@ animations: []
 collision: prefab
 refs: [docs/style/refs/real_crew_quarters_01.webp, docs/style/refs/mw_cabin_posters_01.webp, docs/style/refs/ai_cockpit_chair_01.webp]
 placeholder: Box 0.6 x 0.5 x 1.9 m, Pivot bottom_center, Material-Slots [Locker]
-feedback: []
+feedback:
+  - "2026-11-09 max: Auf jedem Spind steht fest die Nummer 103, auch in fremden Zimmern (Issue #29). Bitte die Nummer aus der Textur nehmen."
 ```
 
 ### SM_Motel_TV.fbx
@@ -10029,5 +10030,86 @@ animations: []
 collision: prefab
 refs: []
 placeholder: Vorhandener Ton bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SM_Motel_FloppyPlayer.fbx
+```yaml
+path: Assets/_Project/Art/Models/Motel/SM_Motel_FloppyPlayer.fbx
+package: P117
+scene: Motel
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0.45, 0.3, 0.25]
+pivot: bottom_center
+tris_max: 400
+materials: [Player]
+textures:
+  - Assets/_Project/Art/Textures/Motel/T_Motel_FloppyPlayer_Albedo.png   # 64x64, Point
+  - Assets/_Project/Art/Textures/Motel/T_Motel_FloppyPlayer_Emission.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Klobiger Diskettenspieler aus den 80ern im Stil der Station: beiges Metallgehäuse, breiter Floppy-Schlitz vorne, zwei Drehregler, kleines grünes Display, Lautsprechergitter. Steht auf dem Tisch in Zimmer 103 anstelle des Fernsehers.
+interaction: "E legt die Diskette ein oder nimmt sie heraus"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: SM_Motel_TV bleibt stehen; Box 0.45 x 0.3 x 0.25 m, Pivot bottom_center, Material-Slots [Player]
+feedback: []
+```
+
+### SM_Item_FloppyDisk.fbx
+```yaml
+path: Assets/_Project/Art/Models/Items/SM_Item_FloppyDisk.fbx
+package: P117
+scene: Motel
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0.09, 0.09, 0.01]
+pivot: bottom_center
+tris_max: 100
+materials: [Disk]
+textures:
+  - Assets/_Project/Art/Textures/Motel/T_Item_FloppyDisk_Albedo.png   # 64x64, Point
+texel_px_per_m: 64
+palette: docs/style/palette.png
+look: >
+  Eine 3,5-Zoll-Diskette, abgegriffen, Etikett von Hand beschriftet („FOR THE NIGHT SHIFT“), liegt flach auf dem Tisch.
+interaction: "liegt auf dem Tisch, solange sie nicht im Spieler steckt"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: keine, bis es geliefert ist; Box 0.09 x 0.09 x 0.01 m, Pivot bottom_center, Material-Slots [Disk]
+feedback: []
+```
+
+### MUS_Floppy_01.ogg
+```yaml
+path: Assets/_Project/Audio/Music/MUS_Floppy_01.ogg
+package: P117
+scene: Motel
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Erster Song für den Diskettenspieler in Zimmer 103. Melancholischer, ruhiger Synth-Track wie von einem alten Heimcomputer, im Stil der heruntergekommenen Station: langsam, warm, leicht verstimmt, kein Gesang, keine Stimmen. 90 bis 150 Sekunden, nahtlos loopbar.
+interaction: "spielt, solange die Diskette im Spieler steckt"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: Kein Ton, der Spieler meldet nur „nothing on this disk yet“.
 feedback: []
 ```

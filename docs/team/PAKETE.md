@@ -1804,3 +1804,18 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: Zufälliger Murmel-Laut statt des Platzhalter-Tons in `Announcer` und auf den Bänken (`HallBench`), Untertitel bleiben.
 - Nicht enthalten: eingesprochene Sätze.
 - Abnahme: Keine zwei Durchsagen hintereinander klingen gleich; Download-Zuwachs gemessen.
+
+### P116 — Bugs aus dem Anspielen, Runde 2
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Braucht: — · Folgt auf: P26, P66, P28
+- Ziel: Die Reports #29 bis #32 beheben (Max, 09.11.).
+- Enthalten: Bestechungszettel nicht mehr unter den Stempeln (#32), Putzroboter fährt eine Runde durch die Halle (#31), Pflanze vor dem Spind weg, Nummer aus der Spind-Textur per Rework (#29), Zettel im Zimmer liegt auf dem Tisch (#30).
+- Abnahme: im Spiel gesehen; Tests grün.
+
+### P117 — Floppy-Player
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 09.11.) · Zuständig: max
+- Braucht: Lieferungen `SM_Motel_FloppyPlayer`, `SM_Item_FloppyDisk`, `MUS_Floppy_01` · Folgt auf: P28
+- Ziel: Musik im Spiel kommt über Disketten; der Fernseher in 103 wird zum Floppy-Player (#30, Max 09.11.).
+- Enthalten: Spieler anstelle des TVs, eine Start-Diskette, [E] legt sie ein oder nimmt sie heraus, Musik nur im Zimmer hörbar.
+- Nicht enthalten: weitere Disketten, Kauf im Kiosk.
+- Abnahme: Diskette einlegen startet den Song, herausnehmen stoppt ihn; Regler MUSIC wirkt.
