@@ -1607,7 +1607,7 @@ feedback:
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Floor_4x4.fbx
 package: P22
 scene: Hangar
-status: final
+status: Vorschau
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 4.0, 0.15]
@@ -6998,7 +6998,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Wall_Viewport.fbx
 package: P106
 scene: Hangar
-status: final
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [4.0, 0.3, 4.0]
