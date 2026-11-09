@@ -173,6 +173,12 @@ namespace GameOff.EditorTools
             Set(frontEnd, "playerCamera", player != null ? player.GetComponentInChildren<Camera>(true) : null);
             Set(frontEnd, "dayUi", dayUi);
             Set(frontEnd, "menuCanvas", canvas.gameObject);
+            var interiors = new SerializedObject(frontEnd);
+            var rooms = StationGrayboxBuilder.InteriorBounds();
+            var hidden = interiors.FindProperty("hiddenRooms");
+            hidden.arraySize = rooms.Length;
+            for (int i = 0; i < rooms.Length; i++) hidden.GetArrayElementAtIndex(i).boundsValue = rooms[i];
+            interiors.ApplyModifiedPropertiesWithoutUndo();
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
             log.Add($"menu built in Main (player {(player != null ? "ok" : "MISSING")}, day UI {(dayUi != null ? "ok" : "MISSING")})");

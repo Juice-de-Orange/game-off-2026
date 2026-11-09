@@ -141,6 +141,7 @@ namespace GameOff.EditorTools
             // Some textures leave out the size in the model's name: SM_Hall_WallEnd_1x6 uses T_Hall_WallEnd_Albedo.
             string unsized = System.Text.RegularExpressions.Regex.Replace(name, @"_\d+x\d+$", "");
             if (name == "SM_Shuttle_Cabin_Interior" || name == "Shuttle_Cabin_Interior") unsized = unsized.Replace("_Interior", ""); // delivered as T_Shuttle_Cabin_*
+            if (name == "Station_Wall_Porthole_Large_2x3") unsized = "Station_Wall_Porthole_2x3"; // P51: shares the texture of the small one
             string textureName = textures.ContainsKey("T_" + name + "_Albedo") ? name : unsized; // albedo and emission always as a pair
             textures.TryGetValue("T_" + textureName + "_Albedo", out var albedo);
             textures.TryGetValue("T_" + textureName + "_Emission", out var emission);

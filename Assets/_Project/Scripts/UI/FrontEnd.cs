@@ -31,8 +31,11 @@ namespace GameOff.UI
         [Tooltip("Just outside the porthole of room 103.")]
         [SerializeField] private Vector3 flightEnd = new Vector3(-21.3f, 1.5f, 5f);
         [SerializeField] private Vector3 flightLookAt = new Vector3(-17f, 1.5f, 5f);
+        [Tooltip("P114: rooms the menu can't see into; their renderers are off until START (the menu runs without occlusion).")]
+        [SerializeField] private Bounds[] hiddenRooms;
 
         private readonly List<Canvas> _hidden = new List<Canvas>();
+        private readonly List<Renderer> _hiddenRenderers = new List<Renderer>();
         private MenuCameraDrift _drift;
         private CinemachineBrain _brain;
         private Transform _cameraParent;
@@ -63,6 +66,18 @@ namespace GameOff.UI
                     _hidden.Add(canvas);
                 }
 
+            foreach (var r in FindObjectsByType<Renderer>(FindObjectsSortMode.None))
+            {
+                if (!r.enabled || r is ParticleSystemRenderer) continue;
+                foreach (var room in hiddenRooms)
+                    if (room.Contains(r.bounds.center))
+                    {
+                        r.enabled = false;
+                        _hiddenRenderers.Add(r);
+                        break;
+                    }
+            }
+
             _fog = RenderSettings.fog;
             RenderSettings.fog = false; // Main's indoor fog would swallow the station at this distance
 
@@ -85,6 +100,8 @@ namespace GameOff.UI
             if (_begun) return;
             _begun = true;
             menuCanvas.SetActive(false);
+            foreach (var r in _hiddenRenderers) if (r != null) r.enabled = true;
+            _hiddenRenderers.Clear();
             StartCoroutine(Flight());
         }
 

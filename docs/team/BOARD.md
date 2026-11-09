@@ -78,6 +78,8 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - **P48** fertig: Das Menü liegt in Main (`FrontEnd`), `Menu.unity` gibt es nicht mehr; Start fliegt zum Bullauge von Zimmer 103.
 - **P106, P14-Rest, P35, P26-Rest** fertig und **live: `1664ad4`** (09.11. nachmittags). Im Browser gesehen: Schott, Kabine, Abflug, Morgen-Gruppe, Schalter. Dazu mit einer lokalen Testversion: Kiste melden, Verhaften, Bank-Gedanke, Albtraum-Zeile, Icons im Kiosk. Nicht im Browser gesehen: Abendgäste (brauchen Durchgelassene), Titel des Zettels. Neu: Icons in Inventar, Handel und Schichtbericht; die Kiste hat ein Dialogfeld mit drei Knöpfen. Offen bleiben: Anspielen von Welle 1, 2 und der Hangar-Welle (Max), P94 (wartet auf Laute), P51 (Bullauge bestellt), P48 (Polish-Woche), #17 prüfen
 
+- **#17:** Geprüft: keine Überschneidung, der Streifen ist die Mittelrippe von `SM_Hangar_Wall_4x4` (dunkle Texturspalte). Asset steht auf `rework`, Issue bleibt offen, bis es geliefert ist.
+
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
 - **martin**: Startbildschirm — alles vom Spielstart bis zum Menü. Baut mit Platzhalter-Assets, Max ersetzt sie.

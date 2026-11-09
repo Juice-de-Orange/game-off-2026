@@ -82,7 +82,7 @@ namespace GameOff.EditorTools
             new Opening(false,  8,  14,   8.0f, 0.9f, 2.4f, true), // Bar window (north), matches SM_Station_Wall_Window_2x3
             new Opening(true,   0,  -9,   4.0f, 0.9f, 2.2f, true), // Counter -> lock
             new Opening(false,-12,  -4,   4.0f, 0.9f, 2.4f, true), // Counter -> hangar: two SM_Station_Wall_Window_2x3 cells
-            new Opening(true, -20,   5,   0.6f, 1.2f, 1.8f, true), // Porthole room 103 (cell center, SM_Station_Wall_Porthole_2x3)
+            new Opening(true, -20,   5,   1.2f, 0.9f, 2.1f, true), // Porthole room 103 (cell center, SM_Station_Wall_Porthole_Large_2x3, P51)
         };
 
         private static readonly Dictionary<Area, Color> AreaColors = new Dictionary<Area, Color>
@@ -262,6 +262,20 @@ namespace GameOff.EditorTools
             WallPiece(parent, onXLine, offsetLine, cursor, to, bottom, top, mat, visible, collider);
         }
 
+        /// <summary>P114: what the menu can't see from outside: every room but the hangar, just inside its walls so the hull stays.</summary>
+        public static Bounds[] InteriorBounds()
+        {
+            var list = new List<Bounds>();
+            foreach (var room in Rooms)
+            {
+                if (room.Name == "Hangar") continue;
+                var bounds = new Bounds();
+                bounds.SetMinMax(new Vector3(room.X0 + 0.05f, -0.05f, room.Z0 + 0.05f), new Vector3(room.X1 - 0.05f, room.Height - 0.02f, room.Z1 - 0.05f));
+                list.Add(bounds);
+            }
+            return list.ToArray();
+        }
+
         /// <summary>The floor plan's area of a room, with some room above and below for whoever stands in it.</summary>
         public static Bounds RoomBounds(string name)
         {
@@ -314,7 +328,7 @@ namespace GameOff.EditorTools
         private const string HullFillerA = "Assets/_Project/Art/Textures/Exterior/T_Ext_HullFiller_A_Albedo.png";
         private const string HullFillerB = "Assets/_Project/Art/Textures/Exterior/T_Ext_HullFiller_B_Albedo.png";
         private const float HullFillerTileMeters = 4f;
-        private const string KitWallPorthole = "Station/SM_Station_Wall_Porthole_2x3.fbx";
+        private const string KitWallPorthole = "Station/SM_Station_Wall_Porthole_Large_2x3.fbx";
         private const string KitWindowWall = "Station/SM_Station_Wall_Window_2x3.fbx";
         private const string KitHangarWall = "Hangar/SM_Hangar_Wall_4x4.fbx";
         private const string KitHangarFloor = "Hangar/SM_Hangar_Floor_4x4.fbx";
@@ -525,7 +539,7 @@ namespace GameOff.EditorTools
             if (IsPortholeOpening(o) && Kit(KitWallPorthole) != null) return null;
             string path = null;
             if (o.OnXLine && Mathf.Approximately(o.Line, 0f) && Mathf.Approximately(o.Width, 4f)) path = KitWindowSlot;      // counter -> lock
-            else if (o.OnXLine && Mathf.Approximately(o.Line, -20f) && o.Width < 1f) path = KitPorthole;                     // room 103
+            else if (o.OnXLine && Mathf.Approximately(o.Line, -20f) && o.Width < 1.5f) path = KitPorthole;                     // room 103
             return path != null && Kit(path) != null ? path : null;
         }
 
@@ -1498,7 +1512,7 @@ namespace GameOff.EditorTools
                 onXLine ? depth : w, onXLine ? w : depth, h, y, yaw);
         }
 
-        private static bool IsPortholeOpening(Opening o) => o.Glass && o.Width < 1f;
+        private static bool IsPortholeOpening(Opening o) => o.Glass && o.Width < 1.5f;
 
         private static bool IsKioskHatch(Opening o) => !o.Glass && o.OnXLine && Mathf.Approximately(o.Line, 8f) && o.Sill > 0.5f;
 

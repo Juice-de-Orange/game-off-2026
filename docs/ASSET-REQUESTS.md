@@ -1578,7 +1578,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Wall_4x4.fbx
 package: P22
 scene: Hangar
-status: final
+status: rework
 priority: P1
 needed_by: 2026-11-09
 size_m: [4.0, 0.3, 4.0]
@@ -1597,7 +1597,8 @@ animations: []
 collision: prefab
 refs: [docs/style/refs/real_hangar_shuttle_01.webp, docs/style/refs/mw_cargo_hold_01.webp]
 placeholder: Box 4.0 x 0.3 x 4.0 m, Pivot bottom_center, Material-Slots [Wall]
-feedback: []
+feedback:
+  - "2026-11-09 max: Die mittlere senkrechte Rippe jeder Kachel (x +-0,12 m) wirkt im Spiel wie ein schwarzer Streifen und flackert beim Bewegen (Issue #17). Bitte die Rippe in der Plattenmitte entfernen oder in der hellen Stahlfarbe der Randrippen einfärben; Textur-Spalte um u 0,91 bis 0,97 aufhellen, keine schmalen Spalten mit hohem Kontrast."
 ```
 
 ### SM_Hangar_Floor_4x4.fbx
@@ -9853,7 +9854,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Porthole_Large_2x3.fbx
 package: P51
 scene: Motel
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [2.0, 0.2, 3.0]
