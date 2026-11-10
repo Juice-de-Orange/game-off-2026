@@ -4,12 +4,19 @@
 POST /api/report with JSON {text, version, day, phase, scene, browser} creates a GitHub issue with the labels "bug" and
 "player-report" through a bot token, so testers need no GitHub account. Standard library only.
 
-Privacy: the client IP is not used or kept. Nothing is written to disk and the log lines carry no IP and no report text.
+P129: POST /api/metrics with JSON {session, version, events: [...]} appends the game's anonymous play events to one JSONL file
+per day in METRICS_DIR (tools/metrics_report.py reads them). Files older than METRICS_DAYS are deleted.
 
-Environment: GITHUB_TOKEN (fine-grained, Issues read/write), GITHUB_REPO, GITHUB_API (tests), PORT.
+Privacy: the client IP is not used or kept. Reports are not written to disk; metrics carry only what the game sends (a random
+session id that lives in the game's memory, no IP) plus the server's time. The log lines carry no IP and no report text.
+
+Environment: GITHUB_TOKEN (fine-grained, Issues read/write), GITHUB_REPO, GITHUB_API (tests), PORT, METRICS_DIR, METRICS_DAYS.
 """
+import datetime
 import json
+import math
 import os
+import re
 import sys
 import threading
 import urllib.error
@@ -24,6 +31,17 @@ MAX_PARALLEL = 8        # GitHub calls at the same time; more → 503 (keeps thr
 # Browsers may only post from the live site and the itch.io build; the game in the editor sends no Origin at all.
 ALLOWED_ORIGINS = ("https://kestrel9.maxlworks.com",)
 ALLOWED_ORIGIN_SUFFIXES = (".itch.zone", ".itch.io")
+
+# P129 play metrics
+METRICS_MAX_BODY = 64 * 1024
+METRICS_MAX_EVENTS = 100
+METRICS_MAX_FIELDS = 24
+METRICS_TEXT_MAX = 500
+METRICS_LIST_MAX = 12
+METRICS_FILE_MAX = 200 * 1024 * 1024  # per day; beyond it events are dropped (a full disk would stop the whole server)
+METRICS_EVENTS = {"session", "day_start", "traveler", "shift_end", "day_end", "run_end", "beat", "error"}
+KEY = re.compile(r"^[a-z][a-z0-9_]{0,23}$")
+SESSION = re.compile(r"^[0-9a-f]{8,32}$")
 
 
 def origin_allowed(origin):
@@ -72,6 +90,91 @@ def parse_report(raw):
         "scene": clean(data.get("scene")) or "-",
         "browser": clean(data.get("browser")) or "-",
     }, None
+
+
+def metric_value(value):
+    """A JSON value the metrics keep: bool, finite number, short text or a short list of numbers; anything else → None."""
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return value if math.isfinite(value) else None
+    if isinstance(value, str):
+        return one_line(value, METRICS_TEXT_MAX)
+    if isinstance(value, list) and len(value) <= METRICS_LIST_MAX:
+        if all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for v in value):
+            return value
+    return None
+
+
+def parse_metrics(raw):
+    """Returns (session, version, [event, ...], None) or (None, None, None, error). Unknown events and odd fields are dropped."""
+    try:
+        data = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return None, None, None, "not JSON"
+    if not isinstance(data, dict):
+        return None, None, None, "not an object"
+    session = str(data.get("session") or "")
+    if not SESSION.match(session):
+        return None, None, None, "bad session"
+    events = data.get("events")
+    if not isinstance(events, list) or not events:
+        return None, None, None, "no events"
+    if len(events) > METRICS_MAX_EVENTS:
+        return None, None, None, "too many events"
+    kept = []
+    for event in events:
+        if not isinstance(event, dict) or event.get("e") not in METRICS_EVENTS:
+            continue
+        clean_event = {"e": event["e"]}
+        for key, value in list(event.items())[:METRICS_MAX_FIELDS]:
+            if key == "e" or not isinstance(key, str) or not KEY.match(key):
+                continue
+            value = metric_value(value)
+            if value is not None:
+                clean_event[key] = value
+        kept.append(clean_event)
+    return session, one_line(data.get("version"), FIELD_MAX) or "unknown", kept, None
+
+
+class MetricsStore:
+    """Appends events to <dir>/metrics-YYYY-MM-DD.jsonl (UTC) and deletes days older than `days` once per day."""
+
+    def __init__(self, directory, days=90, now=None):
+        self.directory, self.days = directory, days
+        self.now = now or (lambda: datetime.datetime.now(datetime.timezone.utc))
+        self.lock = threading.Lock()
+        self.pruned = None
+
+    def path(self, day):
+        return os.path.join(self.directory, f"metrics-{day.isoformat()}.jsonl")
+
+    def write(self, session, version, events):
+        now = self.now()
+        stamp = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+        lines = "".join(json.dumps({"ts": stamp, "s": session, "v": version, **event}, ensure_ascii=False) + "\n" for event in events)
+        with self.lock:
+            self.prune(now.date())
+            path = self.path(now.date())
+            try:
+                size = os.path.getsize(path)
+            except OSError:
+                size = 0
+            if size + len(lines) > METRICS_FILE_MAX:
+                return False
+            with open(path, "a", encoding="utf-8") as f:
+                f.write(lines)
+        return True
+
+    def prune(self, today):
+        if self.pruned == today:
+            return
+        self.pruned = today
+        oldest = today - datetime.timedelta(days=self.days)
+        for name in os.listdir(self.directory):
+            match = re.match(r"^metrics-(\d{4}-\d{2}-\d{2})\.jsonl$", name)
+            if match and datetime.date.fromisoformat(match.group(1)) < oldest:
+                os.remove(os.path.join(self.directory, name))
 
 
 def issue_for(report, repo):
@@ -126,7 +229,7 @@ def make_handler(config):
                 self.send_header("Access-Control-Allow-Origin", origin)
             self.send_header("Vary", "Origin")
 
-        def _send(self, status, payload):
+        def _send(self, status, payload, quiet=False):
             data = json.dumps(payload).encode("utf-8")
             self.send_response(status)
             self.send_header("Content-Type", "application/json")
@@ -135,7 +238,9 @@ def make_handler(config):
             self.send_header("Cache-Control", "no-store")
             self.end_headers()
             self.wfile.write(data)
-            print(f"report {status} {payload.get('issue', payload.get('error', ''))}", flush=True)
+            if quiet:  # metrics come every 30 s per player; only their failures are worth a log line
+                return
+            print(f"{'metrics' if self.path == '/api/metrics' else 'report'} {status} {payload.get('issue', payload.get('error', ''))}", flush=True)
 
         def do_OPTIONS(self):
             self.send_response(204)
@@ -147,22 +252,33 @@ def make_handler(config):
 
         def do_GET(self):
             if self.path == "/api/health":
-                self._send(200, {"ok": True, "configured": bool(config["token"])})
+                self._send(200, {"ok": True, "configured": bool(config["token"]), "metrics": config.get("metrics") is not None})
             else:
                 self._send(404, {"ok": False, "error": "not found"})
 
-        def do_POST(self):
-            if self.path != "/api/report":
-                return self._send(404, {"ok": False, "error": "not found"})
+        def _body(self, limit):
+            """The request body, or None after an error answer."""
             if not origin_allowed(self.headers.get("Origin") or ""):
-                return self._send(403, {"ok": False, "error": "origin"})
+                self._send(403, {"ok": False, "error": "origin"})
+                return None
             try:
                 length = int(self.headers.get("Content-Length") or 0)
             except ValueError:
                 length = -1
-            if length <= 0 or length > MAX_BODY:
-                return self._send(413 if length > MAX_BODY else 400, {"ok": False, "error": "bad size"})
-            report, error = parse_report(self.rfile.read(length))
+            if length <= 0 or length > limit:
+                self._send(413 if length > limit else 400, {"ok": False, "error": "bad size"})
+                return None
+            return self.rfile.read(length)
+
+        def do_POST(self):
+            if self.path == "/api/metrics":
+                return self._metrics()
+            if self.path != "/api/report":
+                return self._send(404, {"ok": False, "error": "not found"})
+            raw = self._body(MAX_BODY)
+            if raw is None:
+                return
+            report, error = parse_report(raw)
             if error:
                 return self._send(400, {"ok": False, "error": error})
             if not config["token"]:
@@ -180,7 +296,33 @@ def make_handler(config):
                 slots.release()
             self._send(201, {"ok": True, "issue": number})
 
+        def _metrics(self):
+            store = config.get("metrics")
+            if store is None:  # the game stops sending for this session on 404
+                return self._send(404, {"ok": False, "error": "metrics off"})
+            raw = self._body(METRICS_MAX_BODY)
+            if raw is None:
+                return
+            session, version, events, error = parse_metrics(raw)
+            if error:
+                return self._send(400, {"ok": False, "error": error})
+            try:
+                stored = store.write(session, version, events) if events else True
+            except OSError:
+                return self._send(503, {"ok": False, "error": "storage"})
+            if not stored:
+                return self._send(503, {"ok": False, "error": "full"})
+            self._send(200, {"ok": True, "stored": len(events)}, quiet=True)
+
     return Handler
+
+
+def metrics_store():
+    """The store in METRICS_DIR, or None (metrics off) when the folder is missing or not writable."""
+    directory = os.environ.get("METRICS_DIR", "/data").strip()
+    if not directory or not os.path.isdir(directory) or not os.access(directory, os.W_OK):
+        return None
+    return MetricsStore(directory, int(os.environ.get("METRICS_DAYS", "90")))
 
 
 def make_server(port=8000, config=None):
@@ -188,13 +330,15 @@ def make_server(port=8000, config=None):
         "token": os.environ.get("GITHUB_TOKEN", "").strip(),
         "repo": os.environ.get("GITHUB_REPO", "Juice-de-Orange/game-off-2026").strip(),
         "api": os.environ.get("GITHUB_API", "https://api.github.com").rstrip("/"),
+        "metrics": metrics_store(),
     }
     return ThreadingHTTPServer(("0.0.0.0", port), make_handler(config))
 
 
 if __name__ == "__main__":
     server = make_server(int(os.environ.get("PORT", "8000")))
-    print(f"kestrel9-reports on :{server.server_address[1]}, token {'set' if os.environ.get('GITHUB_TOKEN') else 'MISSING'}", flush=True)
+    metrics = "on" if metrics_store() is not None else "OFF (no writable METRICS_DIR)"
+    print(f"kestrel9-reports on :{server.server_address[1]}, token {'set' if os.environ.get('GITHUB_TOKEN') else 'MISSING'}, metrics {metrics}", flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

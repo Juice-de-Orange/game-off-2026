@@ -89,6 +89,8 @@ namespace GameOff.Day
         /// <summary>The schedule entry of day n (1-based), e.g. tomorrow's market events for the barkeeper's rumour (P65).</summary>
         public DayEntry Entry(int day) => schedule.Get(day, _runSeed);
         public Phase CurrentPhase => _phase;
+        /// <summary>P129: title of the end screen once the run is over (empty before), for the play metrics.</summary>
+        public string EndingTitle { get; private set; } = "";
         /// <summary>Dialogs and hints (P87: a character's question at the counter).</summary>
         public DayFlowUI UI => ui;
         /// <summary>P28: real seconds until the evening clock reaches 23:00 (0 outside the evening).</summary>
@@ -279,6 +281,7 @@ namespace GameOff.Day
         private void ShowRunEnd(string title, string body)
         {
             _phase = Phase.Finished;
+            EndingTitle = title ?? "";
             Debug.Log($"[Day] Run finished on day {_day}: {title}");
             RunFinished?.Invoke();
             ui.ShowEnd(title, body, "RETURN TO MENU");
@@ -313,6 +316,7 @@ namespace GameOff.Day
                 yield break;
             }
             _phase = Phase.Finished;
+            EndingTitle = "last day";
             RunFinished?.Invoke();
             ui.ShowEnd();
         }

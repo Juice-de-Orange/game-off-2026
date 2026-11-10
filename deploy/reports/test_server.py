@@ -1,5 +1,6 @@
 """Tests for the in-game bug report backend (P84). Run: python -m unittest discover -s deploy/reports"""
 import json
+import os
 import threading
 import unittest
 import urllib.error
@@ -135,6 +136,102 @@ class ReportServerTests(unittest.TestCase):
             self.assertEqual(204, response.status)
             self.assertEqual("https://html-classic.itch.zone", response.headers["Access-Control-Allow-Origin"])
             self.assertIn("POST", response.headers["Access-Control-Allow-Methods"])
+
+
+class MetricsTests(unittest.TestCase):
+    """P129: play metrics are stored as JSONL per day, cleaned, and old days are deleted."""
+
+    def setUp(self):
+        import datetime
+        import tempfile
+        self.datetime = datetime
+        self.dir = tempfile.TemporaryDirectory()
+        self.now = datetime.datetime(2026, 11, 20, 18, 30, 5, tzinfo=datetime.timezone.utc)
+        self.store = server.MetricsStore(self.dir.name, days=90, now=lambda: self.now)
+        config = {"token": "", "repo": "owner/repo", "api": "http://127.0.0.1:9", "metrics": self.store}
+        self.httpd = server.make_server(0, config)
+        self.httpd.server_address = ("127.0.0.1", self.httpd.server_address[1])
+        threading.Thread(target=self.httpd.serve_forever, daemon=True).start()
+        self.url = f"http://127.0.0.1:{self.httpd.server_address[1]}"
+
+    def tearDown(self):
+        self.httpd.shutdown()
+        self.httpd.server_close()
+        self.dir.cleanup()
+
+    def post(self, payload=None, raw=None, origin="https://kestrel9.maxlworks.com", url=None):
+        data = raw if raw is not None else json.dumps(payload).encode()
+        headers = {"Content-Type": "application/json"}
+        if origin:
+            headers["Origin"] = origin
+        request = urllib.request.Request((url or self.url) + "/api/metrics", data=data, method="POST", headers=headers)
+        try:
+            with urllib.request.urlopen(request, timeout=5) as response:
+                return response.status, json.load(response)
+        except urllib.error.HTTPError as e:
+            return e.code, json.loads(e.read() or b"{}")
+
+    def batch(self, *events, session="a1b2c3d4e5f6"):
+        return {"session": session, "version": "0.1.0+abc1234", "events": list(events)}
+
+    def lines(self, day="2026-11-20"):
+        path = os.path.join(self.dir.name, f"metrics-{day}.jsonl")
+        with open(path, encoding="utf-8") as f:
+            return [json.loads(line) for line in f]
+
+    def test_stores_events_with_session_version_and_time(self):
+        status, body = self.post(self.batch(
+            {"e": "day_start", "t": 12.5, "day": 1, "money": 40, "family": [0, 0, 1]},
+            {"e": "traveler", "t": 30.25, "day": 1, "id": "T_Story_Shifter", "chosen": "Admit", "ok": False, "sec": 17.5}))
+        self.assertEqual((200, {"ok": True, "stored": 2}), (status, body))
+        first, second = self.lines()
+        self.assertEqual({"ts": "2026-11-20T18:30:05Z", "s": "a1b2c3d4e5f6", "v": "0.1.0+abc1234", "e": "day_start", "t": 12.5,
+                          "day": 1, "money": 40, "family": [0, 0, 1]}, first)
+        self.assertEqual(False, second["ok"])
+        self.assertEqual("T_Story_Shifter", second["id"])
+
+    def test_drops_unknown_events_and_odd_fields(self):
+        status, body = self.post(self.batch(
+            {"e": "hack", "t": 1},
+            {"e": "beat", "t": 2, "fps": 58.2, "Bad-Key": 1, "nested": {"a": 1}, "inf": 1e400, "msg": "x" * 900, "list": [1, "a"]}))
+        self.assertEqual((200, {"ok": True, "stored": 1}), (status, body))
+        (beat,) = self.lines()
+        self.assertEqual(58.2, beat["fps"])
+        for key in ("Bad-Key", "nested", "inf", "list"):
+            self.assertNotIn(key, beat)
+        self.assertEqual(500, len(beat["msg"]))
+
+    def test_rejects_bad_batches(self):
+        self.assertEqual(400, self.post(self.batch({"e": "beat"}, session="../../etc"))[0])
+        self.assertEqual(400, self.post(self.batch())[0], "no events")
+        self.assertEqual(400, self.post(self.batch(*[{"e": "beat"}] * 101))[0])
+        self.assertEqual(400, self.post(raw=b"nope")[0])
+        self.assertEqual(413, self.post(raw=b"{" + b" " * (65 * 1024) + b"}")[0])
+        self.assertEqual(403, self.post(self.batch({"e": "beat"}), origin="https://evil.example")[0])
+        self.assertEqual([], os.listdir(self.dir.name))
+
+    def test_old_days_are_deleted(self):
+        for day in ("2026-08-21", "2026-08-22"):
+            open(os.path.join(self.dir.name, f"metrics-{day}.jsonl"), "w").close()
+        self.post(self.batch({"e": "beat"}))
+        self.assertEqual(["metrics-2026-08-22.jsonl", "metrics-2026-11-20.jsonl"], sorted(os.listdir(self.dir.name)),
+                         "90 days back from 20.11. is 22.08.: kept, the day before goes")
+
+    def test_full_day_refuses_instead_of_filling_the_disk(self):
+        with open(os.path.join(self.dir.name, "metrics-2026-11-20.jsonl"), "w") as f:
+            f.truncate(server.METRICS_FILE_MAX)
+        self.assertEqual(503, self.post(self.batch({"e": "beat"}))[0])
+
+    def test_off_without_store_and_reports_unaffected(self):
+        off = server.make_server(0, {"token": "", "repo": "owner/repo", "api": "http://127.0.0.1:9", "metrics": None})
+        off.server_address = ("127.0.0.1", off.server_address[1])
+        threading.Thread(target=off.serve_forever, daemon=True).start()
+        try:
+            status, _ = self.post(self.batch({"e": "beat"}), url=f"http://127.0.0.1:{off.server_address[1]}")
+            self.assertEqual(404, status, "404 makes the game stop sending")
+        finally:
+            off.shutdown()
+            off.server_close()
 
 
 if __name__ == "__main__":
