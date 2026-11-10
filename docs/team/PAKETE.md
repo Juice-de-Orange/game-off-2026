@@ -1850,7 +1850,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Rework eingebaut: Die Textur trägt keine Nummer mehr, das Foto am Spind in 103 ist noch da.
 
 ### P121 — Bugreport mit Bild
-- Größe: M · Priorität: Kann · Status: offen, Max muss entscheiden, wo die Bilder liegen · Zuständig: —
+- Größe: M · Priorität: Kann · Status: geschlossen (Max, 10.11.): wird nicht gebaut, #25 geschlossen · Zuständig: —
 - Braucht: — · Folgt auf: P84
 - Ziel: Spieler können beim Bugreport einen Screenshot mitschicken (#25).
 - Enthalten: Haken „Bild mitsenden“ im Bugreport, standardmäßig aus. Aufnahme des Spielbilds ohne Pausenmenü, verkleinert als JPEG. `deploy/reports/server.py` nimmt das Bild an (Limit heute 8 KB je Anfrage) und legt es so ab, dass das GitHub-Issue es verlinken kann, weil GitHub keine Bilder über die Issue-API annimmt.
@@ -1899,7 +1899,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Reisende mit Fehler haben ab Tag 13 eine eigene Antwort auf die Nachfrage zum fehlerhaften Feld, jeder dritte Tag hat eine markierte Kiste, der Brief-Pool ist von 10 auf 20 gewachsen. `Build Day Pool` läuft nicht mit Rebuild All.
 
 ### P127 — Floppy-Player: eigene Laute
-- Größe: S · Priorität: Kann · Status: wartet auf Lieferung `SFX_Floppy_Insert`, `SFX_Floppy_Eject` (bestellt 09.11.) · Zuständig: —
+- Größe: S · Priorität: Kann · Status: geht in P132 auf (Max, 10.11.: Kassetten ersetzen den Floppy-Player); die bestellten Floppy-Laute werden dort zu Kassetten-Lauten · Zuständig: —
 - Braucht: P117 · Folgt auf: P117
 - Ziel: Einlegen und Auswerfen klingen nach Diskette statt nach UI-Klick.
 - Enthalten: Beide Laute im `SoundSet`, Aufruf in `FloppyPlayer`.
@@ -1909,7 +1909,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Größe: M · Priorität: Muss · Status: offen · Zuständig: —
 - Braucht: — · Folgt auf: P09, P48, P73
 - Ziel: Ein Lauf (ca. 7–9 Tage, 1,5–2 h) überlebt Neuladen, geschlossenen Tab und den Weg ins Menü (Mechanik-Prüfung 2, martin, 10.11.).
-- Enthalten: Automatisch speichern zu Beginn jedes Tages (Morgen): Tag, Startwert der endlosen Tage, Geld + Tagesbuchungen, Inventar, Schicht-/Asservatenschrank, Familie (Stufen, kritische Nächte, Tote), Disziplinarstrafen, Moral/Schleusen, Ticket, Figuren-Ausgänge und Flags, offene Markt-Ereignisse, Pinnwand-Verlauf. Im Menü CONTINUE (nur wenn ein Stand da ist) neben START; START fragt vor dem Überschreiben. Speichern in WebGL über `PlayerPrefs` (IndexedDB) als JSON.
+- Enthalten: Automatisch speichern zu Beginn jedes Tages (Morgen): Tag, Startwert der endlosen Tage, Geld + Tagesbuchungen, Inventar, Schicht-/Asservatenschrank, Familie (Stufen, kritische Nächte, Tote), Disziplinarstrafen, Moral/Schleusen, Ticket, Figuren-Ausgänge und Flags, offene Markt-Ereignisse, Vorrat zu Hause (falls P131 vorher fertig ist; der Pinnwand-Verlauf entfällt mit P130). Im Menü CONTINUE (nur wenn ein Stand da ist) neben START; START fragt vor dem Überschreiben. Speichern in WebGL über `PlayerPrefs` (IndexedDB) als JSON.
 - Nicht enthalten: Speichern/Laden mitten im Tag (DESIGN.md: bewusst nicht), mehrere Spielstände.
 - Abnahme: Neuladen an Tag 4 → CONTINUE startet Tag 4 mit gleichem Geld, Inventar, Familie und Figurenstand; ein Ende löscht den Stand. EditMode-Test: speichern → laden ergibt denselben Zustand. Keine Geldwerte geändert.
 
@@ -1922,3 +1922,90 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Ein Lauf im WebGL-Build erzeugt Zeilen in der Tagesdatei; `tools/metrics_report.py` zeigt Sitzungen, Abbrüche je Tag/Phase, Fehlerquote je Reisendem, FPS; Backend-Tests und EditMode-Tests grün; keine Konsolenfehler.
 - **Achtung martin (10.11.):** Auf Max' Wunsch ungetestet nach `main` gemergt (`a6f78d9`). Zeigt Unity Fehler in `Scripts/Metrics/`, `BrowserBridge.cs` oder `PlayMetricsTests.cs`, kommen sie von hier; Max prüft es als Nächstes in Unity.
 - Zwischenstand (10.11., Branch `p129-metrics`): Code fertig, ohne Unity geschrieben (Maschine ohne Editor). Geprüft: Backend-Tests 15/15, C# mit .NET 8 gegen Unity-Stubs kompiliert, Logik der EditMode-Tests grün, ein Batch aus dem C#-Code läuft durch den echten Server-Parser, `metrics_report.py` mit Probedaten. Offen: in Unity öffnen, EditMode-Tests, Konsole, nach `main` mergen; auf Geoffrey Ordner anlegen und Backend + Spiel deployen (`DEPLOY.md`, Spielmetriken). Einzige Änderung an fremdem Code: `DayManager.EndingTitle`. Nachtrag: Die Seite (beide WebGL-Vorlagen) schickt beim Öffnen ein `visit` mit Herkunft (`?src=`, Referrer-Host); das Spiel übernimmt dessen Sitzungskennung. Der Report zeigt Besuche, Spieler und Spielzeit je Tag und je Herkunft.
+
+### P130 — Pinnwand zeigt nur den heutigen Tag
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P33, P41
+- Ziel: Keine Verwirrung durch übereinanderhängende alte Zettel (#42).
+- Enthalten: Jeden Morgen hängen nur die Zettel des Tages an der Wand und in der Nahansicht. Der Verlauf fällt ganz weg (Entscheidung Max, 10.11.): kein Blättern mit A/D, keine hervorlugenden alten Zettel. `PinBoardNotes` hält nur noch einen Tag; Tests und `MECHANICS.md` anpassen.
+- Nicht enthalten: Inhalt der Zettel, Durchsagen.
+- Abnahme: An Tag 3 hängen nur die Zettel von Tag 3; die Nahansicht hat keine Blätter-Hinweise mehr; EditMode-Tests grün; #42 geschlossen.
+
+### P131 — Vorrat zu Hause
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P13, P10
+- Ziel: Wer drei Batterien heimschickt, versorgt die Familie drei Nächte lang (#40).
+- Enthalten: Heimgeschicktes kommt in einen Vorrat zu Hause statt nur in die nächste Nacht. Jede Nacht verbraucht je Bedürfnis (Strom, Essen, Medizin) ein passendes Stück; was fehlt, kostet wie heute Geld. Verderbliches Essen verdirbt auch zu Hause (wie `Spoil`). Abrechnung und Morgenbrief zeigen den Vorrat. Geschenke der Figuren und vom Zoll behaltene Ware wie bisher. Danach Economy Report bis alle Ziele ✓ (`EconomySimulator` kennt den Vorrat).
+- Nicht enthalten: neue Waren, neue Preise außer der Neuabstimmung.
+- Abnahme: 3 Battery packs heimgeschickt → drei Nächte kein Stromgeld, die vierte wieder; Vorrat sichtbar in der Abrechnung; `EconomyBalanceTests` und neue EditMode-Tests grün; #40 geschlossen.
+- Hinweis: P128 muss den Vorrat mitspeichern.
+
+### P132 — Kassetten statt Floppy
+- Größe: L · Priorität: Kann · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P117, P127
+- Ziel: Musik als Sammelgegenstand mit einem einfachen, angenehmen Abspielsystem (#38).
+- Enthalten: Kassetten sind Gegenstände im Inventar. Woher (Entscheidung Max, 10.11.): einige im Kiosk zu kaufen, einige liegen auf der Station, einige schenken Figuren. Kassettenspieler mit **3 sichtbaren Slots** im Schalterraum: [E] → Kassette aus dem Inventar einlegen oder herausnehmen; er spielt die eingelegten nacheinander als Playlist, man sieht die Kassetten stecken. Der Floppy-Player in 103 wird durch dasselbe System ersetzt. Bedienung ohne Untermenüs. Die Floppy-Laute aus P127 werden zu Kassetten-Lauten umbestellt.
+- Assets (bestellen): Kassette (Modell + Label-Varianten), Kassettenspieler mit 3 Slots, Laute Einlegen/Auswerfen/Klick. Musikstücke organisieren Max und Martin selbst (wie bei P61).
+- Nicht enthalten: Musik außerhalb von Schalterraum und 103, Zufallswiedergabe, Lautstärkeregler am Gerät.
+- Abnahme: Zwei Kassetten gekauft, eine gefunden; alle drei eingelegt → laufen nacheinander und wiederholen sich; Herausnehmen legt sie zurück ins Inventar; 103 nutzt dasselbe; keine Konsolenfehler; #38 geschlossen.
+
+### P133 — Durchsage am ersten Morgen
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P115
+- Ziel: Neue Spieler wissen am ersten Morgen, wohin sie müssen, ohne Pfeile oder Marker (#37).
+- Enthalten: Kurz nach dem Aufwachen an Tag 1 eine Lautsprecher-Durchsage mit Untertitel (wie P115), z. B. „Officer, report to the customs counter. Your shift starts now.“ Text in `Announcements`. Nur Tag 1 (Entscheidung Max, 10.11.: nur die Durchsage, keine Bodenleiste, keine Karte).
+- Abnahme: Neuer Lauf → Durchsage samt Untertitel am ersten Morgen, an Tag 2 nicht mehr; #37 geschlossen.
+
+### P134 — Abendgäste an natürlichen Plätzen
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P101, P113
+- Ziel: Die Reisenden am Abend wirken, als hätten sie einen Grund, dort zu sein (#36).
+- Enthalten: Plätze mit Haltung statt freiem Herumstehen: sitzen an Bar und Diner, schauen aus dem Fenster oder Bullauge, stehen vor Kiosk und Schaufenstern, warten am Hangar. Je Platz Blickrichtung und Pose (sitzend/stehend, ggf. vorhandene Idle-Animationen). **Niemand läuft** (Entscheidung Max, 10.11.). Höchstens sechs wie bisher.
+- Assets: Sitz-Pose bzw. Sitz-Idle für die Figuren-Rigs prüfen; fehlt sie, bestellen.
+- Abnahme: An drei Abenden stehen alle Gäste an solchen Plätzen, keiner mitten im Gang oder in einer Wand; FPS nicht schlechter als P57-Werte; #36 geschlossen.
+
+### P135 — Asservatenschrank: Türen beim Öffnen
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P32, P04-locker-rework
+- Ziel: Der geöffnete Schrank sieht aus wie der geschlossene (#35).
+- Enthalten: Ursache finden: Beim Öffnen tauscht `EvidenceLockerDisplay` das Stationsmodell gegen ein offenes Modell; vermutlich andere Materialien/Texturen an den Türen und kein Lightmap/keine Light Probes am beweglichen Teil. Gleiche Materialien wie das Rework, Türen und Fächer mit Light Probes beleuchten.
+- Abnahme: Öffnen und Schließen ohne sichtbaren Textur- oder Lichtwechsel (Vergleichs-Screenshot); #35 geschlossen.
+
+### P136 — Morgenschlange läuft durcheinander
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P14, P107
+- Ziel: Die Reisenden stehen morgens in der Reihenfolge, in der sie drankommen, und laufen nicht durcheinander (#41).
+- Enthalten: Nachstellen an Tag 3; prüfen, in welcher Reihenfolge die Schlange entsteht (der Erste erscheint offenbar zuletzt und läuft durch die anderen). Erster in der Schlange = vorderster Platz, ohne Durchlaufen.
+- Abnahme: Drei Morgen beobachtet, niemand läuft durch andere hindurch; #41 geschlossen.
+
+### P137 — Putzroboter macht Geräusche
+- Größe: S · Priorität: Kann · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P26
+- Ziel: Man hört, dass der Roboter den Boden putzt (#39).
+- Enthalten: Lustiger Putz-Loop als 3D-Klang am Roboter (leise, kurze Reichweite), beim Wenden ein kleines Piepen. In den `SoundSet`.
+- Assets (bestellen): `SFX_CleaningBot_Loop`, `SFX_CleaningBot_Turn`.
+- Abnahme: In der Halle hört man den Roboter in der Nähe, weiter weg nicht; #39 geschlossen.
+
+### P138 — Eigener Mauszeiger und Maus im Browser
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P48
+- Ziel: Ein Mauszeiger im Stil des Spiels und keine typischen Maus-Probleme von Unity im Browser (#34).
+- Enthalten: Zeiger-Grafik (normal + über Klickbarem) für Menüs, Schalter und Fenster. Bekannte WebGL-Probleme durchgehen und mit `tools/drive-webgl.mjs` in Chrome und Firefox prüfen: Maussperre nach Esc/Fokuswechsel zurückholen, Zeiger verschwindet nicht in Menüs, Empfindlichkeit gleich in beiden Browsern, kein Ruck beim ersten Klick.
+- Assets (bestellen): `UI_Cursor_Default`, `UI_Cursor_Hover` (32×32, Hotspot angegeben).
+- Abnahme: Eigener Zeiger in Menü und Schalter; die Punkte oben in Chrome und Firefox ohne Fehler; #34 geschlossen.
+
+### P139 — Schreibtisch: alles verschiebbar, Stempel frei ablegen
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P38, P66
+- Ziel: Nichts liegt verdeckt auf dem Tisch (#43: das Bestechungsgeld lag unter dem Brief).
+- Enthalten: Bestechungszettel und Geld lassen sich wie die Papiere ziehen und liegen beim Erscheinen nicht unter anderen Dingen. Stempel bleiben dort liegen, wo man sie absetzt (Klick auf freien Tisch), statt zurückzuspringen; sie bleiben auf der Tischfläche.
+- Nicht enthalten: Hilfe-Anzeige (P140).
+- Abnahme: Tag 3 mit Bestechung: Geld und Zettel sichtbar und verschiebbar; Stempel bleiben am abgelegten Ort; Stempeln funktioniert weiter; #43 (Teil Tisch) erledigt.
+
+### P140 — Hilfe auf [H] statt Tastenleiste
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P86
+- Ziel: Die Tastenbeschreibungen verwirren nicht mehr (#43).
+- Enthalten: Statt der Tastenleiste unten nur „[H] Help“. [H] blendet eine ruhige Übersicht der Tasten ein, passend zur Lage (gehen, sitzen am Schalter, Pinnwand, Menü); nochmal [H] oder Esc schließt sie. Gilt für alle Hinweisleisten, die heute Tasten aufzählen (`InteractionPromptUI`, Sitz-HUD).
+- Nicht enthalten: Tutorial-Texte am Schalter (P86 bleibt).
+- Abnahme: Unten steht nur noch „[H] Help“; [H] zeigt im Stehen und am Schalter die passende Übersicht; #43 geschlossen (zusammen mit P139).
