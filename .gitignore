@@ -70,6 +70,9 @@ sysinfo.txt
 # Mono auto generated files
 mono_crash.*
 
+# Play metrics copied from Geoffrey for tools/metrics_report.py (P129)
+/metrics/
+
 # Builds
 *.apk
 *.aab

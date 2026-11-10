@@ -39,6 +39,9 @@ services:
       - path: reports.env
         required: false
     read_only: true
+    # P129: play metrics as JSONL per day (90 days). The folder must belong to uid 10001: see docs/DEPLOY.md.
+    volumes:
+      - ./metrics:/data
     cap_drop:
       - ALL
     security_opt:
