@@ -73,6 +73,11 @@ Container `kestrel9-reports` weiter; der legt mit einem Bot-Token ein GitHub-Iss
 - Host-nginx (`sites-available/kestrel9`) setzt `X-Forwarded-For $remote_addr`, das Backend wertet es seit dem 08.11. nicht mehr aus (Sicherung: `/opt/kestrel9/nginx-site.before-p84`).
 
 ## Spielmetriken (P129)
+> **Stand 10.11. abends:** Backend mit Metriken live (`/api/health` → `"metrics": true`). Das Spiel läuft noch als Build `37b758d`, aber im Image
+> `kestrel9:37b758d` stecken jetzt der neue Spiel-nginx und das visit-Skript samt Fußzeile (nachträglich eingebaut, Original: `kestrel9:pre-p129`).
+> Es zählen also Besuche und Herkunft; Spielereignisse kommen erst mit dem nächsten Unity-Build. Sicherungen auf Geoffrey:
+> `compose.yml.before-p129`, `reports.before-p129/`. Ein Test-Besuch mit `src=deploytest` steht in `metrics-2026-11-10.jsonl`.
+
 Der WebGL-Build schickt anonyme Spielereignisse an `https://kestrel9.maxlworks.com/api/metrics` (`Scripts/Metrics/`, startet sich selbst, im Editor aus).
 Derselbe Container `kestrel9-reports` hängt sie als JSONL an `/opt/kestrel9/metrics/metrics-JJJJ-MM-TT.jsonl` (UTC) an und löscht Tage, die älter als
 90 Tage sind (`METRICS_DAYS`). Höchstens 200 MB je Tag, danach 503. Der Spiel-nginx löscht `X-Forwarded-For` auf dieser Route.
