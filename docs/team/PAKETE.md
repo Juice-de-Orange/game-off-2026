@@ -1912,3 +1912,11 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: Automatisch speichern zu Beginn jedes Tages (Morgen): Tag, Startwert der endlosen Tage, Geld + Tagesbuchungen, Inventar, Schicht-/Asservatenschrank, Familie (Stufen, kritische Nächte, Tote), Disziplinarstrafen, Moral/Schleusen, Ticket, Figuren-Ausgänge und Flags, offene Markt-Ereignisse, Pinnwand-Verlauf. Im Menü CONTINUE (nur wenn ein Stand da ist) neben START; START fragt vor dem Überschreiben. Speichern in WebGL über `PlayerPrefs` (IndexedDB) als JSON.
 - Nicht enthalten: Speichern/Laden mitten im Tag (DESIGN.md: bewusst nicht), mehrere Spielstände.
 - Abnahme: Neuladen an Tag 4 → CONTINUE startet Tag 4 mit gleichem Geld, Inventar, Familie und Figurenstand; ein Ende löscht den Stand. EditMode-Test: speichern → laden ergibt denselben Zustand. Keine Geldwerte geändert.
+
+### P129 — Spielmetriken für die Playtests
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 10.11.) · Zuständig: max
+- Braucht: — · Folgt auf: P84
+- Ziel: Wir sehen, wie Tester spielen: wo sie aufhören, welche Reisenden und Regeln sie falsch entscheiden, wie lange sie brauchen, wie das Geld läuft und wie flüssig das Spiel im Browser ist.
+- Enthalten: Anonyme Ereignisse aus dem Spiel (Sitzung, Tagesbeginn/-ende mit Geld und Familie, jede Entscheidung am Schalter mit Dauer, Schichtende, Ende des Laufs, Puls alle 30 s mit Phase und FPS, Fehlermeldungen) an `POST /api/metrics` im Bugreport-Backend, das sie als JSONL auf Geoffrey ablegt (90 Tage). Auswertung mit `tools/metrics_report.py`. Keine Kennung über die Sitzung hinaus, nichts im Browser gespeichert, keine IP, im Editor aus.
+- Nicht enthalten: Abschalt-Knopf in den Optionen (eigenes Paket, falls gewünscht), Dashboard, Bewegungsdaten auf der Station.
+- Abnahme: Ein Lauf im WebGL-Build erzeugt Zeilen in der Tagesdatei; `tools/metrics_report.py` zeigt Sitzungen, Abbrüche je Tag/Phase, Fehlerquote je Reisendem, FPS; Backend-Tests und EditMode-Tests grün; keine Konsolenfehler.
