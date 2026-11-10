@@ -4,7 +4,7 @@ Wofür: Auf einen Blick sehen, welche Spielmechaniken es gibt, wie sie ineinande
 Pflege: Wer ein Paket fertigstellt, das eine Mechanik neu baut oder ändert, zieht diese Datei im selben Push nach (siehe `CLAUDE.md`).
 Wer ein Paket plant, prüft hier zuerst auf Konflikte. Details stehen in `PAKETE.md`, Entscheidungen in `DECISIONS.md`.
 
-Stand: 09.11.2026 (martin)
+Stand: 10.11.2026 (martin, Mechanik-Prüfung 2)
 
 ## Der Kreislauf eines Tages
 ```
@@ -42,7 +42,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Händler & Vorrat | P46, P11 (teilweise) | Kaufen/Verkaufen zu Faktoren; Vorrat pro Tag, „Sold out“, morgens aufgefüllt; Verkauftes liegt beim Händler | Inventar ↔ Geld; `PlayerEconomy.Supply` | `Stock_*_Test.asset` (Einträge mit Tagesmenge) |
 | Schwarzmarkt-Regel | P64 | nur der Schwarzmarkt kauft CONTRABAND/CONFISCATED, und nichts anderes | Label → `VendorStock.Buys` | `refusedTags`, `onlyTags` |
 | Handel nur nach der Schicht | Grundregel (06.11.) | Händler, Drohne und jede Handelsoption nur abends | Phase Evening | Dev-Knöpfe `Dev_force_Trade` / `Dev_force_Send` |
-| Getränkeautomat | P30 | [E] kauft sofort eine Nova Cola zum Marktpreis, 6 pro Tag, nur abends (tagsüber „Out of order“); noch keine Trink-Wirkung | Geld → Inventar (LUXURY) | `Data/Economy/Stock_Vending.asset` |
+| Getränkeautomat | P30 | [E] kauft sofort eine Nova Cola zum Marktpreis, 6 pro Tag, nur abends (tagsüber „Out of order“); keine Trink-Wirkung (gewollt, martin 10.11.: Nova Cola ist Wunsch- und Handelsware) | Geld → Inventar (LUXURY) | `Data/Economy/Stock_Vending.asset` |
 | Anzeigesäule in der Halle | P31 | linker CRT: Tag, Phase, nächstes Shuttle (fiktive Uhrzeit, rückt mit jeder Entscheidung) und Dock; rechter CRT: Marktereignisse des Tages | DayManager, CounterShift, `Market.TodayEvents` | `HallBoard` (erstes Shuttle 08:00, alle 25 min) |
 | Lage der Station: Flackern, Neon-Aussetzer, Stromausfälle | P36 | Krisen-Ereignisse heben die Lage, sie halbiert sich an ruhigen Tagen; je schlimmer, desto öfter flackert und fällt es aus | Markt-Ereignisse (`crisis`) → `StationMood` → `LightFlicker`, Neon-Emission | `MarketEvent.crisis`, `Data/Days/StationMoodTuning.asset` |
 | Frachtdrohne | P13 (Abnahme bei martin) | Gegenstand nach Hause schicken; FOOD/POWER/MEDICINE deckt den Bedarf heute Nacht | Inventar → `PlayerEconomy.Delivery` → Abrechnung | Bedarf → Label in `Household.asset` |
@@ -75,7 +75,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Familie in der Welt: Foto, Brief | P29 | Foto am Spind in 103 intakt/verblasst/zerrissen; der Morgenbrief liegt auf dem Tisch, die Schrift zittert stärker, je schlechter es der Familie geht | `FamilyPhoto`, `TableLetter` ← `Household.Changed`, `DayManager.LetterWritten` | `RestSpotTuning` |
 | Sperrstunde | P109 | Um 23 Uhr Abenduhr: Gong + Durchsage, Kiosk (Gitter fällt), Automat, Drohne, Ticketautomat, GIVE beim Barkeeper schließen; Reden, Schrank-Einbruch, Shuttle, Bett bleiben; Anzeigesäule NIGHT · CURFEW | `DayManager.TradingOpen`/`IsCurfew`, `CurfewStarted` → alle Händler; Bank [F] spult bis dahin | `Data/Counter/Announcements.asset` (`curfew*`), `eveningClockSeconds` (300) |
 | Zoll bei der Drohne | P110 | Sendung mit CONTRABAND/CONFISCATED: einmal pro Nacht 25 % → nur die Schmuggelware weg, 1 Disziplinarstrafe, Zeile in Abrechnung und Brief; Geschenke nie geprüft | `HomeDelivery` → `DroneCustoms` (in `SettlementWindow.Run`) → `Conduct` | `ConfiscationTuning.droneInspectChance` + Texte |
-| Fernrohr: Blick aufs Zuhause | P111 | Voll gezoomt auf den Planeten → Blende zum Diorama der Heimatstraße; drei Fenster (Mom, Lena, Pip) hell/gedimmt/flackernd/dunkel je Zustand; herauszoomen → zurück | `CoinTelescope`, `TelescopeFocus`, `HomeWindows` ← `Household.Changed`, `DayStarted` | `Data/Economy/HomeViewTuning.asset`, Modell `SM_Home_Street` (bestellt, bis dahin Platzhalter) |
+| Fernrohr: Blick aufs Zuhause | P111 | Voll gezoomt auf den Planeten → Blende zum Diorama der Heimatstraße; drei Fenster (Mom, Lena, Pip) hell/gedimmt/flackernd/dunkel je Zustand; herauszoomen → zurück | `CoinTelescope`, `TelescopeFocus`, `HomeWindows` ← `Household.Changed`, `DayStarted` | `Data/Economy/HomeViewTuning.asset`, Modell `SM_Home_Street` |
 | Bugreport im Spiel | P84 (ersetzt P78) | Pausenmenü → REPORT BUG → Text tippen → SEND; das Backend auf Geoffrey legt ein GitHub-Issue an (Labels `bug`, `player-report`) | Version, Tag, Phase, Szene, Browser → `/api/report` | `Data/Menu/BugReportSettings.asset`, `deploy/reports` |
 | Dev-Werkzeuge | P09, P56, P10 | Dev_end_Day, Hitboxen, TRAFFIC_LINE_DEV, CREDITS ±100 | – | **vor der Abgabe ausschalten** (DEV-Reiter weg) |
 
@@ -84,7 +84,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Mechanik | Paket | Hängt an | Stand |
 |---|---|---|---|
 | Stimmen: 10 Laute je Spezies | P94 (martin) | Händler, Reisende | offen |
-| Heim-Shuttle angedockt, begehbar | P106 | P72 | Lieferung liegt bereit |
+| Spielstand am Morgen | P128 | P09, P48, P73 | offen (Mechanik-Prüfung 2) |
 
 ## Lücken / passt noch nicht
 - **Beschlagnahme im Simulator (P125):** Der Economy Report spielt sie als Stil `Pilferer` (ein Stück je Schicht), nicht „alles behalten“.
@@ -100,4 +100,4 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 - **Abend: 5 echte Minuten** bis zur Sperrstunde – ob das zum Handeln, Fernrohr und Barbesuch reicht, beim Anspielen prüfen.
 - **Menü-Bildrate (P48, P114):** Im Menü läuft keine Occlusion, Innenräume sind deshalb aus; gemessen wurde das noch nicht sauber (PC war ausgelastet), Abnahme von P114 offen.
 - **Hangar-Streifen (#17):** Die Rippen auf der Rückseite der Außenhülle lagen in der Ebene der Innenwand; die Hangar-Hülle steht seit `e22b022` 0,1 m weiter außen. Max bestätigt im Spiel (P119).
-- **Pinnwand-Verlauf nur im Speicher:** ohne Spielstand beginnt er bei jedem Spielstart neu.
+- **Kein Spielstand:** Neuladen, Tab schließen oder Menü beendet den Lauf; auch der Pinnwand-Verlauf beginnt neu → **P128** (Speichern am Morgen).

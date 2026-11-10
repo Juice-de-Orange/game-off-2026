@@ -1904,3 +1904,11 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Einlegen und Auswerfen klingen nach Diskette statt nach UI-Klick.
 - Enthalten: Beide Laute im `SoundSet`, Aufruf in `FloppyPlayer`.
 - Abnahme: Beide Aktionen spielen ihren eigenen Laut.
+
+### P128 — Spielstand am Morgen
+- Größe: M · Priorität: Muss · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P09, P48, P73
+- Ziel: Ein Lauf (ca. 7–9 Tage, 1,5–2 h) überlebt Neuladen, geschlossenen Tab und den Weg ins Menü (Mechanik-Prüfung 2, martin, 10.11.).
+- Enthalten: Automatisch speichern zu Beginn jedes Tages (Morgen): Tag, Startwert der endlosen Tage, Geld + Tagesbuchungen, Inventar, Schicht-/Asservatenschrank, Familie (Stufen, kritische Nächte, Tote), Disziplinarstrafen, Moral/Schleusen, Ticket, Figuren-Ausgänge und Flags, offene Markt-Ereignisse, Pinnwand-Verlauf. Im Menü CONTINUE (nur wenn ein Stand da ist) neben START; START fragt vor dem Überschreiben. Speichern in WebGL über `PlayerPrefs` (IndexedDB) als JSON.
+- Nicht enthalten: Speichern/Laden mitten im Tag (DESIGN.md: bewusst nicht), mehrere Spielstände.
+- Abnahme: Neuladen an Tag 4 → CONTINUE startet Tag 4 mit gleichem Geld, Inventar, Familie und Figurenstand; ein Ende löscht den Stand. EditMode-Test: speichern → laden ergibt denselben Zustand. Keine Geldwerte geändert.
