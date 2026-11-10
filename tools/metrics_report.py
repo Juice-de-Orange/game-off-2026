@@ -4,7 +4,8 @@
 Usage: python tools/metrics_report.py <folder or .jsonl files ...> [--since 2026-11-12] [--version abc1234]
 Get the files from Geoffrey first: scp 'geoffrey:/opt/kestrel9/metrics/*.jsonl' metrics/   (the folder is in .gitignore)
 
-Sections: sessions and play time, how far people get (last day and phase per session = where they stop), mistakes per traveler,
+Sections: visits, players and play time per day, where people come from (?src= in the link, else the referring site),
+sessions and play time, how far people get (last day and phase per session = where they stop), mistakes per traveler,
 decision times, money and family per day, endings, frame rate per browser, errors.
 """
 import argparse
@@ -14,6 +15,13 @@ import os
 import statistics
 import sys
 from collections import Counter, defaultdict
+from datetime import datetime
+
+try:
+    from zoneinfo import ZoneInfo
+    LOCAL = ZoneInfo("Europe/Vienna")
+except Exception:  # no time zone data (Windows without tzdata): stay in UTC
+    LOCAL = None
 
 
 def load(paths, since=None, version=None):
@@ -48,6 +56,64 @@ def browser(ua):
     return ua[:20] or "?"
 
 
+def local_day(ts):
+    try:
+        moment = datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ")
+    except (TypeError, ValueError):
+        return "?"
+    if LOCAL is not None:
+        from datetime import timezone
+        moment = moment.replace(tzinfo=timezone.utc).astimezone(LOCAL)
+    return moment.strftime("%Y-%m-%d %a")
+
+
+def source(visit):
+    """Where a session came from: the ?src= of the link, else the referring site, else direct."""
+    if visit is None:
+        return "? (no visit event)"
+    if visit.get("src"):
+        return visit["src"]
+    ref = visit.get("ref", "")
+    if not ref:
+        return "direct / app (no referrer)"
+    if "kestrel9" in ref:
+        return "reload / own page"
+    for name in ("reddit", "itch", "github", "google", "discord", "twitter", "x.com", "bsky"):
+        if name in ref:
+            return name
+    return ref
+
+
+def summarize(sessions):
+    """One row per session: day (local), source, mobile, loaded, played, minutes."""
+    rows = []
+    for sid, evs in sessions.items():
+        visit = next((e for e in evs if e["e"] == "visit"), None)
+        game = [e for e in evs if e["e"] != "visit"]
+        rows.append({
+            "day": local_day(min(e.get("ts", "") for e in evs)),
+            "source": source(visit),
+            "mobile": bool(visit and visit.get("mobile")),
+            "loaded": bool(game),
+            "played": any(e["e"] == "day_start" for e in game),
+            "minutes": max((e.get("t", 0) for e in game), default=0) / 60,
+        })
+    return rows
+
+
+def funnel(rows, key, label, top):
+    groups = defaultdict(list)
+    for row in rows:
+        groups[key(row)].append(row)
+    out = []
+    for name, group in sorted(groups.items(), key=lambda g: (g[0] if label == "day" else -len(g[1]))):
+        played = [r for r in group if r["played"]]
+        out.append((name, len(group), sum(1 for r in group if r["mobile"]), sum(1 for r in group if r["loaded"]), len(played),
+                    f"{median([r['minutes'] for r in played]):.0f}", f"{sum(r['minutes'] for r in played) / 60:.1f}"))
+    table(out[-top * 4:] if label == "day" else out[:top],
+          [label, "visits", "mobile", "game loaded", "played", "min/player (median)", "hours total"])
+
+
 def table(rows, headers):
     widths = [max(len(str(x)) for x in col) for col in zip(headers, *rows)] if rows else [len(h) for h in headers]
     line = lambda r: "  ".join(str(x).ljust(w) for x, w in zip(r, widths))
@@ -68,6 +134,14 @@ def report(events, top=15):
     print(f"# Play metrics: {len(sessions)} sessions, {len(events)} events, "
           f"{min(e.get('ts', '') for e in events)[:10]} to {max(e.get('ts', '') for e in events)[:10]}\n")
 
+    rows = summarize(sessions)
+    print("## Per day" + (" (Vienna time)" if LOCAL else " (UTC)"))
+    print("Visits = page opened, played = started day 1. A reload counts as a new visit.")
+    funnel(rows, lambda r: r["day"], "day", top)
+    print("\n## Where players come from")
+    funnel(rows, lambda r: r["source"], "source", top)
+    print()
+
     # Play time and where people stop
     minutes, last_place, played = [], Counter(), 0
     for evs in sessions.values():
@@ -76,7 +150,9 @@ def report(events, top=15):
         if days:
             played += 1
         last = evs[-1]
-        if any(e["e"] == "run_end" for e in evs):
+        if all(e["e"] == "visit" for e in evs):
+            last_place["left while loading"] += 1
+        elif any(e["e"] == "run_end" for e in evs):
             last_place["run finished"] += 1
         else:
             last_place[f"day {last.get('day', 0)} {last.get('phase', last['e'])}" if last.get("day") else "menu / loading"] += 1

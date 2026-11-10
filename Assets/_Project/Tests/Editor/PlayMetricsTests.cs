@@ -98,6 +98,18 @@ namespace GameOff.Tests
             StringAssert.Contains("{\"e\":\"beat\",\"t\":5}", PlayMetrics.TakeBatch("v"), "events 0-4 are gone");
         }
 
+        [Test]
+        public void Page_session_is_taken_only_when_the_backend_would_accept_it()
+        {
+            PlayMetrics.UseSession("0a1b2c3d4e5f");
+            Assert.AreEqual("0a1b2c3d4e5f", PlayMetrics.SessionId);
+            foreach (var bad in new[] { null, "", "abc", "0A1B2C3D4E5F", "../../etc/x", new string('a', 33) })
+            {
+                PlayMetrics.UseSession(bad);
+                Assert.AreEqual("0a1b2c3d4e5f", PlayMetrics.SessionId, $"'{bad}' is ignored");
+            }
+        }
+
         private static int CountEvents(string batch)
         {
             int count = 0, at = 0;

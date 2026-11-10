@@ -50,6 +50,16 @@ namespace GameOff.Metrics
             return json.ToString();
         }
 
+        /// <summary>Takes over the id the web page used for its "visit" event, so loading and playing count as one session.
+        /// Anything that isn't 8-32 lower-case hex characters (what the backend accepts) is ignored.</summary>
+        public static void UseSession(string id)
+        {
+            if (string.IsNullOrEmpty(id) || id.Length < 8 || id.Length > 32) return;
+            foreach (char c in id)
+                if (!(c >= '0' && c <= '9') && !(c >= 'a' && c <= 'f')) return;
+            SessionId = id;
+        }
+
         /// <summary>Empties the queue and starts a new session id (tests).</summary>
         public static void Reset()
         {

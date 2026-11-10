@@ -16,7 +16,7 @@ namespace GameOff.Metrics
     /// Starts itself, so no scene or generated prefab has to change: after every scene load it looks up the day flow and the
     /// counter once and listens to their events. Off in the editor. Nothing is stored in the browser.
     /// Events (fields in docs/DEPLOY.md, read with tools/metrics_report.py): session, day_start, traveler, shift_end, day_end,
-    /// run_end, beat (phase and frame rate), error.
+    /// run_end, beat (phase and frame rate), error. The web page sends "visit" itself (index.html) under the same session id.
     /// </summary>
     public class PlayMetricsRunner : MonoBehaviour
     {
@@ -43,6 +43,7 @@ namespace GameOff.Metrics
         {
             if (Application.isEditor) return; // play-testing in the editor would only muddy the numbers
             PlayMetrics.Enabled = true;
+            PlayMetrics.UseSession(BrowserBridge.PageSession);
             var go = new GameObject("PlayMetrics");
             DontDestroyOnLoad(go);
             go.AddComponent<PlayMetricsRunner>();

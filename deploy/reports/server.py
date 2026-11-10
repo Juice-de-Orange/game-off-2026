@@ -39,7 +39,7 @@ METRICS_MAX_FIELDS = 24
 METRICS_TEXT_MAX = 500
 METRICS_LIST_MAX = 12
 METRICS_FILE_MAX = 200 * 1024 * 1024  # per day; beyond it events are dropped (a full disk would stop the whole server)
-METRICS_EVENTS = {"session", "day_start", "traveler", "shift_end", "day_end", "run_end", "beat", "error"}
+METRICS_EVENTS = {"visit", "session", "day_start", "traveler", "shift_end", "day_end", "run_end", "beat", "error"}
 KEY = re.compile(r"^[a-z][a-z0-9_]{0,23}$")
 SESSION = re.compile(r"^[0-9a-f]{8,32}$")
 

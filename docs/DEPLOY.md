@@ -82,11 +82,12 @@ Derselbe Container `kestrel9-reports` hängt sie als JSONL an `/opt/kestrel9/met
 - **Ohne Ordner** (oder nicht beschreibbar) antwortet `/api/metrics` mit 404, und das Spiel hört für diese Sitzung auf zu senden. Ebenso bei 403
   (lokale Builds). **Abschalten:** Ordner umbenennen und `reports` neu starten.
 - **Auswerten:** `scp 'geoffrey:/opt/kestrel9/metrics/*.jsonl' metrics/` und `python tools/metrics_report.py metrics [--since 2026-11-12] [--version <commit>]`.
-  Zeigt Sitzungen, wo Sitzungen enden, erreichte Tage, Fehlerquote je Reisendem und häufigste Rügen, Geld/Familie je Tag, Enden, FPS je Browser
+  Zeigt je Tag (Wiener Zeit) Besuche, geladene Spiele, Spieler und Spielzeit, dieselben Zahlen je Herkunft, dann Sitzungen, wo Sitzungen enden, erreichte Tage, Fehlerquote je Reisendem und häufigste Rügen, Geld/Familie je Tag, Enden, FPS je Browser
   und Phase, Fehlermeldungen.
 
 | Ereignis | Wann | Felder (außer `ts` Serverzeit, `s` Sitzung, `v` Version, `e`, `t` Sekunden seit Spielstart) |
 |---|---|---|
+| `visit` | Seite geöffnet (sendet `index.html` selbst, vor dem Laden) | `src` (aus `?src=` im Link), `ref` (nur Hostname der verweisenden Seite), `mobile`, `w`/`h` |
 | `session` | Spiel geladen | `ua` Browser, `w`/`h` Fenster, `gpu`, `mem`, `cpu`, `quality`, `lang`, `load` Sekunden bis zum Start |
 | `day_start` | Morgen | `day`, `story` (Geschichtstag), `money`, `family` (Zustand je Person, 0 gut … 4 tot) |
 | `traveler` | jede Entscheidung | `day`, `n`, `id` (Asset-Name), `chosen`, `right`, `ok`, `sec` (ohne Pause), `why` (Rüge bei Fehler), `disobeyed` |
@@ -96,7 +97,10 @@ Derselbe Container `kestrel9-reports` hängt sie als JSONL an `/opt/kestrel9/met
 | `beat` | alle 30 s | `day`, `phase` (Menu, Morning, Shift, Evening, Night, Finished), `fps`, `slow` (Bilder > 50 ms), `worst_ms`, `paused` |
 | `error` | Fehler/Exception im Log | `type`, `msg`, `at` (erste Stack-Zeile), `day`, `phase`; je Meldung einmal, höchstens 25 je Sitzung |
 
-Die Sitzungskennung ist zufällig und lebt nur im Speicher des Spiels: nichts im Browser gespeichert, Neuladen = neue Sitzung, keine IP.
+Die Sitzungskennung ist zufällig und lebt nur im Speicher der Seite (`window.K9_SESSION`, das Spiel übernimmt sie über `Browser.jslib`):
+nichts im Browser gespeichert, Neuladen = neue Sitzung, keine IP. Spieler sind deshalb Sitzungen, nicht Personen.
+**Herkunft messen:** Links mit `?src=<name>` teilen, z. B. `https://kestrel9.maxlworks.com/?src=playtesters`. Ohne `src` zählt der Hostname der
+verweisenden Seite (Reddit schickt meist nur `www.reddit.com`, die Reddit-App oft gar nichts).
 
 ## Dev-Werkzeuge
 Im Build standardmäßig aus, Besucher schalten sie unter Options → DEV ein. **Vor der Abgabe:** Reiter im `MenuSceneBuilder` entfernen und
@@ -119,7 +123,7 @@ sein Text plus Version, Tag, Phase, Szene und Browserkennung; daraus wird ein Gi
 Die IP wird seit dem 08.11. nicht mehr ausgewertet (vorher nur für die Begrenzung) und weder gespeichert noch geloggt.
 Seit P129 (10.11.) schickt der Build außerdem anonyme Spielmetriken (Abschnitt oben), gespeichert 90 Tage auf Geoffrey; die Fußzeile der Live-Seite
 weist darauf hin. Vorschlag für die Datenschutzerklärung: „Die Testversion von Kestrel-9 sendet anonyme Spielstatistiken (z. B. Spieltag, Entscheidungen,
-Bildrate, Browserkennung, Fehlermeldungen) an unseren Server, um das Spiel zu verbessern. Es werden keine IP-Adressen, Cookies oder dauerhaften Kennungen
+Bildrate, Browserkennung, Fehlermeldungen, die Website, von der man kam) an unseren Server, um das Spiel zu verbessern. Es werden keine IP-Adressen, Cookies oder dauerhaften Kennungen
 gespeichert; jede Sitzung erhält eine zufällige Kennung, die nur bis zum Schließen der Seite existiert. Die Daten werden nach 90 Tagen gelöscht.“
 **Die Datenschutzerklärung auf maxlworks.com muss das erwähnen (Absatz von Claude, 07.11., in Max' Handover).**
 

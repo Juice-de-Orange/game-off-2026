@@ -6,5 +6,14 @@ mergeInto(LibraryManager.library, {
     var buffer = _malloc(size);
     stringToUTF8(text, buffer, size);
     return buffer;
+  },
+
+  // P129: the session id the page made for its "visit" event (index.html), so visit and play are one session; "" if none.
+  GameOff_PageSession: function () {
+    var text = (typeof window !== 'undefined' && window.K9_SESSION) ? String(window.K9_SESSION) : '';
+    var size = lengthBytesUTF8(text) + 1;
+    var buffer = _malloc(size);
+    stringToUTF8(text, buffer, size);
+    return buffer;
   }
 });

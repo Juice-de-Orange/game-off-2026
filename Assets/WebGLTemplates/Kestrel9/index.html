@@ -38,6 +38,25 @@
         document.querySelector("#track").remove();
       }
     </script>
+    <script>
+      // P129: one anonymous "visit" per page load, so the play metrics also count people who leave while the game loads and
+      // where they came from (?src=... in the link, else the referring site's host name). The random id goes to the game
+      // (Browser.jslib) so visit and play are one session. Nothing is stored in the browser.
+      (function () {
+        var bytes = new Uint8Array(6);
+        crypto.getRandomValues(bytes);
+        var id = Array.prototype.map.call(bytes, function (b) { return ("0" + b.toString(16)).slice(-2); }).join("");
+        window.K9_SESSION = id;
+        var src = (new URLSearchParams(location.search).get("src") || "").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 32);
+        var ref = "";
+        try { ref = document.referrer ? new URL(document.referrer).hostname : ""; } catch (e) {}
+        var visit = { e: "visit", t: 0, src: src, ref: ref, mobile: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent), w: innerWidth, h: innerHeight };
+        try {
+          fetch("https://kestrel9.maxlworks.com/api/metrics", { method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+            body: JSON.stringify({ session: id, version: {{{ JSON.stringify(PRODUCT_VERSION) }}}, events: [visit] }) }).catch(function () {});
+        } catch (e) {}
+      })();
+    </script>
     <script src="Build/{{{ LOADER_FILENAME }}}" onerror="showError('the download failed. Please reload the page.')"></script>
     <script>
       if (window.createUnityInstance) createUnityInstance(document.querySelector("#unity-canvas"), {
