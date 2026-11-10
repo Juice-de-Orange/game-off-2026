@@ -3,9 +3,39 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
-    <meta name="robots" content="noindex">
-    <title>Kestrel-9</title>
+    <title>Kestrel-9 – a customs night shift in orbit, free in the browser</title>
+    <meta name="description" content="Free browser game: work the night shift at a run-down customs station in orbit. Check papers, arrest smugglers, keep your family back home alive.">
+    <link rel="canonical" href="https://kestrel9.maxlworks.com/">
     <link rel="icon" type="image/png" href="favicon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Maxlworks">
+    <meta property="og:title" content="Kestrel-9 – Customs &amp; Excise · Night Shift">
+    <meta property="og:description" content="A night shift at a customs station in orbit. Made for GitHub Game Off 2026, playable in the browser.">
+    <meta property="og:url" content="https://kestrel9.maxlworks.com/">
+    <meta property="og:image" content="https://kestrel9.maxlworks.com/og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#0b0d10">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "Kestrel-9",
+        "url": "https://kestrel9.maxlworks.com/",
+        "image": "https://kestrel9.maxlworks.com/og.jpg",
+        "description": "A first-person customs game: on a small, run-down space station you check travelers' papers and luggage, let them pass, arrest them or open the airlock, and keep your family back home alive.",
+        "genre": ["Simulation", "Puzzle"],
+        "gamePlatform": "Web browser",
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "playMode": "SinglePlayer",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "author": [{ "@type": "Organization", "name": "Maxlworks", "url": "https://maxlworks.com/" }, { "@type": "Person", "name": "iMaterix" }],
+        "subjectOf": { "@type": "WebPage", "url": "https://maxlworks.com/games/kestrel-9/" }
+      }
+    </script>
     <style>
       html, body { height: 100%; margin: 0; background: #0b0d10; color: #8b9096; font: 12px/20px monospace; overflow: hidden; }
       body { display: flex; flex-direction: column; }
@@ -13,6 +43,8 @@
       /* The menus are laid out for 16:9 (reference 960x540): keep that shape, narrow windows get bars instead of cut-off menus */
       #unity-canvas { display: block; width: min(100%, calc((100vh - 20px) * 16 / 9)); aspect-ratio: 16 / 9; outline: none; background: #0b0d10; }
       #loading { position: absolute; top: 50%; left: 50%; width: min(320px, 70%); transform: translate(-50%, -50%); text-align: center; }
+      #loading h1 { margin: 0 0 4px; font-size: 20px; line-height: 28px; font-weight: normal; letter-spacing: 0.12em; color: #ffd46b; }
+      #loading p { margin: 0 0 16px; }
       #track { height: 4px; margin-top: 8px; background: #2b3037; }
       #bar { width: 0; height: 100%; background: #ffd46b; }
       #error { color: #ffb74d; }
@@ -23,9 +55,15 @@
   <body>
     <div id="stage">
       <canvas id="unity-canvas" tabindex="-1"></canvas>
-      <div id="loading"><span id="status">Loading…</span><div id="track"><div id="bar"></div></div></div>
+      <div id="loading">
+        <h1>KESTREL-9</h1>
+        <p>Customs &amp; Excise · Night Shift. Check travelers' papers at a run-down station in orbit and keep your family back home alive.</p>
+        <noscript><p>The game needs JavaScript and WebGL.</p></noscript>
+        <span id="status">Loading…</span><div id="track"><div id="bar"></div></div>
+      </div>
     </div>
     <footer>
+      <a href="https://maxlworks.com/games/kestrel-9/">About the game</a>
       <a href="https://maxlworks.com/legal/imprint/">Imprint</a>
       <a href="https://maxlworks.com/legal/privacy/">Privacy</a>
     </footer>

@@ -22,7 +22,7 @@ Schlägt ein Lauf fehl, bleibt die letzte Version online, und GitHub schickt ein
 | Wo | Was |
 |---|---|
 | `Scripts/Editor/WebBuild.cs` | Build-Einstieg; setzt Vorlage, Statistik und Version (`0.1.0+<commit>`, für den Bugreport-Knopf P78) nur für diesen Build |
-| `Assets/WebGLTemplates/Kestrel9/` | Webseite um das Spiel (Vollfenster, Ladebalken, Impressum und Datenschutz) |
+| `Assets/WebGLTemplates/Kestrel9/` | Webseite um das Spiel (Vollfenster, Ladebalken, Impressum und Datenschutz); für Suchmaschinen freigegeben: Beschreibung, Vorschaubild `og.jpg`, `robots.txt`, `sitemap.xml`, strukturierte Daten (VideoGame). Spielseite mit Text: `maxlworks.com/games/kestrel-9/` (Repo `maxlworks-website`) |
 | `deploy/Dockerfile`, `deploy/nginx.conf` | Container: nginx ohne Root-Rechte, ohne Access-Log, mit `version.txt` |
 | `deploy/server/` | Vorlagen für Geoffrey: `deploy.sh`, `compose.yml`, `nginx-site.conf` |
 | `deploy/reports/` | Bugreport-Backend (P84): `server.py` (Python ohne Pakete), `Dockerfile`, `test_server.py` |
