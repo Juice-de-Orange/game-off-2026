@@ -1591,7 +1591,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 08.11.): `DocumentDesk` hält bis zu 4 Papiere/Zettel in einer Reihe (Klick holt dazu, Klick aufs Papier legt es zurück, [R] alle, Esc alle zurück; mindestens 3 Plätze, damit ein einzelnes Papier den Tisch frei lässt). Umschauen beim Lesen geht, die Papiere folgen. Lade: Front zum Beamten, fährt entlang lokal +X. Beide Knöpfe um 180° gedreht, Deckel klappt Richtung Fenster auf, Beschriftung ARREST/AIRLOCK auf dem Tisch (`GameOff/Build Documents`). Geprüft: Validate Travelers ok, 150/150 EditMode-Tests, WebGL-Build mit Bildern von Lade, Deckel, Reihe, Umschauen.
 
 ### P90 — Fehler aus den GitHub-Issues, Runde 1
-- Größe: M · Priorität: Muss · Status: fertig bis auf #17 (max, 09.11.): #21 im Nachtlauf eingebaut, #17 weiter in P119
+- Größe: M · Priorität: Muss · Status: fertig (max, 11.11.): #21 im Nachtlauf eingebaut, #17 mit P119 abgenommen
 - Braucht: — · Folgt auf: P89
 - Ziel: Die klaren Fehler aus den Issues sind weg.
 - Enthalten: #27 Airlock-Deckel klappt nicht mehr in den Tisch (Winkel +110, gemessen; schon mit P86 gebaut). #15 Sperr-Ton nur auf [E] an der gesperrten Tür, nicht beim Vorbeigehen. #17 Flackern an den Hangar-Wänden finden und beheben. #18 grüne Kisten im Hangar stecken nicht mehr ineinander. #21 Ladengitter füllt die ganze Front und ist entweder offen oder zu. #23 Figur sitzt auf dem Barhocker statt darin.
@@ -1833,13 +1833,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Innenleben und Beweisbeutel aus der Lieferung statt der Graybox-Formen. Der offene Schrank bekommt eine kleine Lampe, weil er nicht mitgebacken wird und sonst schwarz bleibt.
 
 ### P119 — Hangar: Nachlieferung und Abnahme von #17
-- Größe: S · Priorität: Muss · Status: gebaut, wartet auf Max' Abnahme von #17 im Spiel (max, 09.11.) · Zuständig: max
+- Größe: S · Priorität: Muss · Status: fertig (max, 11.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P22, P90
 - Ziel: Den Hangar-Fehler #17 endgültig abschließen.
 - Enthalten: Lieferung `SM_Hangar_Wall_Viewport` und `SM_Hangar_Floor_4x4` einbauen (Rebuild All, Bake). Max läuft durch den Hangar und bestätigt, dass Streifen und Flackern weg sind (Ursache war die Außenhülle, Fix in `e22b022`).
 - Nicht enthalten: weitere Änderungen an den Wandmodellen.
 - Abnahme: Max sieht im Spiel keine Streifen mehr; #17 ist geschlossen; P90 steht auf `fertig`.
-- Ergebnis (09.11.): Fenster-Wand und Boden aus der Lieferung eingebaut. Nur noch offen, dass Max durch den Hangar läuft.
+- Ergebnis (09.11.): Fenster-Wand und Boden aus der Lieferung eingebaut. Max hat am 11.11. im Spiel bestätigt, dass die Streifen weg sind (live 37b758d); #17 geschlossen.
 
 ### P120 — Spinde ohne eingebackene Nummer
 - Größe: S · Priorität: Soll · Status: fertig (max, 09.11.) · Zuständig: max
