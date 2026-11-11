@@ -9,8 +9,8 @@ namespace GameOff.Counter
     /// <summary>
     /// The notes on the counter's pinboard (P41): bulletin and wanted list of the current day, new ones every morning.
     /// P68: on days with market events a third note "MARKET" hangs at marketSpot (texts from Market.TodayEvents).
-    /// P33: old notes stay. Every morning's notes go into History (also a memo with the supervisor's new order); at each spot the
-    /// newest note hangs on top of the older ones of its kind, which peek out below it. PinBoardCloseUp shows all of them standing.
+    /// P33/P130: only today's notes hang. Every morning's notes go into Today (also a memo with the supervisor's new order, read in
+    /// PinBoardCloseUp); the previous day's notes come down.
     /// Clicking a note to read it is handled by the DocumentDesk.
     /// </summary>
     public class PinBoard : MonoBehaviour
@@ -22,17 +22,13 @@ namespace GameOff.Counter
         [SerializeField] private Transform wantedSpot;
         [Tooltip("Third note, only on days with market events (P68).")]
         [SerializeField] private Transform marketSpot;
-        [Tooltip("P33: older notes of the same kind hanging under the newest one at each spot.")]
-        [SerializeField] private int olderNotesShown = 2;
-        [Tooltip("P33: days of notes kept for the close-up.")]
-        [SerializeField] private int daysKept = 30;
 
         private readonly List<DocumentView> _views = new List<DocumentView>();
-        private PinBoardNotes _history;
+        private readonly PinBoardNotes _today = new PinBoardNotes();
         private bool _hung;
 
-        /// <summary>P33: all notes so far, newest day last.</summary>
-        public PinBoardNotes History => _history ??= new PinBoardNotes(daysKept);
+        /// <summary>P130: today's notes (no history).</summary>
+        public PinBoardNotes Today => _today;
 
         /// <summary>P33: the morning's notes went up.</summary>
         public event Action Changed;
@@ -54,36 +50,21 @@ namespace GameOff.Counter
             var day = shift.Day;
             if (day == null) return;
             _hung = true;
-            History.SetDay(day.Date, NotesFor(day, shift.NewToday, DayBulletin.Market()));
+            _today.SetDay(day.Date, NotesFor(day, shift.NewToday, DayBulletin.Market()));
             Hang(PinNote.Bulletin, bulletinSpot);
             Hang(PinNote.Wanted, wantedSpot);
             Hang(PinNote.Market, marketSpot);
             Changed?.Invoke();
         }
 
-        /// <summary>The newest note of this kind at the spot, older ones under it, slightly turned and pushed back.</summary>
+        /// <summary>Today's note of this kind at the spot, if there is one.</summary>
         private void Hang(string kind, Transform spot)
         {
             if (spot == null) return;
-            var pile = History.Pile(kind, 1 + Mathf.Max(0, olderNotesShown));
-            for (int i = pile.Count - 1; i >= 0; i--)
-            {
-                var view = desk.Pin(Data(pile[i]), i == 0 ? spot : OlderSpot(spot, i));
-                if (view != null) _views.Add(view);
-            }
-        }
-
-        private static Transform OlderSpot(Transform spot, int depth)
-        {
-            string name = "Older_" + depth;
-            var t = spot.Find(name);
-            if (t != null) return t;
-            t = new GameObject(name).transform;
-            t.SetParent(spot, false);
-            float side = depth % 2 == 1 ? 1f : -1f;
-            t.localPosition = new Vector3(side * 0.012f * depth, -0.0015f * depth, -0.006f * depth); // behind (-Y) and a bit lower
-            t.localRotation = Quaternion.Euler(0f, side * (2.5f + 1.5f * depth), 0f); // turned in the board's plane
-            return t;
+            var note = _today.Of(kind);
+            if (note == null) return;
+            var view = desk.Pin(Data(note), spot);
+            if (view != null) _views.Add(view);
         }
 
         /// <summary>The notes of a day: bulletin, wanted list (with photos), market (only with events), memo (only with a new order).</summary>

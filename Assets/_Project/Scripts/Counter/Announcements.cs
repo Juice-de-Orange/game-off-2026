@@ -2,7 +2,10 @@ using UnityEngine;
 
 namespace GameOff.Counter
 {
-    /// <summary>Loudspeaker lines at the counter (P41). The "new rule" line comes from the day (DayEntry.newToday).</summary>
+    /// <summary>
+    /// Loudspeaker lines at the counter (P41). The "new rule" line comes from the day (DayEntry.newToday).
+    /// The station-wide lines (curfew P109, first morning P133) are said by the DayManager.
+    /// </summary>
     [CreateAssetMenu(menuName = "GameOff/Counter/Announcements", fileName = "Announcements")]
     public class Announcements : ScriptableObject
     {
@@ -19,6 +22,12 @@ namespace GameOff.Counter
         [TextArea] public string curfewHint = DefaultCurfewHint;
         [Tooltip("P109: what shops, bar, drone, vending and ticket machine say after 23:00.")]
         [TextArea] public string curfewClosed = DefaultCurfewClosed;
+        public const string DefaultFirstMorning = "Officer, report to the customs counter. Your shift starts now.";
+        public const float DefaultFirstMorningDelay = 2f;
+        [Tooltip("P133: the station loudspeaker shortly after waking up, on day 1 only (shown as a subtitle anywhere in the station).")]
+        [TextArea] public string firstMorning = DefaultFirstMorning;
+        [Tooltip("P133: seconds after the morning letter is put away until the day-1 announcement.")]
+        public float firstMorningDelay = DefaultFirstMorningDelay;
         [Tooltip("How long a subtitle stays at least (s); longer if its clip is longer.")]
         public float secondsPerLine = 4f;
     }
