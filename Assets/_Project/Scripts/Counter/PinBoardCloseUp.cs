@@ -49,7 +49,7 @@ namespace GameOff.Counter
 
         private void Update()
         {
-            if (!IsOpen) return;
+            if (!IsOpen || GameOff.UI.HelpOverlay.BlocksInput) return; // P140: the Esc that closes the help stays there
             var keys = Keyboard.current;
             if (keys == null) return;
             if (keys.escapeKey.wasPressedThisFrame || (keys.eKey.wasPressedThisFrame && Time.frameCount != _openedFrame)) Close();

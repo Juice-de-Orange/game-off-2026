@@ -47,6 +47,9 @@ namespace GameOff.Shops
 
         private bool _looking;
 
+        /// <summary>P140: the view is at the eyepiece.</summary>
+        public bool IsLooking => _looking;
+
         private void OnEnable() => interactable.OnInteract.AddListener(Use);
 
         private void OnDisable() => interactable.OnInteract.RemoveListener(Use);
@@ -113,10 +116,22 @@ namespace GameOff.Shops
             float streetYaw = 0f, streetPitch = 0f, streetZoom = canStreet ? homeTuning.streetWideFov : wideFov;
             for (float left = seconds; left > 0f; left -= Time.deltaTime)
             {
+                if (GameOff.UI.HelpOverlay.BlocksInput)
+                {
+                    held = false; // P140: in the browser the Esc that closes the help also released the mouse; that is no "leave"
+                    countdown.text = Mathf.CeilToInt(left).ToString("00");
+                    yield return null;
+                    continue; // the coin's time runs on
+                }
                 var keys = Keyboard.current;
                 if (keys != null && (keys.qKey.wasPressedThisFrame || keys.escapeKey.wasPressedThisFrame)) break;
                 held |= PointerLockBridge.IsLocked;
                 if (held && !PointerLockBridge.IsLocked) break; // in the browser Esc only releases the mouse
+                if (!PointerLockBridge.IsLocked && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+                {
+                    Cursor.lockState = CursorLockMode.Locked; // P140: a click catches the mouse again (e.g. after the help)
+                    PointerLockBridge.Request();
+                }
                 // Slower the further it is zoomed in, so the view stays controllable.
                 float scale = mouseDegrees * (street ? streetZoom : zoom) / wideFov;
                 Vector2 pan = Vector2.zero;

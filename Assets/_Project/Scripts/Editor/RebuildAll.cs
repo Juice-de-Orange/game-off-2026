@@ -35,6 +35,7 @@ namespace GameOff.EditorTools
             TrafficBuilder.BuildIntoMainFromMenu();
             AmbienceBuilder.BuildIntoMainFromMenu();
             MenuSceneBuilder.BuildFromMenu();
+            HelpOverlayBuilder.BuildIntoMainFromMenu(); // P140: last, it holds references to what the builders above made
             Debug.Log("[RebuildAll] Done. Bake the light next (GameOff/Setup Main Lighting + Bake).");
         }
     }

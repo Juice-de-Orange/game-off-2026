@@ -61,7 +61,7 @@ namespace GameOff.UI
 
         private void Update()
         {
-            if (IsOpen && Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) Close();
+            if (IsOpen && !HelpOverlay.BlocksInput && Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) Close();
         }
 
         public void OpenTrade(VendorStock stock)

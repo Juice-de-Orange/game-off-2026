@@ -212,7 +212,7 @@ namespace GameOff.EditorTools
             var older = MenuButton(root.transform, "OlderButton", "< OLDER", new Vector2(-330f, -240f), new Vector2(150f, 30f), 14);
             var newer = MenuButton(root.transform, "NewerButton", "NEWER >", new Vector2(-170f, -240f), new Vector2(150f, 30f), 14);
             var close = MenuButton(root.transform, "CloseButton", "CLOSE", new Vector2(330f, -240f), new Vector2(150f, 30f), 14);
-            Label(root.transform, "Keys", "[A] [D] leaf through   ·   [E] [ESC] close", 11, TextDim, new Vector2(80f, -240f), new Vector2(300f, 24f));
+            // P140: no key line any more; the keys are behind [H] (HelpOverlay).
 
             var closeUp = trigger.AddComponent<PinBoardCloseUp>();
             Set(closeUp, "interactable", interactable);

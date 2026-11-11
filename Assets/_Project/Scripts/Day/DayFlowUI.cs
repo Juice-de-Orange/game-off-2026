@@ -62,6 +62,8 @@ namespace GameOff.Day
         }
 
         public bool IsDialogOpen => dialogPanel.activeSelf;
+        /// <summary>P140: a dialog, the letter or the end screen is up (no [H] help meanwhile).</summary>
+        public bool IsPanelOpen => dialogPanel.activeSelf || letterPanel.activeSelf || endPanel.activeSelf;
 
         private void Update()
         {

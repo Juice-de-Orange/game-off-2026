@@ -96,7 +96,7 @@ namespace GameOff.Departure
             _turn.Enable();
             _boost.Enable();
             if (engine != null) engine.Play();
-            if (ui != null) ui.ShowHint("W / S  thrust   ·   Mouse or A / D  steer   ·   Shift  boost", 10f);
+            if (ui != null) ui.ShowHint("[H]  how to fly", 10f); // P140: the keys are behind [H] (HelpOverlay)
             Debug.Log("[Departure] Shuttle launched");
         }
 

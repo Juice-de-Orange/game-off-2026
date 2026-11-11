@@ -59,7 +59,7 @@ namespace GameOff.Counter
         public bool IsSeated => _seated;
         public bool IsHoldingStamp => _held != null;
         /// <summary>P81: a window over the desk (shift inventory) takes the keys and the mouse; the desk ignores them meanwhile.</summary>
-        public bool InputBlocked => _inputBlocked || Time.frameCount == _unblockedFrame;
+        public bool InputBlocked => _inputBlocked || Time.frameCount == _unblockedFrame || GameOff.UI.HelpOverlay.BlocksInput; // P140: [H] help open
 
         private bool _inputBlocked;
         private int _unblockedFrame = -1;
