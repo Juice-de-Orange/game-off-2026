@@ -5,13 +5,12 @@ using UnityEngine;
 namespace GameOff.Rest
 {
     /// <summary>
-    /// P28: the small HUD while sitting or looking out: the keys at the bottom edge and one line above them (an announcement on the
-    /// bench, a thought at the porthole). Shared by every seat; only one can be in use at a time.
+    /// P28: the small HUD while sitting or looking out: one line at the bottom edge (an announcement on the bench, a thought at the
+    /// porthole). Shared by every seat; only one can be in use at a time. P140: the keys moved behind [H] (HelpOverlay).
     /// </summary>
     public class RestHud : MonoBehaviour
     {
         [SerializeField] private GameObject root;
-        [SerializeField] private TMP_Text keys;
         [SerializeField] private TMP_Text line;
         [SerializeField] private float fadeSeconds = 0.5f;
 
@@ -19,14 +18,11 @@ namespace GameOff.Rest
 
         private void Awake() => root.SetActive(false);
 
-        public void Show(string keyText)
+        public void Show()
         {
             root.SetActive(true);
-            SetKeys(keyText);
             ClearLine();
         }
-
-        public void SetKeys(string keyText) => keys.text = keyText;
 
         public void Hide()
         {

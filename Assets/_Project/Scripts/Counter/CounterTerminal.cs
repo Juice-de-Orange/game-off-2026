@@ -123,7 +123,7 @@ namespace GameOff.Counter
             if (!IsOpen) return;
             // A dialog over the terminal (a character's question) unblocks the desk when answered; the terminal is still open.
             if (!station.InputBlocked) station.SetInputBlocked(true);
-            if (Time.frameCount == _openedFrame) return;
+            if (Time.frameCount == _openedFrame || GameOff.UI.HelpOverlay.BlocksInput) return; // P140: the Esc that closes the help stays there
             bool back = (Keyboard.current != null && (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.qKey.wasPressedThisFrame))
                         || (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame);
             if (back) Close();

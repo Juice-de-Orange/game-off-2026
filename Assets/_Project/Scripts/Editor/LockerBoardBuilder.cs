@@ -210,7 +210,7 @@ namespace GameOff.EditorTools
             for (int i = 0; i < 4; i++) cards.Add(Card(root.transform, i));
 
             var close = MenuButton(root.transform, "CloseButton", "CLOSE", new Vector2(330f, -240f), new Vector2(150f, 30f), 14);
-            Label(root.transform, "Keys", "[E] [ESC] close", 11, TextDim, new Vector2(80f, -240f), new Vector2(300f, 24f)); // P130: no paging
+            // P140: no key line any more; the keys are behind [H] (HelpOverlay).
 
             var closeUp = trigger.AddComponent<PinBoardCloseUp>();
             Set(closeUp, "interactable", interactable);

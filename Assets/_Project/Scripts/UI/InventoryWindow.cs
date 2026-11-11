@@ -77,6 +77,7 @@ namespace GameOff.UI
 
         private void Update()
         {
+            if (HelpOverlay.BlocksInput) return; // P140: the Esc that closes the help stays there
             bool pressed = _toggle.WasPressedThisFrame();
             if (IsOpen)
             {

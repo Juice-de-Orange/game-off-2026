@@ -80,6 +80,8 @@ namespace GameOff.Documents
         public bool IsBusy => _busy;
         /// <summary>A paper is being moved or the drawer is pressed. (Reading doesn't count: the officer may look around meanwhile.)</summary>
         public bool IsMovingPaper => _pressed != null || _drawerPress;
+        /// <summary>P140: papers or notes are held up for reading.</summary>
+        public bool IsReading => _reading.Count > 0;
         public IReadOnlyList<DocumentView> OnDesk => _onDesk;
         /// <summary>P62: the papers in the drawer.</summary>
         public IReadOnlyList<DocumentView> InDrawer => _inDrawer;

@@ -105,7 +105,6 @@ namespace GameOff.EditorTools
             clear.GetArrayElementAtIndex(clear.arraySize - 1).objectReferenceValue = crt.GetComponent<BoxCollider>();
             desk.ApplyModifiedPropertiesWithoutUndo();
 
-            hint.text += "  ·  click the CRT: terminal";
             log.Add($"counter terminal (P34): CRT at {crt.transform.localPosition}, window in the seated HUD");
         }
 

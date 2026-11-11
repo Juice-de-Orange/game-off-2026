@@ -99,7 +99,7 @@ namespace GameOff.EditorTools
                 var b = Furniture(scene, "SM_Hall_Bench_" + name, new Vector3(x, 0f, z), new Vector3(2.8f, 0.9f, 0.6f), ref found);
                 var go = Spot(root.transform, "Bench_" + name, b.center, b.size + Vector3.one * 0.2f, "Sit down", out var trigger);
                 var eye = Point(go.transform, "Eye", new Vector3(b.center.x, 1.15f, b.center.z), Quaternion.Euler(6f, 0f, 0f));
-                var seat = Seat(go, trigger, tuning, hud, eye, null, 0f, true, false, false, "[Q] Stand up");
+                var seat = Seat(go, trigger, tuning, hud, eye, null, 0f, true, false, false);
                 Set(go.AddComponent<HallBench>(), "seat", seat);
             }
 
@@ -109,7 +109,7 @@ namespace GameOff.EditorTools
                 var b = Furniture(scene, $"SM_Bar_Stool_{i}", new Vector3(13.6f, 0f, 1.6f + (i - 1) * 1.6f), new Vector3(0.4f, 0.75f, 0.4f), ref found);
                 var go = Spot(root.transform, $"BarStool_{i}", b.center, b.size + Vector3.one * 0.2f, "Sit at the bar", out var trigger);
                 var eye = Point(go.transform, "Eye", new Vector3(b.center.x, b.max.y + 0.72f, b.center.z), Quaternion.Euler(8f, 90f, 0f));
-                var seat = Seat(go, trigger, tuning, hud, eye, null, 0f, false, true, false, "");
+                var seat = Seat(go, trigger, tuning, hud, eye, null, 0f, false, true, false);
                 Set(go.AddComponent<BarStool>(), "seat", seat);
             }
 
@@ -119,7 +119,7 @@ namespace GameOff.EditorTools
                     "Look out of the porthole", out var trigger);
                 var approach = Point(go.transform, "Approach", PortholeApproach, Quaternion.Euler(0f, -90f, 0f));
                 var eye = Point(go.transform, "Eye", PortholeEye, Quaternion.Euler(0f, -90f, 0f));
-                var seat = Seat(go, trigger, tuning, hud, eye, approach, tuning.portholeFov, true, false, true, "[Q] Step back");
+                var seat = Seat(go, trigger, tuning, hud, eye, approach, tuning.portholeFov, true, false, true);
                 Set(go.AddComponent<PortholeView>(), "seat", seat);
             }
 
@@ -140,7 +140,7 @@ namespace GameOff.EditorTools
                 var family = go.AddComponent<FamilyPhoto>();
                 Set(family, "photo", photo);
                 var eye = Point(go.transform, "Eye", new Vector3(at.x, 1.52f, b.max.z + 0.42f), Quaternion.Euler(0f, 180f, 0f));
-                Seat(go, trigger, tuning, hud, eye, null, 45f, false, false, false, "[Q] Step back", canvas);
+                Seat(go, trigger, tuning, hud, eye, null, 45f, false, false, false, canvas);
             }
 
             // The morning letter on the table in 103, left of the TV. #30: the top is only 5.33 to 5.8 deep (the model's bounds include the
@@ -166,7 +166,7 @@ namespace GameOff.EditorTools
                 Set(letter, "text", text);
                 Set(letter, "tuning", tuning);
                 var eye = Point(go.transform, "Eye", at + new Vector3(0f, 0.42f, -0.16f), Quaternion.Euler(70f, 0f, 0f));
-                Seat(go, trigger, tuning, hud, eye, null, 45f, false, false, false, "[Q] Put it down", canvas);
+                Seat(go, trigger, tuning, hud, eye, null, 45f, false, false, false, canvas);
             }
 
             // P117: the floppy player where the TV stands; the song and the models come from the pipeline.
@@ -205,14 +205,12 @@ namespace GameOff.EditorTools
             var root = new GameObject("Root", typeof(RectTransform));
             root.transform.SetParent(canvas, false);
             Stretch(root.GetComponent<RectTransform>());
-            var keys = Label(root.transform, "Keys", "[Q] Stand up", 14f, TextDim, new Vector2(0f, 18f), new Vector2(700f, 24f));
-            BottomCentre(keys.rectTransform);
+            // P140: no key bar any more; the keys are behind [H] (HelpOverlay).
             var line = Label(root.transform, "Line", "", 18f, TextLight, new Vector2(0f, 50f), new Vector2(820f, 70f));
             BottomCentre(line.rectTransform);
             line.alignment = TextAlignmentOptions.Bottom;
             var hud = canvas.gameObject.AddComponent<RestHud>();
             Set(hud, "root", root);
-            Set(hud, "keys", keys);
             Set(hud, "line", line);
             return hud;
         }
@@ -264,7 +262,7 @@ namespace GameOff.EditorTools
         }
 
         private static SeatView Seat(GameObject go, Interactable trigger, RestSpotTuning tuning, RestHud hud, Transform eye, Transform approach,
-            float fov, bool mouseLook, bool standWhenControlReturns, bool looksOutside, string keys, Transform lookAt = null)
+            float fov, bool mouseLook, bool standWhenControlReturns, bool looksOutside, Transform lookAt = null)
         {
             var seat = go.AddComponent<SeatView>();
             Set(seat, "interactable", trigger);
@@ -277,7 +275,6 @@ namespace GameOff.EditorTools
             SetValue(seat, "mouseLook", mouseLook);
             SetValue(seat, "standWhenControlReturns", standWhenControlReturns);
             SetValue(seat, "looksOutside", looksOutside);
-            SetValue(seat, "keys", keys);
             return seat;
         }
 

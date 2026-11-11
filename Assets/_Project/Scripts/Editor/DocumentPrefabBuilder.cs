@@ -507,7 +507,7 @@ namespace GameOff.EditorTools
                 var hintT = root.transform.Find("SeatedHUD/Hint");
                 if (hintT == null) throw new System.InvalidOperationException("PF_CounterStation has no SeatedHUD/Hint");
                 var hint = hintT.GetComponent<TextMeshProUGUI>();
-                hint.text = "Stamp, hand papers back through the drawer  ·  or ARREST / AIRLOCK  ·  click papers or notes to read side by side, [R] all, a field to ask  ·  [A]/[D] look  ·  [Q]/[Esc] back / leave";
+                hint.text = ""; // P140: the keys are behind [H] (HelpOverlay); the object stays as the anchor for notice, subtitle and tutorial
                 // Notice line above the hint (\"Stamp the papers first\" and the like), hidden until used
                 var noticeT = root.transform.Find("SeatedHUD/Notice");
                 if (noticeT == null)

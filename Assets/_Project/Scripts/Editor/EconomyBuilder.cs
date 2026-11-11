@@ -999,7 +999,7 @@ namespace GameOff.EditorTools
             // The overlay's time panel has fixed digits painted in: a black box hides them.
             var digits = Box(overlay.transform, "Digits", new Vector2(56f, -229f), new Vector2(104f, 42f), Color.black);
             var count = Text(digits, "Countdown", "30", 30, Amber, Vector2.zero, new Vector2(100f, 40f), TextAlignmentOptions.Center);
-            Text(overlay.transform, "Hint", "Mouse pans  ·  Wheel zooms  ·  [Q] leave", 16, TextDim, new Vector2(0f, -280f), new Vector2(600f, 30f), TextAlignmentOptions.Center);
+            // P140: no key line under the eyepiece any more; the keys are behind [H] (HelpOverlay).
             var telescope = go.AddComponent<CoinTelescope>();
             Set(telescope, "interactable", interactable);
             Set(telescope, "eye", eye);

@@ -16,16 +16,16 @@ namespace GameOff.Rest
     {
         [SerializeField] private SeatView seat;
         [SerializeField] private DayManager day;
-        [SerializeField] private string keys = "[Q] Stand up";
-        [SerializeField] private string eveningKeys = "[Q] Stand up    [F] Wait until late";
 
         private Coroutine _announcements;
-        private bool _fastForward, _eveningKeysShown;
+        private bool _fastForward;
         private float _rate;
         private int _next = -1;
 
         private RestSpotTuning Tuning => seat.Tuning;
-        private bool CanWait => day != null && day.CurrentPhase == DayManager.Phase.Evening && day.EveningSecondsLeft > 0f;
+        public SeatView Seat => seat;
+        /// <summary>P140: [F] works now (evening, before 23:00); the [H] help lists it then.</summary>
+        public bool CanWait => day != null && day.CurrentPhase == DayManager.Phase.Evening && day.EveningSecondsLeft > 0f;
 
         private void OnEnable()
         {
@@ -42,8 +42,6 @@ namespace GameOff.Rest
 
         private void OnSatDown()
         {
-            _eveningKeysShown = CanWait;
-            seat.Hud.SetKeys(_eveningKeysShown ? eveningKeys : keys);
             _announcements = StartCoroutine(Announcements());
         }
 
@@ -57,14 +55,8 @@ namespace GameOff.Rest
         private void Update()
         {
             if (!seat.IsSeated) return;
-            bool canWait = CanWait;
-            if (canWait != _eveningKeysShown)
-            {
-                _eveningKeysShown = canWait;
-                seat.Hud.SetKeys(canWait ? eveningKeys : keys);
-            }
             var keyboard = Keyboard.current;
-            if (!_fastForward && canWait && keyboard != null && keyboard.fKey.wasPressedThisFrame)
+            if (!_fastForward && CanWait && !GameOff.UI.HelpOverlay.BlocksInput && keyboard != null && keyboard.fKey.wasPressedThisFrame)
             {
                 _fastForward = true;
                 _rate = day.EveningSecondsLeft / Mathf.Max(0.1f, Tuning.fastForwardSeconds);

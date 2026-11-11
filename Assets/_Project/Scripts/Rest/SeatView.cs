@@ -40,7 +40,6 @@ namespace GameOff.Rest
         [SerializeField] private bool standWhenControlReturns;
         [Tooltip("The view looks out of the station: occlusion culling off meanwhile (the bake only covers the inside).")]
         [SerializeField] private bool looksOutside;
-        [SerializeField] private string keys = "[Q] Stand up";
 
         private State _state;
         private Transform _cam, _camParent;
@@ -58,6 +57,8 @@ namespace GameOff.Rest
         public event Action StandingUp;
 
         public bool IsSeated => _state == State.Seated;
+        /// <summary>P140: the view turns with the mouse and WASD (bench, porthole); else only Q / Esc (photo, letter, bar stool).</summary>
+        public bool MouseLook => mouseLook;
         public RestHud Hud => hud;
         public RestSpotTuning Tuning => tuning;
 
@@ -128,7 +129,7 @@ namespace GameOff.Rest
             _lockHeld = false;
             _seatedFrame = Time.frameCount;
             _state = State.Seated;
-            if (hud != null) hud.Show(keys);
+            if (hud != null) hud.Show();
             SatDown?.Invoke();
         }
 
@@ -201,6 +202,16 @@ namespace GameOff.Rest
                 return;
             }
             if (Time.frameCount == _seatedFrame || (dialogs != null && dialogs.IsDialogOpen)) return;
+            if (GameOff.UI.HelpOverlay.BlocksInput)
+            {
+                _lockHeld = false; // P140: in the browser the Esc that closes the help also released the mouse; that is no "stand up"
+                return;
+            }
+            if (mouseLook && !PointerLockBridge.IsLocked && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                Cursor.lockState = CursorLockMode.Locked; // a click catches the mouse again (e.g. after the help)
+                PointerLockBridge.Request();
+            }
 
             var keyboard = Keyboard.current;
             bool exit = keyboard != null && (keyboard.qKey.wasPressedThisFrame || keyboard.escapeKey.wasPressedThisFrame);
