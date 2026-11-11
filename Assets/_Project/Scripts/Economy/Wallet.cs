@@ -32,6 +32,14 @@ namespace GameOff.Economy
 
         public void Charge(int amount, string reason) => Apply(-Math.Abs(amount), reason);
 
+        /// <summary>P128: a saved run continues with this balance; TODAY starts empty.</summary>
+        public void Restore(int balance)
+        {
+            Balance = balance;
+            _today.Clear();
+            Changed?.Invoke();
+        }
+
         /// <summary>New morning: TODAY starts empty.</summary>
         public void BeginDay()
         {

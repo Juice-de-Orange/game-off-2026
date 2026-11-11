@@ -1,0 +1,137 @@
+using System;
+using System.Collections.Generic;
+using GameOff.Travelers;
+
+namespace GameOff.Core
+{
+    /// <summary>
+    /// P128: the run as it stands on the morning of a day, before anything of that day happened (JsonUtility, PlayerPrefs).
+    /// Items, market events and characters by a stable id (asset name, character id), never by reference. Built and applied by SaveGame.
+    /// </summary>
+    [Serializable]
+    public class SaveData
+    {
+        /// <summary>Raise when the format changes in a way old saves can't be read; older saves are then ignored.</summary>
+        public const int CurrentVersion = 1;
+
+        public int version = CurrentVersion;
+        public int day;
+        /// <summary>The seed of the endless days (P73).</summary>
+        public int seed;
+
+        public int credits;
+        public List<ItemStack> inventory = new List<ItemStack>();
+        public string wearing = "";
+        /// <summary>The evidence locker (P83).</summary>
+        public List<ItemStack> locker = new List<ItemStack>();
+        /// <summary>What was sold to vendors that they don't normally sell (VendorSupply extras), by stock asset name.</summary>
+        public List<VendorShelf> vendors = new List<VendorShelf>();
+
+        /// <summary>Household step per family member (0 well … 4 dead), nights critical in a row, who died last night.</summary>
+        public List<int> family = new List<int>();
+        public List<int> criticalNights = new List<int>();
+        public List<int> diedTonight = new List<int>();
+
+        public int disciplinary;
+        public int morale;
+        public int airlockMorale;
+        public bool hasTicket;
+        public int barkeeperSulksFrom;
+        /// <summary>Lines waiting for this morning's letter (character effects, nightmares, the drone, the cargo case).</summary>
+        public List<string> letterLines = new List<string>();
+
+        /// <summary>Market events scheduled for later days (P75, Market.Schedule).</summary>
+        public List<DayEvents> marketEvents = new List<DayEvents>();
+        /// <summary>The station's situation of yesterday (P36); today's crises are added on top in the morning.</summary>
+        public float stationMood;
+
+        public CharacterState characters = new CharacterState();
+
+        [Serializable]
+        public class ItemStack
+        {
+            public string item;
+            public int count;
+        }
+
+        [Serializable]
+        public class VendorShelf
+        {
+            public string stock;
+            public List<ItemStack> extras = new List<ItemStack>();
+        }
+
+        [Serializable]
+        public class DayEvents
+        {
+            public int day;
+            public List<string> events = new List<string>();
+        }
+
+        /// <summary>CharacterMemory (P75–P87).</summary>
+        [Serializable]
+        public class CharacterState
+        {
+            public List<Record> records = new List<Record>();
+            public List<string> flags = new List<string>();
+            public List<Entrusted> entrusted = new List<Entrusted>();
+            public List<Effect> effects = new List<Effect>();
+            public List<Wanted> wanted = new List<Wanted>();
+            public List<DayEvents> events = new List<DayEvents>();
+            public List<Arrest> arrests = new List<Arrest>();
+            public List<Kin> kin = new List<Kin>();
+        }
+
+        [Serializable]
+        public class Record
+        {
+            public string character;
+            public int appearance;
+            public int day;
+            public int outcome;
+        }
+
+        [Serializable]
+        public class Entrusted
+        {
+            public string character;
+            public string item;
+            public int deposit;
+        }
+
+        /// <summary>A consequence due on a later day: appearance and consequence index of that character.</summary>
+        [Serializable]
+        public class Effect
+        {
+            public int day;
+            public string character;
+            public int appearance;
+            public int consequence;
+        }
+
+        [Serializable]
+        public class Wanted
+        {
+            public string character;
+            public WantedEntry entry;
+            public int fromDay;
+            public int toDay;
+        }
+
+        [Serializable]
+        public class Arrest
+        {
+            public string name;
+            public string species;
+            public int day;
+        }
+
+        [Serializable]
+        public class Kin
+        {
+            public string character;
+            public string name;
+            public bool byYou;
+        }
+    }
+}

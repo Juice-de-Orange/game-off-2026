@@ -71,8 +71,37 @@ namespace GameOff.Economy
         /// <summary>The vendor's shelf right now (created full on first use).</summary>
         public VendorSupply Supply(VendorStock stock)
         {
-            if (!_supplies.TryGetValue(stock, out var supply)) _supplies[stock] = supply = new VendorSupply(stock);
+            if (!_supplies.TryGetValue(stock, out var supply))
+            {
+                _supplies[stock] = supply = new VendorSupply(stock);
+                // P128: what the player sold to this vendor before the save is back on its shelf.
+                if (stock != null && _savedExtras.TryGetValue(stock.name, out var extras))
+                {
+                    _savedExtras.Remove(stock.name);
+                    foreach (var (item, count) in extras)
+                        for (int i = 0; i < count; i++) supply.Put(item);
+                }
+            }
             return supply;
+        }
+
+        /// <summary>P128: every vendor shelf used in this run so far.</summary>
+        public IReadOnlyDictionary<VendorStock, VendorSupply> Supplies => _supplies;
+
+        private readonly Dictionary<string, List<(ItemData item, int count)>> _savedExtras = new Dictionary<string, List<(ItemData, int)>>();
+
+        /// <summary>P128: items sold to a vendor (by its stock's asset name) before the save; they return when the shelf is first used.</summary>
+        public void RestoreExtras(string stockName, List<(ItemData item, int count)> extras)
+        {
+            if (string.IsNullOrEmpty(stockName) || extras == null || extras.Count == 0) return;
+            foreach (var pair in _supplies)
+                if (pair.Key != null && pair.Key.name == stockName)
+                {
+                    foreach (var (item, count) in extras)
+                        for (int i = 0; i < count; i++) pair.Value.Put(item);
+                    return;
+                }
+            _savedExtras[stockName] = extras;
         }
 
         /// <summary>One line per family member for the morning letter, e.g. "Ilya is sick and needs medicine."</summary>
@@ -132,6 +161,9 @@ namespace GameOff.Economy
         public void AddLetterLine(string line) => _letterLines.Add(line);
 
         private readonly List<string> _letterLines = new List<string>();
+
+        /// <summary>P128: the lines waiting for the next morning letter (the save keeps them).</summary>
+        public IReadOnlyList<string> LetterLines => _letterLines;
 
         /// <summary>Under the morning letter: what characters did, the family's lines, then what spoiled.</summary>
         public string MorningReport()

@@ -41,6 +41,12 @@ namespace GameOff.Characters
 
         public CharacterMemory Memory { get; private set; } = new CharacterMemory();
 
+        /// <summary>P128: the save reads and restores the memory.</summary>
+        public static CharacterDirector Instance { get; private set; }
+
+        /// <summary>P128: every character this run can meet (incl. the dev ones while the dev tools are on), to find them by id.</summary>
+        public IReadOnlyList<RecurringCharacter> Characters => Active;
+
         private List<RecurringCharacter> Active
         {
             get
@@ -53,6 +59,7 @@ namespace GameOff.Characters
 
         private void OnEnable()
         {
+            Instance = this;
             if (shift != null)
             {
                 shift.PlanDay = Plan;
@@ -64,6 +71,7 @@ namespace GameOff.Characters
 
         private void OnDisable()
         {
+            if (Instance == this) Instance = null;
             if (shift != null)
             {
                 if (shift.PlanDay == Plan) shift.PlanDay = null;

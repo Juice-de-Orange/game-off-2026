@@ -47,6 +47,8 @@ namespace GameOff.UI
 
         /// <summary>The flight is over and the screen is black: the run can begin.</summary>
         public event Action Started;
+        /// <summary>P128: CONTINUE was chosen – DayManager goes on with the saved run instead of day 1.</summary>
+        public bool Continuing { get; private set; }
 
         private void Awake() => Instance = this;
 
@@ -94,11 +96,12 @@ namespace GameOff.UI
             _drift.Configure(orbitTarget, lookOffset);
         }
 
-        /// <summary>Called by the START SHIFT button.</summary>
-        public void Begin()
+        /// <summary>Called by the START SHIFT button, and by CONTINUE with <paramref name="continuing"/> (P128).</summary>
+        public void Begin(bool continuing = false)
         {
             if (_begun) return;
             _begun = true;
+            Continuing = continuing;
             menuCanvas.SetActive(false);
             foreach (var r in _hiddenRenderers) if (r != null) r.enabled = true;
             _hiddenRenderers.Clear();
