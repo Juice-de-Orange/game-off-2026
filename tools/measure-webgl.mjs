@@ -115,9 +115,12 @@ async function measure(name, seconds) {
   console.log(name, JSON.stringify({ ...result.phases[name], spikes: undefined }), JSON.stringify(result.memory[name]));
 }
 
-const START = [0.206, 0.446], MENU_IN_PAUSE = [0.5, 0.769]; // y = 0.5 + 145/540 (MenuSceneBuilder, P78 moved it down)
+const START = [0.206, 0.528], MENU_IN_PAUSE = [0.5, 0.769]; // y = 0.5 + 145/540 (MenuSceneBuilder, P78 moved it down; P128: START at y -15)
+const NEW_RUN = [0.375, 0.667]; // P128: START over a saved run asks first; this spot hits no button while the question isn't up
 async function intoShift(firstRun) {
   await click(...START);
+  await sleep(400);
+  await click(...NEW_RUN);
   await sleep(firstRun ? 9000 : 7000);
   await hold('space', 150); // closes the morning letter
   await sleep(2500);

@@ -19,6 +19,7 @@ namespace GameOff.Day
     /// Hooks for later packages: DayStarted (P31 board, P36 flicker), ShiftOver, DayEnded, RunFinished (P12).
     /// P10 plugs in through NightStep (the settlement runs after "SLEEP", before the fade) and LetterAddendum (family lines
     /// under the morning letter from day 2 on).
+    /// P128: every morning starts with the save (SaveSlot/SaveGame); CONTINUE in the menu goes on with it, any ending deletes it.
     /// </summary>
     public class DayManager : MonoBehaviour
     {
@@ -53,6 +54,8 @@ namespace GameOff.Day
         private bool _curfewAnnounced;
         private Coroutine _curfewHints;
         private (string title, string body)? _gameOver;
+        /// <summary>P128: the morning save of this run (once per morning, deleted by any ending).</summary>
+        private readonly SaveSlot _save = SaveSlot.InPlayerPrefs();
 
         /// <summary>Morning of day n (1-based), before the letter.</summary>
         public event Action<int> DayStarted;
@@ -131,14 +134,32 @@ namespace GameOff.Day
             _runSeed = UnityEngine.Random.Range(1, int.MaxValue);
             Debug.Log($"[Day] Run seed {_runSeed} (endless days after day {schedule.Count}: {schedule.Endless})");
             // P48: the menu is in this scene; the run begins when its flight is over.
-            if (GameOff.UI.FrontEnd.Instance != null) GameOff.UI.FrontEnd.Instance.Started += BeginRun;
+            if (GameOff.UI.FrontEnd.Instance != null) GameOff.UI.FrontEnd.Instance.Started += OnFrontEndStarted;
             else BeginRun();
+        }
+
+        private void OnFrontEndStarted()
+        {
+            if (GameOff.UI.FrontEnd.Instance != null && GameOff.UI.FrontEnd.Instance.Continuing && ContinueRun()) return;
+            BeginRun();
         }
 
         private void BeginRun()
         {
             ui.SetBlack(true);
             StartCoroutine(BeginDay(1));
+        }
+
+        /// <summary>P128: CONTINUE – the saved run goes on with the morning it was saved on.</summary>
+        private bool ContinueRun()
+        {
+            var data = _save.Load();
+            if (data == null) return false;
+            _runSeed = data.seed;
+            SaveGame.ApplyRunning(data);
+            ui.SetBlack(true);
+            StartCoroutine(BeginDay(data.day));
+            return true;
         }
 
         private void Update()
@@ -184,6 +205,8 @@ namespace GameOff.Day
 
         private IEnumerator BeginDay(int day)
         {
+            // P128: the morning save, before anything of the day happens (a continued run replays this morning).
+            if (_phase != Phase.Finished) _save.SaveMorning(day, () => SaveGame.CaptureRunning(day, _runSeed));
             _day = day;
             _phase = Phase.Morning;
             var entry = Entry(day);
@@ -257,6 +280,7 @@ namespace GameOff.Day
         {
             _gameOver = (title, body);
             _nightCancelled = false;
+            _save.EndRun(); // P128
         }
 
         /// <summary>
@@ -266,6 +290,7 @@ namespace GameOff.Day
         public void FinishRun(string title, string body)
         {
             if (_phase == Phase.Finished) return;
+            _save.EndRun(); // P128: at once, in case the tab closes during the fade
             StartCoroutine(FinishRunRoutine(title, body));
         }
 
@@ -281,6 +306,7 @@ namespace GameOff.Day
         private void ShowRunEnd(string title, string body)
         {
             _phase = Phase.Finished;
+            _save.EndRun(); // P128
             EndingTitle = title ?? "";
             Debug.Log($"[Day] Run finished on day {_day}: {title}");
             RunFinished?.Invoke();
@@ -316,6 +342,7 @@ namespace GameOff.Day
                 yield break;
             }
             _phase = Phase.Finished;
+            _save.EndRun(); // P128
             EndingTitle = "last day";
             RunFinished?.Invoke();
             ui.ShowEnd();

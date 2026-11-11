@@ -5,8 +5,8 @@ using GameOff.Travelers;
 namespace GameOff.Characters
 {
     /// <summary>
-    /// P75: what happened with every recurring character in this run (not saved across restarts, like everything else), plus the
-    /// consequences waiting for later days (market events, wanted entries).
+    /// P75: what happened with every recurring character in this run, plus the consequences waiting for later days (market events,
+    /// wanted entries). P128: the morning save reads it through the views at the end and rebuilds it with the same methods.
     /// </summary>
     public class CharacterMemory
     {
@@ -163,6 +163,24 @@ namespace GameOff.Characters
             foreach (var w in _wanted)
                 if (day >= w.fromDay && day <= w.toDay && Alive(w.character)) list.Add(w.entry);
             return list;
+        }
+
+        // ---------- P128: views and setters for the morning save ----------
+
+        public IEnumerable<string> Flags => _flags;
+        public IReadOnlyDictionary<RecurringCharacter, (ItemData item, int deposit)> EntrustedItems => _entrusted;
+        public IReadOnlyList<(int day, Consequence effect)> Effects => _effects;
+        public IReadOnlyList<PendingWanted> Wanted => _wanted;
+        public IEnumerable<int> EventDays => _events.Keys;
+        public IReadOnlyDictionary<RecurringCharacter, (string name, bool byYou)> KnownKin => _kin;
+
+        /// <summary>P128: a wanted entry exactly as it was pending (ScheduleWanted computes the last day).</summary>
+        public void RestoreWanted(PendingWanted w) => _wanted.Add(w);
+
+        /// <summary>P128: who a character's relative in prison turned out to be.</summary>
+        public void RestoreKin(RecurringCharacter c, string name, bool byYou)
+        {
+            if (c != null) _kin[c] = (name, byYou);
         }
     }
 }

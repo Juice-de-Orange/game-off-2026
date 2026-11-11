@@ -27,6 +27,9 @@ namespace GameOff.Day
         private float _blackoutEnd;
         private bool _blackout;
 
+        /// <summary>P128: the save reads and restores the situation.</summary>
+        public static StationMood Instance { get; private set; }
+
         /// <summary>0 = calm, 1 = the station is falling apart.</summary>
         public float Situation { get; private set; }
 
@@ -44,11 +47,13 @@ namespace GameOff.Day
 
         private void OnEnable()
         {
+            Instance = this;
             if (day != null) day.DayStarted += OnDayStarted;
         }
 
         private void OnDisable()
         {
+            if (Instance == this) Instance = null;
             if (day != null) day.DayStarted -= OnDayStarted;
             SetBlackout(false);
             for (int i = 0; i < neons.Length; i++) SetNeon(i, false);

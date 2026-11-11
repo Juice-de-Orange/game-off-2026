@@ -25,6 +25,15 @@ namespace GameOff.Economy
         /// <summary>P35: morale change without an airlock.</summary>
         public void AddMorale(int delta) => Morale += delta;
 
+        /// <summary>P128: a saved run continues with this record (today's airlock counts start fresh with the day).</summary>
+        public void Restore(int disciplinary, int morale, int airlockMorale)
+        {
+            Disciplinary = disciplinary;
+            Morale = morale;
+            AirlockMorale = airlockMorale;
+            BeginDay();
+        }
+
         public void BeginDay()
         {
             AirlocksToday = InnocentToday = 0;

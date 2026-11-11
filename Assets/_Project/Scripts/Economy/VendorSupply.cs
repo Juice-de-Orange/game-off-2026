@@ -31,6 +31,9 @@ namespace GameOff.Economy
             }
         }
 
+        /// <summary>P128: what was sold to the vendor that it doesn't normally sell (stays on the shelf over night).</summary>
+        public IReadOnlyList<ItemData> Extras => _extras;
+
         public int Count(ItemData item) => item != null && _counts.TryGetValue(item, out int n) ? n : 0;
 
         public void Refill()

@@ -141,17 +141,21 @@ namespace GameOff.EditorTools
             float x = -480f + MenuStripWidth / 2f; // reference width 960 → left edge at -480
             Title(Label(mainPanel, "Title", GameTitle, 64, Amber, new Vector2(x, 170f), new Vector2(MenuStripWidth - 30f, 80f)));
             Label(mainPanel, "Subtitle", GameSubtitle, 16, TextDim, new Vector2(x, 122f), new Vector2(MenuStripWidth, 26f));
-            var start = MenuButton(mainPanel, "StartButton", "START SHIFT", new Vector2(x, 30f));
-            var options = MenuButton(mainPanel, "OptionsButton", "OPTIONS", new Vector2(x, -35f));
-            var credits = MenuButton(mainPanel, "CreditsButton", "CREDITS", new Vector2(x, -100f));
-            var quit = MenuButton(mainPanel, "QuitButton", "QUIT", new Vector2(x, -165f));
+            // P128: CONTINUE on top (MainMenu hides it without a saved run), 60 px apart.
+            var cont = MenuButton(mainPanel, "ContinueButton", "CONTINUE", new Vector2(x, 45f));
+            var start = MenuButton(mainPanel, "StartButton", "START SHIFT", new Vector2(x, -15f));
+            var options = MenuButton(mainPanel, "OptionsButton", "OPTIONS", new Vector2(x, -75f));
+            var credits = MenuButton(mainPanel, "CreditsButton", "CREDITS", new Vector2(x, -135f));
+            var quit = MenuButton(mainPanel, "QuitButton", "QUIT", new Vector2(x, -195f));
             Label(mainPanel, "Version", "Game Off 2026 · jam build", 14, TextDim, new Vector2(x, -245f), new Vector2(MenuStripWidth, 24f));
 
             var optionsPanel = BuildOptionsPanel(canvas, out var optionsBack);
             var creditsPanel = BuildCreditsPanel(canvas, out var creditsBack);
+            var confirmPanel = BuildConfirmPanel(canvas, out var confirmText, out var confirmYes, out var confirmBack);
             // Sub pages dim the station instead of hiding it.
             optionsPanel.GetComponent<Image>().color = new Color(Backdrop.r, Backdrop.g, Backdrop.b, SubPageDim);
             creditsPanel.GetComponent<Image>().color = new Color(Backdrop.r, Backdrop.g, Backdrop.b, SubPageDim);
+            confirmPanel.GetComponent<Image>().color = new Color(Backdrop.r, Backdrop.g, Backdrop.b, SubPageDim);
             FullscreenCorner(canvas); // last child: on top of every menu page
 
             var menu = root.AddComponent<MainMenu>();
@@ -163,8 +167,14 @@ namespace GameOff.EditorTools
             Set(menu, "creditsButton", credits);
             Set(menu, "quitButton", quit);
             SetArray(menu, "backButtons", new Object[] { optionsBack, creditsBack });
+            Set(menu, "continueButton", cont);
+            Set(menu, "confirmPanel", confirmPanel.gameObject);
+            Set(menu, "confirmText", confirmText);
+            Set(menu, "confirmButton", confirmYes);
+            Set(menu, "confirmBackButton", confirmBack);
             optionsPanel.gameObject.SetActive(false);
             creditsPanel.gameObject.SetActive(false);
+            confirmPanel.gameObject.SetActive(false);
 
             var frontEnd = root.AddComponent<FrontEnd>();
             var player = Object.FindFirstObjectByType<FirstPersonController>();
@@ -371,6 +381,18 @@ namespace GameOff.EditorTools
             value = button.GetComponentInChildren<TMP_Text>();
             value.color = Amber;
             return button;
+        }
+
+        /// <summary>P128: START over a saved run asks first (MainMenu fills in the day).</summary>
+        private static Transform BuildConfirmPanel(Transform parent, out TMP_Text text, out Button yes, out Button back)
+        {
+            var panel = PanelRoot(parent, "ConfirmNewRunPanel");
+            TerminalStyle.AddFrame(panel, new Vector2(640f, 320f));
+            Title(Label(panel, "Heading", "NEW RUN?", 40, Amber, new Vector2(0f, 90f), new Vector2(560f, 50f)));
+            text = Label(panel, "Body", "Your saved run will be lost.\nStart a new run from day 1?", 20, TextLight, new Vector2(0f, 15f), new Vector2(560f, 80f));
+            yes = MenuButton(panel, "NewRunButton", "NEW RUN", new Vector2(-120f, -90f), new Vector2(220f, 50f), 24);
+            back = MenuButton(panel, "BackButton", "BACK", new Vector2(120f, -90f), new Vector2(220f, 50f), 24);
+            return panel;
         }
 
         private static Transform BuildCreditsPanel(Transform parent, out Button back)

@@ -33,6 +33,8 @@ namespace GameOff.Economy
 
         public int Count => _condition.Length;
         public int Condition(int person) => _condition[person];
+        /// <summary>P128: nights this person has been critical in a row (for the save).</summary>
+        public int CriticalNights(int person) => _criticalNights[person];
         public bool IsDead(int person) => _condition[person] == Dead;
         /// <summary>P69: true if one more night on critical kills this person (the morning letter warns).</summary>
         public bool WillDieNextNight(int person) =>
@@ -79,6 +81,21 @@ namespace GameOff.Economy
                 if (next[i] == Critical && WillDieNextNight(i)) next[i] = Dead;
             }
             return next;
+        }
+
+        /// <summary>P128: a saved run continues with these steps (missing people stay well).</summary>
+        public void Restore(IList<int> condition, IList<int> criticalNights, IEnumerable<int> diedTonight)
+        {
+            for (int i = 0; i < _condition.Length; i++)
+            {
+                _condition[i] = condition != null && i < condition.Count ? Math.Max(Well, Math.Min(Dead, condition[i])) : Well;
+                _criticalNights[i] = criticalNights != null && i < criticalNights.Count ? Math.Max(0, criticalNights[i]) : 0;
+            }
+            _diedTonight.Clear();
+            if (diedTonight != null)
+                foreach (int i in diedTonight)
+                    if (i >= 0 && i < _condition.Length && _condition[i] == Dead) _diedTonight.Add(i);
+            Changed?.Invoke();
         }
 
         public void Settle(bool food, bool heat, bool medicine)

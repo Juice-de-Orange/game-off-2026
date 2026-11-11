@@ -41,6 +41,9 @@ namespace GameOff.Economy
             if (!list.Contains(e)) list.Add(e);
         }
 
+        /// <summary>P128: every day something is scheduled for (the save keeps them).</summary>
+        public static IEnumerable<int> ScheduledDays => Scheduled.Keys;
+
         /// <summary>P75: what is scheduled for that day so far (the barkeeper's rumour looks at tomorrow).</summary>
         public static IReadOnlyList<MarketEvent> ScheduledFor(int day) =>
             Scheduled.TryGetValue(day, out var list) ? list : (IReadOnlyList<MarketEvent>)System.Array.Empty<MarketEvent>();
