@@ -52,6 +52,8 @@ namespace GameOff.Day
         private float _eveningSince;
         private bool _curfewAnnounced;
         private Coroutine _curfewHints;
+        private float _morningSince = -1f; // P133: when the morning letter was put away (-1 = not yet today)
+        private bool _firstMorningAnnounced;
         private (string title, string body)? _gameOver;
 
         /// <summary>Morning of day n (1-based), before the letter.</summary>
@@ -109,6 +111,13 @@ namespace GameOff.Day
         /// <summary>P109: is trading open in this phase with this many real seconds left until 23:00?</summary>
         public static bool TradingOpenAt(Phase phase, float eveningSecondsLeft) => phase == Phase.Evening && eveningSecondsLeft > 0f;
 
+        /// <summary>
+        /// P133: should the first-morning announcement play now? Only on day 1, only once, and delay seconds after the morning
+        /// letter was put away (secondsSinceMorning is negative while the letter is still open, e.g. before the run has begun).
+        /// </summary>
+        public static bool FirstMorningAnnouncementDue(int day, float secondsSinceMorning, float delay, bool alreadyPlayed) =>
+            day == 1 && !alreadyPlayed && secondsSinceMorning >= 0f && secondsSinceMorning >= delay;
+
         private void OnEnable()
         {
             shift.ShiftEnded += OnShiftEnded;
@@ -146,6 +155,23 @@ namespace GameOff.Day
             float evening = eveningClockSeconds > 0f ? (Time.time - _eveningSince) / eveningClockSeconds : 1f;
             GameClock.Set(GameClock.Compute(_phase, shift.Progress, evening));
             if (!_curfewAnnounced && IsCurfew) StartCurfew();
+            float sinceMorning = _phase == Phase.Shift && _morningSince >= 0f ? Time.time - _morningSince : -1f;
+            if (FirstMorningAnnouncementDue(_day, sinceMorning, FirstMorningDelay, _firstMorningAnnounced)) StartCoroutine(FirstMorningAnnouncement());
+        }
+
+        private float FirstMorningDelay => announcements != null ? announcements.firstMorningDelay : Announcements.DefaultFirstMorningDelay;
+
+        /// <summary>P133: day 1 only – the station tells the new officer where to go (#37), then the usual way hint.</summary>
+        private IEnumerator FirstMorningAnnouncement()
+        {
+            _firstMorningAnnounced = true;
+            string line = announcements != null && !string.IsNullOrWhiteSpace(announcements.firstMorning) ? announcements.firstMorning : Announcements.DefaultFirstMorning;
+            float seconds = announcements != null ? Mathf.Max(1f, announcements.secondsPerLine) : 4f;
+            Debug.Log("[Day] First-morning announcement.");
+            AudioManager.PlayAnnouncement(); // P115: a murmur under the subtitle
+            ui.ShowHint(line, seconds + 1f);
+            yield return new WaitForSeconds(seconds + 1f);
+            if (_phase == Phase.Shift) ui.ShowHint(ShiftHint, 6f);
         }
 
         /// <summary>P109: 23:00 – the shops close (they ask TradingOpen), the station says so once, then a hint to go to bed.</summary>
@@ -186,6 +212,7 @@ namespace GameOff.Day
         {
             _day = day;
             _phase = Phase.Morning;
+            _morningSince = -1f;
             var entry = Entry(day);
             if (sky != null) sky.SetDay(day);
             Market.Begin(day, entry.marketEvents); // before the counter pins today's notes (P68)
@@ -208,9 +235,12 @@ namespace GameOff.Day
         private void OnLetterClosed()
         {
             _phase = Phase.Shift;
+            _morningSince = Time.time;
             player.SetControlEnabled(true);
-            ui.ShowHint("Your shift starts at the customs counter. Go through the hall.", 6f);
+            if (_day != 1 || _firstMorningAnnounced) ui.ShowHint(ShiftHint, 6f); // P133: on day 1 the announcement comes first
         }
+
+        private const string ShiftHint = "Your shift starts at the customs counter. Go through the hall.";
 
         private void OnShiftEnded()
         {
