@@ -97,7 +97,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| martin | P128, P130, P133, P140 zusammenführen (Welle 3): Rebuild All, Bake | `Main.unity`, generierte Prefabs, `Data/Counter/Announcements.asset`, Lighting | 11.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog

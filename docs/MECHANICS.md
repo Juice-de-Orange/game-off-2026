@@ -4,7 +4,7 @@ Wofür: Auf einen Blick sehen, welche Spielmechaniken es gibt, wie sie ineinande
 Pflege: Wer ein Paket fertigstellt, das eine Mechanik neu baut oder ändert, zieht diese Datei im selben Push nach (siehe `CLAUDE.md`).
 Wer ein Paket plant, prüft hier zuerst auf Konflikte. Details stehen in `PAKETE.md`, Entscheidungen in `DECISIONS.md`.
 
-Stand: 10.11.2026 (martin, Mechanik-Prüfung 2)
+Stand: 11.11.2026 (martin, Welle 3)
 
 ## Der Kreislauf eines Tages
 ```
@@ -70,12 +70,15 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Münzfernrohr, Stadtlichter | P29 | 1 Credit, 30 s Blick auf den Heimatplaneten; dessen Lichter werden mit der Familie dunkler und flackern, wenn jemand kritisch ist | `CoinTelescope`, `HomeLights` ← `Household` | im Prefab `CoinTelescope`, 1 CR, 30 s |
 | Asservatenschrank | P83, P32 | „As ordered“ landet im Schrank; [E] öffnet die Türen, die Waren liegen als Modelle in 6 Fächern (eigenes Modell, sonst nach Label, sonst Beweisbeutel; Türen schließen ab 3 m oder am neuen Tag); abends bei offenen Türen einmal aufbrechen: Ware (CONFISCATED) oder Disziplinarstrafe | `Confiscation.Locker`, `EvidenceLocker`, `EvidenceLockerDisplay` | `ConfiscationTuning.lockerCaughtChance`, `Data/Economy/EvidenceLockerTuning.asset` (Label → Modell) |
 | Terminal-Datenbank | P34 | Klick auf den Röhrenbildschirm am Schalter → Name und ID des Ausweises sind Knöpfe (P112) → Abgleich mit der Fahndungsliste des Tages (gleiche Prüfung wie `RuleEvaluator`) und Einreiseakte (nur der Ausweis), abgelaufener Ausweis markiert; Statuszeile Lane, Zähler, Uhr | `CounterTerminal`, `TerminalLookup` ← `DayRules.Wanted`, Papiere | `Data/Counter/TerminalTuning.asset` |
-| Pinnwand im Stehen | P33, P41 | [E] an der Pinnwand → Vollbild mit Aushang, Fahndungsfotos, Markt-Notiz, Memo; ältere Morgen bleiben (bis 30 Tage, A/D blättern), an der Wand lugen ältere Zettel hervor | `PinBoardCloseUp`, `PinBoardNotes` ← dieselben Texte wie `PinBoard` | im `PF_Economy` |
+| Pinnwand im Stehen | P33, P41, P130 | [E] an der Pinnwand → Vollbild mit Aushang, Fahndungsfotos, Markt-Notiz, Memo – nur der heutige Tag (P130: kein Verlauf, kein Blättern) | `PinBoardCloseUp`, `PinBoardNotes` ← dieselben Texte wie `PinBoard` | im `PF_Economy` |
 | Sitzplätze & Ruhemomente | P28 | Hallenbänke: sitzen, Durchsagen, abends [F] bis 23 Uhr warten; Barhocker 1–3 öffnen das Barkeeper-Gespräch; Bullauge in 103: Blick auf den Heimatplaneten mit einem Gedanken je Familienzustand; Q/Esc steht auf | `SeatView`, `HallBench`, `BarStool`, `PortholeView` ← `Household`; `DayManager.SkipEvening` | `Data/Rest/RestSpotTuning.asset` (Texte, Zeiten) |
 | Familie in der Welt: Foto, Brief | P29 | Foto am Spind in 103 intakt/verblasst/zerrissen; der Morgenbrief liegt auf dem Tisch, die Schrift zittert stärker, je schlechter es der Familie geht | `FamilyPhoto`, `TableLetter` ← `Household.Changed`, `DayManager.LetterWritten` | `RestSpotTuning` |
 | Sperrstunde | P109 | Um 23 Uhr Abenduhr: Gong + Durchsage, Kiosk (Gitter fällt), Automat, Drohne, Ticketautomat, GIVE beim Barkeeper schließen; Reden, Schrank-Einbruch, Shuttle, Bett bleiben; Anzeigesäule NIGHT · CURFEW | `DayManager.TradingOpen`/`IsCurfew`, `CurfewStarted` → alle Händler; Bank [F] spult bis dahin | `Data/Counter/Announcements.asset` (`curfew*`), `eveningClockSeconds` (300) |
 | Zoll bei der Drohne | P110 | Sendung mit CONTRABAND/CONFISCATED: einmal pro Nacht 25 % → nur die Schmuggelware weg, 1 Disziplinarstrafe, Zeile in Abrechnung und Brief; Geschenke nie geprüft | `HomeDelivery` → `DroneCustoms` (in `SettlementWindow.Run`) → `Conduct` | `ConfiscationTuning.droneInspectChance` + Texte |
 | Fernrohr: Blick aufs Zuhause | P111 | Voll gezoomt auf den Planeten → Blende zum Diorama der Heimatstraße; drei Fenster (Mom, Lena, Pip) hell/gedimmt/flackernd/dunkel je Zustand; herauszoomen → zurück | `CoinTelescope`, `TelescopeFocus`, `HomeWindows` ← `Household.Changed`, `DayStarted` | `Data/Economy/HomeViewTuning.asset`, Modell `SM_Home_Street` |
+| Spielstand | P128 | Automatisch zu Beginn jedes Morgens; Menü CONTINUE · DAY n, START über einem Stand fragt NEW RUN?; jedes Ende löscht ihn; der Morgen wird nach dem Laden neu gespielt | `DayManager.BeginDay` → `SaveSlot` (`PlayerPrefs` `kestrel9.run`) ↔ `SaveGame` (Wallet, Inventar, Schrank, Household, Conduct, Market, StationMood, CharacterMemory) → `FrontEnd`/`MainMenu` | – |
+| Durchsage am ersten Morgen | P133 | Tag 1, 2 s nach dem Morgenbrief: „Officer, report to the customs counter…“ mit Murmeln, nur einmal | `DayManager` → `AudioManager.PlayAnnouncement` | `Announcements.firstMorning*` |
+| Hilfe auf [H] | P140 | Statt Tastenleisten nur „[H] Help“; [H] zeigt die Tasten der aktuellen Lage, [H]/Esc schließt (Esc löst sonst nichts aus) | `HelpOverlay` ← `HelpKeys.SituationFor` (Schalter, Lesen, Terminal, Pinnwand, Sitze, Fernrohr, Flug, Fenster) | Texte in `HelpKeys` |
 | Bugreport im Spiel | P84 (ersetzt P78) | Pausenmenü → REPORT BUG → Text tippen → SEND; das Backend auf Geoffrey legt ein GitHub-Issue an (Labels `bug`, `player-report`) | Version, Tag, Phase, Szene, Browser → `/api/report` | `Data/Menu/BugReportSettings.asset`, `deploy/reports` |
 | Dev-Werkzeuge | P09, P56, P10 | Dev_end_Day, Hitboxen, TRAFFIC_LINE_DEV, CREDITS ±100 | – | **vor der Abgabe ausschalten** (DEV-Reiter weg) |
 
@@ -84,7 +87,6 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 | Mechanik | Paket | Hängt an | Stand |
 |---|---|---|---|
 | Stimmen: 10 Laute je Spezies | P94 (martin) | Händler, Reisende | offen |
-| Spielstand am Morgen | P128 | P09, P48, P73 | offen (Mechanik-Prüfung 2) |
 
 ## Lücken / passt noch nicht
 - **Beschlagnahme im Simulator (P125):** Der Economy Report spielt sie als Stil `Pilferer` (ein Stück je Schicht), nicht „alles behalten“.
@@ -100,4 +102,5 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 - **Abend: 5 echte Minuten** bis zur Sperrstunde – ob das zum Handeln, Fernrohr und Barbesuch reicht, beim Anspielen prüfen.
 - **Menü-Bildrate (P48, P114):** Im Menü läuft keine Occlusion, Innenräume sind deshalb aus; gemessen wurde das noch nicht sauber (PC war ausgelastet), Abnahme von P114 offen.
 - **Hangar-Streifen (#17):** Die Rippen auf der Rückseite der Außenhülle lagen in der Ebene der Innenwand; die Hangar-Hülle steht seit `e22b022` 0,1 m weiter außen. Max bestätigt im Spiel (P119).
-- **Kein Spielstand:** Neuladen, Tab schließen oder Menü beendet den Lauf; auch der Pinnwand-Verlauf beginnt neu → **P128** (Speichern am Morgen).
+- **Spielstand (P128) nur am Morgen:** Wer mitten im Tag neu lädt, spielt den Morgen neu; welche Figuren dann kommen, kann abweichen (Tagesplan ist zufällig). Neue Zustände, die über Nacht bleiben (z. B. Vorrat zu Hause, P131), müssen in `SaveGame` aufgenommen werden.
+- **Hilfe-Overlay verdrahtet Objekte anderer Builder:** Nach einem einzelnen Lauf von Build Documents, Build Economy oder Build Rest Spots auch `Build Help Overlay into Main` laufen lassen (Rebuild All macht das).

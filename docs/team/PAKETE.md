@@ -1906,12 +1906,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Beide Aktionen spielen ihren eigenen Laut.
 
 ### P128 — Spielstand am Morgen
-- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 11.11., Agent A) · Zuständig: martin
+- Größe: M · Priorität: Muss · Status: fertig (martin, 11.11.) · Zuständig: martin
 - Braucht: — · Folgt auf: P09, P48, P73
 - Ziel: Ein Lauf (ca. 7–9 Tage, 1,5–2 h) überlebt Neuladen, geschlossenen Tab und den Weg ins Menü (Mechanik-Prüfung 2, martin, 10.11.).
 - Enthalten: Automatisch speichern zu Beginn jedes Tages (Morgen): Tag, Startwert der endlosen Tage, Geld + Tagesbuchungen, Inventar, Schicht-/Asservatenschrank, Familie (Stufen, kritische Nächte, Tote), Disziplinarstrafen, Moral/Schleusen, Ticket, Figuren-Ausgänge und Flags, offene Markt-Ereignisse, Vorrat zu Hause (falls P131 vorher fertig ist; der Pinnwand-Verlauf entfällt mit P130). Im Menü CONTINUE (nur wenn ein Stand da ist) neben START; START fragt vor dem Überschreiben. Speichern in WebGL über `PlayerPrefs` (IndexedDB) als JSON.
 - Nicht enthalten: Speichern/Laden mitten im Tag (DESIGN.md: bewusst nicht), mehrere Spielstände.
 - Abnahme: Neuladen an Tag 4 → CONTINUE startet Tag 4 mit gleichem Geld, Inventar, Familie und Figurenstand; ein Ende löscht den Stand. EditMode-Test: speichern → laden ergibt denselben Zustand. Keine Geldwerte geändert.
+- Ergebnis (martin, 11.11., Agent): Speichert zu Beginn jedes Morgens (`DayManager.BeginDay`, vor `DayStarted`) als JSON in `PlayerPrefs` (`kestrel9.run`, `SaveGame`/`SaveData`/`SaveSlot`): Tag, Startwert, Geld, Inventar, Schrank, Händler-Extras, Familie inkl. Tote, Strafpunkte, Moral, Ticket, Barkeeper-Schmollen, Briefzeilen, Markt-Ereignisse, Stationslage, Figuren-Gedächtnis. Menü: „CONTINUE · DAY n“ nur mit Stand, START über einem Stand fragt „NEW RUN?“. Jedes Ende löscht den Stand. Der geladene Morgen wird neu gespielt (welche Figuren kommen, kann abweichen). `tools/measure-webgl.mjs` klickt nach START „NEW RUN“. 6 Tests. **P131 muss den Vorrat zu Hause mitspeichern.** Nicht angespielt.
 
 ### P129 — Spielmetriken für die Playtests
 - Größe: M · Priorität: Soll · Status: in Arbeit (max, 10.11.) · Zuständig: max
@@ -1924,12 +1925,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Zwischenstand (10.11., Branch `p129-metrics`): Code fertig, ohne Unity geschrieben (Maschine ohne Editor). Geprüft: Backend-Tests 15/15, C# mit .NET 8 gegen Unity-Stubs kompiliert, Logik der EditMode-Tests grün, ein Batch aus dem C#-Code läuft durch den echten Server-Parser, `metrics_report.py` mit Probedaten. Offen: in Unity öffnen, EditMode-Tests, Konsole, nach `main` mergen; auf Geoffrey Ordner anlegen und Backend + Spiel deployen (`DEPLOY.md`, Spielmetriken). Einzige Änderung an fremdem Code: `DayManager.EndingTitle`. Nachtrag: Die Seite (beide WebGL-Vorlagen) schickt beim Öffnen ein `visit` mit Herkunft (`?src=`, Referrer-Host); das Spiel übernimmt dessen Sitzungskennung. Der Report zeigt Besuche, Spieler und Spielzeit je Tag und je Herkunft.
 
 ### P130 — Pinnwand zeigt nur den heutigen Tag
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 11.11., Agent B) · Zuständig: martin
+- Größe: S · Priorität: Soll · Status: fertig (martin, 11.11.) · Zuständig: martin
 - Braucht: — · Folgt auf: P33, P41
 - Ziel: Keine Verwirrung durch übereinanderhängende alte Zettel (#42).
 - Enthalten: Jeden Morgen hängen nur die Zettel des Tages an der Wand und in der Nahansicht. Der Verlauf fällt ganz weg (Entscheidung Max, 10.11.): kein Blättern mit A/D, keine hervorlugenden alten Zettel. `PinBoardNotes` hält nur noch einen Tag; Tests und `MECHANICS.md` anpassen.
 - Nicht enthalten: Inhalt der Zettel, Durchsagen.
 - Abnahme: An Tag 3 hängen nur die Zettel von Tag 3; die Nahansicht hat keine Blätter-Hinweise mehr; EditMode-Tests grün; #42 geschlossen.
+- Ergebnis (martin, 11.11., Agent): `PinBoardNotes` hält nur einen Tag; kein Blättern, keine älteren Zettel an der Wand, Überschrift „PINBOARD · TODAY · <Datum>“. 4 Tests. Nicht angespielt.
 
 ### P131 — Vorrat zu Hause
 - Größe: M · Priorität: Soll · Status: offen · Zuständig: —
@@ -1939,6 +1941,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Nicht enthalten: neue Waren, neue Preise außer der Neuabstimmung.
 - Abnahme: 3 Battery packs heimgeschickt → drei Nächte kein Stromgeld, die vierte wieder; Vorrat sichtbar in der Abrechnung; `EconomyBalanceTests` und neue EditMode-Tests grün; #40 geschlossen.
 - Hinweis: P128 muss den Vorrat mitspeichern.
+- Hinweis (martin, 11.11.): Der Spielstand (P128, `SaveGame`/`SaveData`) kennt den Vorrat noch nicht – mit einbauen und den Test in `SaveGameTests` erweitern.
 
 ### P132 — Kassetten statt Floppy
 - Größe: L · Priorität: Kann · Status: offen · Zuständig: —
@@ -1950,11 +1953,12 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Zwei Kassetten gekauft, eine gefunden; alle drei eingelegt → laufen nacheinander und wiederholen sich; Herausnehmen legt sie zurück ins Inventar; 103 nutzt dasselbe; keine Konsolenfehler; #38 geschlossen.
 
 ### P133 — Durchsage am ersten Morgen
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 11.11., Agent B) · Zuständig: martin
+- Größe: S · Priorität: Soll · Status: fertig (martin, 11.11.) · Zuständig: martin
 - Braucht: — · Folgt auf: P115
 - Ziel: Neue Spieler wissen am ersten Morgen, wohin sie müssen, ohne Pfeile oder Marker (#37).
 - Enthalten: Kurz nach dem Aufwachen an Tag 1 eine Lautsprecher-Durchsage mit Untertitel (wie P115), z. B. „Officer, report to the customs counter. Your shift starts now.“ Text in `Announcements`. Nur Tag 1 (Entscheidung Max, 10.11.: nur die Durchsage, keine Bodenleiste, keine Karte).
 - Abnahme: Neuer Lauf → Durchsage samt Untertitel am ersten Morgen, an Tag 2 nicht mehr; #37 geschlossen.
+- Ergebnis (martin, 11.11., Agent): An Tag 1, 2 s nach dem Schließen des Morgenbriefs: Durchsage mit Murmeln und Untertitel „Officer, report to the customs counter. Your shift starts now.“ (`Announcements.firstMorning`, `firstMorningDelay`), danach der bisherige Hinweis. Nie während des Menüs. 8 Tests. Klang nicht geprüft.
 
 ### P134 — Abendgäste an natürlichen Plätzen
 - Größe: M · Priorität: Soll · Status: offen · Zuständig: —
@@ -2003,9 +2007,11 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Tag 3 mit Bestechung: Geld und Zettel sichtbar und verschiebbar; Stempel bleiben am abgelegten Ort; Stempeln funktioniert weiter; #43 (Teil Tisch) erledigt.
 
 ### P140 — Hilfe auf [H] statt Tastenleiste
-- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 11.11., Agent C) · Zuständig: martin
+- Größe: S · Priorität: Soll · Status: fertig (martin, 11.11.) · Zuständig: martin
 - Braucht: — · Folgt auf: P86
 - Ziel: Die Tastenbeschreibungen verwirren nicht mehr (#43).
 - Enthalten: Statt der Tastenleiste unten nur „[H] Help“. [H] blendet eine ruhige Übersicht der Tasten ein, passend zur Lage (gehen, sitzen am Schalter, Pinnwand, Menü); nochmal [H] oder Esc schließt sie. Gilt für alle Hinweisleisten, die heute Tasten aufzählen (`InteractionPromptUI`, Sitz-HUD).
 - Nicht enthalten: Tutorial-Texte am Schalter (P86 bleibt).
 - Abnahme: Unten steht nur noch „[H] Help“; [H] zeigt im Stehen und am Schalter die passende Übersicht; #43 geschlossen (zusammen mit P139).
+- Ergebnis (martin, 11.11., Agent): Alle Tastenleisten weg, unten nur „[H]  Help“; [H] öffnet „KEYS“ mit den Tasten der Lage (Gehen, Schalter, Lesen, Terminal, Pinnwand, Sitz, Bank abends, Nahansicht, Fernrohr, Flug, Inventar, Handel), [H]/Esc schließt, ohne dass Esc zusätzlich etwas anderes auslöst. Nicht im Menü, nachts, im Ende, unter Dialogen oder Pause. Sitz und Fernrohr fangen die Maus im Browser per Klick wieder ein. Neuer Builder `GameOff/Build Help Overlay into Main` (läuft am Ende von Rebuild All). 19 Tests. Nicht angespielt.
+
