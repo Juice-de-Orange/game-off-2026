@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameOff.Counter
 {
-    /// <summary>P33: one note on the pinboard (bulletin, wanted list, market, memo), kept after its day (PinBoardNotes).</summary>
+    /// <summary>P33: one note on the pinboard (bulletin, wanted list, market, memo) of today (PinBoardNotes).</summary>
     public class PinNote
     {
         public const string Bulletin = "bulletin";

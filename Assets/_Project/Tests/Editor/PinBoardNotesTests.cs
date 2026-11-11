@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GameOff.Tests
 {
-    /// <summary>P33: the pinboard keeps every morning's notes; the close-up leafs through them by age, the board piles them by kind.</summary>
+    /// <summary>P33/P130: the pinboard holds only today's notes; each morning replaces them.</summary>
     public class PinBoardNotesTests
     {
         private static List<PinNote> Morning(string date, bool memo = false)
@@ -21,57 +21,39 @@ namespace GameOff.Tests
         }
 
         [Test]
-        public void EveryMorning_AddsNotes_OldOnesStay()
+        public void EveryMorning_ReplacesYesterdaysNotes_NoHistory()
         {
             var board = new PinBoardNotes();
+            Assert.AreEqual("", board.Day, "nothing before the first morning");
+            Assert.AreEqual(0, board.Notes.Count);
             board.SetDay("2187-03-01", Morning("2187-03-01"));
             board.SetDay("2187-03-02", Morning("2187-03-02", memo: true));
             board.SetDay("2187-03-03", Morning("2187-03-03"));
-            Assert.AreEqual(3, board.DayCount);
-            Assert.AreEqual("2187-03-03", board.DayOf(0), "age 0 = today");
-            Assert.AreEqual("rules 2187-03-03", board.NotesOfDay(0)[0].Body);
-            Assert.AreEqual(3, board.NotesOfDay(1).Count, "yesterday's memo is still there");
-            Assert.AreEqual("rules 2187-03-01", board.NotesOfDay(2)[0].Body);
-            Assert.AreEqual(0, board.NotesOfDay(3).Count, "nothing before the first morning");
-            Assert.AreEqual("", board.DayOf(3));
-            Assert.AreEqual(0, board.NotesOfDay(-1).Count);
+            Assert.AreEqual("2187-03-03", board.Day);
+            Assert.AreEqual(2, board.Notes.Count, "only day 3's notes, yesterday's memo is gone");
+            foreach (var note in board.Notes) Assert.AreEqual("2187-03-03", note.Date);
+            Assert.IsNull(board.Of(PinNote.Memo));
         }
 
         [Test]
-        public void SameMorningTwice_ReplacesIt_InsteadOfAddingADay()
+        public void SameMorningTwice_ReplacesIt()
         {
             var board = new PinBoardNotes();
-            board.SetDay("2187-03-01", Morning("2187-03-01"));
             board.SetDay("2187-03-02", Morning("2187-03-02"));
             board.SetDay("2187-03-02", Morning("2187-03-02", memo: true));
-            Assert.AreEqual(2, board.DayCount);
-            Assert.AreEqual(3, board.NotesOfDay(0).Count);
+            Assert.AreEqual(3, board.Notes.Count);
         }
 
         [Test]
-        public void OldestDays_DropOut_BeyondTheLimit()
-        {
-            var board = new PinBoardNotes(2);
-            board.SetDay("a", Morning("a"));
-            board.SetDay("b", Morning("b"));
-            board.SetDay("c", Morning("c"));
-            Assert.AreEqual(2, board.DayCount);
-            Assert.AreEqual("b", board.DayOf(1));
-        }
-
-        [Test]
-        public void Pile_NewestFirst_SkipsDaysWithoutThatKind()
+        public void Of_FindsTodaysNoteOfAKind_NullWhenMissing()
         {
             var board = new PinBoardNotes();
             board.SetDay("a", Morning("a", memo: true));
             board.SetDay("b", Morning("b"));
-            board.SetDay("c", Morning("c", memo: true));
-            board.SetDay("d", Morning("d"));
-            var memos = board.Pile(PinNote.Memo, 5);
-            Assert.AreEqual(new[] { "c", "a" }, new[] { memos[0].Date, memos[1].Date });
-            var bulletins = board.Pile(PinNote.Bulletin, 3);
-            Assert.AreEqual(new[] { "d", "c", "b" }, new[] { bulletins[0].Date, bulletins[1].Date, bulletins[2].Date });
-            Assert.AreEqual(0, board.Pile(PinNote.Market, 3).Count);
+            Assert.AreEqual("rules b", board.Of(PinNote.Bulletin).Body);
+            Assert.AreEqual("wanted b", board.Of(PinNote.Wanted).Body);
+            Assert.IsNull(board.Of(PinNote.Market));
+            Assert.IsNull(board.Of(PinNote.Memo), "an older day's memo does not hang on");
         }
 
         [Test]

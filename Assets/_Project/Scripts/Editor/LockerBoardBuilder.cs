@@ -209,10 +209,8 @@ namespace GameOff.EditorTools
             var cards = new List<Object>();
             for (int i = 0; i < 4; i++) cards.Add(Card(root.transform, i));
 
-            var older = MenuButton(root.transform, "OlderButton", "< OLDER", new Vector2(-330f, -240f), new Vector2(150f, 30f), 14);
-            var newer = MenuButton(root.transform, "NewerButton", "NEWER >", new Vector2(-170f, -240f), new Vector2(150f, 30f), 14);
             var close = MenuButton(root.transform, "CloseButton", "CLOSE", new Vector2(330f, -240f), new Vector2(150f, 30f), 14);
-            Label(root.transform, "Keys", "[A] [D] leaf through   ·   [E] [ESC] close", 11, TextDim, new Vector2(80f, -240f), new Vector2(300f, 24f));
+            Label(root.transform, "Keys", "[E] [ESC] close", 11, TextDim, new Vector2(80f, -240f), new Vector2(300f, 24f)); // P130: no paging
 
             var closeUp = trigger.AddComponent<PinBoardCloseUp>();
             Set(closeUp, "interactable", interactable);
@@ -220,8 +218,6 @@ namespace GameOff.EditorTools
             Set(closeUp, "heading", heading);
             Set(closeUp, "empty", empty);
             SetArray(closeUp, "cards", cards.ToArray());
-            Set(closeUp, "olderButton", older);
-            Set(closeUp, "newerButton", newer);
             Set(closeUp, "closeButton", close);
             root.SetActive(false);
         }
