@@ -27,3 +27,5 @@ Bitte einmal durchspielen (gern im Live-Build) und hier notieren, was nicht stim
 Alles gilt als fertig; Fehler werden Fixes oder Folge-Pakete.
 
 ## Antwort
+
+**Max, 11.11., Zwischenstand:** Noch nicht angespielt. Max spielt Welle 3 erst live ein (live ist noch `37b758d`) und testet dann dort, auch ob der Spielstand das Schließen des Tabs übersteht. #37 und #42 werden erst danach geschlossen.

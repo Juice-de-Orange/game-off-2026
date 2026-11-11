@@ -28,3 +28,5 @@ Bitte einmal durchspielen und hier kurz notieren, was nicht stimmt:
 Alles gilt als fertig; Fehler, die du findest, werden Folge-Pakete oder Fixes.
 
 ## Antwort
+
+**Max, 11.11., Zwischenstand:** Noch nicht angespielt, die Frage bleibt offen. Der Punkt „A/D blättert ältere Tage“ an der Pinnwand ist mit P130 hinfällig.
