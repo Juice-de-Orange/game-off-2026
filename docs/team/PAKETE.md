@@ -1906,7 +1906,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Beide Aktionen spielen ihren eigenen Laut.
 
 ### P128 — Spielstand am Morgen
-- Größe: M · Priorität: Muss · Status: offen · Zuständig: —
+- Größe: M · Priorität: Muss · Status: in Arbeit (martin, 11.11., Agent A) · Zuständig: martin
 - Braucht: — · Folgt auf: P09, P48, P73
 - Ziel: Ein Lauf (ca. 7–9 Tage, 1,5–2 h) überlebt Neuladen, geschlossenen Tab und den Weg ins Menü (Mechanik-Prüfung 2, martin, 10.11.).
 - Enthalten: Automatisch speichern zu Beginn jedes Tages (Morgen): Tag, Startwert der endlosen Tage, Geld + Tagesbuchungen, Inventar, Schicht-/Asservatenschrank, Familie (Stufen, kritische Nächte, Tote), Disziplinarstrafen, Moral/Schleusen, Ticket, Figuren-Ausgänge und Flags, offene Markt-Ereignisse, Vorrat zu Hause (falls P131 vorher fertig ist; der Pinnwand-Verlauf entfällt mit P130). Im Menü CONTINUE (nur wenn ein Stand da ist) neben START; START fragt vor dem Überschreiben. Speichern in WebGL über `PlayerPrefs` (IndexedDB) als JSON.
@@ -1924,7 +1924,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Zwischenstand (10.11., Branch `p129-metrics`): Code fertig, ohne Unity geschrieben (Maschine ohne Editor). Geprüft: Backend-Tests 15/15, C# mit .NET 8 gegen Unity-Stubs kompiliert, Logik der EditMode-Tests grün, ein Batch aus dem C#-Code läuft durch den echten Server-Parser, `metrics_report.py` mit Probedaten. Offen: in Unity öffnen, EditMode-Tests, Konsole, nach `main` mergen; auf Geoffrey Ordner anlegen und Backend + Spiel deployen (`DEPLOY.md`, Spielmetriken). Einzige Änderung an fremdem Code: `DayManager.EndingTitle`. Nachtrag: Die Seite (beide WebGL-Vorlagen) schickt beim Öffnen ein `visit` mit Herkunft (`?src=`, Referrer-Host); das Spiel übernimmt dessen Sitzungskennung. Der Report zeigt Besuche, Spieler und Spielzeit je Tag und je Herkunft.
 
 ### P130 — Pinnwand zeigt nur den heutigen Tag
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 11.11., Agent B) · Zuständig: martin
 - Braucht: — · Folgt auf: P33, P41
 - Ziel: Keine Verwirrung durch übereinanderhängende alte Zettel (#42).
 - Enthalten: Jeden Morgen hängen nur die Zettel des Tages an der Wand und in der Nahansicht. Der Verlauf fällt ganz weg (Entscheidung Max, 10.11.): kein Blättern mit A/D, keine hervorlugenden alten Zettel. `PinBoardNotes` hält nur noch einen Tag; Tests und `MECHANICS.md` anpassen.
@@ -1950,7 +1950,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Zwei Kassetten gekauft, eine gefunden; alle drei eingelegt → laufen nacheinander und wiederholen sich; Herausnehmen legt sie zurück ins Inventar; 103 nutzt dasselbe; keine Konsolenfehler; #38 geschlossen.
 
 ### P133 — Durchsage am ersten Morgen
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 11.11., Agent B) · Zuständig: martin
 - Braucht: — · Folgt auf: P115
 - Ziel: Neue Spieler wissen am ersten Morgen, wohin sie müssen, ohne Pfeile oder Marker (#37).
 - Enthalten: Kurz nach dem Aufwachen an Tag 1 eine Lautsprecher-Durchsage mit Untertitel (wie P115), z. B. „Officer, report to the customs counter. Your shift starts now.“ Text in `Announcements`. Nur Tag 1 (Entscheidung Max, 10.11.: nur die Durchsage, keine Bodenleiste, keine Karte).
@@ -2003,7 +2003,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Tag 3 mit Bestechung: Geld und Zettel sichtbar und verschiebbar; Stempel bleiben am abgelegten Ort; Stempeln funktioniert weiter; #43 (Teil Tisch) erledigt.
 
 ### P140 — Hilfe auf [H] statt Tastenleiste
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: S · Priorität: Soll · Status: in Arbeit (martin, 11.11., Agent C) · Zuständig: martin
 - Braucht: — · Folgt auf: P86
 - Ziel: Die Tastenbeschreibungen verwirren nicht mehr (#43).
 - Enthalten: Statt der Tastenleiste unten nur „[H] Help“. [H] blendet eine ruhige Übersicht der Tasten ein, passend zur Lage (gehen, sitzen am Schalter, Pinnwand, Menü); nochmal [H] oder Esc schließt sie. Gilt für alle Hinweisleisten, die heute Tasten aufzählen (`InteractionPromptUI`, Sitz-HUD).
