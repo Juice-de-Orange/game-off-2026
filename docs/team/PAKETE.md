@@ -2068,7 +2068,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 12.11., Agent): Clip `A_NPC_Sit` als Humanoid-Loop, Zustand `Sit` in den fünf Reisenden-Controllern. Drei der sechs Plätze sind Sitze: Deckbank Ost, Barhocker 1, Hallenbank C Ostsitz (Bankmitte bleibt für den Spieler). Jede Figur wird einmal vermessen und an die Sitzhöhe angepasst; wer nicht passt, steht; ein besetzter Barhocker ist für den Spieler bis zum Morgen zu. Tests für Plätze und Controller. Im Browser: Gäste sitzen auf Deckbank, Bank C und Hocker 1 ✓; Hocker-Sperre und Ausweichen nicht geprüft; Vellani/Sorvak-Größen nur berechnet.
 
 ### P146 — Release-Vorbereitung
-- Größe: M · Priorität: Muss · Status: offen · Zuständig: —
+- Größe: M · Priorität: Muss · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P19, P49, P57, P114
 - Ziel: Der Build, der am 30.11. eingereicht wird, ist sauber: keine Entwickler-Werkzeuge, keine Fehlermeldungen beim Start, alle Quellen genannt, schnell genug.
 - Enthalten:
@@ -2081,7 +2081,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Release-Build ohne Dev-Zugänge (im Browser geprüft); Start ohne Konsolenmeldungen aus `Assets/_Project`; CREDITS vollständig; Messwerte nicht schlechter als P57; P114 abgenommen; Checkliste steht.
 
 ### P147 — Automatischer Durchspieltest der Wellen 1–3
-- Größe: M · Priorität: Muss · Status: offen · Zuständig: —
+- Größe: M · Priorität: Muss · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P123
 - Ziel: Martins Testlisten (Welle 1, 2, 3) sind abgearbeitet, ohne dass Max alles von Hand spielt.
 - Enthalten: Ein Agent spielt die Punkte aus `questions/2026-11-09_martin-an-max_welle1-testen.md`, `..._welle2-testen.md` und `2026-11-11_martin-an-max_welle3-testen.md` mit `tools/drive-webgl.mjs` im Browser durch (Screenshots, Konsole) und schreibt je Punkt ✓/✗/„braucht Max“ in die `## Antwort` der Fragen. Jeder Fund wird ein eigenes Folgepaket. Punkte, die Gefühl brauchen (reichen 5 Minuten Abend, Lesbarkeit, Kamera angenehm), sammelt er für Max in einer kurzen Liste.
@@ -2089,7 +2089,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Alle drei Fragen haben eine Antwort; Status `beantwortet`, sobald Max die Gefühlspunkte ergänzt hat; jeder ✗ hat ein Paket; P123 kann damit geschlossen werden.
 
 ### P148 — Wachen gehen Runden durch die Station
-- Größe: M · Priorität: Kann · Status: offen · Zuständig: —
+- Größe: M · Priorität: Kann · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: Wachmann-Figur und `AC_NPC_Guard` (Idle, Walk, Grab) aus P104 · Folgt auf: P104
 - Ziel: Die Station wirkt bewacht (DESIGN.md „Kann“: Wachen-NPCs, die durch die Station laufen).
 - Enthalten: Ein bis zwei Wachen gehen tagsüber und abends feste Runden (Halle, Motel-Gang, Hangar-Galerie) auf dem vorhandenen NavMesh, bleiben an Wegpunkten kurz stehen und schauen sich um; nicht während einer Verhaftung (dann ist die P104-Wache dran). Kein Einfluss auf Regeln oder Geld; Spieler kann sie ansprechen ([E] → eine kurze Zeile aus einem kleinen Pool). Keine Wache in Zimmer 103 oder hinter dem Schalter. Kosten gering: Animator-Culling, keine Wache im Bild = kein Update.
@@ -2097,14 +2097,14 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: An zwei Tagen gehen die Wachen ihre Runden ohne Hängenbleiben oder Durch-Wände-Laufen; Sperrstunde und Verhaftung funktionieren unverändert; FPS nicht schlechter als P57.
 
 ### P149 — Pausenmenü während des Heimflugs
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P106, P72
 - Ziel: Esc pausiert auch im Heimflug (heute gehört die Steuerung dort ganz dem Flug, MECHANICS „Lücken“).
 - Enthalten: Esc im Flug öffnet das normale Pausenmenü und hält den Flug an (Zeit, Kamera, Ton); Weiter setzt ihn genau dort fort; Optionen und Hilfe [H] funktionieren. Maussperre im Browser danach zurückholen (P138).
 - Abnahme: Im Flug Esc → Pause, Weiter → Flug läuft weiter, Ende kommt wie vorher; im Browser geprüft; keine Konsolenfehler.
 
 ### P150 — Ende AIRLOCKED für alle erreichbar: die Komplizin
-- Größe: S–M · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: S–M · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P87, P75
 - Ziel: Jeder Spieler bekommt an Tag 6 die Widerstands-Frage, auch wer den Shifter an Tag 3 wie befohlen terminiert hat (Entscheidung Max, 12.11.).
 - Enthalten: Wurde der Shifter an Tag 3 durch die Schleuse geschickt (oder verhaftet), kommt an Tag 6 statt ihm seine Komplizin (neue Figur, Mensch oder andere Spezies, vorhandenes Modell mit Variante, saubere Papiere) und stellt dieselbe JOIN/REFUSE-Frage („Er ist für uns gestorben …“). JOIN → Tag 7 läuft wie beim Shifter (sie enthüllt sich, Sicherheit, Ende AIRLOCKED); REFUSE → Tag 7 Wendung ohne Ende. Texte in `StoryDayContent`/Figuren-Daten, Eintrag in `docs/FIGUREN.md`. Ende-Auswertung (P124) nennt sie.
