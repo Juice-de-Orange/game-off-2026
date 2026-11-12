@@ -2132,3 +2132,10 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ziel: Nach 23 Uhr leuchtet am Kiosk nicht mehr „OPEN“, wenn das Gitter unten ist.
 - Enthalten: Neonschild aus (oder „CLOSED“), solange das Gitter unten ist; morgens wieder an. Gleiches für andere Läden mit Schild prüfen.
 - Abnahme: Abend bis zur Sperrstunde laufen lassen → Schild aus; nächster Morgen an.
+
+### P154 — Leistung zurück auf P57-Niveau
+- Größe: M · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P57, P146
+- Ziel: Das Spiel läuft auf schwächeren Geräten wieder so flüssig wie nach P57.
+- Enthalten: Messung vom 13.11. (Release-Build ccaa2f7, `measure-webgl`, gleiche Maschine wie P57) liegt 24–47 % unter P57: CPU ×4 Menü 16,2 fps (P57: 25,0), Zimmer 33,2 (59,6), Schalter 26,9 (38,4), Pinnwand 23,4 (43,8), Stehen 28,9 (38,2); ohne Bremse Menü/Zimmer/Schalter 112/270/184 (150/353/212). Download 33 MB statt 14,7 MB. Ursachen suchen mit `GameOff/Audit Main Scene` und dem Unity-Profiler (Kandidaten seit P57: Abendgäste und Reisende als Skinned Meshes, Putzroboter, Wachen, Kassettendecks, Verkehr, Licht/Schatten, neue Modelle, Musik ohne Streaming), die größten zwei bis drei beheben, Download prüfen (Musik als Vorbis mit niedrigerer Qualität/Streaming, Texturen).
+- Abnahme: Neue Messung mit `K9_CPU=4`: Schalter und Stehen ≥ 35 fps, Menü ≥ 22 fps; Download ≤ 25 MB oder Begründung; keine sichtbaren Verluste; Ergebnis-Tabelle im Paket.
