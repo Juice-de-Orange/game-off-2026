@@ -46,7 +46,7 @@ namespace GameOff.Shops
 
         private void ApplyDevTools()
         {
-            if (debugView != null) debugView.SetActive(day == null || day.DevTools);
+            if (debugView != null) debugView.SetActive(DayManager.DevToolsOn(day));
         }
 
         private void UpdatePrompt()

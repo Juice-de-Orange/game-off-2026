@@ -41,7 +41,7 @@ namespace GameOff.Day
         [SerializeField] private float eveningClockSeconds = 300f;
         [Tooltip("P109: the curfew lines at 23:00 (shared with the counter's loudspeaker).")]
         [SerializeField] private Announcements announcements;
-        [Tooltip("Master switch for the dev tools (red Dev_end_Day button, visible bed hitbox); players switch them in the options (GameSettings.DevTools). TURN OFF for the jam build.")]
+        [Tooltip("Master switch for the dev tools (red Dev_end_Day button, visible bed hitbox); players switch them in the options (GameSettings.DevTools). The jam build (WebBuild.BuildRelease, P146) has them off anyway.")]
         [SerializeField] private bool showDevTools = true;
         [Tooltip("Translucent box showing the bed trigger (only with showDevTools).")]
         [SerializeField] private GameObject bedDebugView;
@@ -84,6 +84,8 @@ namespace GameOff.Day
         public int Day => _day;
         /// <summary>Dev tools on (Dev_end_Day, visible hitboxes, vendors open during the shift via a dev button).</summary>
         public bool DevTools => showDevTools && GameSettings.DevTools;
+        /// <summary>Dev tools for something that may be without a DayManager (a sandbox scene): on there, never in the jam build (P146).</summary>
+        public static bool DevToolsOn(DayManager day) => GameSettings.DevToolsAllowed && (day == null || day.DevTools);
         /// <summary>Days of this run: the written ones, or no end with the endless loop (P73).</summary>
         public int DayCount => schedule.Endless ? int.MaxValue : schedule.Count;
 

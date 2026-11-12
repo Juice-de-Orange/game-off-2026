@@ -33,6 +33,17 @@ namespace GameOff.Core
         /// <summary>Dev tools start on in the editor and off in a build (P49): visitors of the live version opt in themselves.</summary>
         public static bool DefaultDevTools => Application.isEditor;
 
+        /// <summary>
+        /// P146: false in the build submitted to the jam (WebBuild.BuildRelease compiles it with K9_RELEASE): there DevTools and
+        /// TrafficLineDev stay off whatever was saved, and the options have no DEV tab. The editor and the live version keep them.
+        /// </summary>
+        public static bool DevToolsAllowed =>
+#if K9_RELEASE
+            false;
+#else
+            true;
+#endif
+
         /// <summary>Raised after any value changed (AudioManager re-applies the mixer volumes).</summary>
         public static event Action Changed;
 
@@ -79,10 +90,10 @@ namespace GameOff.Core
             }
         }
 
-        /// <summary>Dev tools switched on in the options (P49). DayManager.DevTools combines it with its inspector switch.</summary>
+        /// <summary>Dev tools switched on in the options (P49). DayManager.DevTools combines it with its inspector switch. Never in the jam build (P146).</summary>
         public static bool DevTools
         {
-            get => PlayerPrefs.GetInt(DevToolsKey, DefaultDevTools ? 1 : 0) == 1;
+            get => DevToolsAllowed && PlayerPrefs.GetInt(DevToolsKey, DefaultDevTools ? 1 : 0) == 1;
             set
             {
                 PlayerPrefs.SetInt(DevToolsKey, value ? 1 : 0);
@@ -93,10 +104,11 @@ namespace GameOff.Core
         /// <summary>
         /// Traffic lane dev tool (P56): lanes as coloured lines + edit panel in Main. Own switch, independent of DevTools.
         /// Not saved: every start of the game begins with it off (Martin, 07.11.); an old saved "on" is ignored and removed.
+        /// Never in the jam build (P146).
         /// </summary>
         public static bool TrafficLineDev
         {
-            get => _trafficLineDev;
+            get => DevToolsAllowed && _trafficLineDev;
             set
             {
                 _trafficLineDev = value;

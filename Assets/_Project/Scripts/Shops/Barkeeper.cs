@@ -48,7 +48,7 @@ namespace GameOff.Shops
 
         private void ApplyDevTools()
         {
-            if (debugView != null) debugView.SetActive(day == null || day.DevTools);
+            if (debugView != null) debugView.SetActive(DayManager.DevToolsOn(day));
         }
 
         // P109: after 23:00 (DayManager.IsCurfew) he still talks and repeats a rumour; only GIVE is closed (see Talk).

@@ -263,7 +263,33 @@ namespace GameOff.Audio
             source.maxDistance = maxDistance;
             source.rolloffMode = AudioRolloffMode.Linear;
             source.PlayOneShot(clip, volume);
-            Destroy(go, clip.length + 0.1f);
+            float seconds = LoadedLength(clip, -1f);
+            if (seconds >= 0f) Destroy(go, seconds + 0.1f);
+            else Instance.StartCoroutine(DestroyWhenLoaded(go, clip));
+        }
+
+        /// <summary>
+        /// P146: a clip's length in seconds, or <paramref name="unknown"/> while it is not loaded (null, still decoding, failed).
+        /// On the Web the browser decodes clips in the background after the scene loaded; AudioClip.length before that logs
+        /// "Trying to get length of sound which is not loaded yet" to the console and gives 0.
+        /// </summary>
+        public static float LoadedLength(AudioClip clip, float unknown = 0f)
+        {
+            if (clip == null || clip.loadState != AudioDataLoadState.Loaded) return unknown;
+            float seconds = clip.length;
+            return float.IsNaN(seconds) || float.IsInfinity(seconds) ? unknown : seconds;
+        }
+
+        /// <summary>Longest a one-shot's object waits for its clip to be decoded before it goes anyway.</summary>
+        private const float MaxDecodeWait = 10f;
+
+        /// <summary>P146: a one-shot whose clip is still decoding keeps its object until the length is known (0 cut it off before).</summary>
+        private static IEnumerator DestroyWhenLoaded(GameObject go, AudioClip clip)
+        {
+            for (float waited = 0f; waited < MaxDecodeWait && go != null && clip != null && LoadedLength(clip, -1f) < 0f
+                 && clip.loadState != AudioDataLoadState.Failed; waited += Time.unscaledDeltaTime)
+                yield return null;
+            if (go != null) Destroy(go, LoadedLength(clip) + 0.1f);
         }
 
         public static void PlayVoice(AudioClip clip)
