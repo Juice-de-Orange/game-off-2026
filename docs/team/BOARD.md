@@ -97,7 +97,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| max | P131–P139: Integration + Rebuild All + Bake | `Scenes/Main.unity`, `Scenes/Boot.unity`, `Prefabs/Economy/PF_Economy.prefab`, `Prefabs/Counter/PF_CounterStation.prefab`, `PF_Station_Graybox.prefab`, `PF_RestSpots.prefab`, SoundSet, `Data/Items/`, `Data/Characters/` | 12.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog

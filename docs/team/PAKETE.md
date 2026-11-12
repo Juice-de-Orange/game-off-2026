@@ -1934,7 +1934,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (martin, 11.11., Agent): `PinBoardNotes` hält nur einen Tag; kein Blättern, keine älteren Zettel an der Wand, Überschrift „PINBOARD · TODAY · <Datum>“. 4 Tests. Nicht angespielt.
 
 ### P131 — Vorrat zu Hause
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P13, P10
 - Ziel: Wer drei Batterien heimschickt, versorgt die Familie drei Nächte lang (#40).
 - Enthalten: Heimgeschicktes kommt in einen Vorrat zu Hause statt nur in die nächste Nacht. Jede Nacht verbraucht je Bedürfnis (Strom, Essen, Medizin) ein passendes Stück; was fehlt, kostet wie heute Geld. Verderbliches Essen verdirbt auch zu Hause (wie `Spoil`). Abrechnung und Morgenbrief zeigen den Vorrat. Geschenke der Figuren und vom Zoll behaltene Ware wie bisher. Danach Economy Report bis alle Ziele ✓ (`EconomySimulator` kennt den Vorrat).
@@ -1942,15 +1942,17 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: 3 Battery packs heimgeschickt → drei Nächte kein Stromgeld, die vierte wieder; Vorrat sichtbar in der Abrechnung; `EconomyBalanceTests` und neue EditMode-Tests grün; #40 geschlossen.
 - Hinweis: P128 muss den Vorrat mitspeichern.
 - Hinweis (martin, 11.11.): Der Spielstand (P128, `SaveGame`/`SaveData`) kennt den Vorrat noch nicht – mit einbauen und den Test in `SaveGameTests` erweitern.
+- Ergebnis (max, 12.11., Agent): Heimgeschicktes kommt in den Vorrat (`HomeDelivery.Covering/Night`); je fälligem Bedarf ein Stück pro Nacht, ein Stück deckt nur einen Bedarf, Medizin nur bei Kranken, Verderbliches verdirbt nachts zu Hause, Dinge ohne Bedarfs-Label bleiben nicht. Abrechnung „AT HOME … · after tonight“, Morgenbrief „Still at home“. Im Spielstand und im Simulator; Economy Report unverändert, alle Ziele ✓. 8 neue Tests (`HomeStockTests`) + 1 Spielstand-Test. Im Browser gesehen: AT-HOME-Zeile; „3 Batterien = 3 Nächte“ nur per Test geprüft.
 
 ### P132 — Kassetten statt Floppy
-- Größe: L · Priorität: Kann · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: L · Priorität: Kann · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P117, P127
 - Ziel: Musik als Sammelgegenstand mit einem einfachen, angenehmen Abspielsystem (#38).
 - Enthalten: Kassetten sind Gegenstände im Inventar. Woher (Entscheidung Max, 10.11.): einige im Kiosk zu kaufen, einige liegen auf der Station, einige schenken Figuren. Kassettenspieler mit **3 sichtbaren Slots** im Schalterraum: [E] → Kassette aus dem Inventar einlegen oder herausnehmen; er spielt die eingelegten nacheinander als Playlist, man sieht die Kassetten stecken. Der Floppy-Player in 103 wird durch dasselbe System ersetzt. Bedienung ohne Untermenüs. Die Floppy-Laute aus P127 werden zu Kassetten-Lauten umbestellt.
 - Assets (bestellen): Kassette (Modell + Label-Varianten), Kassettenspieler mit 3 Slots, Laute Einlegen/Auswerfen/Klick. Musikstücke organisieren Max und Martin selbst (wie bei P61).
 - Nicht enthalten: Musik außerhalb von Schalterraum und 103, Zufallswiedergabe, Lautstärkeregler am Gerät.
 - Abnahme: Zwei Kassetten gekauft, eine gefunden; alle drei eingelegt → laufen nacheinander und wiederholen sich; Herausnehmen legt sie zurück ins Inventar; 103 nutzt dasselbe; keine Konsolenfehler; #38 geschlossen.
+- Ergebnis (max, 12.11., Agent): 5 Kassetten (`CassetteData`, keine Labels): 01 + 05 im Kiosk (6 CR), 03 auf der Hangar-Kiste, 04 auf dem Bar-Tisch, 02 schenkt Tobin (Tag 5, bei Durchlassen). Kassettendeck (`CassetteDeck`, Logik `CassettePlaylist`) im Schalterraum (neuer Tisch Südwestecke) und in 103 statt Floppy/TV: [E] je Slot einlegen/herausnehmen, Playlist mit Wiederholung, Lämpchen + Hebel; Decks und Fundstücke im Spielstand. Songs bestellt (M029), bis dahin `MUS_Floppy_01`. 10 + 2 Tests. Im Browser: Aufheben, Einlegen, Musik (Schleife), Auswerfen ✓; Kiosk, Deck in 103, Lämpchen nicht angesehen.
 
 ### P133 — Durchsage am ersten Morgen
 - Größe: S · Priorität: Soll · Status: fertig (martin, 11.11.) · Zuständig: martin
@@ -1961,50 +1963,56 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (martin, 11.11., Agent): An Tag 1, 2 s nach dem Schließen des Morgenbriefs: Durchsage mit Murmeln und Untertitel „Officer, report to the customs counter. Your shift starts now.“ (`Announcements.firstMorning`, `firstMorningDelay`), danach der bisherige Hinweis. Nie während des Menüs. 8 Tests. Klang nicht geprüft.
 
 ### P134 — Abendgäste an natürlichen Plätzen
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P101, P113
 - Ziel: Die Reisenden am Abend wirken, als hätten sie einen Grund, dort zu sein (#36).
 - Enthalten: Plätze mit Haltung statt freiem Herumstehen: sitzen an Bar und Diner, schauen aus dem Fenster oder Bullauge, stehen vor Kiosk und Schaufenstern, warten am Hangar. Je Platz Blickrichtung und Pose (sitzend/stehend, ggf. vorhandene Idle-Animationen). **Niemand läuft** (Entscheidung Max, 10.11.). Höchstens sechs wie bisher.
 - Assets: Sitz-Pose bzw. Sitz-Idle für die Figuren-Rigs prüfen; fehlt sie, bestellen.
 - Abnahme: An drei Abenden stehen alle Gäste an solchen Plätzen, keiner mitten im Gang oder in einer Wand; FPS nicht schlechter als P57-Werte; #36 geschlossen.
+- Ergebnis (max, 12.11., Agent): Sechs Plätze mit Grund: Bar-Stehtisch A (zwei im Gespräch), Aussichtsdeck, neben der Kiosk-Luke, Anzeigesäule, Hangar an der Energiebarriere; Blickrichtung je Platz, Idle zeitversetzt; Pose-Feld (Sit vorbereitet, Clip `A_NPC_Sit` bestellt, M029). Test prüft Abstand, Boden, keine Wand/Möbel. Nicht angespielt (Abend im Browsertest nicht erreicht).
 
 ### P135 — Asservatenschrank: Türen beim Öffnen
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P32, P04-locker-rework
 - Ziel: Der geöffnete Schrank sieht aus wie der geschlossene (#35).
 - Enthalten: Ursache finden: Beim Öffnen tauscht `EvidenceLockerDisplay` das Stationsmodell gegen ein offenes Modell; vermutlich andere Materialien/Texturen an den Türen und kein Lightmap/keine Light Probes am beweglichen Teil. Gleiche Materialien wie das Rework, Türen und Fächer mit Light Probes beleuchten.
 - Abnahme: Öffnen und Schließen ohne sichtbaren Textur- oder Lichtwechsel (Vergleichs-Screenshot); #35 geschlossen.
+- Ergebnis (max, 12.11., Agent): `LockerMeshSplit` zerlegt `SM_Counter_Locker.fbx` beim Build in Korpus und zwei Türen (gleiche UVs, Material, Lightmap-UVs); offen übernimmt die Lightmap des geschlossenen Modells, Innenteil über Light Probes vor dem Schrank, Extra-Lampe weg. Software-Render-Vergleich offen/zu fast pixelgleich. Kein neues Asset nötig. Im Spiel nicht angesehen.
 
 ### P136 — Morgenschlange läuft durcheinander
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P14, P107
 - Ziel: Die Reisenden stehen morgens in der Reihenfolge, in der sie drankommen, und laufen nicht durcheinander (#41).
 - Enthalten: Nachstellen an Tag 3; prüfen, in welcher Reihenfolge die Schlange entsteht (der Erste erscheint offenbar zuletzt und läuft durch die anderen). Erster in der Schlange = vorderster Platz, ohne Durchlaufen.
 - Abnahme: Drei Morgen beobachtet, niemand läuft durch andere hindurch; #41 geschlossen.
+- Ergebnis (max, 12.11., Agent): Gänsemarsch in Thekenreihenfolge (`ArrivalQueue`), Vorderster zuerst, 1,2 s Abstand; wer bei Schichtbeginn noch nicht ausgestiegen ist, kommt nicht mehr. Simulationstest über alle Pads: niemand überholt, ≥ 1 m Abstand. Im Browser: drei stehen sauber hintereinander; das Hineinlaufen selbst nicht beobachtet.
 
 ### P137 — Putzroboter macht Geräusche
-- Größe: S · Priorität: Kann · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: S · Priorität: Kann · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P26
 - Ziel: Man hört, dass der Roboter den Boden putzt (#39).
 - Enthalten: Lustiger Putz-Loop als 3D-Klang am Roboter (leise, kurze Reichweite), beim Wenden ein kleines Piepen. In den `SoundSet`.
 - Assets (bestellen): `SFX_CleaningBot_Loop`, `SFX_CleaningBot_Turn`.
 - Abnahme: In der Halle hört man den Roboter in der Nähe, weiter weg nicht; #39 geschlossen.
+- Ergebnis (max, 12.11., Agent): Loop als 3D-Quelle am `PatrolBot` (linear 1–6 m), Piepen beim Wenden über `AudioManager.PlayAt` (7 m); `SoundSet.cleaningBotLoop/Turn`. Nicht angehört.
 
 ### P138 — Eigener Mauszeiger und Maus im Browser
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P48
 - Ziel: Ein Mauszeiger im Stil des Spiels und keine typischen Maus-Probleme von Unity im Browser (#34).
 - Enthalten: Zeiger-Grafik (normal + über Klickbarem) für Menüs, Schalter und Fenster. Bekannte WebGL-Probleme durchgehen und mit `tools/drive-webgl.mjs` in Chrome und Firefox prüfen: Maussperre nach Esc/Fokuswechsel zurückholen, Zeiger verschwindet nicht in Menüs, Empfindlichkeit gleich in beiden Browsern, kein Ruck beim ersten Klick.
 - Assets (bestellen): `UI_Cursor_Default`, `UI_Cursor_Hover` (32×32, Hotspot angegeben).
 - Abnahme: Eigener Zeiger in Menü und Schalter; die Punkte oben in Chrome und Firefox ohne Fehler; #34 geschlossen.
+- Ergebnis (max, 12.11., Agent): `GameCursor` (Boot + Main) setzt `UI_Cursor_Default`/`Hover` (Hand über uGUI-Knöpfen und Klickbarem am Schalter); Cursor-Import in `DeliveryIntegrator`. Browser: jeder Linksklick holt die gewünschte Maussperre zurück (jslib `SetPointerLockWanted`), `LookSettle` verwirft die ersten 2 Frames nach Sperrwechsel. Headless Chrome: Pfeil/Hand im Menü, Pause, Abrechnung, Schalter ✓. Firefox und Empfindlichkeit Chrome vs. Firefox nicht geprüft.
 
 ### P139 — Schreibtisch: alles verschiebbar, Stempel frei ablegen
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P38, P66
 - Ziel: Nichts liegt verdeckt auf dem Tisch (#43: das Bestechungsgeld lag unter dem Brief).
 - Enthalten: Bestechungszettel und Geld lassen sich wie die Papiere ziehen und liegen beim Erscheinen nicht unter anderen Dingen. Stempel bleiben dort liegen, wo man sie absetzt (Klick auf freien Tisch), statt zurückzuspringen; sie bleiben auf der Tischfläche.
 - Nicht enthalten: Hilfe-Anzeige (P140).
 - Abnahme: Tag 3 mit Bestechung: Geld und Zettel sichtbar und verschiebbar; Stempel bleiben am abgelegten Ort; Stempeln funktioniert weiter; #43 (Teil Tisch) erledigt.
+- Ergebnis (max, 12.11., Agent): Bestechungszettel und Umschlag liegen lose obenauf und lassen sich ziehen (`DocumentDesk.Lay/AddLoose`, gemeinsamer Stapel, zuletzt Berührtes oben); zählen nicht als Reisepapiere. Stempel: Klick auf freie Tischfläche stellt ihn dort ab (nicht auf Ankunftsplätzen der Papiere), Esc/Aufstehen → zuletzt abgestellter Ort. Hilfe [H] ergänzt. Tests `DeskLayoutTests`, `DeskThingsTests`. Im Browser: Stempel abstellen + stempeln ✓; Bestechungstag nicht erreicht.
 
 ### P140 — Hilfe auf [H] statt Tastenleiste
 - Größe: S · Priorität: Soll · Status: fertig (martin, 11.11.) · Zuständig: martin
