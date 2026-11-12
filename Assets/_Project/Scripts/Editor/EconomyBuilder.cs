@@ -836,7 +836,7 @@ namespace GameOff.EditorTools
 
             BuildCargoCrate(root.transform, data);
 
-            // P101: those let through today stand around after the shift.
+            // P101: those let through today stand around after the shift; P134: at places with a reason, facing it, with a pose.
             var crowdGo = new GameObject("EveningCrowd");
             crowdGo.transform.SetParent(root.transform, false);
             var crowd = crowdGo.AddComponent<EveningCrowd>();
@@ -845,7 +845,7 @@ namespace GameOff.EditorTools
             var crowdSpots = new List<Object>();
             for (int i = 0; i < CrowdSpots.Length; i++)
             {
-                var (position, yaw) = CrowdSpots[i];
+                var (position, yaw, _) = CrowdSpots[i];
                 var spot = new GameObject("CrowdSpot_" + i).transform;
                 spot.SetParent(crowdGo.transform, false);
                 spot.SetPositionAndRotation(position, Quaternion.Euler(0f, yaw, 0f));
@@ -855,6 +855,9 @@ namespace GameOff.EditorTools
             var crowdList = crowdSo.FindProperty("spots");
             crowdList.arraySize = crowdSpots.Count;
             for (int i = 0; i < crowdSpots.Count; i++) crowdList.GetArrayElementAtIndex(i).objectReferenceValue = crowdSpots[i];
+            var crowdPoses = crowdSo.FindProperty("poses");
+            crowdPoses.arraySize = CrowdSpots.Length;
+            for (int i = 0; i < CrowdSpots.Length; i++) crowdPoses.GetArrayElementAtIndex(i).enumValueIndex = (int)CrowdSpots[i].pose;
             crowdSo.ApplyModifiedPropertiesWithoutUndo();
 
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
@@ -1015,15 +1018,26 @@ namespace GameOff.EditorTools
             go.AddComponent<HomeLights>();
         }
 
-        /// <summary>P101: where people stand in the evening: one at the bar, the rest in the hall, checked free of furniture.</summary>
-        private static readonly (Vector3 position, float yaw)[] CrowdSpots =
+        /// <summary>
+        /// P101/P134: where the evening guests stand, filled in this order (the most recently admitted gets the first). Every spot has
+        /// a reason to be there and faces it; nobody stands in a door, a corridor or the way to a trader. Checked against the station's
+        /// colliders by EveningCrowdSpotTests. Sit needs the ordered A_NPC_Sit in the controllers; until then everyone stands.
+        /// </summary>
+        internal static readonly (Vector3 position, float yaw, CrowdPose pose)[] CrowdSpots =
         {
-            (new Vector3(12f, 0f, 2.2f), 200f),
-            (new Vector3(5.6f, 0f, 2.4f), 120f),
-            (new Vector3(-2.2f, 0f, -4.4f), 20f),
-            (new Vector3(4.8f, 0f, -2.2f), 300f),
-            (new Vector3(-5.2f, 0f, 3.6f), 140f),
-            (new Vector3(1.4f, 0f, 2f), 210f),
+            // Bar, west side of standing table A (10.8, 7.1): leaning on it, turned toward the table and the one at spot 3.
+            (new Vector3(9.95f, 0f, 7.0f), 100f, CrowdPose.Stand),
+            // Observation deck (floor y -0.36), at the railing of the north-east glass: looking out at the home planet (north).
+            // Clear of the bench (2.2, 7.6) and the telescope (0, 9.6).
+            (new Vector3(2.2f, -0.36f, 9.3f), 15f, CrowdPose.Stand),
+            // Hall, beside the kiosk hatch against the east wall: looking at the goods, out of the way of whoever trades at the hatch.
+            (new Vector3(7.3f, 0f, -1.6f), 160f, CrowdPose.Stand),
+            // Bar, south side of standing table A: talking with spot 0 across the corner of the table, facing the north window.
+            (new Vector3(10.85f, 0f, 6.25f), 340f, CrowdPose.Stand),
+            // Hall, west face of the departure board (0, 0): reading the departures.
+            (new Vector3(-1.75f, 0f, 0.25f), 90f, CrowdPose.Stand),
+            // Hangar, at the energy barrier between the pads: watching space, waiting for a ship out.
+            (new Vector3(-1.5f, 0f, -37.4f), 180f, CrowdPose.Stand),
         };
 
         private static void BuildVendor(Transform parent, VendorSpot spot, VendorStock stock, TradeWindow trade)

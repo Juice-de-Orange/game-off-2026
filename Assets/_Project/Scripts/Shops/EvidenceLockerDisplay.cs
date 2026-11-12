@@ -9,6 +9,8 @@ namespace GameOff.Shops
     /// P32: the open evidence locker. While open, the station's closed locker model is hidden and an open one (shell, shelves, two
     /// swinging doors) shows what was handed in "as ordered" (Confiscation.Locker): one compartment per item type, its model
     /// (EvidenceLockerLayout.ModelFor) or a sealed evidence bag. Only shows; taking things out is the break-in (P83, EvidenceLocker).
+    /// P135: shell and doors are cut from the closed model and take its baked lightmap, so the swap does not show; the interior and
+    /// the goods are lit by the room's light probes in front of the locker.
     /// </summary>
     public class EvidenceLockerDisplay : MonoBehaviour
     {
@@ -26,6 +28,10 @@ namespace GameOff.Shops
         [SerializeField] private GameObject evidenceBag;
         [Tooltip("Renderers of the station's closed locker model, hidden while the open one is shown.")]
         [SerializeField] private Renderer[] closedRenderers = new Renderer[0];
+        [Tooltip("P135: shell and doors cut from the closed model (same lightmap UVs); they get its baked lightmap while shown.")]
+        [SerializeField] private Renderer[] sameLightAsClosed = new Renderer[0];
+        [Tooltip("P135: the goods take the light probes at this point, in the room in front of the locker.")]
+        [SerializeField] private Transform probeAnchor;
 
         private readonly List<GameObject> _shown = new List<GameObject>();
         private Inventory _locker;
@@ -103,9 +109,25 @@ namespace GameOff.Shops
 
         private void SetShown(bool open)
         {
+            if (open) ShareClosedLightmap();
             if (openRoot != null) openRoot.SetActive(open);
             foreach (var r in closedRenderers)
                 if (r != null) r.enabled = !open;
+        }
+
+        /// <summary>P135: the cut shell and doors use the closed model's lightmap texels, so they look exactly like it.</summary>
+        private void ShareClosedLightmap()
+        {
+            Renderer baked = null;
+            foreach (var r in closedRenderers)
+                if (r != null && r.lightmapIndex >= 0 && r.lightmapIndex < LightmapSettings.lightmaps.Length) { baked = r; break; }
+            if (baked == null) return; // not baked: they keep the light probes
+            foreach (var r in sameLightAsClosed)
+            {
+                if (r == null) continue;
+                r.lightmapIndex = baked.lightmapIndex;
+                r.lightmapScaleOffset = baked.lightmapScaleOffset;
+            }
         }
 
         /// <summary>Lays the goods out again: one compartment per item type, a few copies for a larger count.</summary>
@@ -135,6 +157,8 @@ namespace GameOff.Shops
             go.name = template.name;
             go.SetActive(true);
             foreach (var c in go.GetComponentsInChildren<Collider>()) Destroy(c);
+            if (probeAnchor != null)
+                foreach (var r in go.GetComponentsInChildren<Renderer>()) r.probeAnchor = probeAnchor;
             var t = go.transform;
             t.localPosition = Vector3.zero;
             // A little turn per copy and compartment, so a row of the same thing doesn't look stamped.
