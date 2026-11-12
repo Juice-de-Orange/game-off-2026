@@ -58,7 +58,7 @@ namespace GameOff.Tests
         [Test]
         public void Next_TalkingFiveTimesInARow_NeverRepeats()
         {
-            // The acceptance: five times in a row with the barkeeper, never the same murmur twice in a row (7 fallback sounds, 10 per species).
+            // The acceptance: five times in a row with the barkeeper, never the same murmur twice in a row (10 per species).
             foreach (int count in new[] { 7, 10, 2 })
             {
                 int last = -1;
@@ -99,7 +99,7 @@ namespace GameOff.Tests
         [TestCase("Barkeeper", "Holly")]
         public void Vendors_SoundDifferent_EvenWithTheJitter(string one, string other)
         {
-            // The acceptance: barkeeper and dealer, both at the bar, sound different (same fallback murmurs until P94 is delivered).
+            // The acceptance: barkeeper and dealer, both at the bar, sound different (same fallback sound until P94 is delivered).
             // The names are Vendor.vendorName (EconomyBuilder) and Barkeeper.VoiceName; the range and jitter the SoundSet's defaults.
             var set = Set();
             float a = VoicePicker.SpeakerPitch(one, set.voicePitchMin, set.voicePitchMax);
@@ -138,14 +138,13 @@ namespace GameOff.Tests
         }
 
         [Test]
-        public void FallbackVoices_AreVendorGreetAndThePaMurmurs()
+        public void FallbackVoices_AreOnlyVendorGreet()
         {
             var set = Set();
             Assert.IsEmpty(set.FallbackVoices(), "nothing with a clip");
             set.vendorGreet = Clip("Greet");
-            var murmur = Clip("Murmur");
-            set.paMurmurs = new[] { murmur, new Sound(), null };
-            CollectionAssert.AreEqual(new[] { set.vendorGreet, murmur }, set.FallbackVoices(), "only those with a clip");
+            set.paMurmurs = new[] { Clip("Murmur") }; // filtered like a loudspeaker: never a voice at the counter
+            CollectionAssert.AreEqual(new[] { set.vendorGreet }, set.FallbackVoices());
         }
 
         [Test]
@@ -162,7 +161,7 @@ namespace GameOff.Tests
             }
             CollectionAssert.AreEquivalent(new[] { "Human", "Vellani", "Quobb", "Sorvak", "Xirrik" }, species, "run GameOff/Build Sound Set");
             Assert.Less(set.voicePitchMin, set.voicePitchMax);
-            Assert.IsNotEmpty(set.FallbackVoices(), "vendorGreet and the PA murmurs stand in until P94 is delivered");
+            Assert.IsNotEmpty(set.FallbackVoices(), "vendorGreet stands in until P94 is delivered");
         }
     }
 }

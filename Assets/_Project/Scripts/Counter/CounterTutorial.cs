@@ -68,7 +68,7 @@ namespace GameOff.Counter
         {
             if (traveler != tutorialTraveler) return;
             Close();
-            _progress = new TutorialProgress();
+            _progress = new TutorialProgress(shift.FreeWarnings);
             Refresh();
             panel.SetActive(true);
         }

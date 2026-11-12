@@ -113,7 +113,7 @@ namespace GameOff.EditorTools
                 voices[i] = new SpeciesVoice { species = VoiceSpecies[i], sounds = Variants($"SFX_Voice_{VoiceSpecies[i]}_{{0:00}}", 10, VoiceVolume) };
                 counts.Append(i > 0 ? ", " : "").Append(VoiceSpecies[i]).Append(' ').Append(voices[i].sounds.Length).Append("/10");
             }
-            Debug.Log($"[SoundSet] voices (P94): {counts}; the rest talk with vendorGreet and the PA murmurs");
+            Debug.Log($"[SoundSet] voices (P94): {counts}; the rest talk with vendorGreet at their own pitch");
             return voices;
         }
 

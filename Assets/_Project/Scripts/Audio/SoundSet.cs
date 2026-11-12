@@ -69,7 +69,7 @@ namespace GameOff.Audio
 
         [Header("Voices (P144)")]
         [Tooltip("P94: the murmurs of each species, filled by Build Sound Set from what is delivered. A species without any talks with " +
-                 "vendorGreet and the PA murmurs, each speaker at their own pitch.")]
+                 "vendorGreet, each speaker at their own pitch.")]
         public SpeciesVoice[] voices = new SpeciesVoice[0];
         [Tooltip("Each speaker's own pitch lies between these two (stable per name, so vendors and travelers sound different).")]
         public float voicePitchMin = 0.85f;
@@ -87,14 +87,12 @@ namespace GameOff.Audio
             return null;
         }
 
-        /// <summary>P144: what every species says until its own murmurs are delivered: vendorGreet and the PA murmurs that have a clip.</summary>
+        /// <summary>P144: what every species says until its own murmurs are delivered: vendorGreet, if it has a clip.</summary>
         public Sound[] FallbackVoices()
         {
             var list = new System.Collections.Generic.List<Sound>();
+            // Not the PA murmurs: they are filtered like a loudspeaker and would make the counter sound like an announcement.
             if (vendorGreet != null && vendorGreet.clip != null) list.Add(vendorGreet);
-            if (paMurmurs != null)
-                foreach (var m in paMurmurs)
-                    if (m != null && m.clip != null) list.Add(m);
             return list.ToArray();
         }
     }

@@ -176,8 +176,8 @@ namespace GameOff.Audio
         private readonly Dictionary<Sound[], int> _lastVoice = new Dictionary<Sound[], int>();
 
         /// <summary>
-        /// P144: someone starts to talk (a vendor greets, a traveler's line begins): one murmur of their species (P94; vendorGreet and
-        /// the PA murmurs until those are delivered), at random but never the one this set played last, at the speaker's own pitch
+        /// P144: someone starts to talk (a vendor greets, a traveler's line begins): one murmur of their species (P94; vendorGreet
+        /// until those are delivered), at random but never the one this set played last, at the speaker's own pitch
         /// (stable per name) with a small change each time. 2D on the Voice group; doesn't cut off announcements or PlayVoice lines.
         /// </summary>
         public static void PlaySpeech(string species, string speaker)
@@ -201,6 +201,7 @@ namespace GameOff.Audio
         /// <summary>A silent speech source, else the one used longest ago (its murmur is cut off); made on first use.</summary>
         private AudioSource SpeechSource()
         {
+            _speech.RemoveAll(source => source == null);
             AudioSource pick = null;
             foreach (var source in _speech)
                 if (source != null && !source.isPlaying) { pick = source; break; }

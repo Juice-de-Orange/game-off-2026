@@ -52,10 +52,17 @@ namespace GameOff.Counter
         {
             bool replacing = Showing;
             Stop();
-            if (!replacing) panel.gameObject.SetActive(false);
-            _speaker = speaker;
-            _speaking = StartCoroutine(Speak(line ?? "", alien, speakerName, replacing));
+            if (!replacing)
+            {
+                panel.gameObject.SetActive(false);
+                _speaker = speaker;
+            }
+            // Replacing: the old line keeps following its own speaker while it fades; Speak switches over afterwards.
+            _speaking = StartCoroutine(Speak(line ?? "", alien, speaker, speakerName, replacing));
         }
+
+        /// <summary>True while the bubble is placed beside this speaker.</summary>
+        public bool Follows(Transform speaker) => speaker != null && _speaker == speaker;
 
         /// <summary>Removes the bubble at once, without Finished.</summary>
         public void Hide()
@@ -86,9 +93,10 @@ namespace GameOff.Counter
             if (cursor != null) cursor.gameObject.SetActive(false);
         }
 
-        private IEnumerator Speak(string line, bool alien, string speakerName, bool replacing)
+        private IEnumerator Speak(string line, bool alien, Transform speaker, string speakerName, bool replacing)
         {
             if (replacing) yield return Fade(0f, snapWhenHidden: true); // the line still up makes way first
+            _speaker = speaker;
             SetAlpha(0f);
             text.text = "";
             text.maxVisibleCharacters = AllCharacters;

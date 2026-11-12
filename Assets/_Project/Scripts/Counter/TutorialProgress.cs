@@ -12,8 +12,15 @@ namespace GameOff.Counter
 
         private const string Buttons = "Smugglers and wanted names: ARREST. Quarantine and terminate orders: AIRLOCK.";
 
+        /// <summary>P103: the hint about the cargo drone, without the sums. Since P143 he gives it at the drawer, before the decision.</summary>
+        public const string DroneTip = "Off the record: money sent home gets skimmed on the way, goods on the cargo drone don't.";
+
+        private readonly int _freeWarnings;
         private bool _paperHeld, _fieldAsked, _rulesRead;
         private bool? _lastStampApproved;
+
+        /// <param name="freeWarnings">How many mistakes a day are only warnings (CounterShift.FreeWarnings); told at the stamp.</param>
+        public TutorialProgress(int freeWarnings = 2) => _freeWarnings = freeWarnings;
 
         public void PaperHeld(bool isNote)
         {
@@ -43,8 +50,9 @@ namespace GameOff.Counter
             Step.AskField => "Click a printed field on a paper you hold up to ask me about it.",
             Step.ReadRules => "Now today's rules: [A] looks left, click the notes on the pinboard. " + Buttons,
             Step.Stamp when _lastStampApproved == false => "DENIED? My papers are in order. Stamp again, the last stamp counts.",
-            Step.Stamp => "Names and ID numbers must match, nothing may be expired. All in order? Put the papers down, pick up the green stamp and stamp one.",
-            _ => "Now drag ALL my papers onto the drawer, then click the drawer.",
+            Step.Stamp => "Names and ID numbers must match, nothing may be expired. All in order? Put the papers down, pick up the green stamp and stamp one."
+                         + $" Your first {_freeWarnings} mistakes each day are only warnings.",
+            _ => "Now drag ALL my papers onto the drawer, then click the drawer. " + DroneTip,
         };
     }
 }

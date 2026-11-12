@@ -275,6 +275,8 @@ namespace GameOff.Travelers
                 yield return new WaitForSeconds(door.CloseSeconds); // gone only once nobody can see it
             }
             _routine = null;
+            StopReaction();
+            if (_head != null && bubble.Follows(_head)) bubble.FadeOut(); // a reaction still up must not hang behind the closed door
             HideFigure();
         }
 

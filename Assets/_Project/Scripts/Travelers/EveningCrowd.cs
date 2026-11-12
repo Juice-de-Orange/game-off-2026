@@ -47,6 +47,8 @@ namespace GameOff.Travelers
         private readonly List<TravelerData> _admitted = new List<TravelerData>();
         private readonly List<GameObject> _figures = new List<GameObject>();
         private readonly List<Interactable> _takenSeats = new List<Interactable>();
+        /// <summary>SitSize per traveler model, so a model is measured once per run and one that fits no free spot is never built.</summary>
+        private readonly Dictionary<GameObject, float> _sizes = new Dictionary<GameObject, float>();
 
         private void OnEnable()
         {
@@ -111,9 +113,11 @@ namespace GameOff.Travelers
 
         private GameObject Place(TravelerData traveler, bool[] taken)
         {
+            bool known = _sizes.TryGetValue(traveler.Model, out float size);
+            if (known && PickSpot(poses, seatHeights, taken, size) < 0) return null; // nothing left for this body: don't build it
             var figure = Instantiate(traveler.Model, transform);
             var animator = figure.GetComponent<Animator>();
-            float size = SitSize(animator);
+            if (!known) _sizes[traveler.Model] = size = SitSize(animator);
             int index = PickSpot(poses, seatHeights, taken, size);
             if (index < 0)
             {
