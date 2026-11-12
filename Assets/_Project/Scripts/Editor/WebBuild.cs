@@ -14,23 +14,43 @@ namespace GameOff.EditorTools
     /// -customBuildPath sets the output folder. Web template and hardware statistics apply to this build only and are put back
     /// afterwards, so the settings for the itch.io build (P19) stay as they are. The version becomes "&lt;bundleVersion&gt;+&lt;commit&gt;"
     /// for this build only (Application.version, P78 bug report).
+    /// P146: BuildRelease is the build submitted to the jam: itch template plus the K9_RELEASE define, so it has no dev tools.
     /// </summary>
     public static class WebBuild
     {
         private const string LiveTemplate = "PROJECT:Kestrel9";
         private const string ItchTemplate = "PROJECT:Kestrel9Itch"; // P19: without the imprint footer of the live page; -itch on the command line
         private const string DefaultOutput = "Builds/WebGL";
+        private const string ReleaseOutput = "Builds/itch";
 
-        public static void Build()
+        /// <summary>P146: compiled into the jam build only; GameSettings.DevToolsAllowed is false under it.</summary>
+        public const string ReleaseDefine = "K9_RELEASE";
+
+        /// <summary>The live version (kestrel9; with -itch the itch template), dev tools in the options as before.</summary>
+        public static void Build() => Run(release: false);
+
+        /// <summary>
+        /// P146: the build submitted to the jam: itch template, compiled with K9_RELEASE, so there is no DEV tab, no red dev button,
+        /// no visible hitbox and no TRAFFIC_LINE_DEV. The define is passed to this one build (BuildPlayerOptions.extraScriptingDefines),
+        /// Player Settings get none. Output: -customBuildPath, else Builds/itch.
+        /// </summary>
+        [MenuItem("GameOff/Build Release (itch)")]
+        public static void BuildRelease() => Run(release: true);
+
+        /// <summary>The scripting defines a build gets on top of Player Settings: K9_RELEASE for the jam build, none for the live one.</summary>
+        public static string[] ExtraDefines(bool release) => release ? new[] { ReleaseDefine } : Array.Empty<string>();
+
+        private static void Run(bool release)
         {
             var template = PlayerSettings.WebGL.template;
             bool statistics = HardwareStatistics;
             string version = PlayerSettings.bundleVersion.Split('+')[0]; // a killed build may have left "+<commit>" behind
             BuildResult result;
-            string output = OutputPath();
+            string output = OutputPath(release ? ReleaseOutput : DefaultOutput);
             try
             {
-                PlayerSettings.WebGL.template = System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "-itch") >= 0 ? ItchTemplate : LiveTemplate;
+                bool itch = release || Array.IndexOf(Environment.GetCommandLineArgs(), "-itch") >= 0;
+                PlayerSettings.WebGL.template = itch ? ItchTemplate : LiveTemplate;
                 HardwareStatistics = false; // the site promises not to pass visitor data on
                 string commit = Commit();
                 if (commit != null) PlayerSettings.bundleVersion = version + "+" + commit;
@@ -40,9 +60,10 @@ namespace GameOff.EditorTools
                     locationPathName = output,
                     target = BuildTarget.WebGL,
                     options = BuildOptions.None,
+                    extraScriptingDefines = ExtraDefines(release),
                 });
                 result = report.summary.result;
-                Debug.Log($"[WebBuild] {result} ({PlayerSettings.bundleVersion}): {report.summary.totalSize / (1024 * 1024)} MB in {report.summary.totalTime:mm\\:ss}, {report.summary.totalErrors} errors → {output}");
+                Debug.Log($"[WebBuild] {(release ? "Release " : "")}{result} ({PlayerSettings.bundleVersion}): {report.summary.totalSize / (1024 * 1024)} MB in {report.summary.totalTime:mm\\:ss}, {report.summary.totalErrors} errors → {output}");
             }
             finally
             {
@@ -98,11 +119,11 @@ namespace GameOff.EditorTools
             return sha.Length > 7 ? sha.Substring(0, 7) : sha;
         }
 
-        private static string OutputPath()
+        private static string OutputPath(string fallback)
         {
             var args = Environment.GetCommandLineArgs();
             int index = Array.IndexOf(args, "-customBuildPath");
-            return Path.GetFullPath(index >= 0 && index + 1 < args.Length ? args[index + 1] : DefaultOutput);
+            return Path.GetFullPath(index >= 0 && index + 1 < args.Length ? args[index + 1] : fallback);
         }
     }
 }

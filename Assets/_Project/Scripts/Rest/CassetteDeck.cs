@@ -161,8 +161,9 @@ namespace GameOff.Rest
             {
                 if (source.isPlaying) _played += Time.unscaledDeltaTime;
                 // Over only once it really played to the end: a source that is still decoding, or a suspended
-                // browser audio context, also reports "not playing" and must not skip the tape.
-                else if (_played >= source.clip.length - 0.5f)
+                // browser audio context, also reports "not playing" and must not skip the tape. P146: a song still decoding has
+                // no length yet (asking for it logs to the browser console and gives 0): no end before it is known.
+                else if (_played >= AudioManager.LoadedLength(source.clip, float.PositiveInfinity) - 0.5f)
                 {
                     Playlist.Advance(); // the track is over: the next cassette, or the first one again
                     StartTrack();

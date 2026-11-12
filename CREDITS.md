@@ -9,9 +9,21 @@ Only use assets whose license allows use in a public, open-source game jam entry
 
 | Asset | Type | Author | Source (URL) | License |
 |-------|------|--------|--------------|---------|
-| Liberation Sans (TextMeshPro default font, placeholder) | Font | Red Hat / Liberation Fonts project, shipped with Unity TextMeshPro | https://github.com/liberationfonts/liberation-fonts | SIL OFL 1.1 |
-| Share Tech Mono (fallback for missing characters) | Font | Carrois Type Design, Ralph du Carrois | https://fonts.google.com/specimen/Share+Tech+Mono | SIL OFL 1.1 (license file next to the font: `Assets/_Project/Fonts/ShareTechMono-OFL.txt`) |
-| Orbitron (all game text) | Font | Matt McInerney / The Orbitron Project Authors | https://fonts.google.com/specimen/Orbitron | SIL OFL 1.1 (license file next to the font: `Assets/_Project/Fonts/Orbitron-OFL.txt`) |
+| Liberation Sans (fallback for missing characters) | Font | Red Hat / Liberation Fonts project, shipped with Unity TextMeshPro | https://github.com/liberationfonts/liberation-fonts | SIL OFL 1.1 (license file next to the font: `Assets/TextMesh Pro/Fonts/LiberationSans - OFL.txt`) |
+| Share Tech Mono (terminals, notes, help) | Font | Carrois Type Design, Ralph du Carrois | https://fonts.google.com/specimen/Share+Tech+Mono | SIL OFL 1.1 (license file next to the font: `Assets/_Project/Fonts/ShareTechMono-OFL.txt`) |
+| Orbitron (titles, menus, documents) | Font | Matt McInerney / The Orbitron Project Authors | https://fonts.google.com/specimen/Orbitron | SIL OFL 1.1 (license file next to the font: `Assets/_Project/Fonts/Orbitron-OFL.txt`) |
+
+Checked for the release (P146, 12.11.): these three fonts are the only third-party files in the build.
+- **Music and sound effects** (`Assets/_Project/Audio/`, every file as of 12.11.): synthesised by our asset pipeline with its own code, no
+  samples and no recordings (see the `assets(...)` delivery commits). Our own work, no row needed. The Freesound loop from P67
+  (Jovica, CC BY 4.0) was replaced on 06.11. and is no longer in the project.
+- **Models, textures, UI graphics, animations** (`Assets/_Project/Art/`): made by our AI-assisted asset pipeline, no third-party files.
+  `Assets/ThirdParty/` is empty. The TextMeshPro emoji sprites were removed in P57.
+- **Voice:** no voice recordings in the game.
+- **Engine and packages:** Unity 6 and Unity's own packages (URP, TextMeshPro/uGUI, Input System, AI Navigation, Cinemachine,
+  ProBuilder, Timeline) under Unity's licenses; the in-game credits end with "Made with Unity".
+
+A new third-party asset gets a row in the table, then `GameOff/Build Menu Scenes` (or Rebuild All) puts it into the in-game credits.
 
 ## Useful sources
 

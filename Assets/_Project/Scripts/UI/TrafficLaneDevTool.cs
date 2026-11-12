@@ -83,7 +83,7 @@ namespace GameOff.UI
         private void Awake()
         {
             _toggleMouse = new InputAction("TrafficDevMouse", InputActionType.Button, "<Keyboard>/tab");
-            if (traffic == null || traffic.Tuning == null) enabled = false;
+            if (traffic == null || traffic.Tuning == null || !GameSettings.DevToolsAllowed) enabled = false; // P146: not in the jam build
             // The panel (about 130 objects) is built the first time the tool is switched on: most players never do.
         }
 

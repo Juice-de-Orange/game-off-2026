@@ -240,7 +240,7 @@ namespace GameOff.EditorTools
             keys.alignment = TextAlignmentOptions.TopLeft;
             var resetControls = MenuButton(controls, "ResetButton", "RESET TO DEFAULTS", new Vector2(0f, ResetY), new Vector2(280f, 40f), 18);
 
-            // DEV (P49): remove this tab for the jam submission (BOARD backlog)
+            // DEV (P49): stays built; the jam build hides it at runtime (OptionsPanel.HideDevTab, P146)
             var dev = pages[2].transform;
             var devTools = ToggleRow(dev, "DevTools", "DEV TOOLS", new Vector2(0f, RowTop), out var devToolsValue);
             var trafficLines = ToggleRow(dev, "TrafficLineDev", "TRAFFIC_LINE_DEV", new Vector2(0f, RowTop - RowStep), out var trafficLinesValue);

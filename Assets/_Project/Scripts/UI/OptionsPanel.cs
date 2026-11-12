@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GameOff.Audio;
 using GameOff.Core;
 using GameOff.Economy;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 namespace GameOff.UI
 {
     /// <summary>
-    /// Options in tabs (P43, follows P02): AUDIO, CONTROLS, DEV (P49). Every change applies at once and is saved in GameSettings;
+    /// Options in tabs (P43, follows P02): AUDIO, CONTROLS, DEV (P49; hidden in the jam build, P146). Every change applies at once and is saved in GameSettings;
     /// AUDIO and CONTROLS have their own "Reset to defaults". The same panel is used in the main menu and the pause menu.
     /// Fullscreen is not here but a corner button in both menus (FullscreenButton).
     /// AUDIO has one slider per GameMixer channel (P18); releasing a slider plays a short preview tone on that channel.
@@ -52,6 +53,7 @@ namespace GameOff.UI
 
         private void Awake()
         {
+            if (!GameSettings.DevToolsAllowed) HideDevTab(); // P146: the jam build has no DEV tab
             for (int i = 0; i < tabButtons.Length; i++)
             {
                 int index = i;
@@ -73,7 +75,7 @@ namespace GameOff.UI
             sensitivity.maxValue = GameSettings.MaxSensitivity;
             sensitivity.onValueChanged.AddListener(v => { GameSettings.MouseSensitivity = v; Refresh(); });
             invertY.onClick.AddListener(() => { GameSettings.InvertY = !GameSettings.InvertY; Refresh(); });
-            // The DEV tab goes away for the jam submission (BOARD backlog), so it may be missing
+            // The DEV tab may be missing (HideDevTab in the jam build only hides it)
             if (devTools != null) devTools.onClick.AddListener(() => { GameSettings.DevTools = !GameSettings.DevTools; Refresh(); });
             if (trafficLines != null) trafficLines.onClick.AddListener(() => { GameSettings.TrafficLineDev = !GameSettings.TrafficLineDev; Refresh(); });
             if (creditsPlus != null) creditsPlus.onClick.AddListener(() => ChangeCredits(100));
@@ -148,10 +150,42 @@ namespace GameOff.UI
             }
         }
 
+        /// <summary>
+        /// P146: takes the DEV tab out (the page holding the dev switches, and its tab button) and centres the other tabs again
+        /// at the same spacing. Called in Awake of the jam build; public for the tests.
+        /// </summary>
+        public void HideDevTab()
+        {
+            int dev = -1;
+            for (int i = 0; i < pages.Length && i < tabButtons.Length; i++)
+                if (devTools != null && pages[i] != null && devTools.transform.IsChildOf(pages[i].transform)) dev = i;
+            if (dev < 0) return;
+            pages[dev].SetActive(false);
+            tabButtons[dev].gameObject.SetActive(false);
+
+            var tabs = new List<Button>(tabButtons);
+            var kept = new List<GameObject>(pages);
+            tabs.RemoveAt(dev);
+            kept.RemoveAt(dev);
+            // The builder puts the tabs in a centred row at equal steps: the same row, one tab shorter
+            var first = (RectTransform)tabButtons[0].transform;
+            var last = (RectTransform)tabButtons[tabButtons.Length - 1].transform;
+            float centre = (first.anchoredPosition.x + last.anchoredPosition.x) / 2f;
+            float step = tabButtons.Length > 1 ? (last.anchoredPosition.x - first.anchoredPosition.x) / (tabButtons.Length - 1) : 0f;
+            for (int i = 0; i < tabs.Count; i++)
+            {
+                var rect = (RectTransform)tabs[i].transform;
+                rect.anchoredPosition = new Vector2(centre + (i - (tabs.Count - 1) / 2f) * step, rect.anchoredPosition.y);
+            }
+            tabButtons = tabs.ToArray();
+            pages = kept.ToArray();
+            _tab = Mathf.Min(_tab, pages.Length - 1);
+        }
+
         private void ChangeCredits(int amount)
         {
             var economy = PlayerEconomy.Instance;
-            if (economy == null) return;
+            if (economy == null || !GameSettings.DevToolsAllowed) return;
             if (amount > 0) economy.Wallet.Add(amount, "Dev · +" + amount);
             else economy.Wallet.Charge(-amount, "Dev · " + amount);
             Refresh();

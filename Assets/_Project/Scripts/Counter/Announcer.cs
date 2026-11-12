@@ -89,7 +89,7 @@ namespace GameOff.Counter
                 if (speakerLamp != null) speakerLamp.SetActive(true);
                 if (clip != null) AudioManager.PlayVoice(clip);
                 else AudioManager.PlayAnnouncement(); // P115: no recorded lines, a murmur under the subtitle
-                float left = Mathf.Max(lines.secondsPerLine, clip != null ? clip.length : 0f);
+                float left = Mathf.Max(lines.secondsPerLine, AudioManager.LoadedLength(clip)); // P146: no length query while decoding
                 while (left > 0f)
                 {
                     if (station.IsSeated && Time.timeScale > 0f) left -= Time.unscaledDeltaTime;

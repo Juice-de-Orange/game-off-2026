@@ -37,7 +37,7 @@ namespace GameOff.Economy
         /// </summary>
         public Inventory ShiftItems { get; private set; }
         public event System.Action<Inventory> ShiftClosing;
-        public bool DevTools => dayManager == null || dayManager.DevTools;
+        public bool DevTools => DayManager.DevToolsOn(dayManager);
         public EconomyTuning Tuning => tuning;
         public HouseholdTuning HouseholdTuning => household;
         public Household Household { get; private set; }
@@ -205,7 +205,7 @@ namespace GameOff.Economy
             var cold = new List<bool>();
             if (household != null) foreach (var m in household.members) cold.Add(m.feelsCold);
             Household = new Household(cold, household != null ? household.criticalNightsToDeath : 0);
-            if (dayManager == null || dayManager.DevTools)
+            if (DevTools)
                 foreach (var item in devStartItems) Inventory.Add(item);
         }
 

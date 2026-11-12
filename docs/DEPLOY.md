@@ -21,7 +21,7 @@ Schlägt ein Lauf fehl, bleibt die letzte Version online, und GitHub schickt ein
 ## Dateien
 | Wo | Was |
 |---|---|
-| `Scripts/Editor/WebBuild.cs` | Build-Einstieg; setzt Vorlage, Statistik und Version (`0.1.0+<commit>`, für den Bugreport-Knopf P78) nur für diesen Build |
+| `Scripts/Editor/WebBuild.cs` | Build-Einstieg; setzt Vorlage, Statistik und Version (`0.1.0+<commit>`, für den Bugreport-Knopf P78) nur für diesen Build. `Build` = Live-Version, `BuildRelease` = Abgabe (P146, unten) |
 | `Assets/WebGLTemplates/Kestrel9/` | Webseite um das Spiel (Vollfenster, Ladebalken, Impressum und Datenschutz); für Suchmaschinen freigegeben: Beschreibung, Vorschaubild `og.jpg`, `robots.txt`, `sitemap.xml`, strukturierte Daten (VideoGame). Spielseite mit Text: `maxlworks.com/games/kestrel-9/` (Repo `maxlworks-website`) |
 | `deploy/Dockerfile`, `deploy/nginx.conf` | Container: nginx ohne Root-Rechte, ohne Access-Log, mit `version.txt` |
 | `deploy/server/` | Vorlagen für Geoffrey: `deploy.sh`, `compose.yml`, `nginx-site.conf` |
@@ -108,8 +108,11 @@ nichts im Browser gespeichert, Neuladen = neue Sitzung, keine IP. Spieler sind d
 verweisenden Seite (Reddit schickt meist nur `www.reddit.com`, die Reddit-App oft gar nichts).
 
 ## Dev-Werkzeuge
-Im Build standardmäßig aus, Besucher schalten sie unter Options → DEV ein. **Vor der Abgabe:** Reiter im `MenuSceneBuilder` entfernen und
-`showDevTools` am `DayManager` ausschalten (Board-Backlog).
+Im Live-Build standardmäßig aus, Besucher schalten sie unter Options → DEV ein. Der Abgabe-Build (`WebBuild.BuildRelease`, P146) wird mit
+`K9_RELEASE` kompiliert (nur dieser Build, Player Settings bleiben ohne Define): `GameSettings.DevToolsAllowed` ist dort `false`, damit fehlen
+der DEV-Reiter (samt TRAFFIC_LINE_DEV und CREDITS ±100), die roten `Dev_…`-Knöpfe, die sichtbaren Hitboxen, Dev-Startgegenstände und Dev-Figuren.
+Szene und Prefabs bleiben gleich, nichts muss vor der Abgabe umgebaut werden. Neue Dev-Werkzeuge laufen über `GameSettings.DevTools`,
+`DayManager.DevTools` oder `DayManager.DevToolsOn(day)`, sonst landen sie im Abgabe-Build.
 
 ## Fehlersuche und Rollback (auf Geoffrey)
 - Stand: `curl -s http://127.0.0.1:18092/version.txt`, `docker ps --filter name=kestrel9`, `docker logs kestrel9-web`
@@ -134,6 +137,27 @@ gespeichert; jede Sitzung erhält eine zufällige Kennung, die nur bis zum Schli
 
 ## itch.io (P19, Abgabe)
 Upload braucht Max' itch-Login (`butler login` einmalig), deshalb nicht automatisch.
-1. Build: `Unity.exe -batchmode -nographics -buildTarget WebGL -projectPath . -executeMethod GameOff.EditorTools.WebBuild.Build -customBuildPath Builds/itch -itch -quit`. Die Vorlage `Kestrel9Itch` hat keine Impressum-Fußzeile (nur für die Live-Seite) und fängt abgelehnte Maussperren genauso ab.
+1. Build: `Unity.exe -batchmode -nographics -buildTarget WebGL -projectPath . -executeMethod GameOff.EditorTools.WebBuild.BuildRelease -customBuildPath Builds/itch -quit` (oder Menü GameOff → Build Release (itch)). Release = Vorlage `Kestrel9Itch` + `K9_RELEASE` (ohne Dev-Werkzeuge); `WebBuild.Build -itch` baut dieselbe Vorlage mit Dev-Werkzeugen, nur zum Testen. Die Vorlage `Kestrel9Itch` hat keine Impressum-Fußzeile (nur für die Live-Seite) und fängt abgelehnte Maussperren genauso ab.
 2. `butler push Builds/itch <user>/<spiel>:html5`, oder den Ordner gezippt auf der itch-Seite hochladen. **Nicht mit PowerShell `Compress-Archive` packen:** Das schreibt `\` in die Pfade, auf itch fehlt dann `Build/` (404, „the download failed“). Python `zipfile` mit `/` funktioniert.
 3. itch-Seite: „This file will be played in the browser“, Viewport 1280×720, Fullscreen-Button an. In Chrome und Firefox prüfen.
+
+## Checkliste Abgabetag (P146)
+Team reicht am **30.11.** ein; harte Frist **01.12., 13:37 PST = 22:37 MEZ**. Upload und Einreichung selbst: P19.
+1. **Stand:** `git pull`, BOARD ohne offene Claims, EditMode-Tests grün, `GameOff/Validate Travelers` und `GameOff/Economy Report` ✓.
+2. **Release-Build:** Unity zu, dann
+   `Unity.exe -batchmode -nographics -buildTarget WebGL -projectPath . -executeMethod GameOff.EditorTools.WebBuild.BuildRelease -customBuildPath Builds/itch -quit -logFile -`.
+   Log endet mit `[WebBuild] Release Succeeded`. Danach Unitys Seiteneffekt-Dateien zurücksetzen (Abschnitt „Lokal bauen“).
+3. **Decompression Fallback:** Player Settings → Publishing Settings an (`webGLDecompressionFallback: 1` in `ProjectSettings.asset`), sonst lädt itch den Build nicht.
+4. **Lokal prüfen** (`python -m http.server` im Build-Ordner, Chrome **und Firefox**): lädt, Ton nach dem ersten Klick; Optionen ohne DEV-Reiter;
+   kein roter `Dev_…`-Knopf (Bett während der Schicht, Kiosk tagsüber); keine Hitbox-Kästen; Konsole beim Start ohne Meldungen aus unserem Code.
+5. **ZIP mit Vorwärts-Schrägstrichen** (nie `Compress-Archive`), `index.html` muss oben im ZIP liegen:
+   `python -c "import pathlib,sys,zipfile; r=pathlib.Path(sys.argv[1]); z=zipfile.ZipFile(sys.argv[2],'w',zipfile.ZIP_DEFLATED); [z.write(p,p.relative_to(r).as_posix()) for p in sorted(r.rglob('*')) if p.is_file()]; z.close()" Builds/itch Builds/kestrel9-itch.zip`,
+   prüfen mit `python -m zipfile -l Builds/kestrel9-itch.zip` (`Build/…`, nicht `Build\…`).
+6. **itch-Seite:** ZIP hochladen (oder `butler push`), „played in the browser“, Viewport (hier 1280×720, der Entwurf stand laut BOARD auf 960×540: einmal festlegen),
+   Fullscreen-Button an; Titelbild, Screenshots, Beschreibung, Genre und Tags; KI-Kennzeichnung (auch Musik und Laute sind von der KI-Pipeline per Code erzeugt);
+   Credits bzw. Link auf `CREDITS.md` (Schriften unter OFL); Hinweis auf Bugreport und anonyme Spielstatistik (P129, laufen auch im itch-Build);
+   auf der fertigen Seite noch einmal in Chrome und Firefox spielen. Sichtbarkeit erst auf öffentlich, wenn Max es freigibt.
+7. **Repo öffentlich** (heute privat, Pflicht vor 01.12., 22:37 MEZ): vorher prüfen, dass keine Secrets im Verlauf liegen; GitHub → Settings → Change visibility → Public.
+   Bugreport-Issues werden damit ebenfalls öffentlich.
+8. **Jam-Einreichung** auf der Game-Off-Seite bei itch.io: Projekt auswählen, Repo-Link angeben, abschicken; danach die Einreichung in der Jam-Liste ansehen.
+9. Die Live-Version auf kestrel9 bleibt der normale Build (`WebBuild.Build`, Dev-Werkzeuge als Schalter).
