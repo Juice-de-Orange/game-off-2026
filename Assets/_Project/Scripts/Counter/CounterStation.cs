@@ -13,7 +13,9 @@ namespace GameOff.Counter
     /// <summary>
     /// The officer's workplace. E on the seat → camera blends to the desk view and the mouse is free;
     /// clicks on CounterClickables (buttons) raise ActionTriggered; stamps are picked up, moved with the mouse and pressed
-    /// onto a StampTarget, which raises ActionTriggered too. Q / Esc / right click puts a held stamp back, or else leaves.
+    /// onto a StampTarget, which raises ActionTriggered too. P139: a click on the bare desk sets a held stamp down there.
+    /// Q / Esc / right click puts a held stamp back (where it was last set down), or else leaves.
+    /// P138: tells the GameCursor when the mouse is over something a click would use.
     /// Document logic (P06/P07) listens to ActionTriggered and IsSeated.
     /// </summary>
     public class CounterStation : MonoBehaviour
@@ -44,6 +46,7 @@ namespace GameOff.Counter
         private bool _seated;
         private int _seatedFrame = -1;
         private StampTool _held;
+        private StampTool[] _stamps;
         private Coroutine _returnControl;
         private readonly RaycastHit[] _hits = new RaycastHit[16];
         private Coroutine _noticeRoutine;
@@ -77,6 +80,7 @@ namespace GameOff.Counter
         {
             deskCamera.Priority = idlePriority;
             if (seatedHud != null) seatedHud.SetActive(false);
+            _stamps = GetComponentsInChildren<StampTool>(true);
         }
 
         private void OnEnable() => seat.OnInteract.AddListener(Sit);
@@ -126,6 +130,7 @@ namespace GameOff.Counter
             deskCamera.Priority = seatedPriority;
             seat.SetInteractionEnabled(false);
             SetHud(true);
+            SetStampsSharp(true);
             leaveAction.action.Enable();
             clickAction.action.Enable();
             pointAction.action.Enable();
@@ -137,6 +142,7 @@ namespace GameOff.Counter
             if (!_seated) return;
             _seated = false;
             PutBackHeld();
+            SetStampsSharp(false);
             leaveAction.action.Disable();
             clickAction.action.Disable();
             pointAction.action.Disable();
@@ -166,6 +172,8 @@ namespace GameOff.Counter
         private void Update()
         {
             if (!_seated || Time.frameCount == _seatedFrame || InputBlocked) return;
+            var screenPos = pointAction.action.ReadValue<Vector2>();
+            MarkHover(screenPos);
             if (_held != null && _held.IsPressing) return; // a started press always finishes and counts
 
             if (leaveAction.action.WasPressedThisFrame())
@@ -182,7 +190,6 @@ namespace GameOff.Counter
                 return;
             }
 
-            var screenPos = pointAction.action.ReadValue<Vector2>();
             bool clicked = clickAction.action.WasPressedThisFrame();
             if (_held != null)
             {
@@ -221,9 +228,45 @@ namespace GameOff.Counter
             var target = hasHit ? hit.collider.GetComponentInParent<StampTarget>() : null;
             if (target != null)
                 _held.StampOn(target, hit.point, hit.normal, transform.right, OnStamped); // page top on the desk, wherever the officer looks (SeatedLook)
-            else
-                PutBackHeld(); // clicking next to a document puts the stamp down again
+            else if (!hasHit || !SetDownHeld(hit))
+                PutBackHeld(); // a click on something else puts the stamp back where it last stood
         }
+
+        /// <summary>P139: a click on the bare desk sets the held stamp down there; it stays until it is picked up again.</summary>
+        private bool SetDownHeld(RaycastHit hit)
+        {
+            if (documents == null || hit.collider.GetComponentInParent<CounterClickable>() != null
+                || hit.collider.GetComponentInParent<StampTool>() != null) return false;
+            if (!documents.StampSpot(hit, _held.DeskTolerance, out var spot)) return false;
+            _held.SetDown(spot);
+            _held = null;
+            return true;
+        }
+
+        /// <summary>P139: stamps are drawn with the papers while seated, so a paper under a stamp never shows over it.</summary>
+        private void SetStampsSharp(bool sharp)
+        {
+            if (_stamps == null) return;
+            foreach (var stamp in _stamps)
+                if (stamp != null) stamp.ShowSharp(sharp);
+        }
+
+        /// <summary>P138: the hand pointer over what a click would use: a stamp target with a stamp in hand, else stamps, buttons and the papers.</summary>
+        private void MarkHover(Vector2 screenPos)
+        {
+            bool hover;
+            if (_held != null)
+                hover = !_held.IsPressing && RaycastPointer(screenPos, out var aim) && aim.collider.GetComponentInParent<StampTarget>() != null;
+            else if (documents != null && (documents.IsMovingPaper || documents.PointerOnField))
+                hover = true;
+            else
+                hover = RaycastPointer(screenPos, out var under) && Clickable(under.collider);
+            if (hover) GameOff.UI.GameCursor.MarkHover();
+        }
+
+        private bool Clickable(Collider collider) =>
+            collider.GetComponentInParent<StampTool>() != null || collider.GetComponentInParent<CounterClickable>() != null
+            || (documents != null && documents.IsClickable(collider));
 
         private void OnStamped(CounterAction action)
         {

@@ -96,11 +96,16 @@ namespace GameOff.Player
 
         private void Update()
         {
-            if (_controlEnabled && !IsCursorCaptured() && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+            // P138: the browser's lock is the truth. Unity keeps saying "Locked" after Esc, a tab switch or a refused request,
+            // so without asking the browser the next click would not catch the mouse and moving it would turn the camera.
+            if (_controlEnabled && !PointerLockBridge.IsLocked && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+            {
                 SetCursorCaptured(true);
+                PointerLockBridge.Request(); // in the click's frame the browser still counts it as the user's action
+            }
 
-            bool canLook = _controlEnabled && IsCursorCaptured();
-            if (canLook) Look(lookAction.action.ReadValue<Vector2>());
+            bool canLook = _controlEnabled && PointerLockBridge.IsLocked;
+            if (canLook) Look(PointerLockBridge.LookDelta(lookAction.action.ReadValue<Vector2>())); // no jerk right after catching the mouse
             Move(_controlEnabled ? moveAction.action.ReadValue<Vector2>() : Vector2.zero);
         }
 
@@ -150,8 +155,6 @@ namespace GameOff.Player
             _controller.enabled = true;
             _verticalVelocity = 0f;
         }
-
-        private static bool IsCursorCaptured() => Cursor.lockState == CursorLockMode.Locked;
 
         private static void SetCursorCaptured(bool captured)
         {

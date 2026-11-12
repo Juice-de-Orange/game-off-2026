@@ -13,5 +13,21 @@ mergeInto(LibraryManager.library, {
     if (!canvas || document.pointerLockElement === canvas || !canvas.requestPointerLock) return;
     var result = canvas.requestPointerLock();
     if (result && result.catch) result.catch(function () {}); // refused (no recent user action): the next click locks
+  },
+
+  // P138: the game wants the mouse captured (walking, seat, telescope, flight) or not (menus, counter). While it does, every
+  // mouse press on the canvas asks for the lock inside the press itself: the one moment every browser accepts as the user's
+  // action. So after Esc, a tab switch or a refused request the next click always catches the mouse again.
+  GameOff_SetPointerLockWanted: function (wanted) {
+    var canvas = Module['canvas'];
+    if (!canvas) return;
+    Module.gameOffLockWanted = wanted !== 0;
+    if (Module.gameOffLockListener) return;
+    Module.gameOffLockListener = function (event) {
+      if (!Module.gameOffLockWanted || event.button !== 0 || document.pointerLockElement === canvas || !canvas.requestPointerLock) return;
+      var result = canvas.requestPointerLock();
+      if (result && result.catch) result.catch(function () {}); // e.g. Chrome right after Esc: the click after the next one locks
+    };
+    canvas.addEventListener('mousedown', Module.gameOffLockListener);
   }
 });

@@ -37,6 +37,7 @@ namespace GameOff.EditorTools
             var report = new List<string>();
             ConfigureWorldTextures(report);
             ConfigureUiTextures(report);
+            ConfigureCursorTextures(report);
             ConfigureTerminalSprites(report);
             var textures = IndexTextures();
             foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { ModelRoot }))
@@ -67,7 +68,7 @@ namespace GameOff.EditorTools
             foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { UiRoot }))
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
-                if (path.StartsWith(IconFolder + "/") || path.StartsWith(TerminalStyle.Folder)) continue;
+                if (path.StartsWith(IconFolder + "/") || path.StartsWith(TerminalStyle.Folder) || path.StartsWith(CursorPrefix)) continue;
                 if (!(AssetImporter.GetAtPath(path) is TextureImporter ti)) continue;
                 if (ti.textureType == TextureImporterType.Sprite && ti.filterMode == FilterMode.Bilinear && !ti.mipmapEnabled
                     && ti.npotScale == TextureImporterNPOTScale.None) continue;
@@ -79,6 +80,33 @@ namespace GameOff.EditorTools
                 ti.alphaIsTransparency = true;
                 ti.SaveAndReimport();
                 report.Add("ui       " + path);
+            }
+        }
+
+        private const string CursorPrefix = UiRoot + "/UI_Cursor_"; // P138: mouse pointers, not sprites
+
+        /// <summary>
+        /// P138: the mouse pointers (UI_Cursor_*) as Cursor.SetCursor needs them: texture type Cursor, readable, uncompressed
+        /// RGBA, no mipmaps, Point (pixel art). Also called by MenuSceneBuilder before it wires GameCursor.
+        /// </summary>
+        internal static void ConfigureCursorTextures(List<string> report)
+        {
+            foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { UiRoot }))
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                if (!path.StartsWith(CursorPrefix) || !(AssetImporter.GetAtPath(path) is TextureImporter ti)) continue;
+                if (ti.textureType == TextureImporterType.Cursor && ti.isReadable && !ti.mipmapEnabled && ti.filterMode == FilterMode.Point
+                    && ti.textureCompression == TextureImporterCompression.Uncompressed && ti.npotScale == TextureImporterNPOTScale.None) continue;
+                ti.textureType = TextureImporterType.Cursor;
+                ti.isReadable = true;
+                ti.mipmapEnabled = false;
+                ti.filterMode = FilterMode.Point;
+                ti.wrapMode = TextureWrapMode.Clamp;
+                ti.alphaIsTransparency = true;
+                ti.npotScale = TextureImporterNPOTScale.None;
+                ti.textureCompression = TextureImporterCompression.Uncompressed;
+                ti.SaveAndReimport();
+                report.Add("cursor   " + path);
             }
         }
 
