@@ -34,6 +34,7 @@ namespace GameOff.EditorTools
             RestSpotBuilder.BuildIntoMainFromMenu(); // P28: needs the station, sky, day flow and economy
             TrafficBuilder.BuildIntoMainFromMenu();
             AmbienceBuilder.BuildIntoMainFromMenu();
+            GuardRoundsBuilder.BuildIntoMainFromMenu(); // P148: needs the day flow and the player
             MenuSceneBuilder.BuildFromMenu();
             HelpOverlayBuilder.BuildIntoMainFromMenu(); // P140: last, it holds references to what the builders above made
             Debug.Log("[RebuildAll] Done. Bake the light next (GameOff/Setup Main Lighting + Bake).");
