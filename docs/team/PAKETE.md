@@ -2025,39 +2025,44 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 
 ### P141 — Kassettendeck: Song überspringen, echte Songs
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: Lieferung `MUS_Cassette_01–05` (gemergt) · Folgt auf: P132
 - Ziel: Am Deck kann man zum nächsten Song springen (#47), jede Kassette spielt ihren eigenen Song.
 - Enthalten: Der Hebel am Deck wird zum Knopf „nächster Song“: [E] auf den Hebel springt zur nächsten eingelegten Kassette (1→2→3→1), mit Laut (`SFX_Cassette_Skip`, bestellt; bis dahin `cassetteInsert`). Ist nur eine Kassette eingelegt, beginnt sie von vorn. Gilt für beide Decks (Schalterraum, 103). Die fünf `CassetteData` zeigen auf `MUS_Cassette_01–05` statt `MUS_Floppy_01`. Hilfe-Übersicht [H] (P140) nennt die Taste.
 - Nicht enthalten: Zurückspulen, Zufallswiedergabe, Lautstärke am Gerät.
 - Abnahme: Drei Kassetten eingelegt → Hebel springt 1→2→3→1; jede klingt anders; Spielstand unverändert; Test für die Playlist-Logik; #47 geschlossen.
+- Ergebnis (max, 12.11., Agent): Hebel am Deck ist eigenes [E]-Ziel „Next song“: springt 1→2→3→1, eine Kassette beginnt von vorn, leeres Deck: Hebel aus. Die fünf Kassetten spielen `MUS_Cassette_01–05`. Laut `cassetteSkip` (bis zur Lieferung Einlege-Laut). Hilfe [H] nennt den Hebel. 4 Tests. Im Browser: Sprünge 01→04→03→01 über die Cliplängen nachgewiesen; [E] auf den Hebel selbst, Hebel-Animation und Prompt nicht angesehen.
 
 ### P142 — Türrahmen in Zimmer 103 flimmert
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P53, P119
 - Ziel: Kein Flimmern mehr an der Innenseite des Türrahmens in 103 (#44), wie damals im Hangar (#17).
 - Enthalten: Ursache suchen (bei #17 lagen zwei Flächen in derselben Ebene, z-fighting: hier vermutlich Rahmen-Innenseite gegen Wandöffnung, Türblatt oder Hülle). Im Builder versetzen, nicht im Prefab. Alle Türen des Wohnmoduls und der Station mit demselben Rahmen prüfen. Editor-Render vorher/nachher.
 - Abnahme: Beim Gehen durch die Tür von 103 flimmert nichts; die anderen Türen geprüft; Max bestätigt im Spiel; #44 geschlossen.
+- Ergebnis (max, 12.11.): Ursache wie #17: Das Türblatt war exakt so breit und hoch wie die Öffnung des Wandmoduls (1,2 × 2,2 m bzw. 1,6 m), seine Seiten und Oberkante lagen in den Flächen von Laibung und Sturz (z-fighting). Alle Schiebetüren der Station und des Wohnmoduls haben jetzt 1 cm Luft (`LeafPlay` im StationGrayboxBuilder). Editor-Render und Browser-Standbild ohne Streifen; Flimmern zeigt sich nur in Bewegung, Max muss es im Spiel bestätigen.
 
 ### P143 — Sprechblasen im Stil der Station, Korr verstummt nach der Entscheidung
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: `UI_SpeechBubble`, `UI_SpeechBubble_Tail` (bestellt; bis dahin `UI_Terminal_Panel`) · Folgt auf: P40, P86, P95, P100
 - Ziel: Nach dem Stempel redet niemand mehr an der Entscheidung vorbei, und die Sprechblasen passen zum Terminal-Stil (#46).
 - Enthalten: Nach der Entscheidung werden noch offene Zeilen des Reisenden verworfen; höchstens seine kurze Reaktion (P100) bleibt. Bei Korr (Tag 1) widersprechen sich Tutorial-Brett und Sprechblase nicht mehr: nach dem Durchlassen keine Anweisungen mehr, nur noch sein Schlusssatz. Blase neu: 9-Slice-Rahmen im Terminal-Stil mit Zipfel zum Sprecher, Name klein oben, kurzes Ein- und Ausblenden, Text baut sich wie auf einem Terminal auf; die Alien-Übersetzung (Glyphen-Welle) bleibt.
 - Nicht enthalten: Vertonung, neue Dialogtexte.
 - Abnahme: Korr an Tag 1 sofort durchlassen → keine weiteren Zeilen; bei einem Alien läuft die Übersetzung wie bisher; Blase bleibt im Bild und verdeckt den Sprecher nicht; #46 geschlossen.
+- Ergebnis (max, 12.11., Agent): Ursache: Korrs Tafel blieb nach dem Stempel 10 s mit Anweisungen stehen und zeigte danach 10 s den Drohnen-Tipp, während schon der Nächste sprach. Jetzt blendet die Tafel bei der Entscheidung aus; Drohnen-Tipp und Hinweis auf die freien Verwarnungen stehen in den Schritten davor; danach nur Korrs eigener Satz („Good. Carry on.“). Blase neu: dunkler Terminal-Rahmen (Platzhalter `UI_Terminal_Panel`, Zipfel erst mit Lieferung), Name oben, Ein-/Ausblenden, Tipp-Effekt mit Block-Cursor, Alien-Übersetzung bleibt; nach der Entscheidung keine offenen Zeilen mehr. Tests für Layout und Korrs Schlusssatz. Im Browser Tag 1 komplett gespielt: Tafel, Ausblenden, Schlusssatz, Tipp-Effekt ✓; das Namensfeld war leer (Feld zu niedrig) und ist danach korrigiert, aber nicht erneut im Browser angesehen.
 
 ### P144 — Händler reden abwechslungsreich
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: — (die Laute aus P94 übernimmt es automatisch, sobald sie da sind) · Folgt auf: P94, P96
 - Ziel: Barkeeper, Dealer und die anderen Händler klingen nicht bei jedem [E] gleich (#45).
 - Enthalten: Statt des einen `vendorGreet` spielt jeder Händler einen Laut aus dem Stimmen-Set seiner Spezies (P94), zufällig, nie zweimal derselbe hintereinander, Tonhöhe je Händler leicht verschieden. Solange P94 nicht geliefert ist: das bisherige Set der Spezies mit variierter Tonhöhe. Gleiche Logik für Reisende am Schalter, falls dort noch nicht vorhanden.
 - Nicht enthalten: neue Bestellungen (P94 hat sie schon), neue Dialogtexte.
 - Abnahme: Fünfmal hintereinander mit dem Barkeeper reden → nie zweimal derselbe Laut direkt nacheinander; Barkeeper und Dealer klingen verschieden; Test für die Auswahl; #45 geschlossen, sobald P94 die Laute geliefert hat (bis dahin offen mit Kommentar).
+- Ergebnis (max, 12.11., Agent): `AudioManager.PlaySpeech`: Laut des Spezies-Sets (P94), zufällig, nie zweimal derselbe hintereinander, eigene Tonhöhe je Sprecher (0,85–1,15) mit kleiner Schwankung. Händler haben eine Spezies (Annahme: Barkeeper Vellani, Holly und Dealer Mensch); Reisende sprechen bei jeder Zeile. Bis zur Lieferung der 50 Laute: `vendorGreet` mit Tonhöhe. Tests. Im Browser: Barkeeper 0,94/0,97, Holly 1,08/1,06, Reisende 0,86–1,15 ✓. #45 bleibt offen, bis P94 geliefert ist (nur die Tonhöhe unterscheidet sich).
 
 ### P145 — Abendgäste sitzen
-- Größe: S · Priorität: Kann · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: S · Priorität: Kann · Status: fertig (max, 12.11.) · Zuständig: max
 - Braucht: Lieferung `A_NPC_Sit.fbx` (gemergt) · Folgt auf: P134
 - Ziel: Ein Teil der Abendgäste sitzt an Bar und auf den Hallenbänken, statt nur zu stehen.
 - Enthalten: Clip `A_NPC_Sit` als Humanoid importieren und als Zustand `Sit` in den Controller der Reisenden; zwei bis drei der sechs Plätze aus P134 werden Sitzplätze (Barhocker, Hallenbank). Becken-Höhe je Platz an die Sitzhöhe anpassen (Clip ist auf 0,45 m). Die Bank, auf die sich der Spieler abends setzt (P28), bleibt frei.
 - Abnahme: An drei Abenden sitzen Gäste sauber (Füße am Boden, nicht im Hocker), Spielerbank frei; Screenshot; FPS nicht schlechter als P57-Werte.
+- Ergebnis (max, 12.11., Agent): Clip `A_NPC_Sit` als Humanoid-Loop, Zustand `Sit` in den fünf Reisenden-Controllern. Drei der sechs Plätze sind Sitze: Deckbank Ost, Barhocker 1, Hallenbank C Ostsitz (Bankmitte bleibt für den Spieler). Jede Figur wird einmal vermessen und an die Sitzhöhe angepasst; wer nicht passt, steht; ein besetzter Barhocker ist für den Spieler bis zum Morgen zu. Tests für Plätze und Controller. Im Browser: Gäste sitzen auf Deckbank, Bank C und Hocker 1 ✓; Hocker-Sperre und Ausweichen nicht geprüft; Vellani/Sorvak-Größen nur berechnet.

@@ -825,7 +825,7 @@ namespace GameOff.EditorTools
         }
 
         // P143: the speech bubble in canvas units (SeatedHUD: 960 x 540)
-        private const float BubbleWidth = 320f, BubbleBorder = 16f, BubblePad = 20f, BubbleNameTop = 12f, BubbleNameHeight = 14f;
+        private const float BubbleWidth = 320f, BubbleBorder = 16f, BubblePad = 20f, BubbleNameTop = 12f, BubbleNameHeight = 17f; // the name line is ~14.1 high at 0.7 x the hint size: an Ellipsis box lower than that shows nothing
         private const float BubbleTailOverlap = 4f; // the tail covers the frame's bottom edge where it joins (tune once the art is in)
         private static readonly Color CrtGreen = new Color(0.61f, 0.88f, 0.35f); // #9BE05A
 
