@@ -10438,7 +10438,7 @@ feedback: []
 path: Assets/_Project/Art/UI/UI_Cursor_Default.png
 package: P138
 scene: UI
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -10465,7 +10465,7 @@ feedback: []
 path: Assets/_Project/Art/UI/UI_Cursor_Hover.png
 package: P138
 scene: UI
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
