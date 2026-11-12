@@ -3,21 +3,14 @@ namespace GameOff.Counter
     /// <summary>
     /// P86, without Unity (EditMode-tested): what Inspector Korr asks for next. Always the first step not done yet, so a player who
     /// runs ahead simply skips steps and nothing is ever blocked. A step counts as done once the player has done it.
+    /// P143: the board ends with the decision. What he used to add afterwards (the ARREST and AIRLOCK buttons) comes with the rules
+    /// step, where the orders are read; his last words are his reaction in the speech bubble (StoryDayContent "Korr_1").
     /// </summary>
     public class TutorialProgress
     {
         public enum Step { HoldPaper, AskField, ReadRules, Stamp, Drawer }
 
         private const string Buttons = "Smugglers and wanted names: ARREST. Quarantine and terminate orders: AIRLOCK.";
-
-        /// <summary>Korr's last words after an approval.</summary>
-        public static string CorrectEnd(int freeWarnings) => $"Good. {Buttons} Your first {freeWarnings} mistakes each day are only warnings. Carry on.";
-
-        /// <summary>P103: after the good ending, a hint without the sums.</summary>
-        public const string DroneTip = "One more thing. Money sent home gets skimmed on the way. Goods on the cargo drone don't. You didn't hear that from me.";
-
-        /// <summary>Korr's last words when his valid papers were refused (he can't say anything after an arrest or the airlock).</summary>
-        public static string WrongEnd => $"My papers were in order, officer. It's in my report. {Buttons} Carry on.";
 
         private bool _paperHeld, _fieldAsked, _rulesRead;
         private bool? _lastStampApproved;
@@ -48,7 +41,7 @@ namespace GameOff.Counter
         {
             Step.HoldPaper => "Click a paper to hold it up. Click more and they stand side by side; [R] holds up all of them.",
             Step.AskField => "Click a printed field on a paper you hold up to ask me about it.",
-            Step.ReadRules => "Now today's rules: [A] looks left, click the notes on the pinboard.",
+            Step.ReadRules => "Now today's rules: [A] looks left, click the notes on the pinboard. " + Buttons,
             Step.Stamp when _lastStampApproved == false => "DENIED? My papers are in order. Stamp again, the last stamp counts.",
             Step.Stamp => "Names and ID numbers must match, nothing may be expired. All in order? Put the papers down, pick up the green stamp and stamp one.",
             _ => "Now drag ALL my papers onto the drawer, then click the drawer.",

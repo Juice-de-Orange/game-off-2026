@@ -110,7 +110,7 @@ namespace GameOff.EditorTools
             }
         }
 
-        /// <summary>P95: pixel art, Point, with the slice borders of TerminalStyle.</summary>
+        /// <summary>P95: pixel art, Point, with the slice borders of TerminalStyle (P143: also UI_SpeechBubble, 16 px, and its unsliced tail).</summary>
         private static void ConfigureTerminalSprites(List<string> report)
         {
             foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { TerminalStyle.Folder.TrimEnd('/') }))

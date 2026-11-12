@@ -46,6 +46,7 @@ namespace GameOff.Travelers
         private Animator _animator;
         private Transform _head;
         private Coroutine _routine;
+        private Coroutine _reaction;
         private bool _walking;
         private Coroutine _lamp;
 
@@ -69,7 +70,8 @@ namespace GameOff.Travelers
             bubble.Finished -= OnBubbleFinished;
             shift.ArrivalDelay = null;
             shift.NextDelay = null;
-            _routine = null; // the coroutine stops with the component
+            _routine = null; // the coroutines stop with the component
+            _reaction = null;
             CloseDoors();
         }
 
@@ -97,6 +99,7 @@ namespace GameOff.Travelers
         {
             FlashLamp(new Color(1f, 0.75f, 0.2f), 1.2f);
             StopRoutine();
+            StopReaction();
             CloseDoors(); // in case the last traveler's walk was cut short
             bubble.Hide();
             Show(traveler);
@@ -214,10 +217,11 @@ namespace GameOff.Travelers
             return false;
         }
 
-        private void Say(TravelerData traveler, string line)
+        /// <param name="animate">False: the figure keeps its animation (a reaction said while walking off).</param>
+        private void Say(TravelerData traveler, string line, bool animate = true)
         {
-            bubble.Say(line, traveler.IsAlien, _head != null ? _head : standSpot);
-            Play(Talk);
+            bubble.Say(line, traveler.IsAlien, _head != null ? _head : standSpot, speakerName: traveler.DisplayName);
+            if (animate) Play(Talk);
         }
 
         private void OnBubbleFinished()
@@ -225,17 +229,37 @@ namespace GameOff.Travelers
             if (!_walking) Play(Idle); // a reaction can end while they are already leaving
         }
 
+        /// <summary>
+        /// The conversation ends with the decision (P143): nothing still to come is said (the greeting routine stops; answers and
+        /// SayLine need shift.Current, which is cleared before this event), the line in the bubble fades out, and after a short pause
+        /// only the traveler's reaction follows (P100).
+        /// </summary>
         private void OnDecision(TravelerData traveler, Verdict chosen, Judgement judgement)
         {
             StopRoutine();
-            bubble.Hide();
+            StopReaction();
+            bubble.FadeOut();
             CloseDoors();
             string reaction = TravelerDialogue.Reaction(traveler, chosen, tuning, Random.value); // P100: said on the way out, costs no time
-            if (!string.IsNullOrWhiteSpace(reaction)) Say(traveler, reaction);
+            if (!string.IsNullOrWhiteSpace(reaction)) _reaction = StartCoroutine(React(traveler, reaction));
             if (chosen == Verdict.Arrest) _routine = StartCoroutine(Arrest());
             else if (chosen == Verdict.Airlock) _routine = StartCoroutine(Airlock());
             else if (_figure != null) _routine = StartCoroutine(WalkOff(chosen == Verdict.Admit ? SlidingDoor.Role.LockHall : SlidingDoor.Role.LockHangar,
                 chosen == Verdict.Admit ? hallDoor : hangarDoor));
+        }
+
+        /// <summary>P143: the reaction comes once the last line has faded, a beat later, as the traveler turns to go.</summary>
+        private IEnumerator React(TravelerData traveler, string line)
+        {
+            yield return new WaitForSeconds(tuning.bubbleFadeSeconds + tuning.reactionPauseSeconds);
+            _reaction = null;
+            Say(traveler, line, animate: !_walking);
+        }
+
+        private void StopReaction()
+        {
+            if (_reaction != null) StopCoroutine(_reaction);
+            _reaction = null;
         }
 
         private IEnumerator WalkOff(SlidingDoor.Role role, Transform marker)
@@ -363,6 +387,7 @@ namespace GameOff.Travelers
         private void Clear()
         {
             StopRoutine();
+            StopReaction();
             bubble.Hide();
             HideFigure();
             HideGuard();

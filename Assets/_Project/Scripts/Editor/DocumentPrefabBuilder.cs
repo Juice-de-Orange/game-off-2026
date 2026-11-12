@@ -740,6 +740,11 @@ namespace GameOff.EditorTools
             text.alignment = TextAlignmentOptions.MidlineLeft;
             text.raycastTarget = false;
             text.text = "";
+            var fade = panelT.GetComponent<CanvasGroup>(); // P143: the board fades away with the decision
+            if (fade == null) fade = panelT.gameObject.AddComponent<CanvasGroup>();
+            fade.alpha = 1f;
+            fade.interactable = false;
+            fade.blocksRaycasts = false;
             panelT.gameObject.SetActive(false);
 
             var korr = AssetDatabase.LoadAssetAtPath<TravelerData>(KorrTutorialTraveler);
@@ -753,6 +758,7 @@ namespace GameOff.EditorTools
             so.FindProperty("tutorialTraveler").objectReferenceValue = korr;
             so.FindProperty("panel").objectReferenceValue = panelT.gameObject;
             so.FindProperty("text").objectReferenceValue = text;
+            so.FindProperty("panelFade").objectReferenceValue = fade;
             so.ApplyModifiedPropertiesWithoutUndo();
             log.Add("Korr's tutorial board");
         }
@@ -782,21 +788,7 @@ namespace GameOff.EditorTools
             var panel = (RectTransform)panelT;
             panel.pivot = new Vector2(0f, 1f);
             panel.anchorMin = panel.anchorMax = new Vector2(0.5f, 0.5f);
-            var image = panelT.GetComponent<UnityEngine.UI.Image>();
-            image.color = new Color(0.89f, 0.87f, 0.81f, 0.95f);
-            image.raycastTarget = false;
-            var text = panelT.Find("Text").GetComponent<TextMeshProUGUI>();
-            var textRect = text.rectTransform;
-            textRect.anchorMin = Vector2.zero;
-            textRect.anchorMax = Vector2.one;
-            textRect.pivot = new Vector2(0.5f, 0.5f);
-            textRect.offsetMin = new Vector2(12f, 12f);
-            textRect.offsetMax = new Vector2(-12f, -12f);
-            text.fontSize = hint.fontSize * 1.1f;
-            text.color = new Color(0.1f, 0.1f, 0.12f);
-            text.alignment = TextAlignmentOptions.TopLeft;
-            text.raycastTarget = false;
-            text.text = "";
+            var parts = BuildBubbleLook(panelT, hint);
             panelT.gameObject.SetActive(false);
 
             var tuning = Asset<DialogueTuning>(CounterDataFolder + "DialogueTuning.asset");
@@ -807,8 +799,16 @@ namespace GameOff.EditorTools
             bso.FindProperty("tuning").objectReferenceValue = tuning;
             bso.FindProperty("panel").objectReferenceValue = panel;
             bso.FindProperty("canvasArea").objectReferenceValue = parent;
-            bso.FindProperty("text").objectReferenceValue = text;
+            bso.FindProperty("text").objectReferenceValue = parts.text;
+            bso.FindProperty("nameLabel").objectReferenceValue = parts.name;
+            bso.FindProperty("fade").objectReferenceValue = parts.fade;
+            bso.FindProperty("cursor").objectReferenceValue = parts.cursor;
+            bso.FindProperty("tail").objectReferenceValue = parts.tail;
+            bso.FindProperty("tailInset").floatValue = BubbleBorder;
+            bso.FindProperty("tailOverlap").floatValue = BubbleTailOverlap;
+            bso.FindProperty("width").floatValue = BubbleWidth;
             bso.ApplyModifiedPropertiesWithoutUndo();
+            log.Add(parts.tail != null ? "speech bubble: terminal frame with tail" : "speech bubble: terminal frame, no tail yet (UI_SpeechBubble_Tail not delivered)");
 
             var presenter = root.GetComponent<TravelerPresenter>();
             if (presenter == null) presenter = root.AddComponent<TravelerPresenter>();
@@ -822,6 +822,127 @@ namespace GameOff.EditorTools
             pso.FindProperty("hangarDoor").objectReferenceValue = hangarDoor;
             pso.ApplyModifiedPropertiesWithoutUndo();
             log.Add("TravelerPresenter, SpeechBubble, desk view 20 degrees");
+        }
+
+        // P143: the speech bubble in canvas units (SeatedHUD: 960 x 540)
+        private const float BubbleWidth = 320f, BubbleBorder = 16f, BubblePad = 20f, BubbleNameTop = 12f, BubbleNameHeight = 14f;
+        private const float BubbleTailOverlap = 4f; // the tail covers the frame's bottom edge where it joins (tune once the art is in)
+        private static readonly Color CrtGreen = new Color(0.61f, 0.88f, 0.35f); // #9BE05A
+
+        /// <summary>
+        /// P143: the bubble in the terminal look: a 9-slice frame (UI_SpeechBubble, until delivered UI_Terminal_Panel, both drawn
+        /// with a 16-unit edge) with dark glass inside, the speaker's name small in amber at the top, the line in CRT green, a block
+        /// cursor for typing on, a CanvasGroup for the fades and, once delivered, the tail (first child: over the frame, under the text).
+        /// </summary>
+        private static (TextMeshProUGUI text, TextMeshProUGUI name, CanvasGroup fade, RectTransform cursor, RectTransform tail) BuildBubbleLook(Transform panelT, TextMeshProUGUI hint)
+        {
+            var image = panelT.GetComponent<UnityEngine.UI.Image>();
+            image.raycastTarget = false;
+            var frame = TerminalStyle.BubbleFrame(out int border);
+            if (frame != null)
+            {
+                image.sprite = frame;
+                image.type = UnityEngine.UI.Image.Type.Sliced;
+                image.color = Color.white;
+                image.pixelsPerUnitMultiplier = Mathf.Max(1f, border / BubbleBorder);
+            }
+            else
+            {
+                image.sprite = null;
+                image.type = UnityEngine.UI.Image.Type.Simple;
+                image.color = new Color(MenuSceneBuilder.Panel.r, MenuSceneBuilder.Panel.g, MenuSceneBuilder.Panel.b, 0.9f);
+                image.pixelsPerUnitMultiplier = 1f;
+            }
+            var fade = panelT.GetComponent<CanvasGroup>();
+            if (fade == null) fade = panelT.gameObject.AddComponent<CanvasGroup>();
+            fade.alpha = 1f;
+            fade.interactable = false;
+            fade.blocksRaycasts = false;
+
+            var text = panelT.Find("Text").GetComponent<TextMeshProUGUI>();
+            var textRect = text.rectTransform;
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.pivot = new Vector2(0.5f, 0.5f);
+            textRect.offsetMin = new Vector2(BubblePad, BubbleBorder);
+            textRect.offsetMax = new Vector2(-BubblePad, -(BubbleNameTop + BubbleNameHeight + 4f));
+            text.fontSize = hint.fontSize * 1.1f;
+            text.enableAutoSizing = false;
+            text.textWrappingMode = TextWrappingModes.Normal;
+            text.overflowMode = TextOverflowModes.Overflow;
+            text.color = CrtGreen;
+            text.alignment = TextAlignmentOptions.TopLeft;
+            text.raycastTarget = false;
+            text.maxVisibleCharacters = 99999;
+            text.text = "";
+
+            var nameT = panelT.Find("Name");
+            if (nameT == null)
+            {
+                nameT = Object.Instantiate(hint.gameObject, panelT).transform;
+                nameT.name = "Name";
+            }
+            var name = nameT.GetComponent<TextMeshProUGUI>();
+            var nameRect = name.rectTransform;
+            nameRect.anchorMin = new Vector2(0f, 1f);
+            nameRect.anchorMax = Vector2.one;
+            nameRect.pivot = new Vector2(0f, 1f);
+            nameRect.offsetMin = new Vector2(BubblePad, -(BubbleNameTop + BubbleNameHeight));
+            nameRect.offsetMax = new Vector2(-BubblePad, -BubbleNameTop);
+            name.fontSize = hint.fontSize * 0.7f;
+            name.enableAutoSizing = false;
+            name.textWrappingMode = TextWrappingModes.NoWrap;
+            name.overflowMode = TextOverflowModes.Ellipsis;
+            name.characterSpacing = 4f;
+            name.color = MenuSceneBuilder.Amber;
+            name.alignment = TextAlignmentOptions.MidlineLeft;
+            name.raycastTarget = false;
+            name.text = "";
+            nameT.gameObject.SetActive(false);
+
+            var cursorT = text.transform.Find("Cursor");
+            if (cursorT == null)
+            {
+                cursorT = new GameObject("Cursor", typeof(RectTransform), typeof(UnityEngine.UI.Image)).transform;
+                cursorT.SetParent(text.transform, false);
+            }
+            var cursor = (RectTransform)cursorT;
+            cursor.anchorMin = cursor.anchorMax = new Vector2(0.5f, 0.5f);
+            cursor.pivot = Vector2.zero; // SpeechBubble puts the bottom left corner after the last character
+            cursor.sizeDelta = new Vector2(8f, 16f);
+            var cursorImage = cursorT.GetComponent<UnityEngine.UI.Image>();
+            cursorImage.color = new Color(CrtGreen.r, CrtGreen.g, CrtGreen.b, 0.85f);
+            cursorImage.raycastTarget = false;
+            cursorT.gameObject.SetActive(false);
+
+            var tailT = panelT.Find("Tail");
+            var tailSprite = TerminalStyle.BubbleTail();
+            RectTransform tail = null;
+            if (tailSprite == null)
+            {
+                if (tailT != null) Object.DestroyImmediate(tailT.gameObject);
+            }
+            else
+            {
+                if (tailT == null)
+                {
+                    tailT = new GameObject("Tail", typeof(RectTransform), typeof(UnityEngine.UI.Image)).transform;
+                    tailT.SetParent(panelT, false);
+                }
+                tailT.SetAsFirstSibling();
+                tail = (RectTransform)tailT;
+                tail.anchorMin = tail.anchorMax = Vector2.zero; // the bubble's bottom left; SpeechBubble slides it along the edge
+                tail.pivot = new Vector2(0.5f, 1f); // mirrored in place
+                tail.localScale = Vector3.one;
+                var tailImage = tailT.GetComponent<UnityEngine.UI.Image>();
+                tailImage.sprite = tailSprite;
+                tailImage.type = UnityEngine.UI.Image.Type.Simple;
+                tailImage.color = Color.white;
+                tailImage.raycastTarget = false;
+                tailImage.SetNativeSize();
+                tail.anchoredPosition = new Vector2(BubbleBorder + tail.sizeDelta.x * 0.5f, BubbleTailOverlap);
+            }
+            return (text, name, fade, cursor, tail);
         }
 
         private static Transform LockPoint(Transform root, string name, Vector3 position, Quaternion rotation)

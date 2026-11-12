@@ -107,5 +107,17 @@ namespace GameOff.Tests
             p.Stamped(approved: false);
             Assert.AreEqual(TutorialProgress.Step.Stamp, p.Current);
         }
+
+        /// <summary>P143: the other two buttons are explained before the decision, with the orders on the pinboard; nothing comes after it.</summary>
+        [Test]
+        public void TheButtons_ComeWithTheRules()
+        {
+            var p = new TutorialProgress();
+            p.PaperHeld(isNote: false);
+            p.FieldAsked();
+            Assert.AreEqual(TutorialProgress.Step.ReadRules, p.Current);
+            StringAssert.Contains("ARREST", p.Text);
+            StringAssert.Contains("AIRLOCK", p.Text);
+        }
     }
 }
