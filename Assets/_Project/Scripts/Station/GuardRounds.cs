@@ -50,7 +50,7 @@ namespace GameOff.Station
         private Transform _player;
         private bool _onDuty;
         private int _dutyDay;
-        private bool _warned;
+        private readonly System.Collections.Generic.HashSet<string> _warned = new System.Collections.Generic.HashSet<string>();
 
         private class Guard
         {
@@ -128,6 +128,7 @@ namespace GameOff.Station
             if (_guards == null) return;
             bool newDay = duty && _dutyDay != day.Day;
             if (duty) _dutyDay = day.Day;
+            else _dutyDay = 0; // back on duty is always a fresh start (also a new run that begins on the same day number)
             foreach (var guard in _guards)
             {
                 if (!duty) guard.Body.SetActive(false);
@@ -364,8 +365,7 @@ namespace GameOff.Station
 
         private void Warn(string message)
         {
-            if (_warned) return;
-            _warned = true;
+            if (!_warned.Add(message)) return; // each problem once, but every different one
             Debug.LogWarning("[GuardRounds] " + message);
         }
     }

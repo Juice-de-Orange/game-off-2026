@@ -282,6 +282,8 @@ namespace GameOff.Audio
 
         /// <summary>Longest a one-shot's object waits for its clip to be decoded before it goes anyway.</summary>
         private const float MaxDecodeWait = 10f;
+        /// <summary>How long a one-shot whose length is still unknown after MaxDecodeWait is kept.</summary>
+        private const float MaxUnknownLength = 30f;
 
         /// <summary>P146: a one-shot whose clip is still decoding keeps its object until the length is known (0 cut it off before).</summary>
         private static IEnumerator DestroyWhenLoaded(GameObject go, AudioClip clip)
@@ -289,7 +291,8 @@ namespace GameOff.Audio
             for (float waited = 0f; waited < MaxDecodeWait && go != null && clip != null && LoadedLength(clip, -1f) < 0f
                  && clip.loadState != AudioDataLoadState.Failed; waited += Time.unscaledDeltaTime)
                 yield return null;
-            if (go != null) Destroy(go, LoadedLength(clip) + 0.1f);
+            // Still not decoded after the wait (a slow device): keep it long enough not to cut the sound off once it starts.
+            if (go != null) Destroy(go, LoadedLength(clip, MaxUnknownLength) + 0.1f);
         }
 
         public static void PlayVoice(AudioClip clip)

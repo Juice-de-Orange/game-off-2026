@@ -102,9 +102,9 @@ namespace GameOff.EditorTools
                 memory.Decide(p.character, p.appearance, day, outcome, p.traveler.IntendedVerdict); // P150: flags too (the Shifter's accomplice)
                 foreach (var c in a.consequences)
                 {
-                    if (c.when != outcome) continue;
+                    if (!c.Applies(outcome, p.traveler.IntendedVerdict)) continue; // the same filter as CharacterDirector
                     if (c.marketEvent != null) Market.Schedule(day + c.eventInDays, c.marketEvent);
-                    if (!c.onlyIfArrested || p.traveler.IntendedVerdict == GameOff.Travelers.Verdict.Arrest) later?.Add((day + c.afterDays, c)); // P125
+                    later?.Add((day + c.afterDays, c)); // P125
                 }
             }
             return due.Count;

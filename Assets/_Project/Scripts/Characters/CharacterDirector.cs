@@ -52,7 +52,7 @@ namespace GameOff.Characters
             get
             {
                 var list = new List<RecurringCharacter>(characters);
-                if (dayManager == null || dayManager.DevTools) list.AddRange(devCharacters);
+                if (DayManager.DevToolsOn(dayManager)) list.AddRange(devCharacters); // P146: never in the release build
                 return list;
             }
         }
