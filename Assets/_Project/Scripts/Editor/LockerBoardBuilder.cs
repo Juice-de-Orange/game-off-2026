@@ -15,8 +15,9 @@ namespace GameOff.EditorTools
 {
     /// <summary>
     /// P32 + P33 rest, called from EconomyBuilder (GameOff/Build Economy into Main), everything inside PF_Economy:
-    /// - the open evidence locker over SM_Counter_Locker: shell, two shelves, six compartments, two hinged doors, a sealed evidence bag
-    ///   for goods without a model (EvidenceLockerDisplay), wired to the EvidenceLocker of P83;
+    /// - the open evidence locker over SM_Counter_Locker: shell and two hinged doors cut from that model (P135, Mesh_LockerOpen.asset),
+    ///   the interior with six compartments, a sealed evidence bag for goods without a model (EvidenceLockerDisplay), wired to the
+    ///   EvidenceLocker of P83;
     /// - the pinboard close-up while standing: a trigger in front of SM_Counter_Board and a screen with up to four notes (PinBoardCloseUp);
     /// - Data/Economy/EvidenceLockerTuning.asset (created once; the label → model list is only filled while it is empty).
     /// Positions mirror StationGrayboxBuilder.BuildProps: locker 1.0 x 0.5 x 1.8 m, pivot bottom centre at (-4, 0, -6.45), front to -Z;
@@ -32,6 +33,10 @@ namespace GameOff.EditorTools
         private const string BodyFontPath = "Assets/_Project/Fonts/ShareTechMono SDF.asset";
         private const string ClosedLockerName = "SM_Counter_Locker";
         private const string InteriorModel = "Assets/_Project/Art/Models/Counter/SM_Counter_LockerInterior.fbx";
+        private const string ClosedModel = "Assets/_Project/Art/Models/Counter/SM_Counter_Locker.fbx";
+        private const string OpenMeshPath = "Assets/_Project/Art/Models/Counter/Mesh_LockerOpen.asset"; // P135, generated
+        private const float OpeningInset = 0.025f; // the interior's side panels stand ~3 cm inside the shell: the frame covers the gap
+        private static readonly Vector3 ProbeAnchorOffset = new Vector3(0f, 1.2f, -1.5f); // in the room, among its light probes
         private const string BagModel = "Assets/_Project/Art/Models/Counter/SM_Item_EvidenceBag.fbx";
         private const string HandleMaterial = "Assets/_Project/Art/Materials/Hangar/M_Hangar_CraneRail.mat";
 
@@ -79,7 +84,12 @@ namespace GameOff.EditorTools
 
         // ---------- Open locker (P32) ----------
 
-        /// <summary>Builds the open locker under the EvidenceLocker object and wires display and tuning into it.</summary>
+        /// <summary>
+        /// Builds the open locker under the EvidenceLocker object and wires display and tuning into it.
+        /// P135: shell and doors are cut from the closed model itself (LockerMeshSplit), with its material and lightmap UVs; the display
+        /// gives them the closed model's baked light, so opening changes nothing but the doors' angle. The interior and the goods take
+        /// the room's light probes in front of the locker; no lamp of its own any more.
+        /// </summary>
         internal static void BuildLockerDisplay(Transform lockerRoot, EvidenceLocker locker, Confiscation confiscation,
             EvidenceLockerTuning tuning)
         {
@@ -88,41 +98,71 @@ namespace GameOff.EditorTools
             go.transform.position = LockerPivot;
             var openRoot = new GameObject("Open").transform;
             openRoot.SetParent(go.transform, false);
+            // The probe inside the closed locker sees only its inside and is dark; the room's probes in front of it are not.
+            var probeAnchor = new GameObject("ProbeAnchor").transform;
+            probeAnchor.SetParent(go.transform, false);
+            probeAnchor.localPosition = ProbeAnchorOffset;
 
-            var outside = AssetDatabase.LoadAssetAtPath<Material>(LockerMaterial) ?? Graybox("M_Graybox_Prop");
-            float w = LockerWidth, d = LockerDepth, h = LockerHeight, halfW = w / 2f, halfD = d / 2f;
+            var closedModel = AssetDatabase.LoadAssetAtPath<GameObject>(ClosedModel);
+            var closedRenderer = closedModel != null ? closedModel.GetComponentInChildren<MeshRenderer>(true) : null;
+            var outside = (closedRenderer != null ? closedRenderer.sharedMaterial : null)
+                          ?? AssetDatabase.LoadAssetAtPath<Material>(LockerMaterial) ?? Graybox("M_Graybox_Prop");
 
-            Model(openRoot, InteriorModel); // P118: back wall, divider and shelves; pivot bottom centre, floors at ShelfTops
-            Block(openRoot, "SideL", new Vector3(-halfW + Wall / 2f, h / 2f, 0f), new Vector3(Wall, h, d), outside);
-            Block(openRoot, "SideR", new Vector3(halfW - Wall / 2f, h / 2f, 0f), new Vector3(Wall, h, d), outside);
-            Block(openRoot, "Top", new Vector3(0f, h - Wall / 2f, 0f), new Vector3(w, Wall, d), outside);
-            Block(openRoot, "Plinth", new Vector3(0f, ShelfTops[0] / 2f, 0f), new Vector3(w, ShelfTops[0], d), outside);
+            var interior = new GameObject("Interior").transform;
+            interior.SetParent(openRoot, false);
+            var interiorModel = Model(interior, InteriorModel); // P118: back wall, divider and shelves; pivot bottom centre, floors at ShelfTops
+            foreach (var r in interiorModel.GetComponentsInChildren<Renderer>(true))
+            {
+                r.probeAnchor = probeAnchor;
+                PrefabUtility.RecordPrefabInstancePropertyModifications(r);
+            }
 
-            // Doors: hinged at the front corners, the leaf a little in front of the shell so it never cuts into the sides.
-            var leftDoor = Hinge(openRoot, "DoorL", new Vector3(-halfW, 0f, -halfD - 0.015f), +1f, outside);
-            var rightDoor = Hinge(openRoot, "DoorR", new Vector3(halfW, 0f, -halfD - 0.015f), -1f, outside);
+            var cut = LockerMeshSplit.Split(LockerMeshSplit.Read(closedModel), OpeningInset);
+            Transform leftDoor, rightDoor;
+            var sameLight = new List<Object>();
+            float slotZ = 0f;
+            if (cut != null)
+            {
+                var meshes = SaveOpenMeshes(cut);
+                sameLight.Add(MeshPiece(openRoot, "Shell", meshes[0], outside, probeAnchor));
+                leftDoor = new GameObject("DoorL").transform;
+                leftDoor.SetParent(openRoot, false);
+                leftDoor.localPosition = cut.LeftHinge;
+                sameLight.Add(MeshPiece(leftDoor, "Leaf", meshes[1], outside, probeAnchor));
+                rightDoor = new GameObject("DoorR").transform;
+                rightDoor.SetParent(openRoot, false);
+                rightDoor.localPosition = cut.RightHinge;
+                sameLight.Add(MeshPiece(rightDoor, "Leaf", meshes[2], outside, probeAnchor));
+                // The interior is deeper than the closed body: squeeze it between the opening and the back, so the closed doors
+                // never cut through the shelves' front lips and its back wall stays in front of the station wall.
+                float front = cut.FrontZ + 0.003f, back = cut.BackZ - 0.005f;
+                FitDepth(interior, openRoot, front, back);
+                slotZ = (front + back) * 0.5f;
+            }
+            else
+            {
+                Debug.LogWarning("[LockerBoardBuilder] SM_Counter_Locker could not be cut into shell and doors: the open locker falls back to boxes.");
+                float w = LockerWidth, d = LockerDepth, h = LockerHeight, halfW = w / 2f, halfD = d / 2f;
+                Block(openRoot, "SideL", new Vector3(-halfW + Wall / 2f, h / 2f, 0f), new Vector3(Wall, h, d), outside, probeAnchor);
+                Block(openRoot, "SideR", new Vector3(halfW - Wall / 2f, h / 2f, 0f), new Vector3(Wall, h, d), outside, probeAnchor);
+                Block(openRoot, "Top", new Vector3(0f, h - Wall / 2f, 0f), new Vector3(w, Wall, d), outside, probeAnchor);
+                Block(openRoot, "Plinth", new Vector3(0f, ShelfTops[0] / 2f, 0f), new Vector3(w, ShelfTops[0], d), outside, probeAnchor);
+                // Doors: hinged at the front corners, the leaf a little in front of the shell so it never cuts into the sides.
+                leftDoor = Hinge(openRoot, "DoorL", new Vector3(-halfW, 0f, -halfD - 0.015f), +1f, outside, probeAnchor);
+                rightDoor = Hinge(openRoot, "DoorR", new Vector3(halfW, 0f, -halfD - 0.015f), -1f, outside, probeAnchor);
+            }
 
             // Compartments, filled eye level first: middle, top, bottom; left before right.
             var slots = new List<Transform>();
-            float column = (w - 2f * Wall - 0.02f) / 4f + 0.01f;
+            float column = (LockerWidth - 2f * Wall - 0.02f) / 4f + 0.01f;
             foreach (int row in new[] { 1, 2, 0 })
                 foreach (float side in new[] { -1f, 1f })
                 {
                     var slot = new GameObject($"Slot_{row}{(side < 0 ? "L" : "R")}").transform;
                     slot.SetParent(openRoot, false);
-                    slot.localPosition = new Vector3(side * column, ShelfTops[row], 0.0f);
+                    slot.localPosition = new Vector3(side * column, ShelfTops[row], slotZ);
                     slots.Add(slot);
                 }
-
-            // P118: the compartments are not baked (the open locker is inactive then); without a lamp they stay black.
-            var lamp = new GameObject("Lamp").AddComponent<Light>();
-            lamp.transform.SetParent(openRoot, false);
-            lamp.transform.localPosition = new Vector3(0f, h * 0.55f, -halfD - 0.35f);
-            lamp.type = LightType.Point;
-            lamp.range = 2f;
-            lamp.intensity = 1f;
-            lamp.color = new Color(1f, 0.93f, 0.8f);
-            lamp.shadows = LightShadows.None;
 
             var bag = EvidenceBag(go.transform);
 
@@ -134,20 +174,83 @@ namespace GameOff.EditorTools
             Set(display, "rightDoor", rightDoor);
             SetArray(display, "slots", slots.Cast<Object>().ToArray());
             Set(display, "evidenceBag", bag);
+            SetArray(display, "sameLightAsClosed", sameLight.ToArray());
+            Set(display, "probeAnchor", probeAnchor);
             openRoot.gameObject.SetActive(false);
 
             Set(locker, "display", display);
             Set(locker, "tuning", tuning);
         }
 
-        private static Transform Hinge(Transform parent, string name, Vector3 position, float side, Material material)
+        /// <summary>P135: the cut meshes as sub-assets of one file, updated in place so the prefab's references and GUID stay.</summary>
+        private static Mesh[] SaveOpenMeshes(LockerMeshSplit.Result cut)
+        {
+            var parts = new[] { (name: "LockerOpen_Shell", part: cut.Shell), (name: "LockerOpen_DoorL", part: cut.LeftDoor), (name: "LockerOpen_DoorR", part: cut.RightDoor) };
+            var existing = AssetDatabase.LoadAllAssetsAtPath(OpenMeshPath).OfType<Mesh>().ToList();
+            var meshes = new Mesh[parts.Length];
+            for (int i = 0; i < parts.Length; i++)
+            {
+                var mesh = existing.FirstOrDefault(m => m.name == parts[i].name);
+                bool created = mesh == null;
+                if (created) mesh = new Mesh { name = parts[i].name };
+                parts[i].part.Fill(mesh, cut.HasUv2);
+                if (created && AssetDatabase.LoadMainAssetAtPath(OpenMeshPath) == null)
+                {
+                    AssetFolders.EnsureForAsset(OpenMeshPath);
+                    AssetDatabase.CreateAsset(mesh, OpenMeshPath);
+                }
+                else if (created) AssetDatabase.AddObjectToAsset(mesh, OpenMeshPath);
+                else EditorUtility.SetDirty(mesh);
+                meshes[i] = mesh;
+            }
+            AssetDatabase.SaveAssets(); // the prefab saved after this refers to the sub-assets: they must be on disk
+            return meshes;
+        }
+
+        private static Renderer MeshPiece(Transform parent, string name, Mesh mesh, Material material, Transform probeAnchor)
+        {
+            var go = new GameObject(name, typeof(MeshFilter), typeof(MeshRenderer));
+            go.transform.SetParent(parent, false);
+            go.GetComponent<MeshFilter>().sharedMesh = mesh;
+            var renderer = go.GetComponent<MeshRenderer>();
+            renderer.sharedMaterial = material;
+            renderer.probeAnchor = probeAnchor;
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; // the closed one's shadows are baked
+            return renderer;
+        }
+
+        /// <summary>Scales the interior along Z so that its front sits at <paramref name="front"/> and its back at <paramref name="back"/>.</summary>
+        private static void FitDepth(Transform interior, Transform space, float front, float back)
+        {
+            float min = float.MaxValue, max = float.MinValue;
+            foreach (var filter in interior.GetComponentsInChildren<MeshFilter>(true))
+            {
+                if (filter.sharedMesh == null) continue;
+                var toSpace = space.worldToLocalMatrix * filter.transform.localToWorldMatrix;
+                var b = filter.sharedMesh.bounds;
+                for (int c = 0; c < 8; c++)
+                {
+                    var corner = new Vector3((c & 1) == 0 ? b.min.x : b.max.x, (c & 2) == 0 ? b.min.y : b.max.y, (c & 4) == 0 ? b.min.z : b.max.z);
+                    float z = toSpace.MultiplyPoint3x4(corner).z;
+                    min = Mathf.Min(min, z);
+                    max = Mathf.Max(max, z);
+                }
+            }
+            if (max - min < 0.01f || back - front < 0.01f) return;
+            float scale = (back - front) / (max - min);
+            interior.localScale = new Vector3(1f, 1f, scale);
+            interior.localPosition = new Vector3(0f, 0f, front - min * scale);
+        }
+
+        private static Transform Hinge(Transform parent, string name, Vector3 position, float side, Material material, Transform probeAnchor)
         {
             var hinge = new GameObject(name).transform;
             hinge.SetParent(parent, false);
             hinge.localPosition = position;
             float leaf = LockerWidth / 2f - 0.005f;
-            Block(hinge, "Leaf", new Vector3(side * leaf / 2f, LockerHeight / 2f, 0f), new Vector3(leaf, LockerHeight - 0.02f, 0.025f), material);
-            Block(hinge, "Handle", new Vector3(side * (leaf - 0.05f), 1.0f, -0.025f), new Vector3(0.02f, 0.16f, 0.025f), AssetDatabase.LoadAssetAtPath<Material>(HandleMaterial) ?? material);
+            Block(hinge, "Leaf", new Vector3(side * leaf / 2f, LockerHeight / 2f, 0f), new Vector3(leaf, LockerHeight - 0.02f, 0.025f), material, probeAnchor);
+            Block(hinge, "Handle", new Vector3(side * (leaf - 0.05f), 1.0f, -0.025f), new Vector3(0.02f, 0.16f, 0.025f),
+                AssetDatabase.LoadAssetAtPath<Material>(HandleMaterial) ?? material, probeAnchor);
             return hinge;
         }
 
@@ -167,7 +270,7 @@ namespace GameOff.EditorTools
             return model;
         }
 
-        private static void Block(Transform parent, string name, Vector3 center, Vector3 size, Material material)
+        private static void Block(Transform parent, string name, Vector3 center, Vector3 size, Material material, Transform probeAnchor)
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.name = name;
@@ -175,7 +278,9 @@ namespace GameOff.EditorTools
             cube.transform.SetParent(parent, false);
             cube.transform.localPosition = center;
             cube.transform.localScale = size;
-            if (material != null) cube.GetComponent<MeshRenderer>().sharedMaterial = material;
+            var renderer = cube.GetComponent<MeshRenderer>();
+            if (material != null) renderer.sharedMaterial = material;
+            renderer.probeAnchor = probeAnchor;
         }
 
         private static Material Graybox(string name) => AssetDatabase.LoadAssetAtPath<Material>(GrayboxMaterials + name + ".mat");

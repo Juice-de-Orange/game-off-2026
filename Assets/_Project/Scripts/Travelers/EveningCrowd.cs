@@ -11,17 +11,23 @@ namespace GameOff.Travelers
     /// P101: whoever the player let through today stands around the station after the shift, at fixed spots, and says a line when spoken
     /// to. They do not walk there, and they are gone in the morning. At most six at a time (skinned figures are expensive in the browser).
     /// P113: after an airlock that day they talk about that instead.
+    /// P134: every spot has a reason (a bar table, a window, the kiosk, the departure board, the hangar barrier), a facing and a pose;
+    /// the idle starts at a random point so they don't breathe in step.
     /// </summary>
     public class EveningCrowd : MonoBehaviour
     {
         private const int MaxFigures = 6;
         private static readonly int Idle = Animator.StringToHash("Idle");
+        private static readonly int Sit = Animator.StringToHash("Sit");
 
         [SerializeField] private DayManager day;
         [SerializeField] private CounterShift shift;
         [SerializeField] private DialogueTuning tuning;
         [SerializeField] private TravelerLooks looks;
+        [Tooltip("Filled in this order: the most recently admitted traveler gets the first spot.")]
         [SerializeField] private Transform[] spots;
+        [Tooltip("P134: pose per spot, same order as the spots; missing entries stand.")]
+        [SerializeField] private CrowdPose[] poses = new CrowdPose[0];
 
         private readonly List<TravelerData> _admitted = new List<TravelerData>();
         private readonly List<GameObject> _figures = new List<GameObject>();
@@ -49,10 +55,14 @@ namespace GameOff.Travelers
         {
             int count = Mathf.Min(_admitted.Count, Mathf.Min(MaxFigures, spots.Length));
             for (int i = 0; i < count; i++)
-                _figures.Add(Place(_admitted[_admitted.Count - 1 - i], spots[i]));
+                _figures.Add(Place(_admitted[_admitted.Count - 1 - i], spots[i], PoseAt(poses, i)));
         }
 
-        private GameObject Place(TravelerData traveler, Transform spot)
+        /// <summary>The pose for spot <paramref name="index"/>; spots without an entry stand.</summary>
+        public static CrowdPose PoseAt(CrowdPose[] poses, int index) =>
+            poses != null && index >= 0 && index < poses.Length ? poses[index] : CrowdPose.Stand;
+
+        private GameObject Place(TravelerData traveler, Transform spot, CrowdPose pose)
         {
             var figure = Instantiate(traveler.Model, spot.position, spot.rotation, transform);
             if (looks != null) looks.Apply(figure, traveler.DisplayName, traveler.Species);
@@ -60,7 +70,9 @@ namespace GameOff.Travelers
             if (animator != null)
             {
                 animator.cullingMode = AnimatorCullingMode.CullCompletely;
-                animator.Play(Idle);
+                // Sitting needs the clip in the controller; without it they stand. A random start keeps them out of step.
+                int state = pose == CrowdPose.Sit && animator.HasState(0, Sit) ? Sit : Idle;
+                animator.Play(state, 0, Random.value);
             }
             var body = figure.AddComponent<CapsuleCollider>();
             body.center = Vector3.up * 0.9f;
