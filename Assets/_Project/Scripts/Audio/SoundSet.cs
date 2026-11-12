@@ -47,6 +47,8 @@ namespace GameOff.Audio
         public Sound cassetteEject = new Sound();
         [Tooltip("The lever clicks to play when the first cassette goes in.")]
         public Sound cassettePlay = new Sound();
+        [Tooltip("P141: [E] on the lever, next song. The insert click until SFX_Cassette_Skip is delivered.")]
+        public Sound cassetteSkip = new Sound();
 
         [Header("Cleaning bot (P137)")]
         [Tooltip("Loops at the bot: 3D, only audible close by (PatrolBot).")]
@@ -64,5 +66,36 @@ namespace GameOff.Audio
 
         [Header("Menus")]
         public Sound uiClick = new Sound();
+
+        [Header("Voices (P144)")]
+        [Tooltip("P94: the murmurs of each species, filled by Build Sound Set from what is delivered. A species without any talks with " +
+                 "vendorGreet and the PA murmurs, each speaker at their own pitch.")]
+        public SpeciesVoice[] voices = new SpeciesVoice[0];
+        [Tooltip("Each speaker's own pitch lies between these two (stable per name, so vendors and travelers sound different).")]
+        public float voicePitchMin = 0.85f;
+        public float voicePitchMax = 1.15f;
+        [Tooltip("Each utterance changes the speaker's pitch by up to this share (0.02 = ±2 %).")]
+        [Range(0f, 0.2f)] public float voicePitchJitter = 0.02f;
+
+        /// <summary>P144: the delivered murmurs of this species (case doesn't matter); null while it has none.</summary>
+        public Sound[] VoicesOf(string species)
+        {
+            if (voices == null || string.IsNullOrEmpty(species)) return null;
+            foreach (var v in voices)
+                if (v != null && v.sounds != null && v.sounds.Length > 0 && string.Equals(v.species, species, System.StringComparison.OrdinalIgnoreCase))
+                    return v.sounds;
+            return null;
+        }
+
+        /// <summary>P144: what every species says until its own murmurs are delivered: vendorGreet and the PA murmurs that have a clip.</summary>
+        public Sound[] FallbackVoices()
+        {
+            var list = new System.Collections.Generic.List<Sound>();
+            if (vendorGreet != null && vendorGreet.clip != null) list.Add(vendorGreet);
+            if (paMurmurs != null)
+                foreach (var m in paMurmurs)
+                    if (m != null && m.clip != null) list.Add(m);
+            return list.ToArray();
+        }
     }
 }

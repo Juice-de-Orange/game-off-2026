@@ -15,6 +15,11 @@ namespace GameOff.Shops
     /// </summary>
     public class Barkeeper : MonoBehaviour
     {
+        /// <summary>P144: his pitch comes from this (VoicePicker.SpeakerPitch), like a vendor's from vendorName.</summary>
+        private const string VoiceName = "Barkeeper";
+
+        [Tooltip("P144: talks with this species' murmurs (Human, Vellani, Quobb, Sorvak, Xirrik).")]
+        [SerializeField] private string species = "Vellani";
         [SerializeField] private Interactable interactable;
         [SerializeField] private FirstPersonController player;
         [SerializeField] private DayManager day;
@@ -52,7 +57,7 @@ namespace GameOff.Shops
         private void OnInteract()
         {
             if (Economy == null || day == null || dialogs == null) return;
-            AudioManager.PlayOnVoice(s => s.vendorGreet);
+            AudioManager.PlaySpeech(species, VoiceName);
             player.SetControlEnabled(false);
             if (!IsOpen)
             {

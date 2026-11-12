@@ -9,14 +9,16 @@ using UnityEngine;
 namespace GameOff.Shops
 {
     /// <summary>
-    /// A vendor in the station (P46 placeholder: grey box until the model is delivered). E plays a placeholder voice tone
-    /// (Voice channel, until there are voicelines) and opens the trade window with this vendor's stock. Vendors whose stock is
+    /// A vendor in the station (P46 placeholder: grey box until the model is delivered). E plays a murmur of the vendor's species at
+    /// their own pitch (P144, AudioManager.PlaySpeech) and opens the trade window with this vendor's stock. Vendors whose stock is
     /// "open after shift only" are closed in the morning and during the shift (P09 phases); with the dev tools on, the
     /// closed dialog has a red Dev_force_Trade button.
     /// </summary>
     public class Vendor : MonoBehaviour
     {
         [SerializeField] private string vendorName = "Vendor";
+        [Tooltip("P144: talks with this species' murmurs (Human, Vellani, Quobb, Sorvak, Xirrik); the pitch comes from vendorName.")]
+        [SerializeField] private string species = "Human";
         [SerializeField] private VendorStock stock;
         [SerializeField] private Interactable interactable;
         [SerializeField] private TradeWindow window;
@@ -75,7 +77,7 @@ namespace GameOff.Shops
                 Debug.LogError($"[Shops] {vendorName} has no stock: run GameOff/Build Economy into Main.", this);
                 return;
             }
-            AudioManager.PlayOnVoice(s => s.vendorGreet); // until the vendors have voicelines
+            AudioManager.PlaySpeech(species, vendorName);
             if (IsOpen || dialogs == null)
             {
                 window.OpenTrade(stock);

@@ -16,7 +16,7 @@ namespace GameOff.EditorTools
     /// MUS_Floppy_01 until that is delivered: the next run picks the song up) and its label: the label tile is painted into a copy of the
     /// cassette albedo (Art/Textures/Items/Cassettes, generated) with its own material (Art/Materials/Items/M_Item_Cassette_0N).
     /// Scene pieces (called by RestSpotBuilder): the tape deck (SM_Counter_CassettePlayer with one [E] trigger per slot, a cassette model
-    /// per slot, lamps, lever, 3D music source) and a cassette lying somewhere to pick up.
+    /// per slot, lamps, lever with its own [E] trigger for the next song (P141), 3D music source) and a cassette lying somewhere to pick up.
     /// Sources: kiosk 01 + 05, Tobin Rask's gift 02 (StoryCharacterBuilder), lying in the hangar 03 and at the bar 04.
     /// </summary>
     public static class CassetteBuilder
@@ -91,7 +91,7 @@ namespace GameOff.EditorTools
                     init.ApplyModifiedPropertiesWithoutUndo();
                     created++;
                 }
-                var song = AssetDatabase.LoadAssetAtPath<AudioClip>(string.Format(SongFormat, t.number));
+                var song = Song(t.number);
                 if (song != null) songs++;
                 var so = new SerializedObject(item);
                 so.FindProperty("title").stringValue = t.title;
@@ -110,6 +110,19 @@ namespace GameOff.EditorTools
             }
             log.Add($"cassettes: {Tapes.Length} ({songs} own songs, the rest play {Path.GetFileNameWithoutExtension(FallbackSongPath)})");
             return kiosk;
+        }
+
+        /// <summary>P141: cassette N's own song MUS_Cassette_0N; a delivered file Unity hasn't imported yet is imported first. Null if missing.</summary>
+        private static AudioClip Song(int number)
+        {
+            string path = string.Format(SongFormat, number);
+            var song = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
+            if (song == null && File.Exists(path))
+            {
+                AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
+                song = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
+            }
+            return song;
         }
 
         /// <summary>The shared inventory icon as a sprite (icons are set up by hand; this one is set up here).</summary>
@@ -305,11 +318,63 @@ namespace GameOff.EditorTools
             SetArray(deck, "lamps", lamps.Cast<Object>().ToArray());
             var lever = Find(body, "Lever");
             if (lever != null) Set(deck, "lever", lever);
+            Set(deck, "skipLever", BuildLeverTrigger(root.transform, lever, triggers));
             Set(deck, "source", source);
             int lampCount = lamps.Count(l => l != null);
             if (model != null && (lampCount < 3 || lever == null))
                 Debug.LogWarning($"[CassetteBuilder] deck {id}: {lampCount}/3 lamps, lever {(lever != null ? "ok" : "MISSING")} in the model");
             return deck;
+        }
+
+        /// <summary>P141: what the lever's [E] trigger adds around its mesh; the lever itself is only a few centimetres.</summary>
+        private const float LeverMargin = 0.03f;
+
+        /// <summary>
+        /// P141: the [E] trigger around the lever (next song), in deck space: the lever's mesh plus a margin; without one a lever-sized
+        /// box above its pivot, or at the right end of the top for the grey box. Cut back where it would reach into a slot's trigger:
+        /// the nearest trigger takes the interaction ray, so they must not overlap.
+        /// </summary>
+        private static Interactable BuildLeverTrigger(Transform root, Transform lever, Interactable[] slots)
+        {
+            var leverSize = new Vector3(0.04f, 0.06f, 0.04f);
+            var box = new Bounds(new Vector3(DeckSize.x * 0.5f - 0.025f, DeckSize.y + leverSize.y * 0.5f, 0.04f), leverSize);
+            if (lever != null)
+            {
+                var renderers = lever.GetComponentsInChildren<Renderer>(true);
+                box = new Bounds(root.InverseTransformPoint(lever.position) + Vector3.up * (renderers.Length == 0 ? leverSize.y * 0.5f : 0f),
+                    renderers.Length == 0 ? leverSize : Vector3.zero);
+                foreach (var r in renderers)
+                {
+                    var b = r.localBounds;
+                    for (int c = 0; c < 8; c++)
+                    {
+                        var corner = new Vector3((c & 1) == 0 ? b.min.x : b.max.x, (c & 2) == 0 ? b.min.y : b.max.y, (c & 4) == 0 ? b.min.z : b.max.z);
+                        box.Encapsulate(root.InverseTransformPoint(r.transform.TransformPoint(corner)));
+                    }
+                }
+            }
+            box.Expand(2f * LeverMargin);
+            foreach (var slot in slots)
+            {
+                var slotCollider = slot != null ? slot.GetComponent<BoxCollider>() : null;
+                if (slotCollider == null) continue;
+                var slotBox = new Bounds(slot.transform.localPosition + slotCollider.center, slotCollider.size);
+                if (!box.Intersects(slotBox)) continue;
+                if (box.center.x >= slotBox.center.x) box.SetMinMax(new Vector3(slotBox.max.x, box.min.y, box.min.z), box.max);
+                else box.SetMinMax(box.min, new Vector3(slotBox.min.x, box.max.y, box.max.z));
+            }
+            if (box.size.x < 0.02f)
+                Debug.LogWarning($"[CassetteBuilder] {root.name}: the lever sits inside a slot's trigger, its [E] box is only {box.size.x * 100f:0} cm wide");
+
+            var t = new GameObject("Lever_Trigger", typeof(BoxCollider));
+            t.transform.SetParent(root, false);
+            t.transform.localPosition = box.center;
+            var collider = t.GetComponent<BoxCollider>();
+            collider.isTrigger = true;
+            collider.size = new Vector3(Mathf.Max(0.005f, box.size.x), box.size.y, box.size.z);
+            var trigger = t.AddComponent<Interactable>();
+            SetPrompt(trigger, "Next song");
+            return trigger;
         }
 
         /// <summary>A cassette lying flat at <paramref name="position"/> (a surface), turned by yaw, to pick up with [E].</summary>
