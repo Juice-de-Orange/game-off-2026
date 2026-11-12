@@ -10622,7 +10622,7 @@ feedback: []
 path: Assets/_Project/Art/Animations/Characters/A_NPC_Sit.fbx
 package: P134
 scene: Halle, Bar
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
