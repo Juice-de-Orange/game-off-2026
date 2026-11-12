@@ -10492,7 +10492,7 @@ feedback: []
 path: Assets/_Project/Audio/Music/MUS_Cassette_01.ogg
 package: P132
 scene: Schalterraum, Zimmer 103
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -10518,7 +10518,7 @@ feedback: []
 path: Assets/_Project/Audio/Music/MUS_Cassette_02.ogg
 package: P132
 scene: Schalterraum, Zimmer 103
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -10544,7 +10544,7 @@ feedback: []
 path: Assets/_Project/Audio/Music/MUS_Cassette_03.ogg
 package: P132
 scene: Schalterraum, Zimmer 103
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -10570,7 +10570,7 @@ feedback: []
 path: Assets/_Project/Audio/Music/MUS_Cassette_04.ogg
 package: P132
 scene: Schalterraum, Zimmer 103
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -10596,7 +10596,7 @@ feedback: []
 path: Assets/_Project/Audio/Music/MUS_Cassette_05.ogg
 package: P132
 scene: Schalterraum, Zimmer 103
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -10622,7 +10622,7 @@ feedback: []
 path: Assets/_Project/Art/Animations/Characters/A_NPC_Sit.fbx
 package: P134
 scene: Halle, Bar
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
