@@ -41,28 +41,30 @@ namespace GameOff.EditorTools
         /// <summary>Vendor placeholder: figure (box size) at a world position facing yaw; trigger box around it.</summary>
         private readonly struct VendorSpot
         {
-            public readonly string Name, Model, Stock;
+            public readonly string Name, Model, Stock, Species;
             public readonly Vector3 Figure, FigureSize, TriggerCenter, TriggerSize;
             public readonly float Yaw;
 
             public VendorSpot(string name, string model, string stock, Vector3 figure, Vector3 figureSize, float yaw,
-                Vector3 triggerCenter, Vector3 triggerSize)
+                Vector3 triggerCenter, Vector3 triggerSize, string species)
             {
                 Name = name; Model = model; Stock = stock; Figure = figure; FigureSize = figureSize; Yaw = yaw;
-                TriggerCenter = triggerCenter; TriggerSize = triggerSize;
+                TriggerCenter = triggerCenter; TriggerSize = triggerSize; Species = species;
             }
         }
 
         // Positions from docs/STATION.md and the delivered counters (measured 05.11.): kiosk counter x 8.2..9 z -5.4..-2.6 with the
         // hatch to the hall at x 8; bar counter x 14.15..14.85 z 1..7; bar stool 4 at x 13.6 z 6.4. Yaw -90 = facing the hall (-x).
+        // Species (P144, whose murmurs they talk with): Holly an older woman, the dealer a hooded man; the barkeeper's long head and
+        // neck are closest to the Vellani.
         private static readonly VendorSpot[] Vendors =
         {
             new VendorSpot("Holly", "SM_NPC_Holly", "Stock_Kiosk_Test", new Vector3(9.6f, 0f, -4f), new Vector3(0.55f, 1.7f, 0.45f), -90f,
-                new Vector3(9.0f, 1.2f, -4f), new Vector3(2.2f, 1.6f, 2.6f)),
+                new Vector3(9.0f, 1.2f, -4f), new Vector3(2.2f, 1.6f, 2.6f), "Human"),
             new VendorSpot("Barkeeper", "SM_NPC_Barkeeper", "Stock_Bar_Test", new Vector3(15.5f, 0f, 4f), new Vector3(0.8f, 1.9f, 0.6f), -90f,
-                new Vector3(15.1f, 1.25f, 4f), new Vector3(2.2f, 1.5f, 2.0f)),
+                new Vector3(15.1f, 1.25f, 4f), new Vector3(2.2f, 1.5f, 2.0f), "Vellani"),
             new VendorSpot("Dealer", "SM_NPC_Dealer", "Stock_BlackMarket_Test", new Vector3(13.6f, 0.74f, 6.4f), new Vector3(0.6f, 1.3f, 0.6f), 90f,
-                new Vector3(13.6f, 1.05f, 6.4f), new Vector3(1.0f, 1.7f, 1.0f)),
+                new Vector3(13.6f, 1.05f, 6.4f), new Vector3(1.0f, 1.7f, 1.0f), "Human"),
         };
 
         [MenuItem("GameOff/Build Economy")]
@@ -1070,12 +1072,13 @@ namespace GameOff.EditorTools
             {
                 // P65: the barkeeper trades rumours for wished items, not goods for money.
                 var barkeeper = go.AddComponent<Barkeeper>();
+                SetFields(barkeeper, ("species", spot.Species)); // P144
                 Set(barkeeper, "interactable", interactable);
                 Set(barkeeper, "debugView", debugView);
                 return;
             }
             var vendor = go.AddComponent<Vendor>();
-            SetFields(vendor, ("vendorName", spot.Name));
+            SetFields(vendor, ("vendorName", spot.Name), ("species", spot.Species));
             Set(vendor, "stock", stock);
             Set(vendor, "interactable", interactable);
             Set(vendor, "window", trade);

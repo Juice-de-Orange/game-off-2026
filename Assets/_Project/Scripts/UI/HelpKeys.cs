@@ -19,6 +19,7 @@ namespace GameOff.UI
             ("[W] [A] [S] [D] / arrows", "Walk"),
             ("Mouse", "Look around"),
             ("[E]", "Use what you look at"),
+            ("[E] on a tape deck's lever", "Next song"), // P141
             ("[I]", "Inventory"),
             ("[Esc] / [P]", "Pause"),
         };

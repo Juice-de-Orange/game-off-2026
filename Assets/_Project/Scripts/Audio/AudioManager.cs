@@ -21,6 +21,7 @@ namespace GameOff.Audio
     ///   AudioManager.PlaySfxAt(clip, pos)   – 3D one-shot on the SFX group at a world position
     ///   AudioManager.Play(s => s.drawerOpen) – 2D one-shot from Data/Audio/SoundSet with its volume
     ///   AudioManager.PlayVoice(clip)        – 2D on the Voice group, replaces the current line
+    ///   AudioManager.PlaySpeech(species, name) – P144: a murmur of the species at the speaker's own pitch (Voice group)
     /// AudioSources placed in scenes without a mixer group (e.g. the doors from the station builder) are routed to SFX
     /// on every scene load. Music and previews keep playing in the pause menu (ignoreListenerPause).
     /// </summary>
@@ -164,6 +165,56 @@ namespace GameOff.Audio
             if (Instance == null || Instance.sounds == null) return;
             var sound = pick(Instance.sounds);
             if (sound != null && sound.clip != null) Instance.voice.PlayOneShot(sound.clip, sound.volume);
+        }
+
+        /// <summary>P144: a few sources of their own for speech, so its pitch never touches the announcer's or another speaker's sound.</summary>
+        private const int SpeechSources = 3;
+        /// <summary>From the one used longest ago to the one used last.</summary>
+        private readonly List<AudioSource> _speech = new List<AudioSource>();
+        private Sound[] _fallbackVoices;
+        /// <summary>P144: the murmur each voice set played last (per set, so nobody hears the same one twice in a row).</summary>
+        private readonly Dictionary<Sound[], int> _lastVoice = new Dictionary<Sound[], int>();
+
+        /// <summary>
+        /// P144: someone starts to talk (a vendor greets, a traveler's line begins): one murmur of their species (P94; vendorGreet and
+        /// the PA murmurs until those are delivered), at random but never the one this set played last, at the speaker's own pitch
+        /// (stable per name) with a small change each time. 2D on the Voice group; doesn't cut off announcements or PlayVoice lines.
+        /// </summary>
+        public static void PlaySpeech(string species, string speaker)
+        {
+            if (Instance == null || Instance.sounds == null) return;
+            var s = Instance.sounds;
+            var set = s.VoicesOf(species) ?? (Instance._fallbackVoices ??= s.FallbackVoices());
+            int pick = VoicePicker.Next(set.Length, Instance._lastVoice.TryGetValue(set, out int last) ? last : -1, UnityEngine.Random.value);
+            if (pick < 0) return;
+            Instance._lastVoice[set] = pick;
+            var sound = set[pick];
+            if (sound == null || sound.clip == null) return;
+            var source = Instance.SpeechSource();
+            source.clip = sound.clip; // Play, not PlayOneShot: one sound per source, so its pitch bends nothing else
+            source.volume = sound.volume;
+            source.pitch = VoicePicker.Utterance(VoicePicker.SpeakerPitch(speaker, s.voicePitchMin, s.voicePitchMax), s.voicePitchJitter,
+                UnityEngine.Random.value);
+            source.Play();
+        }
+
+        /// <summary>A silent speech source, else the one used longest ago (its murmur is cut off); made on first use.</summary>
+        private AudioSource SpeechSource()
+        {
+            AudioSource pick = null;
+            foreach (var source in _speech)
+                if (source != null && !source.isPlaying) { pick = source; break; }
+            if (pick == null && _speech.Count < SpeechSources)
+            {
+                pick = gameObject.AddComponent<AudioSource>();
+                pick.playOnAwake = false;
+                pick.spatialBlend = 0f;
+                pick.outputAudioMixerGroup = voiceGroup;
+            }
+            if (pick == null) pick = _speech[0];
+            _speech.Remove(pick);
+            _speech.Add(pick);
+            return pick;
         }
 
         private int _lastAnnouncement = -1;

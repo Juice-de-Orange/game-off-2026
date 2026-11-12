@@ -12,6 +12,7 @@ namespace GameOff.Rest
     /// P132: the tape deck with three slots, in the counter room and in room 103 (where the floppy player of P117 stood). [E] on an
     /// empty slot puts the first cassette of the inventory in, [E] on a full one takes it back into the inventory; no menus. The deck
     /// plays the cassettes in slot order and starts over (CassettePlaylist); the slot lamps show wait and play, the lever play or stop.
+    /// P141: [E] on the lever skips to the next cassette (1→2→3→1), a single one starts over, an empty deck ignores it.
     /// Music in 3D on the Music group (the options slider applies), audible in the room only. The morning save keeps the slots by id
     /// (SaveGame). Built by RestSpotBuilder.
     /// </summary>
@@ -34,6 +35,10 @@ namespace GameOff.Rest
         [SerializeField] private float leverPlayAngle = -25f;
         [SerializeField] private float leverStopAngle = 25f;
         [SerializeField] private float leverDegreesPerSecond = 400f;
+        [Tooltip("P141: the [E] trigger around the lever: next song.")]
+        [SerializeField] private Interactable skipLever;
+        [Tooltip("P141: on a skip the lever flicks toward stop for this long, then back to play.")]
+        [SerializeField] private float leverFlickSeconds = 0.12f;
         [SerializeField] private AudioSource source;
         [Tooltip("Shows the hint when you have no cassette with you.")]
         [SerializeField] private DayManager day;
@@ -44,6 +49,9 @@ namespace GameOff.Rest
         [SerializeField] private string insertPrompt = "Insert {0}";
         [SerializeField] private string noCassettePrompt = "Insert a cassette";
         [SerializeField] private string ejectPrompt = "Take out {0}";
+        [SerializeField] private string skipPrompt = "Next song";
+        [Tooltip("The lever with only one cassette in.")]
+        [SerializeField] private string restartPrompt = "Play {0} from the start";
         [SerializeField] private string noCassetteHint = "You have no cassette with you. The kiosk sells some, and some are lying around the station.";
 
         private CassettePlaylist _playlist;
@@ -52,6 +60,8 @@ namespace GameOff.Rest
         private Vector2[] _lampOffsets = new Vector2[0];
         private Quaternion _leverRest = Quaternion.identity;
         private float _leverAngle;
+        /// <summary>P141: until then (Time.time) the lever heads for stop after a skip.</summary>
+        private float _leverFlickUntil;
         /// <summary>The cassette whose song is on the source (null = stopped).</summary>
         private CassetteData _onSource;
         /// <summary>A cassette went into the empty deck: it starts at _startAt (Time.time), after the lever.</summary>
@@ -123,12 +133,14 @@ namespace GameOff.Rest
                 _handlers[i] = () => Use(slot);
                 if (slots[i] != null) slots[i].OnInteract.AddListener(_handlers[i]);
             }
+            if (skipLever != null) skipLever.OnInteract.AddListener(Skip);
         }
 
         private void OnDisable()
         {
             for (int i = 0; i < slots.Length && i < _handlers.Length; i++)
                 if (slots[i] != null) slots[i].OnInteract.RemoveListener(_handlers[i]);
+            if (skipLever != null) skipLever.OnInteract.RemoveListener(Skip);
         }
 
         private void OnDestroy()
@@ -201,6 +213,17 @@ namespace GameOff.Rest
             RefreshPrompts();
         }
 
+        /// <summary>P141, [E] on the lever: the next cassette in slot order, a single one from the start; an empty deck ignores it.</summary>
+        private void Skip()
+        {
+            if (!Playlist.Skip()) return;
+            AudioManager.PlayAt(s => s.cassetteSkip, skipLever != null ? skipLever.transform.position : transform.position, soundDistance);
+            _leverFlickUntil = Time.time + leverFlickSeconds;
+            if (_starting) ShowSlots(); // the lever is still going down after an insert: that pending start plays the new one
+            else StartTrack(); // also counts the played seconds from zero again: only the new song's own end advances the tape
+            RefreshPrompts();
+        }
+
         /// <summary>Puts the playing cassette's song on the source (or stops it); a single cassette loops seamlessly.</summary>
         private void StartTrack()
         {
@@ -250,7 +273,7 @@ namespace GameOff.Rest
         private void ApplyLever()
         {
             if (lever == null) return;
-            float target = Playlist.Current != null && !_starting ? leverPlayAngle : leverStopAngle;
+            float target = Playlist.Current != null && !_starting && Time.time >= _leverFlickUntil ? leverPlayAngle : leverStopAngle;
             _leverAngle = Mathf.MoveTowards(_leverAngle, target, leverDegreesPerSecond * Time.deltaTime);
             lever.localRotation = _leverRest * Quaternion.Euler(_leverAngle, 0f, 0f);
         }
@@ -265,6 +288,10 @@ namespace GameOff.Rest
                 slots[i].SetPrompt(cassette != null ? string.Format(ejectPrompt, cassette.Title)
                     : next != null ? string.Format(insertPrompt, next.Title) : noCassettePrompt);
             }
+            if (skipLever == null) return;
+            var current = Playlist.Current;
+            skipLever.SetInteractionEnabled(current != null); // nothing to skip in an empty deck: no prompt either
+            skipLever.SetPrompt(current != null && Playlist.Count == 1 ? string.Format(restartPrompt, current.Title) : skipPrompt);
         }
     }
 }

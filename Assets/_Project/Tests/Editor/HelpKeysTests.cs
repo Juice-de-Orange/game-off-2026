@@ -61,6 +61,13 @@ namespace GameOff.Tests
         }
 
         [Test]
+        public void OnFootTheTapeDeckLeverSkips()
+        {
+            // P141: the lever of a tape deck is its own [E] target (next song).
+            StringAssert.Contains("Next song", All(HelpSituation.Walking));
+        }
+
+        [Test]
         public void PinBoardHasNoPaging()
         {
             // P130 removed the board's history: no A/D leafing any more.

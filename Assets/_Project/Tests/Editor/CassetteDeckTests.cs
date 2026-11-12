@@ -8,7 +8,7 @@ namespace GameOff.Tests
 {
     /// <summary>
     /// P132: the tape deck's playlist (CassettePlaylist): slots, slot order, starting over, taking out and putting back into the
-    /// inventory; cassettes are no goods (no vendor buys them).
+    /// inventory; cassettes are no goods (no vendor buys them). P141: the lever skips to the next cassette.
     /// </summary>
     public class CassetteDeckTests
     {
@@ -113,6 +113,82 @@ namespace GameOff.Tests
             Assert.IsNull(deck.Current, "the last one out: silence");
             Assert.AreEqual(-1, deck.Playing);
             Assert.IsNull(deck.Eject(2), "an empty slot gives nothing");
+        }
+
+        [Test]
+        public void Skip_GoesToTheNextCassette_AndRoundAgain()
+        {
+            // P141: the lever, three cassettes in: 1 -> 2 -> 3 -> 1.
+            var a = Tape("A");
+            var b = Tape("B");
+            var c = Tape("C");
+            var deck = new CassettePlaylist(3);
+            deck.Insert(0, a);
+            deck.Insert(1, b);
+            deck.Insert(2, c);
+            Assert.IsTrue(deck.Skip());
+            Assert.AreSame(b, deck.Current);
+            Assert.IsTrue(deck.Skip());
+            Assert.AreSame(c, deck.Current);
+            Assert.IsTrue(deck.Skip());
+            Assert.AreSame(a, deck.Current, "after the last one the first again");
+            Assert.AreEqual(3, deck.Count, "skipping takes nothing out");
+            Assert.AreEqual(CassettePlaylist.Lamp.Play, deck.LampOf(0));
+            Assert.AreEqual(CassettePlaylist.Lamp.Wait, deck.LampOf(1));
+        }
+
+        [Test]
+        public void Skip_PassesEmptySlots_AndASingleCassetteStartsOver()
+        {
+            var a = Tape("A");
+            var c = Tape("C");
+            var deck = new CassettePlaylist(3);
+            deck.Insert(2, c);
+            deck.Insert(0, a);
+            Assert.IsTrue(deck.Skip());
+            Assert.AreSame(a, deck.Current, "past the end and the empty middle slot");
+            Assert.IsTrue(deck.Skip());
+            Assert.AreSame(c, deck.Current);
+
+            var single = new CassettePlaylist(3);
+            single.Insert(1, a);
+            Assert.IsTrue(single.Skip(), "one cassette: it starts over");
+            Assert.AreEqual(1, single.Playing);
+            Assert.AreSame(a, single.Current);
+        }
+
+        [Test]
+        public void Skip_OnAnEmptyDeck_DoesNothing()
+        {
+            var deck = new CassettePlaylist(3);
+            Assert.IsFalse(deck.Skip());
+            Assert.AreEqual(-1, deck.Playing);
+            Assert.IsNull(deck.Current);
+
+            var a = Tape("A");
+            deck.Insert(1, a);
+            deck.Eject(1);
+            Assert.IsFalse(deck.Skip(), "emptied again");
+            Assert.IsNull(deck.Current);
+        }
+
+        [Test]
+        public void Skip_ThenATrackEnd_GoesOnFromTheSkippedTo()
+        {
+            var a = Tape("A");
+            var b = Tape("B");
+            var c = Tape("C");
+            var deck = new CassettePlaylist(3);
+            deck.Insert(0, a);
+            deck.Insert(1, b);
+            deck.Insert(2, c);
+            deck.Skip(); // B
+            deck.Skip(); // C
+            deck.Advance(); // C played to its end
+            Assert.AreSame(a, deck.Current);
+            Assert.AreSame(b, deck.Eject(1));
+            deck.Skip();
+            Assert.AreSame(c, deck.Current, "the slot taken out is passed");
         }
 
         [Test]

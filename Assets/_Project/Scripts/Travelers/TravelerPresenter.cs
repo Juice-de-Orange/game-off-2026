@@ -218,6 +218,7 @@ namespace GameOff.Travelers
         {
             bubble.Say(line, traveler.IsAlien, _head != null ? _head : standSpot);
             Play(Talk);
+            AudioManager.PlaySpeech(traveler.Species, traveler.DisplayName); // P144: one murmur as the line starts, their own pitch
         }
 
         private void OnBubbleFinished()

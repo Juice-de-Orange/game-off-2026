@@ -6,7 +6,7 @@ namespace GameOff.Rest
     /// <summary>
     /// P132: what a tape deck holds and plays, without Unity (EditMode-tested). Slots in order; the deck plays the filled slots one
     /// after the other and starts over (a single cassette repeats). Inserting into an empty deck starts that cassette; inserting while
-    /// one plays only queues it. Taking out the playing cassette goes on with the next one in slot order.
+    /// one plays only queues it. Taking out the playing cassette goes on with the next one in slot order. P141: the lever skips (Skip).
     /// </summary>
     public class CassettePlaylist
     {
@@ -67,6 +67,17 @@ namespace GameOff.Rest
         {
             Playing = NextFilledAfter(Playing);
             return Playing;
+        }
+
+        /// <summary>
+        /// P141, the lever: on to the next filled slot (1→2→3→1); a single cassette stays and starts over. False on an empty deck,
+        /// where nothing changes.
+        /// </summary>
+        public bool Skip()
+        {
+            if (Playing < 0) return false;
+            Advance();
+            return true;
         }
 
         /// <summary>The first cassette of the inventory into this slot (it leaves the inventory). Null if there is none or the slot is taken.</summary>
