@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
+  m_Name: T_Story_Accomplice_6_Airlocked
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
+  displayName: ILSA KOVAL
+  species: Human
+  model: {fileID: 900898462300460308, guid: 77e75e7a390db8243a63b0891cf385b1, type: 3}
+  documents:
+  - {fileID: 11400000, guid: 5491956270a6ecc4799d661a8944a648, type: 2}
+  - {fileID: 11400000, guid: 3090bb0a21a69ea4280cbfc90c3f355e, type: 2}
+  intendedVerdict: 0
+  intendedReason: 'The Shifter''s accomplice, day 6: papers clean (the question is
+    the decision)'
+  trickIntended: 0
+  storyTag: P76 character, day 6
+  greeting: You put a man out of the airlock three days ago because a poster told
+    you to. He died for us, officer - for a fair wage, a way home, an end to all
+    this.
+  answers:
+  - key: purpose
+    line: Work. Someone has to do it, now that he can't.
+  - key: route
+    line: Torvik. The long way round - fewer cameras.
+  reactionAdmitted: 
+  reactionDenied: 

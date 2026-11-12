@@ -22,6 +22,8 @@ MonoBehaviour:
     slot: 1
     condition: 1
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -50,6 +52,8 @@ MonoBehaviour:
     slot: 0
     condition: 2
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 2
     onDeny: 1
     onArrest: 3
@@ -76,6 +80,7 @@ MonoBehaviour:
       announcement: Inspector Korr commends the officer at lane two for correct conduct.
         A bonus has been paid.
       letterLine: 
+      setFlag: 
     - when: 2
       onlyIfArrested: 0
       marketEvent: {fileID: 0}
@@ -93,6 +98,7 @@ MonoBehaviour:
       announcement: Inspector Korr reports irregularities at lane two. The officer's
         wage has been docked.
       letterLine: 
+      setFlag: 
     entrustItem: {fileID: 0}
     entrustDeposit: 0
     keepsake: {fileID: 0}
@@ -112,6 +118,8 @@ MonoBehaviour:
     slot: 0
     condition: 2
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2

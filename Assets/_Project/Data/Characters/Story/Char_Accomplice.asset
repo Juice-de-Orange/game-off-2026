@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 437759cb285558443bccd8f63941e5a9, type: 3}
+  m_Name: Char_Accomplice
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Characters.RecurringCharacter
+  id: accomplice
+  displayName: ILSA KOVAL
+  species: Human
+  appearances:
+  - traveler: {fileID: 11400000, guid: b05551e8fe5ffe8418282f5f91494a93, type: 2}
+    dayFrom: 6
+    dayTo: 6
+    slot: 0
+    condition: 1
+    flag: joined_resistance
+    onlyIfFlag: shifter_airlocked
+    unlessFlag: 
+    onAdmit: 1
+    onDeny: 3
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
+    questionTitle: JOIN THE RESISTANCE?
+    questionBody: '"He can''t ask you any more, so I will." "We need someone at this
+      counter. Nobody has to know. Say yes, and when this is over, you and your family
+      go free."'
+    acceptLabel: JOIN
+    declineLabel: REFUSE
+    acceptLine: Then he didn't die for nothing. We'll be in touch. Now stamp me through,
+      as if nothing happened.
+    declineLine: So he died for nothing. Forget we ever talked, officer.
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
+  - traveler: {fileID: 11400000, guid: de7077d72419ff04aa8af876761d1ee2, type: 2}
+    dayFrom: 6
+    dayTo: 6
+    slot: 0
+    condition: 1
+    flag: joined_resistance
+    onlyIfFlag: shifter_arrested
+    unlessFlag: 
+    onAdmit: 1
+    onDeny: 3
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
+    questionTitle: JOIN THE RESISTANCE?
+    questionBody: '"He can''t come to this counter again, so I came instead." "We
+      need someone at this counter. Nobody has to know. Say yes, and when this is
+      over, you and your family go free."'
+    acceptLabel: JOIN
+    declineLabel: REFUSE
+    acceptLine: He said you'd come round. We'll be in touch. Now stamp me through,
+      as if nothing happened.
+    declineLine: He said you might. Forget we ever talked, officer.
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
+  - traveler: {fileID: 11400000, guid: 239abc70622730147a72ddb27a6661b6, type: 2}
+    dayFrom: 7
+    dayTo: 7
+    slot: 1
+    condition: 7
+    flag: joined_resistance
+    onlyIfFlag: 
+    unlessFlag: 
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: Officer. Thank you, truly. There is no resistance. There
+      never was. He worked for the Directorate, and so do I. Only a list of names...
+      and yours is on it now.
+    greetingAfterBetrayed: Officer. Thank you, truly. There is no resistance. There
+      never was. He worked for the Directorate, and so do I. Only a list of names...
+      and yours is on it now.
+    greetingAfterConfiscated: Officer. Thank you, truly. There is no resistance.
+      There never was. He worked for the Directorate, and so do I. Only a list of
+      names... and yours is on it now.
+    eventLines: []
+    consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: AIRLOCKED
+    endingBody: 'You joined a resistance that never existed. The woman who came in
+      his place worked for the Directorate, like the man with a hundred faces, and
+      the list she carried had your name on it.
+
+
+      The outer door of Kestrel-9
+      opens at 07:42. Nobody at home is told why the money stopped.'
+    endingWarning: SECURITY TO CUSTOMS. OFFICER, STEP AWAY FROM THE COUNTER.
+  - traveler: {fileID: 11400000, guid: dfadb4c3922a5914c91fdc98132a6e69, type: 2}
+    dayFrom: 7
+    dayTo: 7
+    slot: 0
+    condition: 8
+    flag: joined_resistance
+    onlyIfFlag: 
+    unlessFlag: 
+    onAdmit: 1
+    onDeny: 2
+    onArrest: 2
+    onAirlock: 5
+    greetingAfterHelped: 
+    greetingAfterBetrayed: 
+    greetingAfterConfiscated: 
+    eventLines: []
+    consequences: []
+    entrustItem: {fileID: 0}
+    entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
+    questionTitle: 
+    questionBody: 
+    acceptLabel: YES
+    declineLabel: NO
+    acceptLine: 
+    declineLine: 
+    endingTitle: 
+    endingBody: 
+    endingWarning: 
+  kinName: 
+  kinSpecies: Human
+  kinFateByYou: 
+  kinFateByOthers: 
+  summaryHelped: Ilsa Koval reports to the Directorate from another station now.
+    Next to your name, her file says "reliable".
+  summaryBetrayed: Ilsa Koval was arrested at lane two - and walked out an hour later,
+    by order from above.
+  summaryNeutral: Ilsa Koval left Kestrel on the next shuttle. Nobody asked her where
+    to.
+  summaryDead: Ilsa Koval went out of the airlock. The Directorate sent a wreath,
+    and nobody at the station knew why.

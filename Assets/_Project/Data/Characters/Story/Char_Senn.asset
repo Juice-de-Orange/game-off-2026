@@ -22,6 +22,8 @@ MonoBehaviour:
     slot: 0
     condition: 1
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 3
     onArrest: 4
@@ -49,6 +51,7 @@ MonoBehaviour:
       wageNote: 
       announcement: 
       letterLine: 
+      setFlag: 
     entrustItem: {fileID: 11400000, guid: 67974c849890c5b4aadcb23660d4f06f, type: 2}
     entrustDeposit: 20
     keepsake: {fileID: 0}
@@ -68,6 +71,8 @@ MonoBehaviour:
     slot: 0
     condition: 3
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -94,6 +99,7 @@ MonoBehaviour:
       wageNote: 
       announcement: 
       letterLine: Dr. Senn sent medicine on the drone. He says you earned it.
+      setFlag: 
     entrustItem: {fileID: 0}
     entrustDeposit: 0
     keepsake: {fileID: 0}
@@ -113,6 +119,8 @@ MonoBehaviour:
     slot: 0
     condition: 3
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2

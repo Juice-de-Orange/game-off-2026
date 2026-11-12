@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.DayRules
   date: 2290-11-11
   rules:
-  - rid: 1231853443302031367
-  - rid: 1231853443302031368
+  - rid: 1231853538363310087
+  - rid: 1231853538363310088
   wanted:
   - name: LIRA VOSS
     id: LV-9931-02
@@ -24,17 +24,16 @@ MonoBehaviour:
   travelers:
   - {fileID: 11400000, guid: 862801b3b6b0dcf418a4b2e8032cbf1a, type: 2}
   - {fileID: 11400000, guid: 4f4f39609f6a48745a5808949c8aa5e1, type: 2}
-  - {fileID: 11400000, guid: 6badb8167f0a7e24cbcf0834f80051fa, type: 2}
   - {fileID: 11400000, guid: 620c5c8d2b30f2a4986aba4618bb6d9a, type: 2}
   - {fileID: 11400000, guid: ce5a89cf7ce49ba4aa43a704c69f42f0, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 1231853443302031367
+    - rid: 1231853538363310087
       type: {class: QuarantineRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         station: KETRA STATION
-    - rid: 1231853443302031368
+    - rid: 1231853538363310088
       type: {class: RequireDocumentRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         document: 2

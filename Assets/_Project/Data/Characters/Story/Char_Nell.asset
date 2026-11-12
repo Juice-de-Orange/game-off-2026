@@ -22,6 +22,8 @@ MonoBehaviour:
     slot: 0
     condition: 1
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -50,6 +52,8 @@ MonoBehaviour:
     slot: 0
     condition: 2
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -79,6 +83,8 @@ MonoBehaviour:
     slot: 0
     condition: 2
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2

@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4709148513959452120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9045931814096008582}
+  - component: {fileID: 3052611049046583133}
+  m_Layer: 0
+  m_Name: PF_GuardRounds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9045931814096008582
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4709148513959452120}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3052611049046583133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4709148513959452120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b01bb0e87f779b340b87eef0bac1d532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Station.GuardRounds
+  day: {fileID: 0}
+  player: {fileID: 0}
+  tuning: {fileID: 11400000, guid: e58378a507cfd5640bc1d6847a5f4349, type: 2}
+  guardModel: {fileID: 5404092951187086190, guid: 38df4f46fcb35b64c8b94415d656017a, type: 3}
+  routes:
+  - name: Hall
+    points:
+    - {x: -15, y: 0, z: 1}
+    - {x: -4.8, y: 0, z: -0.6}
+    - {x: 4.4, y: 0, z: -2.6}
+    - {x: 0, y: 0, z: 3.2}
+    yaws:
+    - 270
+    - 220
+    - 165
+    - 0
+  - name: Hangar
+    points:
+    - {x: -3, y: 0, z: -15}
+    - {x: -2.5, y: 0, z: -28}
+    - {x: 2, y: 0, z: -36}
+    - {x: 3.5, y: 0, z: -29}
+    yaws:
+    - 90
+    - 270
+    - 180
+    - 90

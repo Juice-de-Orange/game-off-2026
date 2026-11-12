@@ -22,6 +22,8 @@ MonoBehaviour:
     slot: 0
     condition: 1
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -53,6 +55,8 @@ MonoBehaviour:
     slot: 0
     condition: 2
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -78,6 +82,7 @@ MonoBehaviour:
       wageNote: 
       announcement: 
       letterLine: 
+      setFlag: 
     entrustItem: {fileID: 0}
     entrustDeposit: 0
     keepsake: {fileID: 0}
@@ -97,6 +102,8 @@ MonoBehaviour:
     slot: 0
     condition: 3
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2

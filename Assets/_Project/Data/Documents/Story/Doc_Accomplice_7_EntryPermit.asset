@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddc5e85903ecd443a8bdbe5f40e8659, type: 3}
+  m_Name: Doc_Accomplice_7_EntryPermit
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Documents.DocumentData
+  type: 1
+  photo: {fileID: 2800000, guid: 5ec1f76d1911b2f4384d9f978c828fc2, type: 3}
+  fields:
+  - key: name
+    value: ILSA KOVAL
+  - key: id
+    value: AB-6277-77
+  - key: purpose
+    value: TRANSIT
+  - key: duration
+    value: 3 CYCLES
+  - key: expires
+    value: 2290-11-30
+  - key: issued
+    value: ASKA-3 CONSULATE
+  - key: route
+    value: TORVIK > KESTREL-9
+  forgedSeal: 0

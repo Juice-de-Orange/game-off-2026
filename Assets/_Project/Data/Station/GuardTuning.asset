@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdef45cf7c224c54f9c4efd9509947b1, type: 3}
+  m_Name: GuardTuning
+  m_EditorClassIdentifier: Assembly-CSharp::GameOff.Station.GuardTuning
+  walkSpeed: 1.3
+  pauseSeconds: {x: 2, y: 5}
+  lookAroundDegrees: 45
+  turnDegreesPerSecond: 120
+  giveWayMeters: 1.2
+  stuckSeconds: 4
+  talkSeconds: 3
+  lineSeconds: 5
+  animationBlendSeconds: 0.2
+  prompt: Talk to the guard
+  speakerName: Guard
+  lines:
+  - Move along, officer. Nothing to see here.
+  - Quiet so far. Let's keep it that way.
+  - Eyes open. Somebody always tries something.
+  - You stamp them, we carry them. Fair split.
+  - Just walking my round. Don't mind me.
+  - Keep your papers straight and we'll get along.
+  - Station rules, officer. Not mine.
+  - Long queue today. Long night, too.
+  curfewLines:
+  - Curfew's on, officer. Off to your room.
+  - Twenty-three hundred. The station sleeps now. So should you.
+  - Late for a walk. Get some sleep.

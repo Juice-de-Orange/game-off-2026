@@ -22,6 +22,8 @@ MonoBehaviour:
     slot: 2
     condition: 1
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -52,6 +54,8 @@ MonoBehaviour:
     slot: 0
     condition: 3
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -79,6 +83,7 @@ MonoBehaviour:
       announcement: 
       letterLine: A woman called Mira left a tin of stew at our door. She said you
         would know why.
+      setFlag: 
     entrustItem: {fileID: 0}
     entrustDeposit: 0
     keepsake: {fileID: 0}
@@ -98,6 +103,8 @@ MonoBehaviour:
     slot: 0
     condition: 4
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -126,6 +133,8 @@ MonoBehaviour:
     slot: 0
     condition: 2
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2

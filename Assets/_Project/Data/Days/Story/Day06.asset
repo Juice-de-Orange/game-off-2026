@@ -14,22 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.DayRules
   date: 2290-11-10
   rules:
-  - rid: 1231853443302031372
-  - rid: 1231853443302031373
+  - rid: 1231853538363310092
+  - rid: 1231853538363310093
   wanted: []
   travelers:
   - {fileID: 11400000, guid: 7403d0c0b7e23f2469b51febd503ed27, type: 2}
   - {fileID: 11400000, guid: c3fe1a5509fb59149a671f041098629f, type: 2}
   - {fileID: 11400000, guid: a258fdcaaa8eb184a9b59f66afbacd7c, type: 2}
-  - {fileID: 11400000, guid: fd59bbce16080a84b841c928aac58619, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 1231853443302031372
+    - rid: 1231853538363310092
       type: {class: ForbiddenGoodsRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         keyword: STIMULANT
-    - rid: 1231853443302031373
+    - rid: 1231853538363310093
       type: {class: RequireDocumentRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         document: 2

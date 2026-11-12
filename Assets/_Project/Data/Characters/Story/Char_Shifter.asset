@@ -22,6 +22,8 @@ MonoBehaviour:
     slot: 0
     condition: 1
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -50,6 +52,8 @@ MonoBehaviour:
     slot: 0
     condition: 2
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -80,6 +84,8 @@ MonoBehaviour:
     slot: 0
     condition: 2
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 3
     onArrest: 3
@@ -105,6 +111,7 @@ MonoBehaviour:
       wageNote: 
       announcement: 
       letterLine: 
+      setFlag: 
     - when: 1
       onlyIfArrested: 0
       marketEvent: {fileID: 0}
@@ -122,6 +129,7 @@ MonoBehaviour:
       announcement: 
       letterLine: 'A parcel came with no sender. Inside was a note: "Thank you, officer."
         Mom burned it.'
+      setFlag: 
     - when: 3
       onlyIfArrested: 1
       marketEvent: {fileID: 0}
@@ -140,6 +148,41 @@ MonoBehaviour:
         a different name every hour of his interrogation. He was released at dawn:
         there was no name to charge.'
       letterLine: 
+      setFlag: 
+    - when: 5
+      onlyIfArrested: 0
+      marketEvent: {fileID: 0}
+      eventInDays: 1
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+      afterDays: 0
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: 
+      setFlag: shifter_airlocked
+    - when: 3
+      onlyIfArrested: 1
+      marketEvent: {fileID: 0}
+      eventInDays: 1
+      wanted: 0
+      wantedOrder: 0
+      wantedInDays: 1
+      wantedForDays: 1
+      wantedNote: 
+      afterDays: 0
+      giftItem: {fileID: 0}
+      giftOnlyIfFamilySick: 0
+      wageChange: 0
+      wageNote: 
+      announcement: 
+      letterLine: 
+      setFlag: shifter_arrested
     entrustItem: {fileID: 0}
     entrustDeposit: 0
     keepsake: {fileID: 0}
@@ -159,6 +202,8 @@ MonoBehaviour:
     slot: 0
     condition: 2
     flag: joined_resistance
+    onlyIfFlag: 
+    unlessFlag: shifter_arrested
     onAdmit: 1
     onDeny: 3
     onArrest: 2
@@ -189,6 +234,8 @@ MonoBehaviour:
     slot: 1
     condition: 7
     flag: joined_resistance
+    onlyIfFlag: 
+    unlessFlag: shifter_arrested
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -226,6 +273,8 @@ MonoBehaviour:
     slot: 0
     condition: 8
     flag: joined_resistance
+    onlyIfFlag: 
+    unlessFlag: shifter_arrested
     onAdmit: 1
     onDeny: 2
     onArrest: 2

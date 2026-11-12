@@ -22,6 +22,8 @@ MonoBehaviour:
     slot: 0
     condition: 1
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -50,6 +52,8 @@ MonoBehaviour:
     slot: 0
     condition: 2
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 4
@@ -75,6 +79,7 @@ MonoBehaviour:
       wageNote: 
       announcement: 
       letterLine: 
+      setFlag: 
     - when: 4
       onlyIfArrested: 0
       marketEvent: {fileID: 11400000, guid: 499c80581acc6d241bb1a53254ffe24f, type: 2}
@@ -91,6 +96,7 @@ MonoBehaviour:
       wageNote: 
       announcement: 
       letterLine: 
+      setFlag: 
     - when: 2
       onlyIfArrested: 0
       marketEvent: {fileID: 0}
@@ -107,6 +113,7 @@ MonoBehaviour:
       wageNote: 
       announcement: 
       letterLine: 
+      setFlag: 
     - when: 4
       onlyIfArrested: 0
       marketEvent: {fileID: 0}
@@ -123,6 +130,7 @@ MonoBehaviour:
       wageNote: 
       announcement: 
       letterLine: 
+      setFlag: 
     entrustItem: {fileID: 0}
     entrustDeposit: 0
     keepsake: {fileID: 0}
@@ -142,6 +150,8 @@ MonoBehaviour:
     slot: 0
     condition: 3
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
@@ -171,6 +181,8 @@ MonoBehaviour:
     slot: 0
     condition: 6
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 3
     onDeny: 2
     onArrest: 2
@@ -199,6 +211,8 @@ MonoBehaviour:
     slot: 0
     condition: 3
     flag: 
+    onlyIfFlag: 
+    unlessFlag: 
     onAdmit: 1
     onDeny: 2
     onArrest: 2
