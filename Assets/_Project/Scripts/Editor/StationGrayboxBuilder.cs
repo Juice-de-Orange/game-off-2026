@@ -338,6 +338,8 @@ namespace GameOff.EditorTools
         private const string KitDeckCeiling = "Station/SM_Station_Ceiling_DeckRound.fbx";
         private const string KitSteps = "Station/SM_Station_Steps_2m.fbx";
         private const float KitCell = 2f, KitWallHeight = 3f, KitDoorWidth = 1.6f, KitDoorWidthNarrow = 1.2f, KitDoorHeight = 2.2f;
+        /// <summary>P142: gap (m) between a door leaf and its frame, so the two never share a plane.</summary>
+        private const float LeafPlay = 0.01f;
         private const float WindowSill = 0.9f, WindowHead = 2.4f; // SM_Station_Wall_Window_2x3
 
         /// <summary>Module set used for a room: the hangar uses big 4 x 4 m modules once they exist.</summary>
@@ -684,6 +686,10 @@ namespace GameOff.EditorTools
             {
                 var model = (GameObject)PrefabUtility.InstantiatePrefab(Kit(kit));
                 model.transform.SetParent(door.transform, false);
+                // P142 (#44): the leaf is exactly as wide and high as the door wall's opening, so its sides and top lay in the
+                // planes of the jambs and the head and flickered (z-fighting). A centimetre of play on each side and at the top.
+                float kitWidth = kit == KitDoorNarrow ? KitDoorWidthNarrow : KitDoorWidth;
+                model.transform.localScale = new Vector3((kitWidth - 2f * LeafPlay) / kitWidth, (KitDoorHeight - LeafPlay) / KitDoorHeight, 1f);
                 leaf = model.transform;
             }
             else
