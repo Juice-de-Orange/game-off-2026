@@ -10226,7 +10226,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_Cassette.fbx
 package: P132
 scene: Schalterraum, Zimmer 103, Kiosk
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0.10, 0.064, 0.012]
@@ -10253,7 +10253,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Cassette.png
 package: P132
 scene: UI
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10280,7 +10280,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_CassettePlayer.fbx
 package: P132
 scene: Schalterraum, Zimmer 103
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0.45, 0.20, 0.16]
@@ -10308,7 +10308,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Cassette_Insert.ogg
 package: P132
 scene: Schalterraum, Zimmer 103
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10334,7 +10334,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Cassette_Eject.ogg
 package: P132
 scene: Schalterraum, Zimmer 103
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10360,7 +10360,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Cassette_Play.ogg
 package: P132
 scene: Schalterraum, Zimmer 103
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10386,7 +10386,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_CleaningBot_Loop.ogg
 package: P137
 scene: Halle
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10412,7 +10412,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_CleaningBot_Turn.ogg
 package: P137
 scene: Halle
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10438,7 +10438,7 @@ feedback: []
 path: Assets/_Project/Art/UI/UI_Cursor_Default.png
 package: P138
 scene: UI
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -10465,7 +10465,7 @@ feedback: []
 path: Assets/_Project/Art/UI/UI_Cursor_Hover.png
 package: P138
 scene: UI
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
