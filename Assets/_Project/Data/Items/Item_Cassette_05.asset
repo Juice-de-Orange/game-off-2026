@@ -24,5 +24,5 @@ MonoBehaviour:
   cargoWord: 
   confiscatedVariant: {fileID: 0}
   title: Quiet Hours
-  song: {fileID: 8300000, guid: e934c438d9f2b7f4280407a5f64a8795, type: 3}
+  song: {fileID: 8300000, guid: 773ba9acfec52c54baa2da38843bf814, type: 3}
   material: {fileID: 2100000, guid: 84c771ac334c53e4b8472e1e08d34030, type: 2}

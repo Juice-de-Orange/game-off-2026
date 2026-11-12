@@ -25,5 +25,5 @@ MonoBehaviour:
   cargoWord: 
   confiscatedVariant: {fileID: 0}
   title: Night Shift
-  song: {fileID: 8300000, guid: e934c438d9f2b7f4280407a5f64a8795, type: 3}
+  song: {fileID: 8300000, guid: 25c0cb686a472764492051e831dda027, type: 3}
   material: {fileID: 2100000, guid: d773e21c6bf09c541a5a0e40bcbb7bf4, type: 2}

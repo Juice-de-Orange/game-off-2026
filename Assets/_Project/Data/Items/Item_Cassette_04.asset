@@ -24,5 +24,5 @@ MonoBehaviour:
   cargoWord: 
   confiscatedVariant: {fileID: 0}
   title: Slow Dance
-  song: {fileID: 8300000, guid: e934c438d9f2b7f4280407a5f64a8795, type: 3}
+  song: {fileID: 8300000, guid: ce30e9815aff5114d88ffb604f8e91bb, type: 3}
   material: {fileID: 2100000, guid: 96c410a15051cd54d85aafbc13ba7947, type: 2}

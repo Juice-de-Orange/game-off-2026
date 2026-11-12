@@ -31,5 +31,5 @@ MonoBehaviour:
     line: Sorv Deep. Direct. Inspectors don't change ships.
   - key: issued
     line: The Border Authority signs its own papers. Note that down.
-  reactionAdmitted: 
-  reactionDenied: 
+  reactionAdmitted: Good. Carry on.
+  reactionDenied: My papers were in order, officer. It's in my report. Carry on.

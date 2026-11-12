@@ -25,5 +25,5 @@ MonoBehaviour:
   cargoWord: 
   confiscatedVariant: {fileID: 0}
   title: Dock 7 Mix
-  song: {fileID: 8300000, guid: e934c438d9f2b7f4280407a5f64a8795, type: 3}
+  song: {fileID: 8300000, guid: 12d375029b79f4e4cb02a66beb48aa4f, type: 3}
   material: {fileID: 2100000, guid: ab23a790df1b7374cbac13d6701fcb9f, type: 2}
