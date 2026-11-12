@@ -240,7 +240,7 @@ namespace GameOff.Rest
             var mouse = Mouse.current;
             if (mouse != null && PointerLockBridge.IsLocked)
             {
-                Vector2 m = mouse.delta.ReadValue() * (tuning.mouseDegrees * GameSettings.MouseSensitivity);
+                Vector2 m = PointerLockBridge.LookDelta(mouse.delta.ReadValue()) * (tuning.mouseDegrees * GameSettings.MouseSensitivity); // P138: no jerk on catching
                 if (GameSettings.InvertY) m.y = -m.y;
                 delta += m;
             }

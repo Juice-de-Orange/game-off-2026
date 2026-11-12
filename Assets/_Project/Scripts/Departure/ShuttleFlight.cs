@@ -136,7 +136,7 @@ namespace GameOff.Departure
                 Cursor.lockState = CursorLockMode.Locked;
                 PointerLockBridge.Request();
             }
-            Vector2 mouse = PointerLockBridge.IsLocked && Mouse.current != null ? Mouse.current.delta.ReadValue() : Vector2.zero;
+            Vector2 mouse = PointerLockBridge.IsLocked && Mouse.current != null ? PointerLockBridge.LookDelta(Mouse.current.delta.ReadValue()) : Vector2.zero; // P138
             float turnKeys = _turn.ReadValue<float>();
             float yawStep = mouse.x * tuning.mouseTurn + turnKeys * tuning.keyTurn * dt;
             _yaw += yawStep;

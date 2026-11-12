@@ -145,7 +145,7 @@ namespace GameOff.Shops
                 var mouse = Mouse.current;
                 if (mouse != null)
                 {
-                    if (PointerLockBridge.IsLocked) pan += mouse.delta.ReadValue() * scale;
+                    if (PointerLockBridge.IsLocked) pan += PointerLockBridge.LookDelta(mouse.delta.ReadValue()) * scale; // P138: no jerk on catching
                     wheel = mouse.scroll.ReadValue().y;
                 }
 

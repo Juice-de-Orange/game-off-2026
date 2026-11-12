@@ -27,6 +27,8 @@ namespace GameOff.UI
         {
             ("Click", "Pick up a stamp or paper, press a button"),
             ("Click a stamp, then a paper", "Stamp it"),
+            ("Click a stamp, then the desk", "Set it down there"),
+            ("Drag", "Move papers, notes and the envelope"),
             ("Drag papers into the drawer", "Hand them back"),
             ("Click the CRT", "Terminal"),
             ("[R]", "Hold up all papers"),

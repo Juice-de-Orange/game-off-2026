@@ -807,17 +807,18 @@ namespace GameOff.EditorTools
             bribeGo.transform.SetParent(root.transform, false);
             var bribeSpot = new GameObject("NoteSpot").transform;
             bribeSpot.SetParent(bribeGo.transform, false);
-            bribeSpot.SetPositionAndRotation(new Vector3(-0.84f, 0.868f, -8.42f), Quaternion.Euler(0f, 84f, 0f)); // above the envelope, which is 1.3 cm high
+            bribeSpot.SetPositionAndRotation(new Vector3(-0.84f, 0.854f, -8.42f), Quaternion.Euler(0f, 84f, 0f)); // P139: the desk stacks it (DocumentDesk.Lay)
             var bribe = bribeGo.AddComponent<BribeNote>();
             Set(bribe, "spot", bribeSpot);
-            // P80: the envelope the note came in lies under it, only while the note lies there.
+            // P80: the envelope the note came in, only while the note lies there. P139 (#43): beside the note on its left, not under
+            // it (the note reaches z -8.27); both can be dragged. The desk gives it a box collider around its mesh when it lays it.
             var envelopeModel = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Project/Art/Models/Props/SM_Prop_BribeEnvelope.fbx");
             if (envelopeModel != null)
             {
                 var envelope = (GameObject)PrefabUtility.InstantiatePrefab(envelopeModel);
                 envelope.name = "Envelope";
                 envelope.transform.SetParent(bribeGo.transform, false);
-                envelope.transform.SetPositionAndRotation(bribeSpot.position + new Vector3(0.05f, -0.014f, 0.12f), Quaternion.Euler(0f, 70f, 0f));
+                envelope.transform.SetPositionAndRotation(bribeSpot.position + new Vector3(0.04f, 0f, 0.32f), Quaternion.Euler(0f, 70f, 0f));
                 envelope.SetActive(false);
                 Set(bribe, "envelope", envelope);
             }

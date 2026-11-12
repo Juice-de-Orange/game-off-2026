@@ -31,6 +31,9 @@ namespace GameOff.EditorTools
         private const string MainScene = "Assets/_Project/Scenes/Main.unity";
         private const string PauseMenuPrefab = "Assets/_Project/Prefabs/UI/PF_PauseMenu.prefab";
         private const string AudioManagerPrefab = "Assets/_Project/Prefabs/Audio/PF_AudioManager.prefab";
+        private const string CursorDefaultPath = "Assets/_Project/Art/UI/UI_Cursor_Default.png"; // P138
+        private const string CursorHoverPath = "Assets/_Project/Art/UI/UI_Cursor_Hover.png";
+        private const string CursorObjectName = "GameCursor";
         private const string MixerPath = "Assets/_Project/Audio/GameMixer.mixer"; // created once by hand/script, groups Master > Music, SFX, Voice
         private const string FontAssetPath = "Assets/_Project/Fonts/ShareTechMono SDF.asset";
         // All text uses Orbitron (martin 05.11., revises DECISIONS 31.10.); Share Tech Mono stays as fallback for missing glyphs.
@@ -100,6 +103,7 @@ namespace GameOff.EditorTools
         {
             var scene = OpenCleared(BootScene);
             PlaceAudioManager(scene);
+            PlaceCursor(scene, log);
             CreateCamera();
             var canvas = CreateCanvas("SplashCanvas", 0);
             var group = new GameObject("Splash", typeof(RectTransform), typeof(CanvasGroup));
@@ -618,6 +622,24 @@ namespace GameOff.EditorTools
             if (_audioPrefab != null) PrefabUtility.InstantiatePrefab(_audioPrefab, scene);
         }
 
+        /// <summary>
+        /// P138: the game's mouse pointer (GameCursor), like the audio manager in Boot and in Main (so Main can be played directly);
+        /// the copy that comes second removes itself. Imports the pointer textures as cursors first (DeliveryIntegrator).
+        /// </summary>
+        private static void PlaceCursor(Scene scene, List<string> log)
+        {
+            foreach (var old in scene.GetRootGameObjects().Where(g => g.name == CursorObjectName)) Object.DestroyImmediate(old);
+            DeliveryIntegrator.ConfigureCursorTextures(log);
+            var normal = AssetDatabase.LoadAssetAtPath<Texture2D>(CursorDefaultPath);
+            var hover = AssetDatabase.LoadAssetAtPath<Texture2D>(CursorHoverPath);
+            var go = new GameObject(CursorObjectName);
+            SceneManager.MoveGameObjectToScene(go, scene);
+            var cursor = go.AddComponent<GameCursor>();
+            Set(cursor, "normalTexture", normal);
+            Set(cursor, "hoverTexture", hover);
+            log.Add($"GameCursor in {scene.name} (pointer {(normal != null ? "ok" : "MISSING")}, hover {(hover != null ? "ok" : "MISSING")})");
+        }
+
         private static void PlaceInMain(GameObject prefab, List<string> log)
         {
             var scene = EditorSceneManager.OpenScene(MainScene, OpenSceneMode.Single);
@@ -633,6 +655,7 @@ namespace GameOff.EditorTools
             PrefabUtility.RecordPrefabInstancePropertyModifications(pause);
             foreach (var old in scene.GetRootGameObjects().Where(g => g.name == _audioPrefab.name)) Object.DestroyImmediate(old);
             PlaceAudioManager(scene);
+            PlaceCursor(scene, log);
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
             log.Add($"pause menu + audio manager placed in Main (player {(player != null ? "ok" : "MISSING")}, counter {(counter != null ? "ok" : "missing")}, day manager {(dayManager != null ? "ok" : "missing")})");

@@ -14,5 +14,7 @@ namespace GameOff.Counter
         public float markSize = 0.11f;
         [Tooltip("Random tilt of the ink mark in degrees (±), so stamps look hand-made.")]
         public float markTilt = 8f;
+        [Tooltip("P139: a click with a held stamp sets it down there only on the bare desk top: at most this far above or below the desk's height (m).")]
+        public float deskTolerance = 0.02f;
     }
 }
