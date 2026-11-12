@@ -18,8 +18,10 @@ namespace GameOff.EditorTools
     /// P28/P29, idempotent: Data/Rest/RestSpotTuning.asset (only created if missing – it is content) and
     /// Prefabs/Rest/PF_RestSpots.prefab = the places to sit down or look from: the three hall benches, bar stools 1–3 (stool 4 is
     /// the dealer's), the porthole in room 103, the family photo on the locker in 103 and the morning letter on its table; plus
-    /// the small HUD they share. Positions come from the station's furniture in the open scene (SM_Hall_Bench_*, SM_Bar_Stool_*,
-    /// SM_Motel_Locker, SM_Motel_Table), falling back to the StationGrayboxBuilder numbers.
+    /// the small HUD they share. P132: the two tape decks (room 103, counter room) and two cassettes to pick up (bar, hangar), made by
+    /// CassetteBuilder; the cassettes themselves come from Build Economy. Positions come from the station's furniture in the open scene
+    /// (SM_Hall_Bench_*, SM_Bar_Stool_*, SM_Motel_Locker, SM_Motel_Table, SM_Counter_DeckTable, SM_Bar_Table_B, SM_Hangar_Crate_Small_C),
+    /// falling back to the StationGrayboxBuilder numbers.
     /// Placed in Main and wired to the player, its camera, the DayManager, the dialogs, the barkeeper and the home planet:
     /// run after Build Station, Build Sky &amp; Exterior, Build Day Flow and Build Economy. Part of Rebuild All.
     /// Menu: GameOff → Build Rest Spots into Main (opens and saves Main – claim it first).
@@ -83,7 +85,7 @@ namespace GameOff.EditorTools
                 PrefabUtility.RecordPrefabInstancePropertyModifications(c);
             }
             EditorSceneManager.MarkSceneDirty(scene);
-            return $"[RestSpotBuilder] PF_RestSpots in {scene.name}: tuning {(created ? "created" : "kept")}, {found}/8 furniture pieces found "
+            return $"[RestSpotBuilder] PF_RestSpots in {scene.name}: tuning {(created ? "created" : "kept")}, {found}/12 furniture pieces found "
                 + $"(rest from the builder numbers), player {Ok(player)}, camera {Ok(camera)}, day {Ok(day)}, dialogs {Ok(dialogs)}, "
                 + $"barkeeper {Ok(barkeeperTrigger)}, home planet {Ok(planet)}";
         }
@@ -169,27 +171,22 @@ namespace GameOff.EditorTools
                 Seat(go, trigger, tuning, hud, eye, null, 45f, false, false, false, canvas);
             }
 
-            // P117: the floppy player where the TV stands; the song and the models come from the pipeline.
+            // P132: tape decks instead of the floppy player (P117): on the table in 103 where it stood, right of the letter and clear of
+            // its trigger; on the small table under the hangar window in the counter room. Two cassettes lie on the station.
             {
-                var go = Spot(root.transform, "FloppyPlayer", new Vector3(-16.94f, 1f, 5.55f), new Vector3(0.48f, 0.5f, 0.5f), "Insert the floppy", out var trigger); // clear of the letter's trigger
-                var source = trigger.gameObject.AddComponent<AudioSource>(); // at the player, not at the group's origin
-                source.minDistance = 1.2f;
-                source.maxDistance = 9f;
-                source.rolloffMode = AudioRolloffMode.Linear;
-                var player = go.AddComponent<FloppyPlayer>();
-                Set(player, "interactable", trigger);
-                Set(player, "source", source);
-                var track = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/_Project/Audio/Music/MUS_Floppy_01.ogg");
-                if (track != null) Set(player, "track", track);
-                var diskModel = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Project/Art/Models/Items/SM_Item_FloppyDisk.fbx");
-                if (diskModel != null)
-                {
-                    var disk = (GameObject)PrefabUtility.InstantiatePrefab(diskModel);
-                    disk.name = "Disk";
-                    disk.transform.SetParent(go.transform, false);
-                    disk.transform.SetPositionAndRotation(new Vector3(-16.68f, 0.753f, 5.5f), Quaternion.Euler(0f, 12f, 0f));
-                    Set(player, "diskOnTable", disk);
-                }
+                var table = Furniture(scene, "SM_Motel_Table", new Vector3(-17f, 0f, 5.5f), new Vector3(0.8f, 0.75f, 0.6f), ref found);
+                // The top is only 5.33 to 5.8 deep (see the letter): the deck stands 0.22 m in from the wall-side edge.
+                CassetteBuilder.BuildDeck(root.transform, "Room103", new Vector3(table.center.x + 0.08f, table.max.y, table.max.z - 0.22f), 0f);
+                var counterTable = Furniture(scene, StationGrayboxBuilder.CounterDeckTable, new Vector3(-5.3f, 0f, -11.5f),
+                    new Vector3(0.8f, 0.75f, 0.6f), ref found);
+                CassetteBuilder.BuildDeck(root.transform, "Counter", new Vector3(counterTable.center.x, counterTable.max.y, counterTable.min.z + 0.22f), 180f);
+
+                var barTable = Furniture(scene, "SM_Bar_Table_B", new Vector3(12.5f, 0f, 7.1f), new Vector3(0.8f, 1.1f, 0.8f), ref found);
+                CassetteBuilder.BuildPickup(root.transform, "Bar", CassetteBuilder.Cassette(4),
+                    new Vector3(barTable.center.x - 0.1f, barTable.max.y, barTable.center.z - 0.05f), 25f);
+                var crate = Furniture(scene, "SM_Hangar_Crate_Small_C", new Vector3(-11.2f, 0f, -14.6f), new Vector3(0.6f, 0.5f, 0.6f), ref found);
+                CassetteBuilder.BuildPickup(root.transform, "Hangar", CassetteBuilder.Cassette(3),
+                    new Vector3(crate.center.x + 0.05f, crate.max.y, crate.center.z), -35f);
             }
 
             Directory.CreateDirectory(Path.GetDirectoryName(PrefabPath));

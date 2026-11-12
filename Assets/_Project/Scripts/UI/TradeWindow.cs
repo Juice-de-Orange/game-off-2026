@@ -153,6 +153,7 @@ namespace GameOff.UI
             var right = new List<ItemListView.Row>();
             foreach (var item in economy.Inventory.Items)
             {
+                if (_mode == Mode.SendHome && item is CassetteData) continue; // P132: cassettes stay with you on the station
                 var it = item;
                 right.Add(new ItemListView.Row
                 {
@@ -181,7 +182,7 @@ namespace GameOff.UI
                 string hint = _sendHint != null ? _sendHint(_selected) : "";
                 if (!string.IsNullOrEmpty(hint)) detailDescription.text += $"\n<color=#E2463F>{hint}</color>";
             }
-            else if (_side == Side.Vendor && !Economy.Inventory.CanAdd(_selected))
+            else if (_side == Side.Vendor && AlreadyOwned(_selected))
             {
                 actionButton.gameObject.SetActive(false);
                 detailDescription.text += "\n<color=#8B9096>You already have one.</color>";
@@ -200,6 +201,9 @@ namespace GameOff.UI
             }
         }
 
+        /// <summary>A unique item you have, also a cassette that sits in a tape deck (P132).</summary>
+        private static bool AlreadyOwned(ItemData item) => !Economy.Inventory.CanAdd(item) || GameOff.Rest.CassetteDeck.AnyHolds(item);
+
         private void DoAction()
         {
             if (_selected == null) return;
@@ -213,7 +217,7 @@ namespace GameOff.UI
             }
             else if (_side == Side.Vendor)
             {
-                if (!economy.Inventory.CanAdd(item)) { message.text = "You already have one."; return; }
+                if (AlreadyOwned(item)) { message.text = "You already have one."; return; }
                 if (economy.Supply(_stock).Count(item) == 0) { message.text = "Sold out."; return; }
                 int price = _stock.PriceFor(item);
                 if (!economy.Wallet.TrySpend(price, $"{_stock.Title} · {item.DisplayName}")) { message.text = "Not enough credits."; return; }

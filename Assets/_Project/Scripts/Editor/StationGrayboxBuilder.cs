@@ -568,6 +568,8 @@ namespace GameOff.EditorTools
         }
         // Counter furniture orientation (officer sits at x = -2 looking +X; checked visually).
         private const float DeskYaw = 0f, ChairYaw = 90f;
+        /// <summary>P132: the table the counter room's tape deck stands on (RestSpotBuilder finds it by this name).</summary>
+        public const string CounterDeckTable = "SM_Counter_DeckTable";
 
         private static AudioClip DoorClip(string name) => AssetDatabase.LoadAssetAtPath<AudioClip>($"Assets/_Project/Audio/SFX/SFX_Door_{name}.ogg");
 
@@ -1853,6 +1855,9 @@ namespace GameOff.EditorTools
             // The document drawer (SM_Counter_DocSlot) lives in PF_CounterStation (animated, P06).
             WallProp(p, "Counter/SM_Counter_Speaker.fbx", "SM_Counter_Speaker", false, -6, -1, -2.5f, 2.3f, 0.4f, 0.3f);
             KitProp(p, "Counter/SM_Counter_WarningLamp.fbx", "SM_Counter_WarningLamp", 2f, -9f, 0.25f, 0.25f, 0.3f, 3f); // pivot top_center → hangs from the ceiling
+            // P132: the small table under the hangar window (south-west corner) the tape deck stands on (deck: RestSpotBuilder).
+            // Yaw 180: like the table in 103, its top against the wall, the fold-out leg towards the room.
+            KitProp(p, "Motel/SM_Motel_Table.fbx", CounterDeckTable, -5.3f, -11.5f, 0.8f, 0.6f, 0.75f, 0, 180f);
             // Hall (benches face north toward the observation deck: module front = local -Z → yaw 180)
             KitProp(p, "Hall/SM_Hall_DepartureBoard.fbx", "SM_Hall_DepartureBoard", 0, 0, 2, 2, 3.5f);
             KitProp(p, "Hall/SM_Hall_Bench.fbx", "SM_Hall_Bench_A", -2.5f, 3.2f, 2.8f, 0.6f, 0.9f, 0, 180f);
@@ -1925,7 +1930,7 @@ namespace GameOff.EditorTools
             KitPipeElbow = "Props/SM_Prop_PipeElbow.fbx", KitJunction = "Props/SM_Prop_JunctionBox.fbx", KitBucket = "Props/SM_Prop_MopBucket.fbx",
             KitTrashPile = "Props/SM_Prop_TrashPile.fbx", KitFan = "Props/SM_Prop_CeilingFan.fbx", KitNeon = "Props/SM_Prop_NeonSign_Open.fbx",
             KitCan = "Props/SM_Prop_SodaCan.fbx", KitDeckBench = "Props/SM_Prop_DeckBench.fbx", KitTelescope = "Props/SM_Prop_CoinTelescope.fbx",
-            KitFloppyPlayer = "Motel/SM_Motel_FloppyPlayer.fbx", KitTv = "Motel/SM_Motel_TV.fbx", KitDoorSign = "Motel/SM_Motel_DoorSign.fbx";
+            KitDoorSign = "Motel/SM_Motel_DoorSign.fbx";
 
         private static void BuildDecor(GameObject p)
         {
@@ -1966,9 +1971,7 @@ namespace GameOff.EditorTools
                 if (sign != null && material != null) sign.GetComponentInChildren<Renderer>().sharedMaterial = material;
             }
 
-            // Room 103
-            // P117: the floppy player replaces the TV as soon as it is delivered; the TV stands in until then.
-            PlaceDecor(p, Kit(KitFloppyPlayer) != null ? KitFloppyPlayer : KitTv, "TV_Room103", new Vector3(-17f, 0.75f, 5.55f), 0f);
+            // Room 103 (P132: the tape deck on the table comes from RestSpotBuilder; it replaced the floppy player of P117)
             FloorDecor(p, KitPlant, "Plant_Room103", -16.4f, 4.2f, 0.5f, 0.5f, 1f);
 
             // Bar and diner: fans between the ceiling strips
@@ -2070,10 +2073,21 @@ namespace GameOff.EditorTools
             if (bot == null) return;
             foreach (var t in bot.GetComponentsInChildren<Transform>()) GameObjectUtility.SetStaticEditorFlags(t.gameObject, 0);
             var patrol = bot.gameObject.AddComponent<GameOff.Station.PatrolBot>();
+            // P137: the brushes, quiet and only close by; clip and volume come from the SoundSet when the game starts.
+            var loop = bot.gameObject.AddComponent<AudioSource>();
+            loop.playOnAwake = false;
+            loop.loop = true;
+            loop.spatialBlend = 1f;
+            loop.rolloffMode = AudioRolloffMode.Linear;
+            loop.minDistance = 1f;
+            loop.maxDistance = 6f;
+            loop.dopplerLevel = 0f;
             var so = new SerializedObject(patrol);
             var points = so.FindProperty("route");
             points.arraySize = route.Length;
             for (int i = 0; i < route.Length; i++) points.GetArrayElementAtIndex(i).vector3Value = route[i];
+            so.FindProperty("loop").objectReferenceValue = loop;
+            so.FindProperty("sounds").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameOff.Audio.SoundSet>("Assets/_Project/Data/Audio/SoundSet.asset");
             so.ApplyModifiedPropertiesWithoutUndo();
             bot.position = route[0];
         }

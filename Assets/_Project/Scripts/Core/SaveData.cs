@@ -49,6 +49,11 @@ namespace GameOff.Core
 
         public CharacterState characters = new CharacterState();
 
+        /// <summary>P132: the cassettes in the tape decks, by deck id (older saves: none).</summary>
+        public List<DeckSlots> decks = new List<DeckSlots>();
+        /// <summary>P132: ids of the cassettes already picked up on the station.</summary>
+        public List<string> pickedUp = new List<string>();
+
         [Serializable]
         public class ItemStack
         {
@@ -134,6 +139,14 @@ namespace GameOff.Core
             public string character;
             public string name;
             public bool byYou;
+        }
+
+        /// <summary>P132: one tape deck: cassette asset name per slot, slot 1 first, "" = empty.</summary>
+        [Serializable]
+        public class DeckSlots
+        {
+            public string deck;
+            public List<string> slots = new List<string>();
         }
     }
 }

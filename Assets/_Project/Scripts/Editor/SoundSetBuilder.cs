@@ -55,6 +55,12 @@ namespace GameOff.EditorTools
             Assign(set.shipLand, "SFX_Ship_Land");
             Assign(set.tradeBuy, "SFX_Trade_Buy");
             Assign(set.uiClick, "SFX_UI_Click");
+            // P132 tape deck, P137 cleaning bot: their volume only on the first assignment, so balancing by ear survives.
+            AssignFirst(set.cassetteInsert, "SFX_Cassette_Insert", 0.8f);
+            AssignFirst(set.cassetteEject, "SFX_Cassette_Eject", 0.8f);
+            AssignFirst(set.cassettePlay, "SFX_Cassette_Play", 0.8f);
+            AssignFirst(set.cleaningBotLoop, "SFX_CleaningBot_Loop", 0.45f);
+            AssignFirst(set.cleaningBotTurn, "SFX_CleaningBot_Turn", 0.6f);
 
             if (set.clownFootsteps == null || set.clownFootsteps.Length != 3)
                 set.clownFootsteps = new[] { new Sound { volume = FootstepVolume }, new Sound { volume = FootstepVolume }, new Sound { volume = FootstepVolume } };
@@ -92,6 +98,13 @@ namespace GameOff.EditorTools
                 if (clip != null) list.Add(new Sound { clip = clip, volume = volume });
             }
             return list.ToArray();
+        }
+
+        /// <summary>Like Assign; while the sound has no clip yet (a new field) it also gets this volume.</summary>
+        private static void AssignFirst(Sound sound, string clipName, float volume)
+        {
+            if (sound.clip == null) sound.volume = volume;
+            Assign(sound, clipName);
         }
 
         private static void Assign(Sound sound, string clipName)
