@@ -10386,7 +10386,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_CleaningBot_Loop.ogg
 package: P137
 scene: Halle
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10412,7 +10412,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_CleaningBot_Turn.ogg
 package: P137
 scene: Halle
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
