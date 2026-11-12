@@ -59,7 +59,7 @@ namespace GameOff.Characters
         [Header("Without another encounter (P85)")]
         [Tooltip("Days after the decision (0 = at once; letters arrive the next morning at the earliest).")]
         [Min(0)] public int afterDays;
-        [Tooltip("Arrives at the family: covers its need tonight, like a drone delivery.")]
+        [Tooltip("Arrives at the family: goes into their stock and covers its need, like a drone delivery (P131).")]
         public ItemData giftItem;
         public bool giftOnlyIfFamilySick;
         [Tooltip("Credits added (or, if negative, taken) in the player's wallet.")]

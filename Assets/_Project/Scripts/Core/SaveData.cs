@@ -26,6 +26,8 @@ namespace GameOff.Core
         public List<ItemStack> locker = new List<ItemStack>();
         /// <summary>What was sold to vendors that they don't normally sell (VendorSupply extras), by stock asset name.</summary>
         public List<VendorShelf> vendors = new List<VendorShelf>();
+        /// <summary>P131: the family's stock at home (HomeDelivery), what the drone brought and the nights didn't use up yet.</summary>
+        public List<ItemStack> home = new List<ItemStack>();
 
         /// <summary>Household step per family member (0 well … 4 dead), nights critical in a row, who died last night.</summary>
         public List<int> family = new List<int>();

@@ -9,8 +9,9 @@ namespace GameOff.Core
     /// <summary>
     /// P128: the morning save. Capture reads a Run (the live objects of one run) into a SaveData, Apply writes one back; both are
     /// Unity-light and EditMode-tested. CaptureRunning / ApplyRunning connect them to the scene's singletons (PlayerEconomy,
-    /// Confiscation, CharacterDirector, StationMood, the static Market). DayManager saves at the very start of every morning,
-    /// before DayStarted: so a continued run replays that morning exactly (spoiling, refills, character plan, letter).
+    /// Confiscation, CharacterDirector, StationMood, the static Market; P131: the family's stock at home). DayManager saves at the
+    /// very start of every morning, before DayStarted: so a continued run replays that morning exactly (spoiling, refills,
+    /// character plan, letter).
     /// Saving mid-day is deliberately not possible (DESIGN.md).
     /// </summary>
     public static class SaveGame
@@ -23,6 +24,8 @@ namespace GameOff.Core
             public Wallet wallet;
             public Inventory inventory;
             public Inventory locker;
+            /// <summary>P131: the family's stock at home.</summary>
+            public HomeDelivery home;
             public Household household;
             public Conduct conduct;
             public CharacterMemory memory;
@@ -83,6 +86,7 @@ namespace GameOff.Core
             d.inventory = Stacks(run.inventory);
             d.wearing = run.wearing != null ? run.wearing.name : "";
             d.locker = Stacks(run.locker);
+            if (run.home != null) d.home = Stacks(run.home.Items);
             foreach (var pair in run.vendorExtras)
             {
                 var shelf = new SaveData.VendorShelf { stock = pair.Key };
@@ -171,6 +175,20 @@ namespace GameOff.Core
             return list;
         }
 
+        /// <summary>P131: the stock at home as stacks, each item once, in the order it first appears.</summary>
+        private static List<SaveData.ItemStack> Stacks(IReadOnlyList<ItemData> items)
+        {
+            var list = new List<SaveData.ItemStack>();
+            foreach (var item in items)
+            {
+                if (item == null) continue;
+                var stack = list.Find(s => s.item == item.name);
+                if (stack != null) stack.count++;
+                else list.Add(new SaveData.ItemStack { item = item.name, count = 1 });
+            }
+            return list;
+        }
+
         private static List<SaveData.DayEvents> DayEventList(IEnumerable<int> days, System.Func<int, IReadOnlyList<MarketEvent>> on, int fromDay)
         {
             var list = new List<SaveData.DayEvents>();
@@ -197,6 +215,17 @@ namespace GameOff.Core
             Fill(run.inventory, d.inventory, lookup);
             run.wearing = lookup.Item(d.wearing);
             Fill(run.locker, d.locker, lookup);
+            if (run.home != null)
+            {
+                var stock = new List<ItemData>();
+                if (d.home != null)
+                    foreach (var s in d.home)
+                    {
+                        var item = lookup.Item(s.item);
+                        for (int i = 0; item != null && i < s.count; i++) stock.Add(item);
+                    }
+                run.home.Restore(stock);
+            }
             run.vendorExtras.Clear();
             foreach (var shelf in d.vendors)
             {
@@ -284,6 +313,7 @@ namespace GameOff.Core
                 seed = seed,
                 wallet = economy != null ? economy.Wallet : null,
                 inventory = economy != null ? economy.Inventory : null,
+                home = economy != null ? economy.Delivery : null,
                 household = economy != null ? economy.Household : null,
                 locker = confiscation != null ? confiscation.Locker : null,
                 conduct = confiscation != null ? confiscation.Conduct : null,
@@ -320,6 +350,7 @@ namespace GameOff.Core
             {
                 wallet = economy != null ? economy.Wallet : null,
                 inventory = economy != null ? economy.Inventory : null,
+                home = economy != null ? economy.Delivery : null,
                 household = economy != null ? economy.Household : null,
                 locker = confiscation != null ? confiscation.Locker : null,
                 conduct = confiscation != null ? confiscation.Conduct : null,

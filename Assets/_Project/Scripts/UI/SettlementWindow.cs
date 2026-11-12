@@ -15,7 +15,10 @@ namespace GameOff.UI
     /// free warnings, rent (always paid), then food, heating and medicine to tick off, the family's condition before → after,
     /// and the balance before → after. CONFIRM books everything in the Wallet and applies the night to the Household.
     /// P13: a need covered by a drone delivery (PlayerEconomy.Delivery, by tag) is already ticked and free; otherwise money goes
-    /// home at reference price × moneyFactor (HouseholdTuning). The deliveries are cleared after CONFIRM.
+    /// home at reference price × moneyFactor (HouseholdTuning).
+    /// P131: the deliveries are the family's stock at home. CONFIRM uses up one item per covered need (medicine only while
+    /// someone is sick), perishable leftovers spoil (a line in the morning letter), the rest stays for the next nights.
+    /// The FAMILY box ends with the stock now and after tonight.
     /// Plugs into DayManager.NightStep (after "SLEEP", before the fade) and LetterAddendum (family lines in the morning letter).
     /// </summary>
     public class SettlementWindow : MonoBehaviour
@@ -124,8 +127,18 @@ namespace GameOff.UI
             var family = Economy.Household;
             return family.Alive == family.Count ? full : Market.Rounded(full * family.Alive / (float)family.Count);
         }
-        /// <summary>P13: the item that came home by drone for this need tonight, or null.</summary>
-        private ItemData Delivered(int need) => Economy.Delivery.CoveringItem(Tuning.TagOf((FamilyNeed)need));
+        /// <summary>P131: the item at home that covers each need tonight (a different one per need), null where none does or the need isn't due.</summary>
+        private ItemData[] FromHome()
+        {
+            var tags = new ItemTag[3];
+            for (int i = 0; i < 3; i++) tags[i] = NeedAvailable(i) ? Tuning.TagOf((FamilyNeed)i) : null;
+            return Economy.Delivery.Covering(tags, Perishable);
+        }
+        private static ItemTag Perishable => Economy.Tuning != null ? Economy.Tuning.perishableTag : null;
+        /// <summary>P131: the tags of all needs, due or not: only items with one of them stay in the stock.</summary>
+        private ItemTag[] NeedTags => new[] { Tuning.TagOf(FamilyNeed.Food), Tuning.TagOf(FamilyNeed.Heat), Tuning.TagOf(FamilyNeed.Medicine) };
+        /// <summary>P13: the item at home that covers this need tonight, or null.</summary>
+        private ItemData Delivered(int need) => FromHome()[need];
         private bool Covered(int need) => Delivered(need) != null;
         private bool Met(int need) => _paid[need] || Covered(need);
         private int Bribe => Economy.BribeTonight; // P66: the barkeeper's envelope for letting his man through
@@ -198,10 +211,17 @@ namespace GameOff.UI
             wallet.Charge(Tuning.rent, "Rent · room 103");
             for (int i = 0; i < 3; i++)
                 if (_paid[i]) wallet.Charge(Cost(i), "Family · " + NeedNames[i].ToLowerInvariant());
-            Economy.Household.Settle(Met(Food), Met(Heat), Met(Medicine));
+            // Read before the night: medicine is only due while someone is sick.
+            bool food = Met(Food), heat = Met(Heat), medicine = Met(Medicine);
+            var fromHome = FromHome();
+            Economy.Household.Settle(food, heat, medicine);
+            // P131: one item per covered need is used up, perishable leftovers go bad, items for no need leave, the rest stays at home.
+            var home = Economy.Delivery;
+            var spoiled = home.Night(fromHome, NeedTags, Perishable);
+            if (spoiled.Count > 0) Economy.AddLetterLine("Spoiled at home: " + HomeDelivery.Summary(spoiled) + ".");
             Debug.Log($"[Settlement] day {day}: wage {Wage}, penalty {Penalty}, rent {Tuning.rent}, " +
-                      $"food {Met(Food)}, heat {Met(Heat)}, medicine {Met(Medicine)} (drone: {Economy.Delivery.Items.Count} items) → balance {wallet.Balance}");
-            Economy.Delivery.Clear();
+                      $"food {food}, heat {heat}, medicine {medicine} (used from home: {HomeDelivery.Summary(fromHome)}; " +
+                      $"left: {home.Summary()}; spoiled: {HomeDelivery.Summary(spoiled)}) → balance {wallet.Balance}");
             _customsLines.Clear();
         }
 
@@ -248,14 +268,14 @@ namespace GameOff.UI
             income.text = sb.ToString();
 
             int available = AfterFixed - ChosenCosts();
+            var fromHome = FromHome();
             for (int i = 0; i < 3; i++)
             {
-                var delivered = Delivered(i);
+                var delivered = fromHome[i];
                 if (delivered != null)
                 {
                     needButtons[i].interactable = false;
-                    needLabels[i].text = $"<color=#9BE05A>[X]  {NeedNames[i]}  ·  by drone ({delivered.DisplayName})</color>" +
-                                         (NeedAvailable(i) ? "" : "  (nobody sick)");
+                    needLabels[i].text = $"<color=#9BE05A>[X]  {NeedNames[i]}  ·  from home ({delivered.DisplayName})</color>";
                     continue;
                 }
                 bool can = NeedAvailable(i) && (_paid[i] || Cost(i) <= available);
@@ -280,11 +300,25 @@ namespace GameOff.UI
                     : next[i] < e.Household.Condition(i) ? "<color=#9BE05A>" + then + "</color>" : then;
                 fb.AppendLine($"{m.name} ({m.role})  ·  {now} → {arrow}");
             }
+            fb.Append(HomeLine(fromHome));
             family.text = fb.ToString();
 
             int after = AfterFixed - ChosenCosts();
             balance.text = $"BALANCE  {e.Format(e.Wallet.Balance)}  →  " +
                            (after < 0 ? $"<color=#E2463F>{e.Format(after)}</color>" : e.Format(after));
+        }
+
+        /// <summary>P131: the stock at home now and what stays after tonight (the night played on a copy, so it matches Book).</summary>
+        private string HomeLine(ItemData[] fromHome)
+        {
+            var home = Economy.Delivery;
+            // One line under the family (the box has room for about two more): what is at home, what is left tomorrow.
+            if (home.Items.Count == 0) return "<color=#8B9096>AT HOME  nothing</color>";
+            var tomorrow = home.Copy();
+            var spoils = tomorrow.Night(fromHome, NeedTags, Perishable);
+            string after = tomorrow.Items.Count > 0 ? tomorrow.Summary() : "nothing";
+            if (spoils.Count > 0) after += $"  <color=#E2463F>({HomeDelivery.Summary(spoils)} spoils)</color>";
+            return $"AT HOME  {home.Summary()}  ·  after tonight: {after}";
         }
 
         private static string ExtraCitations(int n) => n == 1 ? "1 extra citation" : $"{n} extra citations";

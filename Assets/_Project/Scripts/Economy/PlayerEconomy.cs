@@ -41,7 +41,7 @@ namespace GameOff.Economy
         public EconomyTuning Tuning => tuning;
         public HouseholdTuning HouseholdTuning => household;
         public Household Household { get; private set; }
-        /// <summary>Items sent home by drone since the last settlement (P13).</summary>
+        /// <summary>Items sent home by drone (P13); P131: the family's stock, each night uses one item per need, the rest stays.</summary>
         public HomeDelivery Delivery { get; } = new HomeDelivery();
         /// <summary>Notes of the day, e.g. the barkeeper's rumour (P65); shown under TODAY in the inventory, cleared every morning.</summary>
         public List<string> Notes { get; } = new List<string>();
@@ -165,7 +165,7 @@ namespace GameOff.Economy
         /// <summary>P128: the lines waiting for the next morning letter (the save keeps them).</summary>
         public IReadOnlyList<string> LetterLines => _letterLines;
 
-        /// <summary>Under the morning letter: what characters did, the family's lines, then what spoiled.</summary>
+        /// <summary>Under the morning letter: what characters did, the family's lines, the stock at home (P131), then what spoiled.</summary>
         public string MorningReport()
         {
             var parts = new List<string>();
@@ -173,6 +173,7 @@ namespace GameOff.Economy
             _letterLines.Clear();
             string family = FamilyReport();
             if (!string.IsNullOrEmpty(family)) parts.Add(family);
+            if (Delivery.Items.Count > 0) parts.Add("Still at home: " + Delivery.Summary() + ".");
             if (!string.IsNullOrEmpty(SpoiledReport)) parts.Add(SpoiledReport);
             return string.Join("\n\n", parts);
         }

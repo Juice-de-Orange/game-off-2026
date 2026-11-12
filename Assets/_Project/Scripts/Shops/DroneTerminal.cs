@@ -9,7 +9,8 @@ namespace GameOff.Shops
 {
     /// <summary>
     /// The cargo drone in the hangar (P46): E opens the trade window in "send home" mode. P13: what you send lands in
-    /// PlayerEconomy.Delivery – food, power and medicine cover that need in tonight's settlement; other items just go home.
+    /// PlayerEconomy.Delivery – food, power and medicine cover that need in the night's settlement; P131: one item per night and
+    /// need, the rest stays in the family's stock for later nights. Other items just go home.
     /// Like every trade, the drone only works after the shift (Martin, 06.11.); with the dev tools a red button forces it.
     /// </summary>
     public class DroneTerminal : MonoBehaviour
@@ -61,7 +62,8 @@ namespace GameOff.Shops
 
         private void OpenWindow() => window.OpenSendHome("CARGO DRONE · HOME",
             "Pick one of your items on the right. It goes home with the next drone.\n\n" +
-            "<color=#8B9096>Food, power and medicine count for tonight: the bed won't ask money for them. Other items just go home.</color>",
+            "<color=#8B9096>Food, power and medicine go into the family's stock at home. Each night uses one per need, so the bed won't ask " +
+            "money for it; the rest lasts for later nights. Fresh food spoils. Other items just go home.</color>",
             item =>
             {
                 var economy = PlayerEconomy.Instance;
