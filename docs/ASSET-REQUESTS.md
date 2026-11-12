@@ -10226,7 +10226,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_Cassette.fbx
 package: P132
 scene: Schalterraum, Zimmer 103, Kiosk
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0.10, 0.064, 0.012]
@@ -10253,7 +10253,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Cassette.png
 package: P132
 scene: UI
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10280,7 +10280,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Counter/SM_Counter_CassettePlayer.fbx
 package: P132
 scene: Schalterraum, Zimmer 103
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0.45, 0.20, 0.16]
