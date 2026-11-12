@@ -50,6 +50,12 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 35696245c313c764e99011cd547b6748, type: 2}
     dailyAmount: 1
     fromDay: 4
+  - item: {fileID: 11400000, guid: 751bf709c2c49164bb4cdbc8f89927e6, type: 2}
+    dailyAmount: 1
+    fromDay: 1
+  - item: {fileID: 11400000, guid: 2d377a9509ff7c047b0727774ceeabc3, type: 2}
+    dailyAmount: 1
+    fromDay: 1
   items: []
   sellFactor: 1
   buyFactor: 0.5

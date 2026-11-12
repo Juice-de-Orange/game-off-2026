@@ -33,6 +33,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -123,6 +125,8 @@ MonoBehaviour:
       letterLine: 
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -150,6 +154,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 11400000, guid: 95ed42a555ca29c44adb1a7a87f3c5aa, type: 2}
     entrustDeposit: 30
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -176,6 +182,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -203,6 +211,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES

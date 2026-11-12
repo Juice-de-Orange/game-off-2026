@@ -33,6 +33,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -61,6 +63,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -138,6 +142,8 @@ MonoBehaviour:
       letterLine: 
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -164,6 +170,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: JOIN THE RESISTANCE?
     questionBody: '"We need someone at this counter. Nobody has to know. Say yes,
       and when this is over, you and your family go free."'
@@ -195,6 +203,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -227,6 +237,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES

@@ -65,6 +65,8 @@ MonoBehaviour:
       letterLine: 
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -93,6 +95,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -119,6 +123,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES

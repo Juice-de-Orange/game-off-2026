@@ -51,6 +51,8 @@ MonoBehaviour:
       letterLine: 
     entrustItem: {fileID: 11400000, guid: 67974c849890c5b4aadcb23660d4f06f, type: 2}
     entrustDeposit: 20
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -94,6 +96,8 @@ MonoBehaviour:
       letterLine: Dr. Senn sent medicine on the drone. He says you earned it.
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -121,6 +125,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES

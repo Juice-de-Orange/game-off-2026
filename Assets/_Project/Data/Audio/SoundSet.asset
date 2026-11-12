@@ -120,6 +120,21 @@ MonoBehaviour:
     volume: 0.5
   - clip: {fileID: 8300000, guid: b3d1806a40af18241a43622e40437fd1, type: 3}
     volume: 0.5
+  cassetteInsert:
+    clip: {fileID: 8300000, guid: 1f1b99fa4aa6e1b47981b5d7dde79ed1, type: 3}
+    volume: 0.8
+  cassetteEject:
+    clip: {fileID: 8300000, guid: 7f0ba6441970c244d8740ae814fe61a4, type: 3}
+    volume: 0.8
+  cassettePlay:
+    clip: {fileID: 8300000, guid: 9480d3a342bacea48ac47db0dbbd9b16, type: 3}
+    volume: 0.8
+  cleaningBotLoop:
+    clip: {fileID: 8300000, guid: b91f61b6d6bde9241b160b6b58c56ac6, type: 3}
+    volume: 0.45
+  cleaningBotTurn:
+    clip: {fileID: 8300000, guid: ba5a68af2ed06a6468dd09c741da2024, type: 3}
+    volume: 0.6
   ambienceVolume: 0.35
   humInRoomVolume: 0.12
   ambienceFadeSeconds: 1.5

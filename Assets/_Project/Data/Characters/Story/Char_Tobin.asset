@@ -35,6 +35,9 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 11400000, guid: 2f017ff616e8b5446be050faa7734a18, type: 2}
+    keepsakeHint: 'Tobin slid a cassette under the glass: "Dock 7 Mix. Keeps you
+      sane on the night shift." Play it on a tape deck.'
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -77,6 +80,8 @@ MonoBehaviour:
       letterLine: 
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
@@ -104,6 +109,8 @@ MonoBehaviour:
     consequences: []
     entrustItem: {fileID: 0}
     entrustDeposit: 0
+    keepsake: {fileID: 0}
+    keepsakeHint: 
     questionTitle: 
     questionBody: 
     acceptLabel: YES
