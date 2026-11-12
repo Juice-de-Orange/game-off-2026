@@ -1934,7 +1934,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (martin, 11.11., Agent): `PinBoardNotes` hält nur einen Tag; kein Blättern, keine älteren Zettel an der Wand, Überschrift „PINBOARD · TODAY · <Datum>“. 4 Tests. Nicht angespielt.
 
 ### P131 — Vorrat zu Hause
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P13, P10
 - Ziel: Wer drei Batterien heimschickt, versorgt die Familie drei Nächte lang (#40).
 - Enthalten: Heimgeschicktes kommt in einen Vorrat zu Hause statt nur in die nächste Nacht. Jede Nacht verbraucht je Bedürfnis (Strom, Essen, Medizin) ein passendes Stück; was fehlt, kostet wie heute Geld. Verderbliches Essen verdirbt auch zu Hause (wie `Spoil`). Abrechnung und Morgenbrief zeigen den Vorrat. Geschenke der Figuren und vom Zoll behaltene Ware wie bisher. Danach Economy Report bis alle Ziele ✓ (`EconomySimulator` kennt den Vorrat).
@@ -1944,7 +1944,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Hinweis (martin, 11.11.): Der Spielstand (P128, `SaveGame`/`SaveData`) kennt den Vorrat noch nicht – mit einbauen und den Test in `SaveGameTests` erweitern.
 
 ### P132 — Kassetten statt Floppy
-- Größe: L · Priorität: Kann · Status: offen, Assets bestellt 12.11. (M028) · Zuständig: —
+- Größe: L · Priorität: Kann · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P117, P127
 - Ziel: Musik als Sammelgegenstand mit einem einfachen, angenehmen Abspielsystem (#38).
 - Enthalten: Kassetten sind Gegenstände im Inventar. Woher (Entscheidung Max, 10.11.): einige im Kiosk zu kaufen, einige liegen auf der Station, einige schenken Figuren. Kassettenspieler mit **3 sichtbaren Slots** im Schalterraum: [E] → Kassette aus dem Inventar einlegen oder herausnehmen; er spielt die eingelegten nacheinander als Playlist, man sieht die Kassetten stecken. Der Floppy-Player in 103 wird durch dasselbe System ersetzt. Bedienung ohne Untermenüs. Die Floppy-Laute aus P127 werden zu Kassetten-Lauten umbestellt.
@@ -1961,7 +1961,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (martin, 11.11., Agent): An Tag 1, 2 s nach dem Schließen des Morgenbriefs: Durchsage mit Murmeln und Untertitel „Officer, report to the customs counter. Your shift starts now.“ (`Announcements.firstMorning`, `firstMorningDelay`), danach der bisherige Hinweis. Nie während des Menüs. 8 Tests. Klang nicht geprüft.
 
 ### P134 — Abendgäste an natürlichen Plätzen
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P101, P113
 - Ziel: Die Reisenden am Abend wirken, als hätten sie einen Grund, dort zu sein (#36).
 - Enthalten: Plätze mit Haltung statt freiem Herumstehen: sitzen an Bar und Diner, schauen aus dem Fenster oder Bullauge, stehen vor Kiosk und Schaufenstern, warten am Hangar. Je Platz Blickrichtung und Pose (sitzend/stehend, ggf. vorhandene Idle-Animationen). **Niemand läuft** (Entscheidung Max, 10.11.). Höchstens sechs wie bisher.
@@ -1969,21 +1969,21 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: An drei Abenden stehen alle Gäste an solchen Plätzen, keiner mitten im Gang oder in einer Wand; FPS nicht schlechter als P57-Werte; #36 geschlossen.
 
 ### P135 — Asservatenschrank: Türen beim Öffnen
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P32, P04-locker-rework
 - Ziel: Der geöffnete Schrank sieht aus wie der geschlossene (#35).
 - Enthalten: Ursache finden: Beim Öffnen tauscht `EvidenceLockerDisplay` das Stationsmodell gegen ein offenes Modell; vermutlich andere Materialien/Texturen an den Türen und kein Lightmap/keine Light Probes am beweglichen Teil. Gleiche Materialien wie das Rework, Türen und Fächer mit Light Probes beleuchten.
 - Abnahme: Öffnen und Schließen ohne sichtbaren Textur- oder Lichtwechsel (Vergleichs-Screenshot); #35 geschlossen.
 
 ### P136 — Morgenschlange läuft durcheinander
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P14, P107
 - Ziel: Die Reisenden stehen morgens in der Reihenfolge, in der sie drankommen, und laufen nicht durcheinander (#41).
 - Enthalten: Nachstellen an Tag 3; prüfen, in welcher Reihenfolge die Schlange entsteht (der Erste erscheint offenbar zuletzt und läuft durch die anderen). Erster in der Schlange = vorderster Platz, ohne Durchlaufen.
 - Abnahme: Drei Morgen beobachtet, niemand läuft durch andere hindurch; #41 geschlossen.
 
 ### P137 — Putzroboter macht Geräusche
-- Größe: S · Priorität: Kann · Status: offen, Assets bestellt 12.11. (M028) · Zuständig: —
+- Größe: S · Priorität: Kann · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P26
 - Ziel: Man hört, dass der Roboter den Boden putzt (#39).
 - Enthalten: Lustiger Putz-Loop als 3D-Klang am Roboter (leise, kurze Reichweite), beim Wenden ein kleines Piepen. In den `SoundSet`.
@@ -1991,7 +1991,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: In der Halle hört man den Roboter in der Nähe, weiter weg nicht; #39 geschlossen.
 
 ### P138 — Eigener Mauszeiger und Maus im Browser
-- Größe: S · Priorität: Soll · Status: offen, Assets bestellt 12.11. (M028) · Zuständig: —
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P48
 - Ziel: Ein Mauszeiger im Stil des Spiels und keine typischen Maus-Probleme von Unity im Browser (#34).
 - Enthalten: Zeiger-Grafik (normal + über Klickbarem) für Menüs, Schalter und Fenster. Bekannte WebGL-Probleme durchgehen und mit `tools/drive-webgl.mjs` in Chrome und Firefox prüfen: Maussperre nach Esc/Fokuswechsel zurückholen, Zeiger verschwindet nicht in Menüs, Empfindlichkeit gleich in beiden Browsern, kein Ruck beim ersten Klick.
@@ -1999,7 +1999,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Eigener Zeiger in Menü und Schalter; die Punkte oben in Chrome und Firefox ohne Fehler; #34 geschlossen.
 
 ### P139 — Schreibtisch: alles verschiebbar, Stempel frei ablegen
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P38, P66
 - Ziel: Nichts liegt verdeckt auf dem Tisch (#43: das Bestechungsgeld lag unter dem Brief).
 - Enthalten: Bestechungszettel und Geld lassen sich wie die Papiere ziehen und liegen beim Erscheinen nicht unter anderen Dingen. Stempel bleiben dort liegen, wo man sie absetzt (Klick auf freien Tisch), statt zurückzuspringen; sie bleiben auf der Tischfläche.

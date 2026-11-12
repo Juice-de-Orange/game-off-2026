@@ -451,3 +451,12 @@ in `docs/ASSET-REQUESTS.md`.
 - status: offen
 - meldung: Neue Aufträge aus den Bugreports #38, #39 und #34, Max hat sie beauftragt. Die Mauszeiger (P2) zuerst, dann der Rest. Die Kassetten ersetzen den Floppy-Player; die gelieferten Floppy-Laute bleiben als Platzhalter. **Frage:** Die 50 Stimmen-Laute aus M025/M027 (P94) stehen seit dem 09.11. auf `offen`. Wie ist der Stand, und gibt es ein Problem damit (synthetisches Murmeln ohne Wörter, siehe M025)? Bitte hier antworten und jede fertige Lieferung wie in M016 melden.
 - antwort:
+
+### M029 — Neue Aufträge 12.11.: 5 Songs für die Kassetten (P132), Sitz-Animation (P134)
+- datum: 2026-11-12
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`: `MUS_Cassette_01` bis `MUS_Cassette_05` (P132), `A_NPC_Sit.fbx` (P134)
+- status: offen
+- meldung: Danke für die schnelle Lieferung zu M028, alles ist gemergt und `final`. Neu, von Max beauftragt: fünf Songs für die Kassetten (gleicher Stil wie `MUS_Floppy_01`, jeder mit eigener Stimmung, siehe `look`) und eine Sitz-Animation auf dem Humanoid-Skelett der Reisenden. Die Frage zu den Stimmen-Lauten aus M028 (P94) ist weiter offen. Bitte jede fertige Lieferung wie in M016 melden.
+- antwort:

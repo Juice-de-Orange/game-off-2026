@@ -10486,3 +10486,159 @@ refs: []
 placeholder: PNG 32x32, Magenta/Grau-Raster
 feedback: []
 ```
+
+### MUS_Cassette_01.ogg
+```yaml
+path: Assets/_Project/Audio/Music/MUS_Cassette_01.ogg
+package: P132
+scene: Schalterraum, Zimmer 103
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Song 1 von 5 für die Kassetten (P132), gleicher Stil wie MUS_Floppy_01 (kein Gesang, keine Stimmen, 90 bis 150 Sekunden, nahtlos loopbar, OGG). Stimmung: Nachtschicht: ruhiger, warmer Synth-Track, langsam, wie ein alter Heimcomputer um 3 Uhr nachts. Selbst erzeugt oder frei (CC0/CC-BY, dann mit Quelle und Lizenz für CREDITS.md). Die fünf sollen sich deutlich unterscheiden, damit eine Playlist aus drei Kassetten abwechslungsreich klingt.
+interaction: "läuft, wenn die Kassette im Kassettendeck steckt; drei Kassetten spielen nacheinander als Playlist"
+variants: []
+animations: []
+collision: prefab
+refs: [Assets/_Project/Audio/Music/MUS_Floppy_01.ogg]
+placeholder: Alle Kassetten spielen MUS_Floppy_01.
+feedback: []
+```
+
+### MUS_Cassette_02.ogg
+```yaml
+path: Assets/_Project/Audio/Music/MUS_Cassette_02.ogg
+package: P132
+scene: Schalterraum, Zimmer 103
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Song 2 von 5 für die Kassetten (P132), gleicher Stil wie MUS_Floppy_01 (kein Gesang, keine Stimmen, 90 bis 150 Sekunden, nahtlos loopbar, OGG). Stimmung: Leicht beschwingt: lockerer Groove mit weichem Bass und Arpeggio, wie Radiomusik aus einer Bordkantine. Selbst erzeugt oder frei (CC0/CC-BY, dann mit Quelle und Lizenz für CREDITS.md). Die fünf sollen sich deutlich unterscheiden, damit eine Playlist aus drei Kassetten abwechslungsreich klingt.
+interaction: "läuft, wenn die Kassette im Kassettendeck steckt; drei Kassetten spielen nacheinander als Playlist"
+variants: []
+animations: []
+collision: prefab
+refs: [Assets/_Project/Audio/Music/MUS_Floppy_01.ogg]
+placeholder: Alle Kassetten spielen MUS_Floppy_01.
+feedback: []
+```
+
+### MUS_Cassette_03.ogg
+```yaml
+path: Assets/_Project/Audio/Music/MUS_Cassette_03.ogg
+package: P132
+scene: Schalterraum, Zimmer 103
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Song 3 von 5 für die Kassetten (P132), gleicher Stil wie MUS_Floppy_01 (kein Gesang, keine Stimmen, 90 bis 150 Sekunden, nahtlos loopbar, OGG). Stimmung: Sehnsucht nach zu Hause: melancholisch, wenige Töne, Pad-Flächen, etwas verstimmt. Selbst erzeugt oder frei (CC0/CC-BY, dann mit Quelle und Lizenz für CREDITS.md). Die fünf sollen sich deutlich unterscheiden, damit eine Playlist aus drei Kassetten abwechslungsreich klingt.
+interaction: "läuft, wenn die Kassette im Kassettendeck steckt; drei Kassetten spielen nacheinander als Playlist"
+variants: []
+animations: []
+collision: prefab
+refs: [Assets/_Project/Audio/Music/MUS_Floppy_01.ogg]
+placeholder: Alle Kassetten spielen MUS_Floppy_01.
+feedback: []
+```
+
+### MUS_Cassette_04.ogg
+```yaml
+path: Assets/_Project/Audio/Music/MUS_Cassette_04.ogg
+package: P132
+scene: Schalterraum, Zimmer 103
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Song 4 von 5 für die Kassetten (P132), gleicher Stil wie MUS_Floppy_01 (kein Gesang, keine Stimmen, 90 bis 150 Sekunden, nahtlos loopbar, OGG). Stimmung: Bar-Lounge: gemütlich, jazzig angehauchter Synth mit Swing, gedämpftes Schlagzeug. Selbst erzeugt oder frei (CC0/CC-BY, dann mit Quelle und Lizenz für CREDITS.md). Die fünf sollen sich deutlich unterscheiden, damit eine Playlist aus drei Kassetten abwechslungsreich klingt.
+interaction: "läuft, wenn die Kassette im Kassettendeck steckt; drei Kassetten spielen nacheinander als Playlist"
+variants: []
+animations: []
+collision: prefab
+refs: [Assets/_Project/Audio/Music/MUS_Floppy_01.ogg]
+placeholder: Alle Kassetten spielen MUS_Floppy_01.
+feedback: []
+```
+
+### MUS_Cassette_05.ogg
+```yaml
+path: Assets/_Project/Audio/Music/MUS_Cassette_05.ogg
+package: P132
+scene: Schalterraum, Zimmer 103
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Song 5 von 5 für die Kassetten (P132), gleicher Stil wie MUS_Floppy_01 (kein Gesang, keine Stimmen, 90 bis 150 Sekunden, nahtlos loopbar, OGG). Stimmung: Station im Leerlauf: ambientartig, pulsierend, gleichmäßiger Rhythmus, leicht hypnotisch. Selbst erzeugt oder frei (CC0/CC-BY, dann mit Quelle und Lizenz für CREDITS.md). Die fünf sollen sich deutlich unterscheiden, damit eine Playlist aus drei Kassetten abwechslungsreich klingt.
+interaction: "läuft, wenn die Kassette im Kassettendeck steckt; drei Kassetten spielen nacheinander als Playlist"
+variants: []
+animations: []
+collision: prefab
+refs: [Assets/_Project/Audio/Music/MUS_Floppy_01.ogg]
+placeholder: Alle Kassetten spielen MUS_Floppy_01.
+feedback: []
+```
+
+### A_NPC_Sit.fbx
+```yaml
+path: Assets/_Project/Art/Animations/Characters/A_NPC_Sit.fbx
+package: P134
+scene: Halle, Bar
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Sitz-Idle für die Reisenden: eine einzelne Animation (Take "Sit") auf demselben Humanoid-Skelett wie SK_NPC_Human (alle SK_NPC_* sind in Unity als Humanoid importiert, die Animation wird retargetet). Figur sitzt auf einer Bank oder einem Hocker mit Sitzhöhe 0,45 bis 0,75 m, Hände auf den Oberschenkeln oder verschränkt, leichtes Atmen und ab und zu ein Blick zur Seite. 4 bis 6 Sekunden, nahtlos loopbar. Das Becken liegt im Ursprung auf Sitzhöhe 0,45 m, die Füße stehen auf dem Boden.
+interaction: "Abendgäste sitzen auf den Hallenbänken und an der Bar"
+variants: []
+animations: [Sit]
+collision: prefab
+refs: [Assets/_Project/Art/Models/Characters/SK_NPC_Human.fbx]
+placeholder: Gäste stehen an Stehplätzen mit Idle.
+feedback: []
+```
