@@ -10642,3 +10642,83 @@ refs: [Assets/_Project/Art/Models/Characters/SK_NPC_Human.fbx]
 placeholder: Gäste stehen an Stehplätzen mit Idle.
 feedback: []
 ```
+
+### UI_SpeechBubble.png
+```yaml
+path: Assets/_Project/Art/UI/Terminal/UI_SpeechBubble.png
+package: P143
+scene: Schalter (Sprechblasen der Reisenden)
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Terminal/UI_SpeechBubble.png   # 96x96, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Rahmen der Sprechblase als 9-Slice, passend zu UI_Terminal_Panel, aber leichter: schmale Metallkante (mindestens 16 px Rand, Ecken verzerren beim Strecken nicht), abgerundete Pixel-Ecken, innen dunkles, leicht durchscheinendes Glas (Alpha etwa 85 %), eine dünne CRT-grüne Innenlinie. Oben links ein schmales Feld für den Namen des Sprechers. Pixel-Art, Farben aus der Palette.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Terminal/UI_Terminal_Panel.png, docs/STYLE.md]
+placeholder: UI_Terminal_Panel, bis die Lieferung da ist.
+feedback: []
+```
+
+### UI_SpeechBubble_Tail.png
+```yaml
+path: Assets/_Project/Art/UI/Terminal/UI_SpeechBubble_Tail.png
+package: P143
+scene: Schalter (Sprechblasen der Reisenden)
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Terminal/UI_SpeechBubble_Tail.png   # 32x24, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Zipfel der Sprechblase, der zum Kopf des Sprechers zeigt: nach links unten zeigend, dieselbe Kante und Füllung wie UI_SpeechBubble, oben offen, damit er nahtlos an die Unterkante der Blase anschließt. Das Spiel spiegelt ihn, wenn der Sprecher auf der anderen Seite steht.
+interaction: "none"
+variants: []
+animations: []
+collision: none
+refs: [Assets/_Project/Art/UI/Terminal/UI_SpeechBubble.png]
+placeholder: Kein Zipfel, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Cassette_Skip.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Cassette_Skip.ogg
+package: P141
+scene: Schalterraum, Zimmer 103
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Tape-Deck springt zum nächsten Song: kurzes hohes Vorspul-Surren, dann ein mechanischer Klack der Taste, 0,4 bis 0,8 s, trocken, mono, passend zu SFX_Cassette_Insert.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: [Assets/_Project/Audio/SFX/SFX_Cassette_Insert.ogg]
+placeholder: SFX_Cassette_Insert, bis die Lieferung da ist.
+feedback: []
+```

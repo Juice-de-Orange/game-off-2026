@@ -460,3 +460,12 @@ in `docs/ASSET-REQUESTS.md`.
 - status: offen
 - meldung: Danke für die schnelle Lieferung zu M028, alles ist gemergt und `final`. Neu, von Max beauftragt: fünf Songs für die Kassetten (gleicher Stil wie `MUS_Floppy_01`, jeder mit eigener Stimmung, siehe `look`) und eine Sitz-Animation auf dem Humanoid-Skelett der Reisenden. Die Frage zu den Stimmen-Lauten aus M028 (P94) ist weiter offen. Bitte jede fertige Lieferung wie in M016 melden.
 - antwort:
+
+### M030 — Neue Aufträge 12.11. abends: Sprechblase (P143), Skip-Laut (P141); Stimmen dringend
+- datum: 2026-11-12
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`: `UI_SpeechBubble`, `UI_SpeechBubble_Tail` (P143), `SFX_Cassette_Skip` (P141); `SFX_Voice_<Spezies>_01–10` (P94)
+- status: offen
+- meldung: Danke für die fünf Songs, die Sitz-Animation und die überarbeiteten Putzroboter-Laute; Max sieht sie sich an und merged. Neu aus den Bugreports #46 und #47: ein Sprechblasen-Rahmen im Terminal-Stil mit Zipfel (zuerst) und ein Laut fürs Überspringen am Kassettendeck. **Stimmen (P94):** Die 50 Laute stehen seit dem 09.11. auf `offen`, inzwischen gibt es dazu zwei Bugreports (#16, #45). Bitte als Nächstes, gern zuerst eine Spezies als Vorschau. Falls es ein Problem gibt, bitte hier antworten. Jede fertige Lieferung wie in M016 melden.
+- antwort:
