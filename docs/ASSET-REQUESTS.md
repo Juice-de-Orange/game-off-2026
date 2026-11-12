@@ -10308,7 +10308,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Cassette_Insert.ogg
 package: P132
 scene: Schalterraum, Zimmer 103
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10334,7 +10334,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Cassette_Eject.ogg
 package: P132
 scene: Schalterraum, Zimmer 103
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10360,7 +10360,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Cassette_Play.ogg
 package: P132
 scene: Schalterraum, Zimmer 103
-status: offen
+status: Vorschau
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
