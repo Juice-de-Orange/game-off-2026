@@ -16,9 +16,25 @@ namespace GameOff.EditorTools
         private static Sprite Load(string name) =>
             AssetDatabase.LoadAllAssetsAtPath(Folder + name + ".png").OfType<Sprite>().FirstOrDefault();
 
-        /// <summary>Slice borders in pixels of the delivered graphics; 0 = not sliced.</summary>
+        /// <summary>Slice borders in pixels of the delivered graphics; 0 = not sliced (also the bubble's tail, P143).</summary>
         internal static int BorderOf(string fileName) =>
-            fileName == "UI_Terminal_Panel" ? 24 : fileName == "UI_Terminal_PanelInset" ? 10 : fileName.StartsWith("UI_Terminal_Button") ? 8 : 0;
+            fileName == "UI_Terminal_Panel" ? 24 : fileName == "UI_Terminal_PanelInset" ? 10 : fileName.StartsWith("UI_Terminal_Button") ? 8
+            : fileName == BubbleFrameName ? 16 : 0;
+
+        private const string BubbleFrameName = "UI_SpeechBubble";
+
+        /// <summary>P143: the speech bubble's frame, until it is delivered the panel frame; null without either.</summary>
+        internal static Sprite BubbleFrame(out int border)
+        {
+            var sprite = Load(BubbleFrameName);
+            string name = sprite != null ? BubbleFrameName : "UI_Terminal_Panel";
+            if (sprite == null) sprite = Load(name);
+            border = sprite != null ? BorderOf(name) : 0;
+            return sprite;
+        }
+
+        /// <summary>P143: the bubble's tail (points down-left, open at the top); null until delivered.</summary>
+        internal static Sprite BubbleTail() => Load(BubbleFrameName + "_Tail");
 
         private static void Sliced(Image image, string sprite)
         {

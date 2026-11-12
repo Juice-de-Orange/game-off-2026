@@ -36,6 +36,8 @@ namespace GameOff.EditorTools
             { "Mira_2", ("Thank you. I won't forget it.", null) },
             { "Mira_3", (null, "Then there is nothing left to try.") },
             { "Tobin_2", (null, "It's one day old. One day! I have shifts to work.") },
+            // P143: Korr's last words on day 1; the tutorial board closes with the decision, so these are all he says after it
+            { "Korr_1", ("Good. Carry on.", "My papers were in order, officer. It's in my report. Carry on.") },
         };
 
         public static Dictionary<int, StoryDayContent> Build() => new Dictionary<int, StoryDayContent>

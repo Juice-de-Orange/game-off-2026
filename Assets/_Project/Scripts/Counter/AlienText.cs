@@ -9,7 +9,7 @@ namespace GameOff.Counter
     public static class AlienText
     {
         private const string Glyphs = "ΞΨΩΣΠΦΛΔΓЖЩЮЯДБЧ";
-        private const string EdgeColor = "#0B7C8E"; // dark cyan: the bubble is pale
+        private const string EdgeColor = "#5EC8FF"; // screen cyan (STYLE.md): the bubble is dark glass since P143
 
         public static string Scramble(string plain)
         {

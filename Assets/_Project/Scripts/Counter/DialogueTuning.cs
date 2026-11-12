@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameOff.Counter
 {
-    /// <summary>Timing of the traveler in the inspection lock and their speech bubble (P40).</summary>
+    /// <summary>Timing of the traveler in the inspection lock and their speech bubble (P40, P143).</summary>
     [CreateAssetMenu(menuName = "GameOff/Counter/Dialogue Tuning", fileName = "DialogueTuning")]
     public class DialogueTuning : ScriptableObject
     {
@@ -17,6 +17,14 @@ namespace GameOff.Counter
         public float minHoldSeconds = 2.5f;
         [Tooltip("Extra time per character of text (s).")]
         public float holdSecondsPerCharacter = 0.04f;
+        [Tooltip("P143: a bubble fades in and out this fast (s, unscaled).")]
+        public float bubbleFadeSeconds = 0.15f;
+        [Tooltip("P143: human speech types on like a terminal, this many characters per second (0 = at once).")]
+        public float typeCharactersPerSecond = 50f;
+        [Tooltip("P143: the block cursor blinks on and off this long while a line is read (s).")]
+        public float cursorBlinkSeconds = 0.4f;
+        [Tooltip("P143: after the decision, the pause between the last line fading out and the traveler's reaction (s).")]
+        public float reactionPauseSeconds = 0.25f;
         [Tooltip("P91: the door opens this long before someone walks through it (s).")]
         public float doorLeadSeconds = 0.4f;
         [Tooltip("P91: how far behind the lock doors a traveler starts and ends, out of sight (m).")]
