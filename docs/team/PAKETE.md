@@ -1944,7 +1944,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Hinweis (martin, 11.11.): Der Spielstand (P128, `SaveGame`/`SaveData`) kennt den Vorrat noch nicht – mit einbauen und den Test in `SaveGameTests` erweitern.
 
 ### P132 — Kassetten statt Floppy
-- Größe: L · Priorität: Kann · Status: offen · Zuständig: —
+- Größe: L · Priorität: Kann · Status: offen, Assets bestellt 12.11. (M028) · Zuständig: —
 - Braucht: — · Folgt auf: P117, P127
 - Ziel: Musik als Sammelgegenstand mit einem einfachen, angenehmen Abspielsystem (#38).
 - Enthalten: Kassetten sind Gegenstände im Inventar. Woher (Entscheidung Max, 10.11.): einige im Kiosk zu kaufen, einige liegen auf der Station, einige schenken Figuren. Kassettenspieler mit **3 sichtbaren Slots** im Schalterraum: [E] → Kassette aus dem Inventar einlegen oder herausnehmen; er spielt die eingelegten nacheinander als Playlist, man sieht die Kassetten stecken. Der Floppy-Player in 103 wird durch dasselbe System ersetzt. Bedienung ohne Untermenüs. Die Floppy-Laute aus P127 werden zu Kassetten-Lauten umbestellt.
@@ -1983,7 +1983,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Drei Morgen beobachtet, niemand läuft durch andere hindurch; #41 geschlossen.
 
 ### P137 — Putzroboter macht Geräusche
-- Größe: S · Priorität: Kann · Status: offen · Zuständig: —
+- Größe: S · Priorität: Kann · Status: offen, Assets bestellt 12.11. (M028) · Zuständig: —
 - Braucht: — · Folgt auf: P26
 - Ziel: Man hört, dass der Roboter den Boden putzt (#39).
 - Enthalten: Lustiger Putz-Loop als 3D-Klang am Roboter (leise, kurze Reichweite), beim Wenden ein kleines Piepen. In den `SoundSet`.
@@ -1991,7 +1991,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: In der Halle hört man den Roboter in der Nähe, weiter weg nicht; #39 geschlossen.
 
 ### P138 — Eigener Mauszeiger und Maus im Browser
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: S · Priorität: Soll · Status: offen, Assets bestellt 12.11. (M028) · Zuständig: —
 - Braucht: — · Folgt auf: P48
 - Ziel: Ein Mauszeiger im Stil des Spiels und keine typischen Maus-Probleme von Unity im Browser (#34).
 - Enthalten: Zeiger-Grafik (normal + über Klickbarem) für Menüs, Schalter und Fenster. Bekannte WebGL-Probleme durchgehen und mit `tools/drive-webgl.mjs` in Chrome und Firefox prüfen: Maussperre nach Esc/Fokuswechsel zurückholen, Zeiger verschwindet nicht in Menüs, Empfindlichkeit gleich in beiden Browsern, kein Ruck beim ersten Klick.

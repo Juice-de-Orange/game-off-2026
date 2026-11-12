@@ -10219,3 +10219,270 @@ refs: []
 placeholder: UI-Klick bleibt, bis die Lieferung da ist.
 feedback: []
 ```
+
+### SM_Item_Cassette.fbx
+*(P132: Kassetten ersetzen den Floppy-Player. Kaufbar im Kiosk, liegen auf der Station, Geschenke von Figuren.)*
+```yaml
+path: Assets/_Project/Art/Models/Items/SM_Item_Cassette.fbx
+package: P132
+scene: Schalterraum, Zimmer 103, Kiosk
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0.10, 0.064, 0.012]
+pivot: bottom_center
+tris_max: 150
+materials: [Cassette]
+textures:
+  - Assets/_Project/Art/Textures/Items/T_Item_Cassette_Albedo.png   # 128x128, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  Eine abgegriffene Audiokassette, Gehäuse halb durchsichtig mit sichtbaren Spulen, Papieretikett mit handgeschriebenem Titel. Liegt flach oder steckt aufrecht in einem Slot des Kassettenspielers (die obere Kante mit dem Etikett schaut heraus).
+interaction: "liegt auf Tisch/Regal oder steckt im Kassettenspieler; wird wie eine Ware ins Inventar genommen"
+variants: [T_Item_Cassette_Label_01.png bis _06.png: sechs Etikettfarben/-titel auf demselben Modell, je 64x32, Point]
+animations: []
+collision: prefab
+refs: []
+placeholder: keine, bis es geliefert ist; Box 0.10 x 0.064 x 0.012 m, Pivot bottom_center, Material-Slots [Cassette]
+feedback: []
+```
+
+### UI_Icon_Item_Cassette.png
+```yaml
+path: Assets/_Project/Art/UI/Icons/UI_Icon_Item_Cassette.png
+package: P132
+scene: UI
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/Icons/UI_Icon_Item_Cassette.png   # 128x128, transparent, Point
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Inventar-Icon einer Audiokassette im selben Stil wie die übrigen Waren-Icons (UI_Icon_Item_NovaCola).
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: PNG 128x128, Magenta/Grau-Raster
+feedback: []
+```
+
+### SM_Counter_CassettePlayer.fbx
+```yaml
+path: Assets/_Project/Art/Models/Counter/SM_Counter_CassettePlayer.fbx
+package: P132
+scene: Schalterraum, Zimmer 103
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0.45, 0.20, 0.16]
+pivot: bottom_center
+tris_max: 900
+materials: [Player]
+textures:
+  - Assets/_Project/Art/Textures/Counter/T_Counter_CassettePlayer_Albedo.png   # 256x256, Point
+  - Assets/_Project/Art/Textures/Counter/T_Counter_CassettePlayer_Emission.png   # 64x64, Point
+texel_px_per_m: 128
+palette: docs/style/palette.png
+look: >
+  Robustes Tape-Deck aus Stationsbeständen mit drei nebeneinanderliegenden, oben offenen Slots, in denen Kassetten aufrecht stecken (sichtbar bis zum Etikett). Kleine Lämpchen je Slot (Emission: grün = spielt gerade, gelb = wartet), ein großer Play/Stop-Kipphebel, Lautsprechergitter vorne. Steht auf einem Regal oder Tisch. Derselbe Spieler ersetzt den Floppy-Player in Zimmer 103.
+interaction: "[E] legt eine Kassette in den nächsten freien Slot oder nimmt eine heraus; spielt die eingelegten nacheinander"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: keine, bis es geliefert ist; Box 0.45 x 0.20 x 0.16 m, Pivot bottom_center, Material-Slots [Player]; Slot-Positionen als leere Objekte Slot_1..Slot_3 im FBX
+feedback: []
+```
+
+### SFX_Cassette_Insert.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Cassette_Insert.ogg
+package: P132
+scene: Schalterraum, Zimmer 103
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Kassette rastet in ein Tape-Deck ein: kurzes Plastikklappern, dann ein satter Klick, 0,3 bis 0,6 s, trocken, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: SFX_Floppy_Insert, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Cassette_Eject.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Cassette_Eject.ogg
+package: P132
+scene: Schalterraum, Zimmer 103
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Kassette wird aus einem Tape-Deck gezogen: Federklick und Plastikschaben, 0,3 bis 0,6 s, trocken, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: SFX_Floppy_Eject, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_Cassette_Play.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_Cassette_Play.ogg
+package: P132
+scene: Schalterraum, Zimmer 103
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Mechanischer Play-Kipphebel eines alten Tape-Decks rastet ein, dazu kurzes Motoranlaufen, 0,4 bis 0,8 s, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: UI-Klick bleibt, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_CleaningBot_Loop.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_CleaningBot_Loop.ogg
+package: P137
+scene: Halle
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Putzroboter bei der Arbeit, nahtlos loopbar 3 bis 5 s: rotierende Bürsten, leises Saugen, ab und zu ein fröhliches Quietschen oder Trällern, damit es lustig wirkt. Mono, wird als 3D-Klang mit kurzer Reichweite abgespielt.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: kein Klang, bis die Lieferung da ist.
+feedback: []
+```
+
+### SFX_CleaningBot_Turn.ogg
+```yaml
+path: Assets/_Project/Audio/SFX/SFX_CleaningBot_Turn.ogg
+package: P137
+scene: Halle
+status: offen
+priority: P3
+needed_by: 2026-11-23
+size_m: [0, 0, 0]
+pivot: bottom_center
+tris_max: 0
+materials: []
+textures: []
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Putzroboter wendet: zwei kurze, hohe Piepser wie ein kleiner Lieferroboter, 0,3 bis 0,5 s, mono.
+interaction: "none"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: kein Klang, bis die Lieferung da ist.
+feedback: []
+```
+
+### UI_Cursor_Default.png
+```yaml
+path: Assets/_Project/Art/UI/UI_Cursor_Default.png
+package: P138
+scene: UI
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/UI_Cursor_Default.png   # 32x32, transparent, Point, Hotspot 0,0 (Spitze oben links)
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Mauszeiger im Terminal-Stil des Spiels (wie UI_Terminal_*): pixeliger Pfeil in Bernstein (#ffd46b) mit dunkler Kontur, gut lesbar auf hellen Papieren und dunklen Wänden.
+interaction: "Zeiger in Menüs, am Schalter und in Fenstern"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: PNG 32x32, Magenta/Grau-Raster
+feedback: []
+```
+
+### UI_Cursor_Hover.png
+```yaml
+path: Assets/_Project/Art/UI/UI_Cursor_Hover.png
+package: P138
+scene: UI
+status: offen
+priority: P2
+needed_by: 2026-11-20
+size_m: [0, 0, 0]
+pivot: none
+tris_max: 0
+materials: []
+textures:
+  - Assets/_Project/Art/UI/UI_Cursor_Hover.png   # 32x32, transparent, Point, Hotspot gleich wie UI_Cursor_Default
+texel_px_per_m: 0
+palette: docs/style/palette.png
+look: >
+  Zeiger über etwas Klickbarem: derselbe Stil wie UI_Cursor_Default, aber als zeigende Hand oder Pfeil mit kleinem Leuchtrahmen, damit man sofort sieht, dass man klicken kann.
+interaction: "Zeiger über Knöpfen, Papieren, Stempeln"
+variants: []
+animations: []
+collision: prefab
+refs: []
+placeholder: PNG 32x32, Magenta/Grau-Raster
+feedback: []
+```

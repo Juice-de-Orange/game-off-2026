@@ -442,3 +442,12 @@ in `docs/ASSET-REQUESTS.md`.
 - status: offen
 - meldung: Danke für die Lieferungen zu P115, P117, P118 und P22; der Song beantwortet die Rückfrage aus M026. Damit fehlen nur noch die Einträge oben, Max hat sie alle beauftragt. Bei den Lauten gilt M025 (synthetisches Murmeln ohne Wörter), beim Spind M026 (nur die Nummer 103 aus der Textur nehmen, das Foto bleibt). Bitte jede fertige Lieferung wie in M016 melden.
 - antwort:
+
+### M028 — Neue Aufträge 12.11.: Kassetten (P132), Putzroboter (P137), Mauszeiger (P138); Frage zu den Stimmen
+- datum: 2026-11-12
+- von: max
+- an: pipeline
+- betrifft: `ASSET-REQUESTS.md`: `SM_Item_Cassette`, `UI_Icon_Item_Cassette`, `SM_Counter_CassettePlayer`, `SFX_Cassette_Insert/Eject/Play` (P132), `SFX_CleaningBot_Loop/Turn` (P137), `UI_Cursor_Default/Hover` (P138); `SFX_Voice_<Spezies>_01–10` (P94)
+- status: offen
+- meldung: Neue Aufträge aus den Bugreports #38, #39 und #34, Max hat sie beauftragt. Die Mauszeiger (P2) zuerst, dann der Rest. Die Kassetten ersetzen den Floppy-Player; die gelieferten Floppy-Laute bleiben als Platzhalter. **Frage:** Die 50 Stimmen-Laute aus M025/M027 (P94) stehen seit dem 09.11. auf `offen`. Wie ist der Stand, und gibt es ein Problem damit (synthetisches Murmeln ohne Wörter, siehe M025)? Bitte hier antworten und jede fertige Lieferung wie in M016 melden.
+- antwort:
