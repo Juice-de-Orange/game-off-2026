@@ -140,7 +140,8 @@ namespace GameOff.Characters
                     dayManager.UI.ShowHint($"{p.character.DisplayName} left {a.entrustItem.DisplayName} with you. Keep it until they are back.", 5f);
             }
             // P132: a small thank-you to keep (a cassette).
-            if (outcome == Outcome.Helped && a.keepsake != null && economy != null && economy.Inventory.CanAdd(a.keepsake))
+            if (outcome == Outcome.Helped && a.keepsake != null && economy != null && economy.Inventory.CanAdd(a.keepsake)
+                && economy.Inventory.Count(a.keepsake) == 0 && !GameOff.Rest.CassetteDeck.AnyHolds(a.keepsake))
             {
                 economy.Inventory.Add(a.keepsake);
                 if (dayManager != null && dayManager.UI != null && !string.IsNullOrWhiteSpace(a.keepsakeHint))

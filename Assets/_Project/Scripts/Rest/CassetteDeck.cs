@@ -59,6 +59,10 @@ namespace GameOff.Rest
         private float _startAt;
         /// <summary>The end of a track is only looked for after this, so a source that is just starting isn't taken for one that ended.</summary>
         private float _checkEndAfter;
+        /// <summary>Seconds the current track has really been playing (its end is only taken once it got there).</summary>
+        private float _played;
+        /// <summary>Each cassette model's own material from the FBX, for a cassette without a label material.</summary>
+        private Material[][] _modelDefaults = new Material[0][];
         private Inventory _inventory;
 
         /// <summary>P128: every deck in the scene (the save reads and restores them).</summary>
@@ -141,10 +145,16 @@ namespace GameOff.Rest
                 if (Playlist.Current != null) AudioManager.PlayAt(s => s.cassettePlay, transform.position, soundDistance);
                 StartTrack();
             }
-            else if (_onSource != null && source.clip != null && !source.isPlaying && !AudioListener.pause && Time.time >= _checkEndAfter)
+            else if (_onSource != null && source.clip != null && !AudioListener.pause && Time.time >= _checkEndAfter)
             {
-                Playlist.Advance(); // the track is over: the next cassette, or the first one again
-                StartTrack();
+                if (source.isPlaying) _played += Time.unscaledDeltaTime;
+                // Over only once it really played to the end: a source that is still decoding, or a suspended
+                // browser audio context, also reports "not playing" and must not skip the tape.
+                else if (_played >= source.clip.length - 0.5f)
+                {
+                    Playlist.Advance(); // the track is over: the next cassette, or the first one again
+                    StartTrack();
+                }
             }
             ApplyLever();
         }
@@ -202,6 +212,7 @@ namespace GameOff.Rest
             source.loop = Playlist.Count == 1;
             if (source.clip != null) source.Play();
             _checkEndAfter = Time.time + 0.5f;
+            _played = 0f;
             ShowSlots();
         }
 
@@ -214,8 +225,17 @@ namespace GameOff.Rest
                 if (model == null) continue;
                 var cassette = Playlist.At(i);
                 model.SetActive(cassette != null);
-                if (cassette == null || cassette.Material == null) continue;
-                foreach (var r in model.GetComponentsInChildren<Renderer>(true)) r.sharedMaterial = cassette.Material;
+                if (cassette == null) continue;
+                var renderers = model.GetComponentsInChildren<Renderer>(true);
+                if (_modelDefaults.Length != cassetteModels.Length) _modelDefaults = new Material[cassetteModels.Length][];
+                if (_modelDefaults[i] == null)
+                {
+                    _modelDefaults[i] = new Material[renderers.Length];
+                    for (int r = 0; r < renderers.Length; r++) _modelDefaults[i][r] = renderers[r].sharedMaterial;
+                }
+                for (int r = 0; r < renderers.Length; r++)
+                    renderers[r].sharedMaterial = cassette.Material != null ? cassette.Material
+                        : r < _modelDefaults[i].Length ? _modelDefaults[i][r] : renderers[r].sharedMaterial;
             }
             for (int i = 0; i < _lampMaterials.Length; i++)
             {

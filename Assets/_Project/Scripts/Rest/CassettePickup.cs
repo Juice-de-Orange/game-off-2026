@@ -47,7 +47,9 @@ namespace GameOff.Rest
         {
             var economy = PlayerEconomy.Instance;
             if (Taken || cassette == null || economy == null) return;
-            economy.Inventory.Add(cassette);
+            // Already owned (in the bag or in a deck): it only disappears. Otherwise it must really land in the bag first.
+            bool owned = economy.Inventory.Count(cassette) > 0 || CassetteDeck.AnyHolds(cassette);
+            if (!owned && economy.Inventory.Add(cassette) <= 0) return;
             AudioManager.Play(s => s.cassetteEject); // the plastic rattle of a cassette in the hand
             if (day != null && day.UI != null) day.UI.ShowHint(string.Format(foundHint, cassette.Title), 5f);
             SetTaken(true);

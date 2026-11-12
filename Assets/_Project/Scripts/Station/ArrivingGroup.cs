@@ -80,6 +80,7 @@ namespace GameOff.Station
         {
             float stepOut = ArrivalQueue.StepOutDelay(index, followGap, walkSpeed);
             if (stepOut > 0f) yield return new WaitForSeconds(stepOut);
+            if (_shiftStarted) yield break; // the counter opened before this one stepped out: it doesn't come at all
             var figure = Instantiate(traveler.Model, wayIn[0], Facing(wayIn[1] - wayIn[0]), transform);
             if (looks != null) looks.Apply(figure, traveler.DisplayName, traveler.Species);
             var animator = figure.GetComponent<Animator>();

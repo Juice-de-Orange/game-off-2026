@@ -272,6 +272,7 @@ namespace GameOff.Documents
             _pile.Remove(thing);
             if (_sharpLayer >= 0) SetLayer(thing, _worldLayer);
             if (wasRead && _reading.Count > 0) LayOutReading();
+            Restack(); // what lay on it comes down onto the desk instead of floating where it was
         }
 
         /// <summary>Hands papers in through the drawer; if the drawer is busy, they come as soon as it is free.</summary>
@@ -468,7 +469,21 @@ namespace GameOff.Documents
                 spot = paperArea.TransformPoint(DeskLayout.ClampToArea(paperArea.InverseTransformPoint(hit.point), paperAreaSize));
                 spot.y = hit.point.y;
             }
-            return !Blocked(spot);
+            return !Blocked(spot) && !OnArrivalSpot(spot);
+        }
+
+        /// <summary>P139: where the drawer lays new papers; a stamp standing there would be picked up instead of the paper.</summary>
+        private bool OnArrivalSpot(Vector3 pos)
+        {
+            const float clearance = 0.12f;
+            foreach (var s in deskSpots)
+            {
+                if (s == null) continue;
+                var d = s.position - pos;
+                d.y = 0f;
+                if (d.sqrMagnitude < clearance * clearance) return true;
+            }
+            return false;
         }
 
         private IEnumerator DeliverRoutine(IReadOnlyList<DocumentData> documents)
