@@ -2081,12 +2081,13 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Abnahme: Release-Build ohne Dev-Zugänge (im Browser geprüft); Start ohne Konsolenmeldungen aus `Assets/_Project`; CREDITS vollständig; Messwerte nicht schlechter als P57; P114 abgenommen; Checkliste steht.
 
 ### P147 — Automatischer Durchspieltest der Wellen 1–3
-- Größe: M · Priorität: Muss · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: M · Priorität: Muss · Status: fertig (max, 13.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P123
 - Ziel: Martins Testlisten (Welle 1, 2, 3) sind abgearbeitet, ohne dass Max alles von Hand spielt.
 - Enthalten: Ein Agent spielt die Punkte aus `questions/2026-11-09_martin-an-max_welle1-testen.md`, `..._welle2-testen.md` und `2026-11-11_martin-an-max_welle3-testen.md` mit `tools/drive-webgl.mjs` im Browser durch (Screenshots, Konsole) und schreibt je Punkt ✓/✗/„braucht Max“ in die `## Antwort` der Fragen. Jeder Fund wird ein eigenes Folgepaket. Punkte, die Gefühl brauchen (reichen 5 Minuten Abend, Lesbarkeit, Kamera angenehm), sammelt er für Max in einer kurzen Liste.
 - Nicht enthalten: Fixes (werden Folgepakete).
 - Abnahme: Alle drei Fragen haben eine Antwort; Status `beantwortet`, sobald Max die Gefühlspunkte ergänzt hat; jeder ✗ hat ein Paket; P123 kann damit geschlossen werden.
+- Ergebnis (max, 13.11., Agent): Alle drei Testlisten im Browser-Build b8b9cc1 durchgespielt und in den Fragen beantwortet: Welle 1 15 ✓ / 3 ✗, Welle 2 12 ✓ / 1 ✗, Welle 3 10 ✓ / 1 ✗ (gleicher Fehler wie Welle 1). Funde → P151 (Untertitel übereinander), P152 (Bullauge ab Tag 3 verdeckt), P153 (Kiosk-Schild nach Sperrstunde). Für Max offen („braucht Max“, in den Fragen markiert): Größe der Schrank-Modelle, Kamerafahrt Bullauge, zittriger Brief, reichen 5 Minuten Abend, Klang von Sperrstunde und erster Durchsage, Spielstand nach Tab-Schließen auf itch/kestrel9, Maus-Einfangen im echten Browser. Nicht geprüft: Barhocker besetzt, zerrissenes Foto, DISCHARGED, dunkles Fenster.
 
 ### P148 — Wachen gehen Runden durch die Station
 - Größe: M · Priorität: Kann · Status: in Arbeit (max, 12.11.) · Zuständig: max
@@ -2110,3 +2111,24 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Enthalten: Wurde der Shifter an Tag 3 durch die Schleuse geschickt (oder verhaftet), kommt an Tag 6 statt ihm seine Komplizin (neue Figur, Mensch oder andere Spezies, vorhandenes Modell mit Variante, saubere Papiere) und stellt dieselbe JOIN/REFUSE-Frage („Er ist für uns gestorben …“). JOIN → Tag 7 läuft wie beim Shifter (sie enthüllt sich, Sicherheit, Ende AIRLOCKED); REFUSE → Tag 7 Wendung ohne Ende. Texte in `StoryDayContent`/Figuren-Daten, Eintrag in `docs/FIGUREN.md`. Ende-Auswertung (P124) nennt sie.
 - Nicht enthalten: neue Modelle, Änderungen an Tag 3.
 - Abnahme: Beide Wege (Shifter terminiert / durchgelassen) führen an Tag 6 zur Frage und mit JOIN an Tag 7 zu AIRLOCKED; Tests (`ShifterTests` erweitert), Validate Travelers ok; Economy Report unverändert ✓.
+
+### P151 — Untertitel liegen übereinander
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P147 (Fund), P115, P133
+- Ziel: Gedanken an Sitzplätzen (Bank, Bullauge) und Hinweise/Durchsagen (Sperrstunde, erste Durchsage) sind immer lesbar.
+- Enthalten: Beide Zeilen stehen heute an derselben Stelle unten. Entweder eigene Zeilen (Gedanke darüber) oder eine Warteschlange, die den zweiten Text erst nach dem ersten zeigt. Wege zum Nachstellen (P147): Tag 1 Brief schließen, sofort [E] am Bullauge → Gedanke über „Officer, report to the customs counter…“; abends Hallenbank, [F] → „It's late…“ über „Curfew. All shops are closed…“.
+- Abnahme: Beide Wege zeigen beide Texte lesbar; Test für die Reihenfolge/Position; keine Konsolenfehler.
+
+### P152 — Bullauge ab Tag 3 halb verdeckt
+- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P147 (Fund), P51, P111
+- Ziel: Der Blick aus dem Bullauge in 103 zeigt an jedem Tag den Planeten frei.
+- Enthalten: An Tag 2 ist etwa ein Fünftel, ab Tag 3 die rechte Hälfte des Bildes von der Innenwand verdeckt, der Planet steht am linken Rand. Vermutung: Der Himmel dreht pro Tag weiter (0/18/36°) und die Kamera zielt schräg durchs Fenster auf den Planeten. Lösung: Kamera bleibt senkrecht zum Fenster bzw. der Planet wird für den Blick ins Fenster gelegt; an allen Tagen (1–12 und Endlos) prüfen.
+- Abnahme: Screenshots Tag 1, 3, 7, 12: Planet frei im Bild, keine Wand; Test für die Blickrichtung.
+
+### P153 — Kiosk-Schild „OPEN“ nach der Sperrstunde aus
+- Größe: XS · Priorität: Kann · Status: offen · Zuständig: —
+- Braucht: — · Folgt auf: P147 (Fund), P109
+- Ziel: Nach 23 Uhr leuchtet am Kiosk nicht mehr „OPEN“, wenn das Gitter unten ist.
+- Enthalten: Neonschild aus (oder „CLOSED“), solange das Gitter unten ist; morgens wieder an. Gleiches für andere Läden mit Schild prüfen.
+- Abnahme: Abend bis zur Sperrstunde laufen lassen → Schild aus; nächster Morgen an.
