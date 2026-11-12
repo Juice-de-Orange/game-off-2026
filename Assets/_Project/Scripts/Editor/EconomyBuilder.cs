@@ -166,6 +166,9 @@ namespace GameOff.EditorTools
             MigrateToEntries(data.Stocks["Stock_Vending"], log);
             SetDailyAmount(data.Stocks["Stock_Vending"], data.Items["cola"], 6);
             BuildGoodsList2(data, contraband, gadget, valuable, confiscated, log, ref created);
+            // P132: five cassettes (CassetteBuilder; no goods: unique, no labels, nobody buys them back), two on the kiosk shelf, one a day.
+            foreach (var (cassette, fromDay) in CassetteBuilder.EnsureItems(log, ref created))
+                AddEntry(data.Stocks["Stock_Kiosk_Test"], cassette, 1, log, fromDay);
             // P08: numbers for confiscation and the shift-end answer; the goods list follows the cargo words (P82).
             data.Confiscation = LoadOrCreate<ConfiscationTuning>(EconomyFolder + "ConfiscationTuning.asset", _ => { }, ref created);
             data.Confiscation.goods = data.Items.Values.Where(i => i != null && !string.IsNullOrEmpty(i.CargoWord)).OrderBy(i => i.name).ToList();

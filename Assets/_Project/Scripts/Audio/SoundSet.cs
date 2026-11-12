@@ -42,6 +42,18 @@ namespace GameOff.Audio
         [Tooltip("P63: with the clown shoes on.")]
         public Sound[] clownFootsteps = new Sound[0];
 
+        [Header("Tape deck (P132)")]
+        public Sound cassetteInsert = new Sound();
+        public Sound cassetteEject = new Sound();
+        [Tooltip("The lever clicks to play when the first cassette goes in.")]
+        public Sound cassettePlay = new Sound();
+
+        [Header("Cleaning bot (P137)")]
+        [Tooltip("Loops at the bot: 3D, only audible close by (PatrolBot).")]
+        public Sound cleaningBotLoop = new Sound();
+        [Tooltip("The beep when it turns at a corner.")]
+        public Sound cleaningBotTurn = new Sound();
+
         [Header("Room sound")]
         [Tooltip("Volume of the station hum, and of the room sound in bar and hangar.")]
         [Range(0f, 1f)] public float ambienceVolume = 0.35f;

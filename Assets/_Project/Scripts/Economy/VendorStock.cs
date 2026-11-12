@@ -45,6 +45,7 @@ namespace GameOff.Economy
         public bool Buys(ItemData item)
         {
             if (buyFactor <= 0f) return false;
+            if (item is CassetteData) return false; // P132: cassettes are no goods, you keep them
             foreach (var tag in refusedTags)
                 if (item.HasTag(tag)) return false;
             if (onlyTags.Count == 0) return true;

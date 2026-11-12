@@ -170,6 +170,45 @@ namespace GameOff.Tests
         }
 
         [Test]
+        public void TapeDecksAndPickedUpCassettes_SurviveTheSave()
+        {
+            var night = Make<CassetteData>("Item_Cassette_01");
+            var haul = Make<CassetteData>("Item_Cassette_03");
+            var run = FreshRun();
+            run.decks["Counter"] = new List<CassetteData> { null, night, haul };
+            run.decks["Room103"] = new List<CassetteData> { null, null, null };
+            run.pickedUp.Add("Hangar");
+
+            var back = FreshRun();
+            back.pickedUp.Add("Bar"); // whatever the fresh run had is replaced
+            SaveGame.Apply(JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(SaveGame.Capture(run))), back,
+                new SaveGame.Lookup(new ItemData[] { night, haul }, null, null));
+            CollectionAssert.AreEqual(new[] { null, night, haul }, back.decks["Counter"], "each cassette in its slot");
+            CollectionAssert.AreEqual(new CassetteData[] { null, null, null }, back.decks["Room103"]);
+            CollectionAssert.AreEqual(new[] { "Hangar" }, back.pickedUp);
+
+            var deck = new GameOff.Rest.CassettePlaylist(3);
+            deck.Restore(back.decks["Counter"]);
+            Assert.AreSame(night, deck.Current, "the first filled slot plays after loading");
+            Assert.AreEqual(2, deck.Count);
+        }
+
+        [Test]
+        public void SaveFromBeforeTheTapeDecks_LoadsWithEmptyDecks()
+        {
+            string json = JsonUtility.ToJson(new SaveData { day = 3 }).Replace(",\"decks\":[]", "").Replace(",\"pickedUp\":[]", "");
+            StringAssert.DoesNotContain("decks", json);
+            StringAssert.DoesNotContain("pickedUp", json);
+            var back = FreshRun();
+            back.decks["Counter"] = new List<CassetteData> { Make<CassetteData>("Item_Cassette_01") };
+            back.pickedUp.Add("Bar");
+            SaveGame.Apply(JsonUtility.FromJson<SaveData>(json), back, new SaveGame.Lookup(null, null, null));
+            Assert.AreEqual(3, back.day);
+            Assert.IsEmpty(back.decks);
+            Assert.IsEmpty(back.pickedUp);
+        }
+
+        [Test]
         public void UnknownIds_AreSkipped()
         {
             var battery = Make<ItemData>("Item_Battery");

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using GameOff.Characters;
 using GameOff.Day;
 using GameOff.Economy;
+using GameOff.Rest;
 using UnityEngine;
 
 namespace GameOff.Core
@@ -37,6 +38,10 @@ namespace GameOff.Core
             public Dictionary<string, List<(ItemData item, int count)>> vendorExtras = new Dictionary<string, List<(ItemData, int)>>();
             /// <summary>Market events scheduled for later days (Market.Schedule).</summary>
             public Dictionary<int, List<MarketEvent>> scheduledEvents = new Dictionary<int, List<MarketEvent>>();
+            /// <summary>P132: the cassette in each slot of each tape deck (by deck id, slot 1 first, null = empty).</summary>
+            public Dictionary<string, List<CassetteData>> decks = new Dictionary<string, List<CassetteData>>();
+            /// <summary>P132: ids of the cassettes already picked up on the station.</summary>
+            public List<string> pickedUp = new List<string>();
         }
 
         /// <summary>Finds items, market events and characters by their saved id.</summary>
@@ -111,7 +116,22 @@ namespace GameOff.Core
             d.marketEvents = DayEventList(run.scheduledEvents.Keys, day => run.scheduledEvents[day], run.day);
             d.stationMood = run.stationMood;
             if (run.memory != null) d.characters = CaptureMemory(run.memory, run.characters);
+            CaptureCassettes(run, d);
             return d;
+        }
+
+        /// <summary>P132: tape decks and picked-up cassettes, by name and id.</summary>
+        private static void CaptureCassettes(Run run, SaveData d)
+        {
+            foreach (var pair in run.decks)
+            {
+                if (string.IsNullOrEmpty(pair.Key) || pair.Value == null) continue;
+                var deck = new SaveData.DeckSlots { deck = pair.Key };
+                foreach (var cassette in pair.Value) deck.slots.Add(cassette != null ? cassette.name : "");
+                d.decks.Add(deck);
+            }
+            foreach (var id in run.pickedUp)
+                if (!string.IsNullOrEmpty(id) && !d.pickedUp.Contains(id)) d.pickedUp.Add(id);
         }
 
         private static SaveData.CharacterState CaptureMemory(CharacterMemory m, IEnumerable<RecurringCharacter> characters)
@@ -225,6 +245,23 @@ namespace GameOff.Core
                 }
             run.stationMood = d.stationMood;
             if (run.memory != null && d.characters != null) ApplyMemory(d.characters, run.memory, lookup);
+            ApplyCassettes(d, run, lookup);
+        }
+
+        /// <summary>P132: tape decks and picked-up cassettes; a save from before P132 has neither.</summary>
+        private static void ApplyCassettes(SaveData d, Run run, Lookup lookup)
+        {
+            run.decks.Clear();
+            if (d.decks != null)
+                foreach (var deck in d.decks)
+                {
+                    if (deck == null || string.IsNullOrEmpty(deck.deck)) continue;
+                    var slots = new List<CassetteData>();
+                    foreach (var name in deck.slots) slots.Add(lookup.Item(name) as CassetteData);
+                    run.decks[deck.deck] = slots;
+                }
+            run.pickedUp.Clear();
+            if (d.pickedUp != null) run.pickedUp.AddRange(d.pickedUp);
         }
 
         private static void ApplyMemory(SaveData.CharacterState s, CharacterMemory m, Lookup lookup)
@@ -307,6 +344,10 @@ namespace GameOff.Core
             foreach (int d in Market.ScheduledDays)
                 run.scheduledEvents[d] = new List<MarketEvent>(Market.ScheduledFor(d));
             run.characters = director != null ? director.Characters : (IEnumerable<RecurringCharacter>)Resources.FindObjectsOfTypeAll<RecurringCharacter>();
+            foreach (var deck in CassetteDeck.All) // P132
+                if (deck != null) run.decks[deck.Id] = new List<CassetteData>(deck.Slots);
+            foreach (var pickup in CassettePickup.All)
+                if (pickup != null && pickup.Taken) run.pickedUp.Add(pickup.Id);
             return Capture(run);
         }
 
@@ -337,6 +378,14 @@ namespace GameOff.Core
             foreach (var pair in run.scheduledEvents)
                 foreach (var e in pair.Value) Market.Schedule(pair.Key, e);
             if (StationMood.Instance != null) StationMood.Instance.SetSituation(run.stationMood);
+            foreach (var deck in CassetteDeck.All) // P132
+            {
+                if (deck == null) continue;
+                run.decks.TryGetValue(deck.Id, out var slots);
+                deck.Restore(slots);
+            }
+            foreach (var pickup in CassettePickup.All)
+                if (pickup != null && run.pickedUp.Contains(pickup.Id)) pickup.SetTaken(true);
             Debug.Log($"[Save] continued on day {d.day}: {d.credits} credits, {d.inventory.Count} item stacks, {d.characters.records.Count} character records");
         }
     }

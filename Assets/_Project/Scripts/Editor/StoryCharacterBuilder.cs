@@ -387,7 +387,10 @@ namespace GameOff.EditorTools
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "DOCK WORK", Valid, "VELL PRIME CONSULATE", "VELL PRIME > KESTREL-9"));
                 chars.Add(Character("Tobin", "tobin", n, sp,
                     new Appearance { traveler = t1, dayFrom = 5, dayTo = 5, condition = AppearanceCondition.NeverMet,
-                        eventLines = new List<EventLine> { new EventLine { marketEvent = ev["ClinicShortage"], line = "And now the clinic is out of medicine too." } } },
+                        eventLines = new List<EventLine> { new EventLine { marketEvent = ev["ClinicShortage"], line = "And now the clinic is out of medicine too." } },
+                        // P132: let through, he leaves a cassette for the officer (run Update Economy Data first, it makes the cassettes)
+                        keepsake = Goods("Cassette_02"),
+                        keepsakeHint = "Tobin slid a cassette under the glass: \"Dock 7 Mix. Keeps you sane on the night shift.\" Play it on a tape deck." },
                     new Appearance { traveler = t2, dayFrom = 7, dayTo = 7, condition = AppearanceCondition.Alive,
                         onAdmit = Outcome.Helped, onDeny = Outcome.Betrayed, onArrest = Outcome.Betrayed,
                         consequences = new List<Consequence> { new Consequence { when = Outcome.Helped, marketEvent = ev["DockStrike"], eventInDays = 1 } } },

@@ -112,6 +112,12 @@ namespace GameOff.Characters
         public ItemData entrustItem;
         public int entrustDeposit;
 
+        [Header("A thank-you the player keeps (P132): into the inventory when let through")]
+        [Tooltip("E.g. a cassette. Not taken back later, unlike the entrusted item.")]
+        public ItemData keepsake;
+        [Tooltip("Shown as a hint when it is handed over.")]
+        public string keepsakeHint;
+
         [Header("A question at the counter (P87): accepting sets the flag")]
         public string questionTitle;
         [TextArea] public string questionBody;
