@@ -13,7 +13,7 @@ namespace GameOff.Departure
     /// <summary>
     /// P72/P106: the flight home. The docked shuttle and its cabin are hidden and a movable copy of its model lifts off; the player's camera
     /// becomes a chase camera. W/S thrust, mouse (or A/D) steers, Shift boosts. No collisions. Far enough from the take-off point,
-    /// or after maxSeconds, the run ends with a ticket ending that depends on the family (TicketEnding).
+    /// or after maxSeconds, the run ends with a ticket ending that depends on the family (TicketEnding). P149: Esc pauses it (PauseMenu).
     /// </summary>
     public class ShuttleFlight : MonoBehaviour
     {
@@ -40,8 +40,18 @@ namespace GameOff.Departure
 
         public bool IsFlying { get; private set; }
 
+        /// <summary>P149: in the air and not over yet; the pause menu may hold it.</summary>
+        public bool InFlight => IsFlying && !_finished;
+
+        /// <summary>P149: held by the pause menu: no clock, no steering, no catching the mouse; the pointer is free for the menu.</summary>
+        public bool Paused { get; private set; }
+
+        /// <summary>P149: the pause menu finds the flight here (no wiring, so Build Departure on its own doesn't cut it off).</summary>
+        public static ShuttleFlight Instance { get; private set; }
+
         private void Awake()
         {
+            Instance = this;
             _thrust = new InputAction("Thrust", InputActionType.Value);
             _thrust.AddCompositeBinding("1DAxis").With("Negative", "<Keyboard>/s").With("Positive", "<Keyboard>/w");
             _thrust.AddCompositeBinding("1DAxis").With("Negative", "<Keyboard>/downArrow").With("Positive", "<Keyboard>/upArrow");
@@ -53,6 +63,7 @@ namespace GameOff.Departure
 
         private void OnDestroy()
         {
+            if (Instance == this) Instance = null;
             _thrust.Dispose();
             _turn.Dispose();
             _boost.Dispose();
@@ -89,9 +100,7 @@ namespace GameOff.Departure
             playerCamera.useOcclusionCulling = false; // the bake only covers the inside of the station
             PlaceCamera(1f);
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            PointerLockBridge.Request();
+            CaptureMouse();
             _thrust.Enable();
             _turn.Enable();
             _boost.Enable();
@@ -100,9 +109,33 @@ namespace GameOff.Departure
             Debug.Log("[Departure] Shuttle launched");
         }
 
+        /// <summary>
+        /// P149: the pause menu holds the flight (Esc / P, or the browser letting go of the mouse) and lets it go on exactly where it
+        /// was. Time and sound stand still through the pause menu (timeScale, AudioListener); this stops the steering and the
+        /// mouse catching, and on resume catches the mouse again inside the Resume click or key, which the browser accepts.
+        /// </summary>
+        public void SetPaused(bool paused)
+        {
+            if (!InFlight || Paused == paused) return;
+            Paused = paused;
+            if (paused)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else CaptureMouse();
+        }
+
+        private static void CaptureMouse()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            PointerLockBridge.Request();
+        }
+
         private void Update()
         {
-            if (!IsFlying || _finished) return;
+            if (!IsFlying || _finished || Paused) return;
             float dt = Time.deltaTime;
             _time += dt;
 

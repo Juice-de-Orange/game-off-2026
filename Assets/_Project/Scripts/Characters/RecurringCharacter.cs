@@ -68,6 +68,13 @@ namespace GameOff.Characters
         [TextArea] public string announcement;
         [Tooltip("A line under the next morning letter.")]
         [TextArea] public string letterLine;
+
+        [Header("A flag for later appearances (P150)")]
+        [Tooltip("Set at once when the decision is made (not after afterDays), e.g. the Shifter is gone: his accomplice comes instead.")]
+        public string setFlag;
+
+        /// <summary>This consequence follows from the decision (P85: some only when the player chose arrest).</summary>
+        public bool Applies(Outcome outcome, Verdict chosen) => when == outcome && (!onlyIfArrested || chosen == Verdict.Arrest);
     }
 
     /// <summary>A line the character adds to the greeting on a day with this market event (they talk about what happens).</summary>
@@ -92,6 +99,10 @@ namespace GameOff.Characters
         public AppearanceCondition condition = AppearanceCondition.Always;
         [Tooltip("P87: the flag FlagSet/FlagNotSet look at, and the flag the question sets when the player accepts.")]
         public string flag;
+        [Tooltip("P150: on top of the condition, only if this flag is set (empty = no gate).")]
+        public string onlyIfFlag;
+        [Tooltip("P150: on top of the condition, not if this flag is set (empty = no gate).")]
+        public string unlessFlag;
 
         [Header("What each decision means")]
         public Outcome onAdmit = Outcome.Helped;

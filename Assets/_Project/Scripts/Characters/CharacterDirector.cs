@@ -115,11 +115,11 @@ namespace GameOff.Characters
             var a = p.character.Appearances[p.appearance];
             var outcome = a.OutcomeOf(chosen);
             if (outcome == Outcome.Helped && _returned.TryGetValue(traveler, out bool kept) && !kept) outcome = Outcome.Betrayed; // P77: sold what they left
-            Memory.Remember(p.character, p.appearance, day, outcome);
+            Memory.Decide(p.character, p.appearance, day, outcome, chosen); // P150: also the flags its consequences set
             Debug.Log($"[Characters] {p.character.DisplayName}: {chosen} → {outcome}");
             foreach (var c in a.consequences)
             {
-                if (c.when != outcome || (c.onlyIfArrested && chosen != Verdict.Arrest)) continue;
+                if (!c.Applies(outcome, chosen)) continue;
                 if (c.marketEvent != null)
                 {
                     Memory.ScheduleEvent(day + c.eventInDays, c.marketEvent);

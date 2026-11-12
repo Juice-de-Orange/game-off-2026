@@ -10,7 +10,7 @@ using UnityEngine;
 namespace GameOff.EditorTools
 {
     /// <summary>
-    /// P76: the eight recurring characters (docs/FIGUREN.md) and the 12 story-day skeletons they need.
+    /// P76: the eight recurring characters (docs/FIGUREN.md; P150: plus the Shifter's accomplice) and the 12 story-day skeletons they need.
     /// Days: Data/Days/Story/Day01–Day12 (date 2290-11-05 + day − 1, base rules of the test day, three test travelers as placeholders;
     /// Max fills them in P15). DaySchedule gets 12 entries; existing letters, bar wishes and bribes stay, the fixed market events follow
     /// FIGUREN.md (border day 2, cold day 3, inspection day 9 – the smuggler raid is now set off by Quill).
@@ -32,6 +32,10 @@ namespace GameOff.EditorTools
         internal const string Valid = "2290-11-30";
         /// <summary>P87: set when the player joins the Shifter's resistance on day 6.</summary>
         public const string ResistanceFlag = "joined_resistance";
+        /// <summary>P150: the Shifter went out of the airlock on day 3 – his accomplice asks on day 6 instead.</summary>
+        public const string ShifterAirlockedFlag = "shifter_airlocked";
+        /// <summary>P150: the Shifter was arrested on day 3 – released, but known now; his accomplice asks on day 6 instead.</summary>
+        public const string ShifterArrestedFlag = "shifter_arrested";
 
         public static string Date(int day) => $"2290-11-{4 + day:00}";
         internal static string Yesterday(int day) => $"2290-11-{3 + day:00}";
@@ -53,6 +57,7 @@ namespace GameOff.EditorTools
             var days = BuildDays(shifterDay3, chars, authored);
             BuildSchedule(days, ev, quillDay3, authored);
             AssetDatabase.SaveAssets();
+            EconomySimulator.ResetCharacters(); // P150: the Economy Report must see a new character (the accomplice) without a domain reload
             return $"{chars.Count} story characters, {days.Count} story days";
         }
 
@@ -85,7 +90,8 @@ namespace GameOff.EditorTools
                 foreach (var p in CharacterPlanner.Due(d, chars, memory, 3, () => 0f))
                 {
                     met[d]++;
-                    memory.Remember(p.character, p.appearance, d, p.character.Appearances[p.appearance].OutcomeOf(p.traveler.IntendedVerdict));
+                    var verdict = p.traveler.IntendedVerdict;
+                    memory.Decide(p.character, p.appearance, d, p.character.Appearances[p.appearance].OutcomeOf(verdict), verdict); // P150: with flags
                 }
 
             var list = new List<DayRules>();
@@ -297,8 +303,11 @@ namespace GameOff.EditorTools
                             new Consequence { when = Outcome.Neutral, onlyIfArrested = true, afterDays = 1, // P85: the interrogation
                                 announcement = "Security notice. The man arrested at lane two yesterday gave a different name every hour of his interrogation. " +
                                                "He was released at dawn: there was no name to charge." },
+                            // P150: gone from the counter (dead, or his face is known now) – his accomplice asks on day 6 instead
+                            new Consequence { when = Outcome.Dead, setFlag = ShifterAirlockedFlag },
+                            new Consequence { when = Outcome.Neutral, onlyIfArrested = true, setFlag = ShifterArrestedFlag },
                         } },
-                    new Appearance { traveler = s6, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.Alive,
+                    new Appearance { traveler = s6, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.Alive, unlessFlag = ShifterArrestedFlag,
                         onAdmit = Outcome.Helped, onDeny = Outcome.Neutral, onArrest = Outcome.Betrayed,
                         flag = ResistanceFlag,
                         questionTitle = "JOIN THE RESISTANCE?",
@@ -308,13 +317,63 @@ namespace GameOff.EditorTools
                         declineLine = "A pity. Forget we ever talked, officer." },
                     // joined: first in the queue, the reveal, the end (no decision at the counter)
                     new Appearance { traveler = s7joined, dayFrom = 7, dayTo = 7, slot = 1, condition = AppearanceCondition.FlagSet, flag = ResistanceFlag,
+                        unlessFlag = ShifterArrestedFlag, // P150: then his accomplice asked, she ends it
                         greetingAfterHelped = Reveal, greetingAfterBetrayed = Reveal, greetingAfterConfiscated = Reveal,
                         endingTitle = "AIRLOCKED",
                         endingBody = "You joined a resistance that never existed. The man with a hundred faces worked for the Directorate, " +
                                      "and the list he carried had your name on it.\n\nThe outer door of Kestrel-9 opens at 07:42. " +
                                      "Nobody at home is told why the money stopped.",
                         endingWarning = "SECURITY TO CUSTOMS. OFFICER, STEP AWAY FROM THE COUNTER." },
-                    new Appearance { traveler = s4, dayFrom = 7, dayTo = 7, condition = AppearanceCondition.FlagNotSet, flag = ResistanceFlag }));
+                    new Appearance { traveler = s4, dayFrom = 7, dayTo = 7, condition = AppearanceCondition.FlagNotSet, flag = ResistanceFlag,
+                        unlessFlag = ShifterArrestedFlag }));
+            }
+
+            // 9 Ilsa Koval (Human), P150, kept next to him: the Shifter's accomplice. Only if he went out of the airlock or was arrested on day 3 (the
+            //   wanted poster): then she asks the question on day 6 instead of him, and day 7 runs as with him. Clean papers both days.
+            //   Her ID ends in 77 like all of his.
+            {
+                const string n = "ILSA KOVAL", sp = "Human", id = "AB-6277-77", origin = "TORVIK COLONY";
+                var answers = new[] { StoryDayContent.Say("purpose", "Work. Someone has to do it, now that he can't."), StoryDayContent.Say("route", "Torvik. The long way round - fewer cameras.") };
+                var c6dead = Talker(answers, "Accomplice_6_Airlocked", n, sp, Verdict.Admit, "The Shifter's accomplice, day 6: papers clean (the question is the decision)", 6,
+                    "You put a man out of the airlock three days ago because a poster told you to. He died for us, officer - for a fair wage, a way home, an end to all this.",
+                    IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "WORK", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
+                var c6arrested = Talker(answers, "Accomplice_6_Arrested", n, sp, Verdict.Admit, "The Shifter's accomplice, day 6: papers clean (the question is the decision)", 6,
+                    "You arrested a friend of mine three days ago. They let him go - no name to charge - but every camera on this station knows his face now. So he sent me.",
+                    IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "WORK", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
+                const string Reveal = "Officer. Thank you, truly. There is no resistance. There never was. He worked for the Directorate, and so do I. Only a list of names... and yours is on it now.";
+                var c7joined = Person("Accomplice_7_Joined", n, sp, Verdict.Admit, "The Shifter's accomplice, day 7: the reveal (the run ends before a decision)", 7,
+                    Reveal,
+                    IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "TRANSIT", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
+                var c7 = Person("Accomplice_7", n, sp, Verdict.Admit, "The Shifter's accomplice, day 7: papers clean", 7,
+                    "You turned me down. Good instinct. There is no resistance, officer. He worked for the Directorate, and so do I - we test people like you. You passed.",
+                    IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "TRANSIT", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
+                const string Body = "\"We need someone at this counter. Nobody has to know. Say yes, and when this is over, you and your family go free.\"";
+                chars.Add(Character("Accomplice", "accomplice", n, sp,
+                    new Appearance { traveler = c6dead, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.NeverMet, onlyIfFlag = ShifterAirlockedFlag,
+                        onAdmit = Outcome.Helped, onDeny = Outcome.Neutral, onArrest = Outcome.Betrayed,
+                        flag = ResistanceFlag,
+                        questionTitle = "JOIN THE RESISTANCE?",
+                        questionBody = "\"He can't ask you any more, so I will.\" " + Body,
+                        acceptLabel = "JOIN", declineLabel = "REFUSE",
+                        acceptLine = "Then he didn't die for nothing. We'll be in touch. Now stamp me through, as if nothing happened.",
+                        declineLine = "So he died for nothing. Forget we ever talked, officer." },
+                    new Appearance { traveler = c6arrested, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.NeverMet, onlyIfFlag = ShifterArrestedFlag,
+                        onAdmit = Outcome.Helped, onDeny = Outcome.Neutral, onArrest = Outcome.Betrayed,
+                        flag = ResistanceFlag,
+                        questionTitle = "JOIN THE RESISTANCE?",
+                        questionBody = "\"He can't come to this counter again, so I came instead.\" " + Body,
+                        acceptLabel = "JOIN", declineLabel = "REFUSE",
+                        acceptLine = "He said you'd come round. We'll be in touch. Now stamp me through, as if nothing happened.",
+                        declineLine = "He said you might. Forget we ever talked, officer." },
+                    // joined: first in the queue, the reveal, the end (as with the Shifter)
+                    new Appearance { traveler = c7joined, dayFrom = 7, dayTo = 7, slot = 1, condition = AppearanceCondition.FlagSet, flag = ResistanceFlag,
+                        greetingAfterHelped = Reveal, greetingAfterBetrayed = Reveal, greetingAfterConfiscated = Reveal,
+                        endingTitle = "AIRLOCKED",
+                        endingBody = "You joined a resistance that never existed. The woman who came in his place worked for the Directorate, " +
+                                     "like the man with a hundred faces, and the list she carried had your name on it.\n\nThe outer door of Kestrel-9 opens at 07:42. " +
+                                     "Nobody at home is told why the money stopped.",
+                        endingWarning = "SECURITY TO CUSTOMS. OFFICER, STEP AWAY FROM THE COUNTER." },
+                    new Appearance { traveler = c7, dayFrom = 7, dayTo = 7, condition = AppearanceCondition.FlagNotSet, flag = ResistanceFlag }));
             }
 
             // 4 Mira Talsk (Quobb): a mother on the way to her children – the player's mirror. Day 2 her permit is one day late.
@@ -476,6 +535,12 @@ namespace GameOff.EditorTools
                             "The man with too many names was arrested again - and released again, by order from above.",
                             "The man with too many names was last seen boarding a shuttle. Under which name, nobody can say.",
                             "The man you put out of the airlock on day three carried eleven names. Nobody came to claim the body.");
+                        break;
+                    case "accomplice": // P150
+                        c.EditorSetSummary("Ilsa Koval reports to the Directorate from another station now. Next to your name, her file says \"reliable\".",
+                            "Ilsa Koval was arrested at lane two - and walked out an hour later, by order from above.",
+                            "Ilsa Koval left Kestrel on the next shuttle. Nobody asked her where to.",
+                            "Ilsa Koval went out of the airlock. The Directorate sent a wreath, and nobody at the station knew why.");
                         break;
                     case "mira":
                         c.EditorSetSummary("Mira Talsk and her children have a home on the far side of the border. She named the cat after you.",

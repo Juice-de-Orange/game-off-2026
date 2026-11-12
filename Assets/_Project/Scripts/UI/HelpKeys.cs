@@ -92,6 +92,7 @@ namespace GameOff.UI
             ("Mouse or [A] [D] / left / right", "Steer"),
             ("[Shift]", "Boost"),
             ("Click", "Catch the mouse again"),
+            ("[Esc] / [P]", "Pause"), // P149
         };
 
         private static readonly (string keys, string action)[] Inventory =

@@ -29,7 +29,6 @@ namespace GameOff.EditorTools
             { "Irin", (null, "Orvan is all I have left. Do you even know where it is?") },
             { "Pela", (null, "A manifest? Nobody told me. Nobody ever tells me.") },
             { "Tzo", (null, "Kss. One new rule a day. I know your game.") },
-            { "Hedda", (null, "It's a typing error! A typing error, and you know it.") },
             { "Oren", (null, "The list changes every week. I can't keep up with it.") },
             { "Kiss", ("Kss. Right. Efficient.", null) },
             { "Mira_1", (null, "Nine days. And you stamp it like it's nothing.") },
@@ -233,6 +232,7 @@ namespace GameOff.EditorTools
             NewToday = "New today: Xirrik travelers need a cargo manifest. No stimulants.",
             Letter = "Dad,\nThey showed the station on the news. Mom turned it off, then turned it back on to look for you.\nPip says hello. Well, Pip whistled.\n— Lena",
             LetterIfTrouble = "Dad,\nWe traded the good chairs for what we needed. We sit on crates now, it is fine.\nIf you can send anything this week, please do.\n— Lena",
+            // P150: three, with Quill, Nell and the Shifter (or his accomplice, on the intended path) = 6 encounters
             Travelers = new List<TravelerData>
             {
                 Normal("Kiss", "KISSA VEL", "Xirrik", Verdict.Admit, "Papers in order, manifest present", 6,
@@ -252,11 +252,6 @@ namespace GameOff.EditorTools
                     IdCard("Vellani", "RELL ASTA", "VELL PRIME", "VL-2288-46"),
                     PermitDoc("Vellani", "RELL ASTA", "VL-2288-46", "BUSINESS", Valid, VellC, "VELL PRIME > KESTREL-9"),
                     Manifest("RELL ASTA", "COLD MARGIN", "VELL PRIME", "12x STIMULANT VIALS")),
-                Normal("Hedda", "HEDDA QUINN", "Human", Verdict.Deny, "Name on the entry permit doesn't match the ID card", 6,
-                    "Married last month. The paperwork hasn't caught up.",
-                    new[] { Say("name", "Quinn now. Marsh before. It's the same me."), Say("purpose", "To see my husband. Finally.") },
-                    IdCard("Human", "HEDDA QUINN", "TORVIK COLONY", "HQ-5519-32"),
-                    PermitDoc("Human", "HEDDA MARSH", "HQ-5519-32", "FAMILY VISIT", Valid, AskaC, "TORVIK > KESTREL-9")),
             },
         };
 
@@ -267,6 +262,7 @@ namespace GameOff.EditorTools
             NewToday = "New today: Quobb travelers need a cargo manifest. Quarantine at KETRA STATION.",
             Letter = "Dad,\nI counted the money in the jar twice and it came out different, so I counted it a third time.\nMom says you will have enough for the ticket soon. Will you?\n— Lena",
             LetterIfTrouble = "Dad,\nMom sold her coat. She says it was too warm anyway.\nPlease come home soon. I am not asking for anything else.\n— Lena",
+            // P150: four, with Tobin and the Shifter (or his accomplice, on the intended path) = 6 encounters
             Travelers = new List<TravelerData>
             {
                 Normal("Lira", "LIRA VOSS", "Human", Verdict.Airlock, "On the wanted list: terminate on sight", 7,
@@ -279,12 +275,6 @@ namespace GameOff.EditorTools
                     new[] { Say("route", "Ketra was just a stop. I never left the seat."), Say("purpose", "Work. They said it couldn't wait.") },
                     IdCard("Human", "ODIN FERRO", "TORVIK COLONY", "OF-1266-71"),
                     PermitDoc("Human", "ODIN FERRO", "OF-1266-71", "WORK", Valid, AskaC, "TORVIK > KETRA STATION > KESTREL-9")),
-                Normal("Mabu", "MABU SOOL", "Quobb", Verdict.Admit, "Papers in order, manifest present", 7,
-                    "New rule, yes? I brought the paper. Look, the paper!",
-                    new[] { Say("cargo", "Fruit! Very fresh! Smell it."), Say("origin", "Quob Atoll. You should visit. You look tired.") },
-                    IdCard("Quobb", "MABU SOOL", "QUOB ATOLL", "QU-2093-44"),
-                    PermitDoc("Quobb", "MABU SOOL", "QU-2093-44", "TRADE", Valid, QuobC, "QUOB ATOLL > KESTREL-9"),
-                    Manifest("MABU SOOL", "HAPPY LADLE", "QUOB ATOLL", "6x FRESH FRUIT CRATE")),
                 Normal("Pung", "PUNG ARLO", "Quobb", Verdict.Deny, "Quobb traveler without a cargo manifest", 7,
                     "No cargo, no paper. That is logical, yes?",
                     new[] { Say("purpose", "I come to see the station. Is it not allowed to look?"), Say("route", "Direct. Very boring.") },

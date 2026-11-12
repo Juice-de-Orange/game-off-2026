@@ -99,7 +99,7 @@ namespace GameOff.EditorTools
             {
                 var a = p.character.Appearances[p.appearance];
                 var outcome = a.OutcomeOf(p.traveler.IntendedVerdict);
-                memory.Remember(p.character, p.appearance, day, outcome);
+                memory.Decide(p.character, p.appearance, day, outcome, p.traveler.IntendedVerdict); // P150: flags too (the Shifter's accomplice)
                 foreach (var c in a.consequences)
                 {
                     if (c.when != outcome) continue;

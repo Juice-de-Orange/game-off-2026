@@ -26,6 +26,7 @@ Endlos-Schleife (P73), in der Figuren nur noch selten und nach Bedingung auftauc
 | 6 | **Tobin Rask** | Vellani | Dockarbeiter, organisiert die Kollegen | 5 | „Dock strike“ (Mengen ↓, Krise ↑) |
 | 7 | **Nell Varga** | Mensch | alte Frau, will ihren Sohn im Stationsgefängnis besuchen | 6 | deine Verhaftungen, Verwahrung (Brief) |
 | 8 | **Pim Oddo** | Quobb | fahrender Händler, komisch, seltsame Waren (Clownsschuhe P63) | 8 | „Oddo's caravan“ (LUXURY billig), Händler |
+| 9 | **Ilsa Koval** (P150) | Mensch | Komplizin des Shifters; kommt nur, wenn er an Tag 3 durch die Schleuse ging oder verhaftet wurde, und stellt statt ihm die Widerstands-Frage | 6 | Shifter-Tag 3, Ende „Airlocked“ |
 
 ### Neue Figuren (ab Tag 5)
 - **Tobin Rask:** Kommt mit einer Arbeitserlaubnis für die Docks, schimpft über Löhne und Kälte. Bei der Entscheidung (Tag 7) fehlt ihm
@@ -48,8 +49,8 @@ Endlos-Schleife (P73), in der Figuren nur noch selten und nach Bedingung auftauc
 | 3 | **Cold snap** (fest) | **Quill:** Spice + Bestechungszettel → helfen/verraten · **Senn:** Antibiotika ohne Schein, gibt dir einen Koffer zur Verwahrung · **Shifter: Steckbrief „auf Sicht terminieren“** (immer, wie Max geplant hat) | – |
 | 4 | *Smugglers busted* (Quill verraten) · *Security lockdown* (Shifter durchgelassen) | **Korr #3 verdeckt:** verlockender Fehler · Quill (nur wenn geholfen): größerer Auftrag, Paket zur Verwahrung · Mira: geholfen → bringt Essen (FOOD) / verraten → gefälschte Papiere | Shifter: durchgelassen → schickt dir etwas · verhaftet → Verhör-Durchsage · Schleuse → nichts mehr |
 | 5 | *Clinic shortage* (Senn beschlagnahmt, P08) | Senn: holt den Koffer ab (Pfand oder Wut), bringt Medizin, wenn die Familie krank ist · **Tobin: Einführung** | – |
-| 6 | – | Quill: holt sein Paket ab (Pfand) / Rache: Steckbrief für Tag 7 · **Nell: Einführung**, Brief zur Verwahrung | Korr: Bewertung per Durchsage, Lob + Bonus oder Disziplinarstrafe |
-| 7 | – | **Tobin: Entscheidung** (fehlender Stempel) · Shifter: letzter Auftritt, Wendung seiner Geschichte (nur wenn er lebt und frei ist) | – |
+| 6 | – | Quill: holt sein Paket ab (Pfand) / Rache: Steckbrief für Tag 7 · **Nell: Einführung**, Brief zur Verwahrung · Widerstands-Frage: Shifter, oder **Ilsa Koval**, wenn er an Tag 3 terminiert/verhaftet wurde (P150) | Korr: Bewertung per Durchsage, Lob + Bonus oder Disziplinarstrafe |
+| 7 | – | **Tobin: Entscheidung** (fehlender Stempel) · Shifter: letzter Auftritt, Wendung seiner Geschichte (nur wenn er lebt und frei ist) – sonst Ilsa Koval, gleicher Ablauf (P150) | – |
 | 8 | *Dock strike* (Tobin geholfen) | Mira: Abschluss (Dank oder letzte Bitte) · Nell: holt den Brief ab · **Oddo: Einführung**, Muster zur Verwahrung | – |
 | 9 | **Inspection week** (fest, Krise: strengere Regeln) | Senn: Abschluss · Quill: Abschluss (Fluchtweg oder Steckbrief) | – |
 | 10 | *Oddo's caravan* (Oddo geholfen) | Korr: Abschluss-Prüfung · Tobin: Ausgang des Streiks · Oddo: holt Muster ab, neue Angebote | – |
@@ -120,3 +121,16 @@ Tag 3 kommt, wird nach diesem Plan und den neuen Figuren gemacht (Martin, 07.11.
   Namen für die Anklage gab (erklärt, warum er an Tag 6 wieder da ist).
 - **Zusammenfassung Tag 11:** Unter dem Morgenbrief steht ein Ausschnitt aus dem Stations-Newsletter, eine Zeile je getroffener Figur nach
   ihrem letzten Ausgang (geholfen, verraten/beschlagnahmt, neutral, tot).
+
+## Umgesetzt (P150, max, 12.11.)
+- **Die Komplizin:** Wurde der Shifter an Tag 3 durch die Schleuse geschickt oder verhaftet, kommt an Tag 6 statt ihm **Ilsa Koval**
+  (Mensch, saubere Papiere, ID endet wie seine auf 77) und stellt dieselbe Frage „JOIN THE RESISTANCE?“. Schleuse: „Er ist für uns gestorben“;
+  Verhaftung: „Sie haben ihn laufen lassen, aber jede Kamera kennt jetzt sein Gesicht, also hat er mich geschickt“ (passt zur Verhör-Durchsage an Tag 4).
+  JOIN → Tag 7 kommt sie als Erste, enthüllt sich (sie und er arbeiten für das Direktorat), Sicherheit, Ende **AIRLOCKED**.
+  REFUSE → Tag 7 nur die Wendung („Es gibt keinen Widerstand … du hast bestanden.“). Durchgelassen/abgewiesen an Tag 3 → alles wie bisher, sie kommt nie.
+- Technik: Folgen können ein **Flag setzen** (`Consequence.setFlag`, sofort bei der Entscheidung), Auftritte haben zusätzlich
+  `onlyIfFlag` / `unlessFlag`. Shifter Tag 3: Schleuse → `shifter_airlocked`, Verhaftung → `shifter_arrested`; seine Auftritte an Tag 6/7 bleiben bei
+  `shifter_arrested` weg. Alle Durchläufe (Spiel, Economy Report, Builder, Tests) buchen über `CharacterMemory.Decide`.
+- Ende-Auswertung (Tag 11, Ticket-Ende) nennt sie nach ihrem letzten Ausgang.
+- **Geld unverändert:** Auf dem richtigen Weg (Shifter terminiert) ist sie an Tag 6 und 7 eine Begegnung mehr; dafür fallen dort je ein normaler
+  Reisender weg (Tag 6 Hedda Quinn, Tag 7 Mabu Sool), es bleiben 6 Begegnungen pro Tag. Auf dem Weg mit dem lebenden Shifter sind es jetzt auch 6 statt 7.

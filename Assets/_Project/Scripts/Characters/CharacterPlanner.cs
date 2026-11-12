@@ -6,7 +6,8 @@ namespace GameOff.Characters
 {
     /// <summary>
     /// P75, without Unity (EditMode-tested): which recurring characters come today and where they stand in the queue.
-    /// Per character at most one appearance a day: the first one in its list that is due, not done yet, and whose condition holds.
+    /// Per character at most one appearance a day: the first one in its list that is due, not done yet, and whose condition holds
+    /// (P150: and whose flag gates let it).
     /// A window of several days picks its day at random (each day 1/(days left) – on the last day it always comes).
     /// At most maxPerDay encounters a day (fixed slots first). Slot n = n-th in the queue; 0 = anywhere.
     /// </summary>
@@ -29,7 +30,7 @@ namespace GameOff.Characters
                 for (int i = 0; i < c.Appearances.Count; i++)
                 {
                     var a = c.Appearances[i];
-                    if (a.traveler == null || !a.InWindow(day) || memory.Done(c, i) || !memory.Meets(c, a.condition, a.flag)) continue;
+                    if (a.traveler == null || !a.InWindow(day) || memory.Done(c, i) || !memory.Meets(c, a.condition, a.flag) || !memory.Allows(a)) continue;
                     int lastDay = Math.Max(a.dayFrom, a.dayTo);
                     int daysLeft = lastDay - day + 1;
                     if (daysLeft > 1 && random() >= 1f / daysLeft) break; // not today; the window goes on

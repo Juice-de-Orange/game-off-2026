@@ -100,12 +100,16 @@ namespace GameOff.Tests
             var memory = new CharacterMemory();
             for (int d = 1; d <= 10; d++)
                 foreach (var p in CharacterPlanner.Due(d, chars, memory, 3, () => 0f))
-                    memory.Remember(p.character, p.appearance, d, p.character.Appearances[p.appearance].OutcomeOf(p.traveler.IntendedVerdict));
+                {
+                    var verdict = p.traveler.IntendedVerdict;
+                    memory.Decide(p.character, p.appearance, d, p.character.Appearances[p.appearance].OutcomeOf(verdict), verdict); // P150: flags too
+                }
             memory.RememberArrest(StoryCharacterBuilder.NellSon, "Human", 4);
             var lines = CharacterDirector.SummaryLines(chars, memory, 11);
             Assert.GreaterOrEqual(lines.Count, 5, string.Join("\n", lines));
             foreach (var l in lines) Assert.IsFalse(l.Contains("{"), l);
             Assert.IsTrue(lines.Exists(l => l.Contains("Nell Varga") && l.Contains("Jonas")), string.Join("\n", lines));
+            Assert.IsTrue(lines.Exists(l => l.Contains("Ilsa Koval")), "P150: the Shifter's accomplice on the intended path\n" + string.Join("\n", lines));
         }
 
         [Test]

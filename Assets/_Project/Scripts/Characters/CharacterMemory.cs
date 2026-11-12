@@ -112,6 +112,21 @@ namespace GameOff.Characters
         public void Remember(RecurringCharacter c, int appearance, int day, Outcome outcome) =>
             _records.Add(new Record { character = c, appearance = appearance, day = day, outcome = outcome });
 
+        /// <summary>
+        /// P150: remembers a decision and sets the flags its consequences raise (e.g. the Shifter is gone, so his accomplice comes).
+        /// The director, the Economy Report, the story builder and the tests all book decisions through here.
+        /// </summary>
+        public void Decide(RecurringCharacter c, int appearance, int day, Outcome outcome, Verdict chosen)
+        {
+            Remember(c, appearance, day, outcome);
+            foreach (var effect in c.Appearances[appearance].consequences)
+                if (effect.Applies(outcome, chosen)) SetFlag(effect.setFlag);
+        }
+
+        /// <summary>P150: the appearance's flag gates (onlyIfFlag, unlessFlag) let it take place.</summary>
+        public bool Allows(Appearance a) =>
+            (string.IsNullOrWhiteSpace(a.onlyIfFlag) || HasFlag(a.onlyIfFlag)) && !HasFlag(a.unlessFlag);
+
         public bool Met(RecurringCharacter c) => _records.Exists(r => r.character == c);
         public bool Alive(RecurringCharacter c) => !_records.Exists(r => r.character == c && r.outcome == Outcome.Dead);
         public bool Done(RecurringCharacter c, int appearance) => _records.Exists(r => r.character == c && r.appearance == appearance);

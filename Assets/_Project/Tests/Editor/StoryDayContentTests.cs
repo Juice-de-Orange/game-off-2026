@@ -26,6 +26,30 @@ namespace GameOff.Tests
                     StringAssert.Contains("/Travelers/Normal/", AssetDatabase.GetAssetPath(t), $"day {d}: {t.name}");
         }
 
+        /// <summary>
+        /// Six encounters a day on the intended path (ordinary travelers plus the characters who come), as the wage balance and the
+        /// Economy Report assume (StoryCharacterBuilder warns otherwise). P150: the Shifter's accomplice counts on days 6 and 7.
+        /// </summary>
+        [Test]
+        public void AuthoredDays_SixEncountersOnTheIntendedPath()
+        {
+            var schedule = Schedule();
+            var chars = new System.Collections.Generic.List<GameOff.Characters.RecurringCharacter>();
+            foreach (var g in AssetDatabase.FindAssets("t:RecurringCharacter", new[] { "Assets/_Project/Data/Characters/Story" }))
+                chars.Add(AssetDatabase.LoadAssetAtPath<GameOff.Characters.RecurringCharacter>(AssetDatabase.GUIDToAssetPath(g)));
+            var memory = new GameOff.Characters.CharacterMemory();
+            for (int d = 1; d <= AuthoredDays; d++)
+            {
+                var due = GameOff.Characters.CharacterPlanner.Due(d, chars, memory, 3, () => 0f);
+                foreach (var p in due)
+                {
+                    var verdict = p.traveler.IntendedVerdict;
+                    memory.Decide(p.character, p.appearance, d, p.character.Appearances[p.appearance].OutcomeOf(verdict), verdict);
+                }
+                Assert.AreEqual(6, schedule.Get(d).rules.Travelers.Count + due.Count, $"day {d}: {due.Count} characters");
+            }
+        }
+
         [Test]
         public void AuthoredDays_HaveNoPlaceholderLetters()
         {

@@ -1,6 +1,7 @@
 using GameOff.Core;
 using GameOff.Counter;
 using GameOff.Day;
+using GameOff.Departure;
 using GameOff.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,7 @@ namespace GameOff.UI
     /// Pause menu in Main. Esc or P while walking freely pauses (time stops, audio pauses, mouse is free).
     /// At the counter Esc keeps meaning "one step back / stand up"; once standing, Esc pauses.
     /// In WebGL the browser swallows Esc to release the pointer lock, so losing the lock while walking pauses too.
+    /// P149: the same in the flight home, which holds still meanwhile (ShuttleFlight.SetPaused) and catches the mouse again on Resume.
     /// </summary>
     public class PauseMenu : MonoBehaviour
     {
@@ -37,6 +39,7 @@ namespace GameOff.UI
         private bool _wasCaptured;
         private int _lastBlockedFrame = -1;
         private float _capturedSince;
+        private ShuttleFlight _heldFlight; // P149: the flight home this pause holds
 
         private const float LockGrace = 0.5f;
         private static bool IsWebGL => Application.platform == RuntimePlatform.WebGLPlayer;
@@ -103,13 +106,22 @@ namespace GameOff.UI
             _wasCaptured = captured;
 
             // Not while another system has the player (counter view, leaving blend); the frame after it gave the player
-            // back doesn't count either, so the Esc that made us stand up doesn't also pause.
-            bool blocked = !player.ControlEnabled || (counter != null && counter.IsSeated);
+            // back doesn't count either, so the Esc that made us stand up doesn't also pause. P149: the flight home keeps the
+            // player's control off all the way and still pauses.
+            var flight = ShuttleFlight.Instance;
+            bool blocked = !MayPause(player.ControlEnabled, counter != null && counter.IsSeated, flight != null && flight.InFlight, HelpOverlay.BlocksInput);
             if (blocked) _lastBlockedFrame = Time.frameCount;
             if (blocked || Time.frameCount - _lastBlockedFrame <= 1) return;
 
             if (pressed || lostLock) Pause();
         }
+
+        /// <summary>
+        /// Whether Esc, P or a lost pointer lock may open the pause menu: walking freely or (P149) flying home; not while another
+        /// system has the player (counter, a window, a seat) or the [H] list takes the key (the Esc that closes it).
+        /// </summary>
+        public static bool MayPause(bool controlEnabled, bool seated, bool flying, bool helpOpen) =>
+            (controlEnabled || flying) && !seated && !helpOpen;
 
         private bool ReportOpen => bugReportForm != null && bugReportForm.IsOpen;
 
@@ -120,6 +132,9 @@ namespace GameOff.UI
             if (bugReportForm != null) bugReportForm.Hide();
             ShowOptions(false);
             player.SetControlEnabled(false); // frees the cursor, stops look/move and interaction
+            var flight = ShuttleFlight.Instance;
+            _heldFlight = flight != null && flight.InFlight ? flight : null;
+            if (_heldFlight != null) _heldFlight.SetPaused(true); // P149: no steering, no clock, the mouse free for the menu
             SetTime(true);
         }
 
@@ -129,7 +144,11 @@ namespace GameOff.UI
             _paused = false;
             root.SetActive(false);
             SetTime(false);
-            player.SetControlEnabled(true); // captures the mouse again (in the browser right after the Resume click)
+            // Captures the mouse again (in the browser right after the Resume click). P149: in the flight the flight does it,
+            // the player stays without control.
+            if (_heldFlight != null) _heldFlight.SetPaused(false);
+            else player.SetControlEnabled(true);
+            _heldFlight = null;
             _wasCaptured = IsPointerLocked();
             _capturedSince = Time.unscaledTime;
             _lastBlockedFrame = Time.frameCount;
