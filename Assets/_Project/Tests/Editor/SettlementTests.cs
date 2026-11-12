@@ -181,19 +181,23 @@ namespace GameOff.Tests
         }
 
         [Test]
-        public void Delivery_CoversTheNeedWithTheTag_AndClears()
+        public void Delivery_CoversTheNeedWithTheTag_TheNightUsesOnlyThatItem()
         {
             var food = Make<ItemTag>();
             var power = Make<ItemTag>();
             var ration = ItemWith(food, 8);
+            var vase = ItemWith(null, 20);
             var d = new HomeDelivery();
-            d.Add(ItemWith(null, 20));
+            d.Add(vase);
             d.Add(ration);
             Assert.AreSame(ration, d.CoveringItem(food));
             Assert.IsFalse(d.Covers(power));
             Assert.IsFalse(d.Covers(null));
+            d.UseUp(d.Covering(new[] { food, power, null }));
+            Assert.IsFalse(d.Covers(food), "P131: the ration is eaten");
+            CollectionAssert.AreEqual(new[] { vase }, d.Items, "P131: only the used item is taken");
             d.Clear();
-            Assert.IsFalse(d.Covers(food));
+            Assert.IsEmpty(d.Items);
         }
 
         [Test]

@@ -10,6 +10,8 @@ namespace GameOff.EditorTools
     /// Plays the economy for N days without the game (P71), with the real rules: Market (prices, events, amounts), VendorSupply,
     /// VendorStock prices, the bed price (HouseholdTuning.MoneyCost), Payroll, Household and the barkeeper's rules. Days beyond the
     /// story are drawn from the loop pool (P73) with a fixed seed; without a pool they loop over the story days. Used by the Economy Report and the balance tests.
+    /// P131: what goes home (kiosk goods, gifts, pilfered goods) lands in the family's stock (HomeDelivery) like in the game: each night
+    /// uses one item per due need, perishable leftovers spoil, the rest stays. The styles still only send what tonight's needs lack.
     /// </summary>
     public class EconomySimulator
     {
@@ -119,8 +121,11 @@ namespace GameOff.EditorTools
         private DayEntry Entry(int day) => _schedule.Endless ? _schedule.Get(day, Seed) : _schedule.Get((day - 1) % _schedule.Count + 1);
         private int ScheduleDay(int day) => _schedule.Endless ? day : (day - 1) % _schedule.Count + 1;
 
-        /// <summary>P125: one shift's confiscated goods for the Pilferer. False = discharged (too many penalties).</summary>
-        private bool Pilfer(DayEntry entry, ref int balance, HashSet<FamilyNeed> covered, System.Func<FamilyNeed, bool> needed, Run run, System.Random rolls)
+        /// <summary>
+        /// P125: one shift's confiscated goods for the Pilferer. False = discharged (too many penalties).
+        /// <paramref name="open"/>: a need that is due tonight and not covered by the stock at home yet (P131).
+        /// </summary>
+        private bool Pilfer(DayEntry entry, ref int balance, HomeDelivery home, System.Func<FamilyNeed, bool> open, Run run, System.Random rolls)
         {
             var goods = new List<(ItemData item, int count)>();
             if (entry.rules != null)
@@ -140,16 +145,16 @@ namespace GameOff.EditorTools
             foreach (var (item, count) in outcome.Kept)
                 for (int i = 0; i < count; i++)
                 {
-                    var open = System.Enum.GetValues(typeof(FamilyNeed)).Cast<FamilyNeed>()
-                        .Where(n => needed(n) && !covered.Contains(n) && item.HasTag(_household.TagOf(n))).ToList();
-                    if (open.Count > 0)
+                    bool forTheFamily = System.Enum.GetValues(typeof(FamilyNeed)).Cast<FamilyNeed>()
+                        .Any(n => open(n) && item.HasTag(_household.TagOf(n)));
+                    if (forTheFamily)
                     {
                         if (DroneCustoms.Resolve(new[] { item }, _confiscation, (float)rolls.NextDouble()).Caught)
                         {
                             run.CustomsCaught++;
                             run.Disciplinary++;
                         }
-                        else covered.Add(open[0]);
+                        else home.Add(item);
                     }
                     else if (_dealer.Buys(item))
                     {
@@ -172,6 +177,8 @@ namespace GameOff.EditorTools
             var later = new List<(int day, GameOff.Characters.Consequence effect)>(); // P125: bonuses and gifts still to come
             var rolls = new System.Random(Seed); // P125: the Pilferer's luck, the same in every report
             var memory = new GameOff.Characters.CharacterMemory(); // P76: who was met and how it went
+            var home = new HomeDelivery(); // P131: the family's stock, carried from night to night
+            var needs = System.Enum.GetValues(typeof(FamilyNeed)).Cast<FamilyNeed>().ToArray();
             try
             {
                 for (int day = 1; day <= days; day++)
@@ -215,8 +222,10 @@ namespace GameOff.EditorTools
 
                     // The money left after tonight's fixed bill must stay ≥ 0, so shopping keeps the rent safe.
                     int Reserve() => balance + wage - penalty - rent;
-                    var covered = new HashSet<FamilyNeed>();
                     bool Needed(FamilyNeed n) => n != FamilyNeed.Medicine || family.AnySick;
+                    // P131: the item at home for every need tonight (one item per need), like the settlement.
+                    ItemData[] FromHome() => home.Covering(needs.Select(n => Needed(n) ? _household.TagOf(n) : null).ToArray(), _economy.perishableTag);
+                    bool Open(FamilyNeed n) => Needed(n) && FromHome()[(int)n] == null;
 
                     // P125: what the characters' outcomes bring today: a bonus or reprimand, a gift for the family.
                     int dueDay = ScheduleDay(day);
@@ -225,12 +234,11 @@ namespace GameOff.EditorTools
                         balance = Mathf.Max(0, balance + effect.wageChange);
                         run.Bonus += effect.wageChange;
                         if (effect.giftItem == null || (effect.giftOnlyIfFamilySick && !family.AnySick)) continue;
-                        foreach (FamilyNeed need in System.Enum.GetValues(typeof(FamilyNeed)))
-                            if (effect.giftItem.HasTag(_household.TagOf(need))) covered.Add(need);
+                        home.AddGift(effect.giftItem);
                     }
                     later.RemoveAll(l => l.day == dueDay);
 
-                    if (style == Style.Pilferer && _confiscation != null && !Pilfer(entry, ref balance, covered, Needed, run, rolls))
+                    if (style == Style.Pilferer && _confiscation != null && !Pilfer(entry, ref balance, home, Open, run, rolls))
                     {
                         run.Discharged = evening.GameOver = true;
                         evening.Balance = balance;
@@ -242,7 +250,7 @@ namespace GameOff.EditorTools
                     if (style == Style.Clever || style == Style.Rumour || style == Style.Corrupt || style == Style.Pilferer)
                         foreach (FamilyNeed need in System.Enum.GetValues(typeof(FamilyNeed)))
                         {
-                            if (!Needed(need) || covered.Contains(need)) continue;
+                            if (!Open(need)) continue;
                             var tag = _household.TagOf(need);
                             var cheapest = kiosk.Items.Where(i => i.HasTag(tag) && kiosk.Count(i) > 0)
                                 .OrderBy(i => _kiosk.PriceFor(i)).FirstOrDefault();
@@ -252,7 +260,7 @@ namespace GameOff.EditorTools
                             kiosk.Take(cheapest);
                             balance -= price;
                             spent += price;
-                            covered.Add(need);
+                            home.Add(cheapest);
                         }
 
                     bool sulking = sulksFrom > 0 && day >= sulksFrom && day <= sulksFrom + 1;
@@ -307,18 +315,23 @@ namespace GameOff.EditorTools
                     }
                     balance += wage - penalty - rent;
                     spent += rent;
+                    var fromHome = FromHome();
+                    var paid = new HashSet<FamilyNeed>();
                     if (style != Style.Skip)
-                        foreach (FamilyNeed need in System.Enum.GetValues(typeof(FamilyNeed)))
+                        foreach (var need in needs)
                         {
-                            if (covered.Contains(need) || !Needed(need)) continue;
+                            if (fromHome[(int)need] != null || !Needed(need)) continue;
                             int cost = _household.MoneyCost(need);
                             if (cost > balance) { evening.SkippedNeed = true; continue; }
                             balance -= cost;
                             spent += cost;
-                            covered.Add(need);
+                            paid.Add(need);
                         }
                     if (style == Style.Skip) evening.SkippedNeed = true;
-                    family.Settle(covered.Contains(FamilyNeed.Food), covered.Contains(FamilyNeed.Heat), covered.Contains(FamilyNeed.Medicine));
+                    bool Met(FamilyNeed n) => fromHome[(int)n] != null || paid.Contains(n);
+                    family.Settle(Met(FamilyNeed.Food), Met(FamilyNeed.Heat), Met(FamilyNeed.Medicine));
+                    // P131: the night uses one item per covered need; perishable leftovers spoil, the rest stays for later nights (like SettlementWindow.Book).
+                    home.Night(fromHome, needs.Select(n => _household.TagOf(n)).ToArray(), _economy.perishableTag);
 
                     evening.Balance = balance;
                     evening.Spent = spent;

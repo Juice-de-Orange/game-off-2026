@@ -42,6 +42,7 @@ namespace GameOff.Tests
             wallet = new Wallet(100),
             inventory = new Inventory(),
             locker = new Inventory(),
+            home = new HomeDelivery(),
             household = new Household(new List<bool>(new bool[members]), 2),
             conduct = new Conduct(),
             memory = new CharacterMemory(),
@@ -77,6 +78,9 @@ namespace GameOff.Tests
             run.inventory.Add(vase);
             run.wearing = clown;
             run.locker.Add(stim, 2);
+            run.home.Add(battery); // P131: the family's stock at home
+            run.home.AddGift(vase);
+            run.home.Add(battery);
             run.household.Settle(false, true, false); // everyone weak
             run.household.Settle(false, true, false); // sick
             run.household.Settle(false, true, false); // critical
@@ -116,6 +120,8 @@ namespace GameOff.Tests
             Assert.AreEqual(3, back.inventory.Count(battery));
             Assert.AreSame(clown, back.wearing);
             Assert.AreEqual(2, back.locker.Count(stim));
+            CollectionAssert.AreEquivalent(new[] { battery, battery, vase }, back.home.Items, "P131: the stock at home");
+            Assert.IsEmpty(back.home.TakeUninspected(), "nothing of a continued run waits for customs");
             for (int i = 0; i < 3; i++)
             {
                 Assert.AreEqual(run.household.Condition(i), back.household.Condition(i));
@@ -167,6 +173,22 @@ namespace GameOff.Tests
             Assert.AreEqual(Household.Weak, back.household.Condition(1));
             CollectionAssert.AreEqual(new[] { 0 }, back.household.DiedTonight, "the loss letter's first morning");
             Assert.AreEqual(1, back.household.Alive);
+        }
+
+        [Test]
+        public void SaveFromBeforeTheHomeStock_ContinuesWithAnEmptyStock()
+        {
+            var run = FreshRun();
+            run.day = 3;
+            string json = JsonUtility.ToJson(SaveGame.Capture(run));
+            StringAssert.Contains("\"home\":[],", json);
+            string old = json.Replace("\"home\":[],", ""); // a P128 save, written before P131
+
+            var back = FreshRun();
+            back.home.Add(Make<ItemData>("Item_Battery"));
+            SaveGame.Apply(JsonUtility.FromJson<SaveData>(old), back, new SaveGame.Lookup(null, null, null));
+            Assert.AreEqual(3, back.day);
+            Assert.IsEmpty(back.home.Items, "P131: a save without a stock means nothing at home");
         }
 
         [Test]
