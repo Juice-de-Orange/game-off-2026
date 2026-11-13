@@ -38,7 +38,7 @@ namespace GameOff.Station
         [SerializeField] private AudioClip lockedClip;
         [Tooltip("Optional red lamp, shown while the door is locked.")]
         [SerializeField] private GameObject lockedLamp;
-        [Tooltip("Carving obstacle that keeps travelers out. Scripted doors: only active while the door is not open.")]
+        [Tooltip("Carving obstacle that keeps NavMesh agents (the guards, P148) out. Scripted doors: only active while the door is not open.")]
         [SerializeField] private NavMeshObstacle obstacle;
 
         private readonly HashSet<Collider> _inside = new HashSet<Collider>();
@@ -108,7 +108,7 @@ namespace GameOff.Station
                 panel.localPosition = _closedLocalPos + Vector3.left * (slideDistance * eased);
             }
 
-            // Travelers may only path through a scripted door (inspection lock) while it is open.
+            // NavMesh agents may only path through a scripted door (inspection lock) while it is open.
             if (obstacle != null && access == DoorAccess.Scripted)
             {
                 bool block = _open < 0.95f;
