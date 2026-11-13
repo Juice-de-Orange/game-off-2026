@@ -45,6 +45,34 @@ namespace GameOff.Tests
             finally { Object.DestroyImmediate(traveler); }
         }
 
+        /// <summary>The note only lies on the desk when the traveler it names is in today's queue (Quill may be dead by day 3).</summary>
+        [Test]
+        public void Note_OnlyWhenItsTravelerComesToday()
+        {
+            var quill = ScriptableObject.CreateInstance<GameOff.Travelers.TravelerData>();
+            var other = ScriptableObject.CreateInstance<GameOff.Travelers.TravelerData>();
+            var day = ScriptableObject.CreateInstance<GameOff.Travelers.DayRules>();
+            try
+            {
+                var bribe = new Bribe { traveler = quill, amount = 60 };
+                day.EditorSet("2290-11-07", new System.Collections.Generic.List<GameOff.Travelers.DayRule>(), new System.Collections.Generic.List<GameOff.Travelers.WantedEntry>(),
+                    new System.Collections.Generic.List<GameOff.Travelers.TravelerData> { other });
+                Assert.IsFalse(GameOff.Shops.BribeNote.LaysNote(bribe, day), "Quill is not in the queue");
+                day.EditorSet("2290-11-07", new System.Collections.Generic.List<GameOff.Travelers.DayRule>(), new System.Collections.Generic.List<GameOff.Travelers.WantedEntry>(),
+                    new System.Collections.Generic.List<GameOff.Travelers.TravelerData> { other, quill });
+                Assert.IsTrue(GameOff.Shops.BribeNote.LaysNote(bribe, day));
+                Assert.IsFalse(GameOff.Shops.BribeNote.LaysNote(new Bribe { traveler = quill, amount = 0 }, day), "no amount, no bribe");
+                Assert.IsFalse(GameOff.Shops.BribeNote.LaysNote(null, day));
+                Assert.IsFalse(GameOff.Shops.BribeNote.LaysNote(bribe, null));
+            }
+            finally
+            {
+                Object.DestroyImmediate(quill);
+                Object.DestroyImmediate(other);
+                Object.DestroyImmediate(day);
+            }
+        }
+
         [Test]
         public void EveryBribeInProject_NamesATravelerOfItsDay()
         {

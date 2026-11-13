@@ -10,10 +10,10 @@ using UnityEngine;
 namespace GameOff.EditorTools
 {
     /// <summary>
-    /// P76: the eight recurring characters (docs/FIGUREN.md; P150: plus the Shifter's accomplice) and the 12 story-day skeletons they need.
-    /// Days: Data/Days/Story/Day01–Day12 (date 2290-11-05 + day − 1, base rules of the test day, three test travelers as placeholders;
-    /// Max fills them in P15). DaySchedule gets 12 entries; existing letters, bar wishes and bribes stay, the fixed market events follow
-    /// FIGUREN.md (border day 2, cold day 3, inspection day 9 – the smuggler raid is now set off by Quill).
+    /// P76: the eight recurring characters (docs/FIGUREN.md; P150: plus the Shifter's accomplice) and the 12 story days.
+    /// Days: Data/Days/Story/Day01–Day12 (date 2290-11-05 + day − 1), rules, wanted list, ordinary travelers and letters from
+    /// StoryDayContent (P15); every story day must be there. DaySchedule gets 12 entries; bar wishes and bribes stay, the fixed market
+    /// events follow FIGUREN.md (border day 2, cold day 3, inspection day 9 – the smuggler raid is set off by Quill).
     /// Characters: Data/Characters/Story/, their travelers and papers in Data/Travelers/Story/. Generated content – change it here.
     /// </summary>
     public static class StoryCharacterBuilder
@@ -25,7 +25,6 @@ namespace GameOff.EditorTools
         private const string PhotoFolder = "Assets/_Project/Art/Textures/Documents/";
         private const string MarketFolder = "Assets/_Project/Data/Market/";
         private const string SchedulePath = "Assets/_Project/Data/Days/DaySchedule.asset";
-        private const string TestTravelers = "Assets/_Project/Data/Travelers/Test/";
         public const int StoryDays = 12;
         private const string NormalTravelerFolder = "Assets/_Project/Data/Travelers/Normal/";
         private const string NormalDocFolder = "Assets/_Project/Data/Documents/Normal/";
@@ -36,6 +35,8 @@ namespace GameOff.EditorTools
         public const string ShifterAirlockedFlag = "shifter_airlocked";
         /// <summary>P150: the Shifter was arrested on day 3 – released, but known now; his accomplice asks on day 6 instead.</summary>
         public const string ShifterArrestedFlag = "shifter_arrested";
+        /// <summary>Quill was turned away or had his goods taken on day 3: the smuggler raid comes, and Quill on day 6 for revenge.</summary>
+        public const string QuillWrongedFlag = "quill_wronged";
 
         public static string Date(int day) => $"2290-11-{4 + day:00}";
         internal static string Yesterday(int day) => $"2290-11-{3 + day:00}";
@@ -54,6 +55,12 @@ namespace GameOff.EditorTools
             var shifterDay3 = BuildCharacters(ev, chars, out var quillDay3);
             Epilogue(chars); // P85
             var authored = StoryDayContent.Build(); // P15
+            for (int d = 1; d <= StoryDays; d++)
+                if (!authored.ContainsKey(d))
+                {
+                    Debug.LogError($"[StoryCharacterBuilder] day {d} has no content in StoryDayContent - story days not built");
+                    return $"day {d} missing in StoryDayContent - story days not built";
+                }
             var days = BuildDays(shifterDay3, chars, authored);
             BuildSchedule(days, ev, quillDay3, authored);
             AssetDatabase.SaveAssets();
@@ -63,25 +70,11 @@ namespace GameOff.EditorTools
 
         // ---------- Days ----------
 
-        /// <summary>Encounters per day as before (6): placeholders fill up what the characters leave on the intended path.</summary>
+        /// <summary>Encounters per day (6): the authored ordinary travelers plus the characters who come on the intended path.</summary>
         private const int EncountersPerDay = 6;
 
         private static List<DayRules> BuildDays(TravelerData shifterDay3, List<RecurringCharacter> chars, Dictionary<int, StoryDayContent> authored)
         {
-            var fillers = new List<TravelerData>();
-            foreach (var f in new[] { "T_Test_01_Vesna", "T_Test_02_Darro", "T_Test_05_Ixa" })
-            {
-                var t = AssetDatabase.LoadAssetAtPath<TravelerData>(TestTravelers + f + ".asset");
-                if (t != null) fillers.Add(t);
-            }
-            // three more placeholders (Max replaces all of them in P15)
-            fillers.Add(Person("Filler_Arin", "ARIN DOLE", "Human", Verdict.Admit, "Papers in order", 0, "Evening shift? Lucky you.",
-                IdCard("Human", "ARIN DOLE", "TORVIK COLONY", "HM-2211-40"), PermitDoc("Human", "ARIN DOLE", "HM-2211-40", "WORK", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9")));
-            fillers.Add(Person("Filler_Beka", "BEKA NUR", "Vellani", Verdict.Deny, "Entry permit expired on 2290-11-04", 0, "I'm sure it's still fine. Isn't it?",
-                IdCard("Vellani", "BEKA NUR", "VELL PRIME", "VL-5521-19"), PermitDoc("Vellani", "BEKA NUR", "VL-5521-19", "TRADE", "2290-11-04", "VELL PRIME CONSULATE", "VELL PRIME > KESTREL-9")));
-            fillers.Add(Person("Filler_Corin", "CORIN HASK", "Xirrik", Verdict.Admit, "Papers in order", 0, "Kss. Quick, please.",
-                IdCard("Xirrik", "CORIN HASK", "LUMEN REACH", "XR-6630-02"), PermitDoc("Xirrik", "CORIN HASK", "XR-6630-02", "TRANSIT", Valid, "LUMEN REACH CONSULATE", "LUMEN REACH > KESTREL-9")));
-
             // characters on the intended path (as the Economy Report plays them)
             var met = new int[StoryDays + 1];
             var memory = new CharacterMemory();
@@ -97,23 +90,12 @@ namespace GameOff.EditorTools
             var list = new List<DayRules>();
             for (int d = 1; d <= StoryDays; d++)
             {
-                List<DayRule> rules;
-                List<WantedEntry> wanted;
-                List<TravelerData> travelers;
-                if (authored.TryGetValue(d, out var content))
-                {
-                    rules = content.Rules;
-                    wanted = content.Wanted;
-                    travelers = content.Travelers;
-                    if (travelers.Count != EncountersPerDay - met[d])
-                        Debug.LogWarning($"[StoryCharacterBuilder] day {d}: {travelers.Count} ordinary travelers + {met[d]} characters, not {EncountersPerDay} encounters (changes the wage balance)");
-                }
-                else
-                {
-                    rules = new List<DayRule> { new BannedOriginRule("ORVAN"), new ForbiddenGoodsRule("STIMULANT"), new QuarantineRule("KETRA STATION") };
-                    wanted = new List<WantedEntry> { new WantedEntry("KAEL DROSS", "DX-0013-44", WantedOrder.Arrest, "Armed robbery, Aska-3") };
-                    travelers = fillers.GetRange(0, System.Math.Max(3, System.Math.Min(fillers.Count, EncountersPerDay - met[d])));
-                }
+                var content = authored[d]; // Build checked that every day is there
+                var rules = content.Rules;
+                var wanted = content.Wanted;
+                var travelers = content.Travelers;
+                if (travelers.Count != EncountersPerDay - met[d])
+                    Debug.LogWarning($"[StoryCharacterBuilder] day {d}: {travelers.Count} ordinary travelers + {met[d]} characters, not {EncountersPerDay} encounters (changes the wage balance)");
                 // Max's plan: the Shifter is on the list on day 3, to be terminated on sight – always.
                 if (d == 3) wanted.Add(new WantedEntry(shifterDay3.DisplayName, "AB-3377-77", WantedOrder.Terminate, "Enemy agent. Terminate on sight."));
                 var day = Asset<DayRules>(DayFolder + $"Day{d:00}.asset");
@@ -136,21 +118,17 @@ namespace GameOff.EditorTools
             {
                 var e = list.GetArrayElementAtIndex(d - 1);
                 e.FindPropertyRelative("rules").objectReferenceValue = days[d - 1];
-                if (d > before)
+                if (d > before) // a new entry: no bar wish, no bribe until set below
                 {
                     e.FindPropertyRelative("letterTitle").stringValue = "A letter from home";
-                    e.FindPropertyRelative("letter").stringValue = $"(Placeholder: the letter for day {d} comes with P15.)";
-                    e.FindPropertyRelative("newToday").stringValue = "";
                     e.FindPropertyRelative("barWish").FindPropertyRelative("amount").intValue = 0;
                     e.FindPropertyRelative("bribe").FindPropertyRelative("traveler").objectReferenceValue = null;
                     e.FindPropertyRelative("bribe").FindPropertyRelative("amount").intValue = 0;
                 }
-                if (authored.TryGetValue(d, out var content))
-                {
-                    e.FindPropertyRelative("letter").stringValue = content.Letter;
-                    e.FindPropertyRelative("letterIfTrouble").stringValue = content.LetterIfTrouble ?? "";
-                    e.FindPropertyRelative("newToday").stringValue = content.NewToday ?? "";
-                }
+                var content = authored[d];
+                e.FindPropertyRelative("letter").stringValue = content.Letter;
+                e.FindPropertyRelative("letterIfTrouble").stringValue = content.LetterIfTrouble ?? "";
+                e.FindPropertyRelative("newToday").stringValue = content.NewToday ?? "";
                 var fixedEvents = d switch
                 {
                     2 => new[] { ev["BorderClosed"] },
@@ -248,15 +226,17 @@ namespace GameOff.EditorTools
                         greetingAfterBetrayed = "You again. Let's try this once more, friendly this time.",
                         consequences = new List<Consequence>
                         {
-                            new Consequence { when = Outcome.Betrayed, marketEvent = ev["SmugglersBusted"], eventInDays = 3 }, // day 6: not while the barkeeper sulks (P66)
-                            new Consequence { when = Outcome.Confiscated, marketEvent = ev["SmugglersBusted"], eventInDays = 3 }, // day 6: not while the barkeeper sulks (P66)
+                            // day 6: not while the barkeeper sulks (P66); the flag brings Quill back for revenge that day
+                            new Consequence { when = Outcome.Betrayed, marketEvent = ev["SmugglersBusted"], eventInDays = 3, setFlag = QuillWrongedFlag },
+                            new Consequence { when = Outcome.Confiscated, marketEvent = ev["SmugglersBusted"], eventInDays = 3, setFlag = QuillWrongedFlag },
                             new Consequence { when = Outcome.Betrayed, wanted = true, wantedInDays = 3, wantedNote = "Smuggling, threats against an officer" },
                             new Consequence { when = Outcome.Confiscated, wanted = true, wantedInDays = 3, wantedNote = "Smuggling, threats against an officer" },
                         } },
                     new Appearance { traveler = q3, dayFrom = 4, dayTo = 4, condition = AppearanceCondition.LastHelped,
                         entrustItem = Goods("Spice"), entrustDeposit = 30,
-                        greetingAfterHelped = "You looked the other way. Quill doesn't forget a favour. Bigger job today." },
-                    new Appearance { traveler = q4, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.LastWronged,
+                        greetingAfterHelped = "You looked the other way. Quill doesn't forget a favor. Bigger job today." },
+                    // revenge only after the raid of day 3 (not when he was helped on day 3 and turned away on day 4)
+                    new Appearance { traveler = q4, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.Alive, onlyIfFlag = QuillWrongedFlag,
                         onAdmit = Outcome.Neutral, onDeny = Outcome.Betrayed, onArrest = Outcome.Betrayed,
                         greetingAfterBetrayed = "Remember me? Thanks to you the whole ring went down.",
                         greetingAfterConfiscated = "You took my goods and my living. Now look at me." },
@@ -321,7 +301,7 @@ namespace GameOff.EditorTools
                         greetingAfterHelped = Reveal, greetingAfterBetrayed = Reveal, greetingAfterConfiscated = Reveal,
                         endingTitle = "AIRLOCKED",
                         endingBody = "You joined a resistance that never existed. The man with a hundred faces worked for the Directorate, " +
-                                     "and the list he carried had your name on it.\n\nThe outer door of Kestrel-9 opens at 07:42. " +
+                                     "and the list he carried had your name on it.\n\nThe outer door of Kestrel-9 opens at 08:12. " +
                                      "Nobody at home is told why the money stopped.",
                         endingWarning = "SECURITY TO CUSTOMS. OFFICER, STEP AWAY FROM THE COUNTER." },
                     new Appearance { traveler = s4, dayFrom = 7, dayTo = 7, condition = AppearanceCondition.FlagNotSet, flag = ResistanceFlag,
@@ -370,7 +350,7 @@ namespace GameOff.EditorTools
                         greetingAfterHelped = Reveal, greetingAfterBetrayed = Reveal, greetingAfterConfiscated = Reveal,
                         endingTitle = "AIRLOCKED",
                         endingBody = "You joined a resistance that never existed. The woman who came in his place worked for the Directorate, " +
-                                     "like the man with a hundred faces, and the list she carried had your name on it.\n\nThe outer door of Kestrel-9 opens at 07:42. " +
+                                     "like the man with a hundred faces, and the list she carried had your name on it.\n\nThe outer door of Kestrel-9 opens at 08:12. " +
                                      "Nobody at home is told why the money stopped.",
                         endingWarning = "SECURITY TO CUSTOMS. OFFICER, STEP AWAY FROM THE COUNTER." },
                     new Appearance { traveler = c7, dayFrom = 7, dayTo = 7, condition = AppearanceCondition.FlagNotSet, flag = ResistanceFlag }));
@@ -380,7 +360,7 @@ namespace GameOff.EditorTools
             {
                 const string n = "MIRA TALSK", sp = "Quobb", id = "QT-0091-12", origin = "QUOB ATOLL";
                 var m1 = Talker(new[] { StoryDayContent.Say("purpose", "My children. That is the whole purpose."), StoryDayContent.Say("route", "Nine days, through Aska-3. I counted each one."), StoryDayContent.Say("expires", "The office closed before I could reach it. Please.") }, "Mira_1", n, sp, Verdict.Deny, "Entry permit expired yesterday", 2,
-                    "Please. My children are on the other side. Nine days I travelled.",
+                    "Please. My children are on the other side. Nine days I traveled.",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "FAMILY VISIT", Yesterday(2), "ASKA-3 CONSULATE", "QUOB ATOLL > ASKA-3 > KESTREL-9"));
                 var m2 = Talker(new[] { StoryDayContent.Say("purpose", "My children. They are safe now."), StoryDayContent.Say("route", "Direct this time. I borrowed for the fare.") }, "Mira_2", n, sp, Verdict.Admit, "Papers in order", 4,
                     "It's me, Mira. My children are safe.",
@@ -395,9 +375,9 @@ namespace GameOff.EditorTools
                     new Appearance { traveler = m1, dayFrom = 2, dayTo = 2, slot = 2, condition = AppearanceCondition.NeverMet,
                         eventLines = new List<EventLine> { new EventLine { marketEvent = ev["BorderClosed"], line = "And now they've closed the border behind me." } } },
                     new Appearance { traveler = m2, dayFrom = 4, dayTo = 4, condition = AppearanceCondition.LastHelped,
-                        greetingAfterHelped = "You let me through. My children ate tonight. This is for yours.",
+                        greetingAfterHelped = "You let me through. My children ate last night. This is for yours.",
                         consequences = new List<Consequence> { new Consequence { when = Outcome.Helped, giftItem = Goods("CannedStew"),
-                            letterLine = "A woman called Mira left a tin of stew at our door. She said you would know why." } } },
+                            letterLine = "A parcel came from a woman called Mira: a tin of stew. She said you would know why." } } },
                     new Appearance { traveler = m3, dayFrom = 4, dayTo = 4, condition = AppearanceCondition.LastBetrayed,
                         greetingAfterBetrayed = "You sent me back. So I bought new papers. Please." },
                     new Appearance { traveler = m4, dayFrom = 8, dayTo = 8, condition = AppearanceCondition.Alive,
@@ -427,7 +407,7 @@ namespace GameOff.EditorTools
                     new Appearance { traveler = s2, dayFrom = 5, dayTo = 5, condition = AppearanceCondition.LastHelped,
                         greetingAfterHelped = "You let my medicine through. Three children walked out of the clinic today.",
                         consequences = new List<Consequence> { new Consequence { when = Outcome.Helped, giftItem = Goods("Antibiotics"), giftOnlyIfFamilySick = true,
-                            letterLine = "Dr. Senn sent medicine on the drone. He says you earned it." } } },
+                            letterLine = "Dr. Senn sent medicine on the drone. She says you earned it." } } },
                     new Appearance { traveler = s3, dayFrom = 9, dayTo = 9, condition = AppearanceCondition.LastHelped,
                         greetingAfterHelped = "I'm leaving Kestrel. Thank you for trusting a stranger with a case of pills." }));
             }
@@ -458,14 +438,15 @@ namespace GameOff.EditorTools
             }
 
             // 7 Nell Varga (Human): an old woman visiting her son in the station prison. P85: he is someone the player arrested
-            //   (Jonas Varga from day 4 if arrested, else the latest human arrest, else Jonas taken by someone else) - see Epilogue.
+            //   (Jonas Varga from day 4 if arrested or airlocked, else the latest human arrest, else Jonas taken by someone else) - see Epilogue.
+            //   Day 6 she leaves a data chip with the player (P77), day 8 she collects it.
             {
                 const string n = "NELL VARGA", sp = "Human", id = "HM-6060-02", origin = "TORVIK COLONY";
                 var l1 = Person("Nell_1", n, sp, Verdict.Admit, "Papers in order", 6,
                     "Nell Varga. I'm here to see my son, {kin}. He's in your prison. {kinFate}",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "FAMILY VISIT", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
                 var l2 = Person("Nell_2", n, sp, Verdict.Admit, "Papers in order", 8,
-                    "Nell again. Did my letter reach {kin}?",
+                    "Nell again. I came to see {kin}.",
                     IdCard(sp, n, origin, id), PermitDoc(sp, n, id, "FAMILY VISIT", Valid, "ASKA-3 CONSULATE", "TORVIK > KESTREL-9"));
                 var l3 = Person("Nell_3", n, sp, Verdict.Admit, "Papers in order", 11,
                     "Nell. They're letting {kin} go home with me.",
@@ -473,15 +454,17 @@ namespace GameOff.EditorTools
                 chars.Add(Character("Nell", "nell", n, sp,
                     new Appearance { traveler = l1, dayFrom = 6, dayTo = 6, condition = AppearanceCondition.NeverMet,
                         entrustItem = Goods("DataChip"), entrustDeposit = 15 },
+                    // chip kept: "You kept it safe. Here is what I promised." comes first; chip gone: only "What I left with you is gone…"
+                    // (CharacterDirector.Greeting) - the line after betrayed is for a refusal on day 6
                     new Appearance { traveler = l2, dayFrom = 8, dayTo = 8, condition = AppearanceCondition.Alive,
-                        greetingAfterHelped = "You were kind to an old woman. Did my letter reach {kin}?",
+                        greetingAfterHelped = "You were kind to an old woman. I won't forget it.",
                         greetingAfterBetrayed = "You sent me away last time. I came back anyway. Mothers do." },
                     new Appearance { traveler = l3, dayFrom = 11, dayTo = 11, condition = AppearanceCondition.Alive,
                         greetingAfterHelped = "My boy {kin} is coming home. I won't forget your face.",
                         greetingAfterBetrayed = "{kin} is coming home - no thanks to you." }));
             }
 
-            // 8 Pim Oddo (Quobb): a cheerful travelling trader. Let through → his caravan two days later (luxuries cheap).
+            // 8 Pim Oddo (Quobb): a cheerful traveling trader. Let through → his caravan two days later (luxuries cheap).
             {
                 const string n = "PIM ODDO", sp = "Quobb", id = "QB-8080-80", origin = "QUOB ATOLL";
                 var o1 = Person("Oddo_1", n, sp, Verdict.Admit, "Papers in order", 8,
@@ -508,10 +491,15 @@ namespace GameOff.EditorTools
             return shifter3;
         }
 
-        // ---------- P85: Nell's son and the day 11 summary ----------
+        // ---------- P85: Nell's son and what became of everyone (day 11 newsletter, ticket ending) ----------
 
         public const string NellSon = "JONAS VARGA";
 
+        /// <summary>
+        /// The summary lines by last outcome, and the day of each character's last appearance: before it is played their story is
+        /// still open (the newsletter leaves them out, the ticket ending says so). A betrayal can also come from a lost deposit (P77),
+        /// so those lines don't speak of a refusal at the counter.
+        /// </summary>
         private static void Epilogue(List<RecurringCharacter> chars)
         {
             foreach (var c in chars)
@@ -523,56 +511,66 @@ namespace GameOff.EditorTools
                             "Inspector Korr's final report on lane two runs to nine pages. None of them are kind.",
                             null,
                             "Inspector Korr was lost in an \"airlock incident\". The Border Authority has sent three more inspectors.");
+                        c.EditorSetStoryEnd(10, "You never read Inspector Korr's final report.");
                         break;
                     case "quill":
                         c.EditorSetSummary("Quill Barragh got out. A postcard from somewhere warm says only: \"Thanks, officer.\"",
-                            "Quill Barragh's smuggling ring is finished, and so is Quill. The barkeeper pours your drinks a little slower now.",
+                            "Quill Barragh doesn't do business at lane two any more. The barkeeper pours your drinks a little slower now.",
                             "Quill Barragh slipped past the wanted list and off the station. Nobody has seen him since.",
                             "Quill Barragh went out of the airlock. The barkeeper hasn't said a word since.");
+                        c.EditorSetStoryEnd(9);
                         break;
                     case "shifter":
                         c.EditorSetSummary("The man with a hundred faces has left Kestrel. The Directorate thanks the officers who did not listen to him.",
-                            "The man with too many names was arrested again - and released again, by order from above.",
+                            "The man with too many names was picked up by security - and released, by order from above.",
                             "The man with too many names was last seen boarding a shuttle. Under which name, nobody can say.",
-                            "The man you put out of the airlock on day three carried eleven names. Nobody came to claim the body.");
+                            "The man you put out of the airlock carried eleven names. Nobody came to claim the body.");
+                        c.EditorSetStoryEnd(7, "You never learned who the man with too many names really was.");
                         break;
                     case "accomplice": // P150
                         c.EditorSetSummary("Ilsa Koval reports to the Directorate from another station now. Next to your name, her file says \"reliable\".",
-                            "Ilsa Koval was arrested at lane two - and walked out an hour later, by order from above.",
+                            "Ilsa Koval was stopped at lane two - and walked out an hour later, by order from above.",
                             "Ilsa Koval left Kestrel on the next shuttle. Nobody asked her where to.",
                             "Ilsa Koval went out of the airlock. The Directorate sent a wreath, and nobody at the station knew why.");
+                        c.EditorSetStoryEnd(7);
                         break;
                     case "mira":
                         c.EditorSetSummary("Mira Talsk and her children have a home on the far side of the border. She named the cat after you.",
                             "Mira Talsk was sent back one time too many. Her children are still waiting on the other side.",
                             null,
                             "Mira Talsk never reached her children.");
+                        c.EditorSetStoryEnd(8);
                         break;
                     case "senn":
                         c.EditorSetSummary("Dr. Senn's clinic got through the cold snap. Three children owe their lungs to a case of pills you let through.",
-                            "Dr. Senn's clinic ran dry during the cold. The station blamed the doctor. The doctor blamed customs.",
+                            "Dr. Senn still runs the clinic, but she no longer trusts anyone in a customs uniform.",
                             "Dr. Senn found another way to bring the medicine in. It took a week longer.",
                             "Dr. Senn went out of the airlock. The clinic has been closed since.");
+                        c.EditorSetStoryEnd(9, "You never learned what became of Dr. Senn.");
                         break;
                     case "tobin":
                         c.EditorSetSummary("Tobin Rask's strike won the dockers a fair wage and heaters that work.",
                             "Tobin Rask was deported. His colleagues still talk about the officer who sent him away.",
                             null,
                             "Tobin Rask went out of the airlock. The docks went quiet for a day, then back to work.");
+                        c.EditorSetStoryEnd(10);
                         break;
                     case "nell":
                         c.EditorSetKin(NellSon, "Human", "They tell me it was you who put him there.",
-                            "They took him off a cargo ship, right here at this station.");
+                            "They took him off a cargo ship, right here at this station.",
+                            "They say he never left your station."); // Jonas went out of the airlock (by the player)
                         c.EditorSetSummary("Nell Varga took {kin} home. She tells everyone about the kind officer at lane two.",
-                            "Nell Varga's letter never reached {kin}. She doesn't talk about Kestrel any more.",
+                            "Nell Varga doesn't talk about Kestrel any more, or about the officer at lane two.",
                             null,
                             "Nell Varga came to see her son and went out of the airlock. {kin} was told in his cell.");
+                        c.EditorSetStoryEnd(11);
                         break;
                     case "oddo":
                         c.EditorSetSummary("Pim Oddo's caravan is the talk of three stations. He tells everyone about his friend at the counter.",
-                            "Pim Oddo never came back. Someone at the bar is selling his clown shoes.",
+                            "Pim Oddo trades at other stations now. When Kestrel-9 comes up, he changes the subject.",
                             null,
                             "Pim Oddo went out of the airlock. His clown shoes are still on a shelf somewhere.");
+                        c.EditorSetStoryEnd(12);
                         break;
                 }
                 EditorUtility.SetDirty(c);

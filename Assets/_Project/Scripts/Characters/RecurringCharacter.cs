@@ -38,7 +38,10 @@ namespace GameOff.Characters
         FlagNotSet = 8,
     }
 
-    /// <summary>What an outcome sets in motion: a market event and/or a wanted entry on a later day.</summary>
+    /// <summary>
+    /// What an outcome sets in motion: a market event and/or a wanted entry on a later day, effects without another encounter
+    /// (gift, credits, announcement, letter line; P85) and a flag for later appearances (P150).
+    /// </summary>
     [Serializable]
     public class Consequence
     {
@@ -48,7 +51,7 @@ namespace GameOff.Characters
         [Tooltip("Market event that happens this many days later (pinboard, announcement, rumour, station mood).")]
         public MarketEvent marketEvent;
         [Min(1)] public int eventInDays = 1;
-        [Tooltip("Put the character on the wanted list (with the next appearance's papers name).")]
+        [Tooltip("Put the character on the wanted list (with the papers name of their next appearance in that time, RecurringCharacter.WantedName).")]
         public bool wanted;
         public WantedOrder wantedOrder = WantedOrder.Arrest;
         [Min(1)] public int wantedInDays = 1;
@@ -57,16 +60,17 @@ namespace GameOff.Characters
         public string wantedNote = "";
 
         [Header("Without another encounter (P85)")]
-        [Tooltip("Days after the decision (0 = at once; letters arrive the next morning at the earliest).")]
+        [Tooltip("Days after the decision (0 = at once; letters arrive the next morning at the earliest). On a later day, credits and the announcement come at the shift start.")]
         [Min(0)] public int afterDays;
         [Tooltip("Arrives at the family: goes into their stock and covers its need, like a drone delivery (P131).")]
         public ItemData giftItem;
+        [Tooltip("The gift (and the letter line that comes with it) only if someone at home is sick.")]
         public bool giftOnlyIfFamilySick;
         [Tooltip("Credits added (or, if negative, taken) in the player's wallet.")]
         public int wageChange;
         public string wageNote = "";
         [TextArea] public string announcement;
-        [Tooltip("A line under the next morning letter.")]
+        [Tooltip("A line under the next morning letter (with a gift: only when the gift is sent).")]
         [TextArea] public string letterLine;
 
         [Header("A flag for later appearances (P150)")]
@@ -75,6 +79,9 @@ namespace GameOff.Characters
 
         /// <summary>This consequence follows from the decision (P85: some only when the player chose arrest).</summary>
         public bool Applies(Outcome outcome, Verdict chosen) => when == outcome && (!onlyIfArrested || chosen == Verdict.Arrest);
+
+        /// <summary>The gift stays away (only for a sick family, and nobody is sick); its letter line stays away with it.</summary>
+        public bool GiftHeldBack(bool familySick) => giftItem != null && giftOnlyIfFamilySick && !familySick;
     }
 
     /// <summary>A line the character adds to the greeting on a day with this market event (they talk about what happens).</summary>
@@ -177,17 +184,62 @@ namespace GameOff.Characters
         [SerializeField, TextArea] private string kinFateByYou;
         [Tooltip("{kinFate} when somebody else did.")]
         [SerializeField, TextArea] private string kinFateByOthers;
+        [Tooltip("{kinFate} when the player sent them out of the airlock (empty = the line for an arrest by the player).")]
+        [SerializeField, TextArea] private string kinFateAirlocked;
 
-        [Header("Day 11 summary in the morning letter (P85), by the last outcome; empty = not mentioned")]
+        [Header("What became of them (P85: day 11 newsletter, P124: ticket ending), by the last outcome; empty = not mentioned")]
         [SerializeField, TextArea] private string summaryHelped;
         [SerializeField, TextArea] private string summaryBetrayed;
         [SerializeField, TextArea] private string summaryNeutral;
         [SerializeField, TextArea] private string summaryDead;
+        [Tooltip("The day of their last appearance: until it is played their story is still open (0 = always finished).")]
+        [SerializeField, Min(0)] private int storyEndsOnDay;
+        [Tooltip("The ending's line while their story is still open; empty = \"You never learned what became of <Name>.\"")]
+        [SerializeField, TextArea] private string summaryOpen;
 
         public string KinName => kinName;
         public string KinSpecies => kinSpecies;
         public bool HasKin => !string.IsNullOrWhiteSpace(kinName);
         public string KinFate(bool byYou) => byYou ? kinFateByYou : kinFateByOthers;
+
+        /// <summary>{kinFate}: who took the relative; airlocked by the player has its own line (else the by-you line).</summary>
+        public string KinFate(bool byYou, bool airlocked) =>
+            byYou && airlocked && !string.IsNullOrWhiteSpace(kinFateAirlocked) ? kinFateAirlocked : KinFate(byYou);
+
+        public int StoryEndsOnDay => storyEndsOnDay;
+
+        /// <summary>
+        /// Their story is told to the end once every day up to their last appearance has been played (<paramref name="playedThrough"/>
+        /// = the last day whose encounters are over), or once they are dead.
+        /// </summary>
+        public bool StoryFinished(Outcome last, int playedThrough) => last == Outcome.Dead || playedThrough >= storyEndsOnDay;
+
+        /// <summary>The line for a story still open: their own, else "You never learned what became of Nell Varga."</summary>
+        public string OpenLine => !string.IsNullOrWhiteSpace(summaryOpen) ? summaryOpen : $"You never learned what became of {TitleCase(displayName)}.";
+
+        /// <summary>"NELL VARGA" → "Nell Varga".</summary>
+        public static string TitleCase(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) return "";
+            var words = name.Trim().Split(' ');
+            for (int i = 0; i < words.Length; i++)
+                if (words[i].Length > 0) words[i] = words[i].Substring(0, 1).ToUpperInvariant() + words[i].Substring(1).ToLowerInvariant();
+            return string.Join(" ", words);
+        }
+
+        /// <summary>
+        /// The name on a wanted entry that appearance <paramref name="fromAppearance"/> puts up for fromDay–toDay: the papers name of their
+        /// first later appearance in that time (the Shifter changes names), else the character's name.
+        /// </summary>
+        public string WantedName(int fromAppearance, int fromDay, int toDay)
+        {
+            for (int i = fromAppearance + 1; i < appearances.Count; i++)
+            {
+                var a = appearances[i];
+                if (a.traveler != null && a.dayFrom <= toDay && Mathf.Max(a.dayFrom, a.dayTo) >= fromDay) return a.traveler.DisplayName;
+            }
+            return displayName;
+        }
 
         /// <summary>P85: the summary line for the last outcome (confiscated counts as betrayed), or null.</summary>
         public string SummaryFor(Outcome last) => last switch
@@ -213,12 +265,20 @@ namespace GameOff.Characters
             appearances = newAppearances;
         }
 
-        public void EditorSetKin(string name, string species, string fateByYou, string fateByOthers)
+        public void EditorSetKin(string name, string species, string fateByYou, string fateByOthers, string fateAirlocked = null)
         {
             kinName = name;
             kinSpecies = species;
             kinFateByYou = fateByYou;
             kinFateByOthers = fateByOthers;
+            kinFateAirlocked = fateAirlocked;
+        }
+
+        /// <summary>The day of their last appearance, and their own line for a story still open (null = the default line).</summary>
+        public void EditorSetStoryEnd(int lastDay, string openLine = null)
+        {
+            storyEndsOnDay = lastDay;
+            summaryOpen = openLine;
         }
 
         public void EditorSetSummary(string helped, string betrayed, string neutral, string dead)

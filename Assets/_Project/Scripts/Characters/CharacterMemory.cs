@@ -5,8 +5,9 @@ using GameOff.Travelers;
 namespace GameOff.Characters
 {
     /// <summary>
-    /// P75: what happened with every recurring character in this run, plus the consequences waiting for later days (market events,
-    /// wanted entries). P128: the morning save reads it through the views at the end and rebuilds it with the same methods.
+    /// P75: what happened with every recurring character in this run, plus what waits for later days (effects, wanted entries; their
+    /// market events are booked straight into Market.Schedule). P128: the morning save reads it through the views at the end and
+    /// rebuilds it with the same methods.
     /// </summary>
     public class CharacterMemory
     {
@@ -27,7 +28,6 @@ namespace GameOff.Characters
 
         private readonly List<Record> _records = new List<Record>();
         private readonly List<PendingWanted> _wanted = new List<PendingWanted>();
-        private readonly Dictionary<int, List<MarketEvent>> _events = new Dictionary<int, List<MarketEvent>>();
         private readonly HashSet<string> _flags = new HashSet<string>();
 
         /// <summary>P87: a choice the player made (e.g. joined the resistance).</summary>
@@ -77,6 +77,8 @@ namespace GameOff.Characters
             public string name;
             public string species;
             public int day;
+            /// <summary>Sent out of the airlock instead (never in the prison).</summary>
+            public bool airlocked;
         }
 
         private readonly List<Arrest> _arrests = new List<Arrest>();
@@ -86,11 +88,20 @@ namespace GameOff.Characters
         public void RememberArrest(string name, string species, int day) =>
             _arrests.Add(new Arrest { name = name, species = species, day = day });
 
+        /// <summary>An ordinary traveler the player sent out of the airlock (e.g. Nell's son: she still comes asking for him).</summary>
+        public void RememberAirlock(string name, string species, int day) =>
+            _arrests.Add(new Arrest { name = name, species = species, day = day, airlocked = true });
+
+        /// <summary>Arrests and airlockings of ordinary travelers, in the order they happened.</summary>
         public IReadOnlyList<Arrest> Arrests => _arrests;
+
+        /// <summary>This ordinary traveler went out of the airlock.</summary>
+        public bool Airlocked(string name) => !string.IsNullOrEmpty(name) && _arrests.Exists(a => a.airlocked && a.name == name);
 
         /// <summary>
         /// P85: who the character's relative in prison is, fixed the first time it is asked: their own name if the player arrested
-        /// them before <paramref name="day"/>, else the latest arrest of the same species, else their own name (somebody else did it).
+        /// (or airlocked) them before <paramref name="day"/>, else the latest arrest of the same species, else their own name
+        /// (somebody else did it).
         /// </summary>
         public (string name, bool byYou) Kin(RecurringCharacter c, int day)
         {
@@ -100,7 +111,7 @@ namespace GameOff.Characters
             if (_arrests.Exists(a => a.day < day && a.name == c.KinName)) kin = (c.KinName, true);
             else
                 for (int i = _arrests.Count - 1; i >= 0; i--)
-                    if (_arrests[i].day < day && _arrests[i].species == c.KinSpecies) { kin = (_arrests[i].name, true); break; }
+                    if (_arrests[i].day < day && !_arrests[i].airlocked && _arrests[i].species == c.KinSpecies) { kin = (_arrests[i].name, true); break; }
             _kin[c] = kin;
             return kin;
         }
@@ -131,7 +142,6 @@ namespace GameOff.Characters
         public bool Alive(RecurringCharacter c) => !_records.Exists(r => r.character == c && r.outcome == Outcome.Dead);
         public bool Done(RecurringCharacter c, int appearance) => _records.Exists(r => r.character == c && r.appearance == appearance);
         public bool MetOn(RecurringCharacter c, int day) => _records.Exists(r => r.character == c && r.day == day);
-        public int Count(RecurringCharacter c, Outcome o) => _records.FindAll(r => r.character == c && r.outcome == o).Count;
 
         public Outcome Last(RecurringCharacter c)
         {
@@ -160,15 +170,6 @@ namespace GameOff.Characters
 
         // ---------- Consequences ----------
 
-        public void ScheduleEvent(int day, MarketEvent e)
-        {
-            if (e == null) return;
-            if (!_events.TryGetValue(day, out var list)) _events[day] = list = new List<MarketEvent>();
-            if (!list.Contains(e)) list.Add(e);
-        }
-
-        public IReadOnlyList<MarketEvent> EventsOn(int day) => _events.TryGetValue(day, out var list) ? list : (IReadOnlyList<MarketEvent>)new MarketEvent[0];
-
         public void ScheduleWanted(RecurringCharacter c, WantedEntry entry, int fromDay, int days) =>
             _wanted.Add(new PendingWanted { character = c, entry = entry, fromDay = fromDay, toDay = fromDay + System.Math.Max(1, days) - 1 });
 
@@ -186,7 +187,6 @@ namespace GameOff.Characters
         public IReadOnlyDictionary<RecurringCharacter, (ItemData item, int deposit)> EntrustedItems => _entrusted;
         public IReadOnlyList<(int day, Consequence effect)> Effects => _effects;
         public IReadOnlyList<PendingWanted> Wanted => _wanted;
-        public IEnumerable<int> EventDays => _events.Keys;
         public IReadOnlyDictionary<RecurringCharacter, (string name, bool byYou)> KnownKin => _kin;
 
         /// <summary>P128: a wanted entry exactly as it was pending (ScheduleWanted computes the last day).</summary>

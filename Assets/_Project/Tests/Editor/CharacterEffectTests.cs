@@ -33,5 +33,18 @@ namespace GameOff.Tests
             CollectionAssert.AreEqual(new[] { effect }, memory.TakeEffects(6));
             Assert.IsEmpty(memory.TakeEffects(6));
         }
+
+        /// <summary>Senn's medicine only comes for a sick family – and her letter line ("she says you earned it") only with it.</summary>
+        [Test]
+        public void GiftOnlyIfSick_HeldBackWhenNobodyIsSick()
+        {
+            var item = ScriptableObject.CreateInstance<ItemData>();
+            var senn = new Consequence { giftItem = item, giftOnlyIfFamilySick = true, letterLine = "medicine" };
+            Assert.IsTrue(senn.GiftHeldBack(false));
+            Assert.IsFalse(senn.GiftHeldBack(true));
+            Assert.IsFalse(new Consequence { giftItem = item, letterLine = "stew" }.GiftHeldBack(false), "Mira's stew always comes");
+            Assert.IsFalse(new Consequence { giftOnlyIfFamilySick = true, letterLine = "a note" }.GiftHeldBack(false), "no gift, the line stands alone");
+            Object.DestroyImmediate(item);
+        }
     }
 }

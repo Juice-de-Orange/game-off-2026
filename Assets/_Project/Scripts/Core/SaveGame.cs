@@ -159,8 +159,7 @@ namespace GameOff.Core
             }
             foreach (var w in m.Wanted)
                 s.wanted.Add(new SaveData.Wanted { character = CharacterId(w.character), entry = w.entry, fromDay = w.fromDay, toDay = w.toDay });
-            s.events = DayEventList(m.EventDays, day => m.EventsOn(day), int.MinValue);
-            foreach (var a in m.Arrests) s.arrests.Add(new SaveData.Arrest { name = a.name, species = a.species, day = a.day });
+            foreach (var a in m.Arrests) s.arrests.Add(new SaveData.Arrest { name = a.name, species = a.species, day = a.day, airlocked = a.airlocked });
             foreach (var pair in m.KnownKin)
                 s.kin.Add(new SaveData.Kin { character = CharacterId(pair.Key), name = pair.Value.name, byYou = pair.Value.byYou });
             return s;
@@ -321,9 +320,9 @@ namespace GameOff.Core
                 var c = lookup.Character(w.character);
                 if (c != null) m.RestoreWanted(new CharacterMemory.PendingWanted { character = c, entry = w.entry, fromDay = w.fromDay, toDay = w.toDay });
             }
-            foreach (var day in s.events)
-                foreach (var id in day.events) m.ScheduleEvent(day.day, lookup.Event(id));
-            foreach (var a in s.arrests) m.RememberArrest(a.name, a.species, a.day);
+            foreach (var a in s.arrests)
+                if (a.airlocked) m.RememberAirlock(a.name, a.species, a.day);
+                else m.RememberArrest(a.name, a.species, a.day);
             foreach (var k in s.kin) m.RestoreKin(lookup.Character(k.character), k.name, k.byYou);
         }
 

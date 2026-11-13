@@ -103,9 +103,9 @@ namespace GameOff.Tests
             m.Entrust(vesna, vase, 40);
             m.ScheduleEffect(6, effect);
             m.ScheduleWanted(korr, new WantedEntry("Korr", "GR-1", WantedOrder.Arrest, "smuggler"), 5, 2);
-            m.ScheduleEvent(5, strike);
             m.RememberArrest("Ilya Petrov", "Human", 2);
-            m.Kin(vesna, 4); // fixes the relative: the arrest of day 2
+            m.RememberAirlock("Bo Renn", "Human", 3);
+            m.Kin(vesna, 4); // fixes the relative: the arrest of day 2 (the airlocked one is not in prison)
 
             string json = JsonUtility.ToJson(SaveGame.Capture(run));
             var loaded = JsonUtility.FromJson<SaveData>(json);
@@ -153,10 +153,28 @@ namespace GameOff.Tests
             Assert.AreEqual(1, b.WantedOn(6).Count);
             Assert.AreEqual("GR-1", b.WantedOn(6)[0].id);
             Assert.IsEmpty(b.WantedOn(7));
-            CollectionAssert.AreEqual(new[] { strike }, b.EventsOn(5));
-            Assert.AreEqual(1, b.Arrests.Count);
+            Assert.AreEqual(2, b.Arrests.Count);
+            Assert.IsFalse(b.Airlocked("Ilya Petrov"));
+            Assert.IsTrue(b.Airlocked("Bo Renn"), "airlocked travelers stay airlocked");
             Assert.AreEqual(("Ilya Petrov", true), m.Kin(vesna, 9));
             Assert.AreEqual(("Ilya Petrov", true), b.Kin(vesna, 9), "the relative stays who it was");
+        }
+
+        /// <summary>Saves from before 13.11. carry the characters' copy of the market schedule ("events"); it is ignored now.</summary>
+        [Test]
+        public void OldSaveWithCharacterEvents_StillLoads()
+        {
+            var run = FreshRun();
+            run.day = 3;
+            run.memory.RememberArrest("Ilya Petrov", "Human", 2);
+            string json = JsonUtility.ToJson(SaveGame.Capture(run));
+            StringAssert.Contains("\"arrests\":", json);
+            json = json.Replace("\"arrests\":", "\"events\":[{\"day\":5,\"events\":[\"Market_Strike\"]}],\"arrests\":");
+            var back = FreshRun();
+            SaveGame.Apply(JsonUtility.FromJson<SaveData>(json), back, new SaveGame.Lookup(null, null, null));
+            Assert.AreEqual(3, back.day);
+            Assert.AreEqual(1, back.memory.Arrests.Count);
+            Assert.IsFalse(back.memory.Airlocked("Ilya Petrov"), "older saves only knew arrests");
         }
 
         [Test]

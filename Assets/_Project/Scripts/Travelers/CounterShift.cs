@@ -41,6 +41,8 @@ namespace GameOff.Travelers
         public event Action ShiftEnded;
         /// <summary>P35: true while a reported crate makes arresting this traveler right.</summary>
         public Func<TravelerData, bool> ArrestAllowed { get; set; }
+        /// <summary>P87: why the decision on this traveler has to wait (a character's question is still open), or null.</summary>
+        public Func<TravelerData, string> HoldDecision { get; set; }
         /// <summary>A new day's rules are in force (the pinboard changes its notes).</summary>
         public event Action DayBegun;
         /// <summary>The officer sat down for the first time today, just before the first traveler.</summary>
@@ -172,6 +174,8 @@ namespace GameOff.Travelers
             // Stamps are read from the traveler's papers when they are handed back (a stamp on a citation slip doesn't count)
             if (action != CounterAction.Arrest && action != CounterAction.Airlock) return;
             if (desk.IsBusy) return; // papers still on their way in
+            string hold = HoldDecision?.Invoke(_current);
+            if (hold != null) { station.ShowNotice(hold); return; }
             desk.Confiscate();
             if (action == CounterAction.Airlock) AudioManager.Play(s => s.airlockFire); // only when it really happens
             else AudioManager.Play(s => s.buttonArrest);
@@ -182,6 +186,8 @@ namespace GameOff.Travelers
         private string CheckReturn(IReadOnlyList<DocumentView> inDrawer, IReadOnlyList<DocumentView> onDesk)
         {
             if (_current == null || !HasTravelerPapers(inDrawer)) return null; // only slips: just send them away
+            string hold = HoldDecision?.Invoke(_current);
+            if (hold != null) return hold;
             if (HasTravelerPapers(onDesk)) return "Hand back all of the traveler's papers.";
             _returnedStamp = LatestStamp(inDrawer);
             if (_returnedStamp == null) return "Stamp the papers first: APPROVED or DENIED.";

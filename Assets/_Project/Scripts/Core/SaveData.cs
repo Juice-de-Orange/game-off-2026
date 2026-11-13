@@ -87,7 +87,7 @@ namespace GameOff.Core
             public List<Entrusted> entrusted = new List<Entrusted>();
             public List<Effect> effects = new List<Effect>();
             public List<Wanted> wanted = new List<Wanted>();
-            public List<DayEvents> events = new List<DayEvents>();
+            // (older saves also carry "events": a copy of the market schedule, which marketEvents keeps; JsonUtility skips it)
             public List<Arrest> arrests = new List<Arrest>();
             public List<Kin> kin = new List<Kin>();
         }
@@ -128,12 +128,14 @@ namespace GameOff.Core
             public int toDay;
         }
 
+        /// <summary>An ordinary traveler the player arrested, or sent out of the airlock (older saves: arrests only).</summary>
         [Serializable]
         public class Arrest
         {
             public string name;
             public string species;
             public int day;
+            public bool airlocked;
         }
 
         [Serializable]
