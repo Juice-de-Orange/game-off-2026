@@ -52,7 +52,7 @@
 | Barfenster | Z = 8 | X 10..18 | 0,9–2,4 m (Modul `SM_Station_Wall_Window_2x3`) |
 | Scheibe Schalter → Prüfkammer (mit Dokument-Durchreiche, `SM_Station_Window_Small_Slot`) | X = 0 | Z −11..−7 | 0,9–2,2 m |
 | Fenster Schalter → Hangar (2× `SM_Station_Wall_Window_2x3`) | Z = −12 | X −6..−2 | 0,9–2,4 m |
-| Bullauge Zimmer 103 (`SM_Station_Wall_Porthole_2x3`) | X = −20 | Z = 5 | Ø 0,6 m, Mitte 1,5 m |
+| Bullauge Zimmer 103 (`SM_Station_Wall_Porthole_Large_2x3`, P51) | X = −20 | Z = 5 | 1,2 m, Brüstung 0,9 m, Sturz 2,1 m (Mitte 1,5 m) |
 
 ## Am Schalter im Sitzen (Stand P40/P41)
 - **Blick:** Kamera 1,55 m hoch, 20° geneigt, mit A/D ±70° drehbar (`SeatedLookTuning`), die Neigung geht dabei auf waagerecht.

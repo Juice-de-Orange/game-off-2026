@@ -183,8 +183,8 @@ namespace GameOff.UI
                 var text = note;
                 today.Add(new ItemListView.Row
                 {
-                    Label = "RUMOUR · " + text, Value = "",
-                    OnClick = () => { _selected = null; wearButton.gameObject.SetActive(false); detailName.text = "Rumour"; detailTags.text = ""; detailDescription.text = text; detailValue.text = ""; },
+                    Label = "RUMOR · " + text, Value = "",
+                    OnClick = () => { _selected = null; wearButton.gameObject.SetActive(false); detailName.text = "Rumor"; detailTags.text = ""; detailDescription.text = text; detailValue.text = ""; },
                 });
             }
             var entries = economy.Wallet.Today;
