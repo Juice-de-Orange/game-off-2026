@@ -22,9 +22,9 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 **Priorität:** `Muss` / `Soll` / `Kann` wie in `DESIGN.md`. Muss-Pakete zuerst.
 
 ## Reihenfolge (Stand 13.11., max)
-Der Kern-Loop, alle 12 Story-Tage, die endlosen Tage und alle Enden sind gebaut (P01–P150, bis auf die Liste unten).
+Der Kern-Loop, alle 12 Story-Tage, die endlosen Tage und alle Enden sind gebaut (P01–P150, bis auf die Liste unten); P155 hat das ganze Spiel vor dem Feature-Freeze durchgeprüft.
 Bis zum Feature-Freeze (22.11.) und danach im Polish:
-1. **P154** Leistung zurück auf P57-Niveau (Messung 13.11.: 24–47 % langsamer, Download 33 MB); P114 geht darin auf
+1. **P154** Leistung zurück auf P57-Niveau (Messung 13.11.: 24–47 % langsamer, Download 34 MB); P114 geht darin auf
 2. **P151** Untertitel liegen übereinander · **P152** Bullauge ab Tag 3 halb verdeckt · **P153** Kiosk-Schild nach der Sperrstunde aus
 3. **P129** Spielmetriken: Code und Backend sind live, die Abnahme mit echten Zeilen auf Geoffrey steht aus
 4. **P123** Anspielen: nur noch die „braucht Max“-Punkte in den drei Testfragen (`questions/2026-11-09_*`, `2026-11-11_*`)
@@ -2141,7 +2141,7 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
 - Größe: M · Priorität: Soll · Status: offen · Zuständig: —
 - Braucht: — · Folgt auf: P57, P146
 - Ziel: Das Spiel läuft auf schwächeren Geräten wieder so flüssig wie nach P57.
-- Enthalten: Messung vom 13.11. (Release-Build ccaa2f7, `measure-webgl`, gleiche Maschine wie P57) liegt 24–47 % unter P57: CPU ×4 Menü 16,2 fps (P57: 25,0), Zimmer 33,2 (59,6), Schalter 26,9 (38,4), Pinnwand 23,4 (43,8), Stehen 28,9 (38,2); ohne Bremse Menü/Zimmer/Schalter 112/270/184 (150/353/212). Download 33 MB statt 14,7 MB. Ursachen suchen mit `GameOff/Audit Main Scene` und dem Unity-Profiler (Kandidaten seit P57: Abendgäste und Reisende als Skinned Meshes, Putzroboter, Wachen, Kassettendecks, Verkehr, Licht/Schatten, neue Modelle, Musik ohne Streaming), die größten zwei bis drei beheben, Download prüfen (Musik als Vorbis mit niedrigerer Qualität/Streaming, Texturen).
+- Enthalten: Messung vom 13.11. (Release-Build ccaa2f7, `measure-webgl`, gleiche Maschine wie P57) liegt 24–47 % unter P57: CPU ×4 Menü 16,2 fps (P57: 25,0), Zimmer 33,2 (59,6), Schalter 26,9 (38,4), Pinnwand 23,4 (43,8), Stehen 28,9 (38,2); ohne Bremse Menü/Zimmer/Schalter 112/270/184 (150/353/212). Download 33 MB statt 14,7 MB. Ursachen suchen mit `GameOff/Audit Main Scene` und dem Unity-Profiler (Kandidaten seit P57: Abendgäste und Reisende als Skinned Meshes, Putzroboter, Wachen, Kassettendecks, Verkehr, Licht/Schatten, neue Modelle, Musik ohne Streaming), die größten zwei bis drei beheben, Download prüfen (Musik als Vorbis mit niedrigerer Qualität/Streaming, Texturen). Aufteilung Build `752c8e3` (34,3 MB): Daten 27,2 MB (unkomprimiert 43,5 MB: Texturen 40 %, Sound 40 %, davon die fünf Kassetten-Songs ~14 MB), Code 6,9 MB (fast nur Unity). Wohl unnötig im Build, ca. 2 MB unkomprimiert: ProBuilder-Gittertexturen (GridBox_*), TMP-Schrift LiberationSans (SDF + TTF), URP-Debug-UI-Prefabs; Herkunft der Verweise prüfen.
 - Abnahme: Neue Messung mit `K9_CPU=4`: Schalter und Stehen ≥ 35 fps, Menü ≥ 22 fps; Download ≤ 25 MB oder Begründung; keine sichtbaren Verluste; Ergebnis-Tabelle im Paket.
 
 ### P155 — Gesamtprüfung: Bugs, Inkonsistenzen, toter Code

@@ -13,7 +13,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 | 05.11. | Erster WebGL-Testbuild auf itch.io (Draft) — danach jede Woche ein Build | ✅ Live seit 05.11. abends: https://kestrel9.maxlworks.com (P49), seitdem laufend aktualisiert · itch-Entwurf seit 09.11. (P19), neu hochgeladen wird erst am Ende |
 | 09.11. | Checkpoint: Trägt der Kern-Loop? Wenn nicht, jetzt umsteuern | ✅ Kern-Loop-Call 06./07.11., kein Umsteuern; danach Endlos-Tage, Figuren, Ticket |
 | 16.11. | Vertical Slice: ein Level komplett mit Ziel, Sieg/Niederlage, Menü, Neustart | ✅ vorzeitig (13.11.): 12 Story-Tage + endlose Tage, 7 Enden, Menü mit CONTINUE (Spielstand am Morgen), Abgabe-Build |
-| 22.11. | **Feature-Freeze**: keine neuen Features mehr, nur Inhalte & Polish | ⏳ |
+| 22.11. | **Feature-Freeze**: keine neuen Features mehr, nur Inhalte & Polish | ⏳ Gesamtprüfung vorab erledigt (P155, 13.11.); offen bis dahin: P154 Leistung, P151–P153 |
 | 28.11. | **Content-Freeze**: nur noch Bugfixes, Audio, Juice | ⏳ |
 | 29.–30.11. | Puffer: itch-Seite, finaler Build, Browser-Tests | ⏳ |
 | 30.11. | **Abgabe** auf itch.io (offizielle Deadline 01.12., 22:37 MEZ) | ⏳ |
@@ -87,10 +87,13 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 ### Stand 13.11. (max)
 - **Fertig seit dem 10.11.:** P128 Spielstand, P130–P150, u. a. Vorrat zu Hause, Kassetten mit Kassettendeck, Mauszeiger, Stempel ablegen, Hilfe auf [H],
   Sprechblase im Terminal-Stil mit Namen, Stimmen-System, sitzende Abendgäste, Wachen-Rundgang, Pause im Heimflug, Komplizin Ilsa Koval (Ende AIRLOCKED für alle),
-  Abgabe-Build ohne Dev-Werkzeuge (`GameOff/Build Release (itch)`). 425/425 EditMode-Tests, Economy Report überall ✓.
-- **Live:** `f7c50cc` (13.11.), Claude spielt neue Versionen selbst ein (`docs/DEPLOY.md`).
+  Abgabe-Build ohne Dev-Werkzeuge (`GameOff/Build Release (itch)`).
+- **P155 Gesamtprüfung (13.11.):** rund 100 Funde, alle Fehler behoben, 13 Entscheidungen von Max (`DECISIONS.md`), 139 ungenutzte Assets gelöscht.
+  468/468 EditMode-Tests, Validate Travelers ohne Befund, Economy Report überall ✓ (Strafe fürs erwischte Einstecken jetzt 35 CR).
+- **Live:** `752c8e3` (13.11., mit P155), Claude spielt neue Versionen selbst ein (`docs/DEPLOY.md`). Der reports-Container auf Geoffrey läuft noch mit dem alten `server.py` (Neubau von Hand, `DEPLOY.md` → „Bugreport“).
+- **Build-Größe:** 34,3 MB (Daten 27,2, Code 6,9, Loader 0,2). Davon Unity selbst etwa 9–10 MB (fast der ganze Code plus ca. 2,5 MB Inhalte); rund 2 MB Unity-Inhalte werden wohl nicht gebraucht (ProBuilder-Gittertexturen, TMP-Schrift LiberationSans, URP-Debug-UI) → Teil von P154.
 - **Wellen 1–3** im Browser automatisch durchgespielt (P147): 37 Punkte bestanden, Funde als P151–P153. Offen sind nur die „braucht Max“-Punkte in den drei Testfragen.
-- **Offen:** P151–P154 (P154 Leistung: 24–47 % unter P57, Download 33 MB), P129 Abnahme, P94 und zwei Kleinteile warten auf die Pipeline (M030), P19 am Schluss.
+- **Offen:** P151–P154 (P154 Leistung: 24–47 % unter P57, Download 34 MB), P129 Abnahme, P94 und zwei Kleinteile warten auf die Pipeline (M030), P19 am Schluss.
 - **GitHub-Issues offen:** #44 (Max bestätigt im Spiel), #45 und #16 (warten auf die Stimmen, P94).
 - **Max:** Repo bis 01.12., 22:37 MEZ öffentlich machen (vorher die Referenzbilder aus der Historie, siehe unten).
 
@@ -138,6 +141,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P155 Gesamtprüfung: rund 100 Funde behoben oder entschieden, toter Code und 139 Assets entfernt (max, 13.11.; live `752c8e3`)
 - [x] P146–P150: Abgabe-Build, Wellen 1–3 automatisch angespielt, Wachen-Rundgang, Pause im Heimflug, Komplizin Ilsa Koval (max, 13.11.; live `f7c50cc`)
 - [x] P141–P145 aus #44–#47: Kassette überspringen, Türspalt, Sprechblase im Terminal-Stil, Stimmen-System, Abendgäste sitzen (max, 12.11.)
 - [x] P131–P140 aus den Bug-Issues: Vorrat zu Hause, Kassetten, Abendgäste-Plätze, Schrank, Schlange, Roboter-Laut, Mauszeiger, Schreibtisch, Hilfe auf [H] (max, 12.11.)
