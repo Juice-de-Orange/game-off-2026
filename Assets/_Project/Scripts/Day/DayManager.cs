@@ -16,7 +16,7 @@ namespace GameOff.Day
     /// Evening (shift over, go to bed) → Night (fade, DayEnded) → next morning. After the written story days the days are
     /// drawn from a pool for this run's seed (P73) and the run goes on until an ending (ticket home, game over).
     /// Without a pool the placeholder end screen follows the last day. Uses CounterShift.BeginDay / ShiftEnded and SkyRig.SetDay without changing them.
-    /// Hooks for later packages: DayStarted (P31 board, P36 flicker), ShiftOver, DayEnded, RunFinished (P12).
+    /// Hooks: DayStarted (P31 board, P36 flicker), CurfewStarted (P109), DayEnded, RunFinished (P12).
     /// P10 plugs in through NightStep (the settlement runs after "SLEEP", before the fade) and LetterAddendum (family lines
     /// under the morning letter from day 2 on).
     /// P128: every morning starts with the save (SaveSlot/SaveGame); CONTINUE in the menu goes on with it, any ending deletes it.
@@ -104,6 +104,9 @@ namespace GameOff.Day
         public bool IsCurfew => CurfewAt(_phase, EveningSecondsLeft);
         /// <summary>P109: shops, bar, drone, vending machine and ticket machine trade only now (evening before 23:00).</summary>
         public bool TradingOpen => TradingOpenAt(_phase, EveningSecondsLeft);
+
+        /// <summary>P155: the curfew has struck since this shift ended (stays true through the night's settlement).</summary>
+        public bool CurfewStruck => _curfewAnnounced;
         /// <summary>P109: what a closed shop says after 23:00.</summary>
         public string CurfewClosedText => announcements != null && !string.IsNullOrWhiteSpace(announcements.curfewClosed)
             ? announcements.curfewClosed : Announcements.DefaultCurfewClosed;

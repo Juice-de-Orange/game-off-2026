@@ -49,6 +49,7 @@ namespace GameOff.Station
         private Guard[] _guards;
         private Transform _player;
         private bool _onDuty;
+        private int _shownDay; // P155: the day the guards were last placed
         private readonly System.Collections.Generic.HashSet<string> _warned = new System.Collections.Generic.HashSet<string>();
 
         private class Guard
@@ -124,10 +125,13 @@ namespace GameOff.Station
             _onDuty = duty;
             if (_guards == null && duty) Spawn();
             if (_guards == null) return;
+            // P155: a cancelled night (RETURN in the settlement) puts them back where they were; a new day starts them afresh.
+            bool newDay = duty && day.Day != _shownDay;
+            if (duty) _shownDay = day.Day;
             foreach (var guard in _guards)
             {
                 if (!duty) guard.Body.SetActive(false);
-                else Show(guard);
+                else Show(guard, newDay);
             }
         }
 
@@ -194,16 +198,20 @@ namespace GameOff.Station
         /// Every time he comes on duty (a new shift, or the evening again after a cancelled night, or a new run): at a random
         /// waypoint of his round, standing and looking around.
         /// </summary>
-        private void Show(Guard guard)
+        private void Show(Guard guard, bool newDay)
         {
             var route = guard.Route;
-            guard.Target = UnityEngine.Random.Range(0, route.points.Length);
-            Vector3 from = route.points[guard.Target];
-            guard.BaseYaw = YawAt(route, guard.Target, 0f);
-            guard.Transform.rotation = Quaternion.Euler(0f, guard.BaseYaw, 0f);
-            guard.Standing = true;
-            guard.StandTime = 0f;
-            guard.StandSeconds = PauseSeconds(tuning.pauseSeconds, UnityEngine.Random.value);
+            Vector3 from = guard.Transform.position;
+            if (newDay)
+            {
+                guard.Target = UnityEngine.Random.Range(0, route.points.Length);
+                from = route.points[guard.Target];
+                guard.BaseYaw = YawAt(route, guard.Target, 0f);
+                guard.Transform.rotation = Quaternion.Euler(0f, guard.BaseYaw, 0f);
+                guard.Standing = true;
+                guard.StandTime = 0f;
+                guard.StandSeconds = PauseSeconds(tuning.pauseSeconds, UnityEngine.Random.value);
+            }
             guard.Talking = false;
             guard.GivingWay = false;
             if (!NavMesh.SamplePosition(from, out var hit, 1f, NavMesh.AllAreas))
@@ -220,12 +228,13 @@ namespace GameOff.Station
                 return;
             }
             guard.State = 0; // switched on again, the Animator starts over in its default state
-            if (guard.Animator != null && guard.Animator.isActiveAndEnabled)
+            if (newDay && guard.Animator != null && guard.Animator.isActiveAndEnabled)
             {
                 guard.Animator.Play(Idle, 0, UnityEngine.Random.value); // out of step with the other one
                 guard.State = Idle;
             }
-            Stand(guard);
+            if (guard.Standing) Stand(guard);
+            else Go(guard);
         }
 
         private void Tick(Guard guard, float dt)

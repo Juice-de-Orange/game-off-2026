@@ -45,7 +45,6 @@ namespace GameOff.UI
         private bool _open;
         private bool _returned;
         /// <summary>P109: 23:00 has struck this evening (DayManager.IsCurfew is false in the night phase this window runs in).</summary>
-        private bool _curfewTonight;
         private readonly System.Collections.Generic.List<string> _customsLines = new System.Collections.Generic.List<string>();
 
         private static PlayerEconomy Economy => PlayerEconomy.Instance;
@@ -83,7 +82,6 @@ namespace GameOff.UI
                 dayManager.LetterAddendum = () => Economy != null ? Economy.MorningReport() : "";
                 dayManager.FamilyInTrouble = () => Economy != null && Economy.Household != null && Economy.Household.AnySick;
                 dayManager.LetterOverride = () => Economy != null ? Economy.LossLetter() : null;
-                dayManager.CurfewStarted += OnCurfew;
             }
             if (shift != null)
             {
@@ -100,7 +98,6 @@ namespace GameOff.UI
                 dayManager.LetterAddendum = null;
                 dayManager.FamilyInTrouble = null;
                 dayManager.LetterOverride = null;
-                dayManager.CurfewStarted -= OnCurfew;
             }
             if (shift != null)
             {
@@ -112,10 +109,7 @@ namespace GameOff.UI
         private void OnDayBegun()
         {
             _travelersToday = _correctToday = 0;
-            _curfewTonight = false;
         }
-
-        private void OnCurfew(int day) => _curfewTonight = true;
 
         // P70: only correctly decided travelers are paid (Martin, 06.11.); wrong ones bring nothing.
         private void OnDecision(TravelerData traveler, Verdict chosen, Judgement judgement)
@@ -273,7 +267,7 @@ namespace GameOff.UI
             if (Bribe > 0) sb.AppendLine(Line("Envelope from the bar", Bribe));
             sb.AppendLine(Line("Rent  ·  room 103", -t.rent));
             foreach (var line in _customsLines) sb.AppendLine($"\n<color=#E2463F>{line}</color>");
-            if (!CanPayRent) sb.AppendLine(RentWarning(_curfewTonight));
+            if (!CanPayRent) sb.AppendLine(RentWarning(dayManager != null && dayManager.CurfewStruck));
             income.text = sb.ToString();
 
             int available = AfterFixed - ChosenCosts();

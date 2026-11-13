@@ -215,17 +215,7 @@ namespace GameOff.Characters
         public bool StoryFinished(Outcome last, int playedThrough) => last == Outcome.Dead || playedThrough >= storyEndsOnDay;
 
         /// <summary>The line for a story still open: their own, else "You never learned what became of Nell Varga."</summary>
-        public string OpenLine => !string.IsNullOrWhiteSpace(summaryOpen) ? summaryOpen : $"You never learned what became of {TitleCase(displayName)}.";
-
-        /// <summary>"NELL VARGA" → "Nell Varga".</summary>
-        public static string TitleCase(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name)) return "";
-            var words = name.Trim().Split(' ');
-            for (int i = 0; i < words.Length; i++)
-                if (words[i].Length > 0) words[i] = words[i].Substring(0, 1).ToUpperInvariant() + words[i].Substring(1).ToLowerInvariant();
-            return string.Join(" ", words);
-        }
+        public string OpenLine => !string.IsNullOrWhiteSpace(summaryOpen) ? summaryOpen : $"You never learned what became of {TextMatch.TitleCase(displayName?.Trim())}.";
 
         /// <summary>
         /// The name on a wanted entry that appearance <paramref name="fromAppearance"/> puts up for fromDay–toDay: the papers name of their

@@ -50,6 +50,7 @@ namespace GameOff.Characters
         private readonly List<(int credits, string note, string announcement)> _atShiftStart = new List<(int, string, string)>();
         /// <summary>P87: this character's question is still to come; their papers can't be decided until it is answered.</summary>
         private TravelerData _asking;
+        private (GameOff.Counter.CounterStation station, Appearance owner) _askBlock; // P155: released if the component goes away mid-question
 
         public CharacterMemory Memory { get; private set; } = new CharacterMemory();
 
@@ -87,6 +88,8 @@ namespace GameOff.Characters
         {
             if (Instance == this) Instance = null;
             _asking = null; // the question coroutine stops with the component
+            if (_askBlock.station != null) _askBlock.station.SetInputBlocked(_askBlock.owner, false);
+            _askBlock = default;
             if (shift != null)
             {
                 if (shift.PlanDay == Plan) shift.PlanDay = null;
@@ -220,9 +223,8 @@ namespace GameOff.Characters
 
         private void BookAtShiftStart(bool announce)
         {
-            var due = new List<(int credits, string note, string announcement)>(_atShiftStart);
+            foreach (var (credits, note, announcement) in _atShiftStart) Book(credits, note, announcement, announce);
             _atShiftStart.Clear();
-            foreach (var (credits, note, announcement) in due) Book(credits, note, announcement, announce);
         }
 
         /// <summary>P77: a returning character collects what they left: kept → deposit paid (at the shift start), gone → they count as betrayed.</summary>
@@ -272,16 +274,33 @@ namespace GameOff.Characters
                 yield break;
             }
             if (station != null) station.SetInputBlocked(a, true);
-            void Answer(bool accepted)
+            _askBlock = (station, a);
+            bool answered = false;
+            void Release()
             {
                 if (station != null) station.SetInputBlocked(a, false);
+                if (_askBlock.owner == a) _askBlock = default;
                 if (_asking == traveler) _asking = null; // now the papers can be decided
+            }
+            void Answer(bool accepted)
+            {
+                if (answered) return;
+                answered = true;
+                Release();
                 if (accepted) Memory.SetFlag(a.flag);
                 Debug.Log($"[Characters] {traveler.DisplayName}: \"{a.questionTitle}\" → {(accepted ? "accepted" : "declined")}");
                 if (presenter != null) presenter.SayLine(accepted ? a.acceptLine : a.declineLine);
             }
-            dayManager.UI.ShowDialog(a.questionTitle, a.questionBody, a.acceptLabel, () => Answer(true), null, () => Answer(false),
-                cancelLabel: a.declineLabel);
+            // P155: another dialog may replace this one without calling back; the question then comes back once the way is clear,
+            // and the counter is never left blocked by an answer that can't come any more.
+            while (!answered && shift.Current == traveler)
+            {
+                if (!dayManager.UI.IsDialogOpen && Time.timeScale > 0f)
+                    dayManager.UI.ShowDialog(a.questionTitle, a.questionBody, a.acceptLabel, () => Answer(true), null, () => Answer(false),
+                        cancelLabel: a.declineLabel);
+                yield return null;
+            }
+            if (!answered) Release();
         }
 
         private IEnumerator EndRun(TravelerData traveler, Appearance a)
@@ -310,8 +329,7 @@ namespace GameOff.Characters
         public static string FirstName(string fullName)
         {
             if (string.IsNullOrWhiteSpace(fullName)) return "";
-            string first = fullName.Trim().Split(' ')[0];
-            return first.Substring(0, 1).ToUpperInvariant() + first.Substring(1).ToLowerInvariant();
+            return TextMatch.TitleCase(fullName.Trim().Split(' ')[0]);
         }
 
         /// <summary>The newsletter under the morning letter: one line per character whose story is over (NewsletterLines).</summary>
