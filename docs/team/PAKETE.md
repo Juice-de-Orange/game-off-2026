@@ -1915,7 +1915,7 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
 - Ergebnis (martin, 11.11., Agent): Speichert zu Beginn jedes Morgens (`DayManager.BeginDay`, vor `DayStarted`) als JSON in `PlayerPrefs` (`kestrel9.run`, `SaveGame`/`SaveData`/`SaveSlot`): Tag, Startwert, Geld, Inventar, Schrank, Händler-Extras, Familie inkl. Tote, Strafpunkte, Moral, Ticket, Barkeeper-Schmollen, Briefzeilen, Markt-Ereignisse, Stationslage, Figuren-Gedächtnis. Menü: „CONTINUE · DAY n“ nur mit Stand, START über einem Stand fragt „NEW RUN?“. Jedes Ende löscht den Stand. Der geladene Morgen wird neu gespielt (welche Figuren kommen, kann abweichen). `tools/measure-webgl.mjs` klickt nach START „NEW RUN“. 6 Tests. **P131 muss den Vorrat zu Hause mitspeichern.** Nicht angespielt.
 
 ### P129 — Spielmetriken für die Playtests
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 10.11.) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig bis auf den EditMode-Testlauf (max, 13.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P84
 - Ziel: Wir sehen, wie Tester spielen: wo sie aufhören, welche Reisenden und Regeln sie falsch entscheiden, wie lange sie brauchen, wie das Geld läuft und wie flüssig das Spiel im Browser ist.
 - Enthalten: Anonyme Ereignisse aus dem Spiel (Sitzung, Tagesbeginn/-ende mit Geld und Familie, jede Entscheidung am Schalter mit Dauer, Schichtende, Ende des Laufs, Puls alle 30 s mit Phase und FPS, Fehlermeldungen) an `POST /api/metrics` im Bugreport-Backend, das sie als JSONL auf Geoffrey ablegt (90 Tage). Auswertung mit `tools/metrics_report.py`. Keine Kennung über die Sitzung hinaus, nichts im Browser gespeichert, keine IP, im Editor aus.
@@ -1924,6 +1924,7 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
 - **Achtung martin (10.11.):** Auf Max' Wunsch ungetestet nach `main` gemergt (`a6f78d9`). Zeigt Unity Fehler in `Scripts/Metrics/`, `BrowserBridge.cs` oder `PlayMetricsTests.cs`, kommen sie von hier; Max prüft es als Nächstes in Unity.
 - Zwischenstand (10.11., Branch `p129-metrics`): Code fertig, ohne Unity geschrieben (Maschine ohne Editor). Geprüft: Backend-Tests 15/15, C# mit .NET 8 gegen Unity-Stubs kompiliert, Logik der EditMode-Tests grün, ein Batch aus dem C#-Code läuft durch den echten Server-Parser, `metrics_report.py` mit Probedaten. Offen: in Unity öffnen, EditMode-Tests, Konsole, nach `main` mergen; auf Geoffrey Ordner anlegen und Backend + Spiel deployen (`DEPLOY.md`, Spielmetriken). Einzige Änderung an fremdem Code: `DayManager.EndingTitle`. Nachtrag: Die Seite (beide WebGL-Vorlagen) schickt beim Öffnen ein `visit` mit Herkunft (`?src=`, Referrer-Host); das Spiel übernimmt dessen Sitzungskennung. Der Report zeigt Besuche, Spieler und Spielzeit je Tag und je Herkunft.
 
+- Ergebnis (max, 13.11.): Läuft im Live-Build (`752c8e3`): bis 12.11. 25 Sitzungen, 641 Ereignisse aller Typen (visit, session, day_start, traveler, shift_end, day_end, run_end, beat), `tools/metrics_report.py` zeigt Besuche/Spieler/Spielzeit je Tag und Herkunft, Abbrüche, Fehlerquote je Reisendem, FPS. Backend-Tests grün. **Offen:** `PlayMetricsTests` im Test Runner einmal laufen lassen (der Code kompiliert in Unity, die Tests selbst hat niemand bestätigt).
 ### P130 — Pinnwand zeigt nur den heutigen Tag
 - Größe: S · Priorität: Soll · Status: fertig (martin, 11.11.) · Zuständig: martin
 - Braucht: — · Folgt auf: P33, P41

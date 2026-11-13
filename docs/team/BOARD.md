@@ -93,7 +93,7 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - **Live:** `752c8e3` (13.11., mit P155), Claude spielt neue Versionen selbst ein (`docs/DEPLOY.md`). Der reports-Container auf Geoffrey läuft noch mit dem alten `server.py` (Neubau von Hand, `DEPLOY.md` → „Bugreport“).
 - **Build-Größe:** 34,3 MB (Daten 27,2, Code 6,9, Loader 0,2). Davon Unity selbst etwa 9–10 MB (fast der ganze Code plus ca. 2,5 MB Inhalte); rund 2 MB Unity-Inhalte werden wohl nicht gebraucht (ProBuilder-Gittertexturen, TMP-Schrift LiberationSans, URP-Debug-UI) → Teil von P154.
 - **Wellen 1–3** im Browser automatisch durchgespielt (P147): 37 Punkte bestanden, Funde als P151–P153. Offen sind nur die „braucht Max“-Punkte in den drei Testfragen.
-- **Offen:** P151–P154 (P154 Leistung: 24–47 % unter P57, Download 34 MB), P129 Abnahme, P94 und zwei Kleinteile warten auf die Pipeline (M030), P19 am Schluss.
+- **Offen:** P151–P154 (P154 Leistung: 24–47 % unter P57, Download 34 MB), P129 nur noch der EditMode-Testlauf, P94 und zwei Kleinteile warten auf die Pipeline (M030), P19 am Schluss.
 - **GitHub-Issues offen:** #44 (Max bestätigt im Spiel), #45 und #16 (warten auf die Stimmen, P94).
 - **Max:** Repo bis 01.12., 22:37 MEZ öffentlich machen (vorher die Referenzbilder aus der Historie, siehe unten).
 
@@ -141,6 +141,7 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P129 Spielmetriken: Besuche, Herkunft, Spielzeit, Entscheidungen, FPS, Fehler; Auswertung `tools/metrics_report.py` (max, 10.–13.11.; Backend live seit 10.11.)
 - [x] P155 Gesamtprüfung: rund 100 Funde behoben oder entschieden, toter Code und 139 Assets entfernt (max, 13.11.; live `752c8e3`)
 - [x] P146–P150: Abgabe-Build, Wellen 1–3 automatisch angespielt, Wachen-Rundgang, Pause im Heimflug, Komplizin Ilsa Koval (max, 13.11.; live `f7c50cc`)
 - [x] P141–P145 aus #44–#47: Kassette überspringen, Türspalt, Sprechblase im Terminal-Stil, Stimmen-System, Abendgäste sitzen (max, 12.11.)
