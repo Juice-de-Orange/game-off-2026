@@ -30,7 +30,7 @@ namespace GameOff.UI
             ("Click a stamp, then a paper", "Stamp it"),
             ("Click a stamp, then the desk", "Set it down there"),
             ("Drag", "Move papers, notes and the envelope"),
-            ("Drag papers onto the drawer, then click it", "Hand them back"),
+            ("Drag to the drawer, click it", "Hand papers back"),
             ("Click the CRT", "Terminal"),
             ("[R]", "Hold up all papers"),
             ("[A] [D] / left / right", "Look along the desk"),
