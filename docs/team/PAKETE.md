@@ -21,14 +21,15 @@ nimmt sich ein offenes Paket und baut es fertig. Es gibt keine festen Zuständig
 **Größen:** `S` ≈ ein halber Tag · `M` ≈ 1–2 Tage · `L` ≈ 3–4 Tage. Ein Paket größer als `L` wird aufgeteilt.
 **Priorität:** `Muss` / `Soll` / `Kann` wie in `DESIGN.md`. Muss-Pakete zuerst.
 
-## Reihenfolge (Stand 05.11. abends, max)
-Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächste offene Muss-Paket.
-1. ~~Kern-Loop-Call~~ hat stattgefunden (martin, 06.11.); P58 ist entschieden
-2. **P09** Tagesablauf abnehmen (max, mit Kontroll-Gameplay; martin hat im Dev-Modus getestet)
-3. **P08** Entscheidungen & Moral → **P10** Geld, Familie & Abrechnung
-4. **P15** Inhalte für 3 Tage inkl. **The Shifter** (auch echte Antworten der Reisenden) → **P12** Enden
-5. **P11** Kiosk, **P13** Heimschicken, **P64** Schwarzmarkt kauft nur Schmuggelware; **P19** itch-Upload ist auf später verschoben (martin, 06.11.)
-6. Danach Soll-Pakete nach Zeit: P50 Türschilder, P14 Reisende laufen, P16, P25–P36; P53 Wohnmodul erst nach Entwurf und Absprache
+## Reihenfolge (Stand 13.11., max)
+Der Kern-Loop, alle 12 Story-Tage, die endlosen Tage und alle Enden sind gebaut (P01–P150, bis auf die Liste unten).
+Bis zum Feature-Freeze (22.11.) und danach im Polish:
+1. **P154** Leistung zurück auf P57-Niveau (Messung 13.11.: 24–47 % langsamer, Download 33 MB); P114 geht darin auf
+2. **P151** Untertitel liegen übereinander · **P152** Bullauge ab Tag 3 halb verdeckt · **P153** Kiosk-Schild nach der Sperrstunde aus
+3. **P129** Spielmetriken: Code und Backend sind live, die Abnahme mit echten Zeilen auf Geoffrey steht aus
+4. **P123** Anspielen: nur noch die „braucht Max“-Punkte in den drei Testfragen (`questions/2026-11-09_*`, `2026-11-11_*`)
+5. Wartet auf Lieferungen (`ASSET-REQUESTS.md`, M030): **P94** Stimmen (50 Laute, 10 je Spezies), Sprechblasen-Rahmen und -Spitze (P143), Kassetten-Spulgeräusch (P141). Die Kassetten-Songs und der Sitz-Clip sind geliefert und eingebaut
+6. Zum Schluss: **P19** itch-Upload (Abgabe-Build `GameOff/Build Release (itch)`, Checkliste in `docs/DEPLOY.md`), Repo öffentlich bis 01.12., 22:37 MEZ
 
 ## Vorlage
 ```
@@ -45,8 +46,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 
 ## Pakete
 
-> **Entwurf (31.10.)** — erste Liste von Claude aus `DESIGN.md` abgeleitet. Am 02.11. nach dem Theme gemeinsam
-> prüfen, anpassen und freigeben. Erst danach werden Pakete genommen (außer P01 und P02).
+> Die erste Liste (P01–P19) entstand am 31.10. aus `DESIGN.md` und wurde am 02.11. freigegeben; alle weiteren kamen unterwegs dazu.
 
 ### P01 — Projekt-Setup
 - Größe: S · Priorität: Muss · Status: fertig (max, 02.11.; abgeschlossen von martin, 05.11.)

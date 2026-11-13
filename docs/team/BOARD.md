@@ -10,9 +10,9 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 | 01.11. | Theme kommt ca. **22:37 MEZ** → jeder für sich Gedanken, Repo öffentlich | ✅ Theme "Shift" · Repo noch privat (Call) |
 | 02.11. | Abend-Call: Theme ins Konzept einweben, `DESIGN.md` finalisieren, Unity-Projekt anlegen | 🔶 Projekt + Station 2.0 stehen; Call offen |
 | 03.11. | Prototyp: Kern-Mechanik spielbar (graue Klötze reichen) | ✅ 04.11.: Schicht am Schalter spielbar (Dokumente, Stempel, Regeln, Verwarnzettel); Geld/Tage fehlen noch (P08–P10) |
-| 05.11. | Erster WebGL-Testbuild auf itch.io (Draft) — danach jede Woche ein Build | 🔶 Build läuft lokal (18 MB); 05.11. martin: Build mit Menü (20 MB) in Chrome getestet ✔; Upload P19 offen · Live seit 05.11. abends: https://kestrel9.maxlworks.com (P49); itch-Entwurf (P19) noch offen |
-| 09.11. | Checkpoint: Trägt der Kern-Loop? Wenn nicht, jetzt umsteuern | ⏳ |
-| 16.11. | Vertical Slice: ein Level komplett mit Ziel, Sieg/Niederlage, Menü, Neustart | ⏳ |
+| 05.11. | Erster WebGL-Testbuild auf itch.io (Draft) — danach jede Woche ein Build | ✅ Live seit 05.11. abends: https://kestrel9.maxlworks.com (P49), seitdem laufend aktualisiert · itch-Entwurf seit 09.11. (P19), neu hochgeladen wird erst am Ende |
+| 09.11. | Checkpoint: Trägt der Kern-Loop? Wenn nicht, jetzt umsteuern | ✅ Kern-Loop-Call 06./07.11., kein Umsteuern; danach Endlos-Tage, Figuren, Ticket |
+| 16.11. | Vertical Slice: ein Level komplett mit Ziel, Sieg/Niederlage, Menü, Neustart | ✅ vorzeitig (13.11.): 12 Story-Tage + endlose Tage, 7 Enden, Menü mit CONTINUE (Spielstand am Morgen), Abgabe-Build |
 | 22.11. | **Feature-Freeze**: keine neuen Features mehr, nur Inhalte & Polish | ⏳ |
 | 28.11. | **Content-Freeze**: nur noch Bugfixes, Audio, Juice | ⏳ |
 | 29.–30.11. | Puffer: itch-Seite, finaler Build, Browser-Tests | ⏳ |
@@ -84,6 +84,16 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 - **P48** fertig: Das Menü liegt in Main (`FrontEnd`), `Menu.unity` gibt es nicht mehr; Start fliegt zum Bullauge von Zimmer 103.
 - **P106, P14-Rest, P35, P26-Rest** fertig und **live: `c9d6da7`** (09.11. nachmittags). Im Browser gesehen: Schott, Kabine, Abflug, Morgen-Gruppe, Schalter. Dazu mit einer lokalen Testversion: Kiste melden, Verhaften, Bank-Gedanke, Albtraum-Zeile, Icons im Kiosk. Nicht im Browser gesehen: Abendgäste (brauchen Durchgelassene), Titel des Zettels. Neu: Icons in Inventar, Handel und Schichtbericht; die Kiste hat ein Dialogfeld mit drei Knöpfen. Offen bleiben: Anspielen von Welle 1, 2 und der Hangar-Welle (Max), P94 (wartet auf Laute), P51 (Bullauge bestellt), P48 (Polish-Woche), #17 prüfen
 
+### Stand 13.11. (max)
+- **Fertig seit dem 10.11.:** P128 Spielstand, P130–P150, u. a. Vorrat zu Hause, Kassetten mit Kassettendeck, Mauszeiger, Stempel ablegen, Hilfe auf [H],
+  Sprechblase im Terminal-Stil mit Namen, Stimmen-System, sitzende Abendgäste, Wachen-Rundgang, Pause im Heimflug, Komplizin Ilsa Koval (Ende AIRLOCKED für alle),
+  Abgabe-Build ohne Dev-Werkzeuge (`GameOff/Build Release (itch)`). 425/425 EditMode-Tests, Economy Report überall ✓.
+- **Live:** `f7c50cc` (13.11.), Claude spielt neue Versionen selbst ein (`docs/DEPLOY.md`).
+- **Wellen 1–3** im Browser automatisch durchgespielt (P147): 37 Punkte bestanden, Funde als P151–P153. Offen sind nur die „braucht Max“-Punkte in den drei Testfragen.
+- **Offen:** P151–P154 (P154 Leistung: 24–47 % unter P57, Download 33 MB), P129 Abnahme, P94 und zwei Kleinteile warten auf die Pipeline (M030), P19 am Schluss.
+- **GitHub-Issues offen:** #44 (Max bestätigt im Spiel), #45 und #16 (warten auf die Stimmen, P94).
+- **Max:** Repo bis 01.12., 22:37 MEZ öffentlich machen (vorher die Referenzbilder aus der Historie, siehe unten).
+
 - **#17:** Geprüft: keine Überschneidung, der Streifen ist die Mittelrippe von `SM_Hangar_Wall_4x4` (dunkle Texturspalte). Asset steht auf `rework`, Issue bleibt offen, bis es geliefert ist.
 
 ## Aufgabenteilung
@@ -107,7 +117,7 @@ die noch kein Paket sind. Bei Zeitnot wird von unten gestrichen.
 - [x] Dev-Werkzeuge: bleiben als Schalter in den Optionen, im Build standardmäßig aus (Max, 09.11.)
 
 ### Soll (macht es gut)
-- [ ] Durchsagen: synthetische Murmel-Laute statt echter Stimmen (Max, 09.11.), bestellt als `SFX_PA_Murmur_01–06`; Einbau, wenn geliefert (P115)
+- [x] Durchsagen: synthetische Murmel-Laute statt echter Stimmen (Max, 09.11.), geliefert und eingebaut (P115)
 - [ ] 
 
 ### Kann (wenn Zeit bleibt)
@@ -128,6 +138,12 @@ Wer einen anfängt, trägt sich unter „Wer“ ein.
 | B02 | Beim **steilen Blick nach unten** (z. B. aufs Bett) erscheint kein „[E]“-Hinweis | Vor ein Interactable unterhalb der Augenhöhe stellen und draufschauen. Ursache: der Interaktions-Strahl traf den eigenen Spieler (`PF_Player`) zuerst | martin, 05.11. | martin | behoben (martin, 05.11.): `PlayerInteractor` überspringt Treffer auf den eigenen Spieler |
 
 ## Erledigt
+- [x] P146–P150: Abgabe-Build, Wellen 1–3 automatisch angespielt, Wachen-Rundgang, Pause im Heimflug, Komplizin Ilsa Koval (max, 13.11.; live `f7c50cc`)
+- [x] P141–P145 aus #44–#47: Kassette überspringen, Türspalt, Sprechblase im Terminal-Stil, Stimmen-System, Abendgäste sitzen (max, 12.11.)
+- [x] P131–P140 aus den Bug-Issues: Vorrat zu Hause, Kassetten, Abendgäste-Plätze, Schrank, Schlange, Roboter-Laut, Mauszeiger, Schreibtisch, Hilfe auf [H] (max, 12.11.)
+- [x] P128 Spielstand am Morgen + CONTINUE, P130 Pinnwand nur heute (10.11.)
+- [x] P48 Menü in Main, P106 Heim-Shuttle angedockt, P112/P113 Terminal nur Pass + Moral spürbar, P115–P126 (max, 09.–10.11.)
+- [x] Nachtläufe 08./09.11.: P11, P12, P16, P50, P62, P63, P69, P77, P80, P83, P95, P97–P105, P107, P108 (max) · P85, P87, P28, P29, P32–P34, P109–P111 (martin)
 - [x] P91 Reisende gehen durch die Türen, Gitter bei Verhaftung und Schleuse (max, 08.11.)
 - [x] P15 Inhalte: alle 12 Story-Tage mit normalen Reisenden, Regeln und Briefen (max, 08.11.; Anspielen steht aus)
 - [x] P92 Diner außer Betrieb, P93 Barkeeper sagt seinen Wunsch, P96 Händler atmen (max, 08.11.)

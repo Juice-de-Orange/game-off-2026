@@ -105,7 +105,7 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 - **Wellen 1–3 automatisch im Browser geprüft (P147):** Funde P151–P153; was Gefühl braucht (5 Minuten Abend, Klang, Kamerafahrt) steht in den Fragen als „braucht Max“.
 - **Terminal kennt die Tischposition als Konstante** (Tisch 1,3 m neben dem Schalter): wird der Tisch im Stations-Builder verschoben, `CounterTerminalBuilder` mitziehen.
 - **Abend: 5 echte Minuten** bis zur Sperrstunde – ob das zum Handeln, Fernrohr und Barbesuch reicht, beim Anspielen prüfen.
-- **Menü-Bildrate (P48, P114):** Im Menü läuft keine Occlusion, Innenräume sind deshalb aus; gemessen wurde das noch nicht sauber (PC war ausgelastet), Abnahme von P114 offen.
+- **Menü-Bildrate (P48, P114):** Im Menü läuft keine Occlusion, Innenräume sind deshalb aus. Gemessen am 13.11.: Menü CPU ×4 16,2 fps; die Abnahme von P114 geht in P154 auf.
 - **Hangar-Streifen (#17):** Die Rippen auf der Rückseite der Außenhülle lagen in der Ebene der Innenwand; die Hangar-Hülle steht seit `e22b022` 0,1 m weiter außen. Max bestätigt im Spiel (P119).
 - **Spielstand (P128) nur am Morgen:** Wer mitten im Tag neu lädt, spielt den Morgen neu; welche Figuren dann kommen, kann abweichen (Tagesplan ist zufällig). Neue Zustände, die über Nacht bleiben, müssen in `SaveGame` aufgenommen werden (Vorrat zu Hause und Kassetten sind drin).
 - **Hilfe-Overlay verdrahtet Objekte anderer Builder:** Nach einem einzelnen Lauf von Build Documents, Build Economy oder Build Rest Spots auch `Build Help Overlay into Main` laufen lassen (Rebuild All macht das).

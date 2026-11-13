@@ -1,11 +1,16 @@
 # Game Design
 
-> **Status: in Arbeit (Stand 08.11.)** — Konzept von Max & Martin, von Claude ausgearbeitet. Punkte mit ❓ sind noch offen,
-> viele davon klärt der Kern-Loop-Call (`docs/team/questions/2026-11-05_martin-an-max_kern-loop.md`).
+> **Status: gebaut, Polish läuft (Stand 13.11.)** — Konzept von Max & Martin, von Claude ausgearbeitet. Alles unter „Muss“ ist gebaut;
+> was offen ist, steht als Paket in `docs/team/PAKETE.md`, wie die Mechaniken zusammenspielen in `docs/MECHANICS.md`. Punkte mit ❓ sind noch offen.
 > Änderungen am Kern nur nach Absprache (Entscheidung zusätzlich in `DECISIONS.md` loggen).
 
 ## Theme
-**Shift** (Bekanntgabe 01.11.). Grundidee: die Arbeitsschicht. ❓ Die Ausformulierung und ob ein Politik-Umschwung oder der Zerfall der Station fest dazukommt, klärt der Kern-Loop-Call (Thema 1).
+**Shift** (Bekanntgabe 01.11.). Im Spiel steckt das Theme in drei Ebenen:
+- **die Arbeitsschicht** am Zollschalter, Tag für Tag mit neuen Regeln;
+- **The Shifter**, der jeden Tag mit neuer Identität kommt und am Ende die Seiten wechselt (Spion, Ende AIRLOCKED);
+- **die Station verschiebt sich:** Die Sonne steht jeden Tag anders, Lichter flackern nach der Lage der Station (P36), der Markt schwankt mit den Ereignissen (P68).
+
+❓ Ein bis zwei Sätze dazu für die itch-Seite stehen noch aus (P19).
 "Theme Interpretation" ist eine eigene Bewertungskategorie im Jam → das Theme muss sichtbar ins Spiel.
 
 ## Pitch
@@ -64,28 +69,31 @@ erscheint erst als Glyphen und wird kurz „entschlüsselt“.
 **The Shifter:** wiederkehrender Reisender, jeden Tag mit neuer Identität (Name, Herkunft, Detail), erkennbar an einer Kleinigkeit.
 Tag 1–2 harmloser, charmanter Grenzgänger. Tag 3 steht er auf der Fahndungsliste: „auf Sicht terminieren“, ohne Begründung. Hast du ihm
 geholfen, steckt er dir etwas für die Familie zu. Gehorchen (Schleuse), verhaften oder heimlich durchlassen färbt Briefe und Ende.
+An Tag 6 kommt die Frage „dem Widerstand beitreten?“ (JOIN/REFUSE): vom Shifter selbst, oder von seiner Komplizin **Ilsa Koval**, wenn er an Tag 3
+durch die Schleuse ging oder verhaftet wurde (P150). Wer beitritt, erlebt an Tag 7 die Enthüllung: Er war ein Spion, Ende **AIRLOCKED** (P87).
 
 ## Station (kompakt, kurze Laufwege — Grundriss Stand 2.0: `docs/STATION.md`, Bild: `docs/station/bauplan.html`)
 | Ort | Funktion im Spiel |
 |---|---|
-| **Zollschalter + Prüfkammer** | Arbeitsplatz; Reisende stehen in der Kammer, die zugleich Luftschleuse ist (Außenschott klappt ins All). Kein sichtbarer Vorgesetzter: Lautsprecher-Durchsagen, Memos, Pinnwand |
+| **Zollschalter + Prüfkammer** | Arbeitsplatz; Reisende stehen in der Kammer, die zugleich Luftschleuse ist (Außenschott klappt ins All). Kein sichtbarer Vorgesetzter: Lautsprecher-Durchsagen, Memos, Pinnwand. Terminal (Abfrage des Passes, P112), Kassettendeck (P132) |
 | **Hangar** (36 × 28 × 16 m) | Morgens landet ein Schiff durch die Energiebarriere, tagsüber stehen 2–4 auf festen Plätzen, jeden Tag andere (P107); das Heim-Shuttle dockt außen am Hangar an und ist innen begehbar (P106); Frachtdrohne für Pakete nach Hause; durchsuchbare Kisten |
 | **Transithalle** | Knotenpunkt mit Anzeigesäule (Live-Ankunftsplan), Bänken, Getränkeautomat |
 | **Aussichtsplattform** | Halbrunde Glasfront: Blick auf den Heimatplaneten (Stadtlichter = Zustand der Familie), Sonne, Gasriese; Münzfernrohr |
 | **Bar "The Last Orbit"** | Barkeeper (Hocker = Gespräch; kauft nichts, tauscht Wünsche gegen Gerüchte, P65; Bestechungszettel, P66), Schwarzmarkt unter der Theke, Fensterband |
 | **Diner** | Außer Betrieb (P92): dunkel, Spinnweben, kann später wieder belebt werden |
-| **Kiosk** | Waren und Gadgets (UV-Lampe, Scanner); das Rollgitter ist unten, solange geschlossen |
-| **Motel** | Dein Zimmer 103 (Bett, Brief, Spind mit Familienfoto, Bullauge = Abendblick nach Hause); 101/102 verriegelt |
+| **Kiosk** | Waren, Gadgets (UV-Lampe, Scanner) und Kassetten; das Rollgitter ist unten, solange geschlossen (auch nach der Sperrstunde um 23 Uhr) |
+| **Motel** | Dein Zimmer 103 (Bett, Brief, Spind mit Familienfoto, Kassettendeck, Bullauge = Abendblick nach Hause); 101/102 verriegelt |
+| **Überall** | Zwei Wachen gehen Runden (Halle/Motelgang und Hangar), mit [E] sagen sie eine Zeile (P148). Abends stehen und sitzen die Durchgelassenen in Halle und Bar (P101, P145) |
 
-Theme-Bezug in der Welt (Vorschlag für den Call): die Sonne steht jeden Tag anders (die Station dreht sich), und an Tag 3
-flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit dir.
+Theme-Bezug in der Welt (gebaut): Die Sonne steht jeden Tag anders (die Station dreht sich), und je schlechter die Lage der Station,
+desto öfter flackern Lichter und Schilder (P36) — die Station „verschiebt“ sich mit dir.
 
 ## Gadgets (freischalten über die Tage oder kaufen)
 - UV-Lampe — im Kiosk ab Tag 4, zeigt auf jedem Papier das Siegel, gefälschte rot (P62). Gefälschte Siegel gibt es ab Tag 5
 - Dokumentenscanner — im Kiosk ab Tag 6, markiert NAME und ID, die sich zwischen den Papieren widersprechen; reiner Komfort (P16)
 - Beide liegen gekauft auf dem Schaltertisch, Klick schaltet sie
 - Ideen, nicht gebaut: Gepäckscanner (Schmuggelware), Bioscanner (Spezies/Identität)
-- Offen (Frage an Max, 09.11.): Das Terminal (P34) zeigt Widersprüche gratis und entwertet damit den Scanner
+- Das Terminal am Schalter (P34) fragt nur Name und ID vom Pass ab; Widersprüche zwischen den Papieren zeigt weiter nur der Scanner (P112, 09.11.)
 
 ## Familie
 - Lebt auf dem Heimatplaneten, braucht täglich Geld (Essen, Wärme, Medizin).
@@ -96,14 +104,17 @@ flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit di
 - Kiosk + Drohne ist rund ein Viertel billiger als Geld über die Abrechnung; das wird nur angedeutet (P103).
 - Wen man durchlässt, steht abends in Halle und Bar und ist am nächsten Tag weg (P101).
 - Bleibt jemand kritisch, stirbt die Person nach zwei weiteren Nächten; davor warnt der Brief (P69). Sterben alle oder Lena, ist das Spiel vorbei.
+- Was per Drohne ankommt, liegt zu Hause als **Vorrat**: Jede Nacht deckt ein Stück ein Bedürfnis, Essen verdirbt (P131). Schmuggelware findet der Zoll zu 25 % (P110).
 
 ## Steuerung
 - Ego-Perspektive, **WASD + Maus**, **E** = interagieren.
 - Am Schalter: E → Kamera fährt auf den Tisch. Dokumente sind 3D-Papiere: ziehen, per Klick hochhalten und lesen, stempeln. **A/D** oder Pfeile schauen sich um (Pinnwand links). Klick auf ein Feld eines hochgehaltenen Papiers = Nachfrage an den Reisenden. **Q / Esc / Rechtsklick** = zurück, aufstehen.
 - Beim Lesen lassen sich bis zu 4 Papiere und Pinnwand-Zettel nebeneinander halten: weitere anklicken oder **R** für alle.
+- **H** zeigt die Tasten für die aktuelle Lage (P140), **Esc** pausiert (auch im Heimflug, P149).
 - Nur Tastatur & Maus (Browser). Kein Gamepad, kein Mobile.
 
 ## Umfang
+Stand 13.11.: Alles unter Muss ist gebaut, ebenso alles unter Kann. Häkchen-Notizen in Klammern.
 ### Muss (ohne das kein Spiel)
 - Zollschalter mit Dokumentenprüfung: 2–3 Dokumenttypen, Regeln pro Tag, Durchlassen/Abweisen/Verhaften/Luftschleuse
 - Reisende als Daten (ScriptableObjects): Aussehen, Dokumente, Fehler, Gepäck
@@ -114,14 +125,14 @@ flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit di
 - Gadgets (UV-Lampe, Dokumentenscanner) kaufbar
 - Startbildschirm, Menü, Sieg/Niederlage-Ende
 ### Soll (macht es gut)
-- Diner mit Gerüchten/Hinweisen, weitere Gadgets
-- Mehrere Enden (abhängig von Familie, Luftschleusen-Nutzung, Geld)
-- Voicelines (ElevenLabs) für Reisende und NPCs
-- Retro-Look mit Low-Res-Filter
+- Diner mit Gerüchten/Hinweisen, weitere Gadgets (Diner bewusst außer Betrieb, P92; Gerüchte gibt es beim Barkeeper, P65)
+- Mehrere Enden (abhängig von Familie, Luftschleusen-Nutzung, Geld) (gebaut: HOME, HOME, BARELY, HOME, WITHOUT THEM, TOO LATE?, DISCHARGED, FAMILY LOST, AIRLOCKED)
+- Voicelines (ElevenLabs) für Reisende und NPCs (ersetzt: Murmel-Laute je Spezies in eigener Tonhöhe, P144; die Laute sind bestellt, P94)
+- Retro-Look mit Low-Res-Filter (gebaut als P17, aber aus: volle Auflösung, 02.11.)
 ### Kann (wenn Zeit bleibt)
-- Story-Reisende, die wiederkommen
-- Bestechung am Schalter
-- Wachen-NPCs, die durch die Station laufen
+- Story-Reisende, die wiederkommen (acht Figuren, `docs/FIGUREN.md`)
+- Bestechung am Schalter (P66)
+- Wachen-NPCs, die durch die Station laufen (P148)
 ### Bewusst NICHT
 - Kampf, Physik-Rätsel, offene Welt, Speichern/Laden mitten im Tag, Mehrspieler, Gamepad/Mobile
 
@@ -130,8 +141,8 @@ flackern Lichter und Schilder häufiger — die Station "verschiebt" sich mit di
   harte Pixel), Asset-Design wie Alien: Isolation (analoger Retro-Futurismus, CRTs, klobige Industrie-Technik). Details: `docs/STYLE.md`.
 - **Dokumente/UI** werden in voller Auflösung über dem Low-Res-Bild gezeichnet → bleiben lesbar.
 - **Musik & SFX:** freie Assets (Lizenz in `CREDITS.md`).
-- **Voicelines:** selbst aufnehmen, mit ElevenLabs in verschiedene Stimmen umwandeln. Ein Aufnahmetag,
-  wenn alle Texte feststehen (nach dem Feature-Freeze).
+- **Stimmen:** keine gesprochenen Sätze. Reisende und Händler murmeln Laute ihrer Spezies in eigener Tonhöhe (P94, P144),
+  die Durchsagen sind synthetische Murmel-Laute (P115). Text steht in Sprechblase und Untertitel.
 - **Schrift:** **Orbitron für alle Texte** (Menü, HUD, Fenster, Brief, Dokumente; martin 05.11.), Share Tech Mono nur noch als Ausweichschrift für fehlende Zeichen. Beide OFL / Google Fonts.
 - **Sprache:** Englisch (Texte und Voicelines).
 - Asset-Regeln: `docs/ASSETS.md`.

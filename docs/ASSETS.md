@@ -116,7 +116,7 @@ ArtSource/                 Arbeitsdateien (.blend, .psd, Rohaufnahmen) — auße
 3. Commit + **Push auf `main`**. Erst dann sieht es die Pipeline; sie liest die Datei etwa stündlich.
 4. Weiterbauen: Platzhalter am finalen Pfad anlegen (Regeln unten) oder, wie bei den Händlern, den Builder eine graue Box setzen lassen.
 
-Danach passiert der Rest ohne dich: Die Pipeline liefert per Pull Request, **Max** gibt frei und baut es ein. Den Stand zeigt `status` im Eintrag.
+Danach passiert der Rest ohne dich: Die Pipeline liefert auf einem Branch `assets/<Paket>`, **Max** gibt frei, mergt und baut es ein. Den Stand zeigt `status` im Eintrag.
 
 **Erst mit Max absprechen:** nur große Aufträge (viele Assets, neue Räume wie P53) und alles, was den Stil ändert (`docs/STYLE.md`).
 Eine Notiz wie „Bestellung nach Absprache“ im Paket reicht nicht: Solange kein Eintrag auf `main` liegt, baut niemand etwas.
@@ -125,7 +125,7 @@ Nicht bestellbar: Voicelines (`VO_`), siehe „Was die Pipeline (nicht) kann“.
 ## Anpassungen anfordern (Max und Martin)
 In `docs/ASSET-REQUESTS.md` beim Eintrag eine datierte Zeile in `feedback` ergänzen und `status: rework` setzen,
 auf `main` pushen. Beispiel: `- "2026-11-10 martin: Tresen 20 cm niedriger, Spieler sieht sonst nicht drüber"`.
-Die Pipeline arbeitet den Eintrag erneut ab und liefert wieder per Pull Request.
+Die Pipeline arbeitet den Eintrag erneut ab und liefert wieder auf einem eigenen Branch.
 
 ## Integration nach dem Merge (Max)
 0. **Der schnelle Weg:** `git pull`, dann **GameOff → Rebuild All After Deliveries** (alle Builder in der richtigen Reihenfolge), dann **GameOff → Setup Main Lighting + Bake**. Danach Tests und ein Blick ins Spiel. `Main.unity`, `Boot.unity` und die generierten Prefabs vorher claimen.
