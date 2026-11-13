@@ -93,7 +93,7 @@
 ## Graybox in Unity (P04)
 - Prefab: `Assets/_Project/Prefabs/Station/PF_Station_Graybox.prefab`, eingebaut in `Main.unity` (Instanz `Station_Graybox`).
 - Erzeugt vom Editor-Skript `Assets/_Project/Scripts/Editor/StationGrayboxBuilder.cs`, Menü **GameOff → Build Station Graybox**.
-  Grundriss geändert? Zahlen im Skript anpassen (gleiche Tabellen wie oben), Menü ausführen, NavMesh neu backen.
+  Grundriss geändert? Zahlen im Skript anpassen (gleiche Tabellen wie oben), danach Rebuild All After Deliveries und Bake (siehe unten).
   Das Skript ersetzt die Instanz in der offenen Szene und überschreibt das Prefab (vorher claimen!).
 - Struktur: `Floors`, `Ceilings`, `Walls/<Raum>`, `Glass`, `Lights` (ein Punktlicht pro Raum in der Raumfarbe),
   `Props_Placeholder` (Blöcke mit den Namen aus `ASSET-REQUESTS.md`), `Markers` (PlayerSpawn, CounterCameraAnchor,
@@ -113,7 +113,7 @@
 - Szenen-Licht per Menü **GameOff → Setup Main Lighting + Bake** (`Scripts/Editor/MainLightingSetup.cs`): Skybox `M_Sky_Space`
   (Platzhalter-Textur `T_Sky_Space.png`), Ambient flach dunkelblau, Nebel Exp² 0,025, `PlanetLight` (gerichtet, kalt, von Norden),
   Lightmaps 4 Texel/m, max. 1024 px, 1 Bounce, Light Probes im 2,5-m-Raster (für Knöpfe, Stempel, später Reisende), NavMesh neu.
-- **Nach jedem Neubau der Graybox:** erst *Build Station Graybox*, dann *Setup Main Lighting + Bake*, warten bis der Bake fertig ist,
+- **Nach jedem Neubau der Graybox:** erst *Build Station Graybox*, dann *Rebuild All After Deliveries* (sonst fehlen anderen Prefabs ihre Verweise in die Station, z. B. der Aufwachpunkt; P155), dann *Setup Main Lighting + Bake*, warten bis der Bake fertig ist,
   Szene speichern. Bake dauert ca. 1 Minute; Lightmaps liegen in `Scenes/Main/` (~1,6 MB).
 
 ## Bausatz-Module (P21)
