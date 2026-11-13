@@ -67,7 +67,6 @@ namespace GameOff.UI
         {
             var answer = Parse(body);
             if (Succeeded(status, body)) return $"Thanks! Your report is in (#{answer.issue}).";
-            if (status == 429) return "Too many reports right now. Please try again in a few minutes.";
             if (status == 400 && answer != null && answer.error == "text too short") return "Please write a little more about what happened.";
             if (status == 400 && answer != null && answer.error == "text too long") return "That's a bit long - please shorten it.";
             return "Couldn't send the report. Please try again later.";

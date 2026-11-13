@@ -5,7 +5,8 @@ namespace GameOff.Economy
 {
     /// <summary>
     /// The player's credits (P46). Add = income, TrySpend = purchase (fails without enough money), Charge = forced payment
-    /// that may go below zero (rent, P10 decides what happens then). Every movement lands in Today with its reason.
+    /// (fines, penalties, rent) that may go below zero; the settlement only books the rent if it can be paid, else the run ends
+    /// STRANDED (SettlementWindow). Every movement lands in Today with its reason.
     /// </summary>
     public class Wallet
     {

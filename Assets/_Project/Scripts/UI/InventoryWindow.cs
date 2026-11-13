@@ -49,7 +49,6 @@ namespace GameOff.UI
         private bool _shiftView;
 
         public bool IsOpen => root.activeSelf;
-        public bool IsShiftView => IsOpen && _shiftView;
 
         /// <summary>The inventory this window shows: your items, or the shift inventory at the counter.</summary>
         private Inventory Shown => _shiftView ? Economy.ShiftItems : Economy.Inventory;
@@ -94,8 +93,6 @@ namespace GameOff.UI
             }
             else if (player.ControlEnabled) Open(false);
         }
-
-        public void Open() => Open(false);
 
         public void Open(bool shiftView)
         {

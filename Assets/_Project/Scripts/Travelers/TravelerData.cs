@@ -23,7 +23,7 @@ namespace GameOff.Travelers
         [TextArea] [SerializeField] private string intendedReason;
         [Tooltip("This traveler is meant to almost match a rule (a trick, e.g. The Shifter): the validator doesn't report near misses. The decision itself is still checked.")]
         [SerializeField] private bool trickIntended;
-        [Tooltip("Story marker, e.g. \"shifter\" for The Shifter (P15).")]
+        [Tooltip("Story marker for authors, e.g. \"P15, day 9\" (only shown here, the game doesn't read it).")]
         [SerializeField] private string storyTag;
         [Header("Dialogue (P40)")]
         [TextArea] [SerializeField] private string greeting;
@@ -40,7 +40,6 @@ namespace GameOff.Travelers
         public IReadOnlyList<DocumentData> Documents => documents;
         public Verdict IntendedVerdict => intendedVerdict;
         public string IntendedReason => intendedReason;
-        public string StoryTag => storyTag;
         public bool TrickIntended => trickIntended;
         public string Greeting => greeting;
         public IReadOnlyList<FieldAnswer> Answers => answers;

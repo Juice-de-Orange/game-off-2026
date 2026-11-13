@@ -718,7 +718,7 @@ namespace GameOff.EditorTools
                 lamp.transform.localPosition = new Vector3(d.Width * 0.5f + 0.15f, 1.6f, 0f);
             }
 
-            // Travelers (NavMesh agents) must not route through staff or locked doors, nor through a closed scripted door
+            // The guards (NavMesh agents, P148) must not route through staff or locked doors, nor through a closed scripted door
             UnityEngine.AI.NavMeshObstacle obstacle = null;
             if (d.Access != GameOff.Station.DoorAccess.Public)
             {
@@ -2198,7 +2198,7 @@ namespace GameOff.EditorTools
         // arrow points left or right of someone walking up to them.
         private enum SignRow { Motel, Diner, Bar, Kiosk, HangarStaff, Customs }
         private const string KitHallSign = "Hall/SM_Hall_Sign.fbx";
-        private const float SignHeight = 0.4f, SignGap = 0.05f, SignHalfWidth = 0.6f;
+        private const float SignHeight = 0.4f, SignGap = 0.05f;
 
         private static void BuildWayfinding(GameObject p)
         {

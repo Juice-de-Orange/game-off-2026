@@ -249,17 +249,16 @@ namespace GameOff.Tests
             var store = new MemoryStore();
             var slot = store.Slot();
             Assert.IsNull(slot.Load());
-            Assert.IsFalse(slot.HasSave);
             Assert.IsFalse(MainMenu.ShowsContinue(slot.Load()));
 
             store.Json = "not json at all";
-            Assert.IsFalse(slot.HasSave, "a broken save counts as none");
+            Assert.IsNull(slot.Load(), "a broken save counts as none");
             store.Json = JsonUtility.ToJson(new SaveData { day = 3, version = SaveData.CurrentVersion + 1 });
-            Assert.IsFalse(slot.HasSave, "another format counts as none");
+            Assert.IsNull(slot.Load(), "another format counts as none");
 
             store.Json = "";
             slot.SaveMorning(3, () => new SaveData { day = 3 });
-            Assert.IsTrue(slot.HasSave);
+            Assert.IsNotNull(slot.Load());
             Assert.IsTrue(MainMenu.ShowsContinue(slot.Load()));
             Assert.AreEqual(3, slot.Load().day);
             StringAssert.Contains("DAY 3", MainMenu.ContinueLabel(3));
@@ -287,9 +286,9 @@ namespace GameOff.Tests
             var slot = store.Slot();
             slot.SaveMorning(5, () => new SaveData { day = 5 });
             slot.EndRun();
-            Assert.IsFalse(slot.HasSave);
+            Assert.IsNull(slot.Load());
             Assert.IsFalse(slot.SaveMorning(6, () => new SaveData { day = 6 }), "the night after a discharge must not save a new morning");
-            Assert.IsFalse(slot.HasSave);
+            Assert.IsNull(slot.Load());
             Assert.IsFalse(MainMenu.ShowsContinue(slot.Load()));
         }
     }

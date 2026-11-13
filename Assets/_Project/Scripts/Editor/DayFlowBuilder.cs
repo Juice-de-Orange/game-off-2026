@@ -280,8 +280,9 @@ namespace GameOff.EditorTools
             var end = new GameObject("EndScreen", typeof(RectTransform));
             end.transform.SetParent(canvas, false);
             Stretch(end.GetComponent<RectTransform>());
-            var endTitle = Label(end.transform, "Title", "END OF THE DEMO", 48, Amber, new Vector2(0f, 60f), new Vector2(800f, 60f));
-            var endBody = Label(end.transform, "Body", "Three shifts done. The real endings come later in the jam.\nThanks for playing this build.", 18, TextLight, new Vector2(0f, -10f), new Vector2(800f, 60f));
+            // Every ending sets its own title and text (DayManager.ShowRunEnd); these only stand until then.
+            var endTitle = Label(end.transform, "Title", "THE END", 48, Amber, new Vector2(0f, 60f), new Vector2(800f, 60f));
+            var endBody = Label(end.transform, "Body", "Thanks for playing.", 18, TextLight, new Vector2(0f, -10f), new Vector2(800f, 60f));
             var menu = MenuButton(end.transform, "MenuButton", "MAIN MENU", new Vector2(0f, -100f));
 
             var ui = canvas.gameObject.AddComponent<DayFlowUI>();
@@ -346,7 +347,7 @@ namespace GameOff.EditorTools
         private const string MoodTuningPath = "Assets/_Project/Data/Days/StationMoodTuning.asset";
 
         // P36: glowing signs that drop out when the station is in trouble (from StationGrayboxBuilder, letters included).
-        private static readonly HashSet<string> NeonNames = new HashSet<string> { "SM_Bar_NeonSign", "Neon_Bar", "Neon_Diner", "Neon_Kiosk" };
+        private static readonly HashSet<string> NeonNames = new HashSet<string> { "SM_Bar_NeonSign", "Neon_Bar", "Neon_Kiosk" };
 
         /// <summary>Tuning of the station's situation (created once; then it is content, edit it in the inspector).</summary>
         private static StationMoodTuning EnsureMoodTuning(List<string> log)

@@ -74,8 +74,6 @@ namespace GameOff.Documents
         private readonly HashSet<Transform> _gliding = new HashSet<Transform>();
         private int _sharpLayer = -1, _worldLayer;
 
-        /// <summary>Raised when delivered papers lie on the desk.</summary>
-        public event Action<IReadOnlyList<DocumentData>> DocumentsDelivered;
         /// <summary>Raised when the drawer has carried papers back to the traveler.</summary>
         public event Action<IReadOnlyList<DocumentData>> DocumentsReturned;
         /// <summary>Raised when the drawer refuses to go (ReturnCheck said no), with the reason.</summary>
@@ -514,9 +512,6 @@ namespace GameOff.Documents
             }
             yield return new WaitForSeconds(tuning.slideDuration);
             _busy = false;
-            var data = new List<DocumentData>();
-            foreach (var v in arrived) data.Add(v.Data);
-            DocumentsDelivered?.Invoke(data);
         }
 
         private IEnumerator ReturnRoutine()

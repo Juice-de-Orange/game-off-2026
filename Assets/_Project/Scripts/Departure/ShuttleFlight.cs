@@ -30,6 +30,8 @@ namespace GameOff.Departure
         [SerializeField] private GameObject shuttleModel;
         [Tooltip("Optional engine loop, pitch follows the speed.")]
         [SerializeField] private AudioSource engine;
+        [Tooltip("P155: the hangar's energy barrier (station prefab); flashes if the shuttle flies through the hangar mouth.")]
+        [SerializeField] private EnergyBarrier barrier;
 
         private InputAction _thrust, _turn, _boost;
         private Transform _body, _visual;
@@ -138,6 +140,7 @@ namespace GameOff.Departure
             if (!IsFlying || _finished || Paused) return;
             float dt = Time.deltaTime;
             _time += dt;
+            var before = _body.position;
 
             if (_time < tuning.liftOffSeconds)
             {
@@ -147,6 +150,7 @@ namespace GameOff.Departure
                 _body.rotation = Quaternion.Euler(0f, _yaw, 0f);
             }
             else Steer(dt);
+            if (barrier != null) barrier.PulseIfPassed(before, _body.position);
 
             PlaceCamera(1f - Mathf.Exp(-tuning.cameraFollow * dt));
             if (engine != null) engine.pitch = tuning.enginePitchIdle + _speed / Mathf.Max(1f, tuning.boostSpeed) * tuning.enginePitchRange;

@@ -22,9 +22,6 @@ namespace GameOff.Shops
         [SerializeField] private DayFlowUI dialogs;
         [SerializeField] private GameObject debugView;
 
-        /// <summary>An item was sent home (P13 hooks in here).</summary>
-        public event System.Action<ItemData> Sent;
-
         private void OnEnable()
         {
             interactable.OnInteract.AddListener(OnInteract);
@@ -69,7 +66,6 @@ namespace GameOff.Shops
                 var economy = PlayerEconomy.Instance;
                 if (economy != null) economy.Delivery.Add(item);
                 Debug.Log($"[Drone] Sent home: {item.DisplayName}.");
-                Sent?.Invoke(item);
             },
             // P110: contraband may be kept by customs tonight.
             item => DroneCustoms.LoadingHint(item, Confiscation.Instance != null ? Confiscation.Instance.Tuning : null));

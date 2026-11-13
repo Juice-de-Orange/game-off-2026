@@ -61,7 +61,7 @@ namespace GameOff.EditorTools
         {
             new VendorSpot("Holly", "SM_NPC_Holly", "Stock_Kiosk_Test", new Vector3(9.6f, 0f, -4f), new Vector3(0.55f, 1.7f, 0.45f), -90f,
                 new Vector3(9.0f, 1.2f, -4f), new Vector3(2.2f, 1.6f, 2.6f), "Human"),
-            new VendorSpot("Barkeeper", "SM_NPC_Barkeeper", "Stock_Bar_Test", new Vector3(15.5f, 0f, 4f), new Vector3(0.8f, 1.9f, 0.6f), -90f,
+            new VendorSpot("Barkeeper", "SM_NPC_Barkeeper", null, new Vector3(15.5f, 0f, 4f), new Vector3(0.8f, 1.9f, 0.6f), -90f,
                 new Vector3(15.1f, 1.25f, 4f), new Vector3(2.2f, 1.5f, 2.0f), "Vellani"),
             new VendorSpot("Dealer", "SM_NPC_Dealer", "Stock_BlackMarket_Test", new Vector3(13.6f, 0.74f, 6.4f), new Vector3(0.6f, 1.3f, 0.6f), 90f,
                 new Vector3(13.6f, 1.05f, 6.4f), new Vector3(1.0f, 1.7f, 1.0f), "Human"),
@@ -129,8 +129,6 @@ namespace GameOff.EditorTools
 
             data.Stocks["Stock_Kiosk_Test"] = Stock("Stock_Kiosk_Test", "KIOSK · HOLLY", 1f, 0.5f, "Sold out.",
                 new[] { data.Items["scanner"], data.Items["ration"], data.Items["painkillers"], data.Items["cola"] }, new[] { contraband }, ref created);
-            data.Stocks["Stock_Bar_Test"] = Stock("Stock_Bar_Test", "THE LAST ORBIT · BAR", 1f, 0f,
-                "Drinks and talk come later.", new ItemData[0], new ItemTag[0], ref created);
             data.Stocks["Stock_BlackMarket_Test"] = Stock("Stock_BlackMarket_Test", "UNDER THE COUNTER", 1.5f, 1.2f, "Nothing today.",
                 new[] { data.Items["spice"] }, new ItemTag[0], ref created);
 
@@ -143,7 +141,6 @@ namespace GameOff.EditorTools
             Tag("ALIEN", "C27BD6", ref created);
             Tag("PERISHABLE", "9BE05A", ref created);
             ApplyTradeRules(data, new[] { contraband, confiscated }, drug, valuable, log);
-            foreach (var stock in data.Stocks.Values) MigrateToEntries(stock, log);
 
             // P10: wage, rent, needs and the family (placeholder names until P15).
             data.Household = LoadOrCreate<HouseholdTuning>(EconomyFolder + "Household.asset", h =>
@@ -165,7 +162,6 @@ namespace GameOff.EditorTools
             BuildMarket(data, contraband, food, power, drug, log, ref created);
             // P30: the drinks machine in the hall sells Nova Cola, 6 a day.
             data.Stocks["Stock_Vending"] = Stock("Stock_Vending", "NOVA COLA MACHINE", 1f, 0f, "Sold out.", new[] { data.Items["cola"] }, new ItemTag[0], ref created);
-            MigrateToEntries(data.Stocks["Stock_Vending"], log);
             SetDailyAmount(data.Stocks["Stock_Vending"], data.Items["cola"], 6);
             BuildGoodsList2(data, contraband, gadget, valuable, confiscated, log, ref created);
             // P132: five cassettes (CassetteBuilder; no goods: unique, no labels, nobody buys them back), two on the kiosk shelf, one a day.
@@ -192,7 +188,6 @@ namespace GameOff.EditorTools
         {
             int changed = 0;
             changed += AddToList(data.Stocks["Stock_Kiosk_Test"], "refusedTags", illegal);
-            changed += AddToList(data.Stocks["Stock_Bar_Test"], "refusedTags", illegal);
             changed += AddToList(data.Stocks["Stock_BlackMarket_Test"], "onlyTags", illegal);
             changed += AddToList(data.Items["spice"], "tags", new[] { drug });
             changed += AddToList(data.Items["watch"], "tags", new[] { valuable });
@@ -205,26 +200,20 @@ namespace GameOff.EditorTools
             { "Item_DocumentScanner", 1 }, { "Item_RationPack", 3 }, { "Item_Painkillers", 2 }, { "Item_NovaCola", 5 }, { "Item_Spice", 3 },
         };
 
-        /// <summary>P11: moves the old item list (without amounts) into entries with a daily amount. Leaves tuned entries alone.</summary>
-        private static void MigrateToEntries(VendorStock stock, List<string> log)
+        /// <summary>P11: a new stock's entries, each with its daily amount, on sale from day 1.</summary>
+        private static void SetEntries(VendorStock stock, ItemData[] items)
         {
             var so = new SerializedObject(stock);
-            var items = so.FindProperty("items");
             var entries = so.FindProperty("entries");
-            if (items.arraySize == 0) return;
-            for (int i = 0; i < items.arraySize; i++)
+            entries.arraySize = items.Length;
+            for (int i = 0; i < items.Length; i++)
             {
-                var item = items.GetArrayElementAtIndex(i).objectReferenceValue;
-                if (item == null) continue;
-                entries.arraySize++;
-                var e = entries.GetArrayElementAtIndex(entries.arraySize - 1);
-                e.FindPropertyRelative("item").objectReferenceValue = item;
-                e.FindPropertyRelative("dailyAmount").intValue = DailyAmounts.TryGetValue(item.name, out int n) ? n : 3;
+                var e = entries.GetArrayElementAtIndex(i);
+                e.FindPropertyRelative("item").objectReferenceValue = items[i];
+                e.FindPropertyRelative("dailyAmount").intValue = DailyAmounts.TryGetValue(items[i].name, out int n) ? n : 3;
+                e.FindPropertyRelative("fromDay").intValue = 1;
             }
-            items.arraySize = 0;
             so.ApplyModifiedPropertiesWithoutUndo();
-            EditorUtility.SetDirty(stock);
-            log.Add($"{stock.name}: {entries.arraySize} entries with daily amounts");
         }
 
         /// <summary>
@@ -561,35 +550,12 @@ namespace GameOff.EditorTools
             Wish(1, Tag("LUXURY", "B9824A", ref created), 2);
             Wish(2, Tag("TECH", "5EC8FF", ref created), 1);
 
-            // P66 bribe (Martin, 07.11.): day 3, the smuggler Quill Barragh, 60 CR – only where the day has none. Not day 2: refusing
-            // makes the barkeeper sulk, and day 2 is the evening of the one rumour that pays.
-            var quill = AssetDatabase.LoadAssetAtPath<GameOff.Travelers.TravelerData>("Assets/_Project/Data/Travelers/Test/T_Test_04_Quill.asset");
-            if (quill != null && days.arraySize >= 3)
-            {
-                var bribe = days.GetArrayElementAtIndex(2).FindPropertyRelative("bribe");
-                if (bribe.FindPropertyRelative("traveler").objectReferenceValue == null)
-                {
-                    bribe.FindPropertyRelative("traveler").objectReferenceValue = quill;
-                    bribe.FindPropertyRelative("amount").intValue = 60;
-                    placed = true;
-                }
-            }
-            void Place(int day, params MarketEvent[] events)
-            {
-                if (days.arraySize < day) return;
-                var list = days.GetArrayElementAtIndex(day - 1).FindPropertyRelative("marketEvents");
-                if (list.arraySize > 0) return; // the day has its own events already
-                list.arraySize = events.Length;
-                for (int i = 0; i < events.Length; i++) list.GetArrayElementAtIndex(i).objectReferenceValue = events[i];
-                placed = true;
-            }
+            // The days' market events and the day-3 bribe come from Build Story Characters (StoryCharacterBuilder.BuildSchedule).
             BalanceCorrections(data, border, smugglers, cold, contraband, drug, log);
-            Place(2, border);
-            Place(3, smugglers, cold);
             if (!placed) return;
             sso.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(schedule);
-            log.Add("day schedule: market events and bar wishes placed where empty");
+            log.Add("day schedule: bar wishes placed where empty");
         }
 
         /// <summary>
@@ -624,21 +590,6 @@ namespace GameOff.EditorTools
                 spice.ApplyModifiedPropertiesWithoutUndo();
                 EditorUtility.SetDirty(data.Items["spice"]);
             }
-        }
-
-        private static bool RemoveEntry(VendorStock stock, ItemData item)
-        {
-            var so = new SerializedObject(stock);
-            var entries = so.FindProperty("entries");
-            for (int i = 0; i < entries.arraySize; i++)
-            {
-                if (entries.GetArrayElementAtIndex(i).FindPropertyRelative("item").objectReferenceValue != item) continue;
-                entries.DeleteArrayElementAtIndex(i);
-                so.ApplyModifiedPropertiesWithoutUndo();
-                EditorUtility.SetDirty(stock);
-                return true;
-            }
-            return false;
         }
 
         private static void SetDailyChange(ItemData item, float[] change)
@@ -743,7 +694,7 @@ namespace GameOff.EditorTools
             LoadOrCreate<VendorStock>(EconomyFolder + file + ".asset", s =>
             {
                 SetFields(s, ("title", title), ("sellFactor", sell), ("buyFactor", buy), ("emptyText", empty), ("openAfterShiftOnly", true));
-                SetList(s, "items", items);
+                SetEntries(s, items);
                 SetList(s, "refusedTags", refused);
             }, ref created);
 
@@ -801,7 +752,7 @@ namespace GameOff.EditorTools
 
             var vendors = new GameObject("Vendors").transform;
             vendors.SetParent(root.transform, false);
-            foreach (var spot in Vendors) BuildVendor(vendors, spot, data.Stocks[spot.Stock], trade);
+            foreach (var spot in Vendors) BuildVendor(vendors, spot, spot.Stock != null ? data.Stocks[spot.Stock] : null, trade); // the barkeeper sells nothing (P65)
             BuildDrone(root.transform, trade);
             BuildVendingMachine(root.transform, data.Stocks["Stock_Vending"]);
             // P66: the bribe note lies behind the stamps on the left of the counter desk, where nothing else sits (#32: it used to lie under them).
@@ -1467,6 +1418,7 @@ namespace GameOff.EditorTools
             foreach (var h in instance.GetComponentsInChildren<GameOff.Station.HangarShips>(true))
             {
                 Set(h, "day", day);
+                Set(h, "barrier", Object.FindFirstObjectByType<GameOff.Core.EnergyBarrier>()); // P155: in the station prefab
                 Record(h);
             }
             foreach (var a in instance.GetComponentsInChildren<GameOff.Station.ArrivingGroup>(true))

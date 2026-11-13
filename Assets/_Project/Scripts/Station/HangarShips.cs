@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using GameOff.Audio;
+using GameOff.Core;
 using GameOff.Day;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ namespace GameOff.Station
         [Tooltip("Where the morning arrival starts: outside the energy barrier.")]
         [SerializeField] private Vector3 approachFrom = new Vector3(0f, 7f, -48f);
         [SerializeField] private float landingSeconds = 7f;
+        [Tooltip("P155: the hangar's energy barrier (station prefab); flashes when the morning ship flies through it.")]
+        [SerializeField] private EnergyBarrier barrier;
 
         private readonly List<GameObject> _placed = new List<GameObject>();
 
@@ -83,10 +86,13 @@ namespace GameOff.Station
         private IEnumerator Land(Transform ship, Transform pad, BoxCollider body)
         {
             AudioManager.PlayAt(s => s.shipLand, pad.position, 60f);
+            var previous = approachFrom;
             for (float t = 0f; t < landingSeconds; t += Time.deltaTime)
             {
                 float k = Mathf.SmoothStep(0f, 1f, t / landingSeconds);
                 ship.position = Vector3.Lerp(approachFrom, pad.position, k);
+                if (barrier != null) barrier.PulseIfPassed(previous, ship.position);
+                previous = ship.position;
                 yield return null;
             }
             ship.position = pad.position;

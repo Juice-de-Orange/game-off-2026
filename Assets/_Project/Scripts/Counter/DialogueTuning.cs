@@ -35,7 +35,7 @@ namespace GameOff.Counter
         public float shutterDropSeconds = 0.25f;
         [Tooltip("P91: how long the shutter takes to rise again (s).")]
         public float shutterRiseSeconds = 1.1f;
-        [Tooltip("P91: arrest and airlock: how long the shutter stays down (s).")]
+        [Tooltip("P91: after an arrest, how long the shutter stays down (s). The airlock has no shutter since P105.")]
         public float shutterHoldSeconds = 3f;
         [Tooltip("Crossfade between Idle, Talk and Walk (s).")]
         public float animationBlendSeconds = 0.2f;

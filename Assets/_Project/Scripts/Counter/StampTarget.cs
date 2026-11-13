@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace GameOff.Counter
@@ -11,9 +10,6 @@ namespace GameOff.Counter
     public class StampTarget : MonoBehaviour
     {
         private const float MarkLift = 0.001f; // above the surface, against z-fighting
-
-        /// <summary>Raised after a mark was placed (for the document's own look). Game decisions: CounterStation.ActionTriggered.</summary>
-        public event Action<CounterAction> Stamped;
 
         private static int s_stampCounter;
 
@@ -47,7 +43,6 @@ namespace GameOff.Counter
             IsStamped = true;
             LastStamp = action;
             StampOrder = ++s_stampCounter;
-            Stamped?.Invoke(action);
         }
     }
 }

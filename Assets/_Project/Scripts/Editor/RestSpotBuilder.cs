@@ -38,7 +38,7 @@ namespace GameOff.EditorTools
         private static readonly Color PhotoPaper = new Color(0.75f, 0.74f, 0.7f);
         private static readonly Color Ink = new Color(0.1f, 0.11f, 0.2f);
 
-        // Room 103's porthole (StationGrayboxBuilder opening on the x = -20 wall, centre z 5, sill 1.2, head 1.8). The eye goes out
+        // Room 103's porthole (StationGrayboxBuilder opening on the x = -20 wall, centre z 5, 1.2 wide, sill 0.9, head 2.1). The eye goes out
         // past the hull (like the coin telescope's) so neither the frame nor the outer wall is in the view of the home planet.
         private static readonly Vector3 PortholeCentre = new Vector3(-20f, 1.5f, 5f);
         private static readonly Vector3 PortholeApproach = new Vector3(-19.4f, 1.5f, 5f);

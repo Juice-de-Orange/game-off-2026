@@ -1,7 +1,6 @@
 using System.Collections;
 using GameOff.Audio;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace GameOff.Counter
 {
@@ -19,7 +18,6 @@ namespace GameOff.Counter
         [Tooltip("Optional protective cover, hinged at its pivot. Must be opened by a first click.")]
         [SerializeField] private Transform cover;
         [SerializeField] private float coverOpenAngle = 110f;
-        [SerializeField] private UnityEvent onPressed = new UnityEvent();
 
         private bool _coverOpen;
         private bool _animating;
@@ -27,7 +25,6 @@ namespace GameOff.Counter
         private Vector3 _restPosition;
 
         public CounterAction Action => action;
-        public UnityEvent OnPressed => onPressed;
 
         private void Awake()
         {
@@ -48,7 +45,6 @@ namespace GameOff.Counter
             }
             if (pressPart != null) StartCoroutine(PressAnimation());
             else ResetCover();
-            onPressed.Invoke();
             return true;
         }
 

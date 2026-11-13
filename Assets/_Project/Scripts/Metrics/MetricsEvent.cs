@@ -12,11 +12,8 @@ namespace GameOff.Metrics
     {
         private readonly StringBuilder _json = new StringBuilder(128);
 
-        public string Name { get; }
-
         public MetricsEvent(string name, float time)
         {
-            Name = name;
             _json.Append("{\"e\":");
             AppendString(_json, name);
             _json.Append(",\"t\":").Append(Number(time));

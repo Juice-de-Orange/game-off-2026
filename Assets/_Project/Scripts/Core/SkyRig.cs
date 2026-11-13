@@ -25,8 +25,6 @@ namespace GameOff.Core
 
         private int _day = 1;
 
-        public int Day => _day;
-
         /// <summary>Sets the sky for day 1..3 (called by the day flow, P09).</summary>
         public void SetDay(int day)
         {

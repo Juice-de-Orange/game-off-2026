@@ -61,9 +61,6 @@ namespace GameOff.UI
         /// </summary>
         public static bool BlocksInput => _open || Time.frameCount == _closedFrame;
 
-        public bool IsOpen => _open;
-        public HelpSituation Shown => _shown;
-
         private void Awake()
         {
             _open = false;

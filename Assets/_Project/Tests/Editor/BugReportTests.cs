@@ -43,7 +43,6 @@ namespace GameOff.Tests
             Assert.AreEqual("Thanks! Your report is in (#42).", BugReport.Result(201, "{\"ok\": true, \"issue\": 42}"));
             Assert.IsTrue(BugReport.Succeeded(201, "{\"ok\": true, \"issue\": 42}"));
             Assert.IsFalse(BugReport.Succeeded(201, "<html>"), "a proxy page is not a success");
-            StringAssert.Contains("Too many reports", BugReport.Result(429, "{\"ok\": false}"));
             StringAssert.Contains("write a little more", BugReport.Result(400, "{\"ok\": false, \"error\": \"text too short\"}"));
             StringAssert.Contains("shorten", BugReport.Result(400, "{\"ok\": false, \"error\": \"text too long\"}"));
             StringAssert.Contains("try again later", BugReport.Result(400, "{\"ok\": false, \"error\": \"not JSON\"}"));

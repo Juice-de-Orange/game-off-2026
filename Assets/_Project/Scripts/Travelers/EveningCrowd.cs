@@ -12,7 +12,8 @@ namespace GameOff.Travelers
     /// P101: whoever the player let through today stands around the station after the shift, at fixed spots, and says a line when spoken
     /// to. They do not walk there, and they are gone in the morning. At most six at a time (skinned figures are expensive in the browser).
     /// P113: after an airlock that day they talk about that instead.
-    /// P134: every spot has a reason (a bar table, a window, the kiosk, the departure board, the hangar barrier), a facing and a pose;
+    /// P134: every spot has a reason (two at a bar table, the deck bench, a bar stool, bench C under the departure board, the hangar
+    /// barrier; EconomyBuilder.CrowdSpots), a facing and a pose;
     /// the idle starts at a random point so they don't breathe in step.
     /// P145: some spots are seats. A_NPC_Sit is made on the human skeleton for a 0.45 m seat, and retargeted the pose scales with the
     /// figure's legs, so every guest is measured once in it: lifted onto higher seats (the feet dangle, never in the floor), small ones

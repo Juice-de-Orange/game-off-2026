@@ -63,6 +63,7 @@ namespace GameOff.EditorTools
             var transforms = all.SelectMany(g => g.GetComponentsInChildren<Transform>(true)).ToList();
             var shuttle = transforms.FirstOrDefault(t => t.name == DockedShuttleName);
             var cabin = transforms.FirstOrDefault(t => t.name == CabinName);
+            var barrier = all.SelectMany(g => g.GetComponentsInChildren<GameOff.Core.EnergyBarrier>(true)).FirstOrDefault(); // P155
             var camera = player != null ? player.GetComponentInChildren<Camera>(true) : null;
 
             foreach (var c in instance.GetComponentsInChildren<MonoBehaviour>(true))
@@ -75,6 +76,7 @@ namespace GameOff.EditorTools
                 Link(so, "playerCamera", camera);
                 Link(so, "dockedShuttle", shuttle);
                 Link(so, "cabin", cabin);
+                Link(so, "barrier", barrier);
                 so.ApplyModifiedPropertiesWithoutUndo();
                 PrefabUtility.RecordPrefabInstancePropertyModifications(c);
             }
@@ -83,7 +85,7 @@ namespace GameOff.EditorTools
             bool model = AssetDatabase.LoadAssetAtPath<GameObject>(TerminalModelPath) != null;
             return $"[DepartureBuilder] PF_Departure in {scene.name}: tuning {(created ? "created" : "kept")}, terminal "
                 + (model ? "model" : "grey box (SM_Hangar_TicketTerminal not delivered yet)")
-                + $", player {Ok(player)}, camera {Ok(camera)}, day {Ok(day)}, dialogs {Ok(dialogs)}, docked shuttle {Ok(shuttle)}, cabin {Ok(cabin)}"
+                + $", player {Ok(player)}, camera {Ok(camera)}, day {Ok(day)}, dialogs {Ok(dialogs)}, docked shuttle {Ok(shuttle)}, cabin {Ok(cabin)}, barrier {Ok(barrier)}"
                 + (AssetDatabase.LoadAssetAtPath<AudioClip>(EngineClipPath) == null ? ", no engine sound yet" : ", engine sound");
         }
 
