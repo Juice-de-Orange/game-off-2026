@@ -107,6 +107,7 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
+| max | P155 Gesamtprüfung: Rebuild All + Bake | `Main.unity`, `Boot.unity`, alle generierten Prefabs, `Data/` (Story, DayPool, Economy, Items, Market, Characters, Audio) | 13.11. |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog
