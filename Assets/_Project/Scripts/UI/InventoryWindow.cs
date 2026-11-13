@@ -124,7 +124,7 @@ namespace GameOff.UI
         /// <summary>P81: the shift is over and its inventory goes to the report (P08): the shift view closes instead of staying under it.</summary>
         private void OnShiftClosing(Inventory shiftItems)
         {
-            if (IsShiftView) Close();
+            if (IsOpen && _shiftView) Close();
         }
 
         private void Unsubscribe()
