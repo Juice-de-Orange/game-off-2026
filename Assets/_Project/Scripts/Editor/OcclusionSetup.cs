@@ -7,7 +7,7 @@ namespace GameOff.EditorTools
     /// <summary>
     /// Occlusion culling for the station (P57): of its 1,600 renderers only the current room is visible, the rest cost CPU every
     /// frame. Static geometry may be hidden, big opaque pieces may hide others. Rebuilding the station clears the old data,
-    /// because stale occluders could hide things that were moved; the light bake and the menu builder bake it again.
+    /// because stale occluders could hide things that were moved; Setup Main Lighting + Bake (or Bake Occlusion (Main)) bakes it again.
     /// </summary>
     public static class OcclusionSetup
     {

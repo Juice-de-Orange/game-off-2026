@@ -190,11 +190,12 @@ namespace GameOff.Tests
             var d = new HomeDelivery();
             d.Add(vase);
             d.Add(ration);
-            Assert.AreSame(ration, d.CoveringItem(food));
-            Assert.IsFalse(d.Covers(power));
-            Assert.IsFalse(d.Covers(null));
-            d.UseUp(d.Covering(new[] { food, power, null }));
-            Assert.IsFalse(d.Covers(food), "P131: the ration is eaten");
+            var covering = d.Covering(new[] { food, power, null });
+            Assert.AreSame(ration, covering[0]);
+            Assert.IsNull(covering[1], "nothing at home has the power tag");
+            Assert.IsNull(covering[2], "a need that isn't due takes nothing");
+            d.UseUp(covering);
+            Assert.IsNull(d.Covering(new[] { food })[0], "P131: the ration is eaten");
             CollectionAssert.AreEqual(new[] { vase }, d.Items, "P131: only the used item is taken");
             d.Clear();
             Assert.IsEmpty(d.Items);

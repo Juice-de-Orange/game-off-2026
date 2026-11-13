@@ -6,7 +6,7 @@ namespace GameOff.Core
     /// <summary>
     /// P128: the one saved run, as JSON under one key (PlayerPrefs; WebGL keeps it in IndexedDB). Saves at most once per morning
     /// and never again once the run has ended (an ending deletes it). Storage is passed in, so tests run without PlayerPrefs.
-    /// DayManager holds one per run; the menu only asks Load / HasSave.
+    /// DayManager holds one per run; the menu only asks Load.
     /// </summary>
     public class SaveSlot
     {
@@ -47,9 +47,6 @@ namespace GameOff.Core
                 return null;
             }
         }
-
-        /// <summary>The menu shows CONTINUE only then.</summary>
-        public bool HasSave => Load() != null;
 
         /// <summary>Saves the morning of this day once; returns false if this morning was already saved or the run is over.</summary>
         public bool SaveMorning(int day, Func<SaveData> capture)

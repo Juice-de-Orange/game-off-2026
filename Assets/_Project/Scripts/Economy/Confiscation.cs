@@ -11,7 +11,7 @@ namespace GameOff.Economy
     /// P08 at the counter: an arrest confiscates the goods on the traveler's cargo manifest into the shift inventory (P81); the airlock
     /// costs hidden morale (much more on someone who didn't deserve it). At shift end the supervisor asks what to report
     /// (ShiftReportWindow): fines go to the wallet (TODAY), kept goods into the inventory as CONFISCATED variants, disciplinary
-    /// penalties add up over the run – at the limit the officer is discharged (placeholder ending until P12).
+    /// penalties add up over the run – at the limit the officer is discharged and the run ends (DISCHARGED).
     /// Wage and citations per decision stay in P07/P10 (SettlementWindow, Payroll).
     /// </summary>
     public class Confiscation : MonoBehaviour
@@ -111,7 +111,7 @@ namespace GameOff.Economy
             else { Apply(ShiftChoice.AsOrdered, items, null, 0f); DischargeIfDue(); }
         }
 
-        /// <summary>At the disciplinary limit the run ends (placeholder text until the endings, P12).</summary>
+        /// <summary>At the disciplinary limit the run ends with the DISCHARGED ending.</summary>
         public void DischargeIfDue()
         {
             if (!Conduct.Discharged(tuning) || dayManager == null) return;

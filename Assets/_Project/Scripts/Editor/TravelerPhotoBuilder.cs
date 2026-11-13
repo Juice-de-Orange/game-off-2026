@@ -6,16 +6,18 @@ using GameOff.Travelers;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GameOff.EditorTools
 {
     /// <summary>
     /// P108: Data/Travelers/TravelerLooks.asset from the delivered textures and hair, and one passport photo per combination rendered from
-    /// the real figure into Art/Textures/Documents/Photos. Menu: GameOff/Build Traveler Photos (opens an empty scene; run before Build Story Characters).
+    /// the real figure into Art/Textures/Documents/Photos. Menu: GameOff/Build Traveler Photos (asks to save the open scene, renders in an
+    /// empty one and opens the scene again afterwards; run before Build Story Characters). Build() itself leaves the empty scene open.
     /// </summary>
     public static class TravelerPhotoBuilder
     {
-        private const string AssetPath = "Assets/_Project/Data/Travelers/TravelerLooks.asset";
+        internal const string AssetPath = "Assets/_Project/Data/Travelers/TravelerLooks.asset";
         private const string PhotoFolder = "Assets/_Project/Art/Textures/Documents/Photos/";
         private const string TextureFolder = "Assets/_Project/Art/Textures/Characters/";
         private const string HairFolder = "Assets/_Project/Art/Models/Characters/";
@@ -26,7 +28,13 @@ namespace GameOff.EditorTools
         private const int PhotoWidth = 128, PhotoHeight = 160;
 
         [MenuItem("GameOff/Build Traveler Photos")]
-        public static void BuildFromMenu() => Debug.Log(Build());
+        public static void BuildFromMenu()
+        {
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            string previous = SceneManager.GetActiveScene().path;
+            Debug.Log(Build());
+            if (!string.IsNullOrEmpty(previous) && File.Exists(previous)) EditorSceneManager.OpenScene(previous);
+        }
 
         public static string Build()
         {

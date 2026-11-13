@@ -18,9 +18,6 @@ namespace GameOff.Core
     {
         [SerializeField] private RetroLookSettings settings;
 
-        // The player's choice survives scene loads and component re-enables for the whole session.
-        private static bool? s_playerChoice;
-
         private Camera _camera;
         private RenderTexture _texture;
         private GameObject _display;
@@ -31,18 +28,6 @@ namespace GameOff.Core
         private Camera _sharpCamera;
         private int _sharpMask, _baseMask;
 
-        /// <summary>Turn the retro look on/off at runtime (e.g. from the options menu).</summary>
-        public bool RetroEnabled
-        {
-            get => _retroEnabled;
-            set
-            {
-                _retroEnabled = value;
-                s_playerChoice = value;
-                Apply();
-            }
-        }
-
         private void Awake()
         {
             _camera = GetComponent<Camera>();
@@ -52,7 +37,7 @@ namespace GameOff.Core
 
         private void OnEnable()
         {
-            _retroEnabled = s_playerChoice ?? (settings == null || settings.enabledByDefault);
+            _retroEnabled = settings == null || settings.enabledByDefault;
             RenderPipelineManager.beginCameraRendering += SyncSharpCamera;
             Apply();
         }

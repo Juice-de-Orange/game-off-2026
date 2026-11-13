@@ -43,17 +43,6 @@ namespace GameOff.Economy
         /// <summary>P110: customs kept one of these; it doesn't arrive.</summary>
         public bool Remove(ItemData item) => _items.Remove(item);
 
-        /// <summary>The first item at home with this tag, or null.</summary>
-        public ItemData CoveringItem(ItemTag tag)
-        {
-            if (tag == null) return null;
-            foreach (var item in _items)
-                if (item.HasTag(tag)) return item;
-            return null;
-        }
-
-        public bool Covers(ItemTag tag) => CoveringItem(tag) != null;
-
         /// <summary>
         /// P131: tonight's items, one per need: <paramref name="needs"/> holds the tag of every need in order, null for a need
         /// that isn't due (medicine while nobody is sick). Returns the item that covers each need, or null. Every item covers only

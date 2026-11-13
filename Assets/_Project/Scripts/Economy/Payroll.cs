@@ -3,8 +3,8 @@ using System;
 namespace GameOff.Economy
 {
     /// <summary>
-    /// Wage of one shift (P10): a fixed amount per processed traveler, minus a penalty for every citation beyond the
-    /// free warnings of the day. P08 will add money per decision on top (bribes, confiscation).
+    /// Wage of one shift (P10): a fixed amount per correctly decided traveler (P70), minus a penalty for every citation beyond
+    /// the free warnings of the day. Bribes and confiscation fines are booked elsewhere (SettlementWindow, Confiscation).
     /// </summary>
     public static class Payroll
     {

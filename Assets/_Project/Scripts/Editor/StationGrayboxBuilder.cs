@@ -655,16 +655,17 @@ namespace GameOff.EditorTools
         {
             var group = Child(root, "Doors");
             group.AddComponent<Unity.AI.Navigation.NavMeshModifier>().ignoreFromBuild = true; // doorways stay walkable in the bake
-            var lampMat = EmissiveMaterial(new Color(0.89f, 0.27f, 0.25f));
-
-            foreach (var d in Doors) BuildDoor(group, d, 0f, lampMat);
+            foreach (var d in Doors) BuildDoor(group, d, 0f);
         }
+
+        /// <summary>The graybox locked lamp's glow, only made while SM_Station_LockLamp is missing (P155: no unused material).</summary>
+        private static readonly Color LockLampColor = new Color(0.89f, 0.27f, 0.25f);
 
         /// <summary>A door of the hab module: it stands on another floor than the station's.</summary>
         public static void BuildDoorAt(GameObject group, string name, bool onXLine, float line, float center, float width, GameOff.Station.DoorAccess access, float floorY) =>
-            BuildDoor(group, new DoorSpec(name, onXLine, line, center, width, access), floorY, EmissiveMaterial(new Color(0.89f, 0.27f, 0.25f)));
+            BuildDoor(group, new DoorSpec(name, onXLine, line, center, width, access), floorY);
 
-        private static void BuildDoor(GameObject group, DoorSpec d, float floorY, Material lampMat)
+        private static void BuildDoor(GameObject group, DoorSpec d, float floorY)
         {
             var door = new GameObject(d.Name);
             door.transform.SetParent(group.transform, false);
@@ -711,14 +712,14 @@ namespace GameOff.EditorTools
                 lamp = PlaceKit(door, KitLockLamp, Vector3.zero, 0f);
                 if (lamp == null)
                 {
-                    lamp = Block(door, "LockedLamp", Vector3.zero, new Vector3(0.12f, 0.08f, 2f * WallFace + 0.04f), lampMat);
+                    lamp = Block(door, "LockedLamp", Vector3.zero, new Vector3(0.12f, 0.08f, 2f * WallFace + 0.04f), EmissiveMaterial(LockLampColor));
                     Object.DestroyImmediate(lamp.GetComponent<Collider>());
                 }
                 lamp.transform.localRotation = Quaternion.identity;
                 lamp.transform.localPosition = new Vector3(d.Width * 0.5f + 0.15f, 1.6f, 0f);
             }
 
-            // Travelers (NavMesh agents) must not route through staff or locked doors, nor through a closed scripted door
+            // The guards (NavMesh agents, P148) must not route through staff or locked doors, nor through a closed scripted door
             UnityEngine.AI.NavMeshObstacle obstacle = null;
             if (d.Access != GameOff.Station.DoorAccess.Public)
             {
@@ -2198,7 +2199,7 @@ namespace GameOff.EditorTools
         // arrow points left or right of someone walking up to them.
         private enum SignRow { Motel, Diner, Bar, Kiosk, HangarStaff, Customs }
         private const string KitHallSign = "Hall/SM_Hall_Sign.fbx";
-        private const float SignHeight = 0.4f, SignGap = 0.05f, SignHalfWidth = 0.6f;
+        private const float SignHeight = 0.4f, SignGap = 0.05f;
 
         private static void BuildWayfinding(GameObject p)
         {

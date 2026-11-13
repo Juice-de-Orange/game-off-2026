@@ -14,8 +14,6 @@ namespace GameOff.Economy
         [SerializeField] private string title = "VENDOR";
         [Tooltip("What is for sale and how many of it every morning (P11).")]
         [SerializeField] private List<StockEntry> entries = new List<StockEntry>();
-        [Tooltip("Before P11: items without amounts. EconomyBuilder moves them into Entries.")]
-        [SerializeField, HideInInspector] private List<ItemData> items = new List<ItemData>();
         [SerializeField] private float sellFactor = 1f;
         [SerializeField] private float buyFactor = 0.5f;
         [Tooltip("The vendor doesn't buy items with these tags.")]

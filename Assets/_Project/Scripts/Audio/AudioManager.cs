@@ -13,17 +13,17 @@ using UnityEngine.UI;
 namespace GameOff.Audio
 {
     /// <summary>
-    /// Audio backbone (P18). One instance survives scene loads (placed in Boot, Menu and Main, so any scene can be played
-    /// directly; extra copies remove themselves). Volumes from GameSettings go to the exposed GameMixer parameters
-    /// (the only mixer feature Unity supports on the Web). Static helpers so other systems don't need a reference:
-    ///   AudioManager.PlayMusic(clip)        – loops on the Music group, crossfades from the current track
+    /// Audio backbone (P18). One instance survives scene loads (placed in Boot and Main, so Main can be played directly;
+    /// extra copies remove themselves; there is no Menu scene since P48). Volumes from GameSettings go to the exposed GameMixer
+    /// parameters (the only mixer feature Unity supports on the Web). Static helpers so other systems don't need a reference:
     ///   AudioManager.PlaySfx(clip)          – 2D one-shot on the SFX group (UI, stamps, desk)
     ///   AudioManager.PlaySfxAt(clip, pos)   – 3D one-shot on the SFX group at a world position
     ///   AudioManager.Play(s => s.drawerOpen) – 2D one-shot from Data/Audio/SoundSet with its volume
     ///   AudioManager.PlayVoice(clip)        – 2D on the Voice group, replaces the current line
     ///   AudioManager.PlaySpeech(species, name) – P144: a murmur of the species at the speaker's own pitch (Voice group)
     /// AudioSources placed in scenes without a mixer group (e.g. the doors from the station builder) are routed to SFX
-    /// on every scene load. Music and previews keep playing in the pause menu (ignoreListenerPause).
+    /// on every scene load. UI clicks and volume previews stay audible in the pause menu (ignoreListenerPause); the cassette
+    /// music (CassetteDeck, on the Music group) pauses with the game.
     /// </summary>
     public class AudioManager : MonoBehaviour
     {
@@ -33,18 +33,12 @@ namespace GameOff.Audio
         [SerializeField] private AudioMixerGroup musicGroup;
         [SerializeField] private AudioMixerGroup sfxGroup;
         [SerializeField] private AudioMixerGroup voiceGroup;
-        [Tooltip("Two looping sources for crossfades.")]
-        [SerializeField] private AudioSource musicA;
-        [SerializeField] private AudioSource musicB;
         [SerializeField] private AudioSource sfx2D;
         [Tooltip("Sounds of the game itself: stop with the pause menu, unlike the UI on sfx2D.")]
         [SerializeField] private AudioSource sfxGame;
         [SerializeField] private AudioSource voice;
-        [SerializeField] private float defaultMusicFade = 1.5f;
         [SerializeField] private SoundSet sounds;
 
-        private AudioSource _activeMusic;
-        private Coroutine _fade;
         private AudioClip[] _previews;
         private readonly List<RaycastResult> _uiHits = new List<RaycastResult>();
 
@@ -52,7 +46,6 @@ namespace GameOff.Audio
 
         public static AudioMixerGroup SfxGroup => Instance != null ? Instance.sfxGroup : null;
         public static AudioMixerGroup MusicGroup => Instance != null ? Instance.musicGroup : null;
-        public static AudioMixerGroup VoiceGroup => Instance != null ? Instance.voiceGroup : null;
 
         private void Awake()
         {
@@ -63,7 +56,6 @@ namespace GameOff.Audio
             }
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            _activeMusic = musicA;
             GameSettings.Changed += ApplyVolumes;
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -99,18 +91,6 @@ namespace GameOff.Audio
         }
 
         // ---------- Public helpers ----------
-
-        public static void PlayMusic(AudioClip clip, float fadeSeconds = -1f)
-        {
-            if (Instance == null) return;
-            Instance.CrossfadeTo(clip, fadeSeconds < 0f ? Instance.defaultMusicFade : fadeSeconds);
-        }
-
-        public static void StopMusic(float fadeSeconds = -1f)
-        {
-            if (Instance == null) return;
-            Instance.CrossfadeTo(null, fadeSeconds < 0f ? Instance.defaultMusicFade : fadeSeconds);
-        }
 
         public static void PlaySfx(AudioClip clip, float volume = 1f)
         {
@@ -333,41 +313,6 @@ namespace GameOff.Audio
             if (sfxGroup == null) return;
             foreach (var source in FindObjectsByType<AudioSource>(FindObjectsInactive.Include, FindObjectsSortMode.None))
                 if (source.outputAudioMixerGroup == null) source.outputAudioMixerGroup = sfxGroup;
-        }
-
-        private void CrossfadeTo(AudioClip clip, float seconds)
-        {
-            if (clip != null && _activeMusic.clip == clip && _activeMusic.isPlaying) return;
-            if (_fade != null) StopCoroutine(_fade);
-            var from = _activeMusic;
-            var to = clip != null ? (from == musicA ? musicB : musicA) : null;
-            if (to != null)
-            {
-                to.clip = clip;
-                to.volume = 0f;
-                to.Play();
-                _activeMusic = to;
-            }
-            _fade = StartCoroutine(Fade(from, to, seconds));
-        }
-
-        private IEnumerator Fade(AudioSource from, AudioSource to, float seconds)
-        {
-            float startFrom = from != null ? from.volume : 0f;
-            for (float t = 0f; t < seconds; t += Time.unscaledDeltaTime)
-            {
-                float k = t / seconds;
-                if (from != null && from != to) from.volume = Mathf.Lerp(startFrom, 0f, k);
-                if (to != null) to.volume = Mathf.Lerp(0f, 1f, k);
-                yield return null;
-            }
-            if (from != null && from != to)
-            {
-                from.Stop();
-                from.volume = 1f;
-            }
-            if (to != null) to.volume = 1f;
-            _fade = null;
         }
 
         private void PreviewInternal(AudioChannel channel)

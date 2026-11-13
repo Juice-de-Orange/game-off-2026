@@ -20,8 +20,9 @@ using UnityEngine.UI;
 namespace GameOff.EditorTools
 {
     /// <summary>
-    /// Builds the front end (P02; options in tabs: P43; audio: P18), idempotent: Boot.unity (splash), Menu.unity (main menu, options, credits),
-    /// PF_PauseMenu.prefab, and places the pause menu in Main.unity wired to the player and the counter.
+    /// Builds the front end (P02; options in tabs: P43; audio: P18), idempotent: Boot.unity (splash), the main menu with options and
+    /// credits in Main.unity (FrontEnd, P48: there is no Menu scene), PF_PauseMenu.prefab and PF_AudioManager.prefab, and places the
+    /// pause menu (wired to the player, the counter and the day), the audio manager and the game cursor in Main.unity.
     /// Credits text is taken from CREDITS.md at build time, so rerun after adding credits.
     /// Placeholder look (Share Tech Mono, palette from STYLE.md); final UI art replaces the sprites later.
     /// </summary>
@@ -58,18 +59,20 @@ namespace GameOff.EditorTools
         private static TMP_FontAsset _titleFont;
         private static GameObject _audioPrefab;
 
-        /// <summary>Only Menu.unity (e.g. after tuning the ship traffic or a station rebuild) – Boot and Main stay untouched.</summary>
-        [MenuItem("GameOff/Build Menu Scene Only")]
-        public static void BuildMenuOnlyFromMenu()
+        /// <summary>
+        /// Only the main menu in Main (the FrontEnd object: menu, options, credits), e.g. after changing its layout or the credits.
+        /// Boot, the pause menu, the audio manager and the cursor stay untouched.
+        /// </summary>
+        [MenuItem("GameOff/Build Front End into Main")]
+        public static void BuildFrontEndFromMenu()
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
-            Debug.Log(BuildMenuOnly());
+            Debug.Log(BuildFrontEnd());
         }
 
-        public static string BuildMenuOnly()
+        public static string BuildFrontEnd()
         {
             _font = BaseFont();
-            _audioPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(AudioManagerPrefab);
             var log = new List<string>();
             BuildMenu(log);
             return "[MenuSceneBuilder] " + string.Join("; ", log);
@@ -441,11 +444,6 @@ namespace GameOff.EditorTools
             return string.Join("\n", lines);
         }
 
-        /// <summary>
-        /// The station seen from space (variant A): instances of Max's generated prefabs (sky, exterior, station incl. hull),
-        /// unchanged, plus the space look of Main (skybox, ambient, thin fog) and a slowly drifting camera.
-        /// Main's baked light stays in Main, so here only the realtime sun and a realtime copy of the planet fill light shine.
-        /// </summary>
         // ---------- Pause menu ----------
 
         private static GameObject BuildPausePrefab(List<string> log)
@@ -569,7 +567,7 @@ namespace GameOff.EditorTools
 
         // ---------- Audio (P18) ----------
 
-        /// <summary>PF_AudioManager: AudioManager + two music sources (crossfade), a 2D SFX source and a voice source, wired to GameMixer.</summary>
+        /// <summary>PF_AudioManager: AudioManager + two 2D SFX sources (UI, game) and a voice source, wired to GameMixer.</summary>
         private static GameObject BuildAudioManagerPrefab(List<string> log)
         {
             var mixer = AssetDatabase.LoadAssetAtPath<AudioMixer>(MixerPath);
@@ -593,8 +591,6 @@ namespace GameOff.EditorTools
                 source.ignoreListenerPause = ignorePause;
                 return source;
             }
-            var musicA = Source("MusicA", music, true, true);
-            var musicB = Source("MusicB", music, true, true);
             var sfx2D = Source("Sfx2D", sfx, false, true); // UI clicks must work in the pause menu
             var sfxGame = Source("SfxGame", sfx, false, false); // stops with the pause menu
             var voiceSource = Source("Voice", voice, false, false);
@@ -604,8 +600,6 @@ namespace GameOff.EditorTools
             Set(manager, "musicGroup", music);
             Set(manager, "sfxGroup", sfx);
             Set(manager, "voiceGroup", voice);
-            Set(manager, "musicA", musicA);
-            Set(manager, "musicB", musicB);
             Set(manager, "sfx2D", sfx2D);
             Set(manager, "sfxGame", sfxGame);
             Set(manager, "voice", voiceSource);
@@ -666,7 +660,7 @@ namespace GameOff.EditorTools
             var wanted = new[] { BootScene, MainScene };
             var current = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
             if (current.SequenceEqual(wanted)) return;
-            var rest = EditorBuildSettings.scenes.Where(s => !wanted.Contains(s.path) && !s.path.EndsWith("/Menu.unity"));
+            var rest = EditorBuildSettings.scenes.Where(s => !wanted.Contains(s.path));
             EditorBuildSettings.scenes = wanted.Select(p => new EditorBuildSettingsScene(p, true)).Concat(rest).ToArray();
             log.Add("build settings reordered (Boot, Main)");
         }
@@ -875,13 +869,6 @@ namespace GameOff.EditorTools
             var prop = so.FindProperty(field);
             if (prop == null) { Debug.LogError($"[MenuSceneBuilder] {target.GetType().Name}.{field} not found"); return; }
             prop.objectReferenceValue = value;
-            so.ApplyModifiedPropertiesWithoutUndo();
-        }
-
-        private static void SetVector(Object target, string field, Vector3 value)
-        {
-            var so = new SerializedObject(target);
-            so.FindProperty(field).vector3Value = value;
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 

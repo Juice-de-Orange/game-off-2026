@@ -35,7 +35,7 @@ namespace GameOff.Day
         [SerializeField] private Interactable bed;
         [SerializeField] private DayFlowUI ui;
         [SerializeField] private float fadeSeconds = 1.2f;
-        [Tooltip("Black screen between the days (P10 shows the settlement here later).")]
+        [Tooltip("How long the screen stays black between going to sleep (after the settlement, P10) and the next morning.")]
         [SerializeField] private float nightSeconds = 1f;
         [Tooltip("P97: real seconds in which the station clocks run from 18:00 to 23:00.")]
         [SerializeField] private float eveningClockSeconds = 300f;
@@ -61,8 +61,6 @@ namespace GameOff.Day
 
         /// <summary>Morning of day n (1-based), before the letter.</summary>
         public event Action<int> DayStarted;
-        /// <summary>The last traveler of day n is done.</summary>
-        public event Action<int> ShiftOver;
         /// <summary>The player went to bed on day n; the screen is black.</summary>
         public event Action<int> DayEnded;
         /// <summary>After the last day.</summary>
@@ -277,7 +275,6 @@ namespace GameOff.Day
             _eveningSince = Time.time;
             _curfewAnnounced = false;
             bed.SetPrompt("Sleep");
-            ShiftOver?.Invoke(_day);
             ui.ShowHint("Shift over. Shops are open until 23:00 - then sleep in room 103.", 6f);
         }
 
@@ -309,8 +306,8 @@ namespace GameOff.Day
         public void CancelNight() => _nightCancelled = true;
 
         /// <summary>
-        /// Called by a NightStep when the run is lost (P10: the rent for room 103 can't be paid). Fades out and shows the end
-        /// screen with these texts; its only button goes back to the main menu. Placeholder until the real endings (P12).
+        /// Called by a NightStep when the run is lost (the settlement: no money left for room 103, the family lost, or discharged
+        /// by drone customs). Fades out and shows the end screen with these texts; its only button goes back to the main menu.
         /// </summary>
         public void GameOver(string title, string body)
         {
@@ -388,13 +385,12 @@ namespace GameOff.Day
                 yield return BeginDay(_day + 1);
                 yield break;
             }
-            _phase = Phase.Finished;
-            FreezeForEnd();
-            _save.EndRun(); // P128
-            EndingTitle = "last day";
-            RunFinished?.Invoke();
-            ui.ShowEnd();
+            ShowRunEnd(LastDayTitle, LastDayBody);
         }
+
+        // Only without a loop pool (DaySchedule.loop empty, P73): the written days are over and so is the run.
+        private const string LastDayTitle = "THE LAST SHIFT";
+        private const string LastDayBody = "Every shift on the schedule is worked. Kestrel-9 has no more travelers for you.\nThanks for playing.";
 
         private static void BackToMenu()
         {

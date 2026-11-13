@@ -41,8 +41,6 @@ namespace GameOff.Shops
 
         public bool IsOpen => _wantOpen;
         public bool IsFullyOpen => _wantOpen && _open >= 1f;
-        /// <summary>For the test driver and checks: how many models lie in the locker right now.</summary>
-        public int ShownCount => _shown.Count;
 
         private void Awake()
         {

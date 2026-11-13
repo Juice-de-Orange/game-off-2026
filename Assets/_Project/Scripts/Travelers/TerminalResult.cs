@@ -7,7 +7,7 @@ namespace GameOff.Travelers
     {
         public TerminalQuery Query { get; }
         public IReadOnlyList<WantedEntry> Wanted { get; }
-        /// <summary>The entry record: one line per paper carrying the value (name, ID, validity), in the order handed over.</summary>
+        /// <summary>The entry record: the ID card's line (name, ID, validity) if its name or number is the value, else empty (P112).</summary>
         public IReadOnlyList<string> Record { get; }
 
         public bool IsWanted => Wanted.Count > 0;

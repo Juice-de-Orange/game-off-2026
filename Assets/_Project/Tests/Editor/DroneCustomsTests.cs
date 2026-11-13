@@ -78,7 +78,7 @@ namespace GameOff.Tests
             Assert.IsTrue(r.Caught);
             CollectionAssert.AreEquivalent(new[] { _spice, _seizedStim }, r.Lost, "CONTRABAND and CONFISCATED are kept");
             CollectionAssert.AreEqual(new[] { _ration }, d.Items);
-            Assert.AreSame(_ration, d.CoveringItem(_food), "the kept confiscated food no longer covers the need, the ration does");
+            Assert.AreSame(_ration, d.Covering(new[] { _food })[0], "the kept confiscated food no longer covers the need, the ration does");
             Assert.AreEqual(1, conduct.Disciplinary);
         }
 
@@ -89,7 +89,7 @@ namespace GameOff.Tests
             d.Add(_seizedStim);
             var conduct = new Conduct();
             Assert.IsFalse(DroneCustoms.Inspect(d, conduct, _tuning, 0.9f).Caught);
-            Assert.AreSame(_seizedStim, d.CoveringItem(_food), "an unnoticed delivery covers the need as before");
+            Assert.AreSame(_seizedStim, d.Covering(new[] { _food })[0], "an unnoticed delivery covers the need as before");
             Assert.AreEqual(0, conduct.Disciplinary);
         }
 

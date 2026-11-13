@@ -54,7 +54,6 @@ namespace GameOff.Counter
 
         /// <summary>
         /// Raised when a counter control (button) is used or a document is stamped: THE decision event for game logic.
-        /// (StampTarget.Stamped only tells the document that it got a mark; don't count decisions there.)
         /// </summary>
         public event Action<CounterAction> ActionTriggered;
         /// <summary>Raised with true when the officer sits down, false when they leave.</summary>

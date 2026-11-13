@@ -61,9 +61,6 @@ namespace GameOff.UI
         /// </summary>
         public static bool BlocksInput => _open || Time.frameCount == _closedFrame;
 
-        public bool IsOpen => _open;
-        public HelpSituation Shown => _shown;
-
         /// <summary>
         /// A window that opens over the help (the shift report, P08) takes over the player the help took while walking: true if it did.
         /// The help then closes without giving control back (it isn't available under the window anyway); the window gives it back.

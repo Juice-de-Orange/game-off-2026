@@ -13,7 +13,7 @@ Ab ca. 150 Einträgen wird die Datei pro Bereich aufgeteilt.
 | `path` | finaler Pfad unter `Assets/_Project/` |
 | `package` | Paket aus `docs/team/PAKETE.md` |
 | `scene` | Raum/Szene, in dem das Asset vorkommt (Bar, Hangar, Counter, Motel, Diner, UI ...) |
-| `status` | `offen` → `in Arbeit` → `Vorschau` → `final`; bei Nachbesserung `rework` |
+| `status` | `offen` → `in Arbeit` → `Vorschau` → `final`; bei Nachbesserung `rework`; nicht mehr gebraucht und gelöscht: `entfällt` |
 | `priority` | `P1` = Muss, `P2` = Soll, `P3` = Kann |
 | `needed_by` | Datum, bis wann das finale Asset gebraucht wird |
 | `size_m` | `[Breite, Tiefe, Höhe]` in Metern |
@@ -40,7 +40,7 @@ ein neuer Eintrag nur für eine zusätzliche Variante.
 path: Assets/_Project/Art/Models/<Bereich>/<Datei>
 package: Pxx
 scene: <Raum>
-status: offen            # offen | in Arbeit | Vorschau | rework | final
+status: offen            # offen | in Arbeit | Vorschau | rework | final | entfällt
 priority: P1             # P1 Muss | P2 Soll | P3 Kann
 needed_by: 2026-11-xx
 size_m: [0.0, 0.0, 0.0]  # Breite x Tiefe x Höhe
@@ -271,7 +271,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Window_Panorama.fbx
 package: P04
 scene: Halle
-status: final
+status: entfällt
 priority: P3
 needed_by: 2026-11-12
 size_m: [8.0, 0.4, 4.5]
@@ -292,6 +292,7 @@ refs: [docs/style/refs/ai_corridor_window_01.webp, docs/style/refs/ai_window_doc
 placeholder: Box 8.0 x 0.4 x 4.5 m, Pivot bottom_center, Material-Slots [Frame, Glass]
 feedback:
   - "2026-11-02 max: ENTFÄLLT - die Aussichtsplattform (SM_Station_Window_Curved) ersetzt das Panoramafenster. Bitte nicht bauen."
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### SM_Station_Window_Small.fbx
@@ -383,7 +384,7 @@ feedback:
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Door_Big.fbx
 package: P04
 scene: Hangar
-status: final
+status: entfällt
 priority: P3
 needed_by: 2026-11-12
 size_m: [16.0, 1.0, 7.0]
@@ -405,6 +406,7 @@ refs: [docs/style/refs/real_hangar_shuttle_01.webp, docs/style/refs/ai_cockpit_v
 placeholder: Box 16.0 x 1.0 x 7.0 m, Pivot bottom_center, Material-Slots [Frame, Field]
 feedback:
   - "2026-11-02 max: ENTFÄLLT (M004) - Barriere + Emitter bilden die Öffnung, wird nicht verbaut."
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### SM_Counter_Desk.fbx
@@ -829,7 +831,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Hangar/SM_Hangar_Shuttle.fbx
 package: P04
 scene: Hangar
-status: final
+status: entfällt
 priority: P1
 needed_by: 2026-11-16
 size_m: [6.0, 9.0, 3.5]
@@ -851,6 +853,7 @@ refs: [docs/style/refs/real_hangar_shuttle_01.webp, docs/style/refs/mw_cargo_hol
 placeholder: Box 6.0 x 9.0 x 3.5 m, Pivot bottom_center, Material-Slots [Hull, Detail]
 feedback:
   - "2026-11-02 max: Heckrampe als eigenes Unterobjekt 'Ramp' mit Pivot an der Angel (klappt per Skript hoch/runter, P25). Rest bleibt."
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### SM_Hangar_DronePad.fbx
@@ -1078,7 +1081,7 @@ feedback:
 path: Assets/_Project/Art/Models/Motel/SM_Motel_TV.fbx
 package: P04
 scene: Motel
-status: final
+status: entfällt
 priority: P2
 needed_by: 2026-11-22
 size_m: [0.5, 0.4, 0.4]
@@ -1098,7 +1101,8 @@ animations: []
 collision: prefab
 refs: [docs/style/refs/ai_terminal_crt_01.webp]
 placeholder: Box 0.5 x 0.4 x 0.4 m, Pivot bottom_center, Material-Slots [TV]
-feedback: []
+feedback:
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### SM_Motel_Reception.fbx
@@ -1384,7 +1388,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Diner/SM_Diner_MenuBoard.fbx
 package: P04
 scene: Diner
-status: final
+status: entfällt
 priority: P2
 needed_by: 2026-11-22
 size_m: [2.0, 0.1, 0.8]
@@ -1404,7 +1408,8 @@ animations: []
 collision: prefab
 refs: [docs/style/refs/ai_mess_table_01.webp, docs/style/refs/ai_mess_table_02.webp]
 placeholder: Box 2.0 x 0.1 x 0.8 m, Pivot center, Material-Slots [Board]
-feedback: []
+feedback:
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### T_Sky_Space.png
@@ -2896,7 +2901,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Station/SM_Station_Wall_Porthole_2x3.fbx
 package: P22
 scene: Motel
-status: final
+status: entfällt
 priority: P1
 needed_by: 2026-11-09
 size_m: [2.0, 0.2, 3.0]
@@ -2915,7 +2920,8 @@ animations: []
 collision: prefab
 refs: []
 placeholder: Box 2.0 x 0.2 x 3.0 m, Pivot bottom_center, Material-Slots [Wall]
-feedback: []
+feedback:
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155). Die Textur T_Station_Wall_Porthole_2x3_Albedo.png bleibt: SM_Station_Wall_Porthole_Large_2x3 nutzt sie."
 ```
 
 ### SM_Station_Wall_Door_2x3_Narrow.fbx
@@ -3907,7 +3913,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_HullEdge_4.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: final
+status: entfällt
 priority: P1
 needed_by: 2026-11-12
 size_m: [4.0, 0.6, 0.6]
@@ -3926,7 +3932,8 @@ animations: []
 collision: none
 refs: [docs/style/refs/ai_station_exterior_01.webp]
 placeholder: Box 4.0 x 0.6 x 0.6 m, Pivot center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
-feedback: []
+feedback:
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### SM_Ext_HullCorner.fbx
@@ -3934,7 +3941,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_HullCorner.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: final
+status: entfällt
 priority: P1
 needed_by: 2026-11-12
 size_m: [0.6, 0.6, 0.6]
@@ -3953,7 +3960,8 @@ animations: []
 collision: none
 refs: [docs/style/refs/ai_station_exterior_01.webp]
 placeholder: Box 0.6 x 0.6 x 0.6 m, Pivot center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
-feedback: []
+feedback:
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### SM_Ext_RoofCap_4x4.fbx
@@ -4070,7 +4078,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Exterior/SM_Ext_Pipe_Large_Elbow.fbx
 package: P39
 scene: Außen (Station von außen, durch Fenster und im Startbildschirm)
-status: final
+status: entfällt
 priority: P1
 needed_by: 2026-11-12
 size_m: [1.2, 1.2, 0.8]
@@ -4089,7 +4097,8 @@ animations: []
 collision: none
 refs: [docs/style/refs/ai_station_exterior_01.webp]
 placeholder: Box 1.2 x 1.2 x 0.8 m, Pivot center, Material-Slots [Hull] (vom SkyExteriorBuilder per Code)
-feedback: []
+feedback:
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### SM_Ext_DockingCollar.fbx
@@ -5913,7 +5922,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Bar/SM_Bar_WishBoard.fbx
 package: P65
 scene: Halle, neben der Bar-Tür (x 7,75, z 4,6, Blick in die Halle)
-status: final
+status: entfällt
 priority: P2
 needed_by: 2026-11-16
 size_m: [0.9, 0.06, 0.6]
@@ -5936,6 +5945,7 @@ refs: []
 placeholder: Dunkler Quader 0.9 x 0.6 x 0.04 m, Pivot center (EconomyBuilder, P65)
 feedback:
   - "2026-11-08 max: (P93) Wird nicht mehr verwendet: Das Schild vor der Bar ist entfallen, der Barkeeper nennt den Wunsch selbst. Nichts weiter zu tun."
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### SM_Prop_BribeEnvelope.fbx
@@ -8235,7 +8245,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_WarnStripe.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: final
+status: entfällt
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8254,7 +8264,8 @@ animations: []
 collision: none
 refs: [docs/STYLE.md]
 placeholder: Bis zur Lieferung einfache Farbflächen.
-feedback: []
+feedback:
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### UI_Terminal_Scanlines.png
@@ -8262,7 +8273,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_Terminal_Scanlines.png
 package: P95
 scene: UI (alle Menüs und Fenster)
-status: final
+status: entfällt
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -8281,7 +8292,8 @@ animations: []
 collision: none
 refs: [docs/STYLE.md]
 placeholder: Bis zur Lieferung einfache Farbflächen.
-feedback: []
+feedback:
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### SFX_Paper_Pickup_01.ogg
@@ -10038,7 +10050,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Motel/SM_Motel_FloppyPlayer.fbx
 package: P117
 scene: Motel
-status: final
+status: entfällt
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.45, 0.3, 0.25]
@@ -10058,7 +10070,8 @@ animations: []
 collision: prefab
 refs: []
 placeholder: SM_Motel_TV bleibt stehen; Box 0.45 x 0.3 x 0.25 m, Pivot bottom_center, Material-Slots [Player]
-feedback: []
+feedback:
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### SM_Item_FloppyDisk.fbx
@@ -10066,7 +10079,7 @@ feedback: []
 path: Assets/_Project/Art/Models/Items/SM_Item_FloppyDisk.fbx
 package: P117
 scene: Motel
-status: final
+status: entfällt
 priority: P2
 needed_by: 2026-11-20
 size_m: [0.09, 0.09, 0.01]
@@ -10085,7 +10098,8 @@ animations: []
 collision: prefab
 refs: []
 placeholder: keine, bis es geliefert ist; Box 0.09 x 0.09 x 0.01 m, Pivot bottom_center, Material-Slots [Disk]
-feedback: []
+feedback:
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### MUS_Floppy_01.ogg
@@ -10173,7 +10187,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Floppy_Insert.ogg
 package: P127
 scene: Zimmer 103
-status: Vorschau
+status: entfällt
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10191,7 +10205,8 @@ animations: []
 collision: prefab
 refs: []
 placeholder: UI-Klick bleibt, bis die Lieferung da ist.
-feedback: []
+feedback:
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### SFX_Floppy_Eject.ogg
@@ -10199,7 +10214,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Floppy_Eject.ogg
 package: P127
 scene: Zimmer 103
-status: Vorschau
+status: entfällt
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]
@@ -10217,7 +10232,8 @@ animations: []
 collision: prefab
 refs: []
 placeholder: UI-Klick bleibt, bis die Lieferung da ist.
-feedback: []
+feedback:
+  - "2026-11-13 max: nicht mehr benutzt, gelöscht (P155)"
 ```
 
 ### SM_Item_Cassette.fbx

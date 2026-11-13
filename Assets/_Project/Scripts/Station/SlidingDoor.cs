@@ -9,7 +9,8 @@ namespace GameOff.Station
     /// Sliding door (P27): opens with a hiss when someone allowed comes close, slides sideways into the wall. A locked door only
     /// says so when the player tries it with [E] (P90), not each time someone walks past.
     /// Needs a trigger collider on this object (the sensing area). The panel carries its own solid collider.
-    /// Travelers count when they have a NavMeshAgent and a collider (P14). Scripted doors react only to Open()/Close().
+    /// Besides the player, anyone with a NavMeshAgent and a collider counts: the guards on their rounds (P148). Scripted doors react
+    /// only to Open()/Close().
     /// </summary>
     [RequireComponent(typeof(Collider))]
     public class SlidingDoor : MonoBehaviour
@@ -37,7 +38,7 @@ namespace GameOff.Station
         [SerializeField] private AudioClip lockedClip;
         [Tooltip("Optional red lamp, shown while the door is locked.")]
         [SerializeField] private GameObject lockedLamp;
-        [Tooltip("Carving obstacle that keeps travelers out. Scripted doors: only active while the door is not open.")]
+        [Tooltip("Carving obstacle that keeps NavMesh agents (the guards, P148) out. Scripted doors: only active while the door is not open.")]
         [SerializeField] private NavMeshObstacle obstacle;
 
         private readonly HashSet<Collider> _inside = new HashSet<Collider>();
@@ -68,13 +69,6 @@ namespace GameOff.Station
         private void OnDisable()
         {
             if (role != Role.None && ForRole(role) == this) ByRole.Remove(role);
-        }
-
-        /// <summary>Change who may pass (e.g. unlock a room later).</summary>
-        public void SetAccess(DoorAccess newAccess)
-        {
-            access = newAccess;
-            UpdateLocked();
         }
 
         /// <summary>Open a door by code (Scripted doors, or force any door open).</summary>
@@ -114,7 +108,7 @@ namespace GameOff.Station
                 panel.localPosition = _closedLocalPos + Vector3.left * (slideDistance * eased);
             }
 
-            // Travelers may only path through a scripted door (inspection lock) while it is open.
+            // NavMesh agents may only path through a scripted door (inspection lock) while it is open.
             if (obstacle != null && access == DoorAccess.Scripted)
             {
                 bool block = _open < 0.95f;
@@ -135,7 +129,7 @@ namespace GameOff.Station
 
         private static bool IsRelevant(Collider c) => IsPlayer(c) || IsTraveler(c);
         private static bool IsPlayer(Collider c) => c.GetComponentInParent<FirstPersonController>() != null;
-        private static bool IsTraveler(Collider c) => c.GetComponentInParent<NavMeshAgent>() != null;
+        private static bool IsTraveler(Collider c) => c.GetComponentInParent<NavMeshAgent>() != null; // the guards (P148)
 
         private void Play(AudioClip clip)
         {

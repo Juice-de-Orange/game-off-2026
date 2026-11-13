@@ -16,7 +16,6 @@ namespace GameOff.Rest
 
         public CassettePlaylist(int slots) => _slots = new CassetteData[System.Math.Max(0, slots)];
 
-        public int SlotCount => _slots.Length;
         /// <summary>The playing slot, -1 while the deck is empty.</summary>
         public int Playing { get; private set; } = -1;
         public CassetteData Current => Playing >= 0 ? _slots[Playing] : null;

@@ -21,7 +21,7 @@ namespace GameOff.Economy
         public int ticketPrice = 350;
 
         [Header("Costs per night")]
-        [Tooltip("Room 103 – always paid, may push the balance below zero.")]
+        [Tooltip("Room 103, paid every night. If the settlement leaves too little for it, the night ends the run (STRANDED).")]
         public int rent = 30;
 
         [Header("Needs (P13): a delivered item with the tag covers the need; otherwise money at the bed")]

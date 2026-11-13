@@ -4,8 +4,8 @@ using UnityEngine;
 namespace GameOff.Counter
 {
     /// <summary>
-    /// P91: the steel shutter in front of the counter window. It drops when someone is arrested or sent through the airlock, so the
-    /// player only hears what happens behind it; no guard has to be shown. Hidden while open.
+    /// P91: the steel shutter in front of the counter window. It drops when someone is arrested, so the player only hears what
+    /// happens behind it (since P105 the airlock happens in view, without the shutter). The kiosk's shutter is one too. Hidden while open.
     /// </summary>
     public class SecurityShutter : MonoBehaviour
     {
