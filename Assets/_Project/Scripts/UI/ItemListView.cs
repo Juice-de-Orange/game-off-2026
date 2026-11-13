@@ -8,7 +8,8 @@ namespace GameOff.UI
 {
     /// <summary>
     /// A simple list of rows (icon and label left, value right) for the trade and inventory windows (P46). Rows are copies of an
-    /// inactive template; the selected row is highlighted. Clipped by a RectMask2D, no scrolling yet (enough for a jam).
+    /// inactive template; the selected row is highlighted. The content sits in a ScrollRect (EconomyBuilder.ListBox): rows keep their
+    /// height and a list longer than the box scrolls.
     /// </summary>
     public class ItemListView : MonoBehaviour
     {

@@ -110,6 +110,23 @@ namespace GameOff.Tests
             }
         }
 
+        // The origins deploy/reports/server.py takes (ALLOWED_ORIGINS, ALLOWED_ORIGIN_SUFFIXES); from anywhere else nothing is sent.
+        [TestCase("https://kestrel9.maxlworks.com/", true)]
+        [TestCase("https://kestrel9.maxlworks.com/index.html?seed=3", true)]
+        [TestCase("https://html-classic.itch.zone/html/12345/index.html", true)]
+        [TestCase("https://someone.itch.io/kestrel-9", true)]
+        [TestCase("http://kestrel9.maxlworks.com/", false)]
+        [TestCase("https://kestrel9.maxlworks.com:8443/", false)]
+        [TestCase("http://localhost:8080/index.html", false)]
+        [TestCase("http://127.0.0.1:5000/", false)]
+        [TestCase("https://kestrel9.maxlworks.com.evil.example/", false)]
+        [TestCase("https://fake-itch.io.example/", false)]
+        [TestCase("file:///C:/Builds/WebGL/index.html", false)]
+        [TestCase("", false)]
+        [TestCase(null, false)]
+        public void Metrics_are_sent_only_from_pages_the_server_accepts(string page, bool sends) =>
+            Assert.AreEqual(sends, PlayMetricsRunner.SendsFrom(page), page);
+
         private static int CountEvents(string batch)
         {
             int count = 0, at = 0;

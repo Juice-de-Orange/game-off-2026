@@ -244,6 +244,40 @@ namespace GameOff.Tests
         }
 
         [Test]
+        public void VendorExtras_RestoredButNotOpened_AreSavedAgain()
+        {
+            var vase = Make<ItemData>("Item_Vase");
+            var spice = Make<ItemData>("Item_Spice");
+            var kiosk = Make<VendorStock>("Stock_Kiosk");
+            var go = new GameObject("economy");
+            try
+            {
+                // CONTINUE: the extras wait for their shelf, and the continued morning is saved again before anyone opens it.
+                var economy = go.AddComponent<PlayerEconomy>();
+                economy.RestoreExtras("Stock_Kiosk", new List<(ItemData, int)> { (vase, 2) });
+                economy.RestoreExtras("Stock_Dealer", new List<(ItemData, int)> { (spice, 1) });
+                var saved = economy.VendorExtras();
+                CollectionAssert.AreEquivalent(new[] { "Stock_Kiosk", "Stock_Dealer" }, saved.Keys);
+                Assert.AreEqual((vase, 2), saved["Stock_Kiosk"][0]);
+
+                var run = FreshRun();
+                run.vendorExtras = saved;
+                var back = FreshRun();
+                SaveGame.Apply(SaveGame.Capture(run), back, new SaveGame.Lookup(new[] { vase, spice }, null, null));
+                Assert.AreEqual((vase, 2), back.vendorExtras["Stock_Kiosk"][0]);
+                Assert.AreEqual((spice, 1), back.vendorExtras["Stock_Dealer"][0]);
+
+                // Opened: the extras are on the shelf and counted once.
+                Assert.AreEqual(2, economy.Supply(kiosk).Count(vase));
+                saved = economy.VendorExtras();
+                Assert.AreEqual(1, saved["Stock_Kiosk"].Count);
+                Assert.AreEqual((vase, 2), saved["Stock_Kiosk"][0]);
+                Assert.AreEqual((spice, 1), saved["Stock_Dealer"][0]);
+            }
+            finally { Object.DestroyImmediate(go); }
+        }
+
+        [Test]
         public void NoSave_NoContinue()
         {
             var store = new MemoryStore();
@@ -273,7 +307,9 @@ namespace GameOff.Tests
             int captures = 0;
             SaveData Capture(int day) { captures++; return new SaveData { day = day }; }
             Assert.IsTrue(slot.SaveMorning(1, () => Capture(1)));
-            Assert.IsFalse(slot.SaveMorning(1, () => Capture(1)), "the same morning again (a continued run) saves nothing new");
+            // Only the same slot: a continued run loads the scene again with a fresh slot and saves its morning once more at once
+            // (so its capture must hold everything the save restored, see VendorExtras_RestoredButNotOpened_AreSavedAgain).
+            Assert.IsFalse(slot.SaveMorning(1, () => Capture(1)), "the same morning again on the same slot saves nothing new");
             Assert.IsTrue(slot.SaveMorning(2, () => Capture(2)));
             Assert.AreEqual(2, store.Writes);
             Assert.AreEqual(2, captures);

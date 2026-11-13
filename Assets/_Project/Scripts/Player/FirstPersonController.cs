@@ -32,6 +32,7 @@ namespace GameOff.Player
         private float _pitch;
         private float _verticalVelocity;
         private bool _controlEnabled = true;
+        private bool _runOver;
 
         public bool ControlEnabled => _controlEnabled;
 
@@ -72,9 +73,20 @@ namespace GameOff.Player
         /// </summary>
         public void SetControlEnabled(bool enabled)
         {
+            if (enabled && _runOver) return; // the end screen keeps the mouse; a window closing behind it must not catch it
             _controlEnabled = enabled;
             SetCursorCaptured(enabled);
             if (enabled) PointerLockBridge.Request();
+        }
+
+        /// <summary>
+        /// The run has ended (end screen): control goes off and stays off. Later SetControlEnabled(true) calls (the counter's stand-up,
+        /// a dialog or window closing behind the end screen) are ignored. A new run loads the scene again.
+        /// </summary>
+        public void EndControlForGood()
+        {
+            SetControlEnabled(false);
+            _runOver = true;
         }
 
         /// <summary>Moves the player to a spot (e.g. after leaving the counter); yaw from the rotation, camera pitch level.</summary>

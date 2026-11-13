@@ -42,6 +42,7 @@ namespace GameOff.Counter
             _queue.Clear();
             _speaking = null; // the coroutine stops with the component
             subtitleRoot.SetActive(false);
+            if (speakerLamp != null) speakerLamp.SetActive(false);
         }
 
         /// <summary>A new day: yesterday's lines are not said anymore, even if the officer left before hearing them.</summary>
@@ -51,6 +52,7 @@ namespace GameOff.Counter
             _speaking = null;
             _queue.Clear();
             subtitleRoot.SetActive(false);
+            if (speakerLamp != null) speakerLamp.SetActive(false); // a line cut off mid-way leaves no lamp burning
         }
 
         private void OnShiftStarted()

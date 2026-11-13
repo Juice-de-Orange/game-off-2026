@@ -69,6 +69,16 @@ namespace GameOff.Tests
         }
 
         [Test]
+        public void Rent_short_before_curfew_says_sell_after_it_says_closed()
+        {
+            StringAssert.Contains("RETURN and sell", GameOff.UI.SettlementWindow.RentWarning(false));
+            string late = GameOff.UI.SettlementWindow.RentWarning(true);
+            StringAssert.DoesNotContain("sell something", late, "after 23:00 nobody buys anything any more");
+            StringAssert.Contains("closed for tonight", late);
+            StringAssert.Contains("can't pay the rent", late);
+        }
+
+        [Test]
         public void Announcements_default_curfew_texts()
         {
             var lines = ScriptableObject.CreateInstance<Announcements>();

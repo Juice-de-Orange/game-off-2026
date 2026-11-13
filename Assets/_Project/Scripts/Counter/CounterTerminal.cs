@@ -103,7 +103,7 @@ namespace GameOff.Counter
         public void Open()
         {
             _openedFrame = Time.frameCount;
-            station.SetInputBlocked(true);
+            station.SetInputBlocked(this, true);
             window.SetActive(true);
             AudioManager.Play(s => s.uiClick);
             ShowQueries();
@@ -114,15 +114,13 @@ namespace GameOff.Counter
             if (!IsOpen) return;
             StopQuery();
             window.SetActive(false);
-            station.SetInputBlocked(false);
+            station.SetInputBlocked(this, false);
         }
 
         private void Update()
         {
             UpdateStatus();
             if (!IsOpen) return;
-            // A dialog over the terminal (a character's question) unblocks the desk when answered; the terminal is still open.
-            if (!station.InputBlocked) station.SetInputBlocked(true);
             if (Time.frameCount == _openedFrame || GameOff.UI.HelpOverlay.BlocksInput) return; // P140: the Esc that closes the help stays there
             bool back = (Keyboard.current != null && (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.qKey.wasPressedThisFrame))
                         || (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame);

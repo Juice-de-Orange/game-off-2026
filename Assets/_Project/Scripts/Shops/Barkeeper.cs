@@ -91,7 +91,7 @@ namespace GameOff.Shops
             {
                 // P109: after 23:00 he still talks, but takes nothing any more
                 dialogs.ShowDialog("THE LAST ORBIT", $"{day.CurfewClosedText}\nToday I wanted: {wish.Text}. Too late now.", null, null,
-                    day.DevTools && enough ? Give : null, Resume, "Dev_force_Give");
+                    day.DevTools && enough ? HandOver : null, Resume, "Dev_force_Give");
                 return;
             }
             string body = $"Today I'd like: {wish.Text}.\nYou have: {have}.\n\n" +
@@ -100,6 +100,14 @@ namespace GameOff.Shops
         }
 
         private void Give()
+        {
+            // P109: GIVE was offered before 23:00 and pressed after it: he takes nothing any more (Talk says so).
+            if (day.IsCurfew) { Talk(); return; }
+            HandOver();
+        }
+
+        /// <summary>The trade itself, without the curfew check: the red Dev_force_Give button calls it after 23:00 too.</summary>
+        private void HandOver()
         {
             if (!BarWishRules.Give(Economy.Inventory, Wish)) { Resume(); return; }
             _servedDay = day.Day;

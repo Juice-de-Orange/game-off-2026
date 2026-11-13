@@ -1198,7 +1198,7 @@ namespace GameOff.EditorTools
             return t;
         }
 
-        /// <summary>List box: header at the top, rows below (clipped), optional empty text.</summary>
+        /// <summary>List box: header at the top, rows below (scroll with the wheel or by dragging when they don't fit), optional empty text.</summary>
         private static ItemListView ListBox(Transform parent, string name, Vector2 pos, Vector2 size, string header,
             out TMP_Text headerText, out TMP_Text emptyText)
         {
@@ -1207,14 +1207,36 @@ namespace GameOff.EditorTools
             headerText = Text(box, "Header", header, 13, TextDim, new Vector2(0f, size.y / 2f - 14f), new Vector2(size.x - 20f, 20f), TextAlignmentOptions.MidlineLeft);
             emptyText = Text(box, "Empty", "", 14, TextDim, new Vector2(0f, -10f), new Vector2(size.x - 30f, size.y - 50f), TextAlignmentOptions.TopLeft);
 
-            var content = new GameObject("Content", typeof(RectTransform), typeof(VerticalLayoutGroup));
-            content.transform.SetParent(box, false);
+            // The rows sit in a clipped viewport and keep their height; a long list (the kiosk) scrolls instead of squeezing them.
+            var viewport = new GameObject("Viewport", typeof(RectTransform), typeof(Image), typeof(RectMask2D), typeof(ScrollRect));
+            viewport.transform.SetParent(box, false);
+            var vrt = viewport.GetComponent<RectTransform>();
+            vrt.anchorMin = new Vector2(0f, 1f);
+            vrt.anchorMax = new Vector2(1f, 1f);
+            vrt.pivot = new Vector2(0.5f, 1f);
+            vrt.anchoredPosition = new Vector2(0f, -28f);
+            vrt.sizeDelta = new Vector2(-16f, size.y - 34f);
+            viewport.GetComponent<Image>().color = Color.clear; // catches the wheel between and below the rows
+
+            var content = new GameObject("Content", typeof(RectTransform), typeof(VerticalLayoutGroup), typeof(ContentSizeFitter));
+            content.transform.SetParent(viewport.transform, false);
             var crt = content.GetComponent<RectTransform>();
             crt.anchorMin = new Vector2(0f, 1f);
             crt.anchorMax = new Vector2(1f, 1f);
             crt.pivot = new Vector2(0.5f, 1f);
-            crt.anchoredPosition = new Vector2(0f, -28f);
-            crt.sizeDelta = new Vector2(-16f, size.y - 34f);
+            crt.anchoredPosition = Vector2.zero;
+            crt.sizeDelta = Vector2.zero;
+            content.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            var scroll = viewport.GetComponent<ScrollRect>();
+            scroll.content = crt;
+            scroll.viewport = vrt;
+            scroll.horizontal = false;
+            scroll.vertical = true;
+            scroll.movementType = ScrollRect.MovementType.Clamped;
+            scroll.inertia = false;
+            scroll.scrollSensitivity = 5f; // × 6 per wheel tick (InputSystemUIInputModule.scrollDeltaPerTick) ≈ one 28 px row per tick
+
             var layout = content.GetComponent<VerticalLayoutGroup>();
             layout.spacing = 2f;
             layout.childControlWidth = true;
@@ -1225,7 +1247,9 @@ namespace GameOff.EditorTools
             var row = MenuButton(content.transform, "RowTemplate", "", Vector2.zero, new Vector2(size.x - 16f, 26f), 15);
             TerminalStyle.Flat(row); // rows show selection by colour
             Object.DestroyImmediate(row.GetComponentInChildren<TMP_Text>().gameObject);
-            row.gameObject.AddComponent<LayoutElement>().preferredHeight = 26f;
+            var rowSize = row.gameObject.AddComponent<LayoutElement>();
+            rowSize.preferredHeight = 26f;
+            rowSize.minHeight = 26f; // never squeezed: the list scrolls instead
             var label = Text(row.transform, "Label", "Item", 15, TextLight, Vector2.zero, Vector2.zero, TextAlignmentOptions.MidlineLeft);
             Stretch(label.rectTransform);
             label.rectTransform.offsetMin = new Vector2(34f, 0f);
@@ -1430,7 +1454,7 @@ namespace GameOff.EditorTools
             Set(economy, "dayManager", day);
             Set(economy, "shift", Object.FindFirstObjectByType<CounterShift>());
             Record(economy);
-            foreach (var w in instance.GetComponentsInChildren<TradeWindow>(true)) { Set(w, "player", player); Record(w); }
+            foreach (var w in instance.GetComponentsInChildren<TradeWindow>(true)) { Set(w, "player", player); Set(w, "day", day); Record(w); }
             foreach (var w in instance.GetComponentsInChildren<InventoryWindow>(true)) { Set(w, "player", player); Set(w, "counter", counter); Record(w); }
             foreach (var v in instance.GetComponentsInChildren<Vendor>(true))
             {
@@ -1518,7 +1542,7 @@ namespace GameOff.EditorTools
                 Set(c, "dayManager", day);
                 Record(c);
             }
-            foreach (var w in instance.GetComponentsInChildren<ShiftReportWindow>(true)) { Set(w, "counter", counter); Record(w); }
+            foreach (var w in instance.GetComponentsInChildren<ShiftReportWindow>(true)) { Set(w, "counter", counter); Set(w, "player", player); Record(w); }
             foreach (var m in instance.GetComponentsInChildren<VendingMachine>(true))
             {
                 Set(m, "player", player);

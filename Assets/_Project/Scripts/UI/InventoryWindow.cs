@@ -90,7 +90,7 @@ namespace GameOff.UI
             // (not in another window: they all take the player's control).
             if (counter != null && counter.IsSeated)
             {
-                if (!counter.IsHoldingStamp && !counter.InputBlocked) Open(true);
+                if (!counter.IsHoldingStamp && !counter.IsMovingPaper && !counter.InputBlocked) Open(true);
             }
             else if (player.ControlEnabled) Open(false);
         }
@@ -102,7 +102,7 @@ namespace GameOff.UI
             _openedFrame = Time.frameCount;
             _selected = null;
             _shiftView = shiftView;
-            if (shiftView) counter.SetInputBlocked(true);
+            if (shiftView) counter.SetInputBlocked(this, true);
             else player.SetControlEnabled(false);
             if (title != null) title.text = shiftView ? "SHIFT · CONFISCATED" : "INVENTORY";
             if (devFillButton != null) devFillButton.gameObject.SetActive(shiftView && Economy.DevTools);
@@ -110,6 +110,7 @@ namespace GameOff.UI
             Economy.Wallet.Changed += Refresh;
             Economy.Inventory.Changed += Refresh;
             Economy.ShiftItems.Changed += Refresh;
+            Economy.ShiftClosing += OnShiftClosing;
             Refresh();
         }
 
@@ -119,8 +120,14 @@ namespace GameOff.UI
             root.SetActive(false);
             Unsubscribe();
             // Seated, the player's control stays off: the counter gets its input back instead.
-            if (_shiftView) counter.SetInputBlocked(false);
+            if (_shiftView) counter.SetInputBlocked(this, false);
             else player.SetControlEnabled(true);
+        }
+
+        /// <summary>P81: the shift is over and its inventory goes to the report (P08): the shift view closes instead of staying under it.</summary>
+        private void OnShiftClosing(Inventory shiftItems)
+        {
+            if (IsShiftView) Close();
         }
 
         private void Unsubscribe()
@@ -129,6 +136,7 @@ namespace GameOff.UI
             Economy.Wallet.Changed -= Refresh;
             Economy.Inventory.Changed -= Refresh;
             Economy.ShiftItems.Changed -= Refresh;
+            Economy.ShiftClosing -= OnShiftClosing;
         }
 
         private void ToggleWear()

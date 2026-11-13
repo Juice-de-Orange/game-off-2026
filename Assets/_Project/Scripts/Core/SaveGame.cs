@@ -363,13 +363,7 @@ namespace GameOff.Core
                 run.hasTicket = economy.HasTicket;
                 run.barkeeperSulksFrom = economy.BarkeeperSulksFrom;
                 run.letterLines.AddRange(economy.LetterLines);
-                foreach (var pair in economy.Supplies)
-                {
-                    if (pair.Key == null) continue;
-                    var extras = new List<(ItemData, int)>();
-                    foreach (var item in pair.Value.Extras) extras.Add((item, pair.Value.Count(item)));
-                    if (extras.Count > 0) run.vendorExtras[pair.Key.name] = extras;
-                }
+                run.vendorExtras = economy.VendorExtras(); // also what a continued run restored for shelves nobody opened yet
             }
             foreach (int d in Market.ScheduledDays)
                 run.scheduledEvents[d] = new List<MarketEvent>(Market.ScheduledFor(d));

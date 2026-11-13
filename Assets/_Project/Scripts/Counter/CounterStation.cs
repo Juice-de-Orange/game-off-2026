@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using GameOff.Audio;
 using GameOff.Documents;
 using GameOff.Player;
@@ -61,17 +62,26 @@ namespace GameOff.Counter
 
         public bool IsSeated => _seated;
         public bool IsHoldingStamp => _held != null;
-        /// <summary>P81: a window over the desk (shift inventory) takes the keys and the mouse; the desk ignores them meanwhile.</summary>
-        public bool InputBlocked => _inputBlocked || Time.frameCount == _unblockedFrame || GameOff.UI.HelpOverlay.BlocksInput; // P140: [H] help open
+        /// <summary>A paper on the desk is pressed or dragged (or the drawer pressed).</summary>
+        public bool IsMovingPaper => documents != null && documents.IsMovingPaper;
+        /// <summary>
+        /// P81: a window over the desk (shift inventory, terminal, a dialog) takes the keys and the mouse; the desk ignores them while
+        /// anyone blocks it.
+        /// </summary>
+        public bool InputBlocked => _blockers.Count > 0 || Time.frameCount == _unblockedFrame || GameOff.UI.HelpOverlay.BlocksInput; // P140: [H] help open
 
-        private bool _inputBlocked;
+        private readonly HashSet<object> _blockers = new HashSet<object>();
         private int _unblockedFrame = -1;
 
-        /// <summary>Blocks desk input while a window is open; the frame it closes stays blocked, so its Esc doesn't also leave the counter.</summary>
-        public void SetInputBlocked(bool blocked)
+        /// <summary>
+        /// Blocks desk input for this owner (a window, a dialog) until the same owner unblocks it: several can block at once, and the
+        /// desk only takes input again when the last one let go. That frame stays blocked, so the Esc that closed it doesn't also leave the counter.
+        /// </summary>
+        public void SetInputBlocked(object owner, bool blocked)
         {
-            if (_inputBlocked && !blocked) _unblockedFrame = Time.frameCount;
-            _inputBlocked = blocked;
+            if (owner == null) return;
+            if (blocked) _blockers.Add(owner);
+            else if (_blockers.Remove(owner) && _blockers.Count == 0) _unblockedFrame = Time.frameCount;
         }
         /// <summary>The camera the mouse rays come from (desk view while seated).</summary>
         public Camera ViewCamera => viewCamera;
@@ -171,7 +181,13 @@ namespace GameOff.Counter
 
         private void Update()
         {
-            if (!_seated || Time.frameCount == _seatedFrame || InputBlocked) return;
+            if (!_seated || Time.frameCount == _seatedFrame) return;
+            if (InputBlocked)
+            {
+                // A window opened over a drag: the button's release would never reach the desk, so the paper is laid down now.
+                if (documents != null && documents.IsMovingPaper) documents.LetGoOfPaper();
+                return;
+            }
             var screenPos = pointAction.action.ReadValue<Vector2>();
             MarkHover(screenPos);
             if (_held != null && _held.IsPressing) return; // a started press always finishes and counts

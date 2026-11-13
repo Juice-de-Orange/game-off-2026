@@ -104,6 +104,33 @@ namespace GameOff.Economy
             _savedExtras[stockName] = extras;
         }
 
+        /// <summary>
+        /// P128: what the player sold to each vendor that it doesn't normally sell, by stock asset name, for the save: the shelves used
+        /// so far and the extras a continued run restored for shelves not opened yet (else the next morning's save would drop them).
+        /// </summary>
+        public Dictionary<string, List<(ItemData item, int count)>> VendorExtras()
+        {
+            var all = new Dictionary<string, List<(ItemData, int)>>();
+            foreach (var pair in _supplies)
+            {
+                if (pair.Key == null) continue;
+                var extras = new List<(ItemData, int)>();
+                foreach (var item in pair.Value.Extras)
+                {
+                    int count = pair.Value.SoldCount(item);
+                    if (count > 0) extras.Add((item, count));
+                }
+                if (extras.Count > 0) all[pair.Key.name] = extras;
+            }
+            foreach (var pair in _savedExtras)
+            {
+                if (pair.Value == null || pair.Value.Count == 0) continue;
+                if (all.TryGetValue(pair.Key, out var list)) list.AddRange(pair.Value);
+                else all[pair.Key] = new List<(ItemData, int)>(pair.Value);
+            }
+            return all;
+        }
+
         /// <summary>One line per family member for the morning letter, e.g. "Ilya is sick and needs medicine."</summary>
         public string FamilyReport()
         {

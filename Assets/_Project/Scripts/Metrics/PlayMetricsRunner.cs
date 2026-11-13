@@ -14,13 +14,15 @@ namespace GameOff.Metrics
     /// <summary>
     /// P129: collects anonymous play metrics in the WebGL build and posts them every 30 s to deploy/reports (/api/metrics).
     /// Starts itself, so no scene or generated prefab has to change: after every scene load it looks up the day flow and the
-    /// counter once and listens to their events. Off in the editor. Nothing is stored in the browser.
+    /// counter once and listens to their events. Off in the editor and on any page but the live site and itch.io (SendsFrom).
+    /// Nothing is stored in the browser.
     /// Events (fields in docs/DEPLOY.md, read with tools/metrics_report.py): session, day_start, traveler, shift_end, day_end,
     /// run_end, beat (phase and frame rate), error. The web page sends "visit" itself (index.html) under the same session id.
     /// </summary>
     public class PlayMetricsRunner : MonoBehaviour
     {
-        private const string Endpoint = "https://kestrel9.maxlworks.com/api/metrics";
+        private const string LiveHost = "kestrel9.maxlworks.com";
+        private const string Endpoint = "https://" + LiveHost + "/api/metrics";
         private const float BeatSeconds = 30f;
         private const float SlowFrameSeconds = 0.05f;
         private const int MaxErrors = 25;
@@ -29,7 +31,7 @@ namespace GameOff.Metrics
 
         private DayManager _days;
         private CounterShift _shift;
-        private bool _sending, _off;
+        private bool _sending, _off, _flushAgain;
         private float _nextBeat;
         private int _frames, _slowFrames;
         private float _frameTime, _worstFrame;
@@ -42,6 +44,7 @@ namespace GameOff.Metrics
         private static void Boot()
         {
             if (Application.isEditor) return; // play-testing in the editor would only muddy the numbers
+            if (!SendsFrom(Application.absoluteURL)) return; // a local or test build: the server would never take it
             PlayMetrics.Enabled = true;
             PlayMetrics.UseSession(BrowserBridge.PageSession);
             var go = new GameObject("PlayMetrics");
@@ -80,6 +83,20 @@ namespace GameOff.Metrics
         }
 
         private static float Now => Time.realtimeSinceStartup;
+
+        /// <summary>
+        /// Only pages the reports server takes posts from (deploy/reports/server.py: ALLOWED_ORIGINS, ALLOWED_ORIGIN_SUFFIXES): the live
+        /// site and the itch.io build, https on the default port. From any other page (a local or test build) the browser's CORS
+        /// preflight fails before the server could answer 403, so the runner would never learn to stop and post all session long.
+        /// </summary>
+        public static bool SendsFrom(string pageUrl)
+        {
+            if (string.IsNullOrEmpty(pageUrl) || !System.Uri.TryCreate(pageUrl, System.UriKind.Absolute, out var uri)) return false;
+            if (uri.Scheme != System.Uri.UriSchemeHttps || !uri.IsDefaultPort) return false;
+            string host = uri.Host.ToLowerInvariant();
+            return host == LiveHost || host.EndsWith(".itch.zone", System.StringComparison.Ordinal)
+                                    || host.EndsWith(".itch.io", System.StringComparison.Ordinal);
+        }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => Hook();
 
@@ -291,7 +308,12 @@ namespace GameOff.Metrics
 
         private void Flush()
         {
-            if (_sending || _off) return;
+            if (_off) return;
+            if (_sending)
+            {
+                _flushAgain = true; // e.g. run_end or leaving the tab during a beat's post: sent right after it
+                return;
+            }
             string batch = PlayMetrics.TakeBatch(Application.version);
             if (batch != null) StartCoroutine(Post(batch));
         }
@@ -306,8 +328,9 @@ namespace GameOff.Metrics
                 request.timeout = TimeoutSeconds;
                 request.SetRequestHeader("Content-Type", "application/json");
                 yield return request.SendWebRequest();
-                // 404: metrics are switched off on the server (or not deployed yet); 403: a local build, whose origin the server
-                // refuses. Stop asking for this session. Other failures lose this batch; the next one comes with the next beat.
+                // 404: metrics are switched off on the server (or not deployed yet); 403: the server refuses the origin (only
+                // pages SendsFrom allows get this far, so this is a server change). Stop asking for this session. Other failures
+                // (also a refused CORS preflight, which never reaches the server) lose this batch; the next one comes with the next beat.
                 if (request.responseCode == 404 || request.responseCode == 403)
                 {
                     _off = true;
@@ -315,6 +338,9 @@ namespace GameOff.Metrics
                 }
             }
             _sending = false;
+            if (!_flushAgain) yield break;
+            _flushAgain = false;
+            Flush();
         }
     }
 }

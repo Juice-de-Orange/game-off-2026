@@ -177,12 +177,15 @@ namespace GameOff.Day
         {
             float evening = eveningClockSeconds > 0f ? (Time.time - _eveningSince) / eveningClockSeconds : 1f;
             GameClock.Set(GameClock.Compute(_phase, shift.Progress, evening));
-            if (!_curfewAnnounced && IsCurfew) StartCurfew();
+            if (!_curfewAnnounced && IsCurfew && !FlyingHome) StartCurfew();
             float sinceMorning = _phase == Phase.Shift && _morningSince >= 0f ? Time.time - _morningSince : -1f;
             if (FirstMorningAnnouncementDue(_day, sinceMorning, FirstMorningDelay, _firstMorningAnnounced)) StartCoroutine(FirstMorningAnnouncement());
         }
 
         private float FirstMorningDelay => announcements != null ? announcements.firstMorningDelay : Announcements.DefaultFirstMorningDelay;
+
+        /// <summary>P72: the player is on the flight home: the station's curfew gong and hints are left behind.</summary>
+        private static bool FlyingHome => GameOff.Departure.ShuttleFlight.Instance != null && GameOff.Departure.ShuttleFlight.Instance.IsFlying;
 
         /// <summary>P133: day 1 only – the station tells the new officer where to go (#37), then the usual way hint.</summary>
         private IEnumerator FirstMorningAnnouncement()
@@ -216,7 +219,7 @@ namespace GameOff.Day
             ui.ShowHint(line, seconds + 1f);
             yield return new WaitForSeconds(seconds + 1f);
             _curfewHints = null;
-            if (_phase == Phase.Evening) ui.ShowHint(hint, 6f);
+            if (_phase == Phase.Evening && !FlyingHome) ui.ShowHint(hint, 6f);
         }
 
         /// <summary>P28: waiting on a bench in the evening runs the clock on by this many seconds (never past 23:00).</summary>
@@ -330,15 +333,26 @@ namespace GameOff.Day
         private IEnumerator FinishRunRoutine(string title, string body)
         {
             _phase = Phase.Finished;
-            player.SetControlEnabled(false); // frees the mouse for the end screen
+            FreezeForEnd(); // frees the mouse for the end screen
             yield return ui.FadeTo(1f, fadeSeconds);
             ShowRunEnd(title, body);
+        }
+
+        /// <summary>
+        /// The run is over for good: the player's control stays off, and the counter takes no more input (seated, its Q / Esc /
+        /// right click would stand up and give the player the mouse back behind the end screen; DISCHARGED, AIRLOCKED).
+        /// </summary>
+        private void FreezeForEnd()
+        {
+            player.EndControlForGood();
+            if (shift.Station != null) shift.Station.SetInputBlocked(this, true);
         }
 
         /// <summary>The one place a run ends with an ending text (game over, ticket home; P12 adds more).</summary>
         private void ShowRunEnd(string title, string body)
         {
             _phase = Phase.Finished;
+            FreezeForEnd();
             _save.EndRun(); // P128
             EndingTitle = title ?? "";
             Debug.Log($"[Day] Run finished on day {_day}: {title}");
@@ -375,6 +389,7 @@ namespace GameOff.Day
                 yield break;
             }
             _phase = Phase.Finished;
+            FreezeForEnd();
             _save.EndRun(); // P128
             EndingTitle = "last day";
             RunFinished?.Invoke();

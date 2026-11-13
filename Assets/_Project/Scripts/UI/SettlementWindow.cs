@@ -44,6 +44,8 @@ namespace GameOff.UI
         private int _correctToday;
         private bool _open;
         private bool _returned;
+        /// <summary>P109: 23:00 has struck this evening (DayManager.IsCurfew is false in the night phase this window runs in).</summary>
+        private bool _curfewTonight;
         private readonly System.Collections.Generic.List<string> _customsLines = new System.Collections.Generic.List<string>();
 
         private static PlayerEconomy Economy => PlayerEconomy.Instance;
@@ -81,6 +83,7 @@ namespace GameOff.UI
                 dayManager.LetterAddendum = () => Economy != null ? Economy.MorningReport() : "";
                 dayManager.FamilyInTrouble = () => Economy != null && Economy.Household != null && Economy.Household.AnySick;
                 dayManager.LetterOverride = () => Economy != null ? Economy.LossLetter() : null;
+                dayManager.CurfewStarted += OnCurfew;
             }
             if (shift != null)
             {
@@ -97,6 +100,7 @@ namespace GameOff.UI
                 dayManager.LetterAddendum = null;
                 dayManager.FamilyInTrouble = null;
                 dayManager.LetterOverride = null;
+                dayManager.CurfewStarted -= OnCurfew;
             }
             if (shift != null)
             {
@@ -105,7 +109,13 @@ namespace GameOff.UI
             }
         }
 
-        private void OnDayBegun() => _travelersToday = _correctToday = 0;
+        private void OnDayBegun()
+        {
+            _travelersToday = _correctToday = 0;
+            _curfewTonight = false;
+        }
+
+        private void OnCurfew(int day) => _curfewTonight = true;
 
         // P70: only correctly decided travelers are paid (Martin, 06.11.); wrong ones bring nothing.
         private void OnDecision(TravelerData traveler, Verdict chosen, Judgement judgement)
@@ -263,8 +273,7 @@ namespace GameOff.UI
             if (Bribe > 0) sb.AppendLine(Line("Envelope from the bar", Bribe));
             sb.AppendLine(Line("Rent  ·  room 103", -t.rent));
             foreach (var line in _customsLines) sb.AppendLine($"\n<color=#E2463F>{line}</color>");
-            if (!CanPayRent)
-                sb.AppendLine("\n<color=#E2463F>You can't pay the rent.</color>\n<color=#8B9096>RETURN and sell something – or CONFIRM and lose your room.</color>");
+            if (!CanPayRent) sb.AppendLine(RentWarning(_curfewTonight));
             income.text = sb.ToString();
 
             int available = AfterFixed - ChosenCosts();
@@ -320,6 +329,12 @@ namespace GameOff.UI
             if (spoils.Count > 0) after += $"  <color=#E2463F>({HomeDelivery.Summary(spoils)} spoils)</color>";
             return $"AT HOME  {home.Summary()}  ·  after tonight: {after}";
         }
+
+        /// <summary>The rent can't be paid: before the curfew RETURN and selling still help; after it (P109) the trading is closed for tonight.</summary>
+        public static string RentWarning(bool curfew) =>
+            "\n<color=#E2463F>You can't pay the rent.</color>\n<color=#8B9096>" +
+            (curfew ? "Trading is closed for tonight. CONFIRM and lose your room." : "RETURN and sell something – or CONFIRM and lose your room.") +
+            "</color>";
 
         private static string ExtraCitations(int n) => n == 1 ? "1 extra citation" : $"{n} extra citations";
 

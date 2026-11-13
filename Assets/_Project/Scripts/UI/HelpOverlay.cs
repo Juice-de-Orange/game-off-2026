@@ -47,11 +47,11 @@ namespace GameOff.UI
         [SerializeField] private SeatView[] seats = new SeatView[0];
         [SerializeField] private HallBench[] benches = new HallBench[0];
 
-        private static bool _open;
+        private static bool _open, _tookControl;
         private static int _closedFrame = -1;
 
         private InputAction _toggle;
-        private bool _begun, _tookControl, _lockHeld;
+        private bool _begun, _lockHeld;
         private HelpSituation _shown = HelpSituation.None;
         private readonly StringBuilder _text = new StringBuilder();
 
@@ -64,9 +64,20 @@ namespace GameOff.UI
         public bool IsOpen => _open;
         public HelpSituation Shown => _shown;
 
+        /// <summary>
+        /// A window that opens over the help (the shift report, P08) takes over the player the help took while walking: true if it did.
+        /// The help then closes without giving control back (it isn't available under the window anyway); the window gives it back.
+        /// </summary>
+        public static bool HandOverPlayer()
+        {
+            if (!_open || !_tookControl) return false;
+            _tookControl = false;
+            return true;
+        }
+
         private void Awake()
         {
-            _open = false;
+            _open = _tookControl = false;
             _closedFrame = -1;
             _toggle = new InputAction("Help", InputActionType.Button, "<Keyboard>/h");
             panel.SetActive(false);
