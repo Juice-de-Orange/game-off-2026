@@ -2143,3 +2143,11 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
 - Ziel: Das Spiel läuft auf schwächeren Geräten wieder so flüssig wie nach P57.
 - Enthalten: Messung vom 13.11. (Release-Build ccaa2f7, `measure-webgl`, gleiche Maschine wie P57) liegt 24–47 % unter P57: CPU ×4 Menü 16,2 fps (P57: 25,0), Zimmer 33,2 (59,6), Schalter 26,9 (38,4), Pinnwand 23,4 (43,8), Stehen 28,9 (38,2); ohne Bremse Menü/Zimmer/Schalter 112/270/184 (150/353/212). Download 33 MB statt 14,7 MB. Ursachen suchen mit `GameOff/Audit Main Scene` und dem Unity-Profiler (Kandidaten seit P57: Abendgäste und Reisende als Skinned Meshes, Putzroboter, Wachen, Kassettendecks, Verkehr, Licht/Schatten, neue Modelle, Musik ohne Streaming), die größten zwei bis drei beheben, Download prüfen (Musik als Vorbis mit niedrigerer Qualität/Streaming, Texturen).
 - Abnahme: Neue Messung mit `K9_CPU=4`: Schalter und Stehen ≥ 35 fps, Menü ≥ 22 fps; Download ≤ 25 MB oder Begründung; keine sichtbaren Verluste; Ergebnis-Tabelle im Paket.
+
+### P155 — Gesamtprüfung: Bugs, Inkonsistenzen, toter Code
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 13.11.) · Zuständig: max
+- Braucht: — · Folgt auf: —
+- Ziel: Vor dem Feature-Freeze ist das ganze Spiel einmal durchgeprüft; eindeutige Fehler sind behoben, Entscheidungen mit Max getroffen.
+- Enthalten: Code-Prüfung aller Bereiche (Runtime, Builder, Story-Inhalte gegen die Docs, Backend, Werkzeuge) mit Gegenprüfung; Bugs, Tippfehler und toter Code direkt behoben; Verhaltens- und Inhaltsfragen per Multiple Choice an Max; größere Punkte als eigene Pakete.
+- Nicht enthalten: P151–P154 (eigene Pakete).
+- Abnahme: Tests, Validate Travelers und Economy Report grün; Fixes im Browser geprüft, soweit möglich; Liste der Funde mit Ergebnis im Paket.
