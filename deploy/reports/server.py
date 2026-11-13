@@ -40,6 +40,7 @@ METRICS_TEXT_MAX = 500
 METRICS_LIST_MAX = 12
 METRICS_FILE_MAX = 200 * 1024 * 1024  # per day; beyond it events are dropped (a full disk would stop the whole server)
 METRICS_EVENTS = {"visit", "session", "day_start", "traveler", "shift_end", "day_end", "run_end", "beat", "error"}
+SERVER_FIELDS = ("e", "ts", "s", "v")  # set by the server (MetricsStore.write); an event can't bring its own
 KEY = re.compile(r"^[a-z][a-z0-9_]{0,23}$")
 SESSION = re.compile(r"^[0-9a-f]{8,32}$")
 
@@ -124,11 +125,12 @@ def parse_metrics(raw):
         return None, None, None, "too many events"
     kept = []
     for event in events:
-        if not isinstance(event, dict) or event.get("e") not in METRICS_EVENTS:
+        # "e" is checked as text first: a list or object there is unhashable and would end the request with a TypeError
+        if not isinstance(event, dict) or not isinstance(event.get("e"), str) or event["e"] not in METRICS_EVENTS:
             continue
         clean_event = {"e": event["e"]}
         for key, value in list(event.items())[:METRICS_MAX_FIELDS]:
-            if key == "e" or not isinstance(key, str) or not KEY.match(key):
+            if key in SERVER_FIELDS or not isinstance(key, str) or not KEY.match(key):
                 continue
             value = metric_value(value)
             if value is not None:
@@ -152,7 +154,9 @@ class MetricsStore:
     def write(self, session, version, events):
         now = self.now()
         stamp = now.strftime("%Y-%m-%dT%H:%M:%SZ")
-        lines = "".join(json.dumps({"ts": stamp, "s": session, "v": version, **event}, ensure_ascii=False) + "\n" for event in events)
+        # Encoded once: the limit counts bytes on disk, and non-ASCII text (ensure_ascii=False) takes more bytes than characters.
+        data = "".join(json.dumps({"ts": stamp, "s": session, "v": version, **event}, ensure_ascii=False) + "\n"
+                       for event in events).encode("utf-8")
         with self.lock:
             self.prune(now.date())
             path = self.path(now.date())
@@ -160,10 +164,10 @@ class MetricsStore:
                 size = os.path.getsize(path)
             except OSError:
                 size = 0
-            if size + len(lines) > METRICS_FILE_MAX:
+            if size + len(data) > METRICS_FILE_MAX:
                 return False
-            with open(path, "a", encoding="utf-8") as f:
-                f.write(lines)
+            with open(path, "ab") as f:
+                f.write(data)
         return True
 
     def prune(self, today):

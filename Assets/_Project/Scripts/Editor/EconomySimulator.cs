@@ -12,6 +12,9 @@ namespace GameOff.EditorTools
     /// story are drawn from the loop pool (P73) with a fixed seed; without a pool they loop over the story days. Used by the Economy Report and the balance tests.
     /// P131: what goes home (kiosk goods, gifts, pilfered goods) lands in the family's stock (HomeDelivery) like in the game: each night
     /// uses one item per due need, perishable leftovers spoil, the rest stays. The styles still only send what tonight's needs lack.
+    /// The ticket counts on the evening the machine would sell it, before the bed pays the wage (Run.TicketDay). Characters pay their
+    /// deposits back (P77); the Corrupt style lets the bribed character through like the game does (no raid after Quill on day 3).
+    /// Fines and reprimands may push the balance below zero like Wallet.Charge.
     /// </summary>
     public class EconomySimulator
     {
@@ -34,6 +37,8 @@ namespace GameOff.EditorTools
         public class Evening
         {
             public int Day, Wage, Spent, Balance;
+            /// <summary>The money at the ticket machine: after the evening's income (bonuses, deposits, sales), before any spending and before the bed.</summary>
+            public int Available;
             public int[] Family;
             public bool GameOver, SkippedNeed;
         }
@@ -43,15 +48,27 @@ namespace GameOff.EditorTools
             public Style Style;
             public int Correct, Travelers;
             public readonly List<Evening> Evenings = new List<Evening>();
-            /// <summary>First day whose evening ends with enough for the ticket and nobody sick; -1 = never.</summary>
+            /// <summary>
+            /// First evening the ticket machine sells the ticket (TicketTerminal: only after the shift, before the bed): the money then
+            /// (Evening.Available, without tonight's wage and envelope, which come at the bed) reaches the price and nobody is sick; -1 = never.
+            /// </summary>
             public int TicketDay = -1;
             public bool SkippedAnyNeed => Evenings.Any(e => e.SkippedNeed);
             public int WorstCondition => Evenings.Count == 0 ? 0 : Evenings.Max(e => e.Family.Max());
             public int SpeculationProfit, SpeculatedUnits, WishCost, Bribes;
             /// <summary>P125: characters' bonuses minus reprimands; fines, goods sold, customs hits and penalties of the Pilferer.</summary>
             public int Bonus, Fines, LootSold, CustomsCaught, Disciplinary;
+            /// <summary>P77: deposits paid back by characters who collected what they left with the officer.</summary>
+            public int Deposits;
             public bool Discharged;
             public bool GameOver => Evenings.Any(e => e.GameOver);
+        }
+
+        /// <summary>A story character at the counter today and how the simulated officer decided.</summary>
+        public struct Met
+        {
+            public GameOff.Travelers.TravelerData Traveler;
+            public GameOff.Travelers.Verdict Chosen;
         }
 
         private readonly EconomyTuning _economy;
@@ -88,26 +105,36 @@ namespace GameOff.EditorTools
         }
 
         /// <summary>
-        /// P76: the story characters met on that day when every one is decided as intended; books their outcomes and schedules the
-        /// market events they set off (Market.Schedule). Returns how many came.
+        /// P76: the story characters met on that day, each decided as intended – except <paramref name="admitted"/>, who is let
+        /// through (P66: taking the bribe means admitting the barkeeper's man, BribeNote). Books their outcomes and schedules the
+        /// market events they set off (Market.Schedule). P77 like CharacterDirector: a returning character first collects what they
+        /// left and pays the deposit (the simulated officer always kept it, <paramref name="deposits"/>), and a helped character
+        /// with an entrustItem leaves it for the next encounter. Returns who came and how they were decided.
         /// </summary>
-        public static int MeetCharacters(int day, GameOff.Characters.CharacterMemory memory,
-            List<(int day, GameOff.Characters.Consequence effect)> later = null)
+        public static List<Met> MeetCharacters(int day, GameOff.Characters.CharacterMemory memory,
+            List<(int day, GameOff.Characters.Consequence effect)> later, GameOff.Travelers.TravelerData admitted, out int deposits)
         {
+            deposits = 0;
+            var met = new List<Met>();
             var due = GameOff.Characters.CharacterPlanner.Due(day, Story, memory, 3, () => 0f);
+            foreach (var p in due) // CharacterDirector.Plan → Collect: in the morning, before any decision
+                if (memory.TakeEntrusted(p.character, out _, out int deposit)) deposits += deposit;
             foreach (var p in due)
             {
                 var a = p.character.Appearances[p.appearance];
-                var outcome = a.OutcomeOf(p.traveler.IntendedVerdict);
-                memory.Decide(p.character, p.appearance, day, outcome, p.traveler.IntendedVerdict); // P150: flags too (the Shifter's accomplice)
+                var chosen = p.traveler == admitted ? GameOff.Travelers.Verdict.Admit : p.traveler.IntendedVerdict;
+                var outcome = a.OutcomeOf(chosen);
+                memory.Decide(p.character, p.appearance, day, outcome, chosen); // P150: flags too (the Shifter's accomplice)
                 foreach (var c in a.consequences)
                 {
-                    if (!c.Applies(outcome, p.traveler.IntendedVerdict)) continue; // the same filter as CharacterDirector
+                    if (!c.Applies(outcome, chosen)) continue; // the same filter as CharacterDirector
                     if (c.marketEvent != null) Market.Schedule(day + c.eventInDays, c.marketEvent);
                     later?.Add((day + c.afterDays, c)); // P125
                 }
+                if (outcome == GameOff.Characters.Outcome.Helped && a.entrustItem != null) memory.Entrust(p.character, a.entrustItem, a.entrustDeposit);
+                met.Add(new Met { Traveler = p.traveler, Chosen = chosen });
             }
-            return due.Count;
+            return met;
         }
 
         /// <summary>Forget the cached characters (after the story builder ran).</summary>
@@ -122,25 +149,27 @@ namespace GameOff.EditorTools
         private int ScheduleDay(int day) => _schedule.Endless ? day : (day - 1) % _schedule.Count + 1;
 
         /// <summary>
-        /// P125: one shift's confiscated goods for the Pilferer. False = discharged (too many penalties).
+        /// P125: one shift's confiscated goods for the Pilferer: the cargo of everybody arrested today, the day's own travelers and
+        /// the story characters (<paramref name="met"/>, e.g. Quill and Dr. Senn on day 3). False = discharged (too many penalties).
         /// <paramref name="open"/>: a need that is due tonight and not covered by the stock at home yet (P131).
         /// </summary>
-        private bool Pilfer(DayEntry entry, ref int balance, HomeDelivery home, System.Func<FamilyNeed, bool> open, Run run, System.Random rolls)
+        private bool Pilfer(DayEntry entry, List<Met> met, ref int balance, HomeDelivery home, System.Func<FamilyNeed, bool> open, Run run, System.Random rolls)
         {
+            var arrested = new List<GameOff.Travelers.TravelerData>();
+            if (entry.rules != null) arrested.AddRange(entry.rules.Travelers.Where(t => t.IntendedVerdict == GameOff.Travelers.Verdict.Arrest));
+            arrested.AddRange(met.Where(m => m.Chosen == GameOff.Travelers.Verdict.Arrest).Select(m => m.Traveler));
             var goods = new List<(ItemData item, int count)>();
-            if (entry.rules != null)
-                foreach (var t in entry.rules.Travelers)
-                {
-                    if (t.IntendedVerdict != GameOff.Travelers.Verdict.Arrest) continue;
-                    var manifest = t.Document(GameOff.Documents.DocumentType.CargoManifest);
-                    if (manifest != null) goods.AddRange(CargoReader.Read(manifest.Get("cargo"), _confiscation.goods, _confiscation.maxPerItem));
-                }
+            foreach (var t in arrested)
+            {
+                var manifest = t.Document(GameOff.Documents.DocumentType.CargoManifest);
+                if (manifest != null) goods.AddRange(CargoReader.Read(manifest.Get("cargo"), _confiscation.goods, _confiscation.maxPerItem));
+            }
             if (goods.Count == 0) return true;
 
             var picked = goods.OrderByDescending(g => _dealer.OfferFor(g.item)).First().item;
             var outcome = ShiftReport.Resolve(ShiftChoice.MissedThat, goods, picked, _confiscation, (float)rolls.NextDouble());
             run.Fines += outcome.Fine;
-            balance = Mathf.Max(0, balance - outcome.Fine);
+            balance -= outcome.Fine; // Wallet.Charge: may go below zero
             run.Disciplinary += outcome.Disciplinary;
             foreach (var (item, count) in outcome.Kept)
                 for (int i = 0; i < count; i++)
@@ -185,15 +214,19 @@ namespace GameOff.EditorTools
                 {
                     var entry = Entry(day);
                     Market.Begin(ScheduleDay(day), entry.marketEvents);
+                    var bribe = entry.bribe;
+                    // P66: taking the envelope means letting the barkeeper's man through (BribeNote pays only on Admit), whatever his papers say.
+                    var admitted = style == Style.Corrupt && bribe != null && bribe.Active ? bribe.traveler : null;
                     // P76: the recurring characters come on top of the day's own travelers – on the path of an officer who
-                    // decides every one of them right (their outcomes set off tomorrow's events, e.g. Quill arrested → smuggler raid).
-                    int travelers = (entry.rules != null ? entry.rules.Travelers.Count : 0) + MeetCharacters(ScheduleDay(day), memory, later);
+                    // decides every one of them right (their outcomes set off later events, e.g. Quill arrested → smuggler raid),
+                    // except the bribed one (Quill let through: no raid, he comes back on day 4 and 9).
+                    var met = MeetCharacters(ScheduleDay(day), memory, later, admitted, out int deposits);
+                    int travelers = (entry.rules != null ? entry.rules.Travelers.Count : 0) + met.Count;
                     int correct = Mathf.Max(0, travelers - wrongPerDay);
                     int bribeMoney = 0;
-                    var bribe = entry.bribe;
                     if (bribe != null && bribe.Active)
                     {
-                        if (style == Style.Corrupt)
+                        if (admitted != null)
                         {
                             bribeMoney = bribe.amount;
                             run.Bribes += bribe.amount;
@@ -227,25 +260,33 @@ namespace GameOff.EditorTools
                     ItemData[] FromHome() => home.Covering(needs.Select(n => Needed(n) ? _household.TagOf(n) : null).ToArray(), _economy.perishableTag);
                     bool Open(FamilyNeed n) => Needed(n) && FromHome()[(int)n] == null;
 
-                    // P125: what the characters' outcomes bring today: a bonus or reprimand, a gift for the family.
+                    // P125: what the characters' outcomes bring today: a bonus or reprimand (Wallet.Charge may go below zero), a gift for the family.
                     int dueDay = ScheduleDay(day);
                     foreach (var (_, effect) in later.Where(l => l.day == dueDay))
                     {
-                        balance = Mathf.Max(0, balance + effect.wageChange);
+                        balance += effect.wageChange;
                         run.Bonus += effect.wageChange;
                         if (effect.giftItem == null || (effect.giftOnlyIfFamilySick && !family.AnySick)) continue;
                         home.AddGift(effect.giftItem);
                     }
                     later.RemoveAll(l => l.day == dueDay);
+                    // P77: deposits for what the officer kept safe, paid in the morning when the character comes back.
+                    balance += deposits;
+                    run.Deposits += deposits;
 
-                    if (style == Style.Pilferer && _confiscation != null && !Pilfer(entry, ref balance, home, Open, run, rolls))
+                    if (style == Style.Pilferer && _confiscation != null && !Pilfer(entry, met, ref balance, home, Open, run, rolls))
                     {
                         run.Discharged = evening.GameOver = true;
-                        evening.Balance = balance;
+                        evening.Balance = evening.Available = balance;
                         evening.Family = Enumerable.Range(0, family.Count).Select(family.Condition).ToArray();
                         run.Evenings.Add(evening);
                         break;
                     }
+
+                    // P72: the ticket machine sells only in the evening, before the bed: tonight's wage and envelope are not paid yet,
+                    // nothing is bought yet (whoever buys the ticket leaves and needs neither rent nor goods). The family is as last night left it.
+                    evening.Available = balance;
+                    if (run.TicketDay < 0 && balance >= _household.ticketPrice && !family.AnySick) run.TicketDay = day;
 
                     if (style == Style.Clever || style == Style.Rumour || style == Style.Corrupt || style == Style.Pilferer)
                         foreach (FamilyNeed need in System.Enum.GetValues(typeof(FamilyNeed)))
@@ -337,7 +378,6 @@ namespace GameOff.EditorTools
                     evening.Spent = spent;
                     evening.Family = Enumerable.Range(0, family.Count).Select(family.Condition).ToArray();
                     run.Evenings.Add(evening);
-                    if (run.TicketDay < 0 && balance >= _household.ticketPrice && !family.AnySick) run.TicketDay = day;
                 }
             }
             finally

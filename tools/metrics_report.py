@@ -11,6 +11,7 @@ decision times, money and family per day, endings, frame rate per browser, error
 import argparse
 import glob
 import json
+import math
 import os
 import statistics
 import sys
@@ -24,6 +25,48 @@ except Exception:  # no time zone data (Windows without tzdata): stay in UTC
     LOCAL = None
 
 
+# The fields the report reads, by type. The server keeps any short text, number or list of numbers in any field, so a crafted
+# event could bring a text where a number belongs; clean() drops such values instead of letting one line break the report.
+NUMBERS = ("t", "day", "money", "sec", "fps", "load", "evening", "earned", "spent", "slow")
+TEXTS = ("ts", "s", "v", "id", "chosen", "right", "why", "ending", "phase", "msg", "at", "ua", "src", "ref")
+
+
+def number(value):
+    """A finite int or float (numeric text is read as a number); None for anything else, also for true/false."""
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, str):
+        try:
+            value = float(value)
+        except ValueError:
+            return None
+    try:
+        return value if isinstance(value, (int, float)) and math.isfinite(value) else None
+    except OverflowError:  # an int too big for a float
+        return None
+
+
+def clean(event):
+    """The event with every field the report reads in its type (day as int, family as a list of ints), bad values dropped;
+    None if it is no event at all."""
+    if not isinstance(event, dict) or not isinstance(event.get("e"), str):
+        return None
+    for key in NUMBERS:
+        if key in event:
+            value = number(event[key])
+            if value is None:
+                del event[key]
+            else:
+                event[key] = int(value) if key == "day" else value
+    for key in TEXTS:
+        if key in event and not isinstance(event[key], str):
+            del event[key]
+    if "family" in event:
+        family = event["family"] if isinstance(event["family"], list) else []
+        event["family"] = [int(n) for n in (number(c) for c in family) if n is not None]
+    return event
+
+
 def load(paths, since=None, version=None):
     files = []
     for path in paths:
@@ -33,8 +76,10 @@ def load(paths, since=None, version=None):
         with open(name, encoding="utf-8") as f:
             for line in f:
                 try:
-                    event = json.loads(line)
-                except json.JSONDecodeError:
+                    event = clean(json.loads(line))
+                except (json.JSONDecodeError, RecursionError):
+                    continue
+                if event is None:
                     continue
                 if since and event.get("ts", "") < since:
                     continue
@@ -131,12 +176,13 @@ def report(events, top=15):
         print("No events.")
         return
 
+    stamps = [e["ts"] for e in events if e.get("ts")]
     print(f"# Play metrics: {len(sessions)} sessions, {len(events)} events, "
-          f"{min(e.get('ts', '') for e in events)[:10]} to {max(e.get('ts', '') for e in events)[:10]}\n")
+          f"{min(stamps, default='?')[:10]} to {max(stamps, default='?')[:10]}\n")
 
     rows = summarize(sessions)
     print("## Per day" + (" (Vienna time)" if LOCAL else " (UTC)"))
-    print("Visits = page opened, played = started day 1. A reload counts as a new visit.")
+    print("Visits = page opened, played = started a day (day 1, or a saved day with CONTINUE). A reload counts as a new visit.")
     funnel(rows, lambda r: r["day"], "day", top)
     print("\n## Where players come from")
     funnel(rows, lambda r: r["source"], "source", top)
@@ -165,14 +211,16 @@ def report(events, top=15):
     print("## Where sessions end (last event)")
     table(last_place.most_common(top), ["place", "sessions"])
 
-    reached = Counter()
+    # The days each session actually started (day_start), not 1..best: CONTINUE from a save starts later than day 1.
+    reached, starters = Counter(), 0
     for evs in sessions.values():
-        best = max((e.get("day", 0) for e in evs if e["e"] == "day_start"), default=0)
-        for d in range(1, best + 1):
-            reached[d] += 1
+        started = {e["day"] for e in evs if e["e"] == "day_start" and e.get("day", 0) > 0}
+        starters += bool(started)
+        reached.update(started)
     if reached:
-        print("\n## Days reached")
-        table([(d, reached[d], f"{100 * reached[d] / reached[1]:.0f}%") for d in sorted(reached)], ["day", "sessions", "of day 1"])
+        print("\n## Days reached (sessions that started this day)")
+        table([(d, reached[d], f"{100 * reached[d] / starters:.0f}%") for d in sorted(reached)],
+              ["day", "sessions", "of sessions that started a day"])
 
     # Counter decisions
     travelers = [e for e in events if e["e"] == "traveler"]
@@ -224,13 +272,13 @@ def report(events, top=15):
         table(endings.most_common(top), ["ending", "n"])
 
     # Performance
-    ua_of = {e["s"]: browser(e.get("ua", "")) for e in events if e["e"] == "session"}
+    ua_of = {e.get("s", "?"): browser(e.get("ua", "")) for e in events if e["e"] == "session"}
     beats = [e for e in events if e["e"] == "beat" and not e.get("paused")]
     if beats:
         print("\n## Frame rate (beats every 30 s, pause left out)")
         per = defaultdict(list)
         for e in beats:
-            per[(ua_of.get(e["s"], "?"), e.get("phase", "?"))].append(e)
+            per[(ua_of.get(e.get("s", "?"), "?"), e.get("phase", "?"))].append(e)
         rows = [(b, p, len(evs), f"{median([e.get('fps', 0) for e in evs]):.0f}",
                  f"{min(e.get('fps', 0) for e in evs):.0f}", f"{median([e.get('slow', 0) for e in evs]):.0f}")
                 for (b, p), evs in sorted(per.items())]
