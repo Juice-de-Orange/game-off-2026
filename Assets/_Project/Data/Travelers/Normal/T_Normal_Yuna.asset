@@ -23,7 +23,7 @@ MonoBehaviour:
   intendedReason: Declares fusion cells, forbidden today
   trickIntended: 0
   storyTag: P15, day 8
-  greeting: The strikers need power too, officer. Somebody has to bring it.
+  greeting: The lower docks need power too, officer. Somebody has to bring it.
   answers:
   - key: cargo
     line: Cells. For the families in the lower docks.

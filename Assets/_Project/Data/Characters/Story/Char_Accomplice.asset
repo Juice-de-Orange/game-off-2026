@@ -122,7 +122,7 @@ MonoBehaviour:
 
 
       The outer door of Kestrel-9
-      opens at 07:42. Nobody at home is told why the money stopped.'
+      opens at 08:12. Nobody at home is told why the money stopped.'
     endingWarning: SECURITY TO CUSTOMS. OFFICER, STEP AWAY FROM THE COUNTER.
   - traveler: {fileID: 11400000, guid: dfadb4c3922a5914c91fdc98132a6e69, type: 2}
     dayFrom: 7
@@ -158,11 +158,14 @@ MonoBehaviour:
   kinSpecies: Human
   kinFateByYou: 
   kinFateByOthers: 
+  kinFateAirlocked: 
   summaryHelped: Ilsa Koval reports to the Directorate from another station now.
     Next to your name, her file says "reliable".
-  summaryBetrayed: Ilsa Koval was arrested at lane two - and walked out an hour later,
+  summaryBetrayed: Ilsa Koval was stopped at lane two - and walked out an hour later,
     by order from above.
   summaryNeutral: Ilsa Koval left Kestrel on the next shuttle. Nobody asked her where
     to.
   summaryDead: Ilsa Koval went out of the airlock. The Directorate sent a wreath,
     and nobody at the station knew why.
+  storyEndsOnDay: 7
+  summaryOpen: 

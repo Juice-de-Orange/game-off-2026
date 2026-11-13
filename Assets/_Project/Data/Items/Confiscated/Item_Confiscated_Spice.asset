@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Item_Confiscated_Spice
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemData
   displayName: Confiscated spice
-  description: Banned, sweet-smelling and much asked for. Only the dealer at the bar
-    buys it. Taken at the counter - only the black market will touch it.
+  description: Banned, sweet-smelling and much asked for. Only the dealer at the
+    bar buys it. Taken at the counter - only the black market will touch it.
   baseValue: 12
   dailyChange:
   - 0

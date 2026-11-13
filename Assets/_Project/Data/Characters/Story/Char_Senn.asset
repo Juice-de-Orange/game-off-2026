@@ -98,7 +98,7 @@ MonoBehaviour:
       wageChange: 0
       wageNote: 
       announcement: 
-      letterLine: Dr. Senn sent medicine on the drone. He says you earned it.
+      letterLine: Dr. Senn sent medicine on the drone. She says you earned it.
       setFlag: 
     entrustItem: {fileID: 0}
     entrustDeposit: 0
@@ -148,10 +148,13 @@ MonoBehaviour:
   kinSpecies: Human
   kinFateByYou: 
   kinFateByOthers: 
+  kinFateAirlocked: 
   summaryHelped: Dr. Senn's clinic got through the cold snap. Three children owe
     their lungs to a case of pills you let through.
-  summaryBetrayed: Dr. Senn's clinic ran dry during the cold. The station blamed
-    the doctor. The doctor blamed customs.
+  summaryBetrayed: Dr. Senn still runs the clinic, but she no longer trusts anyone
+    in a customs uniform.
   summaryNeutral: Dr. Senn found another way to bring the medicine in. It took a
     week longer.
   summaryDead: Dr. Senn went out of the airlock. The clinic has been closed since.
+  storyEndsOnDay: 9
+  summaryOpen: You never learned what became of Dr. Senn.

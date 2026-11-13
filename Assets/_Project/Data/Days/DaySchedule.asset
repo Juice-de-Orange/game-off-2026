@@ -33,11 +33,11 @@ MonoBehaviour:
     letterTitle: A letter from home
     letter: "Dad,\nThe rent man came by and Mom paid him. They say the border is
       closed, so food costs more now. We are careful.\nPip asks if you can see us
-      from up there. Mrs Oren's son sends food on the cargo drone instead of money.
+      from up there. Mrs. Oren's son sends food on the cargo drone instead of money.
       Could you do that too?\n\u2014 Lena"
     letterIfTrouble: "Dad,\nThe rent man came by and Mom paid him, but one of us
       is not well and the border is closed, so everything costs more.\nPlease send
-      what you can. Mrs Oren's son sends food on the cargo drone instead of money.
+      what you can. Mrs. Oren's son sends food on the cargo drone instead of money.
       Could you do that too?\n\u2014 Lena"
     newToday: 'New today: Vellani travelers need a cargo manifest.'
     marketEvents:
@@ -94,7 +94,7 @@ MonoBehaviour:
     letterIfTrouble: "Dad,\nThe clinic has a list now and we are not near the top
       of it. Mom says the list is how they say no politely.\nDid the last parcel
       go out?\n\u2014 Lena"
-    newToday: 'New today: spice is forbidden. ORVAN stays closed.'
+    newToday: 'New today: spice is forbidden. ORVAN is closed again.'
     marketEvents: []
     barWish:
       tag: {fileID: 11400000, guid: df73a66dd95c513448baced3fe575726, type: 2}
@@ -165,7 +165,8 @@ MonoBehaviour:
     letterIfTrouble: "Dad,\nThe inspectors were on the news and all I could think
       about was the rent. Mom doesn't sleep. I do the counting now.\nPlease don't
       lose this job.\n\u2014 Lena"
-    newToday: 'Inspection week: every rule applies at once. Read the bulletin.'
+    newToday: 'Inspection week: five old rules at once, and a wanted name. Read the
+      bulletin.'
     marketEvents:
     - {fileID: 11400000, guid: 5abb6d2dd34a7184e83d89c7b9389401, type: 2}
     barWish:
@@ -199,7 +200,7 @@ MonoBehaviour:
     letterIfTrouble: "Dad,\nIt is very quiet here now. Mom says we should not count
       the days, so I count them where she can't see.\nPlease be careful up there.\n\u2014
       Lena"
-    newToday: 'New today: quarantine at MERIDIAN GATE. ORVAN stays closed.'
+    newToday: 'New today: quarantine at MERIDIAN GATE. ORVAN is closed again.'
     marketEvents: []
     barWish:
       tag: {fileID: 11400000, guid: df73a66dd95c513448baced3fe575726, type: 2}
@@ -216,7 +217,8 @@ MonoBehaviour:
       Lena"
     letterIfTrouble: "Dad,\nI don't know how to write this one. Please just come
       home.\n\u2014 Lena"
-    newToday: 'New today: human travelers need a cargo manifest. No cash shipments.'
+    newToday: 'New today: human travelers need a cargo manifest. No cash, no stimulants.
+      KETRA STATION is quarantined again.'
     marketEvents: []
     barWish:
       tag: {fileID: 0}

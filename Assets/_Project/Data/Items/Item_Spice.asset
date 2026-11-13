@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Item_Spice
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemData
   displayName: Spice
-  description: Banned, sweet-smelling and much asked for. Only the dealer at the bar
-    buys it.
+  description: Banned, sweet-smelling and much asked for. Only the dealer at the
+    bar buys it.
   baseValue: 12
   dailyChange:
   - 0

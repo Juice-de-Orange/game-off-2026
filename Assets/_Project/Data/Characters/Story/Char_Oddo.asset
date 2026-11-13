@@ -130,10 +130,13 @@ MonoBehaviour:
   kinSpecies: Human
   kinFateByYou: 
   kinFateByOthers: 
+  kinFateAirlocked: 
   summaryHelped: Pim Oddo's caravan is the talk of three stations. He tells everyone
     about his friend at the counter.
-  summaryBetrayed: Pim Oddo never came back. Someone at the bar is selling his clown
-    shoes.
+  summaryBetrayed: Pim Oddo trades at other stations now. When Kestrel-9 comes up,
+    he changes the subject.
   summaryNeutral: 
   summaryDead: Pim Oddo went out of the airlock. His clown shoes are still on a shelf
     somewhere.
+  storyEndsOnDay: 12
+  summaryOpen: 

@@ -22,7 +22,7 @@ namespace GameOff.Economy
 
         [Header("\"Oh, seems I missed that\": keep one item")]
         [Range(0f, 1f)] public float missedSuccessChance = 0.6f;
-        public int missedFine = 30;
+        public int missedFine = 35;
 
         [Header("Breaking into the evidence locker (P83)")]
         [Range(0f, 1f)] public float lockerCaughtChance = 0.35f;

@@ -22,7 +22,7 @@ MonoBehaviour:
   intendedReason: Entry permit expired yesterday
   trickIntended: 0
   storyTag: P76 character, day 2
-  greeting: Please. My children are on the other side. Nine days I travelled.
+  greeting: Please. My children are on the other side. Nine days I traveled.
   answers:
   - key: purpose
     line: My children. That is the whole purpose.

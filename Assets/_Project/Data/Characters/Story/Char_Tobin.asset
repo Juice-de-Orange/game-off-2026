@@ -131,6 +131,7 @@ MonoBehaviour:
   kinSpecies: Human
   kinFateByYou: 
   kinFateByOthers: 
+  kinFateAirlocked: 
   summaryHelped: Tobin Rask's strike won the dockers a fair wage and heaters that
     work.
   summaryBetrayed: Tobin Rask was deported. His colleagues still talk about the officer
@@ -138,3 +139,5 @@ MonoBehaviour:
   summaryNeutral: 
   summaryDead: Tobin Rask went out of the airlock. The docks went quiet for a day,
     then back to work.
+  storyEndsOnDay: 10
+  summaryOpen: 

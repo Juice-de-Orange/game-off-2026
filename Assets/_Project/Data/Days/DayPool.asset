@@ -30,11 +30,11 @@ MonoBehaviour:
     - VELL PRIME
     - SELUNE
   - name: Quobb
-    idPrefix: QB
+    idPrefix: QU
     model: {fileID: 2190294317704143118, guid: 2599d4a5607b12d4092e5eb3b17cd21a, type: 3}
     photo: {fileID: 2800000, guid: 301aa66d9296d8b41bbac774cce3a10d, type: 3}
     origins:
-    - QUOBB MARSH
+    - QUOB MARSH
     - ORVAN
   - name: Xirrik
     idPrefix: XR
@@ -44,11 +44,11 @@ MonoBehaviour:
     - LUMEN REACH
     - XIR HOLLOW
   - name: Sorvak
-    idPrefix: SV
+    idPrefix: SK
     model: {fileID: 2456880688624481046, guid: 1e6468b746c5f0e47b03509118fc1380, type: 3}
     photo: {fileID: 2800000, guid: 22a8011810e1f044c95058dd848837e0, type: 3}
     origins:
-    - SORVAK DEEP
+    - SORV DEEP
     - KHARN
   givenNames:
   - ADA
@@ -210,7 +210,7 @@ MonoBehaviour:
   crimes:
   - Armed robbery.
   - Smuggling, three counts.
-  - Escaped from a labour camp.
+  - Escaped from a labor camp.
   - Desertion.
   - Forgery of transit papers.
   - Sabotage at a fuel depot.
@@ -272,131 +272,71 @@ MonoBehaviour:
     key: name
     line: You've got the wrong one. I get that a lot.
   standingWanted:
-  - name: KAEL DROSS
-    id: DX-0013-44
+  - name: DOVAN PRYCE
+    id: DP-7342-18
     order: 0
-    note: Armed robbery, Aska-3
+    note: Armed robbery, New Hadra
   letters:
   - title: A letter from home
-    body: 'The heater rattles again, but it still works if you hit it twice. We hit
-      it a lot.
-
-
-      We count the days. Don''t work too hard.'
+    body: "Dad,\nThe heater rattles again, but it still works if you hit it twice.
+      Mom hits it a lot.\nWe count the days. Don't work too hard.\n\u2014 Lena"
   - title: A letter from home
-    body: 'The little one drew a picture of your station. It has too many windows
-      and a cat on the roof.
-
-
-      We keep it on the wall.'
+    body: "Dad,\nPip drew a picture of your station. It has too many windows and
+      a cat on the roof.\nMom put it on the wall.\n\u2014 Lena"
   - title: A letter from home
-    body: 'Prices went up again at the depot. Everyone says it will get better after
-      the winter.
-
-
-      Nobody says which winter.'
+    body: "Dad,\nPrices went up again at the depot. Everyone says it will get better
+      after the winter.\nNobody says which winter.\n\u2014 Lena"
   - title: A letter from home
-    body: 'Your mother asks if you eat properly. I told her you do. Do you?
-
-
-      Write
-      back when you can.'
+    body: "Dad,\nMom asks if you eat properly. I told her you do. Do you?\nWrite
+      back when you can.\n\u2014 Lena"
   - title: A letter from home
-    body: 'The neighbours left for the inner colonies last week. Their flat is dark
-      now.
-
-
-      We are fine. We just miss you.'
+    body: "Dad,\nThe neighbors left for the inner colonies last week. Their windows
+      are dark now.\nPip waves at them anyway. We miss you.\n\u2014 Lena"
   - title: A letter from home
-    body: 'There was a power cut all night. We sat together under the blankets and
-      told stories about you.
-
-
-      They were mostly true.'
+    body: "Dad,\nThere was a power cut all night. We sat under the blankets and Mom
+      told stories about you.\nThey were mostly true.\n\u2014 Lena"
   - title: A letter from home
-    body: 'The school wants new shoes for the winter term. I said we''ll see.
-
-
-      Don''t
-      worry about it. Just come home.'
+    body: "Dad,\nSchool wants new shoes for the winter term. Mom said we'll see.\nDon't
+      worry about it. Just come home.\n\u2014 Lena"
   - title: A letter from home
-    body: 'I found your old jacket in the cupboard. It still smells like you, a little.
-
-
-      How
-      long now?'
+    body: "Dad,\nI found your old jacket in the cupboard. It still smells like you,
+      a little. I wear it to bed.\nHow long now?\n\u2014 Lena"
   - title: A letter from home
-    body: 'The radio says the routes are getting worse. Be careful who you let through.
-
-
-      And
-      be careful who you don''t.'
+    body: "Dad,\nThe radio says the routes are getting worse. Mom says be careful
+      who you let through.\nI say be careful who you don't.\n\u2014 Lena"
   - title: A letter from home
-    body: 'The depot has started rationing soap. We smell like everybody else now,
-      so nobody minds.
-
-
-      Write when you can.'
+    body: "Dad,\nThe depot has started rationing soap. We smell like everybody else
+      now, so nobody minds.\nWrite when you can.\n\u2014 Lena"
   - title: A letter from home
-    body: 'The stairwell light has been out for a month. We count the steps now.
-      Nineteen.
-
-
-      Come home before we forget the number.'
+    body: "Dad,\nThe stairwell light has been out for a month. Pip and I count the
+      steps now. Nineteen.\nCome home before we forget the number.\n\u2014 Lena"
   - title: A letter from home
-    body: 'Somebody painted over the old mural by the depot. You can still see the
-      sun if you know where to look.
-
-
-      We know where to look.'
+    body: "Dad,\nSomebody painted over the old mural by the depot. You can still
+      see the sun if you know where to look.\nWe know where to look.\n\u2014 Lena"
   - title: A letter from home
-    body: 'The little one lost a tooth and wants to send it to you. I said the drone
-      costs too much.
-
-
-      It is in a matchbox, waiting.'
+    body: "Dad,\nPip lost another tooth and wants to send it to you. Mom said the
+      drone costs too much.\nIt is in a matchbox, waiting.\n\u2014 Lena"
   - title: A letter from home
-    body: 'They moved the clinic to the other side of the river. It''s a long walk,
-      but we are all still walking.
-
-
-      Don''t worry.'
+    body: "Dad,\nThey moved the clinic to the other side of the river. It's a long
+      walk. Mom says that's what legs are for.\nDon't worry.\n\u2014 Lena"
   - title: A letter from home
-    body: 'It snowed indoors at the school, through the roof. The children thought
-      it was wonderful.
-
-
-      The teachers did not.'
+    body: "Dad,\nIt snowed indoors at school, right through the roof. We all thought
+      it was wonderful.\nThe teachers did not.\n\u2014 Lena"
   - title: A letter from home
-    body: 'I saw your name on an old list at the depot and stood there like a fool
-      for a while.
-
-
-      That''s all. I just wanted to say.'
+    body: "Dad,\nMom saw your name on an old list at the depot and stood there for
+      a long time.\nShe didn't say anything. I just wanted you to know.\n\u2014 Lena"
   - title: A letter from home
-    body: 'The neighbour''s dog has decided it lives with us. We can''t feed it.
-      We feed it.
-
-
-      How are the people up there?'
+    body: "Dad,\nThe neighbor's dog has decided it lives with us. We can't feed it.
+      We feed it.\nPip named it Kestrel. How are the people up there?\n\u2014 Lena"
   - title: A letter from home
-    body: 'We put your chair back at the table. It was in the way, but it looked
-      wrong by the wall.
-
-
-      Save what you can.'
+    body: "Dad,\nWe put your chair back at the table. It was in the way, but it looked
+      wrong by the wall.\nSave what you can.\n\u2014 Lena"
   - title: A letter from home
-    body: 'The radio played that song you hate. We all sang it, badly, on purpose.
-
-
-      You
-      would have left the room.'
+    body: "Dad,\nThe radio played that song you hate. We all sang it, badly, on purpose.\nYou
+      would have left the room.\n\u2014 Lena"
   - title: A letter from home
-    body: 'We had soup three days in a row. Good soup, though.
-
-
-      Save what
-      you can. We can wait a bit longer.'
+    body: "Dad,\nWe had soup three days in a row. Good soup, though. Mom says it
+      counts as cooking.\nSave what you can. We can wait a bit longer.\n\u2014 Lena"
   marketEvents:
   - marketEvent: {fileID: 11400000, guid: f43d7922bcf28184f9e158056a4dd645, type: 2}
     weight: 1

@@ -46,10 +46,10 @@ Endlos-Schleife (P73), in der Figuren nur noch selten und nach Bedingung auftauc
 |---|---|---|---|
 | 1 | ruhig | **Korr #1 Tutorial** · Quill: sauber, „grüß den Barkeeper“ · Shifter: Identität A, harmlos | – |
 | 2 | **Border closed** (fest) | **Mira #2:** Erlaubnis 1 Tag abgelaufen → helfen/verraten · Shifter: Identität B, redet über die Grenze | – |
-| 3 | **Cold snap** (fest) | **Quill:** Spice + Bestechungszettel → helfen/verraten · **Senn:** Antibiotika ohne Schein, gibt dir einen Koffer zur Verwahrung · **Shifter: Steckbrief „auf Sicht terminieren“** (immer, wie Max geplant hat) | – |
+| 3 | **Cold snap** (fest) | **Quill:** Stimulanzien (6x CHEM STIMULANT VIALS) + Bestechungszettel → helfen/verraten · **Senn:** Antibiotika ohne Schein, gibt dir einen Koffer zur Verwahrung · **Shifter: Steckbrief „auf Sicht terminieren“** (immer, wie Max geplant hat) | – |
 | 4 | *Smugglers busted* (Quill verraten) · *Security lockdown* (Shifter durchgelassen) | **Korr #3 verdeckt:** verlockender Fehler · Quill (nur wenn geholfen): größerer Auftrag, Paket zur Verwahrung · Mira: geholfen → bringt Essen (FOOD) / verraten → gefälschte Papiere | Shifter: durchgelassen → schickt dir etwas · verhaftet → Verhör-Durchsage · Schleuse → nichts mehr |
 | 5 | *Clinic shortage* (Senn beschlagnahmt, P08) | Senn: holt den Koffer ab (Pfand oder Wut), bringt Medizin, wenn die Familie krank ist · **Tobin: Einführung** | – |
-| 6 | – | Quill: holt sein Paket ab (Pfand) / Rache: Steckbrief für Tag 7 · **Nell: Einführung**, Brief zur Verwahrung · Widerstands-Frage: Shifter, oder **Ilsa Koval**, wenn er an Tag 3 terminiert/verhaftet wurde (P150) | Korr: Bewertung per Durchsage, Lob + Bonus oder Disziplinarstrafe |
+| 6 | – | Quill: holt sein Paket ab (Pfand) / Rache (nur nach Verrat oder Beschlagnahme an Tag 3, Flag `quill_wronged`, P155): Steckbrief für Tag 7 · **Nell: Einführung**, Brief zur Verwahrung · Widerstands-Frage: Shifter, oder **Ilsa Koval**, wenn er an Tag 3 terminiert/verhaftet wurde (P150) | Korr: Bewertung per Durchsage, Lob + Bonus oder Disziplinarstrafe |
 | 7 | – | **Tobin: Entscheidung** (fehlender Stempel) · Shifter: letzter Auftritt, Wendung seiner Geschichte (nur wenn er lebt und frei ist) – sonst Ilsa Koval, gleicher Ablauf (P150) | – |
 | 8 | *Dock strike* (Tobin geholfen) | Mira: Abschluss (Dank oder letzte Bitte) · Nell: holt den Brief ab · **Oddo: Einführung**, Muster zur Verwahrung | – |
 | 9 | **Inspection week** (fest, Krise: strengere Regeln) | Senn: Abschluss · Quill: Abschluss (Fluchtweg oder Steckbrief) | – |
@@ -64,7 +64,7 @@ Endlos-Schleife (P73), in der Figuren nur noch selten und nach Bedingung auftauc
 |---|---|---|---|
 | Border closed | fest, Tag 2 | – | FOOD teurer/knapp (gibt es schon, P68) |
 | Cold snap | fest, Tag 3 | – | POWER teurer (gibt es schon) |
-| Smugglers busted | ausgelöst | Quill verraten/beschlagnahmt (Tag 3) → **Tag 6** (P76: an Tag 3/4 schmollt der Barkeeper) | DRUG teurer, CONTRABAND-Ankauf höher (gibt es schon, bisher fest Tag 3) |
+| Smugglers busted | ausgelöst | Quill verraten/beschlagnahmt (Tag 3) → **Tag 6** (P76: an Tag 3/4 schmollt der Barkeeper) | DRUG doppelt so teuer (der höhere CONTRABAND-Ankauf entfiel mit P71; bisher fest Tag 3) |
 | Security lockdown | ausgelöst | Shifter durchgelassen (Tag 3) → Tag 4 | Krise ↑, mehr Fahndungen, Durchsagen |
 | Clinic shortage | ausgelöst | Senn beschlagnahmt (Tag 3) → Tag 5 | MEDICINE teurer, Krise ↑ |
 | Dock strike | ausgelöst | Tobin geholfen (Tag 7) → Tag 8 | Mengen aller Waren ↓, Krise ↑ |

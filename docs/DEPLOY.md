@@ -80,12 +80,11 @@ Container `kestrel9-reports` weiter; der legt mit einem Bot-Token ein GitHub-Iss
 
 Der WebGL-Build schickt anonyme Spielereignisse an `https://kestrel9.maxlworks.com/api/metrics` (`Scripts/Metrics/`, startet sich selbst, im Editor aus).
 Derselbe Container `kestrel9-reports` hängt sie als JSONL an `/opt/kestrel9/metrics/metrics-JJJJ-MM-TT.jsonl` (UTC) an und löscht Tage, die älter als
-90 Tage sind (`METRICS_DAYS`). Höchstens 200 MB je Tag, danach 503. Der Spiel-nginx löscht `X-Forwarded-For` auf dieser Route.
+90 Tage sind (`METRICS_DAYS`). Höchstens 200 MB je Tag, danach 503. Der Spiel-nginx löscht `X-Forwarded-For` und `X-Real-IP` auf dieser Route und seit P155 auch auf `/api/report`. Gesendet wird nur von `kestrel9.maxlworks.com` und itch.io (`*.itch.zone`, `*.itch.io`, über https); lokale und Test-Builds senden nichts (P155).
 - **Einrichten auf Geoffrey (einmal):** `sudo install -d -o 10001 -g 10001 -m 750 /opt/kestrel9/metrics`, dann wie beim Bugreport `deploy/reports` und
   `compose.yml` kopieren, Image neu bauen, `reports` neu starten, danach das Spiel neu deployen (der neue Spiel-nginx kennt `/api/metrics`).
   Prüfen: `/api/health` zeigt `"metrics": true`; der Start-Log sagt `metrics on`.
-- **Ohne Ordner** (oder nicht beschreibbar) antwortet `/api/metrics` mit 404, und das Spiel hört für diese Sitzung auf zu senden. Ebenso bei 403
-  (lokale Builds). **Abschalten:** Ordner umbenennen und `reports` neu starten.
+- **Ohne Ordner** (oder nicht beschreibbar) antwortet `/api/metrics` mit 404, und das Spiel hört für diese Sitzung auf zu senden. Ebenso bei 403. **Abschalten:** Ordner umbenennen und `reports` neu starten.
 - **Auswerten:** `scp 'geoffrey:/opt/kestrel9/metrics/*.jsonl' metrics/` und `python tools/metrics_report.py metrics [--since 2026-11-12] [--version <commit>]`.
   Zeigt je Tag (Wiener Zeit) Besuche, geladene Spiele, Spieler und Spielzeit, dieselben Zahlen je Herkunft, dann Sitzungen, wo Sitzungen enden, erreichte Tage, Fehlerquote je Reisendem und häufigste Rügen, Geld/Familie je Tag, Enden, FPS je Browser
   und Phase, Fehlermeldungen.

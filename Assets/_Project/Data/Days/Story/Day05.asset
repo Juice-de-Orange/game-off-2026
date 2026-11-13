@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.DayRules
   date: 2290-11-09
   rules:
-  - rid: 1231853443302031376
-  - rid: 1231853443302031377
+  - rid: 1231853547756453904
+  - rid: 1231853547756453905
   wanted:
   - name: NESTOR KAI
-    id: NK-4102-77
+    id: NK-4102-71
     order: 0
     note: Fraud, Lumen Reach
   travelers:
@@ -30,11 +30,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1231853443302031376
+    - rid: 1231853547756453904
       type: {class: BannedOriginRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         origin: ORVAN
-    - rid: 1231853443302031377
+    - rid: 1231853547756453905
       type: {class: ForbiddenGoodsRule, ns: GameOff.Travelers, asm: Assembly-CSharp}
       data:
         keyword: SPICE

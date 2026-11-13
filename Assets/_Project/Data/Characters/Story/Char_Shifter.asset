@@ -264,7 +264,7 @@ MonoBehaviour:
       it.
 
 
-      The outer door of Kestrel-9 opens at 07:42. Nobody at home is told
+      The outer door of Kestrel-9 opens at 08:12. Nobody at home is told
       why the money stopped.'
     endingWarning: SECURITY TO CUSTOMS. OFFICER, STEP AWAY FROM THE COUNTER.
   - traveler: {fileID: 11400000, guid: 6517981b47dc4cf42bc6bd5795ee16b4, type: 2}
@@ -301,11 +301,14 @@ MonoBehaviour:
   kinSpecies: Human
   kinFateByYou: 
   kinFateByOthers: 
+  kinFateAirlocked: 
   summaryHelped: The man with a hundred faces has left Kestrel. The Directorate thanks
     the officers who did not listen to him.
-  summaryBetrayed: The man with too many names was arrested again - and released
-    again, by order from above.
+  summaryBetrayed: The man with too many names was picked up by security - and released,
+    by order from above.
   summaryNeutral: The man with too many names was last seen boarding a shuttle. Under
     which name, nobody can say.
-  summaryDead: The man you put out of the airlock on day three carried eleven names.
-    Nobody came to claim the body.
+  summaryDead: The man you put out of the airlock carried eleven names. Nobody came
+    to claim the body.
+  storyEndsOnDay: 7
+  summaryOpen: You never learned who the man with too many names really was.

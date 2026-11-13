@@ -148,6 +148,7 @@ MonoBehaviour:
   kinSpecies: Human
   kinFateByYou: 
   kinFateByOthers: 
+  kinFateAirlocked: 
   summaryHelped: Inspector Korr's final report calls the officer at lane two "reliable".
     From him, that is high praise.
   summaryBetrayed: Inspector Korr's final report on lane two runs to nine pages.
@@ -155,3 +156,5 @@ MonoBehaviour:
   summaryNeutral: 
   summaryDead: Inspector Korr was lost in an "airlock incident". The Border Authority
     has sent three more inspectors.
+  storyEndsOnDay: 10
+  summaryOpen: You never read Inspector Korr's final report.

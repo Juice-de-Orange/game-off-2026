@@ -22,7 +22,7 @@ MonoBehaviour:
   intendedReason: Papers in order
   trickIntended: 0
   storyTag: P76 character, day 8
-  greeting: Nell again. Did my letter reach {kin}?
+  greeting: Nell again. I came to see {kin}.
   answers: []
   reactionAdmitted: 
   reactionDenied: 

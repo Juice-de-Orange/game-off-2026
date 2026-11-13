@@ -25,7 +25,7 @@ MonoBehaviour:
   greeting: Kss. Fresh from the office. Everyone knows that office.
   answers:
   - key: expires
-    line: Kss. Months yet. Read it.
+    line: Kss. Weeks yet. Read it.
   - key: route
     line: Lumen Reach, as always.
   reactionAdmitted: 

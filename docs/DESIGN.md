@@ -67,7 +67,7 @@ berechnet; jeder Reisende hat zusätzlich eine beabsichtigte Lösung, Prüfwerkz
 erscheint erst als Glyphen und wird kurz „entschlüsselt“.
 
 **The Shifter:** wiederkehrender Reisender, jeden Tag mit neuer Identität (Name, Herkunft, Detail), erkennbar an einer Kleinigkeit.
-Tag 1–2 harmloser, charmanter Grenzgänger. Tag 3 steht er auf der Fahndungsliste: „auf Sicht terminieren“, ohne Begründung. Hast du ihm
+Tag 1–2 harmloser, charmanter Grenzgänger. Tag 3 steht er auf der Fahndungsliste: „Enemy agent. Terminate on sight.“ Hast du ihm
 geholfen, steckt er dir etwas für die Familie zu. Gehorchen (Schleuse), verhaften oder heimlich durchlassen färbt Briefe und Ende.
 An Tag 6 kommt die Frage „dem Widerstand beitreten?“ (JOIN/REFUSE): vom Shifter selbst, oder von seiner Komplizin **Ilsa Koval**, wenn er an Tag 3
 durch die Schleuse ging oder verhaftet wurde (P150). Wer beitritt, erlebt an Tag 7 die Enthüllung: Er war ein Spion, Ende **AIRLOCKED** (P87).

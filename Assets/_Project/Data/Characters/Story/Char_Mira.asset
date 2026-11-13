@@ -60,8 +60,8 @@ MonoBehaviour:
     onDeny: 2
     onArrest: 2
     onAirlock: 5
-    greetingAfterHelped: You let me through. My children ate tonight. This is for
-      yours.
+    greetingAfterHelped: You let me through. My children ate last night. This is
+      for yours.
     greetingAfterBetrayed: 
     greetingAfterConfiscated: 
     eventLines: []
@@ -81,8 +81,8 @@ MonoBehaviour:
       wageChange: 0
       wageNote: 
       announcement: 
-      letterLine: A woman called Mira left a tin of stew at our door. She said you
-        would know why.
+      letterLine: 'A parcel came from a woman called Mira: a tin of stew. She said
+        you would know why.'
       setFlag: 
     entrustItem: {fileID: 0}
     entrustDeposit: 0
@@ -163,9 +163,12 @@ MonoBehaviour:
   kinSpecies: Human
   kinFateByYou: 
   kinFateByOthers: 
+  kinFateAirlocked: 
   summaryHelped: Mira Talsk and her children have a home on the far side of the border.
     She named the cat after you.
   summaryBetrayed: Mira Talsk was sent back one time too many. Her children are still
     waiting on the other side.
   summaryNeutral: 
   summaryDead: Mira Talsk never reached her children.
+  storyEndsOnDay: 8
+  summaryOpen: 

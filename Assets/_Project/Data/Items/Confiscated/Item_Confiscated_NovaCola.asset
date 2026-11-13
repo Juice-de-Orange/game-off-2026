@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Item_Confiscated_NovaCola
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemData
   displayName: Confiscated Nova Cola
-  description: Warm, flat and sweet. Somebody always wants one. Taken at the
-    counter - only the black market will touch it.
+  description: Warm, flat and sweet. Somebody always wants one. Taken at the counter
+    - only the black market will touch it.
   baseValue: 2
   dailyChange:
   - 0

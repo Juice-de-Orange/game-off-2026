@@ -58,7 +58,7 @@ MonoBehaviour:
     onDeny: 2
     onArrest: 2
     onAirlock: 5
-    greetingAfterHelped: You were kind to an old woman. Did my letter reach {kin}?
+    greetingAfterHelped: You were kind to an old woman. I won't forget it.
     greetingAfterBetrayed: You sent me away last time. I came back anyway. Mothers
       do.
     greetingAfterConfiscated: 
@@ -111,10 +111,13 @@ MonoBehaviour:
   kinSpecies: Human
   kinFateByYou: They tell me it was you who put him there.
   kinFateByOthers: They took him off a cargo ship, right here at this station.
+  kinFateAirlocked: They say he never left your station.
   summaryHelped: Nell Varga took {kin} home. She tells everyone about the kind officer
     at lane two.
-  summaryBetrayed: Nell Varga's letter never reached {kin}. She doesn't talk about
-    Kestrel any more.
+  summaryBetrayed: Nell Varga doesn't talk about Kestrel any more, or about the officer
+    at lane two.
   summaryNeutral: 
   summaryDead: Nell Varga came to see her son and went out of the airlock. {kin}
     was told in his cell.
+  storyEndsOnDay: 11
+  summaryOpen: 
