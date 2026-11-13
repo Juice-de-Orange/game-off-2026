@@ -8,7 +8,8 @@ using UnityEngine;
 namespace GameOff.Shops
 {
     /// <summary>
-    /// P66: on days with a bribe the barkeeper's note lies on the counter desk at shift start, with the envelope beside it. P139: both
+    /// P66: on days with a bribe the barkeeper's note lies on the counter desk at shift start, with the envelope beside it (only if
+    /// the traveler it names is in today's queue). P139: both
     /// lie loose (DocumentDesk.Lay / AddLoose): they can be dragged like the papers and the note clicked to read, but they are no
     /// traveler papers, so the drawer, the return check and confiscation ignore them. The envelope is laid last, so it is on top.
     /// The traveler is judged as usual. Admitted → the amount is paid in tonight's settlement; turned away or arrested → the
@@ -55,10 +56,19 @@ namespace GameOff.Shops
             shift.DayBegun -= TakeAway;
         }
 
+        /// <summary>The note only lies there if its traveler really comes today (a character may be gone, e.g. Quill out of the airlock).</summary>
+        public static bool LaysNote(Bribe bribe, DayRules today)
+        {
+            if (bribe == null || !bribe.Active || today == null) return false;
+            foreach (var t in today.Travelers)
+                if (t == bribe.traveler) return true;
+            return false;
+        }
+
         private void OnShiftStarted()
         {
             var bribe = Today;
-            if (bribe == null || !bribe.Active || _note != null || desk == null || spot == null) return;
+            if (!LaysNote(bribe, shift.Day) || _note != null || desk == null || spot == null) return;
             var data = DocumentData.CreateRuntime(DocumentType.Notice, new List<DocumentField>
             {
                 new DocumentField("title", "A NOTE"),

@@ -126,9 +126,100 @@ namespace GameOff.Tests
                 ch.EditorSet("c" + i, "C" + i, "Human", new List<Appearance> { new Appearance { traveler = Traveler("t" + i), slot = i == 3 ? 1 : 0 } });
                 chars.Add(ch);
             }
-            var due = CharacterPlanner.Due(1, chars, new CharacterMemory(), 3, () => 0f);
+            var cut = new List<CharacterPlanner.Planned>();
+            var due = CharacterPlanner.Due(1, chars, new CharacterMemory(), 3, () => 0f, null, cut);
             Assert.AreEqual(3, due.Count);
             Assert.AreEqual("C3", due[0].character.DisplayName, "the fixed slot stays");
+            Assert.AreEqual(1, cut.Count, "the one cut is reported (the director warns)");
+            Assert.AreEqual("C2", cut[0].character.DisplayName, "the last free one goes");
+        }
+
+        /// <summary>The dev test character comes on top of the daily limit instead of being cut by it.</summary>
+        [Test]
+        public void DevCharacter_NotCutByTheLimit()
+        {
+            var chars = new List<RecurringCharacter>();
+            for (int i = 0; i < 3; i++)
+            {
+                var ch = Make<RecurringCharacter>();
+                ch.EditorSet("c" + i, "C" + i, "Human", new List<Appearance> { new Appearance { traveler = Traveler("t" + i) } });
+                chars.Add(ch);
+            }
+            var dev = Make<RecurringCharacter>();
+            dev.EditorSet("dev", "Tess", "Human", new List<Appearance> { new Appearance { traveler = Traveler("tess") } });
+            chars.Add(dev);
+            var cut = new List<CharacterPlanner.Planned>();
+            var due = CharacterPlanner.Due(1, chars, new CharacterMemory(), 3, () => 0f, new[] { dev }, cut);
+            Assert.AreEqual(4, due.Count);
+            Assert.IsTrue(due.Exists(p => p.character == dev));
+            Assert.IsEmpty(cut);
+        }
+
+        /// <summary>P128: the same run seed and day give the same characters in the same places (a reloaded morning plans the same).</summary>
+        [Test]
+        public void SeededPlan_IsTheSameAgain()
+        {
+            var chars = new List<RecurringCharacter>();
+            for (int i = 0; i < 3; i++)
+            {
+                var ch = Make<RecurringCharacter>();
+                ch.EditorSet("c" + i, "C" + i, "Human", new List<Appearance> { new Appearance { traveler = Traveler("t" + i), dayFrom = 1, dayTo = 4 } });
+                chars.Add(ch);
+            }
+            var regular = Regular(Traveler("r1"), Traveler("r2"), Traveler("r3"), Traveler("r4"), Traveler("r5"));
+            List<TravelerData> Plan(int seed)
+            {
+                var rng = GameOff.Day.DayGenerator.Rng(seed, 2, 75);
+                float Next() => (float)rng.NextDouble();
+                return CharacterPlanner.Queue(regular, CharacterPlanner.Due(2, chars, new CharacterMemory(), 3, Next), Next);
+            }
+            CollectionAssert.AreEqual(Plan(4242), Plan(4242));
+        }
+
+        /// <summary>The wanted entry carries the name on the papers of their next appearance in that time (the Shifter changes names).</summary>
+        [Test]
+        public void WantedName_IsTheNextPapersName()
+        {
+            var ch = Make<RecurringCharacter>();
+            var later = Make<TravelerData>("later");
+            var so = new UnityEditor.SerializedObject(later);
+            so.FindProperty("displayName").stringValue = "ORREN VALE";
+            so.ApplyModifiedPropertiesWithoutUndo();
+            ch.EditorSet("s", "THE SHIFTER", "Human", new List<Appearance>
+            {
+                new Appearance { traveler = Traveler("a"), dayFrom = 1, dayTo = 1 },
+                new Appearance { traveler = later, dayFrom = 3, dayTo = 3 },
+            });
+            Assert.AreEqual("ORREN VALE", ch.WantedName(0, 3, 3));
+            Assert.AreEqual("ORREN VALE", ch.WantedName(0, 2, 4), "a window that covers the day");
+            Assert.AreEqual("THE SHIFTER", ch.WantedName(0, 5, 6), "no appearance then: the character's name");
+            Assert.AreEqual("THE SHIFTER", ch.WantedName(1, 3, 3), "only later appearances");
+        }
+
+        /// <summary>
+        /// Quill's revenge on day 6 only follows the raid his day-3 betrayal set off (flag), not a refusal on day 4 after he was
+        /// helped on day 3.
+        /// </summary>
+        [TestCase(Verdict.Deny, true)]
+        [TestCase(Verdict.Arrest, true)]
+        [TestCase(Verdict.Admit, false)]
+        public void QuillRevenge_OnlyAfterTheRaid(Verdict day3, bool revenge)
+        {
+            var chars = new List<RecurringCharacter>();
+            foreach (var g in UnityEditor.AssetDatabase.FindAssets("t:RecurringCharacter", new[] { "Assets/_Project/Data/Characters/Story" }))
+                chars.Add(UnityEditor.AssetDatabase.LoadAssetAtPath<RecurringCharacter>(UnityEditor.AssetDatabase.GUIDToAssetPath(g)));
+            var quill = chars.Find(c => c.Id == "quill");
+            Assert.IsNotNull(quill, "no Quill - run GameOff/Build Story Characters");
+            var memory = new CharacterMemory();
+            for (int d = 1; d <= 5; d++)
+                foreach (var p in CharacterPlanner.Due(d, chars, memory, 3, () => 0f))
+                {
+                    var verdict = p.character == quill && d == 3 ? day3 : p.character == quill && d == 4 ? Verdict.Deny : p.traveler.IntendedVerdict;
+                    memory.Decide(p.character, p.appearance, d, p.character.Appearances[p.appearance].OutcomeOf(verdict), verdict);
+                }
+            if (day3 == Verdict.Admit) Assert.AreEqual(Outcome.Betrayed, memory.Last(quill), "helped on day 3, turned away on day 4");
+            bool comes = CharacterPlanner.Due(6, chars, memory, 3, () => 0f).Exists(p => p.character == quill);
+            Assert.AreEqual(revenge, comes);
         }
 
         [Test]
@@ -153,7 +244,8 @@ namespace GameOff.Tests
 
         /// <summary>
         /// Validator (P75): every appearance of every character in the project is judged right by the rules on its first day –
-        /// with the wanted entries that the earlier appearances can put on that day when the condition says how it went.
+        /// with the wanted entries that the earlier appearances can put on that day when the condition (and a flag gate the character
+        /// sets itself) says how it went. The name on the entry is the one CharacterDirector uses (RecurringCharacter.WantedName).
         /// </summary>
         [Test]
         public void ProjectCharacters_EveryAppearanceIsJudgedAsIntended()
@@ -170,6 +262,10 @@ namespace GameOff.Tests
                     Assert.LessOrEqual(a.dayFrom, Mathf.Max(a.dayFrom, a.dayTo));
                     var rules = schedule.Get(a.dayFrom).rules;
                     var wanted = new List<WantedEntry>();
+                    // a flag this character sets itself: the entry only fits if the same outcome set it
+                    bool ownGate = false;
+                    for (int j = 0; j < i; j++)
+                        if (!string.IsNullOrWhiteSpace(a.onlyIfFlag) && ch.Appearances[j].consequences.Exists(x => x.setFlag == a.onlyIfFlag)) ownGate = true;
                     for (int j = 0; j < i; j++)
                         foreach (var c in ch.Appearances[j].consequences)
                         {
@@ -180,7 +276,10 @@ namespace GameOff.Tests
                                 || (a.condition == AppearanceCondition.LastConfiscated && c.when == Outcome.Confiscated)
                                 || (a.condition == AppearanceCondition.LastWronged && (c.when == Outcome.Betrayed || c.when == Outcome.Confiscated))
                                 || (a.condition == AppearanceCondition.LastHelped && c.when == Outcome.Helped);
-                            if (lands && fits) wanted.Add(new WantedEntry(ch.DisplayName, "", c.wantedOrder, c.wantedNote));
+                            if (ownGate)
+                                fits &= ch.Appearances[j].consequences.Exists(x => x.when == c.when && x.setFlag == a.onlyIfFlag);
+                            if (lands && fits)
+                                wanted.Add(new WantedEntry(ch.WantedName(j, on, on + Mathf.Max(1, c.wantedForDays) - 1), "", c.wantedOrder, c.wantedNote));
                         }
                     var day = rules.RuntimeCopy(null, wanted);
                     try

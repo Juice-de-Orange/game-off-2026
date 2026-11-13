@@ -8,8 +8,10 @@ namespace GameOff.Characters
     /// P75, without Unity (EditMode-tested): which recurring characters come today and where they stand in the queue.
     /// Per character at most one appearance a day: the first one in its list that is due, not done yet, and whose condition holds
     /// (P150: and whose flag gates let it).
-    /// A window of several days picks its day at random (each day 1/(days left) – on the last day it always comes).
-    /// At most maxPerDay encounters a day (fixed slots first). Slot n = n-th in the queue; 0 = anywhere.
+    /// A window of several days picks its day at random (each day 1/(days left) – on the last day it always comes); the random numbers
+    /// come from the caller (the director feeds a stream seeded by run and day, so a reloaded morning plans the same).
+    /// At most maxPerDay encounters a day (fixed slots first); characters in `uncapped` (the dev test character) come on top.
+    /// Slot n = n-th in the queue; 0 = anywhere.
     /// </summary>
     public static class CharacterPlanner
     {
@@ -20,8 +22,10 @@ namespace GameOff.Characters
             public TravelerData traveler;
         }
 
+        /// <param name="uncapped">Characters that don't count towards maxPerDay (the dev test character).</param>
+        /// <param name="cut">If given, receives the characters that were due but cut by maxPerDay.</param>
         public static List<Planned> Due(int day, IReadOnlyList<RecurringCharacter> characters, CharacterMemory memory, int maxPerDay,
-            Func<float> random)
+            Func<float> random, ICollection<RecurringCharacter> uncapped = null, List<Planned> cut = null)
         {
             var due = new List<Planned>();
             foreach (var c in characters)
@@ -38,10 +42,17 @@ namespace GameOff.Characters
                     break;
                 }
             }
-            // fixed slots first, then the rest; cap per day
-            due.Sort((x, y) => (Slot(x) == 0).CompareTo(Slot(y) == 0));
-            if (maxPerDay > 0 && due.Count > maxPerDay) due.RemoveRange(maxPerDay, due.Count - maxPerDay);
-            return due;
+            // fixed slots first, then the rest (each in list order); cap per day, the uncapped ones on top
+            bool Free(Planned p) => uncapped != null && uncapped.Contains(p.character);
+            var capped = due.FindAll(p => !Free(p) && Slot(p) > 0);
+            capped.AddRange(due.FindAll(p => !Free(p) && Slot(p) == 0));
+            if (maxPerDay > 0 && capped.Count > maxPerDay)
+            {
+                cut?.AddRange(capped.GetRange(maxPerDay, capped.Count - maxPerDay));
+                capped.RemoveRange(maxPerDay, capped.Count - maxPerDay);
+            }
+            capped.AddRange(due.FindAll(Free));
+            return capped;
         }
 
         /// <summary>The day's travelers with the characters put in: fixed slots at their place (in slot order), free ones at random.</summary>
