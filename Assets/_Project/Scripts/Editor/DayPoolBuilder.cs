@@ -175,6 +175,9 @@ namespace GameOff.EditorTools
             pool.ships = new List<string>(Ships);
             pool.greetings = new List<string>(Greetings);
             pool.crimes = new List<string>(Crimes);
+            // P108: the generated travelers' looks and photos (Build Traveler Photos sets it too, if the pool exists by then).
+            var looks = AssetDatabase.LoadAssetAtPath<TravelerLooks>(TravelerPhotoBuilder.AssetPath);
+            if (looks != null) pool.looks = looks;
 
             pool.cargo = new List<DayPool.CargoLine>();
             int missing = 0;

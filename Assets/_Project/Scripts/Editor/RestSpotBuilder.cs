@@ -121,7 +121,7 @@ namespace GameOff.EditorTools
                     "Look out of the porthole", out var trigger);
                 var approach = Point(go.transform, "Approach", PortholeApproach, Quaternion.Euler(0f, -90f, 0f));
                 var eye = Point(go.transform, "Eye", PortholeEye, Quaternion.Euler(0f, -90f, 0f));
-                var seat = Seat(go, trigger, tuning, hud, eye, approach, tuning.portholeFov, true, false, true);
+                var seat = Seat(go, trigger, tuning, hud, eye, approach, 0f, true, false, true); // looksOutside: SeatView reads tuning.portholeFov
                 Set(go.AddComponent<PortholeView>(), "seat", seat);
             }
 

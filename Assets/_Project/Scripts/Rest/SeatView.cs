@@ -33,12 +33,12 @@ namespace GameOff.Rest
         [SerializeField] private Transform approach;
         [Tooltip("Optional: the eye turns toward this (the porthole: the home planet).")]
         [SerializeField] private Transform lookAt;
-        [Tooltip("Field of view while seated; 0 keeps the player's.")]
+        [Tooltip("Field of view while seated; 0 keeps the player's. Not used with looksOutside: that view takes RestSpotTuning.portholeFov.")]
         [SerializeField] private float fieldOfView;
         [SerializeField] private bool mouseLook = true;
         [Tooltip("Bar stool: the barkeeper's dialog takes the controls; when it gives them back, the player stands up.")]
         [SerializeField] private bool standWhenControlReturns;
-        [Tooltip("The view looks out of the station: occlusion culling off meanwhile (the bake only covers the inside).")]
+        [Tooltip("The view looks out of the station (the porthole): occlusion culling off meanwhile (the bake only covers the inside), field of view from RestSpotTuning.portholeFov.")]
         [SerializeField] private bool looksOutside;
 
         private State _state;
@@ -114,7 +114,8 @@ namespace GameOff.Rest
                 Cursor.lockState = CursorLockMode.Locked;
                 PointerLockBridge.Request();
             }
-            float fov = fieldOfView > 0f ? fieldOfView : _camFov;
+            // P155: the porthole's field of view is read from the tuning here, so changing it needs no rebuild.
+            float fov = looksOutside && tuning != null && tuning.portholeFov > 0f ? tuning.portholeFov : fieldOfView > 0f ? fieldOfView : _camFov;
             if (approach != null)
             {
                 yield return Move(() => new Pose(approach.position, approach.rotation), _camFov, _camFov, 0.5f);

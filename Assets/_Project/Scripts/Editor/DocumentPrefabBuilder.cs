@@ -17,8 +17,6 @@ namespace GameOff.EditorTools
     /// </summary>
     public static class DocumentPrefabBuilder
     {
-        private const string FontPath = "Assets/_Project/Fonts/Orbitron-Regular.ttf";
-        private const string FontAssetPath = "Assets/_Project/Fonts/Orbitron SDF.asset";
         private const string TexFolder = "Assets/_Project/Art/Textures/Documents/";
         private const string MatFolder = "Assets/_Project/Art/Materials/Documents/";
         private const string PrefabFolder = "Assets/_Project/Prefabs/Documents/";
@@ -52,7 +50,7 @@ namespace GameOff.EditorTools
         public static string Build()
         {
             var log = new List<string>();
-            var font = FontAsset(log);
+            var font = FontAsset();
             var photoTex = Texture("T_Doc_Photo_Placeholder.png");
             var photoMat = UnlitMaterial("M_Doc_Photo", photoTex);
 
@@ -126,22 +124,11 @@ namespace GameOff.EditorTools
         private static Text Label(string text, float x, float z) => new Text("Label_" + text.Replace(" ", "").Replace(".", ""), text, x, z, 0.06f, LabelSize, LabelInk);
         private static Text Value(string key, float x, float z, float w) => new Text("Field_" + key, "", x, z, w, ValueSize, Ink);
 
-        private static TMP_FontAsset FontAsset(List<string> log)
+        /// <summary>The Orbitron TMP font asset, the same one the menus use (created there once, with its fallbacks).</summary>
+        private static TMP_FontAsset FontAsset()
         {
-            var asset = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontAssetPath);
-            if (asset == null)
-            {
-                var font = AssetDatabase.LoadAssetAtPath<Font>(FontPath);
-                asset = TMP_FontAsset.CreateFontAsset(font, 90, 9, UnityEngine.TextCore.LowLevel.GlyphRenderMode.SDFAA, 1024, 1024,
-                    AtlasPopulationMode.Dynamic);
-                asset.name = "Orbitron SDF";
-                AssetDatabase.CreateAsset(asset, FontAssetPath);
-                asset.atlasTextures[0].name = "Orbitron SDF Atlas";
-                AssetDatabase.AddObjectToAsset(asset.atlasTextures[0], asset);
-                asset.material.name = "Orbitron SDF Material";
-                AssetDatabase.AddObjectToAsset(asset.material, asset);
-                log.Add("font " + FontAssetPath);
-            }
+            var asset = MenuSceneBuilder.TitleFont();
+            if (asset == null) throw new System.InvalidOperationException("Orbitron-Regular.ttf is missing in Assets/_Project/Fonts - the documents need it");
             // Measure the cap height at fontSize 1 once, so text sizes can be given in meters.
             var probe = new GameObject("probe").AddComponent<TextMeshPro>();
             probe.font = asset;
@@ -628,7 +615,11 @@ namespace GameOff.EditorTools
             log.Add("pinboard spots, SeatedLook, Announcer");
         }
 
-        /// <summary>P33: a small lamp under SM_Counter_Speaker (world -2.5, 2.3 on the north wall; chair = origin), off until an announcement.</summary>
+        /// <summary>
+        /// P33: a small lamp under SM_Counter_Speaker (world x -2.5, y 2.3 on the north wall; chair = origin at world -2, 0, -9), off until an
+        /// announcement. The wall's face on the counter side is at world z -6.2 (StationGrayboxBuilder: wall line -6, WallFace 0.2), so the
+        /// lamp sits at z -6.25, just in front of it under the speaker (P155: it was 13 cm inside the wall).
+        /// </summary>
         private static GameObject SpeakerLamp(GameObject root)
         {
             var old = root.transform.Find("SpeakerLamp");
@@ -637,7 +628,7 @@ namespace GameOff.EditorTools
             lamp.name = "SpeakerLamp";
             Object.DestroyImmediate(lamp.GetComponent<Collider>());
             lamp.transform.SetParent(root.transform, false);
-            lamp.transform.localPosition = new Vector3(-0.5f, 2.1f, 2.93f);
+            lamp.transform.localPosition = new Vector3(-0.5f, 2.1f, 2.75f);
             lamp.transform.localScale = new Vector3(0.05f, 0.05f, 0.02f);
             var material = UnlitMaterial("M_Counter_SpeakerLamp", null, new Color(1f, 0.72f, 0.25f));
             lamp.GetComponent<MeshRenderer>().sharedMaterial = material;
