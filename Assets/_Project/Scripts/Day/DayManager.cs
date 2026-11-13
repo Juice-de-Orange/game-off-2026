@@ -297,6 +297,7 @@ namespace GameOff.Day
 
         private void DevEndDay()
         {
+            if (!GameSettings.DevToolsAllowed) return; // P146: not even through SendMessage in the release build
             Debug.Log($"[Day] Dev_end_Day: day {_day} ended from phase {_phase}.");
             StartCoroutine(EndDay());
         }

@@ -1789,7 +1789,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Nach einer Schleuse am selben Abend: Gedanke am Bullauge (vor dem Familiengedanken) und auf der Bank (vor der ersten Durchsage), Abendgäste reden darüber. Am nächsten Morgen eine Albtraum-Zeile unter dem Brief. Bei Unschuldigen härtere Zeilen, mit dem Namen der Person. An späteren Tagen nur noch Gedanken, solange `Conduct.Morale` ≤ −3. Ohne Schleuse nichts davon. Texte: `Data/Economy/MoraleTuning.asset`. Nur mit Tests geprüft, angespielt noch nicht.
 
 ### P114 — Menü-Bildrate
-- Größe: S · Priorität: Kann · Status: gebaut, Abnahme offen (max, 09.11.) · Zuständig: max
+- Größe: S · Priorität: Kann · Status: gebaut, Abnahme geht in P154 auf (Messung 13.11.: Menü CPU ×4 16,2 fps) · Zuständig: max
 - Braucht: — · Folgt auf: P48
 - Ziel: Das Menü läuft auf schwachen Geräten wieder so flüssig wie vor P48 (CPU ×4: 24 fps, seit P48: 15 fps).
 - Enthalten (Vorschlag): Innenräume, die von außen nicht zu sehen sind, im Menü abschalten (der Hangar bleibt), beim Start zurücknehmen.
@@ -1866,7 +1866,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (09.11.): Türgriffe und Schild-Aufhängungen nutzen das Material der Kranschiene. `GameOff/List Placeholders` ist leer.
 
 ### P123 — Anspielen: Welle 1, Welle 2, Hangar-Welle
-- Größe: S · Priorität: Muss · Status: offen · Zuständig: max
+- Größe: S · Priorität: Muss · Status: Tests automatisch erledigt (P147); offen sind nur die „braucht Max“-Punkte in den drei Fragen · Zuständig: max
 - Braucht: —
 - Ziel: Was bisher nur Tests gesehen haben, einmal von Hand prüfen.
 - Enthalten: Max spielt die Listen aus den beiden Fragen von Martin (`2026-11-09_martin-an-max_welle1-testen`, `..._welle2-testen`) und die Hangar-Welle durch, auch: Reichen 5 Minuten Abend? Claude schreibt die Antworten in die Fragen, jeder Fund wird ein eigenes Folgepaket.
@@ -2068,7 +2068,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 12.11., Agent): Clip `A_NPC_Sit` als Humanoid-Loop, Zustand `Sit` in den fünf Reisenden-Controllern. Drei der sechs Plätze sind Sitze: Deckbank Ost, Barhocker 1, Hallenbank C Ostsitz (Bankmitte bleibt für den Spieler). Jede Figur wird einmal vermessen und an die Sitzhöhe angepasst; wer nicht passt, steht; ein besetzter Barhocker ist für den Spieler bis zum Morgen zu. Tests für Plätze und Controller. Im Browser: Gäste sitzen auf Deckbank, Bank C und Hocker 1 ✓; Hocker-Sperre und Ausweichen nicht geprüft; Vellani/Sorvak-Größen nur berechnet.
 
 ### P146 — Release-Vorbereitung
-- Größe: M · Priorität: Muss · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: M · Priorität: Muss · Status: fertig (max, 13.11.; Leistung → P154) · Zuständig: max
 - Braucht: — · Folgt auf: P19, P49, P57, P114
 - Ziel: Der Build, der am 30.11. eingereicht wird, ist sauber: keine Entwickler-Werkzeuge, keine Fehlermeldungen beim Start, alle Quellen genannt, schnell genug.
 - Enthalten:
@@ -2079,6 +2079,7 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
   - Checkliste für den Abgabetag in `docs/DEPLOY.md`: Repo öffentlich (heute privat, Pflicht bis 01.12.), ZIP mit Vorwärts-Schrägstrichen, Decompression Fallback, Firefox-Test, itch-Seite.
 - Nicht enthalten: der Upload und die Einreichung selbst (P19), das Öffentlichmachen des Repos (macht Max).
 - Abnahme: Release-Build ohne Dev-Zugänge (im Browser geprüft); Start ohne Konsolenmeldungen aus `Assets/_Project`; CREDITS vollständig; Messwerte nicht schlechter als P57; P114 abgenommen; Checkliste steht.
+- Ergebnis (max, 13.11., Agent): Abgabe-Build `GameOff/Build Release (itch)` (`WebBuild.BuildRelease`, Define `K9_RELEASE`, nach `Builds/itch`): kein DEV-Reiter, keine Dev-Knöpfe, `DevEndDay` auch per SendMessage gesperrt, Dev-Figuren aus (im Browser geprüft). Live-Build unverändert mit Dev-Werkzeugen. Eigene Längen-Abfragen auf noch nicht dekodierte Clips abgesichert (dabei behoben: Einmal-Sounds wurden nach 0,1 s abgeschnitten, das Deck konnte einen dekodierenden Song überspringen); die Meldung „Trying to get length of sound which is not loaded yet“ kommt aber weiter 5× beim Start aus Unitys eigenem Code (nicht behoben, harmlos). CREDITS abgeglichen (Schriften korrigiert, alle Musik/Laute selbst synthetisiert). Checkliste Abgabetag in `docs/DEPLOY.md`. Messung 13.11.: 24–47 % unter P57 → **nicht abgenommen**, eigenes Paket P154; P114 damit ebenfalls dort.
 
 ### P147 — Automatischer Durchspieltest der Wellen 1–3
 - Größe: M · Priorität: Muss · Status: fertig (max, 13.11.) · Zuständig: max
@@ -2090,27 +2091,30 @@ Der Kern-Loop wird in dieser Reihenfolge fertig; wer frei ist, nimmt das nächst
 - Ergebnis (max, 13.11., Agent): Alle drei Testlisten im Browser-Build b8b9cc1 durchgespielt und in den Fragen beantwortet: Welle 1 15 ✓ / 3 ✗, Welle 2 12 ✓ / 1 ✗, Welle 3 10 ✓ / 1 ✗ (gleicher Fehler wie Welle 1). Funde → P151 (Untertitel übereinander), P152 (Bullauge ab Tag 3 verdeckt), P153 (Kiosk-Schild nach Sperrstunde). Für Max offen („braucht Max“, in den Fragen markiert): Größe der Schrank-Modelle, Kamerafahrt Bullauge, zittriger Brief, reichen 5 Minuten Abend, Klang von Sperrstunde und erster Durchsage, Spielstand nach Tab-Schließen auf itch/kestrel9, Maus-Einfangen im echten Browser. Nicht geprüft: Barhocker besetzt, zerrissenes Foto, DISCHARGED, dunkles Fenster.
 
 ### P148 — Wachen gehen Runden durch die Station
-- Größe: M · Priorität: Kann · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: M · Priorität: Kann · Status: fertig (max, 13.11.) · Zuständig: max
 - Braucht: Wachmann-Figur und `AC_NPC_Guard` (Idle, Walk, Grab) aus P104 · Folgt auf: P104
 - Ziel: Die Station wirkt bewacht (DESIGN.md „Kann“: Wachen-NPCs, die durch die Station laufen).
 - Enthalten: Ein bis zwei Wachen gehen tagsüber und abends feste Runden (Halle, Motel-Gang, Hangar-Galerie) auf dem vorhandenen NavMesh, bleiben an Wegpunkten kurz stehen und schauen sich um; nicht während einer Verhaftung (dann ist die P104-Wache dran). Kein Einfluss auf Regeln oder Geld; Spieler kann sie ansprechen ([E] → eine kurze Zeile aus einem kleinen Pool). Keine Wache in Zimmer 103 oder hinter dem Schalter. Kosten gering: Animator-Culling, keine Wache im Bild = kein Update.
 - Nicht enthalten: Wachen, die den Spieler aufhalten oder kontrollieren; neue Modelle.
 - Abnahme: An zwei Tagen gehen die Wachen ihre Runden ohne Hängenbleiben oder Durch-Wände-Laufen; Sperrstunde und Verhaftung funktionieren unverändert; FPS nicht schlechter als P57.
+- Ergebnis (max, 13.11., Agent): `GuardRounds` + `GuardTuning`, Builder `Build Guard Rounds into Main` (läuft in Rebuild All). Zwei Wachen (Halle/Motel-Gang, Hangarboden) gehen in Schicht und Abend ihre Runden auf dem NavMesh, stehen 2–5 s an Wegpunkten und schauen sich um, warten, wenn der Spieler im Weg steht; [E] zeigt eine Zeile. 12 Tests (Wegpunkte, NavMesh-Pfade, verbotene Räume). Im Browser: beide Wachen laufen in Schicht und Abend, [E] ✓, keine Warnungen. Behoben nach dem Test: Wache blieb nach dem Gespräch stehen, solange der Spieler vor ihr stand. Fußgleiten und FPS nicht einzeln gemessen.
 
 ### P149 — Pausenmenü während des Heimflugs
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 13.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P106, P72
 - Ziel: Esc pausiert auch im Heimflug (heute gehört die Steuerung dort ganz dem Flug, MECHANICS „Lücken“).
 - Enthalten: Esc im Flug öffnet das normale Pausenmenü und hält den Flug an (Zeit, Kamera, Ton); Weiter setzt ihn genau dort fort; Optionen und Hilfe [H] funktionieren. Maussperre im Browser danach zurückholen (P138).
 - Abnahme: Im Flug Esc → Pause, Weiter → Flug läuft weiter, Ende kommt wie vorher; im Browser geprüft; keine Konsolenfehler.
+- Ergebnis (max, 13.11., Agent): Esc/P pausiert den Heimflug (Zeit, Lenken, Ton), Weiter setzt ihn fort, die Pausenzeit zählt nicht zum Flug. Im Browser: Pause, Stillstand, Weiter, Ende HOME ✓. Kosmetisch offen: „[H] how to fly“ liegt kurz über dem Pausentext. Mit Esc weitergemacht holt der Browser die Maus erst beim nächsten Klick zurück.
 
 ### P150 — Ende AIRLOCKED für alle erreichbar: die Komplizin
-- Größe: S–M · Priorität: Soll · Status: in Arbeit (max, 12.11.) · Zuständig: max
+- Größe: S–M · Priorität: Soll · Status: fertig (max, 13.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P87, P75
 - Ziel: Jeder Spieler bekommt an Tag 6 die Widerstands-Frage, auch wer den Shifter an Tag 3 wie befohlen terminiert hat (Entscheidung Max, 12.11.).
 - Enthalten: Wurde der Shifter an Tag 3 durch die Schleuse geschickt (oder verhaftet), kommt an Tag 6 statt ihm seine Komplizin (neue Figur, Mensch oder andere Spezies, vorhandenes Modell mit Variante, saubere Papiere) und stellt dieselbe JOIN/REFUSE-Frage („Er ist für uns gestorben …“). JOIN → Tag 7 läuft wie beim Shifter (sie enthüllt sich, Sicherheit, Ende AIRLOCKED); REFUSE → Tag 7 Wendung ohne Ende. Texte in `StoryDayContent`/Figuren-Daten, Eintrag in `docs/FIGUREN.md`. Ende-Auswertung (P124) nennt sie.
 - Nicht enthalten: neue Modelle, Änderungen an Tag 3.
 - Abnahme: Beide Wege (Shifter terminiert / durchgelassen) führen an Tag 6 zur Frage und mit JOIN an Tag 7 zu AIRLOCKED; Tests (`ShifterTests` erweitert), Validate Travelers ok; Economy Report unverändert ✓.
+- Ergebnis (max, 13.11., Agent): Komplizin Ilsa Koval (Mensch, ID endet auf 77): Shifter an Tag 3 per Schleuse oder verhaftet → sie fragt an Tag 6 JOIN/REFUSE, JOIN → Tag 7 Ende AIRLOCKED. Neue Mechanik: Folgen setzen Flags, Auftritte mit `onlyIfFlag`/`unlessFlag`. Damit Lohn und Balance gleich bleiben, entfallen Hedda (Tag 6) und Mabu (Tag 7). Ende-Auswertung nennt sie. Tests für alle vier Wege an Tag 3; Economy Report alle ✓. Im Browser kompletter Weg Tag 3 Schleuse → Tag 6 JOIN → Tag 7 AIRLOCKED ✓.
 
 ### P151 — Untertitel liegen übereinander
 - Größe: S · Priorität: Soll · Status: offen · Zuständig: —

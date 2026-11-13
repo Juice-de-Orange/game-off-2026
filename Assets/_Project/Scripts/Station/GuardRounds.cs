@@ -268,7 +268,9 @@ namespace GameOff.Station
             }
 
             float giveWay = tuning.giveWayMeters + (guard.GivingWay ? GiveWayHysteresis : 0f);
-            bool blocked = _player != null && player.ControlEnabled && Blocks(guard.Transform.position, guard.Transform.forward, _player.position, giveWay);
+            // Where he wants to walk, not where he faces: after a talk he faces the player, and the player stood "in his way" for good.
+            var heading = guard.Agent != null && guard.Agent.hasPath ? guard.Agent.steeringTarget - guard.Transform.position : guard.Transform.forward;
+            bool blocked = _player != null && player.ControlEnabled && Blocks(guard.Transform.position, heading, _player.position, giveWay);
             if (blocked != guard.GivingWay)
             {
                 guard.GivingWay = blocked;

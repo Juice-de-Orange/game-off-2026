@@ -104,7 +104,7 @@ namespace GameOff.Travelers
         public static string StatusLine(Lane lane, bool inspecting, int served, int total, string clock)
         {
             string state = lane == Lane.Closed ? "CLOSED" : lane == Lane.Over ? "SHIFT OVER" : inspecting ? "OPEN · INSPECTION" : "OPEN · NEXT";
-            return $"LANE 1 {state} · {served}/{total} · {clock}";
+            return $"LANE 2 {state} · {served}/{total} · {clock}";
         }
     }
 }

@@ -204,7 +204,7 @@ namespace GameOff.EditorTools
             float slant = new Vector2(screen.size.x, screen.size.y).magnitude;
             text.rectTransform.sizeDelta = new Vector2(CrtTextWidth, slant * 0.8f);
             if (font != null) text.font = font;
-            text.text = "LANE 1 CLOSED";
+            text.text = "LANE 2 CLOSED";
             text.color = Green;
             text.alignment = TextAlignmentOptions.Center;
             text.enableAutoSizing = true;

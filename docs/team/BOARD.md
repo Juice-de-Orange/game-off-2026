@@ -97,7 +97,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
-| max | P146–P150 (Story Characters, Rebuild All, Bake) | `Main.unity`, `Boot.unity`, generierte Prefabs (`PF_DayFlow`, `PF_GuardRounds` neu, `PF_PauseMenu` …), `Data/Days/Story`, Story-Reisende, `Data/Station/GuardTuning` | 12.11. 23:30 |
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
 
 ## Backlog

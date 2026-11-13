@@ -149,7 +149,7 @@ namespace GameOff.Tests
         [Test]
         public void StatusLine_ShowsLaneProgressAndClock()
         {
-            Assert.AreEqual("LANE 1 CLOSED · 0/6 · 08:00", TerminalLookup.StatusLine(TerminalLookup.Lane.Closed, false, 0, 6, "08:00"));
+            Assert.AreEqual("LANE 2 CLOSED · 0/6 · 08:00", TerminalLookup.StatusLine(TerminalLookup.Lane.Closed, false, 0, 6, "08:00"));
             StringAssert.Contains("INSPECTION", TerminalLookup.StatusLine(TerminalLookup.Lane.Open, true, 2, 6, "09:10"));
             StringAssert.Contains("SHIFT OVER", TerminalLookup.StatusLine(TerminalLookup.Lane.Over, false, 6, 6, "17:00"));
         }
