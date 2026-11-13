@@ -59,6 +59,8 @@ namespace GameOff.Departure
 
         private void Buy()
         {
+            // P109: BUY was shown before 23:00 and pressed after it.
+            if (!IsOpen) { dialogs.ShowHint(day.CurfewClosedText, 4f); Resume(); return; }
             if (Economy.Wallet.TrySpend(Price, "Ticket home")) GetTicket();
             else dialogs.ShowHint("Not enough credits.", 4f);
             Resume();

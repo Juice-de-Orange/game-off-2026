@@ -135,6 +135,16 @@ namespace GameOff.Documents
             UpdateLayers();
         }
 
+        /// <summary>
+        /// The desk stops getting the pointer (a window opened over it): a pressed or dragged paper is laid down where it is and a
+        /// drawer press is dropped, so nothing sticks to the mouse once the desk gets it back.
+        /// </summary>
+        public void LetGoOfPaper()
+        {
+            LetGo();
+            _drawerPress = false;
+        }
+
         /// <summary>A pressed or dragged thing is laid down where it is (on the desk, never in the drawer).</summary>
         private void LetGo()
         {

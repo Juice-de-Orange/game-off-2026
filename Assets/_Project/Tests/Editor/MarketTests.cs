@@ -136,6 +136,51 @@ namespace GameOff.Tests
         }
 
         [Test]
+        public void EventItems_LeaveAtTheNextRefill_AndAreNotSoldExtras()
+        {
+            var spice = Item(12);
+            var stew = Item(12);
+            var kiosk = Stock(1f, 0.5f, spice, 1);
+            var e = Make<MarketEvent>();
+            e.stock.Add(new StockChange { stock = kiosk, item = stew, amount = 2 });
+            Market.Begin(2, new[] { e });
+            var k = new VendorSupply(kiosk);
+            Assert.AreEqual(2, k.Count(stew));
+            CollectionAssert.IsEmpty(k.Extras, "the event's items were not sold by the player (the save keeps extras, P128)");
+
+            Market.Begin(3, null);
+            k.Refill();
+            Assert.AreEqual(0, k.Count(stew));
+            CollectionAssert.DoesNotContain(k.Items.ToList(), stew, "only on the shelf for the day of the event");
+        }
+
+        [Test]
+        public void EventItem_SoldBackByThePlayer_OnlyThatOneStays()
+        {
+            var spice = Item(12);
+            var stew = Item(12);
+            var kiosk = Stock(1f, 0.5f, spice, 1);
+            var e = Make<MarketEvent>();
+            e.stock.Add(new StockChange { stock = kiosk, item = stew, amount = 2 });
+            Market.Begin(2, new[] { e });
+            var k = new VendorSupply(kiosk);
+            k.Put(stew);
+            Assert.AreEqual(3, k.Count(stew));
+            Assert.AreEqual(1, k.SoldCount(stew), "what the save keeps");
+            Assert.AreEqual(1, k.Items.Count(i => i == stew), "listed once");
+            Assert.IsTrue(k.Take(stew));
+            Assert.AreEqual(1, k.SoldCount(stew), "a buyer takes the event's units first");
+
+            Market.Begin(3, null);
+            k.Refill();
+            Assert.AreEqual(1, k.Count(stew), "the event's units are gone, the sold one stays");
+            CollectionAssert.AreEqual(new[] { stew }, k.Extras);
+            Assert.AreEqual(1, k.SoldCount(stew));
+            Assert.IsTrue(k.Take(stew));
+            CollectionAssert.DoesNotContain(k.Items.ToList(), stew, "bought back: gone like any extra");
+        }
+
+        [Test]
         public void MarketEventsInProject_HaveTheirTexts()
         {
             foreach (var guid in AssetDatabase.FindAssets("t:MarketEvent"))

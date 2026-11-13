@@ -74,6 +74,23 @@ namespace GameOff.Tests
         }
 
         [Test]
+        public void Desk_StaysBlocked_UntilTheLastWindowLetsGo()
+        {
+            _go = new GameObject("Counter");
+            var station = _go.AddComponent<GameOff.Counter.CounterStation>();
+            object inventory = new object(), question = new object(), stranger = new object();
+            Assert.IsFalse(station.InputBlocked);
+            station.SetInputBlocked(inventory, true);
+            station.SetInputBlocked(question, true);
+            station.SetInputBlocked(question, false); // the character's question is answered under the open shift inventory
+            Assert.IsTrue(station.InputBlocked, "the shift inventory still holds the desk");
+            station.SetInputBlocked(stranger, false);
+            Assert.IsTrue(station.InputBlocked, "letting go of what one never held changes nothing");
+            station.SetInputBlocked(inventory, false);
+            Assert.IsTrue(station.InputBlocked, "the frame the last window closes stays blocked (its Esc must not leave the counter)");
+        }
+
+        [Test]
         public void EconomyPrefab_InventoryWindowHasTheShiftViewParts()
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Project/Prefabs/Economy/PF_Economy.prefab");

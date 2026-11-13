@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GameOff.Audio;
+using GameOff.Day;
 using GameOff.Economy;
 using GameOff.Player;
 using TMPro;
@@ -16,10 +17,14 @@ namespace GameOff.UI
     /// (P13 decides what sending does; P46 only removes the item). Esc or BACK closes; the player stands still meanwhile.
     /// Vendors have a limited shelf (P11, PlayerEconomy.Supply): the count shows next to the name, sold-out items can't be bought,
     /// and what you sell to a vendor lands on their shelf.
+    /// P109: a vendor that opens after the shift and the drone close at the curfew, also with the window open; a window the dev
+    /// tools forced open outside the trading hours stays.
     /// </summary>
     public class TradeWindow : MonoBehaviour
     {
         [SerializeField] private FirstPersonController player;
+        [Tooltip("P109: optional; the window closes at the curfew.")]
+        [SerializeField] private DayManager day;
         [SerializeField] private GameObject root;
         [SerializeField] private TMP_Text title;
         [SerializeField] private TMP_Text credits;
@@ -45,6 +50,7 @@ namespace GameOff.UI
         private Func<ItemData, string> _sendHint;
         private ItemData _selected;
         private Side _side;
+        private bool _closesAtCurfew;
 
         public bool IsOpen => root.activeSelf;
 
@@ -57,7 +63,25 @@ namespace GameOff.UI
             root.SetActive(false);
         }
 
-        private void OnDisable() => Unsubscribe();
+        private void OnEnable()
+        {
+            if (day != null) day.CurfewStarted += OnCurfew;
+        }
+
+        private void OnDisable()
+        {
+            if (day != null) day.CurfewStarted -= OnCurfew;
+            Unsubscribe();
+        }
+
+        /// <summary>P109: 23:00 – the trade ends here too (the shutter falls, the station says why).</summary>
+        private void OnCurfew(int dayNumber)
+        {
+            if (IsOpen && _closesAtCurfew) Close();
+        }
+
+        /// <summary>P109: a trade after the curfew (or outside the trading hours) is refused, unless the dev tools opened the window.</summary>
+        private bool TradingClosed => _closesAtCurfew && day != null && !day.TradingOpen;
 
         private void Update()
         {
@@ -105,6 +129,8 @@ namespace GameOff.UI
             _side = Side.None;
             message.text = "";
             rightHeader.text = "YOUR ITEMS";
+            // Opened in the trading hours: closes with them. Opened outside them, the dev tools forced it (Dev_force_Trade / _Send).
+            _closesAtCurfew = day != null && day.TradingOpen && (_mode == Mode.SendHome || _stock.OpenAfterShiftOnly);
             player.SetControlEnabled(false); // frees the mouse
             root.SetActive(true);
             Economy.Wallet.Changed += Refresh;
@@ -207,6 +233,7 @@ namespace GameOff.UI
         private void DoAction()
         {
             if (_selected == null) return;
+            if (TradingClosed) { Close(); return; }
             var economy = Economy;
             var item = _selected;
             if (_mode == Mode.SendHome)

@@ -191,10 +191,10 @@ namespace GameOff.Characters
             yield return new WaitForSeconds(questionDelay + WalkInSeconds); // P91: counted from when they stand at the window
             if (shift.Current != traveler || dayManager == null || dayManager.UI == null) yield break; // already decided
             var station = shift.Station;
-            if (station != null) station.SetInputBlocked(true);
+            if (station != null) station.SetInputBlocked(a, true);
             void Answer(bool accepted)
             {
-                if (station != null) station.SetInputBlocked(false);
+                if (station != null) station.SetInputBlocked(a, false);
                 if (accepted) Memory.SetFlag(a.flag);
                 Debug.Log($"[Characters] {traveler.DisplayName}: \"{a.questionTitle}\" → {(accepted ? "accepted" : "declined")}");
                 if (presenter != null) presenter.SayLine(accepted ? a.acceptLine : a.declineLine);
@@ -207,7 +207,7 @@ namespace GameOff.Characters
         {
             var station = shift.Station;
             yield return new WaitForSeconds(endingDelay + WalkInSeconds);
-            if (station != null) station.SetInputBlocked(true);
+            if (station != null) station.SetInputBlocked(a, true);
             if (dayManager != null && dayManager.UI != null && !string.IsNullOrWhiteSpace(a.endingWarning)) dayManager.UI.ShowHint(a.endingWarning, 6f);
             yield return new WaitForSeconds(3f);
             Debug.Log($"[Characters] the run ends at {traveler.DisplayName}: {a.endingTitle}");

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using GameOff.Counter;
 using GameOff.Economy;
+using GameOff.Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,12 +10,16 @@ using UnityEngine.UI;
 namespace GameOff.UI
 {
     /// <summary>
-    /// P08: at shift end, while still seated, the supervisor asks about today's confiscations. Left the confiscated goods (click one to
-    /// pick it for "missed that"), right the three answers; after an answer the outcome text and CONTINUE. The desk ignores input meanwhile.
+    /// P08: at shift end the supervisor asks about today's confiscations. Left the confiscated goods (click one to
+    /// pick it for "missed that"), right the three answers; after an answer the outcome text and CONTINUE. Seated, the desk ignores
+    /// input meanwhile; the shift also ends a few seconds after the last decision, when the officer may already walk: then the
+    /// report takes the player like any window (no walking, free mouse) and gives them back on CONTINUE.
     /// </summary>
     public class ShiftReportWindow : MonoBehaviour
     {
         [SerializeField] private CounterStation counter;
+        [Tooltip("Held while the report is open away from the counter.")]
+        [SerializeField] private FirstPersonController player;
         [SerializeField] private GameObject root;
         [SerializeField] private ItemListView itemList;
         [SerializeField] private TMP_Text question;
@@ -30,6 +35,7 @@ namespace GameOff.UI
         private Func<ShiftChoice, ItemData, ShiftOutcome> _answer;
         private bool _answered;
         private Action _closed;
+        private bool _holdsPlayer, _tookControl;
 
         public bool IsOpen => root.activeSelf;
 
@@ -53,11 +59,28 @@ namespace GameOff.UI
             _answer = answer;
             _picked = null;
             _answered = false;
-            if (counter != null && counter.IsSeated) counter.SetInputBlocked(true);
+            _holdsPlayer = _tookControl = false;
+            if (counter != null && counter.IsSeated) counter.SetInputBlocked(this, true);
+            else if (player != null)
+            {
+                // Walking (or the [H] help holds the player): the report needs the mouse. Whoever held the player before keeps them.
+                _holdsPlayer = true;
+                _tookControl = player.ControlEnabled | HelpOverlay.HandOverPlayer(); // | not ||: the help lets go of them either way
+                player.SetControlEnabled(false);
+            }
             root.SetActive(true);
             question.text = "End of shift. The supervisor checks today's confiscations.\nWhat do you report?";
             outcome.text = "";
             Refresh();
+        }
+
+        private void Update()
+        {
+            // Someone gave the player back under the report (the counter's stand-up blend, a window closed below it):
+            // the report keeps them until CONTINUE, else the mouse is captured and its buttons can't be clicked.
+            if (!_holdsPlayer || !IsOpen || !player.ControlEnabled) return;
+            _tookControl = true;
+            player.SetControlEnabled(false);
         }
 
         private void Refresh()
@@ -93,10 +116,14 @@ namespace GameOff.UI
         private void Close()
         {
             root.SetActive(false);
-            if (counter != null) counter.SetInputBlocked(false);
+            if (counter != null) counter.SetInputBlocked(this, false);
+            bool giveBack = _holdsPlayer && _tookControl;
+            _holdsPlayer = _tookControl = false;
             var closed = _closed;
             _closed = null;
             closed?.Invoke();
+            // After it: a discharge (closed) has ended the run, and the player stays with the end screen (the controller ignores this then).
+            if (giveBack) player.SetControlEnabled(true);
         }
     }
 }
