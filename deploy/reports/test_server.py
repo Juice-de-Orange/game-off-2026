@@ -222,6 +222,31 @@ class MetricsTests(unittest.TestCase):
             f.truncate(server.METRICS_FILE_MAX)
         self.assertEqual(503, self.post(self.batch({"e": "beat"}))[0])
 
+    def test_unhashable_event_name_is_dropped_not_a_crash(self):
+        status, body = self.post(self.batch({"e": ["beat"]}, {"e": {"x": 1}}, {"e": 5}, {"e": "beat", "fps": 60}))
+        self.assertEqual((200, {"ok": True, "stored": 1}), (status, body))
+        self.assertEqual([60], [line["fps"] for line in self.lines()])
+
+    def test_server_fields_cannot_be_overridden(self):
+        self.post(self.batch({"e": "beat", "ts": "1999-01-01T00:00:00Z", "s": "forged", "v": "x", "fps": 30}))
+        (beat,) = self.lines()
+        self.assertEqual(("2026-11-20T18:30:05Z", "a1b2c3d4e5f6", "0.1.0+abc1234"), (beat["ts"], beat["s"], beat["v"]))
+
+    def test_day_limit_counts_utf8_bytes_not_characters(self):
+        event = {"e": "error", "msg": "ä" * 400}  # 400 characters, 800 bytes in UTF-8
+        line = json.dumps({"ts": "2026-11-20T18:30:05Z", "s": "a1b2c3d4e5f6", "v": "0.1.0+abc1234", **event}, ensure_ascii=False) + "\n"
+        chars, size = len(line), len(line.encode("utf-8"))
+        self.assertGreater(size, chars)
+        path = os.path.join(self.dir.name, "metrics-2026-11-20.jsonl")
+        with open(path, "wb") as f:
+            f.truncate(server.METRICS_FILE_MAX - chars)  # fits by characters, not by bytes
+        self.assertEqual(503, self.post(self.batch(event))[0])
+        self.assertEqual(server.METRICS_FILE_MAX - chars, os.path.getsize(path))
+        with open(path, "wb") as f:
+            f.truncate(server.METRICS_FILE_MAX - size)  # fits exactly
+        self.assertEqual(200, self.post(self.batch(event))[0])
+        self.assertEqual(server.METRICS_FILE_MAX, os.path.getsize(path))
+
     def test_off_without_store_and_reports_unaffected(self):
         off = server.make_server(0, {"token": "", "repo": "owner/repo", "api": "http://127.0.0.1:9", "metrics": None})
         off.server_address = ("127.0.0.1", off.server_address[1])

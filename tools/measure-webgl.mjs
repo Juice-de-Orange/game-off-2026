@@ -1,6 +1,8 @@
 // Measures a local WebGL build in its own headless Chrome (P57): frame times without the vsync cap, memory, console errors,
 // screenshots, driven by real mouse and key events, the same scenario every run. Independent of the desktop session.
 //   node tools/measure-webgl.mjs <build folder> <output folder> [scenario: full|quick]
+// full also plays two more days through Dev_end_Day and the settlement: that needs the dev tools, i.e. a live build (WebBuild.Build),
+// not the release build (K9_RELEASE): there it stops with an error instead of measuring days that never came.
 // Env: K9_CPU=4 slows the CPU down fourfold (a weaker device); K9_NOTRAFFIC=1 removes the ships in Main before measuring; K9_CYCLES=8 menu round trips.
 // Output: <output>/result.json and screenshots. Nothing here ships with the game: the hook is injected by this server only.
 import { spawn } from 'node:child_process';
@@ -46,7 +48,7 @@ const chrome = spawn(CHROME, ['--headless=new', `--remote-debugging-port=${DEBUG
   '--disable-frame-rate-limit', '--disable-gpu-vsync', '--use-angle=d3d11', '--enable-gpu', '--ignore-gpu-blocklist', 'about:blank'], { stdio: 'ignore' });
 
 let ws, seq = 0;
-const pending = new Map(), consoleLines = [];
+const pending = new Map(), consoleLines = [], logLines = []; // logLines: every console line, for waitForLog
 async function connect() {
   for (let i = 0; i < 60; i++) {
     try {
@@ -62,6 +64,7 @@ async function connect() {
           if (m.method === 'Runtime.consoleAPICalled') {
             const text = m.params.args.map(a => a.value ?? a.description ?? '').join(' ');
             if (m.params.type === 'error' || /exception|error|nullreference|missing/i.test(text)) consoleLines.push(m.params.type + ' ' + text.slice(0, 300));
+            logLines.push(text.slice(0, 500));
           }
         };
         return;
@@ -126,6 +129,37 @@ async function intoShift(firstRun) {
   await sleep(2500);
 }
 
+// Waits until a console line from index `from` on matches; the match, or null after `ms`.
+async function waitForLog(pattern, ms, from) {
+  for (let waited = 0; ; waited += 250) {
+    for (let i = from; i < logLines.length; i++) { const m = pattern.exec(logLines[i]); if (m) return m; }
+    if (waited >= ms) return null;
+    await sleep(250);
+  }
+}
+
+// Settlement CONFIRM: window centre + (317, -205) on the 960x540 canvas (EconomyBuilder.BuildSettlementWindow).
+const CONFIRM = [0.5 + 317 / 960, 0.5 + 205 / 540];
+// One day further like the bed does it: Dev_end_Day (DayManager.DevEndDay, only where GameSettings.DevToolsAllowed), the settlement
+// waits for CONFIRM, then fade, night and the next morning's letter. Returns the day now begun; throws instead of guessing.
+async function nextDay() {
+  const from = logLines.length;
+  await send('PF_DayFlow', 'DevEndDay');
+  const ended = await waitForLog(/\[Day\] Dev_end_Day: day (\d+) ended/, 4000, from);
+  if (!ended) throw new Error('Dev_end_Day did nothing: this build has no dev tools (release build, K9_RELEASE). ' +
+    'Measure the days with a live build (WebBuild.Build), or use the quick scenario.');
+  let booked = null;
+  for (let tries = 0; tries < 4 && !booked; tries++) {
+    await sleep(1500); // the settlement window opens
+    await click(...CONFIRM);
+    booked = await waitForLog(/\[Settlement\] day (\d+): (wage|rent)/, 3000, from);
+  }
+  if (!booked) throw new Error(`day ${ended[1]}: the settlement was not confirmed (CONFIRM at ${CONFIRM.map(c => c.toFixed(3))} missed?)`);
+  if (booked[2] === 'rent') throw new Error(`day ${booked[1]}: the rent could not be paid, the run ended`);
+  await sleep(6000); // fade, night, next morning with its letter
+  return Number(booked[1]) + 1;
+}
+
 try {
   await connect();
   await cdp('Page.enable'); await cdp('Runtime.enable');
@@ -155,14 +189,14 @@ try {
   await measure('standing', 15 * long);
 
   if (scenario === 'full') {
-    // Days and scene changes: does memory keep growing?
-    for (let day = 2; day <= 3; day++) {
-      await send('PF_DayFlow', 'DevEndDay');
-      await sleep(6000);
-      result.memory['day' + day] = await ev('k9mem()');
-      await hold('space', 150);
-      await sleep(1500);
-    }
+    // Days and scene changes: does memory keep growing? One day change only: this run decides no traveler, so there is no
+    // wage, and the second night can't pay the rent (start 40 - rent 30 = 10 CR -> STRANDED; measured 13.11.).
+    const day = await nextDay();
+    result.memory['day' + day] = await ev('k9mem()');
+    result.daysReached = day;
+    console.log('day', day, JSON.stringify(result.memory['day' + day]));
+    await hold('space', 150); // closes the morning letter
+    await sleep(1500);
     for (let cycle = 1; cycle <= Number(process.env.K9_CYCLES ?? 3); cycle++) {
       await hold('p', 150);
       await sleep(400);

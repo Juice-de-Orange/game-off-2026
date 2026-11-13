@@ -2,7 +2,8 @@
 //   node tools/drive-webgl.mjs <build folder> <output folder>       starts the game and waits for steps
 //   curl -s localhost:18096 -d '[["click",0.2,0.45],["wait",9000],["shot","start"]]'    runs steps, answers with new console lines
 // Steps: click u v | down u v | move u v | up u v | key name | hold name ms | wait ms | shot name | send object method [argument] | eval js | quit
-// u, v are 0..1 on the game canvas. Nothing here ships with the game: the hook is injected by this server only.
+// u, v are 0..1 on the game canvas. Key names: a-z (any case), 0-9, space, escape, tab, enter, shift, up, down, left, right;
+// an unknown name stops the batch with a DRIVER line. Nothing here ships with the game: the hook is injected by this server only.
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
@@ -55,9 +56,26 @@ const canvasH = Math.min(HEIGHT - FOOTER, WIDTH * 9 / 16), canvasW = canvasH * 1
 const canvasX = (WIDTH - canvasW) / 2, canvasY = (HEIGHT - FOOTER - canvasH) / 2;
 const at = (u, v) => ({ x: Math.round(canvasX + u * canvasW), y: Math.round(canvasY + v * canvasH) });
 const mouse = (type, u, v, extra = {}) => cdp('Input.dispatchMouseEvent', { type, ...at(u, v), ...extra });
-const KEY = name => name.length === 1
-  ? { code: /[a-z]/.test(name) ? 'Key' + name.toUpperCase() : 'Digit' + name, key: name, windowsVirtualKeyCode: name.toUpperCase().charCodeAt(0), text: name }
-  : { space: { code: 'Space', key: ' ', windowsVirtualKeyCode: 32, text: ' ' }, escape: { code: 'Escape', key: 'Escape', windowsVirtualKeyCode: 27 }, tab: { code: 'Tab', key: 'Tab', windowsVirtualKeyCode: 9 } }[name];
+const arrow = (name, vk) => ({ code: 'Arrow' + name, key: 'Arrow' + name, windowsVirtualKeyCode: vk });
+const NAMED_KEYS = {
+  space: { code: 'Space', key: ' ', windowsVirtualKeyCode: 32, text: ' ' },
+  escape: { code: 'Escape', key: 'Escape', windowsVirtualKeyCode: 27 },
+  tab: { code: 'Tab', key: 'Tab', windowsVirtualKeyCode: 9 },
+  enter: { code: 'Enter', key: 'Enter', windowsVirtualKeyCode: 13, text: '\r' },
+  shift: { code: 'ShiftLeft', key: 'Shift', windowsVirtualKeyCode: 16 },
+  up: arrow('Up', 38), down: arrow('Down', 40), left: arrow('Left', 37), right: arrow('Right', 39),
+};
+const KEY_ALIASES = { esc: 'escape', return: 'enter', arrowup: 'up', arrowdown: 'down', arrowleft: 'left', arrowright: 'right' };
+// A key name: one letter (any case, sent as the lower-case key) or digit, or a name from NAMED_KEYS / KEY_ALIASES.
+// Anything else throws, so a typo stops the batch (DRIVER line in the answer) instead of sending an empty key event.
+const KEY = raw => {
+  const name = String(raw ?? '').toLowerCase();
+  if (/^[a-z]$/.test(name)) return { code: 'Key' + name.toUpperCase(), key: name, windowsVirtualKeyCode: name.toUpperCase().charCodeAt(0), text: name };
+  if (/^[0-9]$/.test(name)) return { code: 'Digit' + name, key: name, windowsVirtualKeyCode: name.charCodeAt(0), text: name };
+  const key = NAMED_KEYS[KEY_ALIASES[name] ?? name];
+  if (!key) throw new Error(`unknown key ${JSON.stringify(raw)}: use a-z, 0-9, ${Object.keys(NAMED_KEYS).join(', ')}`);
+  return key;
+};
 
 async function step([kind, a, b, c]) {
   switch (kind) {
