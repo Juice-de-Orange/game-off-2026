@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Market_OddosCaravan
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.MarketEvent
   bulletinLine: 'Oddo''s caravan is in dock: luxuries at bargain prices, today only.'
-  announcement: Pim Oddo's travelling market has arrived at dock two. Everything
+  announcement: Pim Oddo's traveling market has arrived at dock two. Everything
     must go!
   rumour: Old Oddo's caravan docks tomorrow. Luxuries for a song.
   crisis: 0.05

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Item_NovaCola
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.ItemData
   displayName: Nova Cola
-  description: Warm, flat and sweet. Keeps you awake at the counter.
+  description: Warm, flat and sweet. Somebody always wants one.
   baseValue: 2
   dailyChange:
   - 0

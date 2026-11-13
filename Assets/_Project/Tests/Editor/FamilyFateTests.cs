@@ -83,17 +83,42 @@ namespace GameOff.Tests
             Object.DestroyImmediate(texts);
         }
 
-        [TestCase(0, "clean")]
-        [TestCase(-1, "stained")]
-        [TestCase(-4, "stained")]
-        [TestCase(-5, "bloody")]
-        public void MoraleLine_FollowsTheThresholds(int morale, string expected)
+        [TestCase(0, 0, "clean")]
+        [TestCase(1, 0, "stained")]
+        [TestCase(7, 0, "stained")]
+        [TestCase(1, 1, "bloody")]
+        [TestCase(8, 1, "bloody")]
+        public void AirlockLine_FollowsTheAirlockCounts(int airlocks, int innocent, string expected)
         {
             var texts = ScriptableObject.CreateInstance<DepartureTuning>();
             texts.moraleCleanLine = "clean";
             texts.moraleStainedLine = "stained";
             texts.moraleBloodyLine = "bloody";
-            Assert.AreEqual(expected, TicketEnding.MoraleLine(morale, texts));
+            Assert.AreEqual(expected, TicketEnding.AirlockLine(airlocks, innocent, texts));
+            Object.DestroyImmediate(texts);
+        }
+
+        /// <summary>The story orders seven airlocks: an obedient run gets the "orders" line, one innocent is enough for the other.</summary>
+        [Test]
+        public void ConductLine_OrderedAirlocks_AreNotTheInnocentLine()
+        {
+            var texts = ScriptableObject.CreateInstance<DepartureTuning>();
+            var rules = ScriptableObject.CreateInstance<ConfiscationTuning>();
+            var ordered = new GameOff.Travelers.Judgement(true, true, false, "", GameOff.Travelers.Verdict.Airlock, GameOff.Travelers.Verdict.Airlock);
+            var arrestable = new GameOff.Travelers.Judgement(false, true, false, "x", GameOff.Travelers.Verdict.Arrest, GameOff.Travelers.Verdict.Airlock);
+            var innocent = new GameOff.Travelers.Judgement(false, true, false, "x", GameOff.Travelers.Verdict.Admit, GameOff.Travelers.Verdict.Airlock);
+            var conduct = new Conduct();
+            Assert.AreEqual(texts.moraleCleanLine, TicketEnding.ConductLine(conduct, texts));
+            for (int i = 0; i < 7; i++) conduct.Judge(GameOff.Travelers.Verdict.Airlock, ordered, rules);
+            conduct.Judge(GameOff.Travelers.Verdict.Airlock, arrestable, rules);
+            Assert.AreEqual(8, conduct.Airlocks);
+            Assert.AreEqual(0, conduct.InnocentAirlocks);
+            Assert.AreEqual(texts.moraleStainedLine, TicketEnding.ConductLine(conduct, texts), "orders alone, however many");
+            conduct.BeginDay();
+            conduct.Judge(GameOff.Travelers.Verdict.Airlock, innocent, rules);
+            Assert.AreEqual(1, conduct.InnocentAirlocks, "the run count survives the new day");
+            Assert.AreEqual(texts.moraleBloodyLine, TicketEnding.ConductLine(conduct, texts));
+            Object.DestroyImmediate(rules);
             Object.DestroyImmediate(texts);
         }
     }

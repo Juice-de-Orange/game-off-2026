@@ -191,12 +191,12 @@ namespace GameOff.Tests
 
         [TestCase(Verdict.Admit, Verdict.Deny, "Valid traveler denied")]
         [TestCase(Verdict.Admit, Verdict.Arrest, "Innocent traveler arrested")]
-        [TestCase(Verdict.Admit, Verdict.Airlock, "Innocent traveler ejected")]
+        [TestCase(Verdict.Admit, Verdict.Airlock, "Innocent traveler airlocked")]
         [TestCase(Verdict.Deny, Verdict.Admit, "Admitted")]
         [TestCase(Verdict.Deny, Verdict.Arrest, "Wrongful arrest")]
         [TestCase(Verdict.Arrest, Verdict.Admit, "Criminal released")]
         [TestCase(Verdict.Arrest, Verdict.Deny, "Criminal released")]
-        [TestCase(Verdict.Airlock, Verdict.Admit, "Ordered ejection ignored")]
+        [TestCase(Verdict.Airlock, Verdict.Admit, "Ordered airlock ignored")]
         public void Judge_WrongDecision_HasReason(Verdict correct, Verdict chosen, string reasonStart)
         {
             var j = DecisionJudge.Judge(Result(correct), chosen);

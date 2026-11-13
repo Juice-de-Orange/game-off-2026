@@ -113,6 +113,8 @@ namespace GameOff.Core
                 d.disciplinary = run.conduct.Disciplinary;
                 d.morale = run.conduct.Morale;
                 d.airlockMorale = run.conduct.AirlockMorale;
+                d.airlocks = run.conduct.Airlocks;
+                d.innocentAirlocks = run.conduct.InnocentAirlocks;
             }
             d.hasTicket = run.hasTicket;
             d.barkeeperSulksFrom = run.barkeeperSulksFrom;
@@ -258,7 +260,7 @@ namespace GameOff.Core
                 if (extras.Count > 0 && !string.IsNullOrEmpty(shelf.stock)) run.vendorExtras[shelf.stock] = extras;
             }
             if (run.household != null) run.household.Restore(d.family, d.criticalNights, d.diedTonight);
-            if (run.conduct != null) run.conduct.Restore(d.disciplinary, d.morale, d.airlockMorale);
+            if (run.conduct != null) run.conduct.Restore(d.disciplinary, d.morale, d.airlockMorale, d.airlocks, d.innocentAirlocks);
             run.hasTicket = d.hasTicket;
             run.barkeeperSulksFrom = d.barkeeperSulksFrom;
             run.letterLines.Clear();

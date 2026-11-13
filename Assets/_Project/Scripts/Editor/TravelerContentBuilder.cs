@@ -36,7 +36,7 @@ namespace GameOff.EditorTools
                     Permit(Photo("Vellani"), "DARIO VENN", "VL-2210-33", "TRADE", "5 CYCLES", "2290-12-24", "VELL PRIME CONSULATE",
                         "VELL PRIME > KESTREL-9")),
                 Traveler("03_Mira", "MIRA TALSK", "Sorvak", Verdict.Deny, "Entry permit expired on 2290-10-28",
-                    "Please hurry. I have been travelling for nine days.",
+                    "Please hurry. I have been traveling for nine days.",
                     Id(Photo("Sorvak"), "MIRA TALSK", "SORVAK", "SORV DEEP", "SV-0091-12", "2293-01-20"),
                     Permit(Photo("Sorvak"), "MIRA TALSK", "SV-0091-12", "FAMILY VISIT", "10 CYCLES", "2290-10-28", "ASKA-3 CONSULATE",
                         "SORV DEEP > ASKA-3 > KESTREL-9")),

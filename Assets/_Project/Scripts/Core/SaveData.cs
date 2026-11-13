@@ -37,6 +37,9 @@ namespace GameOff.Core
         public int disciplinary;
         public int morale;
         public int airlockMorale;
+        /// <summary>Airlock uses over the run and those on the innocent (ticket ending's closing sentence; older saves: 0).</summary>
+        public int airlocks;
+        public int innocentAirlocks;
         public bool hasTicket;
         public int barkeeperSulksFrom;
         /// <summary>Lines waiting for this morning's letter (character effects, nightmares, the drone, the cargo case).</summary>

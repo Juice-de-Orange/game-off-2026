@@ -118,11 +118,11 @@ namespace GameOff.Economy
             return string.Join("\n", lines);
         }
 
-        /// <summary>P69: the letter that replaces the day's letter once someone has died; null while everybody lives.</summary>
+        /// <summary>P69: the letter that replaces the day's letter once someone has died; null while everybody lives
+        /// or when the dead have no loss letter (then the day's letter stays).</summary>
         public string LossLetter()
         {
             if (household == null || Household == null || Household.Alive == Household.Count) return null;
-            if (Household.Alive == 1) return household.lastSurvivorLetter;
             for (int i = 0; i < Household.Count; i++)
             {
                 if (!Household.IsDead(i)) continue;
@@ -130,7 +130,7 @@ namespace GameOff.Economy
                 var letter = household.lossLetters.Find(l => l.name == name);
                 if (letter != null) return Household.DiedTonight.Contains(i) ? letter.firstMorning : letter.afterwards;
             }
-            return household.lastSurvivorLetter;
+            return null;
         }
 
         /// <summary>P69: everybody is dead, or the one who writes home is.</summary>

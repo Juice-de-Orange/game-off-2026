@@ -84,7 +84,7 @@ namespace GameOff.Shops
                 return;
             }
             player.SetControlEnabled(false);
-            dialogs.ShowDialog($"{vendorName} is closed", day.IsCurfew ? day.CurfewClosedText : "Come back after your shift.", null, null,
+            dialogs.ShowDialog($"{stock.Title} · CLOSED", day.IsCurfew ? day.CurfewClosedText : "Come back after your shift.", null, null,
                 day.DevTools ? () => window.OpenTrade(stock) : null, () => player.SetControlEnabled(true), "Dev_force_Trade");
         }
     }

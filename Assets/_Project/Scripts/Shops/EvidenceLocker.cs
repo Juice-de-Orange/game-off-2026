@@ -87,7 +87,7 @@ namespace GameOff.Shops
             else
             {
                 player.SetControlEnabled(false);
-                dialogs.ShowDialog("Evidence locker", "Break the seals and take what was handed in? Someone may notice.", "BREAK IT", Break, null,
+                dialogs.ShowDialog("EVIDENCE LOCKER", "Break the seals and take what was handed in? Someone may notice.", "BREAK IT", Break, null,
                     () => player.SetControlEnabled(true));
             }
         }

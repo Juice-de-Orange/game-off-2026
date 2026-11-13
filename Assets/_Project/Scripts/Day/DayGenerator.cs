@@ -25,6 +25,10 @@ namespace GameOff.Day
         // salts: every part of a day has its own random stream, so e.g. yesterday's rules can be drawn again without its travelers
         private const int SaltRules = 1, SaltTravelers = 2, SaltBribe = 3, SaltEvent = 4, SaltLetter = 5, SaltWish = 6, SaltWanted = 7;
 
+        /// <summary>Cargo words for the same kind of goods: a day that forbids one forbids all of them (like story day 10), so a
+        /// pistol is never legal on a weapons day. Rules match whole words only, WEAPON alone would let PISTOL through.</summary>
+        private static readonly string[][] ForbiddenTogether = { new[] { "WEAPON", "PISTOL" } };
+
         public static DayEntry Generate(DayPool pool, int day, int firstDay, DateTime firstDate, int seed)
         {
             var date = firstDate.AddDays(day - firstDay);
@@ -85,7 +89,9 @@ namespace GameOff.Day
                 switch (k)
                 {
                     case 0 when origins.Count > 1: rules.Add(new BannedOriginRule(Pick(rng, origins))); break;
-                    case 1 when forbiddable.Count > 0: rules.Add(new ForbiddenGoodsRule(Pick(rng, forbiddable).item.CargoWord)); break;
+                    case 1 when forbiddable.Count > 0:
+                        foreach (var word in ForbiddenWith(Pick(rng, forbiddable).item.CargoWord)) rules.Add(new ForbiddenGoodsRule(word));
+                        break;
                     case 2 when pool.stops.Count > 1: rules.Add(new QuarantineRule(Pick(rng, pool.stops))); break;
                     case 3:
                         rules.Add(rng.NextDouble() < 0.5 && pool.species.Count > 0
@@ -95,6 +101,16 @@ namespace GameOff.Day
                 }
             }
             return rules;
+        }
+
+        /// <summary>The drawn cargo word first, then the words forbidden together with it (no extra random draw).</summary>
+        public static List<string> ForbiddenWith(string word)
+        {
+            var words = new List<string> { word };
+            foreach (var group in ForbiddenTogether)
+                if (group.Contains(word))
+                    words.AddRange(group.Where(w => w != word));
+            return words;
         }
 
         private static string NewToday(DayPool pool, int day, int firstDay, int seed, List<DayRule> today)
@@ -133,7 +149,8 @@ namespace GameOff.Day
             public DayPool pool;
             public DayRules day;
             public DateTime date;
-            public string banned, forbidden, quarantine;
+            public string banned, quarantine;
+            public List<string> forbidden = new List<string>();
             public bool manifestRule;
             public string manifestSpecies; // empty = everybody
             public List<WantedEntry> wanted;
@@ -158,7 +175,7 @@ namespace GameOff.Day
                 switch (r)
                 {
                     case BannedOriginRule b: c.banned = b.origin; break;
-                    case ForbiddenGoodsRule f: c.forbidden = f.keyword; break;
+                    case ForbiddenGoodsRule f: c.forbidden.Add(f.keyword); break;
                     case QuarantineRule q: c.quarantine = q.station; break;
                     case RequireDocumentRule d when d.document == DocumentType.CargoManifest:
                         c.manifestRule = true;
@@ -197,7 +214,7 @@ namespace GameOff.Day
                 (Flaw.ExpiredPermit, 1f), (Flaw.ExpiredId, 0.7f), (Flaw.NameMismatch, 1f), (Flaw.IdMismatch, 0.8f),
                 (Flaw.MissingPermit, 0.5f), (Flaw.ForgedSeal, 0.6f),
             };
-            if (c.forbidden != null) options.Add((Flaw.Contraband, 1.6f));
+            if (c.forbidden.Count > 0) options.Add((Flaw.Contraband, 1.6f));
             if (c.banned != null) options.Add((Flaw.BannedOrigin, 1.6f));
             if (c.quarantine != null) options.Add((Flaw.Quarantine, 0.8f));
             if (c.manifestRule) options.Add((Flaw.MissingManifest, 1.2f));
@@ -256,6 +273,8 @@ namespace GameOff.Day
             Verdict verdict = Verdict.Admit;
             bool forged = false, permit = true;
             int ago = trick ? 1 : rng.Next(2, 90);
+            // one forbidden word needs no draw: days with a single one stay exactly as they were
+            string contraband = flaw != Flaw.Contraband ? null : c.forbidden.Count == 1 ? c.forbidden[0] : Pick(rng, c.forbidden);
 
             switch (flaw)
             {
@@ -284,7 +303,7 @@ namespace GameOff.Day
                     verdict = Verdict.Arrest; reason = "Forged seal on the entry permit";
                     break;
                 case Flaw.Contraband:
-                    verdict = Verdict.Arrest; reason = $"Declares {c.forbidden}, forbidden today";
+                    verdict = Verdict.Arrest; reason = $"Declares {contraband}, forbidden today";
                     break;
                 case Flaw.BannedOrigin:
                     verdict = Verdict.Deny; reason = $"From {c.banned}, entry banned today";
@@ -318,7 +337,7 @@ namespace GameOff.Day
             if (manifest)
                 docs.Add(DocumentData.CreateGenerated(DocumentType.CargoManifest, null, Fields(("name", name),
                     ("ship", pool.ships.Count > 0 ? Pick(rng, pool.ships) : "UNNAMED"), ("origin", origin), ("destination", Destination),
-                    ("cargo", Cargo(rng, c, flaw == Flaw.Contraband)))));
+                    ("cargo", Cargo(rng, c, contraband)))));
 
             string greeting = pool.greetings.Count > 0 ? Pick(rng, pool.greetings) : "";
             bool trickIntended = trick && (flaw == Flaw.NameMismatch || flaw == Flaw.IdMismatch || flaw == Flaw.ExpiredPermit || flaw == Flaw.ExpiredId);
@@ -336,9 +355,10 @@ namespace GameOff.Day
             return answers;
         }
 
-        private static string Cargo(Random rng, Context c, bool contraband)
+        /// <summary>Manifest lines: legal goods only, plus the forbidden word <paramref name="contraband"/> if it is not null.</summary>
+        private static string Cargo(Random rng, Context c, string contraband)
         {
-            var legal = c.pool.cargo.Where(l => l.item != null && (c.forbidden == null || !TextMatch.ContainsWords(l.line, c.forbidden))).ToList();
+            var legal = c.pool.cargo.Where(l => l.item != null && !c.forbidden.Any(w => TextMatch.ContainsWords(l.line, w))).ToList();
             var lines = new List<string>();
             int n = legal.Count == 0 ? 0 : rng.Next(1, 3);
             for (int i = 0; i < n; i++)
@@ -347,10 +367,10 @@ namespace GameOff.Day
                 string line = $"{rng.Next(1, 6)}x {l.line}";
                 if (!lines.Contains(line)) lines.Add(line);
             }
-            if (contraband)
+            if (contraband != null)
             {
-                var bad = c.pool.cargo.FirstOrDefault(l => l.item != null && TextMatch.ContainsWords(l.line, c.forbidden));
-                lines.Insert(rng.Next(lines.Count + 1), $"{rng.Next(1, 6)}x {(bad != null ? bad.line : c.forbidden + " CRATE")}");
+                var bad = c.pool.cargo.FirstOrDefault(l => l.item != null && TextMatch.ContainsWords(l.line, contraband));
+                lines.Insert(rng.Next(lines.Count + 1), $"{rng.Next(1, 6)}x {(bad != null ? bad.line : contraband + " CRATE")}");
             }
             if (lines.Count == 0) lines.Add("1x PERSONAL LUGGAGE");
             return string.Join("\n", lines);

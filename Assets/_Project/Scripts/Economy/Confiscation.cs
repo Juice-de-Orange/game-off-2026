@@ -78,7 +78,8 @@ namespace GameOff.Economy
 
         private void OnDecision(TravelerData traveler, Verdict chosen, Judgement judgement)
         {
-            int change = Conduct.Judge(chosen, judgement, tuning, traveler.DisplayName);
+            // the name goes into prose ("Someone at the bar said they knew Dela Morn."), not onto papers
+            int change = Conduct.Judge(chosen, judgement, tuning, TextMatch.TitleCase(traveler.DisplayName));
             if (change != 0) Debug.Log($"[Conduct] airlock on {traveler.DisplayName}: morale {change:+0;-0} → {Conduct.Morale}");
             if (chosen == Verdict.Arrest)
             {

@@ -15,6 +15,10 @@ namespace GameOff.Economy
         public int AirlockMorale { get; private set; }
         /// <summary>Of today's airlock uses, those on someone who didn't deserve it.</summary>
         public int InnocentToday { get; private set; }
+        /// <summary>Airlock uses over the whole run: the ticket ending's closing sentence (P12) reads these, not the morale sum.</summary>
+        public int Airlocks { get; private set; }
+        /// <summary>Of the run's airlock uses, those on someone who didn't deserve it (the correct verdict was neither airlock nor arrest).</summary>
+        public int InnocentAirlocks { get; private set; }
         /// <summary>Today's innocent victim if there was one, else today's last one.</summary>
         public string AirlockedName { get; private set; } = "";
 
@@ -25,12 +29,16 @@ namespace GameOff.Economy
         /// <summary>P35: morale change without an airlock.</summary>
         public void AddMorale(int delta) => Morale += delta;
 
-        /// <summary>P128: a saved run continues with this record (today's airlock counts start fresh with the day).</summary>
-        public void Restore(int disciplinary, int morale, int airlockMorale)
+        /// <summary>P128: a saved run continues with this record (today's airlock counts start fresh with the day).
+        /// Saves from before the run counts have none; an airlock morale below 0 then still means at least one airlock.</summary>
+        public void Restore(int disciplinary, int morale, int airlockMorale, int airlocks = 0, int innocentAirlocks = 0)
         {
             Disciplinary = disciplinary;
             Morale = morale;
             AirlockMorale = airlockMorale;
+            InnocentAirlocks = innocentAirlocks;
+            Airlocks = System.Math.Max(airlocks, innocentAirlocks);
+            if (Airlocks == 0 && airlockMorale < 0) Airlocks = 1;
             BeginDay();
         }
 
@@ -49,7 +57,12 @@ namespace GameOff.Economy
             Morale += delta;
             AirlockMorale += delta;
             AirlocksToday++;
-            if (!deserved) InnocentToday++;
+            Airlocks++;
+            if (!deserved)
+            {
+                InnocentToday++;
+                InnocentAirlocks++;
+            }
             if (!deserved || InnocentToday == 0) AirlockedName = name;
             return delta;
         }

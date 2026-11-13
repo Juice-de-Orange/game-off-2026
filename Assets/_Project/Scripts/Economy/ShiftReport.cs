@@ -60,11 +60,11 @@ namespace GameOff.Economy
                     else
                     {
                         o.Kept.Add((Variant(picked), 1));
-                        o.Text = $"{picked.DisplayName} ×1 slipped into your pocket. The rest went to the evidence locker.";
+                        o.Text = $"{picked.DisplayName} ×1 slipped into your pocket. The rest was handed in.";
                     }
                     break;
                 default:
-                    o.Text = confiscated.Count > 0 ? "Everything went to the evidence locker. By the book." : "Nothing to hand in.";
+                    o.Text = confiscated.Count > 0 ? "Everything was handed in. By the book." : "Nothing to hand in.";
                     break;
             }
             return o;

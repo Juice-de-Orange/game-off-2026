@@ -31,7 +31,7 @@ MonoBehaviour:
 
 
     Everyone
-    is there. Everyone is well.
+    is there. Everyone made it.
 
     Kestrel-9 is just a cold little light in the
     sky now.'
@@ -40,15 +40,14 @@ MonoBehaviour:
 
 
     {names}
-    can hardly stand. The ticket ate every credit you had, and the medicine will
-    have to wait a little longer.
+    can hardly stand, and the clinic is the first stop.
 
     But you are together.'
   lateTitle: TOO LATE?
   lateBody: 'Nobody is waiting at the dock.
 
 
-    A neighbour finds you: {names}
+    A neighbor finds you: {names}
     went to the clinic three nights ago. You saved every credit for the ticket.
 
     The

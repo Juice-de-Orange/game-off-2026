@@ -30,7 +30,7 @@ namespace GameOff.UI
             ("Click a stamp, then a paper", "Stamp it"),
             ("Click a stamp, then the desk", "Set it down there"),
             ("Drag", "Move papers, notes and the envelope"),
-            ("Drag papers into the drawer", "Hand them back"),
+            ("Drag papers onto the drawer, then click it", "Hand them back"),
             ("Click the CRT", "Terminal"),
             ("[R]", "Hold up all papers"),
             ("[A] [D] / left / right", "Look along the desk"),
@@ -90,7 +90,7 @@ namespace GameOff.UI
         {
             ("[W] / [S] or up / down", "Thrust, brake"),
             ("Mouse or [A] [D] / left / right", "Steer"),
-            ("[Shift]", "Boost"),
+            ("[Left Shift]", "Boost"),
             ("Click", "Catch the mouse again"),
             ("[Esc] / [P]", "Pause"), // P149
         };

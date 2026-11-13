@@ -55,15 +55,15 @@ namespace GameOff.Shops
             }
             player.SetControlEnabled(false);
             bool curfew = day.IsCurfew; // P109
-            dialogs.ShowDialog(curfew ? "No more drones tonight" : "The drone is loading",
+            dialogs.ShowDialog(curfew ? "NO MORE DRONES TONIGHT" : "THE DRONE IS LOADING",
                 curfew ? day.CurfewClosedText : "The next drone leaves after your shift.", null, null,
                 day.DevTools ? OpenWindow : null, () => player.SetControlEnabled(true), "Dev_force_Send");
         }
 
         private void OpenWindow() => window.OpenSendHome("CARGO DRONE · HOME",
             "Pick one of your items on the right. It goes home with the next drone.\n\n" +
-            "<color=#8B9096>Food, power and medicine go into the family's stock at home. Each night uses one per need, so the bed won't ask " +
-            "money for it; the rest lasts for later nights. Fresh food spoils. Other items just go home.</color>",
+            "<color=#8B9096>Food, power and medicine go into the family's stock at home. Each night uses one per need, so you don't pay for " +
+            "that need at the bed; the rest lasts for later nights. Fresh food spoils. Other items just go home.</color>",
             item =>
             {
                 var economy = PlayerEconomy.Instance;

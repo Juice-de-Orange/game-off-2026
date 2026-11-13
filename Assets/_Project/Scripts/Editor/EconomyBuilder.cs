@@ -123,8 +123,8 @@ namespace GameOff.EditorTools
             SetFields(data.Items["scanner"], ("unique", true)); // a gadget: owned once
             data.Items["ration"] = Item("RationPack", "Ration pack", "Grey, dense and filling. A day of food for one.", 8, ref created, food);
             data.Items["painkillers"] = Item("Painkillers", "Painkillers", "Strong enough for a bad cough. Not much more.", 15, ref created, medicine);
-            data.Items["cola"] = Item("NovaCola", "Nova Cola", "Warm, flat and sweet. Keeps you awake at the counter.", 2, ref created, food);
-            data.Items["spice"] = Item("Spice", "Spice", "Banned, sweet-smelling and much asked for. Worth more under the bar than at the kiosk.", 12, ref created, contraband);
+            data.Items["cola"] = Item("NovaCola", "Nova Cola", "Warm, flat and sweet. Somebody always wants one.", 2, ref created, food);
+            data.Items["spice"] = Item("Spice", "Spice", "Banned, sweet-smelling and much asked for. Only the dealer at the bar buys it.", 12, ref created, contraband);
             data.Items["watch"] = Item("PocketWatch", "Pocket watch", "Old, heavy, still ticking. Someone will want it.", 20, ref created);
 
             data.Stocks["Stock_Kiosk_Test"] = Stock("Stock_Kiosk_Test", "KIOSK · HOLLY", 1f, 0.5f, "Sold out.",
@@ -460,7 +460,7 @@ namespace GameOff.EditorTools
             }, ref created);
             var smugglers = LoadOrCreate<MarketEvent>(MarketFolder + "Market_SmugglersBusted.asset", e =>
             {
-                e.bulletinLine = "Smuggler ring busted by station security. Drugs are hard to get; contraband sells high.";
+                e.bulletinLine = "Smuggler ring busted by station security. Drug prices have doubled.";
                 e.announcement = "Security notice: a smuggler ring has been arrested. Report any contraband at once.";
                 e.labels.Add(new LabelEffect { tag = drug, price = 2.0f }); // 1.8 → 2.0 (P76 rebalancing: one raid on day 6 instead of every cycle)
                 e.labels.Add(new LabelEffect { tag = contraband, buy = 1.3f });
@@ -532,7 +532,7 @@ namespace GameOff.EditorTools
             var caravan = LoadOrCreate<MarketEvent>(MarketFolder + "Market_OddosCaravan.asset", e =>
             {
                 e.bulletinLine = "Oddo's caravan is in dock: luxuries at bargain prices, today only.";
-                e.announcement = "Pim Oddo's travelling market has arrived at dock two. Everything must go!";
+                e.announcement = "Pim Oddo's traveling market has arrived at dock two. Everything must go!";
                 e.rumour = "Old Oddo's caravan docks tomorrow. Luxuries for a song.";
                 e.labels.Add(new LabelEffect { tag = luxury, price = 0.7f, amount = 1.5f });
             }, ref created);
@@ -1081,7 +1081,10 @@ namespace GameOff.EditorTools
             figure.transform.rotation = Quaternion.Euler(0f, spot.Yaw, 0f);
             if (modelAsset != null) Set(figure.AddComponent<IdleBreathing>(), "tuning", IdleTuning()); // P96: the delivered figures have no skeleton
 
-            var (interactable, debugView) = Trigger(go.transform, "Trigger", spot.TriggerCenter, spot.TriggerSize, "Talk to " + spot.Name);
+            // a role gets an article and lower case ("Talk to the dealer"), a name stays as it is ("Talk to Holly")
+            bool role = spot.Name == "Barkeeper" || spot.Name == "Dealer";
+            var (interactable, debugView) = Trigger(go.transform, "Trigger", spot.TriggerCenter, spot.TriggerSize,
+                role ? "Talk to the " + spot.Name.ToLowerInvariant() : "Talk to " + spot.Name);
             if (spot.Name == "Barkeeper")
             {
                 // P65: the barkeeper trades rumours for wished items, not goods for money.

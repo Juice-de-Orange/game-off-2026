@@ -26,15 +26,15 @@ namespace GameOff.Travelers
             {
                 case Verdict.Admit:
                     return chosen == Verdict.Deny ? "Valid traveler denied"
-                        : chosen == Verdict.Arrest ? "Innocent traveler arrested" : "Innocent traveler ejected";
+                        : chosen == Verdict.Arrest ? "Innocent traveler arrested" : "Innocent traveler airlocked";
                 case Verdict.Deny:
                     return chosen == Verdict.Admit ? $"Admitted - {result.MainReason}"
                         : chosen == Verdict.Arrest ? $"Wrongful arrest - only grounds to deny ({result.MainReason})"
-                        : $"Unlawful ejection - only grounds to deny ({result.MainReason})";
+                        : $"Unlawful airlock - only grounds to deny ({result.MainReason})";
                 case Verdict.Arrest:
                     return $"Criminal released - {result.MainReason}";
                 default: // ordered airlock, admitted or denied
-                    return $"Ordered ejection ignored - {result.MainReason}";
+                    return $"Ordered airlock ignored - {result.MainReason}";
             }
         }
     }

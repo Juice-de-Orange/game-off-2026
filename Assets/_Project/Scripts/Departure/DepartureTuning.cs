@@ -53,29 +53,30 @@ namespace GameOff.Departure
         public string homeTitle = "HOME";
         [TextArea(3, 8)] public string homeBody =
             "The shuttle drops out of the jump above the colony. Lena is waiting at the dock with Pip on her shoulders, Mom right behind them.\n\n" +
-            "Everyone is there. Everyone is well.\nKestrel-9 is just a cold little light in the sky now.";
+            "Everyone is there. Everyone made it.\nKestrel-9 is just a cold little light in the sky now.";
         public string barelyTitle = "HOME, BARELY";
         [TextArea(3, 8)] public string barelyBody =
             "You made it home. The dock smells of rain and engine oil.\n\n" +
-            "{names} can hardly stand. The ticket ate every credit you had, and the medicine will have to wait a little longer.\nBut you are together.";
+            "{names} can hardly stand, and the clinic is the first stop.\nBut you are together.";
         public string lostTitle = "HOME, WITHOUT THEM";
         [TextArea(3, 8)] public string lostBody =
             "The shuttle sets down in the rain. Lena is at the dock, taller than you remember, and she doesn't run.\n\n" +
-            "{names} never got to see you come back.\nThe ticket cost everything you had. It came too late to matter.";
+            "{names} never got to see you come back.\nThe ticket came too late to matter.";
         [Tooltip("P124: heading above the lines about the characters the player met.")]
         public string figuresHeader = "What became of the others:";
 
-        [Header("Closing sentence by morale (P12)")]
+        [Header("Closing sentence about the airlock (P12)")]
         [Tooltip("P35: closing sentence when crates were pocketed but nobody went through the airlock.")]
         [TextArea(1, 2)] public string moraleThief = "You never touched the airlock. The crates were another matter.";
-        [Tooltip("Conduct.Morale below this value counts as bloody. Orders alone cost up to -4 in the story days, so that is still stained.")]
-        public int moraleBloodyBelow = -4;
+        [Tooltip("Nobody went through the airlock in the whole run (Conduct.Airlocks).")]
         public string moraleCleanLine = "You never opened the airlock on anyone. Whatever else you did up there, you did not do that.";
+        [Tooltip("The airlock only for those the orders meant: the correct verdict was airlock or arrest (Conduct.InnocentAirlocks = 0).")]
         public string moraleStainedLine = "You opened the airlock when the orders said to. Some nights you still hear it cycle.";
+        [Tooltip("The airlock at least once for someone innocent (Conduct.InnocentAirlocks > 0).")]
         public string moraleBloodyLine = "You opened the airlock on people who had done nothing. It cycles in your sleep, and it always will.";
         public string lateTitle = "TOO LATE?";
         [TextArea(3, 8)] public string lateBody =
             "Nobody is waiting at the dock.\n\n" +
-            "A neighbour finds you: {names} went to the clinic three nights ago. You saved every credit for the ticket.\nThe ticket was the easy part.";
+            "A neighbor finds you: {names} went to the clinic three nights ago. You saved every credit for the ticket.\nThe ticket was the easy part.";
     }
 }
