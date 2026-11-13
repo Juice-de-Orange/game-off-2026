@@ -13,7 +13,7 @@ GitHub Actions (.github/workflows/deploy-web.yml), nachts 03:00 Uhr MEZ oder per
   → docker save | ssh geoffrey → /opt/kestrel9/deploy.sh
        prüft den Image-Namen, startet das Image, prüft die Antwort, bei Fehler zurück auf die vorige Version
 ```
-**Stand 09.11.:** Der Workflow baut noch nicht, weil die Secrets fehlen. Bis dahin wird von Hand eingespielt (unten); Max erlaubt Claude das seit dem 08.11. ausdrücklich. Live: `f7c50cc` (13.11.: P146–P150 Release-Schalter, Wachen, Pause im Flug, Komplizin; davor `b8b9cc1` P141–P145). Max' Claude spielt seit 12.11. selbst ein (Skript `~/.claude/scripts/kestrel9-deploy.sh <sha>` mit Freigabe in seiner lokalen `.claude/settings.local.json`); blockt der Auto-Modus doch einmal, startet max es mit `! bash <skript>`.
+**Stand 09.11.:** Der Workflow baut noch nicht, weil die Secrets fehlen. Bis dahin wird von Hand eingespielt (unten); Max erlaubt Claude das seit dem 08.11. ausdrücklich. Live: `752c8e3` (13.11.: P155 Gesamtprüfung; der reports-Container auf Geoffrey läuft noch mit dem alten `server.py`, Neubau von Hand wie unter „Bugreport“). Max' Claude spielt seit 12.11. selbst ein (Skript `~/.claude/scripts/kestrel9-deploy.sh <sha>` mit Freigabe in seiner lokalen `.claude/settings.local.json`); blockt der Auto-Modus doch einmal, startet max es mit `! bash <skript>`.
 
 Wer sofort eine neue Version will: GitHub → Actions → **Deploy web version** → **Run workflow**.
 Schlägt ein Lauf fehl, bleibt die letzte Version online, und GitHub schickt eine Mail.
