@@ -117,3 +117,4 @@ nächster Morgen (Brief zeigt die Folgen) … nach den 12 Story-Tagen endlos wei
 - **Barriere (P155):** Die Energiebarriere blitzt, wenn das Morgenschiff hindurchfliegt. Der Heimflug startet außerhalb der Hangaröffnung und kreuzt sie normalerweise nicht.
 - **Familie stirbt gemeinsam:** Mom und Lena haben dieselben Bedarfe, Pip trifft es nie besser; FAMILY LOST heißt deshalb immer, dass alle tot sind (Texte seit P155 so formuliert, Entscheidung Max 13.11.).
 
+- **Geschleuster Jonas (P155):** Nell sagt an Tag 6 „They say he never left your station.“, ihre späteren Zeilen (Tag 8 „I came to see {kin}“, Tag 11 „They're letting {kin} go home“) und die Zusammenfassung gehen aber weiter davon aus, dass er lebt. Selten (er müsste ohne Befehl geschleust werden).

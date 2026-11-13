@@ -2145,9 +2145,47 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
 - Abnahme: Neue Messung mit `K9_CPU=4`: Schalter und Stehen ≥ 35 fps, Menü ≥ 22 fps; Download ≤ 25 MB oder Begründung; keine sichtbaren Verluste; Ergebnis-Tabelle im Paket.
 
 ### P155 — Gesamtprüfung: Bugs, Inkonsistenzen, toter Code
-- Größe: M · Priorität: Soll · Status: in Arbeit (max, 13.11.) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig (max, 13.11.) · Zuständig: max
 - Braucht: — · Folgt auf: —
 - Ziel: Vor dem Feature-Freeze ist das ganze Spiel einmal durchgeprüft; eindeutige Fehler sind behoben, Entscheidungen mit Max getroffen.
 - Enthalten: Code-Prüfung aller Bereiche (Runtime, Builder, Story-Inhalte gegen die Docs, Backend, Werkzeuge) mit Gegenprüfung; Bugs, Tippfehler und toter Code direkt behoben; Verhaltens- und Inhaltsfragen per Multiple Choice an Max; größere Punkte als eigene Pakete.
 - Nicht enthalten: P151–P154 (eigene Pakete).
 - Abnahme: Tests, Validate Travelers und Economy Report grün; Fixes im Browser geprüft, soweit möglich; Liste der Funde mit Ergebnis im Paket.
+- Ergebnis (13.11.):
+  - **Prüfung:** 8 Prüf-Agenten nach Bereichen, rund 100 Funde. 23 Einzelfunde wurden gegengeprüft (22 bestätigt, 1 widerlegt: zwei gleiche Wachen sind nie gleichzeitig zu sehen). Eindeutige Fehler sind direkt behoben; 13 Entscheidungen hat Max per Multiple Choice getroffen (`DECISIONS.md`, 13.11.).
+  - **Wichtigste Fixes:**
+    - Widerstands-Frage: kommt erst im Sitzen; bis zur Antwort entscheidet kein Stempel; kann den Schalter nicht mehr dauerhaft sperren.
+    - Schalter-Sperre mit Besitzern statt einem Schalter für alle.
+    - Schichtbericht im Gehen gibt die Maus frei.
+    - Sperrstunde schließt offene Handelsfenster.
+    - Ende ist endgültig (keine Steuerung hinter dem Endbildschirm).
+    - Durchsagen und Geld der Figuren am Morgen kommen zum Schichtbeginn und stehen in TODAY.
+    - CONTINUE verliert keine an Händler verkaufte Ware.
+    - Tagesplan mit festem Startwert.
+    - Listen scrollen.
+    - Lautsprecher-Lampe vor der Wand.
+    - Barriere blitzt beim Morgenschiff.
+    - Waffen und Pistolen an endlosen Tagen gemeinsam verboten.
+    - Schlusssatz nach Schleusungen.
+    - Figuren-Zusammenfassungen nur für abgeschlossene Geschichten.
+    - Pool-Briefe in Lenas Stimme.
+    - Rund 40 Text- und Konsistenzfixes (US-Schreibweise, Großschreibung der Dialogtitel).
+    - Server: Typprüfung, Bytegrenze, IP-Header auch auf `/api/report` gelöscht.
+    - Metriken nur von Live/itch.
+    - Werkzeuge: `measure-webgl` wechselt den Tag wirklich; `metrics_report` robust; `drive-webgl`-Tasten.
+  - **Aufgeräumt:**
+    - Ungenutzte Musik-Logik, rund 30 tote Member.
+    - Füll-Reisende sowie Hedda/Mabu-Assets.
+    - 139 ungenutzte Asset-Dateien, in `ASSET-REQUESTS.md` auf `entfällt`.
+  - **Simulator:** rechnet den echten Kaufabend, Pfand, Bestechung ohne Razzia und Figuren-Ladung. Ziele +1 Tag; „Missed that“-Strafe 30 → 35 CR, alle Ziele ✓.
+  - **Docs:** CLAUDE.md (welche Builder danach Rebuild All brauchen), STATION, MECHANICS, FIGUREN, DEPLOY, DESIGN.
+  - **Geprüft:**
+    - 468/468 EditMode-Tests, Validate Travelers ohne Befund, Economy Report alle ✓, Occlusion nur die bekannte Schattenkante.
+    - Im Browser: keine Spielfehler in der Konsole, Kiosk-Liste scrollt, Sperrstunde schließt das Fenster, Bericht im Gehen, Lampe, Barriere, DEV-Reiter und Tageswechsel, Hilfezeile (danach gekürzt).
+    - Code-Review mit Fixes: Frage-Sperre, Wachen nach abgebrochener Nacht.
+  - **Nicht im Browser geprüft:** Fragen-Ablauf an Tag 6, die Enden, CONTINUE mit Händlerware (nur Tests).
+  - **Offen:**
+    - Server-Fixes (`deploy/reports`) wirken erst nach Neubau des reports-Containers auf Geoffrey.
+    - `measure-webgl` klickt CONFIRM über feste Koordinaten.
+    - Geschleuster Jonas: Nells spätere Zeilen (Tag 8/11) passen dann nicht.
+
