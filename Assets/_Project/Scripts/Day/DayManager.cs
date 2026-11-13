@@ -275,7 +275,7 @@ namespace GameOff.Day
             _curfewAnnounced = false;
             bed.SetPrompt("Sleep");
             ShiftOver?.Invoke(_day);
-            ui.ShowHint("Shift over. Go back to room 103 and get some sleep.", 6f);
+            ui.ShowHint("Shift over. Shops are open until 23:00 - then sleep in room 103.", 6f);
         }
 
         // The bed always asks first, so nobody ends a day by accident. While travelers still wait the day can't end,
@@ -286,10 +286,10 @@ namespace GameOff.Day
             player.SetControlEnabled(false); // frees the mouse for the dialog
             Action dev = DevTools ? DevEndDay : null;
             if (_phase == Phase.Evening)
-                ui.ShowDialog($"End day {_day}?", "Go to sleep. The next shift starts tomorrow morning.", "SLEEP",
+                ui.ShowDialog($"END DAY {_day}?", "Go to sleep. The next shift starts tomorrow morning.", "SLEEP",
                     () => StartCoroutine(EndDay()), null, ResumeAfterDialog);
             else
-                ui.ShowDialog("Travelers are still waiting", "You can't end the day before your shift at the customs counter is done.",
+                ui.ShowDialog("TRAVELERS ARE STILL WAITING", "You can't end the day before your shift at the customs counter is done.",
                     null, null, dev, ResumeAfterDialog);
         }
 

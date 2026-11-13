@@ -26,10 +26,10 @@ namespace GameOff.EditorTools
         /// <summary>P100: own lines after the stamp (admitted, denied), by asset file name; everybody else uses the species' pool.</summary>
         internal static readonly Dictionary<string, (string admitted, string denied)> Reactions = new Dictionary<string, (string, string)>
         {
-            { "Irin", (null, "Orvan is all I have left. Do you even know where it is?") },
+            { "Irin", (null, "Years away, and Orvan still follows me. Do you even know where it is?") },
             { "Pela", (null, "A manifest? Nobody told me. Nobody ever tells me.") },
             { "Tzo", (null, "Kss. One new rule a day. I know your game.") },
-            { "Oren", (null, "The list changes every week. I can't keep up with it.") },
+            { "Oren", (null, "The list changes every day. I can't keep up with it.") },
             { "Kiss", ("Kss. Right. Efficient.", null) },
             { "Mira_1", (null, "Nine days. And you stamp it like it's nothing.") },
             { "Mira_2", ("Thank you. I won't forget it.", null) },
@@ -88,9 +88,9 @@ namespace GameOff.EditorTools
             Wanted = new List<WantedEntry>(),
             NewToday = "New today: Vellani travelers need a cargo manifest.",
             Letter = "Dad,\nThe rent man came by and Mom paid him. They say the border is closed, so food costs more now. We are careful.\n" +
-                     "Pip asks if you can see us from up there. Mrs Oren's son sends food on the cargo drone instead of money. Could you do that too?\n— Lena",
+                     "Pip asks if you can see us from up there. Mrs. Oren's son sends food on the cargo drone instead of money. Could you do that too?\n— Lena",
             LetterIfTrouble = "Dad,\nThe rent man came by and Mom paid him, but one of us is not well and the border is closed, so everything costs more.\n" +
-                              "Please send what you can. Mrs Oren's son sends food on the cargo drone instead of money. Could you do that too?\n— Lena",
+                              "Please send what you can. Mrs. Oren's son sends food on the cargo drone instead of money. Could you do that too?\n— Lena",
             Travelers = new List<TravelerData>
             {
                 Normal("Nessa", "NESSA KILO", "Vellani", Verdict.Admit, "Papers in order, manifest present", 2,
@@ -190,8 +190,8 @@ namespace GameOff.EditorTools
         private static StoryDayContent Day5() => new StoryDayContent
         {
             Rules = new List<DayRule> { new BannedOriginRule(Orvan), new ForbiddenGoodsRule("SPICE") },
-            Wanted = new List<WantedEntry> { new WantedEntry("NESTOR KAI", "NK-4102-77", WantedOrder.Arrest, "Fraud, Lumen Reach") },
-            NewToday = "New today: spice is forbidden. ORVAN stays closed.",
+            Wanted = new List<WantedEntry> { new WantedEntry("NESTOR KAI", "NK-4102-71", WantedOrder.Arrest, "Fraud, Lumen Reach") },
+            NewToday = "New today: spice is forbidden. ORVAN is closed again.",
             Letter = "Dad,\nA man from the housing office wrote down how many of us live here. Mom told him not to worry about it.\nPip learned to whistle. It is all Pip does now.\n— Lena",
             LetterIfTrouble = "Dad,\nThe clinic has a list now and we are not near the top of it. Mom says the list is how they say no politely.\nDid the last parcel go out?\n— Lena",
             Travelers = new List<TravelerData>
@@ -215,11 +215,11 @@ namespace GameOff.EditorTools
                 Normal("Nestor", "NESTOR KAI", "Human", Verdict.Arrest, "On the wanted list (arrest)", 5,
                     "A pleasure, officer. I'll be out of your way in a moment.",
                     new[] { Say("name", "Kai. Common name. Very common."), Say("purpose", "Consulting. The kind that pays in advance.") },
-                    IdCard("Human", "NESTOR KAI", "LUMEN REACH", "NK-4102-77"),
-                    PermitDoc("Human", "NESTOR KAI", "NK-4102-77", "BUSINESS", Valid, LumenC, "LUMEN REACH > KESTREL-9")),
+                    IdCard("Human", "NESTOR KAI", "LUMEN REACH", "NK-4102-71"),
+                    PermitDoc("Human", "NESTOR KAI", "NK-4102-71", "BUSINESS", Valid, LumenC, "LUMEN REACH > KESTREL-9")),
                 Normal("Zeth", "ZETH ORRIK", "Xirrik", Verdict.Arrest, "Forged seal on the entry permit", 5,
                     "Kss. Fresh from the office. Everyone knows that office.",
-                    new[] { Say("expires", "Kss. Months yet. Read it."), Say("route", "Lumen Reach, as always.") },
+                    new[] { Say("expires", "Kss. Weeks yet. Read it."), Say("route", "Lumen Reach, as always.") },
                     IdCard("Xirrik", "ZETH ORRIK", "LUMEN REACH", "XR-3350-81"),
                     Forged(PermitDoc("Xirrik", "ZETH ORRIK", "XR-3350-81", "TRANSIT", Valid, LumenC, "LUMEN REACH > KESTREL-9"))),
             },
@@ -299,7 +299,7 @@ namespace GameOff.EditorTools
             {
                 Normal("Grom", "GROM ULLAR", "Sorvak", Verdict.Admit, "Papers in order, manifest present", 8,
                     "Papers complete. Inspect them and let me work.",
-                    new[] { Say("cargo", "Batteries. Counted twice."), Say("purpose", "Contract work. Your strike is not my concern.") },
+                    new[] { Say("cargo", "Batteries. Counted twice."), Say("purpose", "Contract work. Your docks are not my concern.") },
                     IdCard("Sorvak", "GROM ULLAR", "SORV DEEP", "SK-3307-59"),
                     PermitDoc("Sorvak", "GROM ULLAR", "SK-3307-59", "WORK", Valid, AskaC, "SORV DEEP > KESTREL-9"),
                     Manifest("GROM ULLAR", "IRON PATIENCE", "SORV DEEP", "4x BATTERY CRATE")),
@@ -309,7 +309,7 @@ namespace GameOff.EditorTools
                     IdCard("Human", "SERA LOWE", "HALDER", "SL-7730-20"),
                     PermitDoc("Human", "SERA LOWE", "SL-7730-20", "FAMILY VISIT", Valid, AskaC, "ASKA-3 > KESTREL-9")),
                 Normal("Yuna", "YUNA PRESS", "Vellani", Verdict.Arrest, "Declares fusion cells, forbidden today", 8,
-                    "The strikers need power too, officer. Somebody has to bring it.",
+                    "The lower docks need power too, officer. Somebody has to bring it.",
                     new[] { Say("cargo", "Cells. For the families in the lower docks."), Say("name", "Yuna Press. You'll hear it again.") },
                     IdCard("Vellani", "YUNA PRESS", "VELL PRIME", "VL-6614-38"),
                     PermitDoc("Vellani", "YUNA PRESS", "VL-6614-38", "BUSINESS", Valid, VellC, "VELL PRIME > KESTREL-9"),
@@ -325,7 +325,7 @@ namespace GameOff.EditorTools
                 new RequireDocumentRule(DocumentType.CargoManifest, "Vellani"),
             },
             Wanted = new List<WantedEntry> { new WantedEntry("DARO HESK", "DH-5074-90", WantedOrder.Arrest, "Smuggling, Vell Prime") },
-            NewToday = "Inspection week: every rule applies at once. Read the bulletin.",
+            NewToday = "Inspection week: five old rules at once, and a wanted name. Read the bulletin.",
             Letter = "Dad,\nThey say inspectors are at your station. Mom says that means you must be good at your job or in trouble.\nI said both.\n— Lena",
             LetterIfTrouble = "Dad,\nThe inspectors were on the news and all I could think about was the rent. Mom doesn't sleep. I do the counting now.\nPlease don't lose this job.\n— Lena",
             Travelers = new List<TravelerData>
@@ -403,7 +403,7 @@ namespace GameOff.EditorTools
         {
             Rules = new List<DayRule> { new BannedOriginRule(Orvan), new QuarantineRule("MERIDIAN GATE") },
             Wanted = new List<WantedEntry>(),
-            NewToday = "New today: quarantine at MERIDIAN GATE. ORVAN stays closed.",
+            NewToday = "New today: quarantine at MERIDIAN GATE. ORVAN is closed again.",
             Letter = "Dad,\nThe heater stopped making the funny noise. It also stopped working, but Mom fixed it with a spoon.\nWe saved you the good bowl.\n— Lena",
             LetterIfTrouble = "Dad,\nIt is very quiet here now. Mom says we should not count the days, so I count them where she can't see.\nPlease be careful up there.\n— Lena",
             Travelers = new List<TravelerData>
@@ -444,7 +444,7 @@ namespace GameOff.EditorTools
                 new RequireDocumentRule(DocumentType.CargoManifest, "Human"),
             },
             Wanted = new List<WantedEntry>(),
-            NewToday = "New today: human travelers need a cargo manifest. No cash shipments.",
+            NewToday = "New today: human travelers need a cargo manifest. No cash, no stimulants. KETRA STATION is quarantined again.",
             Letter = "Dad,\nMom says the shuttle home leaves whenever you are ready. I told Pip it could be any day now.\nPip stopped whistling and sat by the window.\n— Lena",
             LetterIfTrouble = "Dad,\nI don't know how to write this one. Please just come home.\n— Lena",
             Travelers = new List<TravelerData>
@@ -455,7 +455,7 @@ namespace GameOff.EditorTools
                     IdCard("Human", "WREN ALDER", "TORVIK COLONY", "WA-6312-05"),
                     PermitDoc("Human", "WREN ALDER", "WA-6312-05", "BUSINESS", Valid, AskaC, "TORVIK > KESTREL-9"),
                     Manifest("WREN ALDER", "OLD HABIT", "TORVIK", "6x RATION CRATE")),
-                Normal("Tomas", "TAVIN ROSK", "Human", Verdict.Deny, "Human traveler without a cargo manifest", 12,
+                Normal("Tavin", "TAVIN ROSK", "Human", Verdict.Deny, "Human traveler without a cargo manifest", 12,
                     "A manifest? For a coat and a sandwich?",
                     new[] { Say("purpose", "Visiting. Or I was."), Say("origin", "Aska-3. It's on the card.") },
                     IdCard("Human", "TAVIN ROSK", "ASKA-3", "TR-4085-61"),

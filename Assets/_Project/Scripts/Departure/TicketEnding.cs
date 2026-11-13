@@ -6,7 +6,7 @@ namespace GameOff.Departure
     /// <summary>
     /// P72: which ending the flight home gets. The family member in the worst condition decides:
     /// well or weak → HOME, sick → HOME, BARELY, critical → TOO LATE?, somebody died (P69) → the lost ending
-    /// ({names} = everyone in that worst condition). P12: a closing sentence about the airlock follows (MoraleLine).
+    /// ({names} = everyone in that worst condition). P12: a closing sentence about the airlock follows (AirlockLine).
     /// </summary>
     public static class TicketEnding
     {
@@ -33,11 +33,13 @@ namespace GameOff.Departure
 
         /// <summary>P35: the closing sentence for the whole run: about the airlock if it was used, about the crates if only those were opened.</summary>
         public static string ConductLine(Conduct conduct, DepartureTuning texts) =>
-            conduct.AirlockMorale == 0 && conduct.Morale < 0 ? texts.moraleThief : MoraleLine(conduct.AirlockMorale, texts);
+            conduct.Airlocks == 0 && conduct.Morale < 0 ? texts.moraleThief : AirlockLine(conduct.Airlocks, conduct.InnocentAirlocks, texts);
 
-        /// <summary>P12: closing sentence for the run's morale (Conduct.Morale: 0 or more clean, then stained, then bloody).</summary>
-        public static string MoraleLine(int morale, DepartureTuning texts) =>
-            morale >= 0 ? texts.moraleCleanLine : morale >= texts.moraleBloodyBelow ? texts.moraleStainedLine : texts.moraleBloodyLine;
+        /// <summary>P12: closing sentence about the airlock over the whole run: never used → clean; used only where the orders meant it
+        /// (Conduct.Judge: the correct verdict was airlock or arrest) → stained; at least once on someone innocent → bloody.
+        /// Counts, not the morale sum: the story orders several airlocks, and obeying them is not airlocking the innocent.</summary>
+        public static string AirlockLine(int airlocks, int innocent, DepartureTuning texts) =>
+            innocent > 0 ? texts.moraleBloodyLine : airlocks > 0 ? texts.moraleStainedLine : texts.moraleCleanLine;
 
         /// <summary>"Pip", "Mom and Pip", "Mom, Lena and Pip".</summary>
         public static string JoinNames(IReadOnlyList<string> names)

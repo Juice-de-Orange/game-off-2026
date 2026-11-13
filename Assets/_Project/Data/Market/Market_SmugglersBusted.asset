@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919e4d0080b723842ab30df29cbce1d6, type: 3}
   m_Name: Market_SmugglersBusted
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Economy.MarketEvent
-  bulletinLine: Smuggler ring busted by station security. Drugs are hard to get;
-    contraband sells high.
+  bulletinLine: Smuggler ring busted by station security. Drug prices have doubled.
   announcement: 'Security notice: a smuggler ring has been arrested. Report any contraband
     at once.'
   rumour: Security is about to raid a smuggler ring. By tomorrow drugs will be worth

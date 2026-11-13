@@ -62,7 +62,7 @@ namespace GameOff.Shops
             if (!IsOpen)
             {
                 var wish = Wish;
-                dialogs.ShowDialog("The bar is still closed", "Come back after your shift." + (wish != null && wish.Active ? $"\nToday I'd like: {wish.Text}." : ""), null, null,
+                dialogs.ShowDialog("THE BAR IS STILL CLOSED", "Come back after your shift." + (wish != null && wish.Active ? $"\nToday I'd like: {wish.Text}." : ""), null, null,
                     day.DevTools ? Talk : null, Resume, "Dev_force_Bar");
                 return;
             }
@@ -108,7 +108,7 @@ namespace GameOff.Shops
         }
 
         private void ShowRumour() =>
-            dialogs.ShowDialog("A RUMOUR", Rumour(), null, null, null, Resume);
+            dialogs.ShowDialog("A RUMOR", Rumour(), null, null, null, Resume);
 
         // P75: tomorrow's fixed events plus what recurring characters set off for tomorrow.
         private string Rumour() => day.Day >= day.DayCount ? BarWishRules.Quiet

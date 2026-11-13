@@ -50,7 +50,7 @@ namespace GameOff.Tests
         {
             var texts = ScriptableObject.CreateInstance<GameOff.Departure.DepartureTuning>();
             var conduct = new Conduct();
-            StringAssert.AreEqualIgnoringCase(GameOff.Departure.TicketEnding.MoraleLine(0, texts), GameOff.Departure.TicketEnding.ConductLine(conduct, texts), "a clean run");
+            StringAssert.AreEqualIgnoringCase(GameOff.Departure.TicketEnding.AirlockLine(0, 0, texts), GameOff.Departure.TicketEnding.ConductLine(conduct, texts), "a clean run");
             conduct.AddMorale(-1);
             Assert.AreEqual(texts.moraleThief, GameOff.Departure.TicketEnding.ConductLine(conduct, texts));
             Object.DestroyImmediate(texts);

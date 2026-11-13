@@ -31,7 +31,7 @@ namespace GameOff.Departure
             else if (!evening)
                 dialogs.ShowDialog("NOT NOW", "You are still on duty.\nThe shuttle leaves after your shift.", null, null, null, Resume);
             else
-                dialogs.ShowDialog("Leave Kestrel-9 for good?",
+                dialogs.ShowDialog("LEAVE KESTREL-9 FOR GOOD?",
                     "Your family is waiting. There is no way back to this station.", "LEAVE", flight.Launch, null, Resume);
         }
 

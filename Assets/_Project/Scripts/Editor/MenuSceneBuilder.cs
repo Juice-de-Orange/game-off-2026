@@ -300,7 +300,7 @@ namespace GameOff.EditorTools
             "<color=#E2DDCF>W A S D</color><pos=210>walk\n" +
             "<color=#E2DDCF>MOUSE</color><pos=210>look around\n" +
             "<color=#E2DDCF>E</color><pos=210>use / sit down\n" +
-            "<color=#E2DDCF>I</color><pos=210>inventory\n" +
+            "<color=#E2DDCF>I / H</color><pos=210>inventory / help\n" +
             "<color=#E2DDCF>LEFT CLICK</color><pos=210>press, stamp, drag papers\n" +
             "<color=#E2DDCF>Q / ESC / RIGHT CLICK</color><pos=210>step back / stand up\n" +
             "<color=#E2DDCF>ESC / P</color><pos=210>pause";

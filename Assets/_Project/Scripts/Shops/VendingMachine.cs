@@ -62,7 +62,7 @@ namespace GameOff.Shops
             {
                 player.SetControlEnabled(false);
                 bool curfew = day != null && day.IsCurfew;
-                dialogs.ShowDialog(curfew ? "Closed" : "Out of order", curfew ? day.CurfewClosedText : "Out of order until the evening.", null, null,
+                dialogs.ShowDialog(curfew ? "CLOSED" : "OUT OF ORDER", curfew ? day.CurfewClosedText : "Out of order until the evening.", null, null,
                     day.DevTools ? Buy : null, () => player.SetControlEnabled(true), "Dev_force_Buy");
                 return;
             }

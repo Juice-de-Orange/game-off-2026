@@ -192,6 +192,37 @@ namespace GameOff.Tests
         }
 
         [Test]
+        public void AirlockCounts_SurviveTheSave()
+        {
+            var rules = Make<ConfiscationTuning>("ConfiscationTuning");
+            var run = FreshRun();
+            run.conduct.Judge(Verdict.Airlock, new Judgement(true, true, false, "", Verdict.Airlock, Verdict.Airlock), rules);
+            run.conduct.Judge(Verdict.Airlock, new Judgement(false, true, false, "x", Verdict.Admit, Verdict.Airlock), rules);
+
+            var back = FreshRun();
+            SaveGame.Apply(JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(SaveGame.Capture(run))), back, new SaveGame.Lookup(null, null, null));
+            Assert.AreEqual(2, back.conduct.Airlocks);
+            Assert.AreEqual(1, back.conduct.InnocentAirlocks);
+            Assert.AreEqual(run.conduct.AirlockMorale, back.conduct.AirlockMorale);
+            Assert.AreEqual(0, back.conduct.AirlocksToday, "today's counts start fresh");
+        }
+
+        [Test]
+        public void SaveFromBeforeTheAirlockCounts_KeepsAnAirlockFromTheMorale()
+        {
+            string json = JsonUtility.ToJson(new SaveData { day = 5, airlockMorale = -2 }).Replace(",\"airlocks\":0", "").Replace(",\"innocentAirlocks\":0", "");
+            StringAssert.DoesNotContain("irlocks", json);
+            var back = FreshRun();
+            SaveGame.Apply(JsonUtility.FromJson<SaveData>(json), back, new SaveGame.Lookup(null, null, null));
+            Assert.AreEqual(1, back.conduct.Airlocks, "a negative airlock morale means the airlock was used");
+            Assert.AreEqual(0, back.conduct.InnocentAirlocks, "unknown: counts as the orders");
+
+            var clean = FreshRun();
+            SaveGame.Apply(JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(new SaveData { day = 5 })), clean, new SaveGame.Lookup(null, null, null));
+            Assert.AreEqual(0, clean.conduct.Airlocks);
+        }
+
+        [Test]
         public void TapeDecksAndPickedUpCassettes_SurviveTheSave()
         {
             var night = Make<CassetteData>("Item_Cassette_01");

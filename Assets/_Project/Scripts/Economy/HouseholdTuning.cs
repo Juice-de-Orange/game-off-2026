@@ -67,15 +67,10 @@ namespace GameOff.Economy
         public string deadName = "dead";
         [Tooltip("Writes the letters home. Without this person the family is broken and the run ends.")]
         public string letterWriterName = "Lena";
-        [Tooltip("Replaces the day's letter once someone has died.")]
+        [Tooltip("Replaces the day's letter once someone has died. Only Pip can die alone: Mom and Lena have the same needs, so they " +
+                 "always die in the same night, and without Lena the run ends (FAMILY LOST).")]
         public List<FamilyLossLetter> lossLetters = new List<FamilyLossLetter>
         {
-            new FamilyLossLetter
-            {
-                name = "Mom",
-                firstMorning = "Dad,\nMom didn't wake up this morning. I tried for a long time.\nThe neighbours came. I am looking after Pip now.\nPlease come home.\n— Lena",
-                afterwards = "Dad,\nThe house is very quiet without Mom. I do the counting and the cooking now.\nWe are still here. Send what you can.\n— Lena",
-            },
             new FamilyLossLetter
             {
                 name = "Pip",
@@ -83,12 +78,11 @@ namespace GameOff.Economy
                 afterwards = "Dad,\nMom still sets out three bowls. I put one back when she isn't looking.\nPlease come home soon.\n— Lena",
             },
         };
-        [TextArea(2, 5)] public string lastSurvivorLetter = "Dad,\nIt's only me now.\nI don't know what else to write. Please come home.\n— Lena";
         public string familyLostTitle = "FAMILY LOST";
         [Tooltip("{names} = everyone who died.")]
         [TextArea(3, 8)] public string familyLostBody =
             "The message from the colony is three lines long, and it isn't in Lena's handwriting.\n\n" +
-            "{names} did not make it. Whoever is left has been taken in by the neighbours.\n\n" +
+            "{names} did not make it.\n\n" +
             "There is nobody to send anything home to now. You hand in your badge and stop counting credits.";
     }
 }

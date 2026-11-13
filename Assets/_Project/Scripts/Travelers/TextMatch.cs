@@ -18,6 +18,17 @@ namespace GameOff.Travelers
             !string.IsNullOrWhiteSpace(text) && !string.IsNullOrWhiteSpace(phrase)
             && Regex.IsMatch(text, @"(?<![A-Za-z0-9])" + Regex.Escape(phrase.Trim()) + @"(?![A-Za-z0-9])", RegexOptions.IgnoreCase);
 
+        /// <summary>A name from the papers for prose: "DELA MORN" → "Dela Morn", "ASKA-3" → "Aska-3", "KESSLER'S LUCK" → "Kessler's Luck".
+        /// A word starts at the beginning, after a space or after a hyphen.</summary>
+        public static string TitleCase(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return text ?? "";
+            var chars = text.ToLowerInvariant().ToCharArray();
+            for (int i = 0; i < chars.Length; i++)
+                if (i == 0 || chars[i - 1] == ' ' || chars[i - 1] == '-') chars[i] = char.ToUpperInvariant(chars[i]);
+            return new string(chars);
+        }
+
         /// <summary>A route like "TORVIK > KETRA STATION > KESTREL-9" passes through the stop (exact stop name).</summary>
         public static bool RouteHasStop(string route, string stop)
         {

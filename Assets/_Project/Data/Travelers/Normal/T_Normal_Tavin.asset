@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3ced4d683b9a3641aabd767ecc42499, type: 3}
-  m_Name: T_Normal_Tomas
+  m_Name: T_Normal_Tavin
   m_EditorClassIdentifier: Assembly-CSharp::GameOff.Travelers.TravelerData
   displayName: TAVIN ROSK
   species: Human

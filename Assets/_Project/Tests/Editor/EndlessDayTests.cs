@@ -76,6 +76,37 @@ namespace GameOff.Tests
             Assert.Greater(Avg(late, e => e.rules.Rules.Count), Avg(first, e => e.rules.Rules.Count));
         }
 
+        /// <summary>Rules match whole words: a weapons day has to forbid pistols too, or a pistol carrier would be admitted.</summary>
+        [Test]
+        public void WeaponAndPistol_AreForbiddenTogether()
+        {
+            CollectionAssert.AreEqual(new[] { "WEAPON", "PISTOL" }, DayGenerator.ForbiddenWith("WEAPON"));
+            CollectionAssert.AreEqual(new[] { "PISTOL", "WEAPON" }, DayGenerator.ForbiddenWith("PISTOL"));
+            CollectionAssert.AreEqual(new[] { "SPICE" }, DayGenerator.ForbiddenWith("SPICE"));
+
+            var s = Schedule();
+            int weaponDays = 0;
+            var problems = new List<string>();
+            for (int seed = 1; seed <= 40 && weaponDays < 4; seed++)
+                for (int d = s.Count + 1; d <= s.Count + Checked; d++)
+                {
+                    var e = Draw(s, d, seed);
+                    var words = e.rules.Rules.OfType<ForbiddenGoodsRule>().Select(r => r.keyword).ToList();
+                    if (!words.Contains("WEAPON") && !words.Contains("PISTOL")) continue;
+                    weaponDays++;
+                    if (!words.Contains("WEAPON") || !words.Contains("PISTOL")) problems.Add($"seed {seed} day {d}: only {string.Join(", ", words)}");
+                    foreach (var t in e.rules.Travelers)
+                    {
+                        string cargo = t.Document(GameOff.Documents.DocumentType.CargoManifest)?.Get("cargo") ?? "";
+                        bool armed = TextMatch.ContainsWords(cargo, "WEAPON") || TextMatch.ContainsWords(cargo, "PISTOL");
+                        if (armed && t.IntendedVerdict == Verdict.Admit) problems.Add($"seed {seed} day {d}: {t.DisplayName} admitted with \"{cargo}\"");
+                        if (RuleEvaluator.Evaluate(t, e.rules).Correct != t.IntendedVerdict) problems.Add($"seed {seed} day {d}: {t.DisplayName} computed differs");
+                    }
+                }
+            Assert.Greater(weaponDays, 0, "no weapons day drawn - try more seeds");
+            Assert.IsEmpty(problems, string.Join("\n", problems.Take(20)));
+        }
+
         [Test]
         public void WrittenDaysStayAsTheyAre()
         {

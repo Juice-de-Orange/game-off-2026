@@ -32,8 +32,8 @@ namespace GameOff.Rest
             "Passengers for the Aska shuttle: have your papers ready. Officers will not wait for you.",
             "Unattended luggage will be confiscated and inspected. Thank you for your cooperation.",
             "KESTREL-9 thanks you for your patience. Your patience has been noted.",
-            "The diner serves reconstituted noodles until twenty-two hundred. Today: noodles.",
-            "Lost and found: one ration card, one glove, one prosthetic finger. Ask at the motel reception.",
+            "The diner remains closed until further notice. Today: no noodles.",
+            "Lost and found: one ration card, one glove, one prosthetic finger. Ask station security.",
         };
         public string eveningOver = "It's late. The hall is empty. Time to sleep.";
 
@@ -54,7 +54,7 @@ namespace GameOff.Rest
         };
         [TextArea(1, 3)] public string[] thoughtsSick =
         {
-            "{0} needs medicine. It costs what a day at the counter pays.",
+            "{0} needs medicine. I keep doing the sums, and they keep coming out short.",
             "I count the lights down there and lose track. I keep thinking of {0}.",
         };
         [TextArea(1, 3)] public string[] thoughtsCritical =

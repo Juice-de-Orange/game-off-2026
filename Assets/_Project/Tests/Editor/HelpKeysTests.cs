@@ -38,7 +38,7 @@ namespace GameOff.Tests
         [TestCase(HelpSituation.BenchEvening, new[] { "[Q]", "[Esc]", "[F]" })]
         [TestCase(HelpSituation.CloseLook, new[] { "[Q]", "[Esc]" })]
         [TestCase(HelpSituation.Telescope, new[] { "[Q]", "[Esc]", "Mouse wheel", "[W]" })]
-        [TestCase(HelpSituation.Flight, new[] { "[W]", "[S]", "[A]", "[D]", "[Shift]", "Mouse", "[Esc]", "[P]" })]
+        [TestCase(HelpSituation.Flight, new[] { "[W]", "[S]", "[A]", "[D]", "[Left Shift]", "Mouse", "[Esc]", "[P]" })]
         [TestCase(HelpSituation.Inventory, new[] { "[I]", "[Esc]" })]
         [TestCase(HelpSituation.Trade, new[] { "[Esc]" })]
         public void SituationListsItsRealKeys(HelpSituation situation, string[] keys)

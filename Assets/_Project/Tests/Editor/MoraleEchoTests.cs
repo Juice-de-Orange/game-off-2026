@@ -31,6 +31,13 @@ namespace GameOff.Tests
             Object.DestroyImmediate(_tuning);
         }
 
+        [TestCase("DELA MORN", "Dela Morn")]
+        [TestCase("ZEV ZELL-3", "Zev Zell-3")]
+        [TestCase("KESSLER'S LUCK", "Kessler's Luck")]
+        [TestCase("Vesna", "Vesna")]
+        [TestCase("", "")]
+        public void TitleCase_MakesPaperNamesFitForProse(string name, string expected) => Assert.AreEqual(expected, TextMatch.TitleCase(name));
+
         [Test]
         public void WithoutTheAirlock_NothingAppears()
         {

@@ -17,6 +17,6 @@ namespace GameOff.Economy
 
         public bool Active => traveler != null && amount > 0;
         public string Text => !string.IsNullOrWhiteSpace(note) ? note
-            : $"Officer -\n\nmy friend {traveler.DisplayName} comes through today. Let him pass and there's {amount} CR for you tonight.\n\nBurn this.\n- L.";
+            : $"Officer -\n\nmy friend {traveler.DisplayName} comes through today. Let them pass and there's {amount} CR for you tonight.\n\nBurn this.\n- L.";
     }
 }
