@@ -51,6 +51,15 @@ namespace GameOff.Rest
             return true;
         }
 
+        /// <summary>P156: puts the cassette into an empty slot without starting it (the deck stays stopped until the lever).</summary>
+        public bool Load(int slot, CassetteData cassette)
+        {
+            int playing = Playing;
+            if (!Insert(slot, cassette)) return false;
+            Playing = playing;
+            return true;
+        }
+
         /// <summary>Takes the cassette out of the slot (null if empty). If it was playing, the next one in slot order plays.</summary>
         public CassetteData Eject(int slot)
         {
@@ -69,14 +78,13 @@ namespace GameOff.Rest
         }
 
         /// <summary>
-        /// P141, the lever: on to the next filled slot (1→2→3→1); a single cassette stays and starts over. False on an empty deck,
-        /// where nothing changes.
+        /// P141, the lever: on to the next filled slot (1→2→3→1); a single cassette stays and starts over. P156: a stopped deck
+        /// with cassettes starts at the first filled slot. False on an empty deck, where nothing changes.
         /// </summary>
         public bool Skip()
         {
-            if (Playing < 0) return false;
             Advance();
-            return true;
+            return Playing >= 0;
         }
 
         /// <summary>The first cassette of the inventory into this slot (it leaves the inventory). Null if there is none or the slot is taken.</summary>
@@ -99,7 +107,7 @@ namespace GameOff.Rest
             return cassette;
         }
 
-        /// <summary>P128: the slots as saved (missing entries stay empty); the first filled slot plays.</summary>
+        /// <summary>P128: the slots as saved (missing entries stay empty), stopped (P156: the lever starts the first filled slot).</summary>
         public void Restore(IList<CassetteData> slots)
         {
             for (int i = 0; i < _slots.Length; i++) _slots[i] = null;
@@ -107,7 +115,6 @@ namespace GameOff.Rest
             if (slots == null) return;
             for (int i = 0; i < _slots.Length && i < slots.Count; i++)
                 if (slots[i] != null && !Holds(slots[i])) _slots[i] = slots[i];
-            Playing = NextFilledAfter(-1);
         }
 
         /// <summary>The first filled slot after this one in slot order, wrapping round (the same slot if it is the only one); -1 if empty.</summary>

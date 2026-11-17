@@ -111,7 +111,6 @@ Welche **Pakete** gerade wer baut, steht in `PAKETE.md`.
 | Wer | Aufgabe | Geclaimte Dateien | Seit |
 |---|---|---|---|
 | martin | P11 Rest (Schwarzmarkt, Beschlagnahme): P08-Gespräch war im Call 07.11., kommt mit P81/P82/P08 | — | 07.11. |
-| max | P151–P153, P156–P159, Lieferungen P141/P143 einbauen (Rebuild All + Bake) | `Main.unity`, `Boot.unity`, generierte Prefabs (Station, Exterior, Dokumente, Departure, Guard Rounds), `Data/Days/Story/` | 17.11. |
 
 ## Backlog
 Die Arbeit läuft über **Pakete** in `PAKETE.md` (Entwurf, wird am 02.11. freigegeben). Diese Liste nur für Ideen,

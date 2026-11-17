@@ -35,6 +35,8 @@ namespace GameOff.Station
         public const float ArriveMeters = 0.25f;
         private const float GiveWayHysteresis = 0.3f; // walks on only once the player is this much further away again
         private const float SettleSeconds = 0.25f;    // right after a new destination the remaining distance isn't known yet
+        // P157 (#48): where the way bends more than this he stops and turns on the spot, and walks on once he faces it again.
+        private const float TurnOnSpotDegrees = 50f, WalkOnDegrees = 12f;
         private static readonly int Idle = Animator.StringToHash("Idle");
         private static readonly int Walk = Animator.StringToHash("Walk");
 
@@ -64,6 +66,7 @@ namespace GameOff.Station
             public float StandTime, StandSeconds, BaseYaw;
             public float WalkTime, Stuck;
             public bool GivingWay;
+            public bool TurningOnSpot;   // P157: stopped, turning toward the way before walking on
             public bool Talking;
             public float TalkUntil;
             public int State;            // animator state last crossfaded to
@@ -228,6 +231,7 @@ namespace GameOff.Station
                 return;
             }
             guard.State = 0; // switched on again, the Animator starts over in its default state
+            if (guard.Animator != null) guard.Animator.speed = 1f; // P157: Turn may have left a slow walk pace
             if (newDay && guard.Animator != null && guard.Animator.isActiveAndEnabled)
             {
                 guard.Animator.Play(Idle, 0, UnityEngine.Random.value); // out of step with the other one
@@ -285,12 +289,19 @@ namespace GameOff.Station
             }
 
             guard.WalkTime += dt;
-            if (guard.WalkTime < SettleSeconds || agent.pathPending) return;
-            if (agent.pathStatus == NavMeshPathStatus.PathInvalid || agent.remainingDistance <= ArriveMeters)
+            if (agent.pathPending) return;
+            // Arrival first: right at the waypoint the steering target is centimetres away and its angle means nothing.
+            if (guard.WalkTime >= SettleSeconds && (agent.pathStatus == NavMeshPathStatus.PathInvalid || agent.remainingDistance <= ArriveMeters))
             {
                 Arrive(guard);
                 return;
             }
+            if (Turn(guard, dt))
+            {
+                guard.Stuck = 0f;
+                return;
+            }
+            if (guard.WalkTime < SettleSeconds) return;
             guard.Stuck = agent.velocity.sqrMagnitude < 0.01f ? guard.Stuck + dt : 0f;
             if (guard.Stuck >= tuning.stuckSeconds) Arrive(guard); // stands where he got to, then tries the next waypoint
         }
@@ -317,20 +328,46 @@ namespace GameOff.Station
             Play(guard, Idle);
         }
 
-        /// <summary>Walks to the current target; the agent turns him along the way.</summary>
+        /// <summary>Walks to the current target. P157: he turns himself (Turn): first on the spot toward the way, then along it.</summary>
         private void Go(Guard guard)
         {
             var agent = guard.Agent;
             guard.WalkTime = 0f;
             guard.Stuck = 0f;
-            agent.updateRotation = true;
+            guard.TurningOnSpot = true; // until Turn sees him facing the way
+            agent.updateRotation = false;
             if (agent.isOnNavMesh)
             {
-                agent.isStopped = guard.GivingWay;
+                agent.isStopped = true;
                 agent.SetDestination(guard.Route.points[guard.Target]);
             }
-            Play(guard, guard.GivingWay ? Idle : Walk);
+            Play(guard, Idle);
         }
+
+        /// <summary>
+        /// P157 (#48): faces the way himself instead of the agent turning him while it already moves (that slid him sideways round
+        /// corners). Where the way bends sharply he stops and turns on the spot; the walk cycle runs at his real speed, so the feet
+        /// don't skate while he speeds up or slows down. True while he turns on the spot.
+        /// </summary>
+        private bool Turn(Guard guard, float dt)
+        {
+            var agent = guard.Agent;
+            float yaw = guard.Transform.eulerAngles.y;
+            float want = agent.hasPath ? YawTowards(guard.Transform.position, agent.steeringTarget, yaw) : yaw;
+            bool onSpot = TurnsOnSpot(Mathf.DeltaAngle(yaw, want), guard.TurningOnSpot);
+            guard.Transform.rotation = Quaternion.RotateTowards(guard.Transform.rotation, Quaternion.Euler(0f, want, 0f),
+                tuning.turnDegreesPerSecond * (onSpot ? 1f : 2f) * dt);
+            guard.TurningOnSpot = onSpot;
+            agent.isStopped = onSpot;
+            Play(guard, onSpot ? Idle : Walk);
+            if (!onSpot && guard.Animator != null)
+                guard.Animator.speed = Mathf.Clamp(agent.velocity.magnitude / Mathf.Max(0.1f, tuning.walkSpeed), 0.4f, 1.2f);
+            return onSpot;
+        }
+
+        /// <summary>P157: turning on the spot starts above TurnOnSpotDegrees off the way and ends below WalkOnDegrees.</summary>
+        public static bool TurnsOnSpot(float degreesOff, bool turningNow) =>
+            Mathf.Abs(degreesOff) > (turningNow ? WalkOnDegrees : TurnOnSpotDegrees);
 
         /// <summary>[E]: he stops, turns to the player and says one line in the hint bar (like the evening guests, P101).</summary>
         private void Talk(Guard guard)
@@ -362,6 +399,7 @@ namespace GameOff.Station
         private void Play(Guard guard, int state)
         {
             if (guard.State == state || guard.Animator == null || !guard.Animator.isActiveAndEnabled) return;
+            guard.Animator.speed = 1f; // Turn sets the walk cycle's pace while walking
             guard.Animator.CrossFade(state, tuning.animationBlendSeconds);
             guard.State = state;
         }

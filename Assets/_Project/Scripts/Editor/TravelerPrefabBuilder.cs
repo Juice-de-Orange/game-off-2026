@@ -115,10 +115,13 @@ namespace GameOff.EditorTools
                 controller = AnimatorController.CreateAnimatorControllerAtPath(path);
             }
             var clips = AssetDatabase.LoadAllAssetsAtPath(fbx).OfType<AnimationClip>().Where(c => !c.name.StartsWith("__preview__")).ToList();
+            // P157 (#48): the guard's own walk holds the arms up at the shoulders; the humans' walk (humanoid, retargeted) swings them low.
+            var humanClips = AssetDatabase.LoadAllAssetsAtPath(ModelFolder + "SK_NPC_Human.fbx").OfType<AnimationClip>()
+                .Where(c => !c.name.StartsWith("__preview__")).ToList();
             var machine = controller.layers[0].stateMachine;
             foreach (string name in species == "Guard" ? new[] { "Idle", "Walk", "Grab" } : States)
             {
-                var clip = clips.FirstOrDefault(c => c.name == name);
+                var clip = (species == "Guard" && name == "Walk" ? humanClips : clips).FirstOrDefault(c => c.name == name);
                 if (clip == null) log.Add($"WARNING {fbx} has no clip {name}");
                 var state = machine.states.Select(s => s.state).FirstOrDefault(s => s.name == name) ?? machine.AddState(name);
                 state.motion = clip;

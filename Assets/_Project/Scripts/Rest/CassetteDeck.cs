@@ -13,6 +13,7 @@ namespace GameOff.Rest
     /// empty slot puts the first cassette of the inventory in, [E] on a full one takes it back into the inventory; no menus. The deck
     /// plays the cassettes in slot order and starts over (CassettePlaylist); the slot lamps show wait and play, the lever play or stop.
     /// P141: [E] on the lever skips to the next cassette (1→2→3→1), a single one starts over, an empty deck ignores it.
+    /// P156: a new run finds the start cassette in slot 1 of the room deck, stopped; the lever plays it.
     /// Music in 3D on the Music group (the options slider applies), audible in the room only. The morning save keeps the slots by id
     /// (SaveGame). Built by RestSpotBuilder.
     /// </summary>
@@ -22,6 +23,8 @@ namespace GameOff.Rest
 
         [Tooltip("The save keeps the slots under this id (P128), e.g. Counter, Room103.")]
         [SerializeField] private string id = "Deck";
+        [Tooltip("P156: in slot 1 when a new run starts (stopped until the lever); a continued run restores the saved slots instead.")]
+        [SerializeField] private CassetteData startCassette;
         [Tooltip("The [E] trigger of each slot, slot 1 first.")]
         [SerializeField] private Interactable[] slots = new Interactable[0];
         [Tooltip("The cassette model standing in each slot; hidden while the slot is empty.")]
@@ -50,6 +53,8 @@ namespace GameOff.Rest
         [SerializeField] private string noCassettePrompt = "Insert a cassette";
         [SerializeField] private string ejectPrompt = "Take out {0}";
         [SerializeField] private string skipPrompt = "Next song";
+        [Tooltip("P156: the lever of a stopped deck with cassettes in it.")]
+        [SerializeField] private string playPrompt = "Play {0}";
         [Tooltip("The lever with only one cassette in.")]
         [SerializeField] private string restartPrompt = "Play {0} from the start";
         [SerializeField] private string noCassetteHint = "You have no cassette with you. The kiosk sells some, and some are lying around the station.";
@@ -108,6 +113,7 @@ namespace GameOff.Rest
             }
             if (lever != null) _leverRest = lever.localRotation;
             _leverAngle = leverStopAngle;
+            if (startCassette != null) Playlist.Load(0, startCassette);
             ShowSlots();
             ApplyLever();
         }
@@ -174,12 +180,12 @@ namespace GameOff.Rest
             ApplyLever();
         }
 
-        /// <summary>P128: the slots of the save, without sounds; the first cassette plays at once.</summary>
+        /// <summary>P128: the slots of the save, without sounds; stopped, like a new game (P156: music only after [E] on the lever).</summary>
         public void Restore(IList<CassetteData> saved)
         {
             Playlist.Restore(saved);
-            StartTrack();
-            _leverAngle = Playlist.Current != null ? leverPlayAngle : leverStopAngle;
+            StartTrack(); // nothing current: the source falls silent
+            _leverAngle = leverStopAngle;
             ApplyLever();
             RefreshPrompts();
         }
@@ -219,6 +225,16 @@ namespace GameOff.Rest
         /// <summary>P141, [E] on the lever: the next cassette in slot order, a single one from the start; an empty deck ignores it.</summary>
         private void Skip()
         {
+            if (Playlist.Current == null && !_starting) // P156: a stopped deck starts like an insert: the lever goes down, then the music
+            {
+                if (!Playlist.Skip()) return;
+                AudioManager.PlayAt(s => s.cassetteSkip, skipLever != null ? skipLever.transform.position : transform.position, soundDistance);
+                _starting = true;
+                _startAt = Time.time + startDelay;
+                ShowSlots();
+                RefreshPrompts();
+                return;
+            }
             if (!Playlist.Skip()) return;
             AudioManager.PlayAt(s => s.cassetteSkip, skipLever != null ? skipLever.transform.position : transform.position, soundDistance);
             _leverFlickUntil = Time.time + leverFlickSeconds;
@@ -293,8 +309,16 @@ namespace GameOff.Rest
             }
             if (skipLever == null) return;
             var current = Playlist.Current;
-            skipLever.SetInteractionEnabled(current != null); // nothing to skip in an empty deck: no prompt either
-            skipLever.SetPrompt(current != null && Playlist.Count == 1 ? string.Format(restartPrompt, current.Title) : skipPrompt);
+            skipLever.SetInteractionEnabled(Playlist.Count > 0); // nothing to skip in an empty deck: no prompt either
+            if (current == null) skipLever.SetPrompt(string.Format(playPrompt, FirstLoaded()?.Title)); // P156: stopped
+            else skipLever.SetPrompt(Playlist.Count == 1 ? string.Format(restartPrompt, current.Title) : skipPrompt);
+        }
+
+        private CassetteData FirstLoaded()
+        {
+            foreach (var c in Playlist.Slots)
+                if (c != null) return c;
+            return null;
         }
     }
 }

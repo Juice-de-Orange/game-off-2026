@@ -31,14 +31,14 @@ namespace GameOff.EditorTools
         private const string MixerPath = "Assets/_Project/Audio/GameMixer.mixer";
         private const string DockedShuttleName = "Shuttle_Docked", CabinName = "SM_Shuttle_Cabin_Interior";
 
-        // Against the west wall south of the hatch (z -26), front facing into the hangar.
+        // Against the west wall south of the hatch (StationGrayboxBuilder.DockHatchZ), front facing into the hangar.
         private static readonly Vector3 TerminalPosition = new Vector3(-17.4f, 0f, -28.7f);
         private const float TerminalYaw = 90f;
         private static readonly Vector3 TerminalSize = new Vector3(0.8f, 1.8f, 0.6f);
         // Thin plates against the wall: the interaction ray starts at the camera and doesn't report a collider the camera is inside of.
-        private static readonly Vector3 HatchTriggerCenter = new Vector3(-17.75f, 1.2f, -26f);
-        private static readonly Vector3 HatchTriggerSize = new Vector3(0.2f, 2.4f, 2f);
-        private static readonly Vector3 HatchOutside = new Vector3(-16.6f, 0f, -26f);
+        private static readonly Vector3 HatchTriggerCenter = new Vector3(-17.75f, 1.2f, StationGrayboxBuilder.DockHatchZ);
+        private static readonly Vector3 HatchTriggerSize = new Vector3(0.2f, 2.4f, 1.6f); // the door's width (P159: between two wall ribs)
+        private static readonly Vector3 HatchOutside = new Vector3(-16.6f, 0f, StationGrayboxBuilder.DockHatchZ);
 
         [MenuItem("GameOff/Build Departure into Main")]
         public static void BuildIntoMainFromMenu()

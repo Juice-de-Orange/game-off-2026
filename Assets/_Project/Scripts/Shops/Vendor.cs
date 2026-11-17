@@ -33,6 +33,9 @@ namespace GameOff.Shops
         [Tooltip("P109: how fast the shutter falls at the curfew (shutterDropSeconds).")]
         [SerializeField] private Counter.DialogueTuning shutterTuning;
 
+        [Tooltip("P153: the shop's \"OPEN\" sign renderers; dark while the shutter is down.")]
+        [SerializeField] private Renderer[] openSigns = new Renderer[0];
+
         private bool _shutterOpen = true;
 
         private void OnEnable()
@@ -53,6 +56,7 @@ namespace GameOff.Shops
         {
             if (shutter == null || IsOpen == _shutterOpen) return;
             _shutterOpen = IsOpen;
+            SetSigns(!_shutterOpen);
             if (_shutterOpen) shutter.Raise(1.2f);
             else if (day != null && day.IsCurfew)
             {
@@ -61,6 +65,11 @@ namespace GameOff.Shops
                 AudioManager.PlayAt(s => s.shutterDrop, shutter.transform.position, 25f);
             }
             else shutter.Drop(0f); // otherwise nobody watches the kiosk close: it happens while the player sleeps
+        }
+
+        private void SetSigns(bool closed)
+        {
+            foreach (var sign in openSigns) StationMood.SetSignClosed(sign, closed); // the mood owns the neons' emission (P36)
         }
 
         private void ApplyDevTools()

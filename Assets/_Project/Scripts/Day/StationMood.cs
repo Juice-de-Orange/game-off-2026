@@ -23,6 +23,7 @@ namespace GameOff.Day
         private float[] _neonNext = new float[0];
         private float[] _neonEnd = new float[0];
         private bool[] _neonOff = new bool[0];
+        private bool[] _neonClosed = new bool[0];
         private float _nextBlackout;
         private float _blackoutEnd;
         private bool _blackout;
@@ -43,6 +44,7 @@ namespace GameOff.Day
             _neonNext = new float[neons.Length];
             _neonEnd = new float[neons.Length];
             _neonOff = new bool[neons.Length];
+            _neonClosed = new bool[neons.Length];
         }
 
         private void OnEnable()
@@ -133,7 +135,46 @@ namespace GameOff.Day
         {
             if (i >= _neonOff.Length || _neonOff[i] == off || neons[i] == null) return;
             _neonOff[i] = off;
-            neons[i].SetPropertyBlock(off ? _dark : null);
+            ApplyNeon(i);
         }
+
+        /// <summary>
+        /// P153: a shop's "OPEN" sign stays dark while the shop is closed (its shutter is down); dropouts and blackouts go on
+        /// around it. A sign the mood does not know is switched directly.
+        /// </summary>
+        public void SetClosed(Renderer sign, bool closed)
+        {
+            if (sign == null) return;
+            int i = System.Array.IndexOf(neons, sign);
+            if (i < 0 || i >= _neonClosed.Length)
+            {
+                SetDirect(sign, closed);
+                return;
+            }
+            if (_neonClosed[i] == closed) return;
+            _neonClosed[i] = closed;
+            ApplyNeon(i);
+        }
+
+        /// <summary>P153: without a mood (or for a sign it doesn't own) the sign is switched directly.</summary>
+        public static void SetSignClosed(Renderer sign, bool closed)
+        {
+            if (Instance != null) Instance.SetClosed(sign, closed);
+            else if (sign != null) SetDirect(sign, closed);
+        }
+
+        private static MaterialPropertyBlock _darkShared;
+
+        private static void SetDirect(Renderer sign, bool closed)
+        {
+            if (_darkShared == null)
+            {
+                _darkShared = new MaterialPropertyBlock();
+                _darkShared.SetColor(EmissionColor, Color.black);
+            }
+            sign.SetPropertyBlock(closed ? _darkShared : null);
+        }
+
+        private void ApplyNeon(int i) => neons[i].SetPropertyBlock(_neonOff[i] || _neonClosed[i] ? _dark : null);
     }
 }

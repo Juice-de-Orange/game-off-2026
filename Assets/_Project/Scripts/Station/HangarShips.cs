@@ -9,7 +9,7 @@ namespace GameOff.Station
 {
     /// <summary>
     /// P107: two to four small ships stand on the hangar pads, different ones every day; one of them comes in through the barrier each
-    /// morning. Which ones follows from the day number, so a replayed day looks the same.
+    /// morning. Which ones follows from the day number, so a replayed day looks the same. P158: their boxes follow the shape.
     /// </summary>
     public class HangarShips : MonoBehaviour
     {
@@ -45,10 +45,22 @@ namespace GameOff.Station
                 var pad = pads[(firstPad + i) % pads.Length];
                 var ship = Instantiate(ships[rng.Next(ships.Length)], pad.position, pad.rotation, transform);
                 _placed.Add(ship);
-                var body = FitCollider(ship);
-                body.enabled = i != 0; // the one coming in gets solid when it is down
+                var body = BodyOf(ship);
+                SetSolid(body, i != 0); // the one coming in gets solid when it is down
                 if (i == 0) StartCoroutine(Land(ship.transform, pad, body));
             }
+        }
+
+        /// <summary>P158: the boxes that follow the ship's shape (built into its prefab); one box around everything if it has none.</summary>
+        private static BoxCollider[] BodyOf(GameObject ship)
+        {
+            var boxes = ship.GetComponentsInChildren<BoxCollider>(true);
+            return boxes.Length > 0 ? boxes : new[] { FitCollider(ship) };
+        }
+
+        private static void SetSolid(BoxCollider[] body, bool solid)
+        {
+            foreach (var box in body) box.enabled = solid;
         }
 
         /// <summary>One box around the whole ship, in its own space.</summary>
@@ -75,15 +87,18 @@ namespace GameOff.Station
             return box;
         }
 
-        private static bool PlayerInside(BoxCollider box)
+        private static bool PlayerInside(BoxCollider[] body)
         {
-            var t = box.transform;
-            foreach (var hit in Physics.OverlapBox(t.TransformPoint(box.center), Vector3.Scale(box.size * 0.5f, t.lossyScale), t.rotation, ~0, QueryTriggerInteraction.Ignore))
-                if (hit is CharacterController) return true;
+            foreach (var box in body)
+            {
+                var t = box.transform;
+                foreach (var hit in Physics.OverlapBox(t.TransformPoint(box.center), Vector3.Scale(box.size * 0.5f, t.lossyScale), t.rotation, ~0, QueryTriggerInteraction.Ignore))
+                    if (hit is CharacterController) return true;
+            }
             return false;
         }
 
-        private IEnumerator Land(Transform ship, Transform pad, BoxCollider body)
+        private IEnumerator Land(Transform ship, Transform pad, BoxCollider[] body)
         {
             AudioManager.PlayAt(s => s.shipLand, pad.position, 60f);
             var previous = approachFrom;
@@ -99,7 +114,7 @@ namespace GameOff.Station
             Landed?.Invoke(pad);
             // Someone standing on the pad must not end up inside a solid box.
             while (PlayerInside(body)) yield return new WaitForSeconds(0.5f);
-            body.enabled = true;
+            SetSolid(body, true);
         }
     }
 }

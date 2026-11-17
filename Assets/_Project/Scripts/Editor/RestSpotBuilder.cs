@@ -30,6 +30,8 @@ namespace GameOff.EditorTools
     {
         private const string MainScene = "Assets/_Project/Scenes/Main.unity";
         private const string PrefabPath = "Assets/_Project/Prefabs/Rest/PF_RestSpots.prefab";
+        /// <summary>P151: bottom of the seat HUD's line, clear of the hint bar (DayFlowBuilder.HintBottom + HintHeight).</summary>
+        internal const float LineBottom = DayFlowBuilder.HintBottom + DayFlowBuilder.HintHeight + 10f;
         private const string TuningPath = "Assets/_Project/Data/Rest/RestSpotTuning.asset";
         private const string PhotoPath = "Assets/_Project/Art/UI/UI_Family_Photo.png";
         private const string HandFontPath = "Assets/_Project/Fonts/ShareTechMono SDF.asset";
@@ -40,9 +42,10 @@ namespace GameOff.EditorTools
 
         // Room 103's porthole (StationGrayboxBuilder opening on the x = -20 wall, centre z 5, 1.2 wide, sill 0.9, head 2.1). The eye goes out
         // past the hull (like the coin telescope's) so neither the frame nor the outer wall is in the view of the home planet.
+        // P152: far enough out that the station's own corner stays out of the view when the sky has turned (planet up to 44° east of north).
         private static readonly Vector3 PortholeCentre = new Vector3(-20f, 1.5f, 5f);
         private static readonly Vector3 PortholeApproach = new Vector3(-19.4f, 1.5f, 5f);
-        private static readonly Vector3 PortholeEye = new Vector3(-21.5f, 1.5f, 5f);
+        internal static readonly Vector3 PortholeEye = new Vector3(-24.5f, 1.5f, 5f);
 
         [MenuItem("GameOff/Build Rest Spots into Main")]
         public static void BuildIntoMainFromMenu()
@@ -176,7 +179,8 @@ namespace GameOff.EditorTools
             {
                 var table = Furniture(scene, "SM_Motel_Table", new Vector3(-17f, 0f, 5.5f), new Vector3(0.8f, 0.75f, 0.6f), ref found);
                 // The top is only 5.33 to 5.8 deep (see the letter): the deck stands 0.22 m in from the wall-side edge.
-                CassetteBuilder.BuildDeck(root.transform, "Room103", new Vector3(table.center.x + 0.08f, table.max.y, table.max.z - 0.22f), 0f);
+                var roomDeck = CassetteBuilder.BuildDeck(root.transform, "Room103", new Vector3(table.center.x + 0.08f, table.max.y, table.max.z - 0.22f), 0f);
+                Set(roomDeck, "startCassette", CassetteBuilder.Cassette(1)); // P156 (#51): "Night Shift" is in the deck when a new run starts
                 var counterTable = Furniture(scene, StationGrayboxBuilder.CounterDeckTable, new Vector3(-5.3f, 0f, -11.5f),
                     new Vector3(0.8f, 0.75f, 0.6f), ref found);
                 CassetteBuilder.BuildDeck(root.transform, "Counter", new Vector3(counterTable.center.x, counterTable.max.y, counterTable.min.z + 0.22f), 180f);
@@ -203,7 +207,8 @@ namespace GameOff.EditorTools
             root.transform.SetParent(canvas, false);
             Stretch(root.GetComponent<RectTransform>());
             // P140: no key bar any more; the keys are behind [H] (HelpOverlay).
-            var line = Label(root.transform, "Line", "", 18f, TextLight, new Vector2(0f, 50f), new Vector2(820f, 70f));
+            // P151: above the day UI's hint bar, so a thought and an announcement or hint can both be read at the same time.
+            var line = Label(root.transform, "Line", "", 18f, TextLight, new Vector2(0f, LineBottom), new Vector2(820f, 70f));
             BottomCentre(line.rectTransform);
             line.alignment = TextAlignmentOptions.Bottom;
             var hud = canvas.gameObject.AddComponent<RestHud>();

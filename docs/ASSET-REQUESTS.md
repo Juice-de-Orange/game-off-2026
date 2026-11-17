@@ -10664,7 +10664,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_SpeechBubble.png
 package: P143
 scene: Schalter (Sprechblasen der Reisenden)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -10691,7 +10691,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_SpeechBubble_Tail.png
 package: P143
 scene: Schalter (Sprechblasen der Reisenden)
-status: Vorschau
+status: final
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -10718,7 +10718,7 @@ feedback: []
 path: Assets/_Project/Audio/SFX/SFX_Cassette_Skip.ogg
 package: P141
 scene: Schalterraum, Zimmer 103
-status: Vorschau
+status: final
 priority: P3
 needed_by: 2026-11-23
 size_m: [0, 0, 0]

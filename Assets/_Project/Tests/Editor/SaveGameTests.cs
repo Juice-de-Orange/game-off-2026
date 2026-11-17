@@ -260,7 +260,9 @@ namespace GameOff.Tests
 
             var deck = new GameOff.Rest.CassettePlaylist(3);
             deck.Restore(back.decks["Counter"]);
-            Assert.AreSame(night, deck.Current, "the first filled slot plays after loading");
+            Assert.IsNull(deck.Current, "P156: loaded stopped");
+            deck.Skip();
+            Assert.AreSame(night, deck.Current, "the lever plays the first filled slot");
             Assert.AreEqual(2, deck.Count);
         }
 

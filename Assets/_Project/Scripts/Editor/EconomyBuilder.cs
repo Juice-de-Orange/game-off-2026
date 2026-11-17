@@ -859,7 +859,6 @@ namespace GameOff.EditorTools
             slats.gameObject.SetActive(false); // SecurityShutter shows it when it falls
         }
 
-        /// <summary>P107: the ships that can stand in the hangar and their pads, away from the shuttle ramp and the walkways.</summary>
         /// <summary>P35: the flagged crate east of the queue lane, off unless today has a case.</summary>
         private static void BuildCargoCrate(Transform parent, Data data)
         {
@@ -912,12 +911,17 @@ namespace GameOff.EditorTools
             visual.SetActive(false);
         }
 
+        /// <summary>P107: the ships that can stand in the hangar and their pads, away from the shuttle ramp and the walkways.
+        /// P158: each ship is a prefab with boxes that follow its shape (ShipCollisionBuilder).</summary>
         private static GameOff.Station.HangarShips BuildHangarShips(Transform parent)
         {
             var go = new GameObject("HangarShips");
             go.transform.SetParent(parent, false);
+            var log = new List<string>();
             var models = new[] { "Courier", "Hauler", "Skiff", "Family" }
-                .Select(n => AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_{n}.fbx")).Where(m => m != null).ToArray();
+                .Select(n => AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/_Project/Art/Models/Hangar/SM_Hangar_Ship_{n}.fbx")).Where(m => m != null)
+                .Select(m => ShipCollisionBuilder.BuildPrefab(m, log)).ToArray();
+            Debug.Log("[EconomyBuilder] hangar ships: " + string.Join(", ", log));
             var pads = new List<Object>();
             foreach (var (position, yaw) in new[] { (new Vector3(-10f, 0f, -23f), 90f), (new Vector3(10f, 0f, -23f), -90f), (new Vector3(-8f, 0f, -33f), 90f), (new Vector3(10f, 0f, -35f), -90f) })
             {
@@ -1395,6 +1399,14 @@ namespace GameOff.EditorTools
 
         // ---------- Placement ----------
 
+        /// <summary>P153: the station's "OPEN" neon over the kiosk hatch belongs to Holly; other vendors have no sign.</summary>
+        private static Object[] OpenSignsOf(Scene scene, Vendor vendor)
+        {
+            if (vendor.name != "Vendor_Holly") return new Object[0];
+            return scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Transform>(true))
+                .Where(t => t.name == "Neon_Kiosk").SelectMany(t => t.GetComponentsInChildren<Renderer>(true)).Distinct().Cast<Object>().ToArray();
+        }
+
         private static void Place(Scene scene, GameObject prefab, List<string> log)
         {
             foreach (var old in scene.GetRootGameObjects().Where(g => g.name == prefab.name)) Object.DestroyImmediate(old);
@@ -1415,6 +1427,7 @@ namespace GameOff.EditorTools
                 Set(v, "player", player);
                 Set(v, "day", day);
                 Set(v, "dialogs", dialogs);
+                SetArray(v, "openSigns", OpenSignsOf(scene, v)); // P153
                 Record(v);
             }
             var planetT = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Transform>(true)).FirstOrDefault(t => t.name == "HomePlanet");

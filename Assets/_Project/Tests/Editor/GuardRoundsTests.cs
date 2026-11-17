@@ -170,6 +170,20 @@ namespace GameOff.Tests
             var states = controller.layers[0].stateMachine.states.Select(s => s.state.name).ToList();
             CollectionAssert.Contains(states, "Idle");
             CollectionAssert.Contains(states, "Walk");
+            // P157 (#48): the humans' walk, not the guard's own one with the arms up.
+            var walk = controller.layers[0].stateMachine.states.Select(s => s.state).First(s => s.name == "Walk").motion;
+            Assert.IsNotNull(walk, "the guard has a walk clip");
+            StringAssert.EndsWith("SK_NPC_Human.fbx", AssetDatabase.GetAssetPath(walk));
+        }
+
+        [Test]
+        public void Turning_OnTheSpot_StartsAtSharpBends_AndEndsWhenHeFacesTheWay()
+        {
+            Assert.IsFalse(GuardRounds.TurnsOnSpot(30f, false), "a gentle bend: he turns while walking");
+            Assert.IsTrue(GuardRounds.TurnsOnSpot(90f, false), "a sharp bend: he stops and turns");
+            Assert.IsTrue(GuardRounds.TurnsOnSpot(-90f, false), "both ways");
+            Assert.IsTrue(GuardRounds.TurnsOnSpot(30f, true), "once turning he goes on until he nearly faces the way");
+            Assert.IsFalse(GuardRounds.TurnsOnSpot(5f, true), "then he walks on");
         }
 
         [Test]

@@ -1915,7 +1915,7 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
 - Ergebnis (martin, 11.11., Agent): Speichert zu Beginn jedes Morgens (`DayManager.BeginDay`, vor `DayStarted`) als JSON in `PlayerPrefs` (`kestrel9.run`, `SaveGame`/`SaveData`/`SaveSlot`): Tag, Startwert, Geld, Inventar, Schrank, Händler-Extras, Familie inkl. Tote, Strafpunkte, Moral, Ticket, Barkeeper-Schmollen, Briefzeilen, Markt-Ereignisse, Stationslage, Figuren-Gedächtnis. Menü: „CONTINUE · DAY n“ nur mit Stand, START über einem Stand fragt „NEW RUN?“. Jedes Ende löscht den Stand. Der geladene Morgen wird neu gespielt (welche Figuren kommen, kann abweichen). `tools/measure-webgl.mjs` klickt nach START „NEW RUN“. 6 Tests. **P131 muss den Vorrat zu Hause mitspeichern.** Nicht angespielt.
 
 ### P129 — Spielmetriken für die Playtests
-- Größe: M · Priorität: Soll · Status: fertig bis auf den EditMode-Testlauf (max, 13.11.) · Zuständig: max
+- Größe: M · Priorität: Soll · Status: fertig (max, 17.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P84
 - Ziel: Wir sehen, wie Tester spielen: wo sie aufhören, welche Reisenden und Regeln sie falsch entscheiden, wie lange sie brauchen, wie das Geld läuft und wie flüssig das Spiel im Browser ist.
 - Enthalten: Anonyme Ereignisse aus dem Spiel (Sitzung, Tagesbeginn/-ende mit Geld und Familie, jede Entscheidung am Schalter mit Dauer, Schichtende, Ende des Laufs, Puls alle 30 s mit Phase und FPS, Fehlermeldungen) an `POST /api/metrics` im Bugreport-Backend, das sie als JSONL auf Geoffrey ablegt (90 Tage). Auswertung mit `tools/metrics_report.py`. Keine Kennung über die Sitzung hinaus, nichts im Browser gespeichert, keine IP, im Editor aus.
@@ -1924,7 +1924,7 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
 - **Achtung martin (10.11.):** Auf Max' Wunsch ungetestet nach `main` gemergt (`a6f78d9`). Zeigt Unity Fehler in `Scripts/Metrics/`, `BrowserBridge.cs` oder `PlayMetricsTests.cs`, kommen sie von hier; Max prüft es als Nächstes in Unity.
 - Zwischenstand (10.11., Branch `p129-metrics`): Code fertig, ohne Unity geschrieben (Maschine ohne Editor). Geprüft: Backend-Tests 15/15, C# mit .NET 8 gegen Unity-Stubs kompiliert, Logik der EditMode-Tests grün, ein Batch aus dem C#-Code läuft durch den echten Server-Parser, `metrics_report.py` mit Probedaten. Offen: in Unity öffnen, EditMode-Tests, Konsole, nach `main` mergen; auf Geoffrey Ordner anlegen und Backend + Spiel deployen (`DEPLOY.md`, Spielmetriken). Einzige Änderung an fremdem Code: `DayManager.EndingTitle`. Nachtrag: Die Seite (beide WebGL-Vorlagen) schickt beim Öffnen ein `visit` mit Herkunft (`?src=`, Referrer-Host); das Spiel übernimmt dessen Sitzungskennung. Der Report zeigt Besuche, Spieler und Spielzeit je Tag und je Herkunft.
 
-- Ergebnis (max, 13.11.): Läuft im Live-Build (`752c8e3`): bis 12.11. 25 Sitzungen, 641 Ereignisse aller Typen (visit, session, day_start, traveler, shift_end, day_end, run_end, beat), `tools/metrics_report.py` zeigt Besuche/Spieler/Spielzeit je Tag und Herkunft, Abbrüche, Fehlerquote je Reisendem, FPS. Backend-Tests grün. **Offen:** `PlayMetricsTests` im Test Runner einmal laufen lassen (der Code kompiliert in Unity, die Tests selbst hat niemand bestätigt).
+- Ergebnis (max, 13.11.): Läuft im Live-Build (`752c8e3`): bis 12.11. 25 Sitzungen, 641 Ereignisse aller Typen (visit, session, day_start, traveler, shift_end, day_end, run_end, beat), `tools/metrics_report.py` zeigt Besuche/Spieler/Spielzeit je Tag und Herkunft, Abbrüche, Fehlerquote je Reisendem, FPS. Backend-Tests grün. **Offen:** `PlayMetricsTests` im Test Runner einmal laufen lassen (der Code kompiliert in Unity, die Tests selbst hat niemand bestätigt). Nachtrag 17.11.: alle 6 `PlayMetricsTests` grün (EditMode 476/476).
 ### P130 — Pinnwand zeigt nur den heutigen Tag
 - Größe: S · Priorität: Soll · Status: fertig (martin, 11.11.) · Zuständig: martin
 - Braucht: — · Folgt auf: P33, P41
@@ -2118,25 +2118,28 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
 - Ergebnis (max, 13.11., Agent): Komplizin Ilsa Koval (Mensch, ID endet auf 77): Shifter an Tag 3 per Schleuse oder verhaftet → sie fragt an Tag 6 JOIN/REFUSE, JOIN → Tag 7 Ende AIRLOCKED. Neue Mechanik: Folgen setzen Flags, Auftritte mit `onlyIfFlag`/`unlessFlag`. Damit Lohn und Balance gleich bleiben, entfallen Hedda (Tag 6) und Mabu (Tag 7). Ende-Auswertung nennt sie. Tests für alle vier Wege an Tag 3; Economy Report alle ✓. Im Browser kompletter Weg Tag 3 Schleuse → Tag 6 JOIN → Tag 7 AIRLOCKED ✓.
 
 ### P151 — Untertitel liegen übereinander
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 17.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 17.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P147 (Fund), P115, P133
 - Ziel: Gedanken an Sitzplätzen (Bank, Bullauge) und Hinweise/Durchsagen (Sperrstunde, erste Durchsage) sind immer lesbar.
 - Enthalten: Beide Zeilen stehen heute an derselben Stelle unten. Entweder eigene Zeilen (Gedanke darüber) oder eine Warteschlange, die den zweiten Text erst nach dem ersten zeigt. Wege zum Nachstellen (P147): Tag 1 Brief schließen, sofort [E] am Bullauge → Gedanke über „Officer, report to the customs counter…“; abends Hallenbank, [F] → „It's late…“ über „Curfew. All shops are closed…“.
 - Abnahme: Beide Wege zeigen beide Texte lesbar; Test für die Reihenfolge/Position; keine Konsolenfehler.
+- Ergebnis (max, 17.11.): Die Gedankenzeile der Sitzplätze steht jetzt über dem Hinweisbalken (`RestSpotBuilder.LineBottom` aus `DayFlowBuilder.HintBottom/HintHeight`), Test `HudLayoutTests`. Im Release-Build beide Wege nachgestellt (Bullauge Tag 1, Hallenbank mit [F]): beide Texte lesbar.
 
 ### P152 — Bullauge ab Tag 3 halb verdeckt
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 17.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 17.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P147 (Fund), P51, P111
 - Ziel: Der Blick aus dem Bullauge in 103 zeigt an jedem Tag den Planeten frei.
 - Enthalten: An Tag 2 ist etwa ein Fünftel, ab Tag 3 die rechte Hälfte des Bildes von der Innenwand verdeckt, der Planet steht am linken Rand. Vermutung: Der Himmel dreht pro Tag weiter (0/18/36°) und die Kamera zielt schräg durchs Fenster auf den Planeten. Lösung: Kamera bleibt senkrecht zum Fenster bzw. der Planet wird für den Blick ins Fenster gelegt; an allen Tagen (1–12 und Endlos) prüfen.
 - Abnahme: Screenshots Tag 1, 3, 7, 12: Planet frei im Bild, keine Wand; Test für die Blickrichtung.
+- Ergebnis (max, 17.11.): Ursache: Der Himmel dreht pro Tag weiter (0/18/36°), der Planet wandert von 8° auf 44° und verschwand hinter der Stationsecke. Das Auge des Bullaugenblicks sitzt 3 m weiter draußen (`RestSpotBuilder.PortholeEye`). Test `PortholeViewTests` prüft für jeden `dayYaw`, dass zwischen Auge und Planet keine Station/Außenhülle steht. Browser: Tag 1 frei; Tag 3/7/12 nur über den Test geprüft (ab Tag 3 ist der Winkel gleich).
 
 ### P153 — Kiosk-Schild „OPEN“ nach der Sperrstunde aus
-- Größe: XS · Priorität: Kann · Status: in Arbeit (max, 17.11.) · Zuständig: max
+- Größe: XS · Priorität: Kann · Status: fertig (max, 17.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P147 (Fund), P109
 - Ziel: Nach 23 Uhr leuchtet am Kiosk nicht mehr „OPEN“, wenn das Gitter unten ist.
 - Enthalten: Neonschild aus (oder „CLOSED“), solange das Gitter unten ist; morgens wieder an. Gleiches für andere Läden mit Schild prüfen.
 - Abnahme: Abend bis zur Sperrstunde laufen lassen → Schild aus; nächster Morgen an.
+- Ergebnis (max, 17.11.): `Vendor` schaltet das Neonschild „OPEN“ des Kiosks mit dem Gitter (`StationMood.SetSignClosed`, ohne Mood direkt). Browser: in der Schicht dunkel, abends an, nach der Sperrstunde wieder dunkel. Nächster Morgen nicht im Browser geprüft. Andere Läden haben kein eigenes Schild.
 
 ### P154 — Leistung zurück auf P57-Niveau
 - Größe: M · Priorität: Soll · Status: offen · Zuständig: —
@@ -2192,30 +2195,34 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
 
 
 ### P156 — Startkassette steckt im Zimmerdeck
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 17.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 17.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P132, P141 · Issue: #51
 - Ziel: Wer ein neues Spiel beginnt, findet im Kassettendeck von Zimmer 103 schon eine Kassette und kann sofort Musik hören.
 - Enthalten: Neuer Spielstand (und alter Spielstand ohne Deck-Eintrag): Slot 1 des Zimmerdecks mit der ersten Kassette belegt; sie spielt nicht von selbst, sondern startet mit [E]. Spielstand (P128) speichert wie bisher.
 - Nicht enthalten: weitere Kassetten oder Fundorte.
 - Abnahme: Neues Spiel → Kassette sichtbar im Deck, Prompt „Play …“; Test für den Startzustand; geladener Stand mit geleertem Deck bleibt leer.
+- Ergebnis (max, 17.11.): Deck in 103 hat „Night Shift“ gestoppt in Slot 1 (`CassetteDeck.startCassette`), der Hebel startet sie mit Laut („Play Night Shift“). Ein fortgesetzter Lauf lädt die Decks ebenfalls gestoppt (vorher spielte die erste Kassette nach CONTINUE von selbst). Tests in `CassetteDeckTests`/`SaveGameTests`. Browser: Prompt, Start, Herausnehmen, Einlegen geprüft. „Geladener Stand mit geleertem Deck bleibt leer“ nur im Test (Restore mit leeren Slots).
 
 ### P157 — Wache läuft sauber
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 17.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 17.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P148 · Issue: #48
 - Ziel: Die Wachen auf ihrer Runde rutschen nicht beim Drehen und halten die Arme beim Gehen natürlich.
 - Enthalten: Drehen an Wegpunkten im Stand (erst drehen, dann gehen), Laufanimation an die tatsächliche Geschwindigkeit gekoppelt; Avatar/Clip prüfen. Liegen die hochgezogenen Arme am Clip selbst, wird eine neue Laufanimation bestellt.
 - Abnahme: Im Browser eine Runde beobachtet, kein Rutschen in Kurven; keine Konsolenfehler.
+- Ergebnis (max, 17.11.): Der Gang-Clip der Wache hielt die Arme hoch; die Wache nutzt jetzt den Walk-Clip von `SK_NPC_Human`. `GuardRounds` dreht im Stand, wenn der nächste Wegpunkt mehr als 50° abweicht, und koppelt das Animationstempo an die Geschwindigkeit. Browser: Drehen am Wegpunkt im Stand, Arme unten; eine Kurve mitten auf dem Weg nicht eindeutig erwischt.
 
 ### P158 — Hangar-Schiffe: genauere Kollision
-- Größe: S · Priorität: Kann · Status: in Arbeit (max, 17.11.) · Zuständig: max
+- Größe: S · Priorität: Kann · Status: fertig (max, 17.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P107 · Issue: #49
 - Ziel: Man kann an die geparkten Schiffe im Hangar nah herangehen, ohne an einer unsichtbaren Box hängen zu bleiben.
 - Enthalten: Statt einer Box um das ganze Modell mehrere Boxen bzw. eine an die Form angepasste Kollision (Rumpf, Flügel, Triebwerke), vom Builder erzeugt; Kosten im WebGL-Build vertretbar.
 - Abnahme: Unter Flügeln und an Lücken frei laufen, durch den Rumpf nicht; keine Konsolenfehler.
+- Ergebnis (max, 17.11.): `ShipCollisionBuilder` erzeugt je Schiff ein Prefab `PF_HangarShip_*` mit 28–38 Boxen aus dem Mesh (0,4-m-Säulen, entlang Z und X zusammengefasst). Test `HangarShipCollisionTests`. Browser: bis an Flügelkante und Rumpf, nicht hindurch.
 
 ### P159 — Shuttle-Tür ohne Balken
-- Größe: S · Priorität: Soll · Status: in Arbeit (max, 17.11.) · Zuständig: max
+- Größe: S · Priorität: Soll · Status: fertig (max, 17.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P106 · Issue: #50
 - Ziel: Durch die offene Shuttle-Luke im Hangar läuft kein Balken.
 - Enthalten: Ursache finden (Rahmen, Hülle oder Schott schneidet die Öffnung) und im Builder beheben.
 - Abnahme: Editor-Bild und Browser-Bild der offenen Luke ohne Balken; Durchgang begehbar.
+- Ergebnis (max, 17.11.): Ursache: Die Luke saß bei z = -26 genau auf der Mittelrippe der Hangarwand. Luke, Kragen und Shuttle stehen jetzt bei `StationGrayboxBuilder.DockHatchZ` = -25. Browser: Tür zwischen zwei Rippen, kein Balken.

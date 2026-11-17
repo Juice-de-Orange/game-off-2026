@@ -27,6 +27,8 @@ namespace GameOff.EditorTools
         private const string SchedulePath = "Assets/_Project/Data/Days/DaySchedule.asset";
         private const string TestDayPath = "Assets/_Project/Data/Days/Day1_Test.asset";
         private const string PrefabPath = "Assets/_Project/Prefabs/Day/PF_DayFlow.prefab";
+        /// <summary>The hint bar at the bottom edge (canvas units). P151: the seat HUD's line stands above it, see RestSpotBuilder.</summary>
+        internal const float HintBottom = 40f, HintHeight = 38f;
         private const string MainScene = "Assets/_Project/Scenes/Main.unity";
         private const string DebugMaterialPath = "Assets/_Project/Art/Materials/Debug/M_Debug_Trigger.mat";
 
@@ -228,8 +230,8 @@ namespace GameOff.EditorTools
             hintBar.transform.SetParent(canvas, false);
             var hintRt = hintBar.GetComponent<RectTransform>();
             hintRt.anchorMin = hintRt.anchorMax = hintRt.pivot = new Vector2(0.5f, 0f);
-            hintRt.anchoredPosition = new Vector2(0f, 40f);
-            hintRt.sizeDelta = new Vector2(720f, 38f);
+            hintRt.anchoredPosition = new Vector2(0f, HintBottom);
+            hintRt.sizeDelta = new Vector2(720f, HintHeight);
             hintBar.GetComponent<Image>().color = new Color(Backdrop.r, Backdrop.g, Backdrop.b, 0.8f);
             hintBar.GetComponent<Image>().raycastTarget = false;
             var hintText = Label(hintBar.transform, "Text", "", 18, TextLight, Vector2.zero, Vector2.zero);

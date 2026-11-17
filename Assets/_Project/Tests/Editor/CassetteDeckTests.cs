@@ -8,7 +8,7 @@ namespace GameOff.Tests
 {
     /// <summary>
     /// P132: the tape deck's playlist (CassettePlaylist): slots, slot order, starting over, taking out and putting back into the
-    /// inventory; cassettes are no goods (no vendor buys them). P141: the lever skips to the next cassette.
+    /// inventory; cassettes are no goods (no vendor buys them). P141: the lever skips to the next cassette. P156: the start cassette.
     /// </summary>
     public class CassetteDeckTests
     {
@@ -252,7 +252,7 @@ namespace GameOff.Tests
         }
 
         [Test]
-        public void Restore_FillsTheSlots_AndPlaysTheFirst()
+        public void Restore_FillsTheSlots_Stopped_AndTheLeverPlaysTheFirst()
         {
             var a = Tape("A");
             var b = Tape("B");
@@ -260,7 +260,9 @@ namespace GameOff.Tests
             deck.Insert(0, Tape("Old"));
             deck.Restore(new List<CassetteData> { null, b, a });
             CollectionAssert.AreEqual(new[] { null, b, a }, deck.Slots);
-            Assert.AreSame(b, deck.Current);
+            Assert.IsNull(deck.Current, "P156: a continued run doesn't start the music by itself");
+            Assert.IsTrue(deck.Skip());
+            Assert.AreSame(b, deck.Current, "the lever plays the first filled slot");
             Assert.IsTrue(deck.Holds(a));
 
             deck.Restore(new List<CassetteData> { a, a }); // a broken save: never the same cassette twice
@@ -268,6 +270,43 @@ namespace GameOff.Tests
             deck.Restore(null);
             Assert.AreEqual(0, deck.Count);
             Assert.IsNull(deck.Current);
+        }
+
+        [Test]
+        public void Load_PutsACassetteInStopped_AndTheLeverStartsIt()
+        {
+            var start = Tape("Start");
+            var other = Tape("Other");
+            var deck = new CassettePlaylist(3);
+            Assert.IsTrue(deck.Load(0, start), "P156: the start cassette goes in");
+            Assert.IsNull(deck.Current, "a loaded cassette doesn't start by itself");
+            Assert.AreEqual(CassettePlaylist.Lamp.Wait, deck.LampOf(0));
+            Assert.IsTrue(deck.Holds(start), "it counts as owned: the kiosk doesn't sell it again");
+            Assert.IsFalse(deck.Load(0, other), "a full slot stays refused");
+
+            Assert.IsTrue(deck.Skip(), "the lever of a stopped deck plays the first cassette");
+            Assert.AreSame(start, deck.Current);
+
+            var stopped = new CassettePlaylist(3);
+            stopped.Load(0, start);
+            Assert.IsTrue(stopped.Insert(2, other));
+            Assert.AreSame(other, stopped.Current, "inserting into a stopped deck plays the new cassette");
+        }
+
+        [Test]
+        public void StartCassette_OfTheRoomDeck_IsSet_AndTheCounterDeckStartsEmpty()
+        {
+            var rest = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Project/Prefabs/Rest/PF_RestSpots.prefab");
+            if (rest == null) Assert.Ignore("PF_RestSpots is not built yet");
+            int checkedDecks = 0;
+            foreach (var deck in rest.GetComponentsInChildren<CassetteDeck>(true))
+            {
+                var start = new UnityEditor.SerializedObject(deck).FindProperty("startCassette").objectReferenceValue;
+                if (deck.Id == "Room103") Assert.IsNotNull(start, "P156: a new run finds a cassette in the room deck");
+                else Assert.IsNull(start, deck.Id + " deck starts empty");
+                checkedDecks++;
+            }
+            Assert.That(checkedDecks, Is.GreaterThanOrEqualTo(2));
         }
 
         [Test]

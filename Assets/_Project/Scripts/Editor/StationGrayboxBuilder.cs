@@ -1820,7 +1820,9 @@ namespace GameOff.EditorTools
         // --- P106: the staff shuttle, docked outside the west wall (hull and collar: SkyExteriorBuilder, hatch and seat: DepartureBuilder) ---
         private const string KitHangarViewport = "Hangar/SM_Hangar_Wall_Viewport.fbx";
         private const string KitShuttleCabin = "Hangar/SM_Shuttle_Cabin_Interior.fbx";
-        private const float DockViewportZ = -22f, DockHatchZ = -26f;
+        private const float DockViewportZ = -22f;
+        /// <summary>P159 (#50): the hatch stands between two ribs of the wall cell (ribs at its edges and centre, z -28/-26/-24), not across one.</summary>
+        internal const float DockHatchZ = -25f;
         // Inside the hull, raised so that the cabin's underside doesn't show below the belly; the hatch fades, so its floor need not match the hangar's.
         public static readonly Vector3 ShuttleCabinCentre = new Vector3(-23.2f, 0.6f, -28f);
         private const float ShuttleCabinYaw = 180f; // the pilot's seat points to the nose (north); checked visually
@@ -1916,7 +1918,7 @@ namespace GameOff.EditorTools
                 KitProp(p, "Hangar/SM_Hangar_Barrier.fbx", $"SM_Hangar_Barrier_W{i}", 1, z, 0.3f, 2f, 1, 0, 90f);
                 KitProp(p, "Hangar/SM_Hangar_Barrier.fbx", $"SM_Hangar_Barrier_E{i}", 3, z, 0.3f, 2f, 1, 0, 90f);
             }
-            KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_A", -16.5f, -31, 1.2f, 1.2f, 1); // kept clear of the shuttle hatch at z -26
+            KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_A", -16.5f, -31, 1.2f, 1.2f, 1); // kept clear of the shuttle hatch (DockHatchZ)
             KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_B", -16.5f, -32.4f, 1.2f, 1.2f, 1, 0, 90f);
             KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_C", -16.5f, -31.7f, 1.2f, 1.2f, 1, 1, 15f);
             KitProp(p, "Hangar/SM_Hangar_Crate.fbx", "SM_Hangar_Crate_D", -15.2f, -33, 1.2f, 1.2f, 1, 0, -10f);
