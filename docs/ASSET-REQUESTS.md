@@ -10664,7 +10664,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_SpeechBubble.png
 package: P143
 scene: Schalter (Sprechblasen der Reisenden)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
@@ -10691,7 +10691,7 @@ feedback: []
 path: Assets/_Project/Art/UI/Terminal/UI_SpeechBubble_Tail.png
 package: P143
 scene: Schalter (Sprechblasen der Reisenden)
-status: offen
+status: Vorschau
 priority: P2
 needed_by: 2026-11-20
 size_m: [0, 0, 0]
