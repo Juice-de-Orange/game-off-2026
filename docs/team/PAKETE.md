@@ -2142,7 +2142,7 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
 - Ergebnis (max, 17.11.): `Vendor` schaltet das Neonschild „OPEN“ des Kiosks mit dem Gitter (`StationMood.SetSignClosed`, ohne Mood direkt). Browser: in der Schicht dunkel, abends an, nach der Sperrstunde wieder dunkel. Nächster Morgen nicht im Browser geprüft. Andere Läden haben kein eigenes Schild.
 
 ### P154 — Leistung zurück auf P57-Niveau
-- Größe: M · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: M · Priorität: Soll · Status: in Arbeit (max, 17.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P57, P146
 - Ziel: Das Spiel läuft auf schwächeren Geräten wieder so flüssig wie nach P57.
 - Enthalten: Messung vom 13.11. (Release-Build ccaa2f7, `measure-webgl`, gleiche Maschine wie P57) liegt 24–47 % unter P57: CPU ×4 Menü 16,2 fps (P57: 25,0), Zimmer 33,2 (59,6), Schalter 26,9 (38,4), Pinnwand 23,4 (43,8), Stehen 28,9 (38,2); ohne Bremse Menü/Zimmer/Schalter 112/270/184 (150/353/212). Download 33 MB statt 14,7 MB. Ursachen suchen mit `GameOff/Audit Main Scene` und dem Unity-Profiler (Kandidaten seit P57: Abendgäste und Reisende als Skinned Meshes, Putzroboter, Wachen, Kassettendecks, Verkehr, Licht/Schatten, neue Modelle, Musik ohne Streaming), die größten zwei bis drei beheben, Download prüfen (Musik als Vorbis mit niedrigerer Qualität/Streaming, Texturen). Aufteilung Build `752c8e3` (34,3 MB): Daten 27,2 MB (unkomprimiert 43,5 MB: Texturen 40 %, Sound 40 %, davon die fünf Kassetten-Songs ~14 MB), Code 6,9 MB (fast nur Unity). Wohl unnötig im Build, ca. 2 MB unkomprimiert: ProBuilder-Gittertexturen (GridBox_*), TMP-Schrift LiberationSans (SDF + TTF), URP-Debug-UI-Prefabs; Herkunft der Verweise prüfen.
