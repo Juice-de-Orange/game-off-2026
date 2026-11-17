@@ -2118,21 +2118,21 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
 - Ergebnis (max, 13.11., Agent): Komplizin Ilsa Koval (Mensch, ID endet auf 77): Shifter an Tag 3 per Schleuse oder verhaftet → sie fragt an Tag 6 JOIN/REFUSE, JOIN → Tag 7 Ende AIRLOCKED. Neue Mechanik: Folgen setzen Flags, Auftritte mit `onlyIfFlag`/`unlessFlag`. Damit Lohn und Balance gleich bleiben, entfallen Hedda (Tag 6) und Mabu (Tag 7). Ende-Auswertung nennt sie. Tests für alle vier Wege an Tag 3; Economy Report alle ✓. Im Browser kompletter Weg Tag 3 Schleuse → Tag 6 JOIN → Tag 7 AIRLOCKED ✓.
 
 ### P151 — Untertitel liegen übereinander
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 17.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P147 (Fund), P115, P133
 - Ziel: Gedanken an Sitzplätzen (Bank, Bullauge) und Hinweise/Durchsagen (Sperrstunde, erste Durchsage) sind immer lesbar.
 - Enthalten: Beide Zeilen stehen heute an derselben Stelle unten. Entweder eigene Zeilen (Gedanke darüber) oder eine Warteschlange, die den zweiten Text erst nach dem ersten zeigt. Wege zum Nachstellen (P147): Tag 1 Brief schließen, sofort [E] am Bullauge → Gedanke über „Officer, report to the customs counter…“; abends Hallenbank, [F] → „It's late…“ über „Curfew. All shops are closed…“.
 - Abnahme: Beide Wege zeigen beide Texte lesbar; Test für die Reihenfolge/Position; keine Konsolenfehler.
 
 ### P152 — Bullauge ab Tag 3 halb verdeckt
-- Größe: S · Priorität: Soll · Status: offen · Zuständig: —
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 17.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P147 (Fund), P51, P111
 - Ziel: Der Blick aus dem Bullauge in 103 zeigt an jedem Tag den Planeten frei.
 - Enthalten: An Tag 2 ist etwa ein Fünftel, ab Tag 3 die rechte Hälfte des Bildes von der Innenwand verdeckt, der Planet steht am linken Rand. Vermutung: Der Himmel dreht pro Tag weiter (0/18/36°) und die Kamera zielt schräg durchs Fenster auf den Planeten. Lösung: Kamera bleibt senkrecht zum Fenster bzw. der Planet wird für den Blick ins Fenster gelegt; an allen Tagen (1–12 und Endlos) prüfen.
 - Abnahme: Screenshots Tag 1, 3, 7, 12: Planet frei im Bild, keine Wand; Test für die Blickrichtung.
 
 ### P153 — Kiosk-Schild „OPEN“ nach der Sperrstunde aus
-- Größe: XS · Priorität: Kann · Status: offen · Zuständig: —
+- Größe: XS · Priorität: Kann · Status: in Arbeit (max, 17.11.) · Zuständig: max
 - Braucht: — · Folgt auf: P147 (Fund), P109
 - Ziel: Nach 23 Uhr leuchtet am Kiosk nicht mehr „OPEN“, wenn das Gitter unten ist.
 - Enthalten: Neonschild aus (oder „CLOSED“), solange das Gitter unten ist; morgens wieder an. Gleiches für andere Läden mit Schild prüfen.
@@ -2190,3 +2190,32 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
     - `measure-webgl` klickt CONFIRM über feste Koordinaten.
     - Geschleuster Jonas: Nells spätere Zeilen (Tag 8/11) passen dann nicht.
 
+
+### P156 — Startkassette steckt im Zimmerdeck
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 17.11.) · Zuständig: max
+- Braucht: — · Folgt auf: P132, P141 · Issue: #51
+- Ziel: Wer ein neues Spiel beginnt, findet im Kassettendeck von Zimmer 103 schon eine Kassette und kann sofort Musik hören.
+- Enthalten: Neuer Spielstand (und alter Spielstand ohne Deck-Eintrag): Slot 1 des Zimmerdecks mit der ersten Kassette belegt; sie spielt nicht von selbst, sondern startet mit [E]. Spielstand (P128) speichert wie bisher.
+- Nicht enthalten: weitere Kassetten oder Fundorte.
+- Abnahme: Neues Spiel → Kassette sichtbar im Deck, Prompt „Play …“; Test für den Startzustand; geladener Stand mit geleertem Deck bleibt leer.
+
+### P157 — Wache läuft sauber
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 17.11.) · Zuständig: max
+- Braucht: — · Folgt auf: P148 · Issue: #48
+- Ziel: Die Wachen auf ihrer Runde rutschen nicht beim Drehen und halten die Arme beim Gehen natürlich.
+- Enthalten: Drehen an Wegpunkten im Stand (erst drehen, dann gehen), Laufanimation an die tatsächliche Geschwindigkeit gekoppelt; Avatar/Clip prüfen. Liegen die hochgezogenen Arme am Clip selbst, wird eine neue Laufanimation bestellt.
+- Abnahme: Im Browser eine Runde beobachtet, kein Rutschen in Kurven; keine Konsolenfehler.
+
+### P158 — Hangar-Schiffe: genauere Kollision
+- Größe: S · Priorität: Kann · Status: in Arbeit (max, 17.11.) · Zuständig: max
+- Braucht: — · Folgt auf: P107 · Issue: #49
+- Ziel: Man kann an die geparkten Schiffe im Hangar nah herangehen, ohne an einer unsichtbaren Box hängen zu bleiben.
+- Enthalten: Statt einer Box um das ganze Modell mehrere Boxen bzw. eine an die Form angepasste Kollision (Rumpf, Flügel, Triebwerke), vom Builder erzeugt; Kosten im WebGL-Build vertretbar.
+- Abnahme: Unter Flügeln und an Lücken frei laufen, durch den Rumpf nicht; keine Konsolenfehler.
+
+### P159 — Shuttle-Tür ohne Balken
+- Größe: S · Priorität: Soll · Status: in Arbeit (max, 17.11.) · Zuständig: max
+- Braucht: — · Folgt auf: P106 · Issue: #50
+- Ziel: Durch die offene Shuttle-Luke im Hangar läuft kein Balken.
+- Enthalten: Ursache finden (Rahmen, Hülle oder Schott schneidet die Öffnung) und im Builder beheben.
+- Abnahme: Editor-Bild und Browser-Bild der offenen Luke ohne Balken; Durchgang begehbar.
