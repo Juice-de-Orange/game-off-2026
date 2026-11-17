@@ -99,6 +99,13 @@ Rhythmus: 3 Wochen Entwicklung, 1 Woche Polish, 2 Tage Puffer.
 
 - **#17:** Geprüft: keine Überschneidung, der Streifen ist die Mittelrippe von `SM_Hangar_Wall_4x4` (dunkle Texturspalte). Asset steht auf `rework`, Issue bleibt offen, bis es geliefert ist.
 
+### Stand 17.11. (max)
+- **Fertig und live:** P151–P153 und P156–P159 (Untertitel, Bullauge, Kiosk-Schild, Startkassette, Wachen, Schiffskollision, Shuttle-Luke) und P129. Eingebaut sind die Lieferungen P141 (Skip-Laut) und P143 (Sprechblase). Issues #44, #48–#51 sind geschlossen. 476/476 EditMode-Tests grün.
+- **P154 Leistung, halb fertig:** Der Download ist erledigt, 32,7 → 22,5 MB, weil die Musik für WebGL mit Qualität 0,4 kodiert wird (`MusicImportSettings`). Max hört rein. Die fps sind offen: Die Messung war unbrauchbar, weil ein anderer Unity-Editor den Rechner auslastete. Bei freiem Rechner neu messen.
+- **Live:** `a861b51`.
+- **Metriken seit 11.11.:** 7 von 23 Sitzungen brechen beim Laden ab, 8 enden im Menü. Tag-1-Reisender Sudo wird in 2 von 3 Fällen falsch durchgelassen. Beides ist Stoff für die Polish-Runde (Einstieg, Laden).
+- **Offen:** P154 (fps), P94 + #16/#45 (Stimmen bei der Pipeline), P19 (itch am Schluss), Martins alte Zeile „P11 Rest“ (Frage `2026-11-17_max-an-martin_p11-claim.md`).
+
 ## Aufgabenteilung
 - **max**: alle finalen Assets (Art, Sound, Musik).
 - **martin**: Startbildschirm — alles vom Spielstart bis zum Menü. Baut mit Platzhalter-Assets, Max ersetzt sie.
