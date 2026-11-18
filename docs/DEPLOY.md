@@ -3,7 +3,7 @@
 Der aktuelle Stand von `main` läuft öffentlich auf Geoffrey (Contabo, 144.91.89.2) als Docker-Container. Paket: P49.
 itch.io (P19) ist davon getrennt und bleibt der Weg für die Abgabe.
 
-> **Stand 09.11.:** Deploy von Hand, der Nacht-Workflow unten läuft nicht und bleibt aus (P49 geschlossen). itch.io: **seit 18.11. öffentlich und beim Game Off eingereicht** unter `juice-de-orange.itch.io/kestrel-9` (itch-Projekt 5397553; das alte `game-off-2026` ist Draft, weil vor dem Jam-Start angelegt).
+> **Stand 09.11.:** Deploy von Hand, der Nacht-Workflow unten läuft nicht und bleibt aus (P49 geschlossen). itch.io: **seit 18.11. öffentlich und beim Game Off eingereicht** unter `juice-de-orange.itch.io/kestrel-9` (itch-Projekt 5397553, Admins: Max, Martin eingeladen; das alte `game-off-2026` ist Draft, weil vor dem Jam-Start angelegt).
 
 ## Ablauf
 ```
