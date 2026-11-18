@@ -3,7 +3,7 @@
 Der aktuelle Stand von `main` läuft öffentlich auf Geoffrey (Contabo, 144.91.89.2) als Docker-Container. Paket: P49.
 itch.io (P19) ist davon getrennt und bleibt der Weg für die Abgabe.
 
-> **Stand 09.11.:** Deploy von Hand, der Nacht-Workflow unten läuft nicht und bleibt aus (P49 geschlossen). itch.io: Entwurf `juice-de-orange.itch.io/game-off-2026`, noch nicht öffentlich.
+> **Stand 09.11.:** Deploy von Hand, der Nacht-Workflow unten läuft nicht und bleibt aus (P49 geschlossen). itch.io: **seit 18.11. öffentlich und beim Game Off eingereicht** unter `juice-de-orange.itch.io/kestrel-9` (itch-Projekt 5397553; das alte `game-off-2026` ist Draft, weil vor dem Jam-Start angelegt).
 
 ## Ablauf
 ```
@@ -136,7 +136,7 @@ gespeichert; jede Sitzung erhält eine zufällige Kennung, die nur bis zum Schli
 **Die Datenschutzerklärung auf maxlworks.com muss das erwähnen (Absatz von Claude, 07.11., in Max' Handover).**
 
 ## itch.io (P19, Abgabe)
-Upload braucht Max' itch-Login (`butler login` einmalig), deshalb nicht automatisch.
+Upload braucht Max' itch-Login (`butler login` einmalig), deshalb nicht automatisch. **itch nimmt nie automatisch den neuesten Stand:** jedes Update = Release-Build + ZIP + Upload in `itch.io/game/edit/5397553` (alte ZIP löschen, neue als „played in the browser“). Bis zur Frist darf die Einreichung aktualisiert werden. Game Off akzeptiert nur itch-Projekte, die nach dem Jam-Start angelegt wurden.
 1. Build: `Unity.exe -batchmode -nographics -buildTarget WebGL -projectPath . -executeMethod GameOff.EditorTools.WebBuild.BuildRelease -customBuildPath Builds/itch -quit` (oder Menü GameOff → Build Release (itch)). Release = Vorlage `Kestrel9Itch` + `K9_RELEASE` (ohne Dev-Werkzeuge); `WebBuild.Build -itch` baut dieselbe Vorlage mit Dev-Werkzeugen, nur zum Testen. Die Vorlage `Kestrel9Itch` hat keine Impressum-Fußzeile (nur für die Live-Seite) und fängt abgelehnte Maussperren genauso ab.
 2. `butler push Builds/itch <user>/<spiel>:html5`, oder den Ordner gezippt auf der itch-Seite hochladen. **Nicht mit PowerShell `Compress-Archive` packen:** Das schreibt `\` in die Pfade, auf itch fehlt dann `Build/` (404, „the download failed“). Python `zipfile` mit `/` funktioniert.
 3. itch-Seite: „This file will be played in the browser“, Viewport 1280×720, Fullscreen-Button an. In Chrome und Firefox prüfen.

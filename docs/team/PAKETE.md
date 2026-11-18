@@ -378,7 +378,7 @@ Bis zum Feature-Freeze (22.11.) und danach im Polish:
   - Getestet im Editor (Mixer-Werte, Routing aller 10 Türen) und im WebGL-Build mit Ton in Chrome. Echte Sounds fehlen noch (Max/Pipeline).
 
 ### P19 — WebGL-Build & itch-Upload
-- Größe: S · Priorität: Muss · Status: Entwurf auf itch.io getestet, läuft in Chrome (max, 09.11.). Weitere Uploads erst am Ende (Max, 09.11.): dann neue ZIP, Firefox-Test, Genre/Tags, Public und Jam-Einreichung
+- Größe: S · Priorität: Muss · Status: eingereicht (max, 18.11.): öffentlich unter https://juice-de-orange.itch.io/kestrel-9, beim Game Off eingereicht, Repo öffentlich. Offen: Firefox-Test; Martin als Mitautor im neuen Projekt eintragen
 - Braucht: P01
 - Ziel: Erster Build auf itch.io (Entwurf) bis 05.11., danach wiederholbarer Ablauf.
 - Hinweis (max, 05.11.): `GameOff.EditorTools.WebBuild.Build` ist der Build-Einstieg. Die Vorlage für itch muss abgelehnte Maussperren abfangen und 16:9 halten wie `Assets/WebGLTemplates/Kestrel9/index.html` (Ausnahme: Impressum-Fußzeile nur für die Live-Version), siehe P49.
